@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 $config            = KunenaConfig::getInstance();
 $author            = $this->message->getAuthor();
 $subject           = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
-$this->messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
+$this->messageLink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->message->getUrl(null, false);
 
 if ($this->approved) {
     $msg1 = Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION_APPROVED_MESSAGE');
@@ -201,7 +201,7 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
             padding: 25px 6.25% 5px;" class="button"><a
-                                    href="<?php echo Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"
+                                    href="<?php echo Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->message->getUrl(null, false); ?>"
                                     target="_blank" style="text-decoration: underline;">
                                 <table border="0" cellpadding="0" cellspacing="0" align="center"
                                        style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">

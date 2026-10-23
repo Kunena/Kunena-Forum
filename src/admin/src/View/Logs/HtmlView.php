@@ -91,7 +91,7 @@ class HtmlView extends BaseHtmlView
 
     /**
      * Get the log type
-     * 
+     *
      * @param   integer  $id  id
      *
      * @return string

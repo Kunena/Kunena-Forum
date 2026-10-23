@@ -20,11 +20,11 @@ use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -266,7 +266,7 @@ abstract class KunenaTopicHelper
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = []): array
     {
@@ -291,7 +291,7 @@ abstract class KunenaTopicHelper
         // language of the list is "all" or another language.
         if (KunenaMultilanguage::isEnabled() && ($params['language'] ?? '') !== 'all') {
             $language = isset(KunenaMultilanguage::getLanguages()[$params['language'] ?? '']) ? $params['language'] : KunenaMultilanguage::getCurrent();
-            $where   .= ' AND ' . $db->quoteName('tt.language') . ' IN (' . $db->quote('*') . ', ' . $db->quote($language) . ')';
+            $where .= ' AND ' . $db->quoteName('tt.language') . ' IN (' . $db->quote('*') . ', ' . $db->quote($language) . ')';
         }
 
         if (str_contains($orderby, 'tt.first_post_time')) {

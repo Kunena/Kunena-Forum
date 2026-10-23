@@ -119,10 +119,10 @@ abstract class KunenaMap
      */
     public static function osmEmbedUrl(float $latitude, float $longitude, int $zoom = 10): string
     {
-        $zoom   = max(1, min(18, $zoom));
+        $zoom    = max(1, min(18, $zoom));
         $lonSpan = 360 / (2 ** $zoom) * 2.4;
         $latSpan = $lonSpan / 2.4;
-        $bbox   = [$longitude - $lonSpan / 2, $latitude - $latSpan / 2, $longitude + $lonSpan / 2, $latitude + $latSpan / 2];
+        $bbox    = [$longitude - $lonSpan / 2, $latitude - $latSpan / 2, $longitude + $lonSpan / 2, $latitude + $latSpan / 2];
 
         return 'https://www.openstreetmap.org/export/embed.html?bbox=' . implode(',', array_map(static fn ($value) => rtrim(rtrim(number_format($value, 6, '.', ''), '0'), '.'), $bbox))
             . '&layer=mapnik&marker=' . rtrim(rtrim(number_format($latitude, 6, '.', ''), '0'), '.') . ',' . rtrim(rtrim(number_format($longitude, 6, '.', ''), '0'), '.');

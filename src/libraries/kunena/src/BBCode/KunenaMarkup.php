@@ -249,8 +249,8 @@ final class KunenaMarkup
 
         // Tags with the same meaning in BBCode. The attributes of these tags are dropped.
         $pairs = [
-            'b' => 'b', 'strong' => 'b', 'i' => 'i', 'em' => 'i', 'u' => 'u', 's' => 's', 'strike' => 's', 'del' => 's',
-            'sup' => 'sup', 'sub' => 'sub', 'blockquote' => 'quote', 'ul' => 'ul', 'ol' => 'ol', 'li' => 'li',
+            'b'     => 'b', 'strong' => 'b', 'i' => 'i', 'em' => 'i', 'u' => 'u', 's' => 's', 'strike' => 's', 'del' => 's',
+            'sup'   => 'sup', 'sub' => 'sub', 'blockquote' => 'quote', 'ul' => 'ul', 'ol' => 'ol', 'li' => 'li',
             'table' => 'table', 'tr' => 'tr', 'th' => 'th', 'td' => 'td',
         ];
 

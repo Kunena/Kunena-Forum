@@ -20,12 +20,12 @@ use finfo;
 use InvalidArgumentException;
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
@@ -33,14 +33,14 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Image\KunenaImage;
+use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Tables\TableKunenaPrivateAttachmentMap;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
-use Kunena\Forum\Libraries\Tables\TableKunenaPrivateAttachmentMap;
 use RuntimeException;
 
 /**
@@ -77,47 +77,47 @@ class KunenaAttachment extends KunenaDatabaseObject
     /**
      * @since   Kunena 6.0
      */
-    const PROTECTION_NONE = 0;
+    public const PROTECTION_NONE = 0;
 
     /**
      * @since   Kunena 6.0
      */
-    const PROTECTION_PUBLIC = 1;
+    public const PROTECTION_PUBLIC = 1;
 
     /**
      * @since   Kunena 6.0
      */
-    const PROTECTION_ACL = 2;
+    public const PROTECTION_ACL = 2;
 
     /**
      * @since   Kunena 6.0
      */
-    const PROTECTION_FRIENDS = 4;
+    public const PROTECTION_FRIENDS = 4;
 
     /**
      * @since   Kunena 6.0
      */
-    const PROTECTION_MODERATORS = 8;
+    public const PROTECTION_MODERATORS = 8;
 
     /**
      * @since   Kunena 6.0
      */
-    const PROTECTION_ADMINS = 16;
+    public const PROTECTION_ADMINS = 16;
 
     /**
      * @since   Kunena 6.0
      */
-    const PROTECTION_PRIVATE = 32;
+    public const PROTECTION_PRIVATE = 32;
 
     /**
      * @since   Kunena 6.0
      */
-    const PROTECTION_AUTHOR = 64;
+    public const PROTECTION_AUTHOR = 64;
 
     /**
      * @since   Kunena 6.0
      */
-    const PROTECTION_UNPUBLISHED = 128;
+    public const PROTECTION_UNPUBLISHED = 128;
 
     /**
      * @var     string
@@ -387,9 +387,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 
     /**
      * Get the table relevant properties. Override for your specific Object
-     * 
+     *
      * @return array    Assocative array with the propertie values of table
-     * 
+     *
      * @since   Kunena 6.4
      */
     protected function getTableProperties(): array
@@ -406,9 +406,9 @@ class KunenaAttachment extends KunenaDatabaseObject
             'filename'      => $this->filename,
             'filename_real' => $this->filename_real,
             // 191 characters in the database (a longer caption was an error of the upload).
-            'caption'       => mb_substr((string) $this->caption, 0, 191),
-            'inline'        => $this->inline,
-            'status'        => $this->status,
+            'caption' => mb_substr((string) $this->caption, 0, 191),
+            'inline'  => $this->inline,
+            'status'  => $this->status,
         ];
 
         return $properties;
@@ -426,9 +426,9 @@ class KunenaAttachment extends KunenaDatabaseObject
         $path = $this->getPath();
 
         if ($path && $this->isImage()) {
-             $imageProperties = Image::getImageFileProperties($path);
-             $this->width = $imageProperties->width;
-             $this->height = $imageProperties->height;
+            $imageProperties = Image::getImageFileProperties($path);
+            $this->width     = $imageProperties->width;
+            $this->height    = $imageProperties->height;
         } else {
             $this->width = $this->height = 0;
         }
@@ -672,7 +672,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      * @return string|null
      *
      * @since   Kunena 4.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getImageLink(): ?string
     {
@@ -725,7 +725,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      *
      * @return bool
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 4.0
      */
     public function upload(string $key = 'kattachment', ?int $catid = null): bool
@@ -828,7 +828,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
     /**
      * Say if the attachment belong to the user
-     * 
+     *
      * @return boolean
      * @since   Kunena 6.3
      */
@@ -866,10 +866,10 @@ class KunenaAttachment extends KunenaDatabaseObject
         }
 
         // Hash, size and MIME are set during saving, so let's deal with all other variables.
-        $this->userid = \is_null($this->userid) ? KunenaUserHelper::getMyself() : $this->userid;
-        $this->folder = \is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
+        $this->userid    = \is_null($this->userid) ? KunenaUserHelper::getMyself() : $this->userid;
+        $this->folder    = \is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
         $this->protected = KunenaConfig::getInstance()->attachmentProtection ? 1 : 0;
-        $this->status = \is_null($this->status) ? 0 : $this->status;
+        $this->status    = \is_null($this->status) ? 0 : $this->status;
 
         if (!$this->filename_real) {
             $this->filename_real = $this->filename;
@@ -1101,7 +1101,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         }
 
         // Need to load private message (for now allow only one private message per KunenaAttachment).
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db  = Factory::getContainer()->get(DatabaseInterface::class);
         $map = new TableKunenaPrivateAttachmentMap($db);
 
         $map->load(['attachment_id' => $this->id]);
@@ -1115,14 +1115,13 @@ class KunenaAttachment extends KunenaDatabaseObject
         if (\in_array($user->userid, $private->users()->getMapped())) {
             // Yes, I have access..
             return;
-        } else {
-            $messages = KunenaMessageHelper::getMessages($private->posts()->getMapped());
+        }
+        $messages = KunenaMessageHelper::getMessages($private->posts()->getMapped());
 
-            foreach ($messages as $message) {
-                if ($user->isModerator($message->getCategory())) {
-                    // Yes, I have access..
-                    return;
-                }
+        foreach ($messages as $message) {
+            if ($user->isModerator($message->getCategory())) {
+                // Yes, I have access..
+                return;
             }
         }
 

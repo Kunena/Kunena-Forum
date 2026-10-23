@@ -9,6 +9,7 @@ namespace Kunena\Forum\Plugin\Kunena\Finder;
 
 \defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Event\Finder\AfterDeleteEvent;
 use Joomla\CMS\Event\Finder\AfterSaveEvent;
 use Joomla\CMS\Event\Finder\BeforeSaveEvent;
@@ -63,7 +64,7 @@ final class Finder extends CMSPlugin implements SubscriberInterface, DispatcherA
      *
      * @since   2.5
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function onKunenaAfterSave(ModelAfterSaveEvent $event): void
     {
@@ -98,7 +99,7 @@ final class Finder extends CMSPlugin implements SubscriberInterface, DispatcherA
      *
      * @since   2.5
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function onKunenaBeforeSave(ModelBeforeSaveEvent $event): void
     {
@@ -132,7 +133,7 @@ final class Finder extends CMSPlugin implements SubscriberInterface, DispatcherA
      *
      * @since   2.5
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function onKunenaAfterDelete(ModelAfterDeleteEvent $event): void
     {
@@ -163,7 +164,7 @@ final class Finder extends CMSPlugin implements SubscriberInterface, DispatcherA
      *
      * @since   2.5
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function onKunenaBeforeDelete(ModelBeforeDeleteEvent $event): void
     {

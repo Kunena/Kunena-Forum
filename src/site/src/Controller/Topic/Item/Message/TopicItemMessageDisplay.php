@@ -128,10 +128,10 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
         $this->message  = KunenaMessageHelper::get($mesid);
         $this->message->tryAuthorise();
 
-        $this->topic     = $this->message->getTopic();
-        $this->category  = $this->topic->getCategory();
-        $this->profile   = $this->message->getAuthor();
-        $this->ktemplate = KunenaFactory::getTemplate();
+        $this->topic          = $this->message->getTopic();
+        $this->category       = $this->topic->getCategory();
+        $this->profile        = $this->message->getAuthor();
+        $this->ktemplate      = KunenaFactory::getTemplate();
         $this->candisplaymail = $this->me->canDisplayEmail($this->profile);
 
         if ($this->topic->unread) {
@@ -149,19 +149,19 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 
         $this->pmHasBody = false;
 
-        if(isset($this->message->pm)) {
-          $pmId = array_key_first($this->message->pm);
-          $pmBody = $this->message->pm[$pmId]->body;
+        if (isset($this->message->pm)) {
+            $pmId   = array_key_first($this->message->pm);
+            $pmBody = $this->message->pm[$pmId]->body;
 
-          if (!empty($pmBody)) {
-              $this->pmHasBody = true;
-          }
+            if (!empty($pmBody)) {
+                $this->pmHasBody = true;
+            }
         }
 
         // Thank you info and buttons.
         $this->thankyou             = [];
-        $this->total_thankyou = 0;
-        $this->more_thankyou  = 0;
+        $this->total_thankyou       = 0;
+        $this->more_thankyou        = 0;
         $this->thankyou_delete      = [];
 
         if (isset($this->message->thankyou)) {

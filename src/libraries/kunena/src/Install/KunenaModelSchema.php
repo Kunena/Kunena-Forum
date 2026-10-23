@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Install;
 use DOMAttr;
 use DOMDocument;
 use DOMElement;
+use DOMException;
 use DOMNode;
 use Exception;
 use Joomla\CMS\Factory;
@@ -140,7 +141,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws \DOMException
+     * @throws DOMException
      */
     public function getCreateSQL(): ?array
     {
@@ -177,7 +178,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws \DOMException
+     * @throws DOMException
      */
     public function getDiffSchema($from = null, $to = null, $using = null): ?DOMDocument
     {
@@ -211,7 +212,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws \DOMException
+     * @throws DOMException
      */
     public function getSchema()
     {
@@ -228,7 +229,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      * @return  boolean|DOMDocument
      *
      * @since   Kunena 6.0
-     * @throws \DOMException
+     * @throws DOMException
      * @throws  KunenaSchemaException*@throws \DOMException
      */
     public function getSchemaFromDatabase($reload = false)
@@ -421,7 +422,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws \DOMException
+     * @throws DOMException
      */
     public function upgradeSchema(object $dbschema, object $upgrade): void
     {
@@ -445,7 +446,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws \DOMException
+     * @throws DOMException
      */
     protected function getDOMDocument(object $input)
     {
@@ -642,7 +643,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws \DOMException
+     * @throws DOMException
      */
     public function getSchemaDiff(DOMDocument $old, DOMDocument $new): ?DOMDocument
     {
@@ -857,7 +858,7 @@ class KunenaModelSchema extends BaseDatabaseModel
                     $str .= 'DROP TABLE ' . $this->db->quoteName($tablename) . ';';
                     break;
 
-                //              case 'rename':
+                    //              case 'rename':
                 case 'alter':
                     if ($action == 'alter') {
                         $str .= 'ALTER TABLE ' . $this->db->quoteName($tablename) . ' ' . "\n";
@@ -919,7 +920,7 @@ class KunenaModelSchema extends BaseDatabaseModel
                 case 'create':
                 case '':
                     $action = 'create';
-                    $str    .= 'CREATE TABLE ' . $this->db->quoteName($tablename) . ' (' . "\n";
+                    $str .= 'CREATE TABLE ' . $this->db->quoteName($tablename) . ' (' . "\n";
 
                     foreach ($table->childNodes as $field) {
                         $sqlpart = $this->getSchemaSQLField($field);
@@ -1032,7 +1033,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws \DOMException
+     * @throws DOMException
      */
     public function updateSchemaTable(string $table)
     {
@@ -1061,7 +1062,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws \DOMException
+     * @throws DOMException
      */
     protected function getSQL(): ?array
     {
@@ -1078,7 +1079,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws \DOMException
+     * @throws DOMException
      */
     public function updateSchema(): array
     {

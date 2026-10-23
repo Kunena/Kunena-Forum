@@ -279,7 +279,7 @@ class HtmlView extends KunenaView
         $channels       = $this->category->getChannels();
 
         $options            = [];
-        $options[]         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+        $options[]          = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
         $cat_params         = ['sections' => 1, 'catid' => 0];
         $this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
@@ -1001,7 +1001,7 @@ class HtmlView extends KunenaView
         $categoryId = isset($this->category->id) ? (int) $this->category->id : (int) $this->message->catid;
 
         if (!isset($this->messageModeratorCache[$userId]) || !\array_key_exists($categoryId, $this->messageModeratorCache[$userId])) {
-            $category = $this->category ?? $this->message->getCategory();
+            $category                                          = $this->category ?? $this->message->getCategory();
             $this->messageModeratorCache[$userId][$categoryId] = $this->me->isModerator($category);
         }
 
@@ -1416,8 +1416,8 @@ class HtmlView extends KunenaView
             'action'      => 'topic.create',
         ];
 
-        $this->catid    = $this->state->get('item.catid');
-        $this->category = KunenaCategoryHelper::get($this->catid);
+        $this->catid                       = $this->state->get('item.catid');
+        $this->category                    = KunenaCategoryHelper::get($this->catid);
         list($this->topic, $this->message) = $this->category->newTopic($saved);
 
         if (!$this->topic->category_id) {

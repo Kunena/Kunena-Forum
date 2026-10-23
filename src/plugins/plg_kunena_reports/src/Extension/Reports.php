@@ -132,12 +132,12 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
                 . Text::sprintf('PLG_KUNENA_REPORTS_POST_BY', $author->getName((string) $message->name)) . "\n"
                 . '[quote="' . $author->getName((string) $message->name) . ' post=' . (int) $message->id . ' userid=' . (int) $message->userid . '"]' . $quoted . '[/quote]';
 
-            $db       = Factory::getContainer()->get(DatabaseInterface::class);
-            $existing = $this->getReportTopicId($db, (int) $message->id);
+            $db          = Factory::getContainer()->get(DatabaseInterface::class);
+            $existing    = $this->getReportTopicId($db, (int) $message->id);
             $reportTopic = $existing ? KunenaTopicHelper::get($existing) : null;
 
             // The users who reported the post: a post which enough different users report is held for review.
-            $reporters = $this->getReporters($db, (int) $message->id);
+            $reporters                          = $this->getReporters($db, (int) $message->id);
             $reporters[(int) $reporter->userid] = (int) $reporter->userid;
 
             $threshold = (int) $this->params->get('holdThreshold', 0);

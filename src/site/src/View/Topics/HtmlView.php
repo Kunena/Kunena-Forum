@@ -19,10 +19,10 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\View\KunenaView;
 
@@ -172,7 +172,9 @@ class HtmlView extends KunenaView
      *
      * @since   Kunena 6.0
      */
-    protected function _prepareDocument() {}
+    protected function _prepareDocument()
+    {
+    }
 
     /**
      * @param   null  $tpl  tpl

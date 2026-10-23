@@ -15,11 +15,13 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 
 \defined('_JEXEC') or die();
 
+use CBAuthentication;
 use CBLib\Registry\Registry as CBRegistry;
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /**
  * Class KunenaLoginComprofiler
@@ -38,14 +40,14 @@ class KunenaLoginComprofiler extends KunenaLoginAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function loginUser(string $username, string $password, bool $rememberme = false, $secretkey = null)
     {
         cbimport('cb.authentication');
         global $ueConfig;
 
-        $cbAuthenticate = new \CBAuthentication();
+        $cbAuthenticate = new CBAuthentication();
 
         $messagesToUser = [];
         $alertmessages  = [];
@@ -62,13 +64,13 @@ class KunenaLoginComprofiler extends KunenaLoginAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function logoutUser($return = null)
     {
         cbimport('cb.authentication');
 
-        $cbAuthenticate = new \CBAuthentication();
+        $cbAuthenticate = new CBAuthentication();
 
         $redirect_url = KunenaRoute::current();
         $resultError  = $cbAuthenticate->logout($redirect_url);

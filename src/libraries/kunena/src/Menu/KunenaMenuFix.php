@@ -255,8 +255,8 @@ abstract class KunenaMenuFix
         $errors = [];
 
         foreach (self::$legacy as $itemid) {
-            $item = self::$items[$itemid];
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $item  = self::$items[$itemid];
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $table = new Menu($db);
             $table->load($item->id);
             $data = [
@@ -288,8 +288,8 @@ abstract class KunenaMenuFix
             return false;
         }
 
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $table = new Menu($db);
+        $db     = Factory::getContainer()->get(DatabaseInterface::class);
+        $table  = new Menu($db);
         $result = $table->delete($itemid);
         KunenaMenuHelper::cleanCache();
 

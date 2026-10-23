@@ -15,8 +15,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\WebAsset\WebAssetManager;
-use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 /** @var WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();

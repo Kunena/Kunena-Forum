@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Inbox\Helper;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -25,6 +26,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
+use RuntimeException;
 
 /**
  * The storage of the inbox: private messages and notifications of the forum.
@@ -114,12 +116,12 @@ class InboxHelper
     {
         self::$unread = [];
 
-        $db       = self::db();
-        $now      = time();
-        $subject  = (string) $message->getTopic()->subject;
-        $author   = $senderId ?: (int) $message->userid;
+        $db        = self::db();
+        $now       = time();
+        $subject   = (string) $message->getTopic()->subject;
+        $author    = $senderId ?: (int) $message->userid;
         $messageId = (int) $message->id;
-        $topicId  = (int) $message->thread;
+        $topicId   = (int) $message->thread;
 
         foreach ($userids as $userid) {
             $userid = (int) $userid;
@@ -191,7 +193,7 @@ class InboxHelper
      *
      * @return  int  The id of the new message.
      *
-     * @throws  \RuntimeException
+     * @throws  RuntimeException
      * @since   Kunena 7.2
      */
     public static function send(int $from, int $to, string $subject, string $body, int $replyTo = 0): int
@@ -207,7 +209,7 @@ class InboxHelper
             $parent = self::getRow($replyTo);
 
             if (!$parent || $parent->type !== 'message' || ($parent->user_id != $from && $parent->sender_id != $from)) {
-                throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
+                throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
             }
 
             $conversation = (int) ($parent->conversation_id ?: $parent->id);
@@ -219,22 +221,22 @@ class InboxHelper
         }
 
         if ($to === $from) {
-            throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_SELF'));
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_SELF'));
         }
 
         $recipient = KunenaUserHelper::get($to);
 
         if (!$recipient->exists() || $recipient->blocked) {
-            throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_RECIPIENT'));
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_RECIPIENT'));
         }
 
         if ($body === '' || $subject === '') {
-            throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_EMPTY'));
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_EMPTY'));
         }
 
         // A user who ignores or has blocked the sender gets no message from him.
         if (\in_array($to, KunenaUserIgnore::getIgnoredBy($from), true) || self::isBlocked($to, $from)) {
-            throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_IGNORED'));
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_IGNORED'));
         }
 
         $row = (object) [
@@ -300,7 +302,7 @@ class InboxHelper
      *
      * @return  void
      *
-     * @throws  \RuntimeException
+     * @throws  RuntimeException
      * @since   Kunena 7.2
      */
     public static function block(int $userid, int $target): void
@@ -308,15 +310,15 @@ class InboxHelper
         $user = KunenaUserHelper::get($target);
 
         if ($target === $userid) {
-            throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_SELF'));
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_SELF'));
         }
 
         if (!$user->exists()) {
-            throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_RECIPIENT'));
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_RECIPIENT'));
         }
 
         if ($user->isModerator()) {
-            throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_BLOCK_STAFF'));
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_BLOCK_STAFF'));
         }
 
         $db  = self::db();
@@ -324,7 +326,7 @@ class InboxHelper
 
         try {
             $db->insertObject('#__kunena_inbox_blocks', $row);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Blocked already.
         }
     }
@@ -454,13 +456,13 @@ class InboxHelper
         $row = self::getRow($id);
 
         if (!$row || ($row->user_id != $userid && $row->sender_id != $userid)) {
-            throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
         }
 
         if ($row->type !== 'message') {
             // A notification belongs to the user who gets it: the user who caused it (the sender) has no business in it.
             if ($row->user_id != $userid) {
-                throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
+                throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
             }
 
             self::markRead($userid, [$id]);

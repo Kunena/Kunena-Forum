@@ -27,4 +27,6 @@ use Joomla\CMS\Event\Model\DeleteEvent;
  *
  * @since  7.0.0
  */
-class KunenaBeforeSaveEvent extends DeleteEvent implements FinderEventInterface {}
+class KunenaBeforeSaveEvent extends DeleteEvent implements FinderEventInterface
+{
+}

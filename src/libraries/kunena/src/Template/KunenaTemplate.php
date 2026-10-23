@@ -16,20 +16,19 @@ namespace Kunena\Forum\Libraries\Template;
 \defined('_JEXEC') or die();
 
 use Exception;
+use FilesystemIterator;
 use Joomla\CMS\Application\SiteApplication;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Captcha\Captcha;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
-use KunenaScssPhp\ScssPhp\Compiler;
-use KunenaScssPhp\ScssPhp\OutputStyle;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -39,6 +38,11 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use KunenaScssPhp\ScssPhp\Compiler;
+use KunenaScssPhp\ScssPhp\OutputStyle;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RuntimeException;
 use SimpleXMLElement;
 use StdClass;
 
@@ -301,8 +305,8 @@ class KunenaTemplate
     public function __construct($name = null)
     {
         $this->config = KunenaFactory::getConfig();
-        $this->app = KunenaFactory::getApplication();
-        $this->input = $this->app->getInput();
+        $this->app    = KunenaFactory::getApplication();
+        $this->input  = $this->app->getInput();
 
         if (!$name) {
             $name = $this->config->template;
@@ -353,7 +357,7 @@ class KunenaTemplate
 
         if ($this->xml) {
             foreach ($this->xml->xpath('//field') as $node) {
-                if (isset($node['name']) && isset($node['default'])) {
+                if (isset($node['name'], $node['default'])) {
                     $this->params->def($node['name'], (string) $node['default']);
                 }
             }
@@ -434,7 +438,7 @@ class KunenaTemplate
      * @return \Joomla\CMS\Document\Document|boolean
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function addScriptDeclaration(string $content, $type = 'text/javascript')
     {
@@ -641,13 +645,13 @@ class KunenaTemplate
         $types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
         $names = [
             'unsubscribe' => 'subscribe',
-            'unfavorite' => 'favorite',
-            'unsticky' => 'sticky',
-            'unlock' => 'lock',
-            'create' => 'newtopic',
+            'unfavorite'  => 'favorite',
+            'unsticky'    => 'sticky',
+            'unlock'      => 'lock',
+            'create'      => 'newtopic',
             'quickReply'  => 'reply',
-            'quote' => 'kquote',
-            'edit' => 'kedit',
+            'quote'       => 'kquote',
+            'edit'        => 'kedit',
         ];
 
         $text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
@@ -1071,7 +1075,7 @@ HTML;
      *
      * @return \Joomla\CMS\Document\Document|boolean
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 3.5
      */
     public function addScriptOptions(string $key, $options, $merge = true)
@@ -1315,7 +1319,7 @@ HTML;
      */
     public function getTopicIconPath($filename = '', $url = true): string
     {
-        $categoryIconset = 'images/topic_icons';
+        $categoryIconset       = 'images/topic_icons';
         $defaultIconPathExists = $this->getPathStatCached($categoryIconset)['exists'];
 
         if ($this->config->topicIcons) {
@@ -1396,79 +1400,78 @@ HTML;
                 return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
             } elseif ($topicicontype == 'image') {
                 return '<img loading=lazy src="' . Uri::root() . 'media/kunena/topic_icons/' . $categoryIconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
-            } else {
-                $iconurl = $this->getTopicIconPath("{$categoryIconset}/{$icon->src}", true);
-
-                return '<img loading=lazy src="' . $iconurl . '" alt="Topic-icon" />';
             }
-        } else {
-            $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/systemicons.xml';
+            $iconurl = $this->getTopicIconPath("{$categoryIconset}/{$icon->src}", true);
 
-            if (!$this->getPathStatCached($xmlfile)['exists']) {
-                $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/systemicons.xml';
-            }
+            return '<img loading=lazy src="' . $iconurl . '" alt="Topic-icon" />';
 
-            $iconid = 0;
-
-            if ($topic->posts < 2) {
-                $iconid = 6;
-            }
-
-            if ($topic->ordering) {
-                $iconid = 3;
-            }
-
-            if ($topic->locked) {
-                $iconid = 4;
-            }
-
-            if ($topic->ordering && $topic->locked) {
-                $iconid = 7;
-            }
-
-            if ($topic->moved_id) {
-                $iconid = 5;
-            }
-
-            if ($topic->hold == 1) {
-                $iconid = 1;
-            }
-
-            if ($topic->hold == 2) {
-                $iconid = 2;
-            }
-
-            if ($topic->hold == 3) {
-                $iconid = 2;
-            }
-
-            $xml  = $this->loadXmlFileCached($xmlfile);
-            $icon = $this->get_xml_systemicon($xml, $iconid, $topicicontype);
-
-            if ($topicicontype == 'svg') {
-                return KunenaSvgIcons::loadsvg($icon->svg, 'systemtopicIcons', $categoryIconset);
-            } elseif ($topicicontype == 'fa') {
-                return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
-            } else {
-                $file = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/system/normal.png';
-
-                if (!$this->getPathStatCached($file)['exists']) {
-                    $categoryIconset = 'default';
-                }
-
-                if (!empty($topic->unread)) {
-                    $icon->src = $icon->new;
-                }
-
-                if (empty($icon->name)) {
-                    $icon->name = "";
-                }
-
-                $iconurl = $this->getTopicIconPath("{$categoryIconset}/system/{$icon->src}", true);
-
-                return '<img loading=lazy src="' . $iconurl . '" alt="' . $icon->name . '" />';
-            }
         }
+        $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/systemicons.xml';
+
+        if (!$this->getPathStatCached($xmlfile)['exists']) {
+            $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/systemicons.xml';
+        }
+
+        $iconid = 0;
+
+        if ($topic->posts < 2) {
+            $iconid = 6;
+        }
+
+        if ($topic->ordering) {
+            $iconid = 3;
+        }
+
+        if ($topic->locked) {
+            $iconid = 4;
+        }
+
+        if ($topic->ordering && $topic->locked) {
+            $iconid = 7;
+        }
+
+        if ($topic->moved_id) {
+            $iconid = 5;
+        }
+
+        if ($topic->hold == 1) {
+            $iconid = 1;
+        }
+
+        if ($topic->hold == 2) {
+            $iconid = 2;
+        }
+
+        if ($topic->hold == 3) {
+            $iconid = 2;
+        }
+
+        $xml  = $this->loadXmlFileCached($xmlfile);
+        $icon = $this->get_xml_systemicon($xml, $iconid, $topicicontype);
+
+        if ($topicicontype == 'svg') {
+            return KunenaSvgIcons::loadsvg($icon->svg, 'systemtopicIcons', $categoryIconset);
+        } elseif ($topicicontype == 'fa') {
+            return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
+        }
+        $file = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/system/normal.png';
+
+        if (!$this->getPathStatCached($file)['exists']) {
+            $categoryIconset = 'default';
+        }
+
+        if (!empty($topic->unread)) {
+            $icon->src = $icon->new;
+        }
+
+        if (empty($icon->name)) {
+            $icon->name = "";
+        }
+
+        $iconurl = $this->getTopicIconPath("{$categoryIconset}/system/{$icon->src}", true);
+
+        return '<img loading=lazy src="' . $iconurl . '" alt="' . $icon->name . '" />';
+
     }
 
     /**
@@ -1544,7 +1547,7 @@ HTML;
      * @param   int     $id     id
      * @param   string  $style  style
      *
-     * @return \StdClass
+     * @return StdClass
      *
      * @since      Kunena 5.0.0-Beta4
      */
@@ -1792,7 +1795,7 @@ HTML;
         $scss->addImportPath(\dirname($inputFile));
         $scss->setOutputStyle(OutputStyle::COMPRESSED);
         $scssContent = file_get_contents($inputFile);
-        $style = $scss->compileString($scssContent, $inputFile);
+        $style       = $scss->compileString($scssContent, $inputFile);
 
         file_put_contents($outputPath, $style->getCss());
     }
@@ -1814,7 +1817,7 @@ HTML;
     /**
      * @param   mixed  $topic  topic
      *
-     * @return \StdClass
+     * @return StdClass
      *
      * @since   Kunena 6.0
      */
@@ -1850,15 +1853,15 @@ HTML;
 
                 if ($xml && isset($xml->labels)) {
                     foreach ($xml->labels->label as $labelNode) {
-                        $attributes = $labelNode->attributes();
-                        $label      = new stdClass();
-                        $label->id  = (int) $attributes->id;
-                        $label->svg = (string) $attributes->svg;
-                        $label->fa  = (string) $attributes->fa;
-                        $label->src = (string) $attributes->src;
-                        $label->name = (string) $attributes->name;
-                        $label->new = (string) $attributes->new;
-                        $label->labeltype = (string) $attributes->labeltype;
+                        $attributes         = $labelNode->attributes();
+                        $label              = new stdClass();
+                        $label->id          = (int) $attributes->id;
+                        $label->svg         = (string) $attributes->svg;
+                        $label->fa          = (string) $attributes->fa;
+                        $label->src         = (string) $attributes->src;
+                        $label->name        = (string) $attributes->name;
+                        $label->new         = (string) $attributes->new;
+                        $label->labeltype   = (string) $attributes->labeltype;
                         $labels[$label->id] = $label;
                     }
                 }
@@ -1958,7 +1961,7 @@ HTML;
         if ($xml instanceof SimpleXMLElement) {
             self::$xmlFileCache[$cacheKey] = [
                 'mtime' => $mtime,
-                'xml' => $xml,
+                'xml'   => $xml,
             ];
 
             return $xml;
@@ -2065,7 +2068,7 @@ HTML;
         }
 
         $maxMtime = 0;
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($inputDir, \FilesystemIterator::SKIP_DOTS));
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($inputDir, FilesystemIterator::SKIP_DOTS));
 
         foreach ($iterator as $fileInfo) {
             if ($fileInfo->isFile() && strtolower($fileInfo->getExtension()) === 'scss') {
@@ -2083,7 +2086,7 @@ HTML;
      * @param   int     $id     id
      * @param   string  $style  style
      *
-     * @return \StdClass
+     * @return StdClass
      *
      * @since   Kunena 6.0
      */
@@ -2151,10 +2154,10 @@ HTML;
 
     /**
      * Function to get the Global Configured Captcha
-     * 
+     *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.3
      */
     public function getCaptcha(): string
@@ -2176,7 +2179,7 @@ HTML;
             if ($captcha->initialise($id)) {
                 $result = $captcha->display('captcha', $id, 'required');
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $result = '';
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
@@ -2227,8 +2230,8 @@ HTML;
                 $filename = $this->getFile($filename, false, $this->pathTypes['js'], $this->pathTypes['js']);
             }
 
-            $filemin      = $filename;
-            $filemin_path = preg_replace('/\.js$/u', '-min.js', $filename);
+            $filemin       = $filename;
+            $filemin_path  = preg_replace('/\.js$/u', '-min.js', $filename);
             $minPathStat   = $this->getPathStatCached(JPATH_ROOT . "/$filemin_path");
 
             if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && $minPathStat['exists']) {

@@ -23,8 +23,8 @@ use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Tables\KunenaUserCategories;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Category\CategoryUser
@@ -137,7 +137,7 @@ class KunenaCategoryUser
         }
 
         // Create the KunenaUserCategories table object
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
         $tableObject = new KunenaUserCategories($db);
 
         return $tableObject;
@@ -182,8 +182,9 @@ class KunenaCategoryUser
         $data = array_diff_key($data, array_flip($ignore));
 
         foreach ((array) $data as $property => $value) {
-            if (!\is_null($value))
+            if (!\is_null($value)) {
                 $this->$property = $value;
+            }
         }
     }
 

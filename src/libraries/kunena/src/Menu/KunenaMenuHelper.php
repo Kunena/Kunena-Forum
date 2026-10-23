@@ -17,8 +17,8 @@ namespace Kunena\Forum\Libraries\Menu;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -53,7 +53,7 @@ abstract class KunenaMenuHelper
      */
     public static function KunenaMenusExists()
     {
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new MenuType($db);
         $data  = [
             'menutype'    => 'kunenamenu',
@@ -92,9 +92,9 @@ abstract class KunenaMenuHelper
         $user   = Factory::getApplication()->getIdentity();
         $levels = $user->getAuthorisedViewLevels();
         asort($levels);
-        $key   = 'menuinternalItems' . $params . implode(',', $levels) . '.' . $base->id;
+        $key     = 'menuinternalItems' . $params . implode(',', $levels) . '.' . $base->id;
         $options = ['defaultgroup' => 'mod_menu'];
-        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('', $options);
+        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('', $options);
 
         if ($cache->contains($key)) {
             $items = $cache->get($key);

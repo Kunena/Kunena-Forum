@@ -13,6 +13,7 @@
 
 namespace Kunena\Forum\Libraries\Event;
 
+use BadMethodCallException;
 use Joomla\CMS\Event\AbstractImmutableEvent;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -32,7 +33,7 @@ abstract class KunenaContentEvent extends AbstractImmutableEvent
      * @param   string  $name       The event name.
      * @param   array   $arguments  The event arguments.
      *
-     * @throws  \BadMethodCallException
+     * @throws  BadMethodCallException
      *
      * @since   7.1.0
      */
@@ -41,11 +42,11 @@ abstract class KunenaContentEvent extends AbstractImmutableEvent
         parent::__construct($name, $arguments);
 
         if (!\array_key_exists('context', $this->arguments)) {
-            throw new \BadMethodCallException("Argument 'context' of event {$name} is required but has not been provided");
+            throw new BadMethodCallException("Argument 'context' of event {$name} is required but has not been provided");
         }
 
         if (!\array_key_exists('content', $this->arguments)) {
-            throw new \BadMethodCallException("Argument 'content' of event {$name} is required but has not been provided");
+            throw new BadMethodCallException("Argument 'content' of event {$name} is required but has not been provided");
         }
     }
 

@@ -16,10 +16,10 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\Login\KunenaLogin;
 
 $login = KunenaLogin::getInstance();
 ?>

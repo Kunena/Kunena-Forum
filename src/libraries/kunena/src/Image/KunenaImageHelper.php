@@ -58,7 +58,7 @@ class KunenaImageHelper
         try {
             $info = KunenaImage::getImageFileProperties($file);
         } catch (Exception $e) {
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
         if ($info->width > $maxWidth || $info->height > $maxHeight) {
@@ -92,7 +92,7 @@ class KunenaImageHelper
                 $image->toFile($temp, $info->type, $options);
                 unset($image);
             } catch (Exception $e) {
-                throw new \Exception($e->getMessage());
+                throw new Exception($e->getMessage());
             }
 
             // Move new file to its proper location.

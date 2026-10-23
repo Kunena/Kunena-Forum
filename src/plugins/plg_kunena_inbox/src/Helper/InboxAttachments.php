@@ -22,6 +22,7 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use RuntimeException;
 
 /**
  * The files which are sent with a private message. They are stored with a random name in a folder which the web server does
@@ -127,7 +128,7 @@ class InboxAttachments
      *
      * @return  void
      *
-     * @throws  \RuntimeException
+     * @throws  RuntimeException
      * @since   Kunena 7.2
      */
     public static function check(array $uploads, Registry $params): void
@@ -139,7 +140,7 @@ class InboxAttachments
         $max = max(1, (int) $params->get('attachmentMax', 3));
 
         if (!$params->get('attachments', 1) || \count($uploads) > $max) {
-            throw new \RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_COUNT', $params->get('attachments', 1) ? $max : 0));
+            throw new RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_COUNT', $params->get('attachments', 1) ? $max : 0));
         }
 
         $config     = KunenaFactory::getConfig();
@@ -151,23 +152,23 @@ class InboxAttachments
             $extension = strtolower(pathinfo($name, PATHINFO_EXTENSION));
 
             if ($upload['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($upload['tmp_name'])) {
-                throw new \RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_UPLOAD', $name));
+                throw new RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_UPLOAD', $name));
             }
 
             if (!\in_array($extension, $allowed, true)) {
-                throw new \RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_TYPE', $name));
+                throw new RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_TYPE', $name));
             }
 
             $isImage = \in_array($extension, $images, true);
             $limit   = (int) ($isImage ? $config->imageSize : $config->fileSize) * 1024;
 
             if ($limit > 0 && $upload['size'] > $limit) {
-                throw new \RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_SIZE', $name));
+                throw new RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_SIZE', $name));
             }
 
             // An image has to be an image.
             if ($isImage && @getimagesize($upload['tmp_name']) === false) {
-                throw new \RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_TYPE', $name));
+                throw new RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_TYPE', $name));
             }
         }
     }
@@ -181,7 +182,7 @@ class InboxAttachments
      *
      * @return  void
      *
-     * @throws  \RuntimeException
+     * @throws  RuntimeException
      * @since   Kunena 7.2
      */
     public static function store(int $inboxId, int $userId, array $uploads): void
@@ -193,10 +194,10 @@ class InboxAttachments
             $stored = bin2hex(random_bytes(16));
 
             if (!move_uploaded_file($upload['tmp_name'], $folder . '/' . $stored)) {
-                throw new \RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_UPLOAD', basename($upload['name'])));
+                throw new RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FILE_UPLOAD', basename($upload['name'])));
             }
 
-            $finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
+            $finfo = \function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
             $mime  = $finfo ? (string) finfo_file($finfo, $folder . '/' . $stored) : 'application/octet-stream';
 
             $row = (object) [
@@ -271,7 +272,7 @@ class InboxAttachments
      *
      * @return  void
      *
-     * @throws  \RuntimeException
+     * @throws  RuntimeException
      * @since   Kunena 7.2
      */
     public static function download(int $userid, int $id): void
@@ -288,7 +289,7 @@ class InboxAttachments
         $path = $file ? self::folder() . '/' . basename($file->stored) : '';
 
         if (!$file || !is_file($path) || !(($file->recipient == $userid && !$file->dr) || ($file->sender == $userid && !$file->ds))) {
-            throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'), 404);
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'), 404);
         }
 
         $app = Factory::getApplication();

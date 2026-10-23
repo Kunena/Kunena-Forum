@@ -20,6 +20,8 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial\Helper;
 
 \defined('_JEXEC') or die('Unauthorized Access');
 
+use ES;
+use FRoute;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
@@ -47,7 +49,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
         $this->params = $params;
 
         // Process scripts
-        \ES::initialize();
+        ES::initialize();
     }
 
     /**
@@ -75,7 +77,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
      */
     public function getInboxURL(): string
     {
-        return \FRoute::conversations();
+        return FRoute::conversations();
     }
 
     /**

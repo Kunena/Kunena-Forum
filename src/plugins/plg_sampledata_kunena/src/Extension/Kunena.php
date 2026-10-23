@@ -26,6 +26,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaSampleData;
+use stdClass;
 
 /**
  * Sampledata - Kunena Plugin
@@ -86,7 +87,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
      * Get an overview of the proposed sampleData.
      *
      * @param   GetOverviewEvent  $event  Event instance
-     * 
+     *
      * @return  void
      *
      * @since   4.0.0
@@ -103,7 +104,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
             return;
         }
 
-        $data              = new \stdClass();
+        $data              = new stdClass();
         $data->name        = $this->_name;
         $data->title       = Text::_('PLG_SAMPLEDATA_KUNENA_OVERVIEW_TITLE');
         $data->description = Text::_('PLG_SAMPLEDATA_KUNENA_OVERVIEW_DESC');

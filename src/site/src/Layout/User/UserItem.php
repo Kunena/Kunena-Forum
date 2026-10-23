@@ -229,10 +229,10 @@ class UserItem extends KunenaLayout
                 $feed = $this->subRequest('Topic/Listing/User', new Input($params), $params);
             }
 
-            $tab              = new stdClass();
-            $tab->title       = Text::_('COM_KUNENA_FOLLOWING_TAB');
-            $tab->content     = $this->subLayout('User/Item/Following')->set('following', $following)->set('feed', $feed);
-            $tab->active      = false;
+            $tab               = new stdClass();
+            $tab->title        = Text::_('COM_KUNENA_FOLLOWING_TAB');
+            $tab->content      = $this->subLayout('User/Item/Following')->set('following', $following)->set('feed', $feed);
+            $tab->active       = false;
             $tabs['following'] = $tab;
 
             $tab               = new stdClass();
@@ -347,7 +347,7 @@ class UserItem extends KunenaLayout
         PluginHelper::importPlugin('kunena');
 
         $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-        $event = $dispatcher->dispatch(
+        $event      = $dispatcher->dispatch(
             'onKunenaUserTabs',
             new KunenaUserTabsEvent(
                 'onKunenaUserTabs',

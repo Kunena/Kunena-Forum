@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use StdClass;
+use Throwable;
 
 /**
  * Class KunenaError
@@ -142,7 +143,7 @@ abstract class KunenaError
     /**
      * Return different error if it's an admin or a simple user
      *
-     * @param   \Throwable  $exception  exception
+     * @param   Throwable  $exception  exception
      *
      * @return  void
      *

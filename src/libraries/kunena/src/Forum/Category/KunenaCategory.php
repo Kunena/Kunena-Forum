@@ -17,8 +17,8 @@ namespace Kunena\Forum\Libraries\Forum\Category;
 
 use Exception;
 use InvalidArgumentException;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Application\SiteApplication;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
@@ -26,14 +26,13 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
-use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUser;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
@@ -43,6 +42,7 @@ use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
@@ -136,7 +136,7 @@ class KunenaCategory extends KunenaDatabaseObject
         'topic.post.attachment.createimage' => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'],
         'topic.post.attachment.createfile'  => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'],
         'topic.post.attachment.delete'      => ['NotBanned'],
-        'topic.post.attachment.private'      => ['NotBanned'],
+        'topic.post.attachment.private'     => ['NotBanned'],
         // TODO: In the future we might want to restrict this: array('Read', 'NotBanned', 'Unlocked'),
     ];
 
@@ -763,9 +763,9 @@ class KunenaCategory extends KunenaDatabaseObject
 
     /**
      * Get the table relevant properties. Override for your specific Object
-     * 
+     *
      * @return array    Assocative array with the propertie values of table
-     * 
+     *
      * @since   Kunena 6.4
      */
     protected function getTableProperties(): array
@@ -971,7 +971,7 @@ class KunenaCategory extends KunenaDatabaseObject
      * @return string
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getMarkReadUrl($children = false, $xhtml = true): string
     {
@@ -1003,9 +1003,10 @@ class KunenaCategory extends KunenaDatabaseObject
 
             if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix')) {
                 return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=feed{$params}") . '?format=feed&type=rss';
-            } else {
-                return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&type=rss&layout=feed{$params}", $xhtml);
             }
+
+            return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&type=rss&layout=feed{$params}", $xhtml);
+
         }
 
         return;
@@ -1216,7 +1217,7 @@ class KunenaCategory extends KunenaDatabaseObject
             $category->buildInfo();
             $lastCategory  = $category->getLastCategory();
             $this->_topics += $category->_topics ? $category->_topics : max($category->numTopics, 0);
-            $this->_posts  += $category->_posts ? $category->_posts : max($category->numPosts, 0);
+            $this->_posts += $category->_posts ? $category->_posts : max($category->numPosts, 0);
 
             if ($lastCategory->last_post_time && $this->_lastcat->last_post_time < $lastCategory->last_post_time) {
                 $this->_lastcat = $lastCategory;
@@ -1984,7 +1985,7 @@ class KunenaCategory extends KunenaDatabaseObject
         if ($topicdelta || $postdelta) {
             // Update topic and post count
             $this->numTopics += (int) $topicdelta;
-            $this->numPosts  += (int) $postdelta;
+            $this->numPosts += (int) $postdelta;
             $update          = true;
         }
 
@@ -2082,9 +2083,10 @@ class KunenaCategory extends KunenaDatabaseObject
         if ($count) {
             if ($count > 1) {
                 return Text::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($count));
-            } else {
-                return Text::plural('COM_KUNENA_X_TOPICS_1', $count);
             }
+
+            return Text::plural('COM_KUNENA_X_TOPICS_1', $count);
+
         }
 
         return Text::_('COM_KUNENA_X_TOPICS_0');

@@ -25,10 +25,10 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Tables\TableKunenaPolls;
 use StdClass;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicPoll
@@ -187,7 +187,7 @@ class KunenaPoll
         }
 
         // Create the TableKunenaPolls table object
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
         $tableObject = new TableKunenaPolls($db);
 
         return $tableObject;
@@ -213,7 +213,7 @@ class KunenaPoll
      * @return int|null
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getTotal(): ?int
     {
@@ -442,8 +442,7 @@ class KunenaPoll
         $this->changeOptionVotes($votes->lastvote, 1);
 
         // The stored number of votes of the user changes below.
-        unset($this->myvotes[$votes->userid]);
-        unset($this->mytime[$votes->userid]);
+        unset($this->myvotes[$votes->userid], $this->mytime[$votes->userid]);
 
         if ($votes->new) {
             // No votes
@@ -706,9 +705,10 @@ class KunenaPoll
     {
         if (!empty($this->polltimetolive)) {
             return Factory::getDate($this->polltimetolive)->toUnix();
-        } else {
-            return 0;
         }
+
+        return 0;
+
     }
 
     /**

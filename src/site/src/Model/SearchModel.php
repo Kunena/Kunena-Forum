@@ -125,8 +125,8 @@ class SearchModel extends KunenaModel
             'orderby'     => $this->buildOrderBy(),
             'starttime'   => -1,
         ];
-        $limitstart = $this->getState('list.start');
-        $limit      = $this->getState('list.limit');
+        $limitstart                         = $this->getState('list.start');
+        $limit                              = $this->getState('list.limit');
         list($this->total, $this->messages) = KunenaMessageHelper::getLatestMessages($this->getState('query.catids'), $limitstart, $limit, $params);
 
         if ($limit && $this->total <= $limitstart) {
@@ -364,21 +364,21 @@ class SearchModel extends KunenaModel
     {
         // Turn internal state into URL, but ignore default values
         $defaults = [
-            'titleonly' => 0,
-            'searchuser' => '',
-            'exactname' => 0,
-            'childforums' => 0,
-            'starteronly' => 0,
-            'replyless' => 0,
-            'replylimit' => 0,
-            'searchdate' => '365',
-            'beforeafter' => 'after',
-            'sortby' => 'lastpost',
-            'order'     => 'dec',
-            'catids' => '0',
-            'show' => '0',
-            'topic_id' => 0,
-            'ids' => 0,
+            'titleonly'    => 0,
+            'searchuser'   => '',
+            'exactname'    => 0,
+            'childforums'  => 0,
+            'starteronly'  => 0,
+            'replyless'    => 0,
+            'replylimit'   => 0,
+            'searchdate'   => '365',
+            'beforeafter'  => 'after',
+            'sortby'       => 'lastpost',
+            'order'        => 'dec',
+            'catids'       => '0',
+            'show'         => '0',
+            'topic_id'     => 0,
+            'ids'          => 0,
             'searchatdate' => '',
         ];
 

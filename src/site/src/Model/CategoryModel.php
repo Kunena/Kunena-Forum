@@ -83,10 +83,10 @@ class CategoryModel extends CategoriesModel
     public function getLastestCategories()
     {
         if ($this->items === false) {
-            $this->items = [];
-            $user        = KunenaFactory::getUser();
+            $this->items              = [];
+            $user                     = KunenaFactory::getUser();
             list($total, $categories) = KunenaCategoryHelper::getLatestSubscriptions($user->userid);
-            $this->items = $categories;
+            $this->items              = $categories;
         }
 
         return $this->items;
@@ -140,7 +140,7 @@ class CategoryModel extends CategoriesModel
 
             if ($this->config->listCatShowModerators) {
                 foreach ($allsubcats as $subcat) {
-                    $modUserids = array_keys($access->getModerators($subcat->id));
+                    $modUserids                   = array_keys($access->getModerators($subcat->id));
                     $catModeratorMap[$subcat->id] = !empty($modUserids) ? array_combine($modUserids, $modUserids) : [];
                 }
             }
@@ -162,7 +162,7 @@ class CategoryModel extends CategoriesModel
                     if ($this->config->listCatShowModerators) {
                         // Assign from pre-built map instead of calling getModerators() per category
                         $subcat->moderators = $catModeratorMap[$subcat->id] ?? [];
-                        $userlist           += $subcat->moderators;
+                        $userlist += $subcat->moderators;
                     }
 
                     if ($this->me->isModerator($subcat)) {
@@ -280,7 +280,7 @@ class CategoryModel extends CategoriesModel
             $hold               = $format == 'feed' ? 0 : $access->getAllowedHold($this->me, $catid);
             $moved              = $format == 'feed' ? 0 : 1;
             $hasModeratorStatus = !empty($access->getModeratorStatus());
-            $params = [
+            $params             = [
                 'hold'  => $hold,
                 'moved' => $moved, ];
 

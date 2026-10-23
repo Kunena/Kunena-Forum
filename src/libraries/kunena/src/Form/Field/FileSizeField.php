@@ -40,7 +40,7 @@ class FileSizeField extends NumberField
      */
     protected function getLayoutData()
     {
-        $data = parent::getLayoutData();
+        $data                = parent::getLayoutData();
         $data['description'] = \sprintf(
             $data['description'],
             \ini_get('post_max_size'),

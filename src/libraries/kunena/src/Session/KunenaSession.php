@@ -188,7 +188,7 @@ class KunenaSession
         }
 
         // Create the KunenaSessions table object
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
         $tableObject = new KunenaSessions($db);
 
         return $tableObject;

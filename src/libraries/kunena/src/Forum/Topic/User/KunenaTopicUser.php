@@ -25,8 +25,8 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Tables\KunenaUserTopics;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicUser
@@ -172,7 +172,7 @@ class KunenaTopicUser
         }
 
         // Create the KunenaUserTopics table object
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
         $tableObject = new KunenaUserTopics($db);
 
         return $tableObject;
@@ -296,12 +296,12 @@ class KunenaTopicUser
      *
      * @return bool
      *
-     * @throws \Exception
+     * @throws Exception
      *@since   Kunena 6.0
      */
     public function update(?KunenaMessage $message = null, int $postDelta = 0): bool
     {
-        $this->posts       += $postDelta;
+        $this->posts += $postDelta;
         $this->category_id = $this->getTopic()->category_id;
 
         if ($message && !$message->hold && $message->thread == $this->topic_id) {

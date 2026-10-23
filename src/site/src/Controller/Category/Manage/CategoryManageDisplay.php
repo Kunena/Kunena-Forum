@@ -16,9 +16,9 @@ namespace Kunena\Forum\Site\Controller\Category\Manage;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -86,17 +86,17 @@ class CategoryManageDisplay extends KunenaControllerDisplay
      */
     protected $state = null;
 
-	/**
-	 * @var array
-	 * @since Kunena 4.0
-	 */
-	public $lists;
-	 /**
-     * @var     array
-     * @since   Kunena 7.1
+    /**
+     * @var array
+     * @since Kunena 4.0
      */
+    public $lists;
+    /**
+    * @var     array
+    * @since   Kunena 7.1
+    */
     public $moderators = [];
-	/**
+    /**
      * Prepare category display.
      *
      * @return  false|void
@@ -145,7 +145,7 @@ class CategoryManageDisplay extends KunenaControllerDisplay
         if (!$category) {
             return false;
         }
-		$this->moderators = $category->getModerators(false);
+        $this->moderators = $category->getModerators(false);
         $category->params = new Registry($category->params);
 
         // Make a standard yes/no list

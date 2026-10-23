@@ -35,12 +35,12 @@ class KunenaUserBans extends KunenaTable
     /**
      * @since   Kunena 6.0
      */
-    const ANY = 0;
+    public const ANY = 0;
 
     /**
      * @since   Kunena 6.0
      */
-    const ACTIVE = 1;
+    public const ACTIVE = 1;
 
     /**
      * @var     null

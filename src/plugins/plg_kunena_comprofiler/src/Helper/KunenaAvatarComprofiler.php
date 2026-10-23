@@ -15,10 +15,12 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 
 \defined('_JEXEC') or die();
 
+use CBuser;
+use Exception;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Joomla\Registry\Registry;
 
 /**
  * Class \Kunena\Forum\Libraries\Integration\AvatarComprofiler
@@ -46,7 +48,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
      */
     public function load(array $userlist): void
     {
-        \CBuser::advanceNoticeOfUsersNeeded($userlist);
+        CBuser::advanceNoticeOfUsersNeeded($userlist);
     }
 
     /**
@@ -70,7 +72,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
     {
@@ -78,10 +80,10 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 
         // Get CUser object
         $cbUser = null;
-        $url = null;
+        $url    = null;
 
         if ($user->userid) {
-            $cbUser = \CBuser::getInstance($user->userid);
+            $cbUser = CBuser::getInstance($user->userid);
         }
 
         if ($cbUser !== null) {

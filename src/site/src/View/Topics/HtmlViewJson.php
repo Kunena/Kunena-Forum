@@ -16,7 +16,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\KunenaView;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * @package     ${NAMESPACE}

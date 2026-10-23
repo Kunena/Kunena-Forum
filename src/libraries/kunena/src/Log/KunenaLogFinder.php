@@ -19,9 +19,9 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
-use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
 use Kunena\Forum\Libraries\Collection\KunenaCollection;
+use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
+use Kunena\Forum\Libraries\Error\KunenaError;
 
 /**
  * Class KunenaLogFinder

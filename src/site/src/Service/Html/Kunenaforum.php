@@ -347,7 +347,7 @@ class Kunenaforum
     public static function formatfilesize(int $bytes, int $round = 2)
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
-        $i = 0;
+        $i     = 0;
 
         while ($bytes >= 1024 && $i < \count($units) - 1) {
             $bytes /= 1024;

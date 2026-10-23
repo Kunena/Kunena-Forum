@@ -143,7 +143,7 @@ class Router extends RouterView
 
         if (isset($query['Itemid'])) {
             static $menuitems = [];
-            $Itemid = $query['Itemid'] = (int) $query['Itemid'];
+            $Itemid           = $query['Itemid'] = (int) $query['Itemid'];
 
             if (!isset($menuitems[$Itemid])) {
                 $menuitems[$Itemid] = Factory::getApplication()->getMenu()->getItem($Itemid);
@@ -397,7 +397,7 @@ class Router extends RouterView
                     // item wins and the alias contributes only the catid. Without this the
                     // union below replaces view=topic with view=category, which combined with
                     // layout=create resolves to no controller and returns a 404.
-                    if (!empty($vars['view']) && isset($variables['catid']) && isset($variables['view']) && $variables['view'] === 'category') {
+                    if (!empty($vars['view']) && isset($variables['catid'], $variables['view']) && $variables['view'] === 'category') {
                         unset($variables['view']);
                     }
 

@@ -14,12 +14,12 @@ namespace Kunena\Forum\Site\Layout\Widget\Login;
 
 \defined('_JEXEC') or die;
 
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
 /**
  * KunenaLayoutTopicEditEditor
@@ -69,7 +69,8 @@ class WidgetLoginLogin extends KunenaLayout
     *
     * @since  Kunena 6.2
     */
-    public function loadModuleWebauthn() {
+    public function loadModuleWebauthn()
+    {
         $moduleId = KunenaFactory::getTemplate()->params->get('moduleIdWebauthn');
 
         if ($moduleId > 0) {

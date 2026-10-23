@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site\View\Credits;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\View\KunenaView;
@@ -34,7 +35,7 @@ class HtmlView extends KunenaView
      * @return  mixed  A string if successful, otherwise a JError object.
      *
      * @since   1.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function display($tpl = null)
     {

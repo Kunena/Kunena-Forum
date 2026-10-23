@@ -1,92 +1,161 @@
 <?php
-/**
- * @package    Joomla.Site
- *
- * @copyright  (C) 2016 Open Source Matters, Inc. <https://www.joomla.org>
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- */
 
 /**
- * This is the configuration file for php-cs-fixer
+ * Kunena Component
  *
- * @see https://github.com/FriendsOfPHP/PHP-CS-Fixer
- * @see https://mlocati.github.io/php-cs-fixer-configurator/#version:3.0
+ * @package         Kunena
+ *
+ * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
+
+/**
+ * This is the configuration file for php-cs-fixer, after the one of Joomla (joomla-cms, .php-cs-fixer.dist.php).
+ *
+ * @link https://github.com/FriendsOfPHP/PHP-CS-Fixer
+ * @link https://mlocati.github.io/php-cs-fixer-configurator/#version:3.95
  *
  *
  * If you would like to run the automated clean up, then open a command line and type one of the commands below
  *
  * To run a quick dry run to see the files that would be modified:
  *
- *        ./libraries/vendor/bin/php-cs-fixer fix --dry-run
+ *        ./vendor/bin/php-cs-fixer fix --dry-run
  *
  * To run a full check, with automated fixing of each problem :
  *
- *        ./libraries/vendor/bin/php-cs-fixer fix
+ *        ./vendor/bin/php-cs-fixer fix
  *
  * You can run the clean up on a single file if you need to, this is faster
  *
- *        ./libraries/vendor/bin/php-cs-fixer fix --dry-run administrator/index.php
- *        ./libraries/vendor/bin/php-cs-fixer fix administrator/index.php
+ *        ./vendor/bin/php-cs-fixer fix --dry-run src/site/src/Controllers/TopicController.php
+ *        ./vendor/bin/php-cs-fixer fix src/site/src/Controllers/TopicController.php
  */
 
-// Add all the core Joomla folders and append to this list the files indexed above from /libraries
-$mainFinder = PhpCsFixer\Finder::create()
-	->in(
-		[
-			__DIR__ . '/src',
-		]
-	);
+declare(strict_types=1);
 
-$config = new PhpCsFixer\Config();
-$config
-	->setRiskyAllowed(true)
-	->setIndent("\t")
-	->setRules(
-		[
-			// psr-1
-			'encoding'                              => true,
-			// psr-2
-			'elseif'                                => true,
-			'single_blank_line_at_eof'              => true,
-			'no_spaces_after_function_name'         => true,
-			'blank_line_after_namespace'            => true,
-			'line_ending'                           => true,
-			'constant_case'                         => ['case' => 'lower'],
-			'lowercase_keywords'                    => true,
-			'method_argument_space'                 => true,
-			'single_import_per_statement'           => true,
-			'no_spaces_inside_parenthesis'          => true,
-			'single_line_after_imports'             => true,
-			'no_trailing_whitespace'                => true,
-			// symfony
-			'no_whitespace_before_comma_in_array'   => true,
-			'whitespace_after_comma_in_array'       => true,
-			'no_empty_statement'                    => true,
-			'simplified_null_return'                => true,
-			'no_extra_blank_lines'                  => true,
-			'function_typehint_space'               => true,
-			'include'                               => true,
-			'no_alias_functions'                    => true,
-			'no_trailing_comma_in_list_call'        => true,
-			'trailing_comma_in_multiline'           => ['elements' => ['arrays']],
-			'no_blank_lines_after_class_opening'    => true,
-			'phpdoc_trim'                           => true,
-			'blank_line_before_statement'           => ['statements' => ['return']],
-			'no_trailing_comma_in_singleline_array' => true,
-			'single_blank_line_before_namespace'    => true,
-			'cast_spaces'                           => true,
-			'no_unused_imports'                     => true,
-			'no_whitespace_in_blank_line'           => true,
-			'nullable_type_declaration_for_default_null_value' => true,
-			// contrib
-			'concat_space'                          => ['spacing' => 'one'],
-			/**
-			 * PHP 7+ zend_try_compile_special_func compiles certain PHP Functions to opcode which is faster
-			 * @see https://github.com/php/php-src/blob/9dc947522186766db4a7e2d603703a2250797577/Zend/zend_compile.c#L4192
-			 */
-			'native_function_invocation' => ['include' => ['@compiler_optimized'], 'scope' => 'namespaced', 'strict' => true],
-		]
-	)
-	->setFinder($mainFinder);
+use PhpCsFixer\Config;
+use PhpCsFixer\Config\RuleCustomisationPolicyInterface;
+use PhpCsFixer\Finder;
+
+// The code of the package: the component, the libraries and the plugins (not the libraries of other projects which Kunena
+// ships, they keep their own code style).
+$finder = (new Finder())
+    ->in(__DIR__ . '/src')
+    ->exclude([
+        'libraries/kunena/External',
+        'media',
+    ])
+;
+
+final class KunenaPolicy implements RuleCustomisationPolicyInterface
+{
+    public function getPolicyVersionForCache(): string
+    {
+        return hash_file('xxh128', __FILE__);
+    }
+
+    public function getRuleCustomisers(): array
+    {
+        // The rules which change the layout of a file which mixes HTML and PHP: they are not used for the templates (a change
+        // there is also a change of every template override of the sites).
+        $disableLayoutFile = [
+            'binary_operator_spaces',
+            'native_function_invocation',
+            'no_trailing_whitespace_in_comment',
+            'single_space_around_construct',
+            'statement_indentation',
+            'braces_position',
+            'combine_consecutive_issets',
+            'no_spaces_after_function_name',
+            'no_unneeded_control_parentheses',
+            'single_line_after_imports',
+            'spaces_inside_parentheses',
+            'ternary_operator_spaces',
+            'trailing_comma_in_multiline',
+            'blank_line_before_statement',
+            'no_extra_blank_lines',
+        ];
+
+        $ruleCustomisers = [];
+
+        foreach ($disableLayoutFile as $rule) {
+            $ruleCustomisers[$rule] = static function (\SplFileInfo $file): bool {
+                return !self::isLayoutFile($file);
+            };
+        }
+
+        return $ruleCustomisers;
+    }
+
+    private static function isLayoutFile(\SplFileInfo $file): bool
+    {
+        $path = str_replace('\\', '/', $file->getPathname());
+
+        // The templates of the backend and of the plugins (tmpl), the templates of the site (layouts and pages of a template of
+        // Kunena, like aurelia) and the layouts of Joomla style.
+        return str_contains($path, '/tmpl/')
+            || str_contains($path, '/layouts/')
+            || str_contains($path, '/site/template/');
+    }
+}
+
+$config = (new Config())
+    ->setRiskyAllowed(true)
+    ->setHideProgress(false)
+    ->setUsingCache(false)
+    ->setRules(
+        [
+            // Basic ruleset is PSR 12
+            '@PSR12'                                           => true,
+            // Short array syntax
+            'array_syntax'                                     => ['syntax' => 'short'],
+            // List of values separated by a comma is contained on a single line should not have a trailing comma like [$foo, $bar,] = ...
+            'no_trailing_comma_in_singleline'                  => true,
+            // Arrays on multiline should have a trailing comma
+            'trailing_comma_in_multiline'                      => ['elements' => ['arrays']],
+            // Align elements in multiline array and variable declarations on new lines below each other
+            'binary_operator_spaces'                           => ['operators' => ['=>' => 'align_single_space_minimal', '=' => 'align', '??=' => 'align']],
+            // The "No break" comment in switch statements
+            'no_break_comment'                                 => ['comment_text' => 'No break'],
+            // Remove unused imports
+            'no_unused_imports'                                => true,
+            // Classes from the global namespace are imported, like the code of Kunena does (use Exception;), not \Exception in the code
+            'global_namespace_import'                          => ['import_classes' => true, 'import_constants' => false, 'import_functions' => false],
+            // Alpha order imports
+            'ordered_imports'                                  => ['imports_order' => ['class', 'function', 'const'], 'sort_algorithm' => 'alpha'],
+            // There should not be useless else cases
+            'no_useless_else'                                  => true,
+            // Native function invocation
+            'native_function_invocation'                       => ['include' => ['@compiler_optimized']],
+            // Adds null to type declarations when parameter have a default null value
+            'nullable_type_declaration_for_default_null_value' => true,
+            // Removes unneeded parentheses around control statements
+            'no_unneeded_control_parentheses'                  => true,
+            // Using isset($var) && multiple times should be done in one call.
+            'combine_consecutive_issets'                       => true,
+            // Calling unset on multiple items should be done in one call
+            'combine_consecutive_unsets'                       => true,
+            // There must be no sprintf calls with only the first argument
+            'no_useless_sprintf'                               => true,
+
+            // The rules of Kunena which its code follows already (from the earlier configuration of Kunena)
+            // One space around the concatenation operator: 'a' . 'b'
+            'concat_space'                                     => ['spacing' => 'one'],
+            // A blank line before a return
+            'blank_line_before_statement'                      => ['statements' => ['return']],
+            // No more than one blank line, no blank lines with spaces
+            'no_extra_blank_lines'                             => true,
+            'no_whitespace_in_blank_line'                      => true,
+            // One space after a cast: (int) $value
+            'cast_spaces'                                      => true,
+            // No empty statements (;;)
+            'no_empty_statement'                               => true,
+        ]
+    )
+    ->setRuleCustomisationPolicy(new KunenaPolicy())
+    ->setFinder($finder)
+;
 
 return $config;

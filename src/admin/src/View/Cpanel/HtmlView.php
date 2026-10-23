@@ -75,23 +75,23 @@ class HtmlView extends BaseHtmlView
 
         $this->KunenaMenusExists = KunenaMenuHelper::KunenaMenusExists();
 
-        $logFinder = new KunenaLogFinder();
+        $logFinder          = new KunenaLogFinder();
         $this->numberOfLogs = $logFinder->count();
 
-        $count = KunenaStatistics::getInstance()->loadCategoryCount();
+        $count                 = KunenaStatistics::getInstance()->loadCategoryCount();
         $this->categoriesCount = $count['sections'] . ' / ' . $count['categories'];
 
-        $lastid = KunenaUserHelper::getLastId();
-        $user                     = KunenaUser::getInstance($lastid)->registerDate;
+        $lastid                       = KunenaUserHelper::getLastId();
+        $user                         = KunenaUser::getInstance($lastid)->registerDate;
         $this->lastUserRegisteredDate = KunenaDate::getInstance($user)->toKunena('ago');
 
         // Get the number of messages in trashbin
-        $messageFinder = new KunenaMessageFinder;
+        $messageFinder = new KunenaMessageFinder();
         $messageFinder->filterByHold([2, 3]);
         $messagesTrashedCount = $messageFinder->count();
 
         // Get the number of topics in trashbin
-        $topicFinder = new KunenaTopicFinder;
+        $topicFinder = new KunenaTopicFinder();
         $topicFinder->filterByHold([2, 3]);
         $topicTrashedCount = $topicFinder->count();
 
@@ -135,8 +135,8 @@ class HtmlView extends BaseHtmlView
      */
     public function getLanguagePack()
     {
-        $lang = false;
-        $db = Factory::getContainer()->get('DatabaseDriver');
+        $lang  = false;
+        $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery()
             ->select('*')
             ->from($db->quoteName('#__extensions'))

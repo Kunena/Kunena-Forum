@@ -15,7 +15,6 @@ namespace Kunena\Forum\Plugin\Kunena\Inbox\Helper;
 
 \defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;

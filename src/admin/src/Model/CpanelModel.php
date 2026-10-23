@@ -43,10 +43,10 @@ class CpanelModel extends AdminModel
 
     /**
      * Get number of mails queues not yet send to be displayed in cpanel
-     * 
+     *
      * @since   Kunena 7.1
      */
-    public function numberOfMailsqueues() :int
+    public function numberOfMailsqueues(): int
     {
         $db    = $this->getDatabase();
         $query = $db->createQuery();
@@ -72,9 +72,9 @@ class CpanelModel extends AdminModel
      *
      * @since   Kunena 7.1
      */
-    function setSampleDataFlag($value = 1)
+    public function setSampleDataFlag($value = 1)
     {
-        $db = Factory::getContainer()->get('DatabaseDriver');
+        $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
 
         $query->update($db->quoteName('#__kunena_version'))

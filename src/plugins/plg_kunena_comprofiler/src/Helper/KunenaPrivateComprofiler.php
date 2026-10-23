@@ -61,7 +61,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
             return 0;
         }
 
-        return ($_CB_PMS->getPMSunreadCount($userid)[0] ?? 0);
+        return $_CB_PMS->getPMSunreadCount($userid)[0] ?? 0;
     }
 
     /**
@@ -79,7 +79,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
             return '';
         }
 
-        return ($_CB_PMS->getPMSlinks($userid, 0, '', '', 2)[0]['url'] ?? '');
+        return $_CB_PMS->getPMSlinks($userid, 0, '', '', 2)[0]['url'] ?? '';
     }
 
     /**
@@ -135,6 +135,6 @@ class KunenaPrivateComprofiler extends KunenaPrivate
             return '';
         }
 
-        return ($_CB_PMS->getPMSlinks($user->userid, $myid, '', '', 1)[0]['url'] ?? '');
+        return $_CB_PMS->getPMSlinks($user->userid, $myid, '', '', 1)[0]['url'] ?? '';
     }
 }

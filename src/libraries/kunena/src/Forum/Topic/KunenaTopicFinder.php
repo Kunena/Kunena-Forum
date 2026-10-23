@@ -20,9 +20,9 @@ use Joomla\CMS\Date\Date;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
-use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 
 /**
@@ -490,7 +490,7 @@ class KunenaTopicFinder extends KunenaFinder
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function find($access = 'read'): array
     {

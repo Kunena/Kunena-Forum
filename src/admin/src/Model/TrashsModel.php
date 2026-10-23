@@ -236,9 +236,9 @@ class TrashsModel extends ListModel
 
     /**
      * Function to purge Topics in trashbin
-     * 
+     *
      * @param   array $cid  The topics to purge
-     * 
+     *
      * @return boolean
      * @since  Kunena 7.0.0
      */
@@ -272,10 +272,10 @@ class TrashsModel extends ListModel
 
     /**
      * Function to purge messages in trashbin
-     * 
+     *
      * @param   array $cid  The messages to purge
      * @param   int   $age  The minimum age to delete the messages for
-     * 
+     *
      * @return boolean
      * @since  Kunena 7.0.0
      */

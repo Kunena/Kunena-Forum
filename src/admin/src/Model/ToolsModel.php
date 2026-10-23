@@ -18,7 +18,6 @@ namespace Kunena\Forum\Administrator\Model;
 use Exception;
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\LanguageHelper;
@@ -26,6 +25,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -481,7 +481,7 @@ class ToolsModel extends AdminModel
         $thirdParty              = [];
         $thirdParty['cb']        = $this->getExtensionVersion('com_comprofiler', 'CommunityBuilder');
         $thirdParty['jomsocial'] = $this->getExtensionVersion('com_community', 'Jomsocial');
-        $thirdParty['uddeim'] = $this->getExtensionVersion('com_uddeim', 'UddeIm');
+        $thirdParty['uddeim']    = $this->getExtensionVersion('com_uddeim', 'UddeIm');
 
         foreach ($thirdParty as $id => $item) {
             if (empty($item)) {
@@ -638,7 +638,7 @@ class ToolsModel extends AdminModel
      * @return string
      *
      * @since   Kunena 1.6
-     * @throws \Exception
+     * @throws Exception
      */
     protected function internalGetTablesCollation(): string
     {
@@ -767,7 +767,7 @@ class ToolsModel extends AdminModel
             $path = JPATH_SITE . "/modules/{$extension}";
         } else {
             list($folder, $element) = explode('/', $extension, 2);
-            $path = JPATH_PLUGINS . "/{$folder}/{$element}";
+            $path                   = JPATH_PLUGINS . "/{$folder}/{$element}";
         }
 
         $version = $this->findExtensionVersion($path);
@@ -890,9 +890,10 @@ class ToolsModel extends AdminModel
 
         if (!$columnSocials) {
             return Text::_('COM_KUNENA_ADMIN_SOCIALS_NOT_PRESENT');
-        } else {
-            return Text::_('COM_KUNENA_ADMIN_SOCIALS_ARE_PRESENT');
         }
+
+        return Text::_('COM_KUNENA_ADMIN_SOCIALS_ARE_PRESENT');
+
     }
 
     /**
@@ -914,7 +915,7 @@ class ToolsModel extends AdminModel
 
         try {
             $socials = $db->loadResult();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
             return [];

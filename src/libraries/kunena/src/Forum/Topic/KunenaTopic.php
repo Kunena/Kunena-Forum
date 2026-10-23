@@ -25,7 +25,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
-use \Joomla\Database\ParameterType;
+use Joomla\Database\ParameterType;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
@@ -132,7 +132,7 @@ class KunenaTopic extends KunenaDatabaseObject
         'post.attachment.createimage' => ['Unlocked'],
         'post.attachment.createfile'  => ['Unlocked'],
         'post.attachment.delete'      => [],
-        'post.attachment.private'      => [],
+        'post.attachment.private'     => [],
         // TODO: In the future we might want to restrict this: array('Read','Unlocked'),
     ];
 
@@ -687,7 +687,9 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @since   Kunena 6.0
      */
-    public function getKeywords($user = null, $glue = false): void {}
+    public function getKeywords($user = null, $glue = false): void
+    {
+    }
 
     /**
      * @param   int  $value  value
@@ -1180,7 +1182,7 @@ class KunenaTopic extends KunenaDatabaseObject
      * @return \Kunena\Forum\Libraries\Pagination\KunenaPagination|null
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPagination($limitstart = 0, $limit = 6, $display = 4, $prefix = ''): ?KunenaPagination
     {
@@ -1205,7 +1207,7 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @return \Joomla\CMS\Uri\Uri
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public function getUri($category = null, $action = null, $Itemid = 0): Uri
@@ -1862,7 +1864,7 @@ class KunenaTopic extends KunenaDatabaseObject
 
             if ($shadow || $ids) {
                 // Create new topic for the moved messages
-                $target = clone $this;
+                $target    = clone $this;
                 $newTarget = true;
                 $target->exists(false);
                 $target->id     = 0;
@@ -2039,8 +2041,8 @@ class KunenaTopic extends KunenaDatabaseObject
             // Moving topic into another topic
 
             // Add new posts, hits and attachments into the target topic
-            $target->posts       += $this->posts;
-            $target->hits        += $this->hits;
+            $target->posts += $this->posts;
+            $target->hits += $this->hits;
             $target->attachments += $this->attachments;
 
             // Update first and last post information into the target topic
@@ -2104,13 +2106,13 @@ class KunenaTopic extends KunenaDatabaseObject
         $this->_authfcache = $this->_authccache = $this->_authcache = [];
 
         $db        = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery()
+        $query     = $db->createQuery()
             ->update($db->quoteName('#__kunena_messages'))
             ->set($db->quoteName('hold') . ' = 2')
             ->where($db->quoteName('thread') . ' = :thread')
             ->bind(':thread', $this->id, \Joomla\Database\ParameterType::INTEGER);
         $queries[] = $query;
-        $query = $db->createQuery()
+        $query     = $db->createQuery()
             ->update($db->quoteName('#__kunena_topics'))
             ->set($db->quoteName('hold') . ' = 2')
             ->where($db->quoteName('id') . ' = :id')
@@ -2525,9 +2527,9 @@ class KunenaTopic extends KunenaDatabaseObject
 
     /**
      * Get the table relevant properties. Override for your specific Object
-     * 
+     *
      * @return array    Assocative array with the propertie values of table
-     * 
+     *
      * @since   Kunena 6.4
      */
     protected function getTableProperties(): array

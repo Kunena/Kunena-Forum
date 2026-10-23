@@ -13,13 +13,13 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Language\LanguageHelper;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 $this->wa->registerAndUseScript('ckeditor', 'media/kunena/core/js/ckeditor.js');

@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Request;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use InvalidArgumentException;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Controller\KunenaControllerBase;
@@ -50,7 +51,7 @@ class KunenaRequest
      *
      * @return  KunenaControllerBase| KunenaControllerDisplay
      *
-     * @throws \Exception
+     * @throws Exception
      *@since   Kunena 6.0
      */
     public static function factory(string $path, ?Input $input = null, $options = null)

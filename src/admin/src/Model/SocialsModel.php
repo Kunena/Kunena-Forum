@@ -15,6 +15,7 @@ namespace Kunena\Forum\Administrator\Model;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -155,7 +156,7 @@ class SocialsModel extends AdminModel
 
         try {
             $db->setQuery($query)->execute();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->setError($e->getMessage());
 
             return false;

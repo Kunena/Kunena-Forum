@@ -10,7 +10,7 @@
  * @link           https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Installer\InstallerScript;
 
@@ -45,12 +45,12 @@ class plgKunenaEasysocialInstallerScript extends InstallerScript
         }
 
         // Delete kunena.php
-        $this->deleteFiles[] = '/plugins/kunena/easysocial/easysocial.php';
-        $this->deleteFiles[] = '/plugins/kunena/easysocial/KunenaActivityEasysocial.php';
-        $this->deleteFiles[] = '/plugins/kunena/easysocial/KunenaAvatarEasysocial.php';
-        $this->deleteFiles[] = '/plugins/kunena/easysocial/KunenaLoginEasysocial.php';
-        $this->deleteFiles[] = '/plugins/kunena/easysocial/KunenaPrivateEasysocial.php';
-        $this->deleteFiles[] = '/plugins/kunena/easysocial/KunenaProfileEasysocial.php';
+        $this->deleteFiles[]   = '/plugins/kunena/easysocial/easysocial.php';
+        $this->deleteFiles[]   = '/plugins/kunena/easysocial/KunenaActivityEasysocial.php';
+        $this->deleteFiles[]   = '/plugins/kunena/easysocial/KunenaAvatarEasysocial.php';
+        $this->deleteFiles[]   = '/plugins/kunena/easysocial/KunenaLoginEasysocial.php';
+        $this->deleteFiles[]   = '/plugins/kunena/easysocial/KunenaPrivateEasysocial.php';
+        $this->deleteFiles[]   = '/plugins/kunena/easysocial/KunenaProfileEasysocial.php';
         $this->deleteFolders[] = '/plugins/kunena/easysocial/alerts';
         $this->deleteFolders[] = '/plugins/kunena/easysocial/badges';
         $this->deleteFolders[] = '/plugins/kunena/easysocial/points';

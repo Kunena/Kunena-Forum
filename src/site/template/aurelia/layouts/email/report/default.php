@@ -20,7 +20,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 
 $config            = KunenaConfig::getInstance();
 $user              = $this->message->getAuthor();
-$this->messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
+$this->messageLink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->message->getUrl(null, false);
 
 // Report moderator email (HTML)
 if (!$config->plainEmail) :

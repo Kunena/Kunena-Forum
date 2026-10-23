@@ -14,20 +14,23 @@ namespace Kunena\Forum\Libraries\Config;
 
 \defined('_JEXEC') or die();
 
+use BadMethodCallException;
+use Exception;
 use Joomla\CMS\Cache\CacheController;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Cache\Controller\CallbackController;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
+use SimpleXMLElement;
 
 /**
  * Kunena Config class
  *
  * Propertylist generated via KunenaConfig::getIdeProperties()
- * 
+ *
  * @property string $XConsumerKey                          The X consumer key
  * @property string $XConsumerSecret                       The X consumer secret
  * @property string $accessComponent                       Direct Component Access
@@ -277,7 +280,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $userlistUserHits                      Show Profile Hits
  * @property string $username                              Display User Name
  * @property string $utmSource                             UTM Source
- *    
+ *
  * @since 7.0.0
  */
 class KunenaConfig
@@ -300,7 +303,7 @@ class KunenaConfig
     /**
      * Private constructor to prevent direct instantiation of this utility class.
      * This class is intended to be used statically.
-     * 
+     *
      * @since  7.0.0
      */
     private function __construct()
@@ -311,23 +314,23 @@ class KunenaConfig
     /**
      * Public clone method to prevent cloning of this utility class.
      * Throw an exception to make it explicit that cloning is not allowed.
-     * 
+     *
      * @since  7.0.0
      */
     public function __clone()
     {
-        throw new \BadMethodCallException('Cloning of ' . __CLASS__ . ' is not allowed.');
+        throw new BadMethodCallException('Cloning of ' . __CLASS__ . ' is not allowed.');
     }
 
     /**
      * Public wakeup method to prevent unserialization of this utility class.
      * Throw an exception to make it explicit that unserialization is not allowed.
-     * 
+     *
      * @since  7.0.0
      */
     public function __wakeup()
     {
-        throw new \BadMethodCallException('Unserialization of ' . __CLASS__ . ' is not allowed.');
+        throw new BadMethodCallException('Unserialization of ' . __CLASS__ . ' is not allowed.');
     }
 
     /**
@@ -376,7 +379,7 @@ class KunenaConfig
             return $this->config[$key];
         }
 
-        throw new \Exception('Trying to get non-existing property: ' . $key, 500);
+        throw new Exception('Trying to get non-existing property: ' . $key, 500);
     }
 
     /**
@@ -399,21 +402,21 @@ class KunenaConfig
             return;
         }
 
-        throw new \Exception('Trying to set non-existing property: ' . $key, 500);
+        throw new Exception('Trying to set non-existing property: ' . $key, 500);
     }
 
     /**
      * Get an instance of KunenaConfig
-     * 
+     *
      * @return  ?KunenaConfig
      * @since   7.0.0
      */
     public static function getInstance(): ?KunenaConfig
     {
         if (\null === self::$instance) {
-            $instance = new KunenaConfig();
+            $instance         = new KunenaConfig();
             $instance->config = self::getCachedConfig();
-            self::$instance = $instance;
+            self::$instance   = $instance;
         }
 
         return self::$instance;
@@ -421,7 +424,7 @@ class KunenaConfig
 
     /**
      * Function to build the configuration values with default values from config.xml
-     * 
+     *
      * @return  array
      * @since   7.0.0
      */
@@ -439,7 +442,7 @@ class KunenaConfig
     }
 
     /**
-     * Function to build the configuration values with default values from config.xml and fill it with values 
+     * Function to build the configuration values with default values from config.xml and fill it with values
      *
      * @return  array
      * @since   7.0.2
@@ -451,7 +454,7 @@ class KunenaConfig
 
     /**
      * Function to get the cached (or create when not existing) configuration settings
-     * 
+     *
      * @return  array
      * @since   7.0.0
      */
@@ -460,7 +463,7 @@ class KunenaConfig
         /** @var CallbackController $cache */
         $cache  = self::getConfigCacheController();
         $config = $cache->get(
-            fn() => self::buildConfig(),
+            fn () => self::buildConfig(),
             [],
             'config'
         );
@@ -470,7 +473,7 @@ class KunenaConfig
 
     /**
      * Function to store the configuration settings in to Joomla configured cache
-     * 
+     *
      * @param   array  $config  The config object to store.
      *
      * @return  void
@@ -485,7 +488,7 @@ class KunenaConfig
 
     /**
      * Function to get the Configuration cache Controller
-     * 
+     *
      * @return  CacheController
      * @since   7.0.0
      */
@@ -508,16 +511,16 @@ class KunenaConfig
      *
      * @param   string  $path  Path to the XML file
      *
-     * @return  \SimpleXMLElement|false
+     * @return  SimpleXMLElement|false
      * @since   7.0.0
      */
-    private static function getXml(string $path): \SimpleXMLElement|false
+    private static function getXml(string $path): SimpleXMLElement|false
     {
         if (!is_file($path)) {
             return \false;
         }
 
-        $xml = new \SimpleXMLElement(file_get_contents($path));
+        $xml = new SimpleXMLElement(file_get_contents($path));
 
         return $xml;
     }
@@ -668,7 +671,7 @@ class KunenaConfig
 
     /**
      * Function to clear the local cached $config variable
-     * 
+     *
      * @return  void
      * @since   7.0.0
      */

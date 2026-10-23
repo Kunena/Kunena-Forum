@@ -21,9 +21,6 @@ use Joomla\CMS\Cache\CacheController;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
-use Joomla\Filesystem\Path;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
@@ -31,11 +28,14 @@ use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Extension;
-use Joomla\CMS\Table\MenuType;
 use Joomla\CMS\Table\Menu;
+use Joomla\CMS\Table\MenuType;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -50,7 +50,6 @@ use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
-use const KPATH_ADMIN;
 
 /**
  *
@@ -186,41 +185,41 @@ class KunenaModelInstall extends BaseDatabaseModel
         $this->_fbVersions = [
             [
                 'component' => 'FireBoard',
-                'prefix' => 'fb_',
-                'version' => '1.0.4',
-                'date' => '2007-12-23',
+                'prefix'    => 'fb_',
+                'version'   => '1.0.4',
+                'date'      => '2007-12-23',
                 'table'     => 'fb_sessions',
-                'column' => 'currvisit',
+                'column'    => 'currvisit',
             ],
             [
                 'component' => 'FireBoard',
-                'prefix' => 'fb_',
-                'version' => '1.0.3',
-                'date' => '2007-09-04',
+                'prefix'    => 'fb_',
+                'version'   => '1.0.3',
+                'date'      => '2007-09-04',
                 'table'     => 'fb_categories',
-                'column' => 'headerdesc',
+                'column'    => 'headerdesc',
             ],
             [
                 'component' => 'FireBoard',
-                'prefix' => 'fb_',
-                'version' => '1.0.2',
-                'date' => '2007-08-03',
+                'prefix'    => 'fb_',
+                'version'   => '1.0.2',
+                'date'      => '2007-08-03',
                 'table'     => 'fb_users',
-                'column' => 'rank',
+                'column'    => 'rank',
             ],
             [
                 'component' => 'FireBoard',
-                'prefix' => 'fb_',
-                'version' => '1.0.1',
-                'date' => '2007-05-20',
+                'prefix'    => 'fb_',
+                'version'   => '1.0.1',
+                'date'      => '2007-05-20',
                 'table'     => 'fb_users',
-                'column' => 'uhits',
+                'column'    => 'uhits',
             ],
             [
                 'component' => 'FireBoard',
-                'prefix' => 'fb_',
-                'version' => '1.0.0',
-                'date' => '2007-04-15',
+                'prefix'    => 'fb_',
+                'version'   => '1.0.0',
+                'date'      => '2007-04-15',
                 'table'     => 'fb_messages',
             ],
             ['component' => null, 'prefix' => null, 'version' => null, 'date' => null],
@@ -230,9 +229,9 @@ class KunenaModelInstall extends BaseDatabaseModel
         $this->_sbVersions = [
             [
                 'component' => 'JoomlaBoard',
-                'prefix' => 'sb_',
-                'version' => 'v1.0.5',
-                'date' => '1000-01-01',
+                'prefix'    => 'sb_',
+                'version'   => 'v1.0.5',
+                'date'      => '1000-01-01',
                 'table'     => 'sb_messages',
             ],
             ['component' => null, 'prefix' => null, 'version' => null, 'date' => null],
@@ -434,7 +433,7 @@ class KunenaModelInstall extends BaseDatabaseModel
     {
         // Put back file that was removed during installation.
         $contents = '';
-        File::write(KPATH_ADMIN . '/install.php', $contents);
+        File::write(\KPATH_ADMIN . '/install.php', $contents);
 
         // Uninstall all plugins.
         $this->uninstallPlugin('kunena', 'community');
@@ -534,7 +533,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      */
     public function deleteMenu(): void
     {
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new MenuType($db);
         $table->load(['menutype' => 'kunenamenu']);
 
@@ -650,7 +649,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      * @return bool|null
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function installModule(string $path, string $name): ?bool
     {
@@ -704,7 +703,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      *
      * @return bool|null
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public function extract(string $path, string $filename, $dest = null, bool $silent = false): ?bool
@@ -736,7 +735,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             }
         } else {
             $success = true;
-            $text    .= Text::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
+            $text .= Text::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
         }
 
         if ($success !== null && !$silent) {
@@ -828,7 +827,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      */
     public function loadPlugin(array $group, string $element)
     {
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db     = Factory::getContainer()->get(DatabaseInterface::class);
         $plugin = new Extension($db);
         $plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element]);
 
@@ -866,7 +865,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
         if ($action == 'migrate' && $installed['fb']->component) {
             $version    = $installed['fb'];
-            $results[] = $this->migrateTable($version->prefix, $version->prefix . 'version', 'kunena_version');
+            $results[]  = $this->migrateTable($version->prefix, $version->prefix . 'version', 'kunena_version');
         } else {
             $version = $installed['kunena'];
         }
@@ -1022,9 +1021,9 @@ class KunenaModelInstall extends BaseDatabaseModel
     {
         $query = $this->db->createQuery();
 
-        $conditions = array(
+        $conditions = [
             $this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.reply'),
-        );
+        ];
 
         $query->delete($this->db->quoteName('#__mail_templates'));
         $query->where($conditions);
@@ -1039,9 +1038,9 @@ class KunenaModelInstall extends BaseDatabaseModel
 
         $query = $this->db->createQuery();
 
-        $conditions = array(
+        $conditions = [
             $this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.replymoderator'),
-        );
+        ];
 
         $query->delete($this->db->quoteName('#__mail_templates'));
         $query->where($conditions);
@@ -1056,9 +1055,9 @@ class KunenaModelInstall extends BaseDatabaseModel
 
         $query = $this->db->createQuery();
 
-        $conditions = array(
+        $conditions = [
             $this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.report'),
-        );
+        ];
 
         $query->delete($this->db->quoteName('#__mail_templates'));
         $query->where($conditions);
@@ -1112,7 +1111,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
         foreach ($list as $table) {
             $table                           = preg_replace('/^' . $this->db->getPrefix() . '/', '', $table);
-            $this->tables[$prefix][$table] = $table;
+            $this->tables[$prefix][$table]   = $table;
         }
 
         return $this->tables[$prefix];
@@ -1189,7 +1188,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      * @param   array    $versionlist  versionlist
      * @param   boolean  $state        state
      *
-     * @return \stdClass|null
+     * @return stdClass|null
      *
      * @throws \Kunena\Forum\Libraries\Install\KunenaInstallerException
      * @since   Kunena 6.0
@@ -1471,7 +1470,7 @@ class KunenaModelInstall extends BaseDatabaseModel
          */
 
         static $search = ['#COMPONENT_OLD#', '#VERSION_OLD#', '#VERSION#'];
-        $replace = [$version->component, $version->version, KunenaForum::version()];
+        $replace       = [$version->component, $version->version, KunenaForum::version()];
 
         if (!$action) {
             $action = $version->action;
@@ -1885,7 +1884,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      */
     public function enablePlugin(string $group, string $element): bool
     {
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db     = Factory::getContainer()->get(DatabaseInterface::class);
         $plugin = new Extension($db);
 
         if (!$plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element])) {
@@ -1995,11 +1994,11 @@ class KunenaModelInstall extends BaseDatabaseModel
 
                 // Database migration continues
                 return false;
-            } else {
-                // Reset user state
-                $this->updateVersionState('installDatabase');
-                $app->setUserState('com_kunena.install.dbstate', null);
             }
+            // Reset user state
+            $this->updateVersionState('installDatabase');
+            $app->setUserState('com_kunena.install.dbstate', null);
+
         }
 
         // Database migration complete
@@ -2089,11 +2088,10 @@ class KunenaModelInstall extends BaseDatabaseModel
 
             // Database install continues
             return false;
-        } else {
-            // Reset user state
-            $this->updateVersionState('upgradeDatabase');
-            $app->setUserState('com_kunena.install.dbstate', null);
         }
+        // Reset user state
+        $this->updateVersionState('upgradeDatabase');
+        $app->setUserState('com_kunena.install.dbstate', null);
 
         // Database install complete
         return true;
@@ -2474,9 +2472,9 @@ class KunenaModelInstall extends BaseDatabaseModel
     // TODO: move to migration
 
     /**
-     * @return \stdClass
+     * @return stdClass
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     protected function getAvatarStatus(): stdClass
@@ -2692,9 +2690,9 @@ class KunenaModelInstall extends BaseDatabaseModel
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     protected function getAttachmentStatus(): stdClass
@@ -2786,9 +2784,9 @@ class KunenaModelInstall extends BaseDatabaseModel
     {
         KunenaFactory::loadLanguage('com_kunena.install', 'admin');
         $menu = [
-            'name' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'),
-            'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum'),
-            'link' => 'index.php?option=com_kunena&view=home',
+            'name'   => Text::_('COM_KUNENA_MENU_ITEM_FORUM'),
+            'alias'  => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum'),
+            'link'   => 'index.php?option=com_kunena&view=home',
             'access' => 1,
             'params' => ['catids' => 0],
         ];
@@ -2816,7 +2814,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
         KunenaFactory::loadLanguage('com_kunena.install', 'admin');
         $languages = LanguageHelper::getLanguages('default');
-        $langCode = $languages[0]->lang_code;
+        $langCode  = $languages[0]->lang_code;
 
         // First fix all broken menu items
         $db    = Factory::getContainer()->get('DatabaseDriver');
@@ -2833,7 +2831,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             throw new KunenaInstallerException($e->getMessage(), $e->getCode());
         }
 
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new MenuType($db);
         $data  = [
             'menutype'    => 'kunenamenu',
@@ -2900,7 +2898,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             $menu['alias'] = KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum');
         }
 
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new Menu($db);
         $table->load(['menutype' => 'kunenamenu', 'link' => $menu['link'], 'language' => $parentLanguage]);
         $paramdata = [
@@ -2951,69 +2949,69 @@ class KunenaModelInstall extends BaseDatabaseModel
         $defaultmenu = 0;
 
         $submenu = [
-            'index'     => [
-                'name' => Text::_('COM_KUNENA_MENU_ITEM_INDEX'),
-                'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_INDEX_ALIAS'), 'index'),
-                'link' => 'index.php?option=com_kunena&view=category&layout=list',
-                'access' => 1,
+            'index' => [
+                'name'    => Text::_('COM_KUNENA_MENU_ITEM_INDEX'),
+                'alias'   => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_INDEX_ALIAS'), 'index'),
+                'link'    => 'index.php?option=com_kunena&view=category&layout=list',
+                'access'  => 1,
                 'default' => 'categories',
-                'params' => [],
+                'params'  => [],
             ],
-            'recent'    => [
-                'name' => Text::_('COM_KUNENA_MENU_ITEM_RECENT'),
-                'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_RECENT_ALIAS'), 'recent'),
-                'link' => 'index.php?option=com_kunena&view=topics&mode=replies',
-                'access' => 1,
+            'recent' => [
+                'name'    => Text::_('COM_KUNENA_MENU_ITEM_RECENT'),
+                'alias'   => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_RECENT_ALIAS'), 'recent'),
+                'link'    => 'index.php?option=com_kunena&view=topics&mode=replies',
+                'access'  => 1,
                 'default' => 'recent',
-                'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],
+                'params'  => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],
             ],
-            'unread'    => [
-                'name' => Text::_('COM_KUNENA_MENU_ITEM_UNREAD'),
-                'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_UNREAD_ALIAS'), 'unread'),
-                'link' => 'index.php?option=com_kunena&view=topics&layout=unread',
+            'unread' => [
+                'name'   => Text::_('COM_KUNENA_MENU_ITEM_UNREAD'),
+                'alias'  => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_UNREAD_ALIAS'), 'unread'),
+                'link'   => 'index.php?option=com_kunena&view=topics&layout=unread',
                 'access' => 2,
                 'params' => [],
             ],
-            'newtopic'  => [
-                'name' => Text::_('COM_KUNENA_MENU_ITEM_NEWTOPIC'),
-                'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NEWTOPIC_ALIAS'), 'newtopic'),
-                'link' => 'index.php?option=com_kunena&view=topic&layout=create',
+            'newtopic' => [
+                'name'   => Text::_('COM_KUNENA_MENU_ITEM_NEWTOPIC'),
+                'alias'  => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NEWTOPIC_ALIAS'), 'newtopic'),
+                'link'   => 'index.php?option=com_kunena&view=topic&layout=create',
                 'access' => 2,
                 'params' => [],
             ],
             'noreplies' => [
-                'name' => Text::_('COM_KUNENA_MENU_ITEM_NOREPLIES'),
-                'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NOREPLIES_ALIAS'), 'noreplies'),
-                'link' => 'index.php?option=com_kunena&view=topics&mode=noreplies',
+                'name'   => Text::_('COM_KUNENA_MENU_ITEM_NOREPLIES'),
+                'alias'  => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NOREPLIES_ALIAS'), 'noreplies'),
+                'link'   => 'index.php?option=com_kunena&view=topics&mode=noreplies',
                 'access' => 2,
                 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],
             ],
-            'mylatest'  => [
-                'name' => Text::_('COM_KUNENA_MENU_ITEM_MYLATEST'),
-                'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_MYLATEST_ALIAS'), 'mylatest'),
-                'link' => 'index.php?option=com_kunena&view=topics&layout=user&mode=default',
-                'access' => 2,
+            'mylatest' => [
+                'name'    => Text::_('COM_KUNENA_MENU_ITEM_MYLATEST'),
+                'alias'   => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_MYLATEST_ALIAS'), 'mylatest'),
+                'link'    => 'index.php?option=com_kunena&view=topics&layout=user&mode=default',
+                'access'  => 2,
                 'default' => 'my',
-                'params' => ['topics_catselection' => '2', 'topics_categories' => '0', 'topics_time' => ''],
+                'params'  => ['topics_catselection' => '2', 'topics_categories' => '0', 'topics_time' => ''],
             ],
-            'profile'   => [
-                'name' => Text::_('COM_KUNENA_MENU_ITEM_PROFILE'),
-                'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_PROFILE_ALIAS'), 'profile'),
-                'link' => 'index.php?option=com_kunena&view=user',
+            'profile' => [
+                'name'   => Text::_('COM_KUNENA_MENU_ITEM_PROFILE'),
+                'alias'  => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_PROFILE_ALIAS'), 'profile'),
+                'link'   => 'index.php?option=com_kunena&view=user',
                 'access' => 2,
                 'params' => ['integration' => 1],
             ],
-            'help'      => [
-                'name' => Text::_('COM_KUNENA_MENU_ITEM_HELP'),
-                'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_HELP_ALIAS'), 'help'),
-                'link' => 'index.php?option=com_kunena&view=misc',
+            'help' => [
+                'name'   => Text::_('COM_KUNENA_MENU_ITEM_HELP'),
+                'alias'  => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_HELP_ALIAS'), 'help'),
+                'link'   => 'index.php?option=com_kunena&view=misc',
                 'access' => 3,
                 'params' => ['body' => Text::_('COM_KUNENA_MENU_HELP_BODY'), 'body_format' => 'bbcode'],
             ],
-            'search'    => [
-                'name' => Text::_('COM_KUNENA_MENU_ITEM_SEARCH'),
-                'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_SEARCH_ALIAS'), 'search'),
-                'link' => 'index.php?option=com_kunena&view=search',
+            'search' => [
+                'name'   => Text::_('COM_KUNENA_MENU_ITEM_SEARCH'),
+                'alias'  => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_SEARCH_ALIAS'), 'search'),
+                'link'   => 'index.php?option=com_kunena&view=search',
                 'access' => 1,
                 'params' => [],
             ],
@@ -3022,7 +3020,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         foreach ($submenu as $menuitem) {
             $params = clone $gparams;
             $params->loadArray($menuitem['params']);
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $table = new Menu($db);
             $table->load(['menutype' => 'kunenamenu', 'link' => $menuitem['link'], 'language' => $langCode]);
             $data = [
@@ -3070,31 +3068,31 @@ class KunenaModelInstall extends BaseDatabaseModel
         // The alias of an item of one language can not be the alias of an item for all languages.
         $aliasName = 'kunena-' . Factory::getDate()->format('Y-m-d') . ($multilingual ? '-' . strtolower($langCode) : '');
 
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new Menu($db);
         $table->load(['menutype' => $defaultmenu->menutype, 'type' => 'alias', 'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'language' => $parentLanguage]);
 
         if (!$table->id) {
             $data = [
-                'menutype' => $defaultmenu->menutype,
-                'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'),
-                'alias' => $aliasName,
-                'note' => '',
-                'link' => 'index.php?Itemid=' . $parent->id,
-                'type' => 'alias',
-                'published' => 1,
-                'parent_id' => 1,
-                'component_id' => 0,
-                'checked_out' => null,
-                'checked_out_time' => null,
-                'browserNav' => 0,
-                'access' => 1,
-                'img' => '',
+                'menutype'          => $defaultmenu->menutype,
+                'title'             => Text::_('COM_KUNENA_MENU_ITEM_FORUM'),
+                'alias'             => $aliasName,
+                'note'              => '',
+                'link'              => 'index.php?Itemid=' . $parent->id,
+                'type'              => 'alias',
+                'published'         => 1,
+                'parent_id'         => 1,
+                'component_id'      => 0,
+                'checked_out'       => null,
+                'checked_out_time'  => null,
+                'browserNav'        => 0,
+                'access'            => 1,
+                'img'               => '',
                 'template_style_id' => 0,
-                'params' => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
-                'home' => 0,
-                'language' => $parentLanguage,
-                'client_id' => 0,
+                'params'            => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
+                'home'              => 0,
+                'language'          => $parentLanguage,
+                'client_id'         => 0,
             ];
 
             $table->setLocation(1, 'last-child');
@@ -3280,4 +3278,6 @@ class KunenaModelInstall extends BaseDatabaseModel
  *
  * @since   Kunena 6.0
  */
-class KunenaInstallerException extends Exception {}
+class KunenaInstallerException extends Exception
+{
+}

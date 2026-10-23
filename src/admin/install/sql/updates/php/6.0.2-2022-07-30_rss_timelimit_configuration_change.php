@@ -10,7 +10,7 @@
  * @link           https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -44,6 +44,6 @@ function kunena_602_2022_07_30_rss_timelimit_configuration_change($parent)
         // Save configuration
         $config->save();
 
-        return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_602_UPDATE_CONFIGURATION_RSS_TIMELIMIT'), 'success' => true);
+        return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_602_UPDATE_CONFIGURATION_RSS_TIMELIMIT'), 'success' => true];
     }
 }

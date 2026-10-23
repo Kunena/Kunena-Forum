@@ -51,7 +51,7 @@ class DisplayController extends BaseController
     public function display($cachable = false, $urlparams = []): BaseController
     {
         $document = $this->app->getDocument();
-        $view = Factory::getApplication()->getInput()->getCmd('view', '');
+        $view     = Factory::getApplication()->getInput()->getCmd('view', '');
 
         // The views of Kunena in the menu on the left get an icon: the manifest of a component can not give icons to the
         // items below the main one.

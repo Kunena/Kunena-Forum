@@ -185,7 +185,9 @@ class HtmlView extends KunenaView
      *
      * @since   Kunena 6.0
      */
-    protected function _prepareDocument() {}
+    protected function _prepareDocument()
+    {
+    }
 
     /**
      * @param   null  $tpl  tpl
@@ -315,7 +317,7 @@ class HtmlView extends KunenaView
             $usertype       = $this->getCurrentUserTypeByCategory((int) $this->category->id);
 
             // TODO: add context (options, template) to caching
-            $this->cache = true;
+            $this->cache      = true;
             $this->cachekey   = "{$templateHash}.{$usertype}.t{$this->topic->id}.p{$message->id}";
             $this->cachegroup = 'com_kunena.posts';
 

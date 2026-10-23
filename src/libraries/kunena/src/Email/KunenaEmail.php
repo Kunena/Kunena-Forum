@@ -53,9 +53,9 @@ abstract class KunenaEmail
 
         $chunks = array_chunk($receivers, 1);
 
-        $success = true;
+        $success     = true;
         $totalEmails = \count($receivers);
-        $emailsSent = 0;
+        $emailsSent  = 0;
 
         if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
             $mail->SMTPKeepAlive = true;

@@ -77,7 +77,7 @@ class TopicListingRecentDisplay extends ListDisplay
                 } else {
                     $menu      = $this->app->getMenu();
                     $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}"));
-                    $itemid = $getid->id;
+                    $itemid    = $getid->id;
                 }
 
                 if (!$itemid) {
@@ -86,15 +86,13 @@ class TopicListingRecentDisplay extends ListDisplay
 
                 $params = [
                     'option' => 'com_kunena',
-                    'view' => 'topics',
-                    'mode' => $this->state->get('list.mode'),
+                    'view'   => 'topics',
+                    'mode'   => $this->state->get('list.mode'),
                     'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
-            }
-
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }

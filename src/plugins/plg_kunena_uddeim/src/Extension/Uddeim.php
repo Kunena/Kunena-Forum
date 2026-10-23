@@ -23,6 +23,7 @@ use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Uddeim\Helper\KunenaPrivateUddeim;
+use uddeIMAPI;
 
 /**
  * Class PlgKunenaUddeIM
@@ -88,7 +89,7 @@ class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
         include_once $path;
 
-        $uddeim = new \uddeIMAPI;
+        $uddeim = new uddeIMAPI();
 
         if ($uddeim->version() < 1) {
             return;
@@ -104,9 +105,9 @@ class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
     /**
      * Get Kunena private message integration object.
-     * 
+     *
      * @param   KunenaGetPrivateEvent  $event The event  instance
-     * 
+     *
      * @return void
      * @since Kunena 6.0
      */

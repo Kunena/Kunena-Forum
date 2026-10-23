@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
+use BadMethodCallException;
 use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
@@ -40,7 +41,7 @@ class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwar
      *
      * @return  KunenaProfile
      * @since   7.0.0
-     * @throws  \BadMethodCallException
+     * @throws  BadMethodCallException
      */
     protected function onSetProfile(KunenaProfile $profile): KunenaProfile
     {

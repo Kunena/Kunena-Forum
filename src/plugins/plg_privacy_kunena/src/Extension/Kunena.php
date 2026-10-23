@@ -133,7 +133,7 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
             return;
         }
 
-        $domains = [];
+        $domains   = [];
         $domains[] = $this->createKunenaUserDomain($user->id);
         $domains[] = $this->createKunenaAnnouncementDomain($user->id);
         $domains[] = $this->createKunenaAttachmentsDomain($user->id);
@@ -198,7 +198,7 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
 
     /**
      * Adds the Kunena Privacy Information to Joomla Privacy plugin.
-     * 
+     *
      * @param   CollectCapabilitiesEvent  $event  Event instance
      *
      * @return  void

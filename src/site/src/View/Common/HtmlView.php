@@ -16,8 +16,8 @@ namespace Kunena\Forum\Site\View\Common;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -151,8 +151,8 @@ class HtmlView extends KunenaView
                 return;
             }
 
-            $options = ['defaultgroup' => 'com_kunena'];
-            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+            $options  = ['defaultgroup' => 'com_kunena'];
+            $cache    = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
             $annCache = $cache->get('announcement', 'global');
 
             if (!$annCache) {
@@ -195,7 +195,7 @@ class HtmlView extends KunenaView
 
         $allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
         $options = ['defaultgroup' => 'com_kunena'];
-        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template')) {
             return;
@@ -229,7 +229,7 @@ class HtmlView extends KunenaView
         $layout = $this->app->getInput()->getWord('layout', 'default');
 
         $this->breadcrumb = $pathway = $this->app->getPathway();
-        $active     = $this->app->getMenu()->getActive();
+        $active           = $this->app->getMenu()->getActive();
 
         if (empty($this->pathway)) {
             KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
@@ -317,8 +317,8 @@ class HtmlView extends KunenaView
         }
 
         $moderator = \intval($this->me->isModerator()) + \intval($this->me->isAdmin());
-        $options = ['defaultgroup' => 'com_kunena'];
-        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $options   = ['defaultgroup' => 'com_kunena'];
+        $cache     = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) {
             return;
@@ -345,7 +345,7 @@ class HtmlView extends KunenaView
             $who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
         }
 
-        $who           .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
+        $who .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
 
         $onlineList = [];
         $hiddenList = [];
@@ -406,7 +406,7 @@ class HtmlView extends KunenaView
         }
 
         $options = ['defaultgroup' => 'com_kunena'];
-        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) {
             return;
@@ -471,16 +471,17 @@ class HtmlView extends KunenaView
 
             if ($link) {
                 return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
-            } else {
-                return $name;
             }
+
+            return $name;
+
         } elseif ($my->userid == 0 && !KunenaFactory::getConfig()->userlistAllowed) {
             return false;
-        } else {
-            $link = KunenaFactory::getProfile()->getUserListURL($action);
-
-            return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
         }
+        $link = KunenaFactory::getProfile()->getUserListURL($action);
+
+        return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
+
     }
 
     /**
@@ -540,23 +541,23 @@ class HtmlView extends KunenaView
 
         if (!empty(KunenaFactory::getConfig()->rssFeedBurnerUrl)) {
             return KunenaFactory::getConfig()->rssFeedBurnerUrl;
-        } else {
-            $rssType = 'mode=topics';
-
-            switch ($mode) {
-                case 'topic':
-                    $rssType = 'mode=topics';
-                    break;
-                case 'recent':
-                    $rssType = 'mode=replies';
-                    break;
-                case 'post':
-                    $rssType = 'mode=posts';
-                    break;
-            }
-
-            return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}{$params}&format=feed&type=rss", $xhtml);
         }
+        $rssType = 'mode=topics';
+
+        switch ($mode) {
+            case 'topic':
+                $rssType = 'mode=topics';
+                break;
+            case 'recent':
+                $rssType = 'mode=replies';
+                break;
+            case 'post':
+                $rssType = 'mode=posts';
+                break;
+        }
+
+        return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}{$params}&format=feed&type=rss", $xhtml);
+
     }
 
     /**
@@ -637,8 +638,8 @@ class HtmlView extends KunenaView
         }
 
         $my         = $this->app->getIdentity();
-        $options = ['defaultgroup' => 'com_kunena'];
-        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $options    = ['defaultgroup' => 'com_kunena'];
+        $cache      = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
         $cachekey   = "{$this->ktemplate->name}.common.loginbox.u{$my->id}";
         $cachegroup = 'com_kunena.template';
 
@@ -686,7 +687,9 @@ class HtmlView extends KunenaView
      *
      * @throws  Exception
      */
-    public function getPrivateMessageLink() {}
+    public function getPrivateMessageLink()
+    {
+    }
 
     /**
      * @param   array  $matches  matches

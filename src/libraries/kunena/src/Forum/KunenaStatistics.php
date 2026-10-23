@@ -226,7 +226,7 @@ class KunenaStatistics
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getTotalEmoticons(): ?int
     {
@@ -338,7 +338,7 @@ class KunenaStatistics
                     $this->sectionCount++;
                 } else {
                     $this->categoryCount++;
-                    $this->topicCount   += $category->numTopics;
+                    $this->topicCount += $category->numTopics;
                     $this->messageCount += $category->numPosts;
                 }
             }
@@ -438,7 +438,7 @@ class KunenaStatistics
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public function loadTopTopics($limit = 0): array
@@ -446,7 +446,7 @@ class KunenaStatistics
         $limit           = $limit ? $limit : $this->_config->popSubjectCount;
 
         if ($this->topTopics === null || \count($this->topTopics) < $limit) {
-            $params = ['orderby' => 'posts DESC'];
+            $params                        = ['orderby' => 'posts DESC'];
             list($total, $this->topTopics) = KunenaTopicHelper::getLatestTopics(false, 0, $limit, $params);
 
             $top = reset($this->topTopics);

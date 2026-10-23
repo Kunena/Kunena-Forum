@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -8,7 +9,7 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -20,7 +21,8 @@ use Joomla\CMS\Language\Text;
  * @throws Exception
  * @since Kunena 6.4.0
  */
-function kunena_640_2024_10_21_remove_delicious_socialshare($parent) {
+function kunena_640_2024_10_21_remove_delicious_socialshare($parent)
+{
     $db     = Factory::getContainer()->get('DatabaseDriver');
 
     $query = "SHOW COLUMNS FROM " . $db->quoteName('#__kunena_users') . " LIKE 'delicious';";
@@ -43,5 +45,5 @@ function kunena_640_2024_10_21_remove_delicious_socialshare($parent) {
         $db->execute();
     }
 
-    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_REMOVE_DELICIOUS_SOCIALSHARE'), 'success' => true);
+    return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_REMOVE_DELICIOUS_SOCIALSHARE'), 'success' => true];
 }

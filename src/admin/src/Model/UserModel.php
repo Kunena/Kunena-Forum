@@ -52,7 +52,7 @@ class UserModel extends KunenaModel
      * @return array
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getSubscriptions(): array
     {
@@ -102,7 +102,7 @@ class UserModel extends KunenaModel
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public function getIPlist(): array
@@ -202,7 +202,7 @@ class UserModel extends KunenaModel
     /**
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public function getListUserRanks(): string
@@ -242,7 +242,7 @@ class UserModel extends KunenaModel
      */
     public function getMoveCatsList()
     {
-        return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox form-control"', 'value', 'text');
+        return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, [], [], 'class="inputbox form-control"', 'value', 'text');
     }
 
     /**

@@ -21,6 +21,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
+use StdClass;
 
 /**
  * CategoryDisplay
@@ -63,8 +64,8 @@ class CategoryDisplay extends KunenaControllerDisplay
         $response['topiclist'] = [];
 
         $this->me        = KunenaUserHelper::getMyself();
-        $document = Factory::getApplication()->getDocument();
-        $model = new CategoryModel;
+        $document        = Factory::getApplication()->getDocument();
+        $model           = new CategoryModel();
 
         if ($this->me->exists()) {
             $category = $model->getCategory();
@@ -78,7 +79,7 @@ class CategoryDisplay extends KunenaControllerDisplay
             $topics = $model->getTopics();
 
             foreach ($topics as $topic) {
-                $item                    = new \StdClass();
+                $item                    = new StdClass();
                 $item->id                = $topic->id;
                 $item->subject           = $topic->subject;
                 $response['topiclist'][] = $item;

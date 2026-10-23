@@ -21,6 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
+use stdClass;
 
 /**
  * About view for Kunena stats backend
@@ -30,7 +31,7 @@ use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 class HtmlView extends BaseHtmlView
 {
     /**
-     * @var \stdClass
+     * @var stdClass
      * @since Kunena 1.X
      */
     public $config;

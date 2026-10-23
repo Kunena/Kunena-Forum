@@ -179,7 +179,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
         }
 
         list($this->topic, $this->message) = $parent->newReply($saved ? $saved : ['quote' => $quote], $parent->userid);
-        $this->action = 'post';
+        $this->action                      = 'post';
 
         $this->privateMessage       = new KunenaPrivateMessage();
         $this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;

@@ -16,8 +16,8 @@ namespace Kunena\Forum\Site\Controller\Topic\Listing;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -27,12 +27,12 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
-use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -143,10 +143,10 @@ abstract class ListDisplay extends KunenaControllerDisplay
         // Not in a list which is shown inside another page (a module, the profile of a user).
         $this->filterBar = !$this->getOptions()->get('embedded', false);
         $this->filters   = [
-            'tag'    => KunenaTopicTags::isEnabled() ? $this->input->getInt('ftag', 0) : 0,
-            'status' => $this->input->getCmd('fstatus', ''),
-            'q'      => trim($this->input->getString('fq', '')),
-            'author' => trim($this->input->getString('fauthor', '')),
+            'tag'      => KunenaTopicTags::isEnabled() ? $this->input->getInt('ftag', 0) : 0,
+            'status'   => $this->input->getCmd('fstatus', ''),
+            'q'        => trim($this->input->getString('fq', '')),
+            'author'   => trim($this->input->getString('fauthor', '')),
             'language' => $language,
         ];
 
@@ -216,8 +216,8 @@ abstract class ListDisplay extends KunenaControllerDisplay
         }
 
         $this->allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-        $options = ['defaultgroup' => 'com_kunena'];
-        $this->cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $options       = ['defaultgroup' => 'com_kunena'];
+        $this->cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         /*
         if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
@@ -226,7 +226,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
         }*/
 
         $options    = [];
-        $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+        $options[]  = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
         // Todo: fix params
         $this->catParams    = ['sections' => 1, 'catid' => 0];
         $this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-select fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');

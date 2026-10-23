@@ -18,6 +18,7 @@ namespace Kunena\Forum\Libraries\Forum\Category;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\File;
+use RuntimeException;
 
 /**
  * The image a category has as its own icon: the file media/kunena/category_images/icon_<category id>.<extension>.
@@ -118,7 +119,7 @@ abstract class KunenaCategoryIcon
      *
      * @return  void
      *
-     * @throws  \RuntimeException  When the file is not an image which can be used.
+     * @throws  RuntimeException  When the file is not an image which can be used.
      * @since   Kunena 7.2
      */
     public static function save(int $id, array $file): void
@@ -130,29 +131,29 @@ abstract class KunenaCategoryIcon
         }
 
         if ($error !== UPLOAD_ERR_OK || empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
-            throw new \RuntimeException(Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE_UPLOAD_FAILED'));
+            throw new RuntimeException(Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE_UPLOAD_FAILED'));
         }
 
         if ((int) $file['size'] > self::MAX_SIZE) {
-            throw new \RuntimeException(Text::sprintf('COM_KUNENA_CATEGORY_ICON_IMAGE_TOO_BIG', (int) (self::MAX_SIZE / 1024)));
+            throw new RuntimeException(Text::sprintf('COM_KUNENA_CATEGORY_ICON_IMAGE_TOO_BIG', (int) (self::MAX_SIZE / 1024)));
         }
 
         // The type is read from the content of the file, never from its name.
         $info = @getimagesize($file['tmp_name']);
 
         if (!$info || !isset(self::TYPES[$info[2]])) {
-            throw new \RuntimeException(Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE_WRONG_TYPE'));
+            throw new RuntimeException(Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE_WRONG_TYPE'));
         }
 
         if (!is_dir(self::folder()) && !@mkdir(self::folder(), 0755, true)) {
-            throw new \RuntimeException(Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE_UPLOAD_FAILED'));
+            throw new RuntimeException(Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE_UPLOAD_FAILED'));
         }
 
         // One icon per category: the old one (it may have another extension) goes.
         self::delete($id);
 
         if (!File::upload($file['tmp_name'], self::folder() . '/icon_' . $id . '.' . self::TYPES[$info[2]])) {
-            throw new \RuntimeException(Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE_UPLOAD_FAILED'));
+            throw new RuntimeException(Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE_UPLOAD_FAILED'));
         }
 
         self::$files = null;

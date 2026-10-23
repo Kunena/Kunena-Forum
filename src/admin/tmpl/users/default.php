@@ -156,12 +156,12 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                 <?php echo $this->pagination->getListFooter(); ?>
 
                 <?php echo HTMLHelper::_(
-                	'bootstrap.renderModal',
-                	'joomla-dialog-subscribecatsusers',
-                	[
+                    'bootstrap.renderModal',
+                    'joomla-dialog-subscribecatsusers',
+                    [
                         'title'  => Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_MODAL_TITLE'),
                     ],
-                	$this->loadTemplate('subscribecatsusers')
+                    $this->loadTemplate('subscribecatsusers')
                 ); ?>
                 <?php echo HTMLHelper::_(
                     'bootstrap.renderModal',

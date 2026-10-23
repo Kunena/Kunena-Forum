@@ -24,5 +24,5 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class CategoryModerators extends KunenaLayout
 {
-   public $moderators;
+    public $moderators;
 }

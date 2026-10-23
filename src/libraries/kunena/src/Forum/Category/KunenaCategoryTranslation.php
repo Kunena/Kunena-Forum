@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Forum\Category;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
@@ -53,7 +54,7 @@ abstract class KunenaCategoryTranslation
 
         try {
             return (array) $db->setQuery($query)->loadObjectList('category_id');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // The table is not there yet (the extension was not updated).
             return [];
         }
@@ -79,7 +80,7 @@ abstract class KunenaCategoryTranslation
 
         try {
             return (array) $db->setQuery($query)->loadObjectList('language');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return [];
         }
     }
@@ -152,7 +153,7 @@ abstract class KunenaCategoryTranslation
 
         try {
             $db->setQuery($query)->execute();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // The table is not there yet.
         }
     }

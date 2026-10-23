@@ -1039,7 +1039,7 @@ class ToolsController extends FormController
 
             // Prepare the JSON for each user with putting the old value of each social
             // Set the content in the column socials
-            $limit = 100;
+            $limit  = 100;
             $offset = 0;
 
             do {
@@ -1067,7 +1067,7 @@ class ToolsController extends FormController
                             $bluesky_app = $value->bluesky_app;
                         }
 
-                        $fields = array(
+                        $fields = [
                             $db->quoteName('socials') . ' = ' . $db->quote('{
                             "x_social": {
                             "value": "' . $X_social . '",
@@ -1273,11 +1273,11 @@ class ToolsController extends FormController
                             "fa": "fa-brands fa-threads"
                             }
                             }'),
-                        );
+                        ];
 
-                        $conditions = array(
+                        $conditions = [
                             $db->quoteName('userid') . ' = ' . $value->userid,
-                        );
+                        ];
 
                         $query = $db->createQuery();
                         $query->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
@@ -1294,7 +1294,7 @@ class ToolsController extends FormController
                 } else {
                     break;
                 }
-            }  while (true);
+            } while (true);
 
             // Check if column socialshare exist to remove the column
             $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('socialshare');
@@ -1352,10 +1352,10 @@ class ToolsController extends FormController
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         }
 
-        $name = $this->input->getString('name');
+        $name       = $this->input->getString('name');
         $profileURL = $this->input->getString('profileurl', '##VALUE##');
-        $noURL = $this->input->getInt('nourl', 0);
-        $fa = $this->input->getString('fa');
+        $noURL      = $this->input->getInt('nourl', 0);
+        $fa         = $this->input->getString('fa');
 
         $socials = ['name' => $name, 'profileURL' => $profileURL, 'noURL' => $noURL, 'fa' => $fa];
 
@@ -1372,11 +1372,11 @@ class ToolsController extends FormController
             )
         )->getArgument('result', []);
 
-       $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_HAS_BEEN_CHANGED'), 'message');
-       if (!empty($result[0])) {
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_HAS_BEEN_CHANGED'), 'message');
+        if (!empty($result[0])) {
             $this->app->enqueueMessage($result[0], 'message');
         }
-       $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+        $this->app->redirect(KunenaRoute::_($this->baseurl, false));
 
     }
 

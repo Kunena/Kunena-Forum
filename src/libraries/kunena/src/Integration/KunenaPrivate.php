@@ -46,9 +46,9 @@ class KunenaPrivate
 
     /**
      * Function to get the active KunenaPrivate instance from the integration
-     * 
+     *
      * @return  KunenaPrivate
-     * @throws  \Exception
+     * @throws  Exception
      * @since   Kunena 6.0
      */
     public static function getInstance(): KunenaPrivate
@@ -75,7 +75,7 @@ class KunenaPrivate
 
     /**
      * Show the icon of the link for private
-     * 
+     *
      * @param   integer  $userid  userid
      *
      * @return  string
@@ -142,7 +142,7 @@ class KunenaPrivate
 
     /**
      * Show a new icon when there are new items in inbox
-     * 
+     *
      * @param   integer  $userid  userid
      * @param   string   $class   class
      * @param   string   $icon    icon
@@ -193,7 +193,7 @@ class KunenaPrivate
 
     /**
      * Get the number of unread items
-     * 
+     *
      * @param   integer  $userid  userid
      *
      * @return  integer

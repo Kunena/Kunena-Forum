@@ -73,9 +73,9 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
     /**
      * Function to get the KunenaAvatar for this integration
-     * 
+     *
      * @param   KunenaGetAvatarEvent  $event  The event instance
-     * 
+     *
      * @return  void
      * @since   Kunena 6.0
      */
@@ -91,9 +91,9 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
     /**
      * Function to get the KunenaProfile for this integration
-     * 
+     *
      * @param   KunenaGetProfileEvent  $event  The event instance
-     * 
+     *
      * @return  void
      * @since   Kunena 6.0
      */

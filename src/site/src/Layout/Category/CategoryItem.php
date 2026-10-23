@@ -153,7 +153,7 @@ class CategoryItem extends KunenaLayout
             if ($this->me->exists()) {
                 $actions['markread'] = $this->subLayout('Widget/Button')
                     ->setProperties(
-                        ['url'  => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
+                        ['url'              => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
                                      'icon' => KunenaIcons::bookmark(), ]
                     );
             }

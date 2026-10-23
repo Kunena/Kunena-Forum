@@ -21,6 +21,7 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial\Extension;
 \defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\SubscriberInterface;
@@ -30,12 +31,11 @@ use Kunena\Forum\Libraries\Event\KunenaGetLoginEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaActivityEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaAvatarEasySocial;
-use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaProfileEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaLoginEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaPrivateEasySocial;
-use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaActivityEasySocial;
-use Joomla\CMS\Plugin\CMSPlugin;
+use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaProfileEasySocial;
 
 /**
  * @package     Kunena
@@ -122,9 +122,9 @@ class Easysocial extends CMSPlugin implements SubscriberInterface, DatabaseAware
 
     /**
      * Get Kunena login integration object.
-     * 
+     *
      * @param   KunenaGetLoginEvent  $event  The event instance
-     * 
+     *
      * @return  void
      * @since   Kunena 5.0
      */
@@ -143,7 +143,7 @@ class Easysocial extends CMSPlugin implements SubscriberInterface, DatabaseAware
 
     /**
      * Get Kunena avatar integration object.
-     * 
+     *
      * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return  void
@@ -165,7 +165,7 @@ class Easysocial extends CMSPlugin implements SubscriberInterface, DatabaseAware
 
     /**
      * Get Kunena profile integration object.
-     * 
+     *
      * @param   KunenaGetProfileEvent  $event  The event instance
      *
      * @return  void
@@ -188,7 +188,7 @@ class Easysocial extends CMSPlugin implements SubscriberInterface, DatabaseAware
 
     /**
      * Get Kunena private message integration object.
-     * 
+     *
      * @param   KunenaGetPrivateEvent  $event The event  instance
      *
      * @return  void

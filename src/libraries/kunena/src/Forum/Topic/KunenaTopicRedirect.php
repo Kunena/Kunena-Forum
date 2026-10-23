@@ -100,7 +100,7 @@ abstract class KunenaTopicRedirect
         }
 
         try {
-            $db     = Factory::getContainer()->get(DatabaseInterface::class);
+            $db      = Factory::getContainer()->get(DatabaseInterface::class);
             $now     = (new Date())->toSql();
             $header  = 410;
             $comment = self::COMMENT;

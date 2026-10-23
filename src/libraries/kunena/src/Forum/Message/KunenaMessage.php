@@ -18,16 +18,16 @@ namespace Kunena\Forum\Libraries\Forum\Message;
 use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\Mail;
-use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Mail\MailerFactoryInterface;
+use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Event\DispatcherInterface;
+use Joomla\Filesystem\File;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
@@ -35,8 +35,8 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
-use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
+use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Event\KunenaDeleteEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
@@ -54,8 +54,8 @@ use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use StdClass;
 
@@ -106,7 +106,7 @@ class KunenaMessage extends KunenaDatabaseObject
         'attachment.createimage' => ['Read', 'AttachmentsImage'],
         'attachment.createfile'  => ['Read', 'AttachmentsFile'],
         'attachment.delete'      => [],
-        'attachment.private'      => [],
+        'attachment.private'     => [],
     ];
 
     /**
@@ -349,7 +349,7 @@ class KunenaMessage extends KunenaDatabaseObject
      */
     public function __construct($properties = null)
     {
-        $this->_db = Factory::getContainer()->get('DatabaseDriver');
+        $this->_db     = Factory::getContainer()->get('DatabaseDriver');
         $this->_config = KunenaFactory::getConfig();
 
         parent::__construct($properties);
@@ -378,8 +378,8 @@ class KunenaMessage extends KunenaDatabaseObject
      */
     public function __destruct()
     {
-        unset($this->_db);
-        unset($this->_topic);
+        unset($this->_db, $this->_topic);
+
     }
 
     /**
@@ -434,7 +434,7 @@ class KunenaMessage extends KunenaDatabaseObject
      * @return \Kunena\Forum\Libraries\Forum\Topic\KunenaTopic|null
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getTopic(): ?KunenaTopic
     {
@@ -644,24 +644,23 @@ class KunenaMessage extends KunenaDatabaseObject
         if ($type) {
             // Send the notification now
             return $this->sendNotificationNow($emailToList, $subject, $url, $once, $sentusers);
-        } else {
-            // Store the notification in queue
-            $columns = array('subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once', 'sentusers');
+        }
+        // Store the notification in queue
+        $columns = ['subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once', 'sentusers'];
 
-            $values = array($this->_db->quote($subject), $this->id, $this->_db->quote($url), $this->_db->quote(json_encode($emailToList)), $this->_db->quote($this->getCategory()->name), (int) $once, $this->_db->quote(json_encode($sentusers)));
+        $values = [$this->_db->quote($subject), $this->id, $this->_db->quote($url), $this->_db->quote(json_encode($emailToList)), $this->_db->quote($this->getCategory()->name), (int) $once, $this->_db->quote(json_encode($sentusers))];
 
-            $query     = $this->_db->createQuery()
-                ->insert($this->_db->quoteName('#__kunena_notifications_mailsqueue'))
-                ->columns($this->_db->quoteName($columns))
-                ->values(implode(',', $values));
+        $query     = $this->_db->createQuery()
+            ->insert($this->_db->quoteName('#__kunena_notifications_mailsqueue'))
+            ->columns($this->_db->quoteName($columns))
+            ->values(implode(',', $values));
 
-            $this->_db->setQuery($query);
+        $this->_db->setQuery($query);
 
-            try {
-                $this->_db->execute();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-            }
+        try {
+            $this->_db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
         }
 
         return true;
@@ -706,8 +705,8 @@ class KunenaMessage extends KunenaDatabaseObject
                     ? KunenaAccess::CATEGORY_SUBSCRIPTION
                     : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 
-                    // FIXME: category subscription can override topic
-                    $once = $this->_config->topicSubscriptions == 'first';
+                // FIXME: category subscription can override topic
+                $once = $this->_config->topicSubscriptions == 'first';
             }
         }
 
@@ -780,27 +779,27 @@ class KunenaMessage extends KunenaDatabaseObject
                         \count($emailToList) == 1 &&
                         ($emailTo->moderator || $emailTo->subscription)
                     )
-                    ) {
-                        $sentusers[] = $emailTo->id;
-                    }
+                ) {
+                    $sentusers[] = $emailTo->id;
+                }
             }
         }
 
-        return array($emailToList, $once, $sentusers);
+        return [$emailToList, $once, $sentusers];
     }
 
     /**
      * Send the notification mail
-     * 
-     * @param   array    $emailToList  Contains a list of users to whom the notification will be sent  
+     *
+     * @param   array    $emailToList  Contains a list of users to whom the notification will be sent
      * @param   string   $subject  The subject of the notification mail
      * @param   string   $url  The url of the message of the notification mail
      * @param   boolean  $once
      * @param   array    $sentusers
      * @param   callable|null  $onRecipientSent  Callback for each successfully sent recipient
-     * 
+     *
      * @return  boolean
-     * 
+     *
      * @throws  Exception
      * @since   Kunena 7.1
      */
@@ -829,58 +828,58 @@ class KunenaMessage extends KunenaDatabaseObject
                     \count($emailToList) == 1 &&
                     ($emailTo->moderator || $emailTo->subscription)
                 )
-                ) {
-                    continue;
+            ) {
+                continue;
+            }
+
+            // Determine subscription type (1 = subscriber, 0 = moderator/admin).
+            $subscriptionType = $emailTo->subscription ? 1 : 0;
+
+            // Load the recipient's language if it differs from the current one.
+            $recipientLanguage = null;
+
+            if (!empty($emailTo->id)) {
+                $kunenaUser = KunenaUserHelper::get((int) $emailTo->id);
+
+                if (!empty($kunenaUser->language)) {
+                    $recipientLanguage = $kunenaUser->language;
                 }
+            }
 
-                // Determine subscription type (1 = subscriber, 0 = moderator/admin).
-                $subscriptionType = $emailTo->subscription ? 1 : 0;
+            $languageChanged = $recipientLanguage && $recipientLanguage !== $currentLanguage;
 
-                // Load the recipient's language if it differs from the current one.
-                $recipientLanguage = null;
+            $siteLanguageLoaded = KunenaFactory::loadLanguageMail(
+                'com_kunena',
+                'site',
+                $recipientLanguage
+            );
 
-                if (!empty($emailTo->id)) {
-                    $kunenaUser = KunenaUserHelper::get((int) $emailTo->id);
+            $librariesLanguageLoaded = KunenaFactory::loadLanguageMail(
+                'com_kunena.libraries',
+                'admin',
+                $recipientLanguage
+            );
 
-                    if (!empty($kunenaUser->language)) {
-                        $recipientLanguage = $kunenaUser->language;
-                    }
+            try {
+                $mailSubject = MailHelper::cleanSubject($subject . " (" . $this->getCategory()->name . ")");
+
+                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                $mail->setSubject($mailSubject);
+                $mail->setSender([$this->_config->email, $mailnamesender]);
+
+                if (!$this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, (string) $recipientLanguage)) {
+                    $success = false;
+                } elseif ($onRecipientSent !== null) {
+                    $onRecipientSent($recipientIndex);
                 }
-
-                $languageChanged = $recipientLanguage && $recipientLanguage !== $currentLanguage;
-
-                $siteLanguageLoaded = KunenaFactory::loadLanguageMail(
-                    'com_kunena',
-                    'site',
-                    $recipientLanguage
-                );
-
-                $librariesLanguageLoaded = KunenaFactory::loadLanguageMail(
-                    'com_kunena.libraries',
-                    'admin',
-                    $recipientLanguage
-                );
-
-                try {
-                    $mailSubject = MailHelper::cleanSubject($subject . " (" . $this->getCategory()->name . ")");
-
-                    $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                    $mail->setSubject($mailSubject);
-                    $mail->setSender([$this->_config->email, $mailnamesender]);
-
-                    if (!$this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, (string) $recipientLanguage)) {
-                        $success = false;
-                    } elseif ($onRecipientSent !== null) {
-                        $onRecipientSent($recipientIndex);
-                    }
-                } catch (Exception $e) {
-                    throw new Exception($e->getMessage());
-                } finally {
-                    // Restore original language regardless of success or failure.
-                    if ($languageChanged) {
-                        $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
-                    }
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
+            } finally {
+                // Restore original language regardless of success or failure.
+                if ($languageChanged) {
+                    $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
                 }
+            }
         }
 
         // Update subscriptions.
@@ -915,7 +914,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @throws  Exception
      * @since   Kunena 6.0
-     * 
+     *
      * @deprecated Kunena 7.1
      */
     public function sendNotification($url = null, $approved = false)
@@ -956,7 +955,7 @@ class KunenaMessage extends KunenaDatabaseObject
                     : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 
                 // FIXME: category subscription can override topic
-                    $once = $this->_config->topicSubscriptions == 'first';
+                $once = $this->_config->topicSubscriptions == 'first';
             }
         }
 
@@ -1022,24 +1021,24 @@ class KunenaMessage extends KunenaDatabaseObject
                         \count($emailToList) == 1 &&
                         ($emailTo->moderator || $emailTo->subscription)
                     )
-                    ) {
-                        continue;
-                    }
+                ) {
+                    continue;
+                }
 
-                    // Determine subscription type (1 = subscriber, 0 = moderator/admin).
-                    $subscriptionType = $emailTo->subscription ? 1 : 0;
+                // Determine subscription type (1 = subscriber, 0 = moderator/admin).
+                $subscriptionType = $emailTo->subscription ? 1 : 0;
 
-                    try {
-                        $mailSubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+                try {
+                    $mailSubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
 
-                        $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                        $mail->setSubject($mailSubject);
-                        $mail->setSender([$this->_config->email, $mailnamesender]);
+                    $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                    $mail->setSubject($mailSubject);
+                    $mail->setSender([$this->_config->email, $mailnamesender]);
 
-                        $this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, '');
-                    } catch (Exception $e) {
-                        throw new Exception($e->getMessage());
-                    }
+                    $this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, '');
+                } catch (Exception $e) {
+                    throw new Exception($e->getMessage());
+                }
             }
 
             // Update subscriptions.
@@ -1141,7 +1140,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return bool
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public function save(): bool
@@ -1790,14 +1789,14 @@ class KunenaMessage extends KunenaDatabaseObject
     {
         $attachments = KunenaAttachmentHelper::getNumberAttachments($this->id);
 
-        $attachs           = new StdClass();
-        $attachs->inline   = 0;
-        $attachs->image    = 0;
-        $attachs->file     = 0;
+        $attachs                       = new StdClass();
+        $attachs->inline               = 0;
+        $attachs->image                = 0;
+        $attachs->file                 = 0;
         $attachs->totalNonProtected    = 0;
-        $attachs->readable = 0;
-        $attachs->totalProtected = 0;
-        $attachs->totalPrivate = 0;
+        $attachs->readable             = 0;
+        $attachs->totalProtected       = 0;
+        $attachs->totalPrivate         = 0;
 
         foreach ($attachments as $attach) {
             if ($attach->inline) {
@@ -2059,7 +2058,7 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         $userids = array_diff(self::getMentionedUserIds((string) $this->message), self::getMentionedUserIds($oldText));
-        $userids = array_slice($userids, 0, 10);
+        $userids = \array_slice($userids, 0, 10);
 
         if (!$userids) {
             return 0;
@@ -2226,16 +2225,16 @@ class KunenaMessage extends KunenaDatabaseObject
         };
 
         $headers = [
-            'X-Forum'          => 'kunena',
-            'X-Forum-URL'      => Uri::root(),
-            'X-Forum-Name'     => $this->_config->boardTitle,
-            'X-Forum-Category' => $category->name,
+            'X-Forum'             => 'kunena',
+            'X-Forum-URL'         => Uri::root(),
+            'X-Forum-Name'        => $this->_config->boardTitle,
+            'X-Forum-Category'    => $category->name,
             'X-Forum-Category-Id' => (int) $category->id,
-            'X-Forum-Topic'    => $topic->subject,
-            'X-Forum-Topic-Id' => (int) $topic->id,
-            'X-Forum-Post-Id'  => (int) $this->id,
-            'X-Forum-Type'     => $this->parent ? 'reply' : 'new-topic',
-            'X-Forum-Who'      => $this->getAuthor()->getName($this->name),
+            'X-Forum-Topic'       => $topic->subject,
+            'X-Forum-Topic-Id'    => (int) $topic->id,
+            'X-Forum-Post-Id'     => (int) $this->id,
+            'X-Forum-Type'        => $this->parent ? 'reply' : 'new-topic',
+            'X-Forum-Who'         => $this->getAuthor()->getName($this->name),
         ];
 
         foreach ($headers as $name => $value) {
@@ -2243,7 +2242,7 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         // The threading: the first message of a topic starts the thread, a reply points to the message it answers and to the start.
-        $firstPostId = (int) $topic->first_post_id;
+        $firstPostId     = (int) $topic->first_post_id;
         $mail->MessageID = $this->getEmailMessageId((int) $this->id, (int) $topic->id, $firstPostId);
 
         if ($this->parent && $firstPostId && (int) $this->id !== $firstPostId) {
@@ -2739,9 +2738,9 @@ class KunenaMessage extends KunenaDatabaseObject
 
     /**
      * Get the table relevant properties. Override for your specific Object
-     * 
+     *
      * @return array    Assocative array with the propertie values of table
-     * 
+     *
      * @since   Kunena 6.4
      */
     protected function getTableProperties(): array

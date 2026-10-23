@@ -105,7 +105,7 @@ class UserEdit extends KunenaLayout
         PluginHelper::importPlugin('kunena');
 
         $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-        $plugins =  $dispatcher->dispatch(
+        $plugins    =  $dispatcher->dispatch(
             'onKunenaUserTabsEdit',
             new KunenaUserTabsEditEvent(
                 'onKunenaUserTabsEdit',

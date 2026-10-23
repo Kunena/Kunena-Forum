@@ -435,7 +435,7 @@ abstract class KunenaTopicUserHelper
         }
 
         if ($end) {
-            $where  .= " AND (" . $db->quoteName('m.thread') . " BETWEEN {$start} AND {$end})";
+            $where .= " AND (" . $db->quoteName('m.thread') . " BETWEEN {$start} AND {$end})";
             $where2 .= " AND (" . $db->quoteName('ut.topic_id') . " BETWEEN {$start} AND {$end})";
         }
 
@@ -456,7 +456,7 @@ abstract class KunenaTopicUserHelper
 
         // Create the base insert statement.
         $query->insert($db->quoteName('#__kunena_user_topics'))
-            ->columns($db->quoteName(array('user_id', 'topic_id', 'category_id', 'posts', 'last_post_id', 'owner')))
+            ->columns($db->quoteName(['user_id', 'topic_id', 'category_id', 'posts', 'last_post_id', 'owner']))
             ->values($subQuery);
 
         // Add ON DUPLICATE KEY UPDATE clause manually

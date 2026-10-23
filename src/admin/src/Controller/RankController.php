@@ -103,10 +103,10 @@ class RankController extends AdminController
             $query = $db->createQuery();
 
             // Insert columns.
-            $columns = array('rankTitle', 'rankImage', 'rankSpecial', 'rankMin');
+            $columns = ['rankTitle', 'rankImage', 'rankSpecial', 'rankMin'];
 
             // Insert values.
-            $values = array($db->quote($rankTitle), $db->quote($rankImage), $db->quote($rankSpecial), $db->quote($rankMin));
+            $values = [$db->quote($rankTitle), $db->quote($rankImage), $db->quote($rankSpecial), $db->quote($rankMin)];
 
             // Prepare the insert query.
             $query

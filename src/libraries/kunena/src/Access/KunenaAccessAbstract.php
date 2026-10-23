@@ -18,7 +18,7 @@ namespace Kunena\Forum\Libraries\Access;
 use Joomla\Registry\Registry;
 
 /**
- * class KunenaAccessAbstract 
+ * class KunenaAccessAbstract
  *
  * @since   Kunena 7.0
  */

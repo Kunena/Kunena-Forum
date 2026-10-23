@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Kunena\Helper;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -51,12 +52,12 @@ class KunenaAvatarKunena extends KunenaAvatar
 
     /**
      * Function to get the link to the User edit page
-     * 
+     *
      * @return  string
      *
      * @return  string
      * @since   Kunena 6.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function getEditURL(): string
     {
@@ -65,14 +66,14 @@ class KunenaAvatarKunena extends KunenaAvatar
 
     /**
      * Function to get the Avatar image for the user
-     * 
+     *
      * @param   KunenaUser  $user   user
      * @param   int         $sizex  sizex
      * @param   int         $sizey  sizey
      *
      * @return  string
      * @since   Kunena 6.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
     {
@@ -125,7 +126,7 @@ class KunenaAvatarKunena extends KunenaAvatar
                         KunenaImage::SCALE_INSIDE,
                         \intval($config->avatarCrop)
                     );
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     KunenaError::error($e->getMessage());
                 }
 
@@ -137,13 +138,13 @@ class KunenaAvatarKunena extends KunenaAvatar
             }
 
             return KURL_MEDIA . "avatars/{$resized}/{$file}{$timestamp}";
-        } else {
-            // When KunenaFactory::getConfig()->avatarType is true it means Icontype
-            if ($config->avatarType) {
-                return KURL_MEDIA . "core/svg/person.svg";
-            } else {
-                return KURL_MEDIA . 'avatars/' . $config->defaultAvatar;
-            }
         }
+        // When KunenaFactory::getConfig()->avatarType is true it means Icontype
+        if ($config->avatarType) {
+            return KURL_MEDIA . "core/svg/person.svg";
+        }
+
+        return KURL_MEDIA . 'avatars/' . $config->defaultAvatar;
+
     }
 }

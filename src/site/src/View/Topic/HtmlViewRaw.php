@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
@@ -44,7 +44,7 @@ class KunenaViewTopic extends KunenaView
 
         if ($this->me->exists() || $this->config->pubWrite) {
             $msgbody              = KunenaParser::parseBBCode($body, $this);
-            $response['preview'] = $msgbody;
+            $response['preview']  = $msgbody;
         }
 
         // Set the MIME type and header for JSON output.

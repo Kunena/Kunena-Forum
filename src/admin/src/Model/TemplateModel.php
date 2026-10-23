@@ -16,8 +16,8 @@ namespace Kunena\Forum\Administrator\Model;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Client\ClientHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
@@ -41,7 +41,7 @@ class TemplateModel extends AdminModel
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getForm($data = [], $loadData = true): object
     {
@@ -216,7 +216,7 @@ class TemplateModel extends AdminModel
     protected function loadFormData()
     {
         // Check the session for previously entered form data.
-        $data = Factory::getApplication()->getUserState('com_kunena.edit.template.data', array());
+        $data = Factory::getApplication()->getUserState('com_kunena.edit.template.data', []);
 
         if (empty($data)) {
             $template = $this->getState('template');

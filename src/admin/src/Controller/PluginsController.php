@@ -117,76 +117,75 @@ class PluginsController extends AdminController
             $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false));
 
             return;
-        } else {
-            // Get the model from com_plugins.
-            $model = $this->app->bootComponent('com_plugins')->getMVCFactory()->createModel('Plugin', 'Administrator', ['ignore_request' => true]);
+        }
+        // Get the model from com_plugins.
+        $model = $this->app->bootComponent('com_plugins')->getMVCFactory()->createModel('Plugin', 'Administrator', ['ignore_request' => true]);
 
-            // Make sure the item ids are integers
-            $cid  = ArrayHelper::toInteger($cid);
-            $cids = implode(',', $cid);
+        // Make sure the item ids are integers
+        $cid  = ArrayHelper::toInteger($cid);
+        $cids = implode(',', $cid);
 
-            // Retrieve the name of plugin extension from extensions table to check before if the third party extension exist
-            $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->createQuery()
-                ->select($db->quoteName(['element', 'extension_id']))
-                ->from($db->quoteName('#__extensions'))
-                ->where($db->quoteName('extension_id') . ' IN (' . $cids . ')');
-            $db->setQuery($query);
-            $plg_kunena_exts = $db->loadObjectList();
+        // Retrieve the name of plugin extension from extensions table to check before if the third party extension exist
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select($db->quoteName(['element', 'extension_id']))
+            ->from($db->quoteName('#__extensions'))
+            ->where($db->quoteName('extension_id') . ' IN (' . $cids . ')');
+        $db->setQuery($query);
+        $plg_kunena_exts = $db->loadObjectList();
 
-            $cids_exist = [];
+        $cids_exist = [];
 
-            foreach ($plg_kunena_exts as $plg) {
-                if ($plg->element == 'community') {
-                    if (file_exists(JPATH_ROOT . '/components/com_community/libraries/core.php')) {
-                        $cids_exist[] = $plg->extension_id;
-                    }
-                } elseif ($plg->element == 'comprofiler') {
-                    if ((file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))) {
-                        $cids_exist[] = $plg->extension_id;
-                    }
-                } elseif ($plg->element == 'easyblog') {
-                    if (file_exists(JPATH_ADMINISTRATOR . '/components/com_easyblog/includes/easyblog.php')) {
-                        $cids_exist[] = $plg->extension_id;
-                    }
-                } elseif ($plg->element == 'easysocial') {
-                    if (file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php')) {
-                        $cids_exist[] = $plg->extension_id;
-                    }
-                } else {
+        foreach ($plg_kunena_exts as $plg) {
+            if ($plg->element == 'community') {
+                if (file_exists(JPATH_ROOT . '/components/com_community/libraries/core.php')) {
                     $cids_exist[] = $plg->extension_id;
                 }
-            }
-
-            $extension    = $this->input->get('extension');
-            $extensionURL = ($extension) ? '&extension=' . $extension : '';
-
-            if (empty($cids_exist)) {
-                $this->setMessage(Text::_('COM_KUNENA_PLUGINS_NO_THIRD_PARTIES_EXTENSIONS_FOUND'), 'error');
-                $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList . $extensionURL, false));
-
-                return false;
-            }
-
-            // Publish the items.
-            try {
-                $model->publish($cids_exist, $value);
-            } catch (Exception $e) {
-                Log::add($e->getMessage(), Log::WARNING, 'jerror');
-            }
-
-            if ($value == 1) {
-                $ntext = $this->textPrefix . '_N_ITEMS_PUBLISHED';
-            } elseif ($value == 0) {
-                $ntext = $this->textPrefix . '_N_ITEMS_UNPUBLISHED';
-            } elseif ($value == 2) {
-                $ntext = $this->textPrefix . '_N_ITEMS_ARCHIVED';
+            } elseif ($plg->element == 'comprofiler') {
+                if ((file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))) {
+                    $cids_exist[] = $plg->extension_id;
+                }
+            } elseif ($plg->element == 'easyblog') {
+                if (file_exists(JPATH_ADMINISTRATOR . '/components/com_easyblog/includes/easyblog.php')) {
+                    $cids_exist[] = $plg->extension_id;
+                }
+            } elseif ($plg->element == 'easysocial') {
+                if (file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php')) {
+                    $cids_exist[] = $plg->extension_id;
+                }
             } else {
-                $ntext = $this->textPrefix . '_N_ITEMS_TRASHED';
+                $cids_exist[] = $plg->extension_id;
             }
-
-            $this->setMessage(Text::plural($ntext, \count($cid)));
         }
+
+        $extension    = $this->input->get('extension');
+        $extensionURL = ($extension) ? '&extension=' . $extension : '';
+
+        if (empty($cids_exist)) {
+            $this->setMessage(Text::_('COM_KUNENA_PLUGINS_NO_THIRD_PARTIES_EXTENSIONS_FOUND'), 'error');
+            $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList . $extensionURL, false));
+
+            return false;
+        }
+
+        // Publish the items.
+        try {
+            $model->publish($cids_exist, $value);
+        } catch (Exception $e) {
+            Log::add($e->getMessage(), Log::WARNING, 'jerror');
+        }
+
+        if ($value == 1) {
+            $ntext = $this->textPrefix . '_N_ITEMS_PUBLISHED';
+        } elseif ($value == 0) {
+            $ntext = $this->textPrefix . '_N_ITEMS_UNPUBLISHED';
+        } elseif ($value == 2) {
+            $ntext = $this->textPrefix . '_N_ITEMS_ARCHIVED';
+        } else {
+            $ntext = $this->textPrefix . '_N_ITEMS_TRASHED';
+        }
+
+        $this->setMessage(Text::plural($ntext, \count($cid)));
 
         $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList . $extensionURL, false));
     }

@@ -16,18 +16,18 @@ namespace Kunena\Forum\Site\Controller\Application\Category\Feed;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Document\Feed\FeedImage;
+use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\UserFactoryInterface;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
-use Joomla\CMS\Date\Date;
-use Joomla\CMS\Document\Feed\FeedImage;
-use Joomla\CMS\Document\Feed\FeedItem;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
 
 /**
@@ -73,8 +73,8 @@ class CategoryDisplay extends KunenaControllerDisplay
     {
         $this->config = KunenaFactory::getConfig();
         $this->checkForumIsOpen();
-        $catid = $this->input->getInt('catid', 0);
-        $model = new CategoryModel();
+        $catid          = $this->input->getInt('catid', 0);
+        $model          = new CategoryModel();
         $this->document = $this->app->getDocument();
 
         if (!$this->config->enableRss) {

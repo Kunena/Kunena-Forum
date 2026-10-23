@@ -16,12 +16,16 @@ namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
 
 \defined('_JEXEC') or die();
 
+use CFactory;
+use CRoute;
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use RuntimeException;
 
 /**
  * Class KunenaProfileCommunity
@@ -46,7 +50,7 @@ class KunenaProfileCommunity extends KunenaProfile
      *
      * @return string
      * @since   Kunena 5.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getUserListURL(string $action = '', bool $xhtml = true): string
     {
@@ -57,7 +61,7 @@ class KunenaProfileCommunity extends KunenaProfile
             return false;
         }
 
-        return \CRoute::_('index.php?option=com_community&view=search&task=browse', $xhtml);
+        return CRoute::_('index.php?option=com_community&view=search&task=browse', $xhtml);
     }
 
     /**
@@ -65,7 +69,7 @@ class KunenaProfileCommunity extends KunenaProfile
      *
      * @return  array
      *
-     * @throws  \RuntimeException
+     * @throws  RuntimeException
      *
      * @since   Kunena 5.0
      */
@@ -85,7 +89,7 @@ class KunenaProfileCommunity extends KunenaProfile
 
         try {
             $top = (array) $db->loadObjectList();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             KunenaError::displayDatabaseError($e);
         }
 
@@ -107,7 +111,7 @@ class KunenaProfileCommunity extends KunenaProfile
 
     /**
      * Function to get User Profile URL
-     * 
+     *
      * @param   int     $userid     userid
      * @param   string  $task       task
      * @param   bool    $xhtml      xhtml
@@ -115,16 +119,16 @@ class KunenaProfileCommunity extends KunenaProfile
      *
      * @return  string|false
      * @since   Kunena 5.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
     {
         // Make sure that user profile exist.
-        if (!$userid || \CFactory::getUser($userid) === null) {
+        if (!$userid || CFactory::getUser($userid) === null) {
             return false;
         }
 
-        return \CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $userid, $xhtml);
+        return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $userid, $xhtml);
     }
 
     /**
@@ -140,15 +144,16 @@ class KunenaProfileCommunity extends KunenaProfile
      */
     public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
     {
-        $cconfig         = \CFactory::getConfig();
+        $cconfig         = CFactory::getConfig();
         $displayusername = $cconfig->get('displayname');
 
         if ($user->id == 0) {
             return $user->name;
         } elseif ($displayusername == 'name') {
-            return \CFactory::getUser($user->userid)->name;
-        } else {
-            return \CFactory::getUser($user->userid)->username;
+            return CFactory::getUser($user->userid)->name;
         }
+
+        return CFactory::getUser($user->userid)->username;
+
     }
 }

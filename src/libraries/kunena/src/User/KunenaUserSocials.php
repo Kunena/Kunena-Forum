@@ -15,14 +15,16 @@ namespace Kunena\Forum\Libraries\User;
 
 \defined('_JEXEC') or die();
 
+use AllowDynamicProperties;
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use stdClass;
 
 /**
  * Class KunenaUserSocials
@@ -56,7 +58,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  *
  * @since   Kunena 6.4
  */
-#[\AllowDynamicProperties]
+#[AllowDynamicProperties]
 class KunenaUserSocials
 {
     /**
@@ -403,13 +405,13 @@ class KunenaUserSocials
         $params = get_object_vars($this);
         unset($params['id']);
 
-        $fields = array(
+        $fields = [
             $db->quoteName('socials') . ' = ' . $db->quote(json_encode($params)),
-        );
+        ];
 
-        $conditions = array(
+        $conditions = [
             $db->quoteName('userid') . ' = ' . $this->userid,
-        );
+        ];
 
         $query = $db->createQuery()
             ->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
@@ -553,7 +555,7 @@ class KunenaUserSocials
         if (!$rows) {
             $providers = json_decode(self::getDefaultSocialsJson());
         } else {
-            $providers = new \stdClass();
+            $providers = new stdClass();
 
             foreach ($rows as $row) {
                 $key = (string) ($row['key'] ?? '');
@@ -786,13 +788,13 @@ JSON;
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery();
 
-            $fields = array(
+            $fields = [
                 $db->quoteName('socials') . ' = ' . $db->quote(json_encode(self::getProviders())),
-            );
+            ];
 
-            $conditions = array(
+            $conditions = [
                 $db->quoteName('userid') . ' = ' . $user->userid,
-            );
+            ];
 
             $query->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
             $db->setQuery($query);

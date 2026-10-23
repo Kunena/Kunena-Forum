@@ -17,7 +17,9 @@ namespace Kunena\Forum\Libraries\Image;
 
 use Exception;
 use Joomla\CMS\Image\Image;
+use LogicException;
 use RuntimeException;
+use stdClass;
 
 \define('MIME_GIF', 'image/gif');
 \define('MIME_PNG', 'image/png');
@@ -40,13 +42,13 @@ class KunenaImage extends Image
     {
         // Make sure the resource handle is valid.
         if (!$this->isLoaded()) {
-            throw new \LogicException('No valid image was loaded.');
+            throw new LogicException('No valid image was loaded.');
         }
 
         $angle  = 0;
         $flip   = 0;
 
-        if(\function_exists('exif_read_data')) {
+        if (\function_exists('exif_read_data')) {
             $exif = exif_read_data($this->getPath());
 
             if ($exif && isset($exif['Orientation'])) {
@@ -125,7 +127,7 @@ class KunenaImage extends Image
      * @return  Image
      *
      * @since   4.0.0
-     * @throws  \LogicException
+     * @throws  LogicException
      */
     public function resize($width, $height, $createNew = true, $scaleMethod = self::SCALE_INSIDE)
     {
@@ -133,7 +135,7 @@ class KunenaImage extends Image
 
         // Make sure the resource handle is valid.
         if (!$this->isLoaded()) {
-            throw new \LogicException('No valid image was loaded.');
+            throw new LogicException('No valid image was loaded.');
         }
 
         // Sanitize width.
@@ -146,7 +148,7 @@ class KunenaImage extends Image
         $dimensions = $this->prepareDimensions($width, $height, $scaleMethod);
 
         // Instantiate offset.
-        $offset    = new \stdClass();
+        $offset    = new stdClass();
         $offset->x = $offset->y = 0;
 
         // Get true color handle
@@ -167,7 +169,7 @@ class KunenaImage extends Image
 
         try {
             $imgProperties = self::getImageFileProperties($this->getPath());
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
 
@@ -220,8 +222,8 @@ class KunenaImage extends Image
         } else {
             \call_user_func_array(
                 $resizemethod,
-                array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
-                $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight(), )
+                [&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
+                $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight(), ]
             );
         }
 
@@ -235,13 +237,13 @@ class KunenaImage extends Image
             // @codeCoverageIgnoreEnd
         }
         // Swap out the current handle for the new image handle.
-        else {
-            // Free the memory from the current handle
-            $this->destroy();
 
-            $this->handle = $handle;
+        // Free the memory from the current handle
+        $this->destroy();
 
-            return $this;
-        }
+        $this->handle = $handle;
+
+        return $this;
+
     }
 }

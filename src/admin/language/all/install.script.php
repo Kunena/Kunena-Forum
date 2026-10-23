@@ -10,15 +10,15 @@
  * @link          https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\Language\LanguageHelper;
-use Joomla\Database\DatabaseInterface;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Joomla\CMS\Table\Extension;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
  * Class pkg_kunena_languagesInstallerScript
@@ -53,7 +53,7 @@ class pkg_kunena_languagesInstallerScript
      */
     public function preflight($type, $parent)
     {
-        if (!in_array($type, ['install', 'update'])) {
+        if (!\in_array($type, ['install', 'update'])) {
             return true;
         }
 
@@ -61,7 +61,7 @@ class pkg_kunena_languagesInstallerScript
 
         // Do not install if Kunena doesn't exist.
         if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('7.1')) {
-            $app->enqueueMessage(sprintf('Kunena %s has not been installed, aborting!', '7.1'), 'notice');
+            $app->enqueueMessage(\sprintf('Kunena %s has not been installed, aborting!', '7.1'), 'notice');
 
             return false;
         }
@@ -93,17 +93,17 @@ class pkg_kunena_languagesInstallerScript
             $file->addAttribute('type', 'file');
             $file->addAttribute('client', 'site');
             $file->addAttribute('id', $name);
-            echo sprintf('Installing language %s - %s ...', $language['tag'], $language['name']) . '<br />';
+            echo \sprintf('Installing language %s - %s ...', $language['tag'], $language['name']) . '<br />';
         }
 
         if (empty($files)) {
-            $app->enqueueMessage(sprintf('Your site is English only. There\'s no need to install Kunena language pack.'), 'notice');
+            $app->enqueueMessage('Your site is English only. There\'s no need to install Kunena language pack.', 'notice');
 
             return false;
         }
 
         // Remove old K1.7 style language pack.
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new Extension($db);
         $id    = $table->find(['type' => 'file', 'element' => "kunena_language_pack"]);
 
@@ -117,9 +117,9 @@ class pkg_kunena_languagesInstallerScript
 
     /**
      * Method to run after an install/update/uninstall method
-     * 
+     *
      * @return void
-     * 
+     *
      * @since   Kunena 6.2
      */
     public function postflight($type, $parent)
@@ -141,7 +141,7 @@ class pkg_kunena_languagesInstallerScript
      */
     public function uninstallLanguage($tag, $name)
     {
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new Extension($db);
         $id    = $table->find(['type' => 'file', 'element' => "com_kunena_{$tag}"]);
 

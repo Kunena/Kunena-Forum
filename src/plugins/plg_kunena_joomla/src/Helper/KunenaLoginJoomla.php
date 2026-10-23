@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Joomla\Helper;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -36,11 +37,11 @@ class KunenaLoginJoomla extends KunenaLoginAbstract
      * @param   boolean  $rememberme  Remember the user next time it wants login
      * @param   null     $secretkey   The secretkey given by user when TFA is enabled
      *
-     * @return  boolean|\Exception  True on success, false if failed or silent handling is configured, or a \Exception object on authentication error.
+     * @return  boolean|Exception  True on success, false if failed or silent handling is configured, or a \Exception object on authentication error.
      *
      * @since   Kunena 6.0
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function loginUser(string $username, string $password, bool $rememberme = false, $secretkey = null)
     {
@@ -54,7 +55,7 @@ class KunenaLoginJoomla extends KunenaLoginAbstract
 
         try {
             $logged   = Factory::getApplication()->login($credentials, $options);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
 
@@ -66,7 +67,7 @@ class KunenaLoginJoomla extends KunenaLoginAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function logoutUser($return = null)
     {

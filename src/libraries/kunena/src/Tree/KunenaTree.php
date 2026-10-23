@@ -13,6 +13,7 @@
 namespace Kunena\Forum\Libraries\Tree;
 
 use Iterator;
+use ReturnTypeWillChange;
 
 \defined('_JEXEC') or die();
 
@@ -156,7 +157,7 @@ class KunenaTree implements Iterator
      *
      * @since   Kunena 6.0
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         $this->heap = [0];
@@ -171,7 +172,7 @@ class KunenaTree implements Iterator
      *
      * @since   Kunena 6.0
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function next()
     {
         $id = array_shift($this->heap);
@@ -196,7 +197,7 @@ class KunenaTree implements Iterator
      *
      * @since   Kunena 6.0
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function current()
     {
         $id = reset($this->heap);
@@ -209,7 +210,7 @@ class KunenaTree implements Iterator
      *
      * @since   Kunena 6.0
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function key()
     {
         return reset($this->heap);
@@ -276,7 +277,7 @@ class KunenaTree implements Iterator
             if ($this->_parents[$id] < 0) {
                 // Item isn't available (but there's at least one child)
                 $indent[] = 'gap';
-                $list     += $this->getIndentation($id, $indent, true);
+                $list += $this->getIndentation($id, $indent, true);
 
                 continue;
             }
@@ -307,7 +308,7 @@ class KunenaTree implements Iterator
             } else {
                 // Has child nodes
                 $list[$id]->indent[] = $parentid ? 'node' : 'root';
-                $list                += $this->getIndentation($id, $indent);
+                $list += $this->getIndentation($id, $indent);
             }
         }
 

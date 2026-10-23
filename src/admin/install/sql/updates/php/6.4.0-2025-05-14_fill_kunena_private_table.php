@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -8,7 +9,7 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -25,7 +26,8 @@ use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
  * @throws Exception
  * @since Kunena 6.4.0
  */
-function kunena_640_2025_05_14_fill_kunena_private_table($parent) {
+function kunena_640_2025_05_14_fill_kunena_private_table($parent)
+{
     $db     = Factory::getContainer()->get('DatabaseDriver');
     $query  = $db->createQuery();
     $query->select('id, mesid')
@@ -44,11 +46,11 @@ function kunena_640_2025_05_14_fill_kunena_private_table($parent) {
     $messages = KunenaMessageHelper::getMessages($listMesid);
 
     $listAttachByMessage = [];
-    foreach($attachmentsPrivate as $attachment) {
+    foreach ($attachmentsPrivate as $attachment) {
         $listAttachByMessage[$attachment->mesid][] = $attachment->id;
     }
 
-    foreach($messages as $message) {
+    foreach ($messages as $message) {
         $attachIds = $listAttachByMessage[$message->id];
 
         $parent             = $message->getParent();
@@ -84,5 +86,5 @@ function kunena_640_2025_05_14_fill_kunena_private_table($parent) {
         }
     }
 
-    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_FILL_KUNENA_PRIVATE_TABLE'), 'success' => true);
+    return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_FILL_KUNENA_PRIVATE_TABLE'), 'success' => true];
 }

@@ -93,9 +93,10 @@ abstract class KunenaRateHelper
 
         if (empty($db->loadResult())) {
             return '0';
-        } else {
-            return round($db->loadResult());
         }
+
+        return round($db->loadResult());
+
     }
 
     /**

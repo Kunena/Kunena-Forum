@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Quickicon\Kunena\Extension;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Database\DatabaseAwareInterface;
@@ -24,6 +25,7 @@ use Joomla\Event\SubscriberInterface;
 use Joomla\Module\Quickicon\Administrator\Event\QuickIconsEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use stdClass;
 
 /**
  * Class plgQuickiconKunena
@@ -64,11 +66,11 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
      * @return  void
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function onGetIcons(QuickIconsEvent $event): void
     {
-        $app = $this->getApplication();
+        $app     = $this->getApplication();
         $context = $event->getContext();
 
         if ($context != $this->params->get('context', 'mod_quickicon') || !$app->getIdentity()->authorise('core.manage', 'com_kunena')) {
@@ -93,7 +95,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
             $list = (array) $db->loadObjectList();
 
             if ($list) {
-                $updateInfo          = new \stdClass();
+                $updateInfo          = new stdClass();
                 $updateInfo->addons  = 0;
                 $updateInfo->version = 0;
 

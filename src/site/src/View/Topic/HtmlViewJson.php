@@ -10,7 +10,7 @@
  * @link          https://www.kunena.org
  **/
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Date\KunenaDate;

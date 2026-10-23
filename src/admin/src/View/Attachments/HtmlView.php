@@ -40,10 +40,10 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $model            = $this->getModel();
-        $this->items      = $model->getItems();
-        $this->state      = $model->getState();
-        $this->pagination = $model->getPagination();
+        $model               = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->state         = $model->getState();
+        $this->pagination    = $model->getPagination();
         $this->filterForm    = $model->getFilterForm();
         $this->activeFilters = $model->getActiveFilters();
 

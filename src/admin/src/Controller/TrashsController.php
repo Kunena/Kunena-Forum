@@ -64,7 +64,7 @@ class TrashsController extends AdminController
     {
         parent::__construct($config, $factory, $app, $input);
 
-        $layout = $this->input->get('layout', 'messages');
+        $layout        = $this->input->get('layout', 'messages');
         $this->baseurl = 'administrator/index.php?option=com_kunena&view=trashs&layout=' . $layout;
     }
 
@@ -85,7 +85,7 @@ class TrashsController extends AdminController
             return;
         }
 
-        $cid = $this->input->get('cid', array(), 'post', 'array');
+        $cid = $this->input->get('cid', [], 'post', 'array');
         $cid = ArrayHelper::toInteger($cid);
 
         $type = $this->input->getCmd('type', 'topics', 'post');

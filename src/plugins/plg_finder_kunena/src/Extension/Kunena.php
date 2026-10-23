@@ -15,32 +15,34 @@ namespace Kunena\Forum\Plugin\Finder\Kunena\Extension;
 
 \defined('_JEXEC') or die('');
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\Log\Log;
-use Joomla\CMS\User\UserFactoryInterface;
+use Exception;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Finder\AfterDeleteEvent;
 use Joomla\CMS\Event\Finder\AfterSaveEvent;
 use Joomla\CMS\Event\Finder\BeforeSaveEvent;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Log\Log;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Component\Finder\Administrator\Indexer\Adapter;
+use Joomla\Component\Finder\Administrator\Indexer\Helper;
 use Joomla\Component\Finder\Administrator\Indexer\Indexer;
 use Joomla\Component\Finder\Administrator\Indexer\Result;
-use Joomla\Component\Finder\Administrator\Indexer\Helper;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\QueryInterface;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Event\KunenaBeforeDeleteEvent;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use Kunena\Forum\Libraries\Tables\TableKunenaMessages;
 use Kunena\Forum\Libraries\Tables\TableKunenaTopics;
-use Kunena\Forum\Libraries\Html\KunenaParser;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Throwable;
 
 /**
  * Finder adapter for com_kunena.
@@ -149,7 +151,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return  void
      *
      * @since   2.5
-     * @throws  \Exception on database error.
+     * @throws  Exception on database error.
      */
     public function onFinderBeforeSave(BeforeSaveEvent $event): void
     {
@@ -174,7 +176,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return  void
      *
      * @since   2.5
-     * @throws  \Exception on database error.
+     * @throws  Exception on database error.
      */
     public function onFinderAfterSave(AfterSaveEvent $event): void
     {
@@ -220,7 +222,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return  void
      *
      * @since   2.5
-     * @throws  \Exception on database error.
+     * @throws  Exception on database error.
      */
     public function onFinderBeforeDelete(KunenaBeforeDeleteEvent $event): void
     {
@@ -250,7 +252,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return  void
      *
      * @since   2.5
-     * @throws  \Exception on database error.
+     * @throws  Exception on database error.
      */
     public function onFinderAfterDelete(AfterDeleteEvent $event): void
     {
@@ -273,7 +275,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return   boolean  True on success.
      *
      * @since   2.5
-     * @throws  \Exception on error.
+     * @throws  Exception on error.
      */
     public function onBuildIndex(): bool
     {
@@ -304,7 +306,7 @@ final class Kunena extends Adapter implements SubscriberInterface
         // Get the content items to index.
         try {
             $items = $this->getItems($lastId, $limit);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             ob_end_clean();
             Log::add("Finder Kunena plugin: getItems({$lastId}, {$limit}) threw " . \get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
             throw $e;
@@ -315,7 +317,7 @@ final class Kunena extends Adapter implements SubscriberInterface
 
             try {
                 $this->index($item);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 ob_end_clean();
                 Log::add("Finder Kunena plugin: index of message {$item->id} threw " . \get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
                 throw $e;
@@ -360,7 +362,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return  void
      *
      * @since   Kunena 6.0
-     * @throws  \Exception on database error.
+     * @throws  Exception on database error.
      */
     protected function index(Result $item): void
     {
@@ -399,7 +401,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return   boolean  True on success.
      *
      * @since   2.5
-     * @throws  \Exception
+     * @throws  Exception
      */
     protected function setup(): bool
     {
@@ -426,7 +428,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return   integer  The number of content items available to index.
      *
      * @since   2.5
-     * @throws  \Exception on database error.
+     * @throws  Exception on database error.
      */
     protected function getContentCount(): int
     {
@@ -443,7 +445,7 @@ final class Kunena extends Adapter implements SubscriberInterface
 
         try {
             $return = (int) $this->db->loadResult();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             KunenaError::displayDatabaseError($e);
         }
 
@@ -458,7 +460,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return  Result  A FinderIndexerResult object.
      *
      * @since   2.5
-     * @throws  \Exception on database error.
+     * @throws  Exception on database error.
      */
     protected function getItem($id): Result
     {
@@ -486,7 +488,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return  array  An array of Result objects.
      *
      * @since   2.5
-     * @throws  \Exception on database error.
+     * @throws  Exception on database error.
      */
     protected function getItems($offset, $limit, $sql = \null): array
     {
@@ -503,7 +505,7 @@ final class Kunena extends Adapter implements SubscriberInterface
 
         try {
             $ids = $this->db->loadColumn();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             KunenaError::displayDatabaseError($e);
         }
 
@@ -528,7 +530,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      *
      * @return  Result
      * @since   Kunena 6.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     protected function createIndexerResult($message): Result
     {
@@ -557,7 +559,7 @@ final class Kunena extends Adapter implements SubscriberInterface
 
         // Set body context.
         // The text for some readers only ([hide], [confidential]) is not for the index of the site: the search shows the text.
-        $text = preg_replace('/\[(confidential|hide)\](.*?)\[\/\1\]/su', '', (string) $message->message);
+        $text          = preg_replace('/\[(confidential|hide)\](.*?)\[\/\1\]/su', '', (string) $message->message);
         $item->body    = KunenaParser::stripBBCode($text);
         $item->summary = $item->body;
 
@@ -609,7 +611,7 @@ final class Kunena extends Adapter implements SubscriberInterface
 
         try {
             $subject = (string) $db->loadResult();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $subject = '';
         }
 
@@ -649,7 +651,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      *
      * @return  mixed
      * @since   Kunena 6.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     protected function getMessagesByCategory($cat_id)
     {
@@ -677,7 +679,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      *
      * @return  mixed
      * @since   Kunena 6.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     protected function getMessagesByTopic($topic_id)
     {
@@ -711,7 +713,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      *
      * @return  integer
      * @since   Kunena 6.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     protected function getAccessLevel($catid): int
     {

@@ -303,4 +303,3 @@ foreach ($this->sections as $section) :
 if ($this->templateParams->get('displayModule')) {
     echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_bottom');
 }
-

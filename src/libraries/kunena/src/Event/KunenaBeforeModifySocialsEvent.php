@@ -26,10 +26,11 @@ use Joomla\CMS\Event\Result\ResultTypeStringAware;
  *  new KunenaBeforeModifySocialsEvent('onEventName', ['socials' => $socials]);
  *
  * Joomla Core doesn't have a Finder\BeforeDeleteEvent
- * 
+ *
  * @since  7.1.0
  */
-class KunenaBeforeModifySocialsEvent extends GenericEvent implements ResultAwareInterface {
+class KunenaBeforeModifySocialsEvent extends GenericEvent implements ResultAwareInterface
+{
     use ResultAware;
     use ResultTypeStringAware;
 

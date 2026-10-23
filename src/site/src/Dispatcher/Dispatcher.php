@@ -151,13 +151,13 @@ class Dispatcher extends ComponentDispatcher
         // Prepare and display the output.
         $params       = new \stdClass();
         $params->text = '';
-        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        $dispatcher   = Factory::getContainer()->get(DispatcherInterface::class);
         $dispatcher->dispatch(
             'onKunenaBeforeRender',
             new KunenaBeforeRenderEvent(
                 'onKunenaBeforeRender',
                 ['context' => "com_kunena.{$view}",
-                'content' => &$contents]
+                'content'  => &$contents]
             )
         );
         $contents = (string) $contents;
@@ -166,7 +166,7 @@ class Dispatcher extends ComponentDispatcher
             new KunenaAfterRenderEvent(
                 'onKunenaAfterRender',
                 ['context' => "com_kunena.{$view}",
-                'content' => &$contents]
+                'content'  => &$contents]
             )
         );
         echo $contents;
@@ -205,12 +205,12 @@ class Dispatcher extends ComponentDispatcher
             Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
             Factory::getApplication()->sendHeaders();
 
-?>
+            ?>
             <h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
             <div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
 <?php
 
-            return;
+                        return;
         }
     }
 

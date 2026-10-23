@@ -37,9 +37,9 @@ class KunenaUser extends KunenaDatabaseObject
 
     /**
      * Get the table relevant properties. Override for your specific Object
-     * 
+     *
      * @return array    Assocative array with the propertie values of table
-     * 
+     *
      * @since   Kunena 6.4
      */
     protected function getTableProperties(): array

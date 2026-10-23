@@ -16,10 +16,10 @@ namespace Kunena\Forum\Site\Controller\User\Edit\Avatar;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\Folder;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;

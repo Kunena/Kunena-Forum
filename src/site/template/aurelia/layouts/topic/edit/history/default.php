@@ -62,7 +62,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
                     $hasVisibleAttachments = false;
 
                     // Filter out private attachments
-                    $visibleAttachments = array_filter($attachments, function($attachment) {
+                    $visibleAttachments = array_filter($attachments, function ($attachment) {
                         return $attachment->protected != 32; // Exclude private attachments
                     });
 

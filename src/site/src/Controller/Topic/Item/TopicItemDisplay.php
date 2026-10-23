@@ -16,8 +16,8 @@ namespace Kunena\Forum\Site\Controller\Topic\Item;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -26,6 +26,7 @@ use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -45,7 +46,6 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use stdClass;
-use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 
 /**
  * Class ComponentTopicControllerItemDisplay
@@ -149,9 +149,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
                 $params = [
                     'option' => 'com_kunena',
-                    'view' => 'topic',
-                    'catid' => $catid,
-                    'id' => $id,
+                    'view'   => 'topic',
+                    'catid'  => $catid,
+                    'id'     => $id,
                     'Itemid' => $itemid,
                 ];
 
@@ -171,8 +171,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $this->me = KunenaUserHelper::getMyself();
 
         $this->allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-        $options = ['defaultgroup' => 'com_kunena'];
-        $this->cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $options       = ['defaultgroup' => 'com_kunena'];
+        $this->cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         /*
         if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
@@ -181,7 +181,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
          }*/
 
         $options    = [];
-        $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+        $options[]  = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 
         // Todo: fix params
         $this->catParams    = ['sections' => 1, 'catid' => 0];
@@ -334,7 +334,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         $this->headerText = KunenaParser::parseText($this->topic->displayField('subject'));
 
-        $data                           = new \stdClass();
+        $data                           = new stdClass();
         $data->{'@context'}             = "https://schema.org";
         $data->{'@type'}                = "DiscussionForumPosting";
         $data->{'url'}                  = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
@@ -348,34 +348,34 @@ class TopicItemDisplay extends KunenaControllerDisplay
         }
 
         $data->{'author'}               = [];
-        $tmp                            = new \stdClass();
+        $tmp                            = new stdClass();
         $tmp->{'@type'}                 = "Person";
         $tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
         $tmp->{'url'}                   = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getLastPostAuthor()->getURL();
         $data->{'author'}               = $tmp;
         $data->interactionStatistic     = [];
-        $tmp2                           = new \stdClass();
+        $tmp2                           = new stdClass();
         $tmp2->{'@type'}                = "InteractionCounter";
         $tmp2->{'interactionType'}      = "InteractionCounter";
         $tmp2->{'userInteractionCount'} = $this->topic->getReplies();
         $data->interactionStatistic     = $tmp2;
-        $tmp3                           = new \stdClass();
+        $tmp3                           = new stdClass();
         $tmp3->{'@type'}                = "ImageObject";
         $tmp3->{'url'}                  = $this->docImage();
-        $tmp4                           = new \stdClass();
+        $tmp4                           = new stdClass();
         $tmp4->{'@type'}                = "Organization";
         $tmp4->{'name'}                 = $this->config->boardTitle;
         $tmp4->{'logo'}                 = $tmp3;
         $data->publisher                = (array) $tmp4;
         $data->mainEntityOfPage         = [];
-        $tmp5                           = new \stdClass();
+        $tmp5                           = new stdClass();
         $tmp5->{'@type'}                = "WebPage";
         $tmp5->{'name'}                 = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
         $data->mainEntityOfPage         = $tmp5;
 
         if ($this->category->allowRatings && $this->config->ratingEnabled && KunenaRateHelper::getCount($this->topic->id) > 0) {
             $data->aggregateRating  = [];
-            $tmp3                   = new \stdClass();
+            $tmp3                   = new stdClass();
             $tmp3->{'@type'}        = "AggregateRating";
             $tmp3->{'itemReviewed'} = $this->headerText;
             $tmp3->{'ratingValue'}  = KunenaRateHelper::getSelected($this->topic->id) > 0 ? KunenaRateHelper::getSelected($this->topic->id) : 5;
@@ -458,9 +458,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
         }
 
         if ($first) {
-            $firstId           = (int) $first->id;
-            $first->replynum   = 1;
-            $first->thankyou   = isset($thankyous[$firstId]) ? (array) $thankyous[$firstId]->getList() : [];
+            $firstId                             = (int) $first->id;
+            $first->replynum                     = 1;
+            $first->thankyou                     = isset($thankyous[$firstId]) ? (array) $thankyous[$firstId]->getList() : [];
             $userlist[(int) $first->userid]      = (int) $first->userid;
             $userlist[(int) $first->modified_by] = (int) $first->modified_by;
         }
@@ -686,7 +686,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         $multispaces_replaced = '';
         if (!empty($this->topic->first_post_message)) {
-            $firstPostMessage = KunenaParser::stripBBCode($this->topic->first_post_message, 160, false);
+            $firstPostMessage     = KunenaParser::stripBBCode($this->topic->first_post_message, 160, false);
             $multispaces_replaced = preg_replace('/\s+/', ' ', $firstPostMessage);
         }
 
@@ -752,7 +752,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         if ($menu_item) {
             $this->params = $menu_item->getParams();
-            $subject = $this->topic->subject;
+            $subject      = $this->topic->subject;
 
             $this->setTitle($subject);
 

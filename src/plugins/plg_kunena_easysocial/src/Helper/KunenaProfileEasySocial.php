@@ -20,6 +20,10 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial\Helper;
 
 \defined('_JEXEC') or die('Unauthorized Access');
 
+use ES;
+use Exception;
+use FD;
+use FRoute;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -47,7 +51,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 
     /**
      * Function to get User List URL
-     * 
+     *
      * @param   string  $action  action
      * @param   bool    $xhtml   xhtml
      *
@@ -63,12 +67,12 @@ class KunenaProfileEasySocial extends KunenaProfile
             return false;
         }
 
-        return \FRoute::users([], $xhtml);
+        return FRoute::users([], $xhtml);
     }
 
     /**
      * Function to get User Profile URL
-     * 
+     *
      * @param   int     $userid     userid
      * @param   string  $task       task
      * @param   bool    $xhtml      xhtml
@@ -76,18 +80,18 @@ class KunenaProfileEasySocial extends KunenaProfile
      *
      * @return  string|false
      * @since   Kunena 5.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
     {
         if ($userid) {
-            $user = \ES::user($userid);
+            $user = ES::user($userid);
 
             // When simple urls are enabled, we just hardcode the url
-            $config  = \ES::config();
-            $jConfig = \ES::jConfig();
+            $config  = ES::config();
+            $jConfig = ES::jConfig();
 
-            if (!\ES::isSh404Installed() && $config->get('users.simpleUrl') && $jConfig->getValue('sef')) {
+            if (!ES::isSh404Installed() && $config->get('users.simpleUrl') && $jConfig->getValue('sef')) {
                 return rtrim(Uri::root(), '/') . '/' . $user->getAlias(false);
             }
 
@@ -103,7 +107,7 @@ class KunenaProfileEasySocial extends KunenaProfile
             $options['layout'] = $task;
         }
 
-        $url = \FRoute::profile($options, $xhtml);
+        $url = FRoute::profile($options, $xhtml);
 
         return $url;
     }
@@ -122,7 +126,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 
     /**
      * Function to get the User Profile
-     * 
+     *
      * @param   KunenaLayout  $view    view
      * @param   Registry      $params  params
      *
@@ -133,7 +137,7 @@ class KunenaProfileEasySocial extends KunenaProfile
     {
         $userid = $view->profile->userid;
 
-        $user = \FD::user($userid);
+        $user = FD::user($userid);
 
         $gender = $user->getFieldData('GENDER');
 
@@ -142,7 +146,7 @@ class KunenaProfileEasySocial extends KunenaProfile
         }
 
         $data     = $user->getFieldData('BIRTHDAY');
-        $json     = \FD::json();
+        $json     = FD::json();
         $birthday = null;
 
         // Legacy
@@ -157,7 +161,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 
         // New format
         if (isset($data['date']) && !$birthday) {
-            $birthday = \FD::date($data['date']);
+            $birthday = FD::date($data['date']);
         }
 
         if (!\is_null($birthday)) {
@@ -177,26 +181,26 @@ class KunenaProfileEasySocial extends KunenaProfile
     public function getLegacyDate(int $birthday)
     {
         $birthday = json_decode($birthday);
-        $birthday = \FD::date($birthday->day . '-' . $birthday->month . '-' . $birthday->year);
+        $birthday = FD::date($birthday->day . '-' . $birthday->month . '-' . $birthday->year);
 
         return $birthday;
     }
 
     /**
      * Function to get User Profile Edit URL
-     * 
+     *
      * @param   int   $userid  userid
      * @param   bool  $xhtml   xhtml
      *
      * @return  string|false
      * @since   Kunena 5.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function getEditProfileURL(int $userid, bool $xhtml = true): string|false
     {
         $options = ['layout' => 'edit'];
 
-        return \FRoute::profile($options, $xhtml);
+        return FRoute::profile($options, $xhtml);
     }
 
     /**
@@ -211,17 +215,19 @@ class KunenaProfileEasySocial extends KunenaProfile
      */
     public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
     {
-        $config          = \ES::config();
+        $config          = ES::config();
         $displayusername = $config->get('users.displayName');
 
         if ($user->userid > 0) {
             if ($displayusername == 'username') {
-                return \FD::user($user->userid)->username;
-            } else {
-                return \FD::user($user->userid)->name;
+                return FD::user($user->userid)->username;
             }
-        } else {
-            return $visitorname;
+
+            return FD::user($user->userid)->name;
+
         }
+
+        return $visitorname;
+
     }
 }

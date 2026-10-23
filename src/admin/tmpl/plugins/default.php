@@ -141,9 +141,9 @@ $joomlaVersion = new Version();
                                         <?php echo $linkModal; ?>
                                         <?php if (version_compare($joomlaVersion->getShortVersion(), '5.1', '<')) : ?>
                                             <?php echo HTMLHelper::_(
-                        	'bootstrap.renderModal',
-                        	'plugin' . $item->extension_id . 'Modal',
-                        	array(
+                            'bootstrap.renderModal',
+                            'plugin' . $item->extension_id . 'Modal',
+                            [
                                                     'url'         => $link,
                                                     'title'       => Text::_($item->name),
                                                     'height'      => '400px',
@@ -165,7 +165,7 @@ $joomlaVersion = new Version();
                                                         . '<button type="button" class="btn btn-success"'
                                                         . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#applyBtn\'})">'
                                                         . Text::_('JAPPLY') . '</button>',
-                                                )
+                                                ]
                         ); ?>
                                         <?php endif; ?>
                                     <?php else : ?>

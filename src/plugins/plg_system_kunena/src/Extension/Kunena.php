@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\System\Kunena\Extension;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Model\AfterSaveEvent as ModelAfterSaveEvent;
 use Joomla\CMS\Event\Model\BeforeSaveEvent as ModelBeforeSaveEvent;
@@ -25,16 +26,17 @@ use Joomla\CMS\Event\User\BeforeSaveEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\User\User;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\SubscriberInterface;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Joomla\CMS\User\User;
 use Joomla\Http\Http;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\IpHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
+use RuntimeException;
 
 /**
  * Class Kunena
@@ -69,8 +71,8 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         $mapping = [];
 
         if ($app->isClient('site') || $app->isClient('administrator')) {
-            $mapping['onUserAfterSave'] = 'onUserAfterSave';
-            $mapping['onUserAfterLogin'] = 'onUserAfterLogin';
+            $mapping['onUserAfterSave']   = 'onUserAfterSave';
+            $mapping['onUserAfterLogin']  = 'onUserAfterLogin';
             $mapping['onUserAfterDelete'] = 'onUserAfterDelete';
 
             if ($app->isClient('site')) {
@@ -79,7 +81,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             } elseif ($app->isClient('administrator')) {
                 // Only allowed in the backend
                 $mapping['onExtensionBeforeSave'] = 'onExtensionBeforeSave';
-                $mapping['onExtensionAfterSave'] = 'onExtensionAfterSave';
+                $mapping['onExtensionAfterSave']  = 'onExtensionAfterSave';
             }
         }
 
@@ -94,7 +96,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      * @return  void
      *
      * @since   7.0.0
-     * @throws  \Exception when listed on stopforumspam
+     * @throws  Exception when listed on stopforumspam
      */
     public function onUserBeforeSave(BeforeSaveEvent $event): void
     {
@@ -126,7 +128,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
         try {
             $response = $http->get($request, [], 5);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             // The service cannot be reached: do not block the registration because of it.
             return;
         }
@@ -138,7 +140,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             if ($result && $result->success) {
                 if (($result->username->appears ?? false) || ($result->email->appears ?? false) || ($result->ip->appears ?? false)) {
                     $this->loadLanguage('plg_system_kunena.sys');
-                    throw new \Exception(Text::_('PLG_SYSTEM_KUNENA_STOPFORUMSPAMLISTED'), 400);
+                    throw new Exception(Text::_('PLG_SYSTEM_KUNENA_STOPFORUMSPAMLISTED'), 400);
                 }
             }
         }
@@ -198,8 +200,8 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             return;
         }
 
-        $options = $event->getOptions();
-        $kuser = KunenaFactory::getUser(\intval($options['user']->id));
+        $options         = $event->getOptions();
+        $kuser           = KunenaFactory::getUser(\intval($options['user']->id));
         $kuser->language = $this->getUserDefaultLanguage($options['user']->params);
 
         $kuser->save();
@@ -253,7 +255,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
                         ->delete($db->quoteName($table))
                         ->where($db->quoteName($field) . ' = ' . $userid);
                     $db->setQuery($query)->execute();
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     // A table of a plugin which is not installed: nothing to delete there.
                 }
             }
@@ -270,8 +272,8 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     }
 
     /**
-     * Get the user language defined in his Joomla! profile 
-     * 
+     * Get the user language defined in his Joomla! profile
+     *
      * @param string $params
      * @return string
      * @since   Kunena 7.0.0

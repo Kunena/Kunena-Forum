@@ -18,9 +18,9 @@ namespace Kunena\Forum\Libraries\Upload;
 use Exception;
 use finfo;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
-use Joomla\CMS\Language\Text;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -310,9 +310,9 @@ class KunenaUpload
     {
         $filename = $filename ? $filename : $this->filename;
 
-        $user    = Factory::getApplication()->getIdentity();
-        $session = Factory::getApplication()->getSession();
-        $token   = Factory::getApplication()->get('secret') . $user->id . $session->getToken();
+        $user             = Factory::getApplication()->getIdentity();
+        $session          = Factory::getApplication()->getSession();
+        $token            = Factory::getApplication()->get('secret') . $user->id . $session->getToken();
         list($name, $ext) = $this->splitFilename($filename);
 
         return md5("{$name}.{$token}.{$ext}");
@@ -367,7 +367,7 @@ class KunenaUpload
      *
      * @param   array  $file  Entry from $_FILES array.
      *
-     * @return \RuntimeException|null
+     * @return RuntimeException|null
      *
      * @since   Kunena 6.0
      */
@@ -480,10 +480,10 @@ class KunenaUpload
         switch ($unit) {
             case 'g':
                 $bytes *= 1024;
-                // no break
+                // No break
             case 'm':
                 $bytes *= 1024;
-                // no break
+                // No break
             case 'k':
                 $bytes *= 1024;
         }

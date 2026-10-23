@@ -207,12 +207,12 @@ if ($item->checked_out) {
                 <?php echo $this->pagination->getListFooter(); ?>
 
                 <?php echo HTMLHelper::_(
-                	'bootstrap.renderModal',
-                	'joomla-dialog-batch',
-                	[
+                    'bootstrap.renderModal',
+                    'joomla-dialog-batch',
+                    [
                         'title'  => Text::_('COM_KUNENA_BATCH_OPTIONS'),
                     ],
-                	$this->loadTemplate('batch')
+                    $this->loadTemplate('batch')
                 ); ?>
 
                 <input type="hidden" name="task" value="" />

@@ -137,13 +137,12 @@ class MiscDisplay extends Display
 
                 $params = [
                     'option' => 'com_kunena',
-                    'view' => 'misc',
+                    'view'   => 'misc',
                     'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
-            }
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }
@@ -163,7 +162,7 @@ class MiscDisplay extends Display
             $this->body = htmlspecialchars($body, ENT_COMPAT, 'UTF-8');
         } else {
             $options = ['defaultgroup' => 'com_kunena'];
-            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
+            $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
             $cache->setLifeTime(180);
 
             $this->body = $cache->get(['Kunena\Forum\Libraries\Html\KunenaParser', 'parseBBCode'], [$body]);

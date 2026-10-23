@@ -151,7 +151,7 @@ class KunenaKarma
         }
 
         // Create the TableKunenaKarma table object
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
         $tableObject = new TableKunenaKarma($db);
 
         return $tableObject;
@@ -183,8 +183,8 @@ class KunenaKarma
      */
     public function save()
     {
-        $time  = Factory::getDate();
-        $query = $this->_db->createQuery();
+        $time   = Factory::getDate();
+        $query  = $this->_db->createQuery();
         $values = [
             $this->_db->quote($this->userid),
             $this->_db->quote($this->target_userid),

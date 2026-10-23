@@ -27,9 +27,9 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Class ComponentTopicControllerItemActionsDisplay
@@ -320,13 +320,13 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
         return KunenaLayout::factory('Widget/Button')
             ->setProperties(
                 [
-                    'url'   => $url,
-                    'name' => $name,
-                    'scope' => $scope,
-                    'type' => $type,
+                    'url'     => $url,
+                    'name'    => $name,
+                    'scope'   => $scope,
+                    'type'    => $type,
                     'primary' => $primary,
-                    'normal' => $normal,
-                    'icon' => $icon,
+                    'normal'  => $normal,
+                    'icon'    => $icon,
                 ]
             );
     }

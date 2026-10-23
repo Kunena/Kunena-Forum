@@ -23,7 +23,9 @@ use Joomla\CMS\Event\AbstractEvent;
  *  new KunenaGetUserTopicsEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
  *
  * Joomla Core doesn't have a Finder\BeforeDeleteEvent
- * 
+ *
  * @since  7.1.0
  */
-class KunenaGetUserTopicsEvent extends AbstractEvent {}
+class KunenaGetUserTopicsEvent extends AbstractEvent
+{
+}

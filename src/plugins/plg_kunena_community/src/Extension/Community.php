@@ -28,11 +28,11 @@ use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaAccessCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaActivityCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaAvatarCommunity;
-use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaProfileCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaLoginCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaPrivateCommunity;
-use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaActivityCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaProfileCommunity;
 
 /**
  * Class Kunena
@@ -117,7 +117,7 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
      * Get Kunena access control object.
      *
      * @param   KunenaGetAccessControlEvent  $event  The event instance
-     * 
+     *
      * @return  void
      * @todo    Should we remove category ACL integration?
      * @since   Kunena 6.0
@@ -139,7 +139,7 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
      * Get Kunena login integration object.
      *
      * @param   KunenaGetLoginEvent  $event  The event instance
-     * 
+     *
      * @return  void
      * @since   Kunena 6.0
      */
@@ -158,7 +158,7 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
 
     /**
      * Get Kunena avatar integration object.
-     * 
+     *
      * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return  void
@@ -180,7 +180,7 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
 
     /**
      * Get Kunena profile integration object.
-     * 
+     *
      * @param   KunenaGetProfileEvent  $event  The event instance
      *
      * @return  void
@@ -202,7 +202,7 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
 
     /**
      * Get Kunena private message integration object.
-     * 
+     *
      * @param   KunenaGetPrivateEvent  $event The event  instance
      *
      * @return  void
@@ -226,7 +226,7 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
      * Get Kunena activity stream integration object.
      *
      * @param   KunenaGetActivityEvent  $event  The event instance
-     * 
+     *
      * @return  void
      * @since   Kunena 6.0
      */

@@ -82,8 +82,7 @@ class AjaxDisplay extends KunenaControllerDisplay
         {
             // Invalid access token.
             $content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
-        }*/
-        elseif ($this->config->boardOffline && !$this->me->isAdmin()) {
+        }*/ elseif ($this->config->boardOffline && !$this->me->isAdmin()) {
             // Forum is offline.
             $content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
         } elseif ($this->config->regOnly && !$this->me->exists()) {

@@ -14,6 +14,7 @@ namespace Kunena\Forum\Libraries\Model;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
@@ -84,7 +85,7 @@ class KunenaModel extends BaseDatabaseModel
      * @param   array                                             $config   config
      * @param   \Joomla\CMS\MVC\Factory\MVCFactoryInterface|null  $factory  factory
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public function __construct($config = [], ?MVCFactoryInterface $factory = null)

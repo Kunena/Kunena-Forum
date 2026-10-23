@@ -11,16 +11,16 @@
  * @link            https://www.kunena.org
  **/
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Joomla\CMS\Dispatcher\ComponentDispatcherFactoryInterface;
 use Joomla\CMS\Component\Router\RouterFactoryInterface;
+use Joomla\CMS\Dispatcher\ComponentDispatcherFactoryInterface;
 use Joomla\CMS\Extension\ComponentInterface;
 use Joomla\CMS\Extension\Service\Provider\ComponentDispatcherFactory;
 use Joomla\CMS\Extension\Service\Provider\MVCFactory;
+use Joomla\CMS\Extension\Service\Provider\RouterFactory;
 use Joomla\CMS\HTML\Registry;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Extension\Service\Provider\RouterFactory;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Kunena\Forum\Administrator\Extension\ForumComponent;
@@ -30,7 +30,7 @@ use Kunena\Forum\Administrator\Extension\ForumComponent;
  *
  * @since   Kunena 6.0
  */
-return new class implements ServiceProviderInterface {
+return new class () implements ServiceProviderInterface {
     /**
      * Registers the service provider with a DI container.
      *

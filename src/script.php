@@ -10,10 +10,9 @@
  * @link           https://www.kunena.org
  **/
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Date\Date;
-use Joomla\Filesystem\Folder;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
@@ -22,20 +21,21 @@ use Joomla\Database\ParameterType;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 
 // phpcs:disable PSR1.Files.SideEffects
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-return new class() implements ServiceProviderInterface {
+return new class () implements ServiceProviderInterface {
     public function register(Container $container)
     {
         $container->set(
             InstallerScriptInterface::class,
-            new class(
+            new class (
                 $container->get(AdministratorApplication::class),
                 $container->get(DatabaseInterface::class)
             ) implements InstallerScriptInterface {
@@ -57,60 +57,60 @@ return new class() implements ServiceProviderInterface {
                  * @since Kunena 2.0
                  */
                 protected $versions = [
-                    'PHP'     => [
+                    'PHP' => [
                         '8.5' => '8.5.0',
                         '8.4' => '8.4.1',
                         '8.3' => '8.3.0',
                         '0'   => '8.5.0', // Preferred version
                     ],
-                    'MySQL'   => [
-                        '26.7'=> '26.7.0',
-                        '9.7' => '9.7.0',
-                        '9.6' => '9.6.0',
-                        '9.5' => '9.5.0',
-                        '9.4' => '9.4.0',
-                        '9.3' => '9.3.0',
-                        '9.2' => '9.2.0',
-                        '9.1' => '9.1.0',
-                        '9.0' => '9.0.0',
-                        '8.4' => '8.4.2',
-                        '8.3' => '8.3.0',
-                        '8.2' => '8.2.0',
-                        '8.1' => '8.1.0',
-                        '8.0' => '8.0.16',
-                        '0'   => '9.6.0', // Preferred version
+                    'MySQL' => [
+                        '26.7' => '26.7.0',
+                        '9.7'  => '9.7.0',
+                        '9.6'  => '9.6.0',
+                        '9.5'  => '9.5.0',
+                        '9.4'  => '9.4.0',
+                        '9.3'  => '9.3.0',
+                        '9.2'  => '9.2.0',
+                        '9.1'  => '9.1.0',
+                        '9.0'  => '9.0.0',
+                        '8.4'  => '8.4.2',
+                        '8.3'  => '8.3.0',
+                        '8.2'  => '8.2.0',
+                        '8.1'  => '8.1.0',
+                        '8.0'  => '8.0.16',
+                        '0'    => '9.6.0', // Preferred version
                     ],
                     'mariaDB' => [
-                        '13.0' => '13.0.2',
-                        '12.3' => '12.3.2',
-                        '12.2' => '12.2.2',
-                        '12.1' => '12.1.2',
-                        '12.0' => '12.0.2',
-                        '11.8' => '11.8.2',
-                        '11.7' => '11.7.2',
-                        '11.6' => '11.6.2',
-                        '11.5' => '11.5.2',
-                        '11.4' => '11.4.2',
-                        '11.3' => '11.3',
-                        '11.2' => '11.2',
-                        '11.1' => '11.1',
-                        '11.0' => '11.0',
+                        '13.0'  => '13.0.2',
+                        '12.3'  => '12.3.2',
+                        '12.2'  => '12.2.2',
+                        '12.1'  => '12.1.2',
+                        '12.0'  => '12.0.2',
+                        '11.8'  => '11.8.2',
+                        '11.7'  => '11.7.2',
+                        '11.6'  => '11.6.2',
+                        '11.5'  => '11.5.2',
+                        '11.4'  => '11.4.2',
+                        '11.3'  => '11.3',
+                        '11.2'  => '11.2',
+                        '11.1'  => '11.1',
+                        '11.0'  => '11.0',
                         '10.11' => '10.11',
                         '10.10' => '10.10',
-                        '10.9' => '10.9',
-                        '10.8' => '10.8',
-                        '10.7' => '10.7',
-                        '10.6' => '10.6',
-                        '10.5' => '10.5',
-                        '10.4' => '10.4',
-                        '0' => '12.2.3', // Preferred version
+                        '10.9'  => '10.9',
+                        '10.8'  => '10.8',
+                        '10.7'  => '10.7',
+                        '10.6'  => '10.6',
+                        '10.5'  => '10.5',
+                        '10.4'  => '10.4',
+                        '0'     => '12.2.3', // Preferred version
                     ],
                     'Joomla!' => [
                         '6.2' => '6.2.0',
                         '6.1' => '6.1.4',
                         '6.0' => '6.0.4',
                         '5.4' => '5.4.10',
-                        '0' => '6.2.0',  // Preferred version
+                        '0'   => '6.2.0',  // Preferred version
                     ],
                 ];
 
@@ -135,8 +135,8 @@ return new class() implements ServiceProviderInterface {
                  */
                 public function __construct(AdministratorApplication $app, DatabaseInterface $db)
                 {
-                    $this->app = $app;
-                    $this->db  = $db;
+                    $this->app              = $app;
+                    $this->db               = $db;
                     $this->installedVersion = $this->getInstalledVersion();
                 }
 
@@ -214,7 +214,7 @@ return new class() implements ServiceProviderInterface {
                         return true;
                     }
 
-                    if (function_exists('apcu_clear_cache')) {
+                    if (\function_exists('apcu_clear_cache')) {
                         apcu_clear_cache();
                     }
 
@@ -223,7 +223,7 @@ return new class() implements ServiceProviderInterface {
                     $table = $db->getPrefix() . 'kunena_version';
 
                     $db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
-                    $upgrade = 0;
+                    $upgrade   = 0;
                     $installed = 'NONE';
 
                     if ($db->loadResult() == $table) {
@@ -463,17 +463,19 @@ return new class() implements ServiceProviderInterface {
 
                         if ($return) {
                             return $return->version;
-                        } else {
-                            return '0';
                         }
-                    } else {
+
                         return '0';
+
                     }
+
+                    return '0';
+
                 }
 
                 /**
                  * Check all the requirements mandatory to allow to install Kunena
-                 * 
+                 *
                  * @param   string  $version  version
                  *
                  * @return boolean|integer
@@ -528,7 +530,7 @@ return new class() implements ServiceProviderInterface {
                     reset($this->versions[$name]);
                     if (version_compare($version, next($this->versions[$name]), '<=')) {
                         $app->enqueueMessage(
-                            sprintf(
+                            \sprintf(
                                 "%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.",
                                 $name,
                                 $version,
@@ -541,7 +543,7 @@ return new class() implements ServiceProviderInterface {
                         );
                     } else {
                         $app->enqueueMessage(
-                            sprintf(
+                            \sprintf(
                                 "%s %s is not supported. Minimum required version is %s %s.",
                                 $name,
                                 $version,
@@ -596,11 +598,11 @@ return new class() implements ServiceProviderInterface {
                 {
                     $app = Factory::getApplication();
 
-                    if (in_array($name, $types)) {
+                    if (\in_array($name, $types)) {
                         return true;
                     }
 
-                    $app->enqueueMessage(sprintf("Database driver '%s' is not supported. Please use MySQL instead.", $name), 'notice');
+                    $app->enqueueMessage(\sprintf("Database driver '%s' is not supported. Please use MySQL instead.", $name), 'notice');
 
                     return false;
                 }
@@ -620,9 +622,9 @@ return new class() implements ServiceProviderInterface {
                     $pass = 1;
 
                     foreach ($extensions as $name) {
-                        if (!extension_loaded($name)) {
+                        if (!\extension_loaded($name)) {
                             $pass = 0;
-                            $app->enqueueMessage(sprintf("Required PHP extension '%s' is missing. Please install it into your system.", $name), 'notice');
+                            $app->enqueueMessage(\sprintf("Required PHP extension '%s' is missing. Please install it into your system.", $name), 'notice');
                         }
                     }
 

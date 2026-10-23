@@ -65,7 +65,8 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i = 0; foreach ($this->items as $row) : ?>
+                            <?php $i = 0;
+                            foreach ($this->items as $row) : ?>
                                 <tr>
                                     <td class="text-center">
                                         <?php echo HTMLHelper::_('grid.id', $i, intval($row->id)); ?>

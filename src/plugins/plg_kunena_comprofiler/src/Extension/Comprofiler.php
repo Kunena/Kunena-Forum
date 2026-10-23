@@ -16,6 +16,7 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Extension;
 \defined('_JEXEC') or die();
 
 use CBLib\Core\CBLib;
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -31,13 +32,13 @@ use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaAccessComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaActivityComprofiler;
 use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaAvatarComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaProfileComprofiler;
 use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaLoginComprofiler;
 use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaPrivateComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaActivityComprofiler;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaProfileComprofiler;
 
 /**
  * Class Kunena
@@ -149,7 +150,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
      *
      * @return  void
      *
-     * @throws  \Exception
+     * @throws  Exception
      * @since   Kunena 6.0
      */
     public function onKunenaDisplay(KunenaDisplayEvent $event): void
@@ -175,7 +176,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
      *
      * @return  void
      *
-     * @throws  \Exception
+     * @throws  Exception
      * @since   Kunena 6.0
      */
     public function onKunenaPrepare(KunenaPrepareEvent $event): void
@@ -197,7 +198,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
 
     /**
      * Function to get the KunenaAccessControl for this integration
-     * 
+     *
      * @param   KunenaGetAccessControlEvent  $event  The event instance
      *
      * @return  void
@@ -218,7 +219,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
 
     /**
      * Function to get the KunenaLogin for this integration
-     * 
+     *
      * @param   KunenaGetLoginEvent  $event  The event instance
      *
      * @return  void
@@ -239,7 +240,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
 
     /**
      * Get Kunena avatar integration object.
-     * 
+     *
      * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return  void
@@ -262,7 +263,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
 
     /**
      * Get Kunena profile integration object.
-     * 
+     *
      * @param   KunenaGetProfileEvent  $event  The event instance
      *
      * @return  void
@@ -285,7 +286,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
 
     /**
      * Get Kunena private message integration object.
-     * 
+     *
      * @param   KunenaGetPrivateEvent  $event The event  instance
      *
      * @return  void

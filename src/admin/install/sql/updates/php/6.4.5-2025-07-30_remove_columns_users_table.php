@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -8,7 +9,7 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -20,7 +21,8 @@ use Joomla\CMS\Language\Text;
  * @throws Exception
  * @since Kunena 6.4.5
  */
-function kunena_645_2025_07_30_remove_columns_users_table($parent) {
+function kunena_645_2025_07_30_remove_columns_users_table($parent)
+{
     $db     = Factory::getContainer()->get('DatabaseDriver');
 
     $listOfColumns = ['qq', 'karma_time'];
@@ -37,5 +39,5 @@ function kunena_645_2025_07_30_remove_columns_users_table($parent) {
         }
     }
 
-    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_645_REMOVE_COLUMNS_USERS_TABLE'), 'success' => true);
+    return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_645_REMOVE_COLUMNS_USERS_TABLE'), 'success' => true];
 }

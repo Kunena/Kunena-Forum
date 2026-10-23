@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
+use BadMethodCallException;
 use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\Registry\Registry;
 
@@ -34,14 +35,14 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
      * @param   array   $arguments  The event arguments.
      *
      * @since   4.0.0
-     * @throws  \BadMethodCallException
+     * @throws  BadMethodCallException
      */
     public function __construct(string $name, array $arguments = [])
     {
         parent::__construct($name, $arguments);
 
         if (!\array_key_exists('type', $this->arguments)) {
-            throw new \BadMethodCallException("Argument 'type' of event {$name} is required but has not been provided");
+            throw new BadMethodCallException("Argument 'type' of event {$name} is required but has not been provided");
         }
     }
 

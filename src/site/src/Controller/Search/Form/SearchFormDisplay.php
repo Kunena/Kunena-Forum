@@ -85,14 +85,12 @@ class SearchFormDisplay extends KunenaControllerDisplay
 
                 $params = [
                     'option' => 'com_kunena',
-                    'view' => 'search',
+                    'view'   => 'search',
                     'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
-            }
-
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }

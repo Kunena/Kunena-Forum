@@ -36,7 +36,7 @@ class UserAttachments extends KunenaLayout
      * @var     KunenaUser
      * @since   Kunena 6.1
      */
-   public $me;
+    public $me;
 
     /**
      * @var     KunenaConfig

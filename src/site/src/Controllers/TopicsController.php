@@ -343,8 +343,8 @@ class TopicsController extends KunenaController
             return;
         }
 
-        $ids   = ArrayHelper::toInteger(array_keys($this->app->getInput()->get('topics', [], 'post', 'array')));
-        $icons = KunenaFactory::getTemplate()->getUserTopicIcons();
+        $ids    = ArrayHelper::toInteger(array_keys($this->app->getInput()->get('topics', [], 'post', 'array')));
+        $icons  = KunenaFactory::getTemplate()->getUserTopicIcons();
         $iconId = $this->app->getInput()->post->getInt('status_icon', -1);
 
         if (!isset($icons[$iconId])) {

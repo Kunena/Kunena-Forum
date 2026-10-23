@@ -41,7 +41,7 @@ class ProtectAttachmentsField extends RadioField
      */
     protected function getLayoutData()
     {
-        $data = parent::getLayoutData();
+        $data                = parent::getLayoutData();
         $data['description'] = \sprintf(
             $data['description'],
             Uri::root(\false) . 'media/kunena/attachments/image.png'

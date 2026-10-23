@@ -16,6 +16,7 @@ namespace Kunena\Forum\Plugin\Task\Kunena\Extension;
 // No direct access
 \defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
@@ -35,8 +36,8 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\User\KunenaBan;
 
 /**
  * A task plugin.
@@ -97,7 +98,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
      * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
      *
      * @since  7.0.0
-     * @throws \Exception
+     * @throws Exception
      */
     private function removeExpiredBans(ExecuteTaskEvent $event): int
     {
@@ -107,7 +108,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
 
         try {
             /** @var DatabaseDriver */
-            $db = $this->getDatabase();
+            $db  = $this->getDatabase();
             $now = new Date();
 
             // Find expired site-wide bans
@@ -133,7 +134,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 }
 
                 // Update Kunena user profile
-                $profile = KunenaFactory::getUser($ban->userid);
+                $profile         = KunenaFactory::getUser($ban->userid);
                 $profile->banned = \null;
                 $profile->save(\true);
 
@@ -147,7 +148,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             }
 
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVEEXPIREDBANSSUCCESS', $countExpiredbans));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVEEXPIREDBANSERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
@@ -162,7 +163,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
      * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
      *
      * @since  7.0.0
-     * @throws \Exception
+     * @throws Exception
      */
     private function purgeTrash(ExecuteTaskEvent $event): int
     {
@@ -175,9 +176,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         }
 
         $params      = $event->getArgument('params');
-        $params = (object) $params;
+        $params      = (object) $params;
         // Define $age to default value else if empty
-        $age    = $params->age ?? 31;
+        $age         = $params->age ?? 31;
         $app         = Factory::getApplication();
         $trashsModel = new TrashsModel();
 
@@ -211,7 +212,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
      * @return integer  The routine exit code.
      *
      * @since  7.1.0
-     * @throws \Exception
+     * @throws Exception
      */
     private function sendNotifications(ExecuteTaskEvent $event): int
     {
@@ -219,9 +220,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             !ComponentHelper::isEnabled('com_kunena')
             || !KunenaForum::isCompatible('7.1')
             || !KunenaForum::installed()
-            ) {
-                return Status::NO_RUN;
-            }
+        ) {
+            return Status::NO_RUN;
+        }
 
         $config = KunenaFactory::getConfig();
 
@@ -237,8 +238,8 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
 
         KunenaForum::loadApi();
 
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $batchSize =  $config->emailBatchSize;
+        $db             = Factory::getContainer()->get('DatabaseDriver');
+        $batchSize      =  $config->emailBatchSize;
         $processedCount = 0;
 
         // Process the notifications by batch
@@ -264,10 +265,10 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             }
 
             // Table to store the IDs of the notifications which are processed
-            $processedIds = [];
+            $processedIds   = [];
             $deliveryFailed = false;
 
-            foreach($mailsToSend as $mail) {
+            foreach ($mailsToSend as $mail) {
                 $message = KunenaMessageHelper::get($mail->messageId);
 
                 if (!$message || !$message->exists()) {
@@ -276,9 +277,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                     continue;
                 }
 
-                $emailToList = json_decode($mail->emailListJson);
-                $sentusers = json_decode($mail->sentusers);
-                $pendingRecipients = $emailToList;
+                $emailToList          = json_decode($mail->emailListJson);
+                $sentusers            = json_decode($mail->sentusers);
+                $pendingRecipients    = $emailToList;
                 $persistRecipientSent = function ($recipientIndex) use (&$pendingRecipients, $db, $mail): void {
                     unset($pendingRecipients[$recipientIndex]);
 
@@ -362,7 +363,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
      * @return integer  The routine exit code.
      *
      * @since  7.1.0
-     * @throws \Exception
+     * @throws Exception
      */
     private function cleanPendingAttachments(ExecuteTaskEvent $event): int
     {
@@ -399,7 +400,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             }
 
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSSUCCESS', $countDeleted));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;

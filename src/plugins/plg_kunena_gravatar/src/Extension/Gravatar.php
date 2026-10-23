@@ -89,7 +89,7 @@ class Gravatar extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
 
     /**
      * Get Kunena avatar integration object.
-     * 
+     *
      * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return void

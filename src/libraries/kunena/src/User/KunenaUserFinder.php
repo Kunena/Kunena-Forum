@@ -17,9 +17,9 @@ namespace Kunena\Forum\Libraries\User;
 
 use Exception;
 use Joomla\CMS\Date\Date;
+use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
-use Joomla\CMS\Factory;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUserFinder
@@ -129,7 +129,7 @@ class KunenaUserFinder extends KunenaFinder
 
     /**
      * Filter the users by type (banned, admin, moderator...)
-     * 
+     *
      * @param   string  $usertype  Set the type of user to filter
      *
      * @return  $this
@@ -164,7 +164,7 @@ class KunenaUserFinder extends KunenaFinder
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function find(): array
     {

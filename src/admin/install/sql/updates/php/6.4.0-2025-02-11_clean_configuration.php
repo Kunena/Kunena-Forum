@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -8,21 +9,22 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 /**
  * Clean in the configuration the leftovers of previous parameters which has been deleted since
- * 
+ *
  * @param $parent
  *
  * @return array
  * @throws Exception
  * @since Kunena 6.4.0
  */
-function kunena_640_2025_02_11_clean_configuration($parent) {
+function kunena_640_2025_02_11_clean_configuration($parent)
+{
     $config = KunenaFactory::getConfig();
 
     $listNewConfigParams = ['boardTitle', 'boardOffline', 'offlineMessage', 'enableRss', 'threadsPerPage', 'messagesPerPage', 'messagesPerPageSearch', 'showHistory', 'historyLimit', 'showNew', 'disableEmoticons', 'showAnnouncement',
@@ -61,11 +63,11 @@ function kunena_640_2025_02_11_clean_configuration($parent) {
         'activemenuitem', 'mainmenu_id', 'home_id', 'index_id', 'moderators_id', 'topiclist_id', 'misc_id', 'profile_id', 'search_id', 'avatar_type', 'sef_redirect', 'allow_edit_poll', 'use_system_emails', 'autoembedinstagram', 'disable_re',
     ];
 
-    foreach($config as $param => $val) {
+    foreach ($config as $param => $val) {
         if ($param != 'id') {
             $keyFound = array_search($param, $listOldConfigParams);
             if ($keyFound !== false) {
-                $configParam = $listNewConfigParams[$keyFound];
+                $configParam          = $listNewConfigParams[$keyFound];
                 $config->$configParam = $val;
                 unset($config->$param);
             }
@@ -96,7 +98,7 @@ function kunena_640_2025_02_11_clean_configuration($parent) {
     ];
 
     // We are deleting the remaining config params which have been dropped in previous versions
-    foreach($config as $param => $val) {
+    foreach ($config as $param => $val) {
         if ($param != 'id') {
             if (array_search($param, $listConfigParams) === false) {
                 unset($config->$param);
@@ -107,5 +109,5 @@ function kunena_640_2025_02_11_clean_configuration($parent) {
     // Save configuration
     $config->save();
 
-    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_CLEAN_CONFIGURATION'), 'success' => true);
+    return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_CLEAN_CONFIGURATION'), 'success' => true];
 }

@@ -15,8 +15,8 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Application\SiteApplication;
+use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 

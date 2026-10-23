@@ -22,17 +22,17 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Event\KunenaGetAccessControlEvent;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaGetAccessControlEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -49,14 +49,14 @@ class KunenaAccess
      *
      * @since   Kunena 6.0
      */
-    const CATEGORY_SUBSCRIPTION = 1;
+    public const CATEGORY_SUBSCRIPTION = 1;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    const TOPIC_SUBSCRIPTION = 2;
+    public const TOPIC_SUBSCRIPTION = 2;
 
     /**
      * @var     null
@@ -308,7 +308,7 @@ jQuery(document).ready(function ($) {
                 if (method_exists($access, 'getAccessOptions')) {
                     $string               = Text::_('COM_KUNENA_INTEGRATION_TYPE_' . preg_replace('/[^\w\d]/', '_', $type));
                     $accesstypes[$string] = HTMLHelper::_('select.option', $type, $string);
-                    $exists               |= $type == $category->accesstype;
+                    $exists |= $type == $category->accesstype;
 
                     break;
                 }
@@ -852,7 +852,7 @@ jQuery(document).ready(function ($) {
         }
 
         if (!empty($adminlist)) {
-            $userlist  += $adminlist;
+            $userlist += $adminlist;
             $adminlist = implode(',', array_keys($adminlist));
             $query->select("IF( u.id IN ({$adminlist}), 1, 0 ) AS admin");
         } else {

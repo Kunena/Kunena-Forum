@@ -19,9 +19,9 @@ use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Mail\MailerFactoryInterface;
+use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
@@ -34,19 +34,21 @@ use Joomla\Filesystem\Folder;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Event\KunenaAfterProfileUpdateEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
-use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Karma\KunenaKarmaHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
-use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Notification\KunenaPopupNotification;
+use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
@@ -54,14 +56,12 @@ use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
+use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
 use Kunena\Forum\Plugin\Kunena\Kunena\Helper\KunenaProfileKunena;
 use RuntimeException;
 use stdClass;
-use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 
 /**
  * Kunena User Controller
@@ -81,7 +81,7 @@ class UserController extends KunenaController
      * @return \Joomla\CMS\MVC\Controller\BaseController
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function display($cachable = false, $urlparams = false): BaseController
     {
@@ -206,8 +206,8 @@ class UserController extends KunenaController
 
         $userid = $this->app->getInput()->getInt('userid', 0);
 
-        $target = KunenaFactory::getUser($userid);
-        $karma = KunenaKarmaHelper::get(0);
+        $target               = KunenaFactory::getUser($userid);
+        $karma                = KunenaKarmaHelper::get(0);
         $karma->userid        = $this->me->userid;
         $karma->target_userid = $userid;
 
@@ -258,7 +258,7 @@ class UserController extends KunenaController
             return;
         }
 
-        $karma->userid = KunenaUserHelper::getMyself()->userid;
+        $karma->userid        = KunenaUserHelper::getMyself()->userid;
         $karma->target_userid = $userid;
 
         try {
@@ -442,9 +442,9 @@ class UserController extends KunenaController
                 $meterp            = $params->get('meter');
                 $thresholdp        = $params->get('threshold');
 
-                empty($minimumLengthp) ?: $minimumLength = (int) $minimumLengthp;
-                empty($minimumIntegersp) ?: $minimumIntegers = (int) $minimumIntegersp;
-                empty($minimumSymbolsp) ?: $minimumSymbols = (int) $minimumSymbolsp;
+                empty($minimumLengthp) ?: $minimumLength       = (int) $minimumLengthp;
+                empty($minimumIntegersp) ?: $minimumIntegers   = (int) $minimumIntegersp;
+                empty($minimumSymbolsp) ?: $minimumSymbols     = (int) $minimumSymbolsp;
                 empty($minimumUppercasep) ?: $minimumUppercase = (int) $minimumUppercasep;
             }
 
@@ -950,15 +950,15 @@ class UserController extends KunenaController
     {
         if ($ban->isEnabled()) {
             $mailTitle =  Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE');
-            $mailBody = $this->config->mailBodyUserBanned;
+            $mailBody  = $this->config->mailBodyUserBanned;
         } else {
             $mailTitle = Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE');
-            $mailBody = $this->config->mailBodyUserUnBanned;
+            $mailBody  = $this->config->mailBodyUserUnBanned;
         }
 
         // Create email to notify the user which has been unbanned.
         $mailnamesender  = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle);
-        $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+        $mail            = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
         $mail->setSubject($mailTitle);
         $mail->setSender([$this->config->email, $mailnamesender]);
         $mail->setBody($mailBody);
@@ -1018,20 +1018,20 @@ class UserController extends KunenaController
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'), 'success');
 
                 return true;
-            } else {
-                // Report failed or refused
-                $reasons = [];
-                preg_match('/<p>.*<\/p>/', $result ? (string) $result->getBody() : '', $reasons);
-
-                // Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-                $reason = isset($reasons[0]) ? strip_tags($reasons[0]) : ($result ? 'HTTP ' . $result->getStatusCode() : 'no answer');
-                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', $reason), 'error');
-
-                return false;
             }
-        } else {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_NO_IP_GIVEN'), 'error');
+            // Report failed or refused
+            $reasons = [];
+            preg_match('/<p>.*<\/p>/', $result ? (string) $result->getBody() : '', $reasons);
+
+            // Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+            $reason = isset($reasons[0]) ? strip_tags($reasons[0]) : ($result ? 'HTTP ' . $result->getStatusCode() : 'no answer');
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', $reason), 'error');
+
+            return false;
+
         }
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_NO_IP_GIVEN'), 'error');
+
     }
 
     /**
@@ -1218,9 +1218,9 @@ class UserController extends KunenaController
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
 
-        $upload = KunenaUpload::getInstance();
+        $upload       = KunenaUpload::getInstance();
         $joomlaUserId = Factory::getApplication()->getIdentity()->id;
-        $user   = KunenaFactory::getUser($joomlaUserId);
+        $user         = KunenaFactory::getUser($joomlaUserId);
 
         // We are converting all exceptions into JSON.
         try {
@@ -1244,7 +1244,7 @@ class UserController extends KunenaController
                 $this->deleteOldAvatars($user);
 
                 // We have it all, lets update the avatar in user table
-                $uploadFile = $upload->getProtectedFile();
+                $uploadFile                 = $upload->getProtectedFile();
                 list($basename, $extension) = $upload->splitFilename();
 
                 File::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
@@ -1280,7 +1280,7 @@ class UserController extends KunenaController
 
     /**
      * Delete previoulsy uploaded avatars from filesystem
-     * 
+     *
      * @param   KunenaUser   $user   KunenaUser object
      *
      * @return  void
@@ -1333,7 +1333,7 @@ class UserController extends KunenaController
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
 
-        $success = [];
+        $success      = [];
         $joomlaUserId = Factory::getApplication()->getIdentity()->id;
         $kuser        = KunenaFactory::getUser($joomlaUserId);
 
@@ -1469,12 +1469,12 @@ class UserController extends KunenaController
                 $this->setRedirectBack();
 
                 return;
-            } else {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_DELETE_FAILED'), 'error');
-                $this->setRedirectBack();
-
-                return;
             }
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_DELETE_FAILED'), 'error');
+            $this->setRedirectBack();
+
+            return;
+
         }
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'), 'error');
@@ -1535,7 +1535,7 @@ class UserController extends KunenaController
 
     /**
      * Get the list of users to mentions in the topic by the given topicid
-     * 
+     *
      * @since   Kunena 6.3
      */
     public function getusersmentions()
@@ -1572,8 +1572,8 @@ class UserController extends KunenaController
                     continue;
                 }
 
-                $obj = new stdClass();
-                $obj->id = $key;
+                $obj         = new stdClass();
+                $obj->id     = $key;
                 $obj->userid = $user->userid;
                 $obj->avatar = $user->getAvatarURL();
                 // The name which is shown of the user (username, real name or display name).
@@ -1645,7 +1645,7 @@ class UserController extends KunenaController
         if (($this->me->exists() || $this->config->userlistAllowed) && $user !== '') {
             $db     = Factory::getContainer()->get('DatabaseDriver');
             $query  = $db->createQuery();
-            $query->select($db->quoteName(array('name', 'username')))
+            $query->select($db->quoteName(['name', 'username']))
                 ->from($db->quoteName('#__users'))
                 ->where($db->quoteName('block') . ' = 0')
                 ->where($db->quoteName('username') . ' LIKE ' . $db->quote('%' . $db->escape($user, true) . '%'))

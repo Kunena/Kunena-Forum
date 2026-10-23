@@ -16,10 +16,10 @@ namespace Kunena\Forum\Libraries\KunenaPrivate\Message;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
 
 /**
  * Private message finder.
@@ -96,7 +96,7 @@ class KunenaPrivateMessageFinder extends KunenaFinder
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function firstOrNew(): KunenaPrivateMessage
     {
@@ -111,7 +111,7 @@ class KunenaPrivateMessageFinder extends KunenaFinder
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public function find(): array

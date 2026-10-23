@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site\Service\Html;
 
 \defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -39,8 +40,8 @@ class Kunenagrid
      *
      * @return  string   The boolean setting widget.
      *
-     * @throws \Exception
-     * @throws \Exception
+     * @throws Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public static function boolean(int $i, int $value, $taskOn = null, $taskOff = null): string
@@ -67,7 +68,7 @@ class Kunenagrid
     /**
      * @return  void
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public static function behavior(): void
@@ -158,7 +159,7 @@ class Kunenagrid
      *
      * @return  string
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public static function checkedOut($row, int $i, $identifier = 'id'): string
@@ -233,8 +234,8 @@ class Kunenagrid
      *
      * @return  string
      *
-     * @throws \Exception
-     * @throws \Exception
+     * @throws Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public static function published(int $i, $value, $prefix = '', $bootstrap = false)
@@ -268,7 +269,7 @@ class Kunenagrid
      *
      * @return   string The Html code
      *
-     * @throws \Exception
+     * @throws Exception
      * @internal param string $text An optional text to display
      *
      * @since    Kunena 3.0
@@ -369,7 +370,7 @@ class Kunenagrid
      *
      * @return  string
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public static function task(int $i, string $img, string $alt, string $task, $prefix = '', $bootstrap = false)

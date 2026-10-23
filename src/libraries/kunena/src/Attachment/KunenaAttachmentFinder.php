@@ -17,8 +17,8 @@ namespace Kunena\Forum\Libraries\Attachment;
 
 use Exception;
 use Kunena\Forum\Libraries\Collection\KunenaCollection;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use RuntimeException;
 
 /**

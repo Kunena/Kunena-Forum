@@ -18,10 +18,10 @@ use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Path;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\Filesystem\Path;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -422,9 +422,9 @@ class KunenaView extends HtmlView
         if (method_exists($document, 'countModules') && $document->countModules($position)) {
             $renderer = $document->loadRenderer('modules');
             $options  = ['style' => 'xhtml'];
-            $html     .= '<div class="' . $position . '">';
-            $html     .= $renderer->render($position, $options, null);
-            $html     .= '</div>';
+            $html .= '<div class="' . $position . '">';
+            $html .= $renderer->render($position, $options, null);
+            $html .= '</div>';
         }
 
         return $html;
@@ -529,7 +529,7 @@ class KunenaView extends HtmlView
      *
      * @return  string  The output of the the template script.
      *
-     * @throws  \Exception
+     * @throws  Exception
      * @since   3.0
      */
     public function loadTemplate($tpl = null)
@@ -567,7 +567,7 @@ class KunenaView extends HtmlView
         }
 
         // Load the template script
-        $filetofind      = $this->_createFileName('template', ['name' => $file]);
+        $filetofind             = $this->_createFileName('template', ['name' => $file]);
         $this->_template[$file] = Path::find($this->_path['template'], $filetofind);
 
         // If alternate layout can't be found, fall back to default layout
@@ -602,7 +602,7 @@ class KunenaView extends HtmlView
             }
         }
 
-        throw new \Exception(Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file), 500);
+        throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file), 500);
     }
 
     /**
@@ -614,7 +614,7 @@ class KunenaView extends HtmlView
      *
      * @return string The output of the the template script.
      *
-     * @throws \Exception
+     * @throws Exception
      *@since   Kunena 6.0
      */
     public function loadTemplateFile(?string $tpl = null, ?array $hmvcParams = null): string
@@ -642,8 +642,7 @@ class KunenaView extends HtmlView
             $templateFile = preg_replace('%' . KunenaPath::clean(JPATH_ROOT, '/') . '/%', '', KunenaPath::clean($this->_template, '/'));
 
             // Unset so as not to introduce into template scope
-            unset($tpl);
-            unset($file);
+            unset($tpl, $file);
 
             // Never allow a 'this' property
             if (isset($this->this)) {

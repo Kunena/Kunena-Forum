@@ -181,7 +181,7 @@ class CpanelController extends FormController
      * @return void
      *
      * @since   Kunena 2.0.0-BETA2
-     * @throws \Exception
+     * @throws Exception
      */
     public function display($cachable = false, $urlparams = false): void
     {

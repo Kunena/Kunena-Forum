@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Integration;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -25,6 +26,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use StdClass;
 
 /**
  * Class \Kunena\Forum\Libraries\Integration\Avatar
@@ -59,9 +61,9 @@ class KunenaAvatar
 
     /**
      * Function to get the active KunenaAvatar instance from the integration
-     * 
+     *
      * @return  KunenaAvatar
-     * @throws  \Exception
+     * @throws  Exception
      * @since   Kunena 6.0
      */
     public static function getInstance(): KunenaAvatar
@@ -88,24 +90,26 @@ class KunenaAvatar
 
     /**
      * function to (pre) load the Avatars
-     * 
+     *
      * @param   array  $userlist  userlist
      *
      * @return  void
      * @since   Kunena 6.0
      */
-    public function load(array $userlist): void {}
+    public function load(array $userlist): void
+    {
+    }
 
     /**
      * Function to get the Avatar image with link for the user
-     * 
+     *
      * @param   KunenaUser  $user   user
      * @param   string      $class  class
      * @param   int         $sizex  sizex
      * @param   int         $sizey  sizey
      *
      * @return  string|false
-     * @throws  \Exception
+     * @throws  Exception
      * @since   Kunena 6.0
      */
     public function getLink(KunenaUser $user, $class = 'kavatar', $sizex = 90, $sizey = 90): string|false
@@ -144,17 +148,17 @@ class KunenaAvatar
 
     /**
      * Function to get the Avatar image sizes
-     * 
+     *
      * @param   int  $sizex  sizex
      * @param   int  $sizey  sizey
      *
-     * @return  \StdClass
-     * @throws  \Exception
+     * @return  StdClass
+     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getSize($sizex = 90, $sizey = 90): \StdClass
+    public function getSize($sizex = 90, $sizey = 90): StdClass
     {
-        $size    = new \StdClass();
+        $size    = new StdClass();
         $size->x = \intval($sizex);
         $size->y = \intval($sizey);
 
@@ -170,14 +174,14 @@ class KunenaAvatar
 
     /**
      * Function to get the Avatar image for the user
-     * 
+     *
      * @param   KunenaUser  $user   user
      * @param   int         $sizex  sizex
      * @param   int         $sizey  sizey
      *
      * @return  string
      * @since   Kunena 6.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function getURL(KunenaUser $user, $sizex = 90, int $sizey = 90): string
     {
@@ -196,7 +200,7 @@ class KunenaAvatar
 
     /**
      * Function to get the Avatar image for the user
-     * 
+     *
      * @param   KunenaUser  $user   user
      * @param   integer     $sizex  sizex
      * @param   integer     $sizey  sizey

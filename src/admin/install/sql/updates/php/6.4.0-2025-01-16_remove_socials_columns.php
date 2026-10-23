@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -8,7 +9,7 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -20,7 +21,8 @@ use Joomla\CMS\Language\Text;
  * @throws Exception
  * @since Kunena 6.4.0
  */
-function kunena_640_2025_01_16_remove_socials_columns($parent) {
+function kunena_640_2025_01_16_remove_socials_columns($parent)
+{
     $db     = Factory::getContainer()->get('DatabaseDriver');
 
     $listOfColumns = ['icq', 'x_social', 'facebook', 'myspace', 'linkedin', 'linkedin_company', 'digg', 'skype', 'yim', 'google', 'friendfeed', 'github', 'microsoft', 'blogspot', 'flickr', 'bebo', 'instagram',
@@ -38,5 +40,5 @@ function kunena_640_2025_01_16_remove_socials_columns($parent) {
         }
     }
 
-    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_REMOVE_SOCIALS_COLUMNS'), 'success' => true);
+    return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_REMOVE_SOCIALS_COLUMNS'), 'success' => true];
 }

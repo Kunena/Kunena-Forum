@@ -111,7 +111,7 @@ class KunenaUserTopics extends KunenaTable
     {
         $user  = KunenaUserHelper::get($this->user_id);
         $topic = KunenaTopicHelper::get($this->topic_id);
-        $mod = KunenaUserHelper::getMyself()->isModerator();
+        $mod   = KunenaUserHelper::getMyself()->isModerator();
 
         if (!$user->exists() && !$mod) {
             throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_USER_INVALID', (int) $user->userid));

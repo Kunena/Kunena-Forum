@@ -15,12 +15,13 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Access\KunenaAccessAbstract;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
-use Kunena\Forum\Libraries\Access\KunenaAccessAbstract;
 
 /**
  * Kunena Access Control for CommunityBuilder
@@ -56,7 +57,7 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function getAccessTypes(): array
     {
@@ -79,7 +80,7 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getGroupName(string $accesstype, $id = null)
     {
@@ -106,7 +107,7 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     protected function loadGroups(): void
     {
@@ -131,7 +132,7 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAccessOptions($accesstype, KunenaCategory $category): array
     {
@@ -175,7 +176,7 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     protected function loadCategories(): void
     {
@@ -205,7 +206,7 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadCategoryRoles(?array $categories = null): array
     {
@@ -228,7 +229,7 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAuthoriseActions(KunenaCategory $category, int $userid): array
     {
@@ -255,7 +256,7 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function authoriseCategories(int $userid, array &$categories): array
     {
@@ -286,7 +287,7 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function authoriseUsers(KunenaDatabaseObject $topic, array $userids): array
     {

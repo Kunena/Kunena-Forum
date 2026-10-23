@@ -21,12 +21,12 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Administrator\Model\CategoriesModel;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
-use Kunena\Forum\Administrator\Model\CategoriesModel;
 use RuntimeException;
 
 /**
@@ -743,7 +743,7 @@ class CategoriesController extends KunenaController
      * @return bool
      *
      * @since   Kunena 5.1.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function batchcategories(): bool
     {
@@ -765,7 +765,7 @@ class CategoriesController extends KunenaController
             return false;
         }
 
-		// User needs to be admin in the target category and in the current parent of every moved category
+        // User needs to be admin in the target category and in the current parent of every moved category
         $target = KunenaCategoryHelper::get($catParent);
 
         if (!$this->me->isAdmin($target)) {
@@ -788,7 +788,7 @@ class CategoriesController extends KunenaController
             }
         }
 
-	    if ($task == 'move') {
+        if ($task == 'move') {
             foreach ($cid as $cat) {
                 // A category cannot become a child of itself or of one of its own descendants.
                 $isLoop = false;

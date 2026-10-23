@@ -44,8 +44,8 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Tables\KunenaUsers;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use stdClass;
 
 /**
@@ -478,7 +478,7 @@ class KunenaUser
         }
 
         // Create the user table object
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
         $tableObject = new KunenaUsers($db);
 
         return $tableObject;
@@ -756,7 +756,7 @@ class KunenaUser
      * @return array|null
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAllowedCategories(): ?array
     {
@@ -1062,35 +1062,35 @@ class KunenaUser
         $table  = $this->getTable();
 
         $properties = [
-            'userid'       => $this->userid,
-            'status'       => $this->status,
-            'status_text'  => $this->status_text,
-            'view'         => $this->view,
-            'signature'    => $this->signature,
-            'moderator'    => $this->moderator,
-            'banned'       => $this->banned,
-            'ordering'     => $this->ordering,
-            'posts'        => $this->posts,
-            'avatar'       => $this->avatar,
-            'timestamp'    => $this->timestamp,
-            'karma'        => $this->karma,
-            'group_id'     => $this->group_id,
-            'uhits'        => $this->uhits,
-            'personalText' => $this->personalText,
-            'gender'       => $this->gender,
-            'birthdate'    => $this->birthdate,
-            'location'     => $this->location,
-            'websitename'  => $this->websitename,
-            'websiteurl'   => $this->websiteurl,
-            'rank'         => $this->rank,
-            'hideEmail'    => $this->hideEmail,
-            'showOnline'   => $this->showOnline,
+            'userid'              => $this->userid,
+            'status'              => $this->status,
+            'status_text'         => $this->status_text,
+            'view'                => $this->view,
+            'signature'           => $this->signature,
+            'moderator'           => $this->moderator,
+            'banned'              => $this->banned,
+            'ordering'            => $this->ordering,
+            'posts'               => $this->posts,
+            'avatar'              => $this->avatar,
+            'timestamp'           => $this->timestamp,
+            'karma'               => $this->karma,
+            'group_id'            => $this->group_id,
+            'uhits'               => $this->uhits,
+            'personalText'        => $this->personalText,
+            'gender'              => $this->gender,
+            'birthdate'           => $this->birthdate,
+            'location'            => $this->location,
+            'websitename'         => $this->websitename,
+            'websiteurl'          => $this->websiteurl,
+            'rank'                => $this->rank,
+            'hideEmail'           => $this->hideEmail,
+            'showOnline'          => $this->showOnline,
             'displayAgeBirthdate' => $this->displayAgeBirthdate,
-            'canSubscribe' => $this->canSubscribe,
-            'userListtime' => $this->userListtime,
-            'thankyou'     => $this->thankyou,
-            'ip'           => $this->ip,
-            'language'     => $this->language,
+            'canSubscribe'        => $this->canSubscribe,
+            'userListtime'        => $this->userListtime,
+            'thankyou'            => $this->thankyou,
+            'ip'                  => $this->ip,
+            'language'            => $this->language,
         ];
 
         // The texts of the profile fit their columns: with a strict database one long text (a place, the name of a website) was
@@ -1339,9 +1339,10 @@ class KunenaUser
     {
         if (!empty($this->websitename)) {
             return trim($this->websitename);
-        } else {
-            return $this->websiteurl;
         }
+
+        return $this->websiteurl;
+
     }
 
     /**
@@ -1824,7 +1825,7 @@ class KunenaUser
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public function rankCss(object $rank, int $catid): string
@@ -1851,9 +1852,8 @@ class KunenaUser
             $stylelast   = 'style="color:#e8f7ff;"';
         } elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK4') {
             $stylelast = 'style="color:#e8f7ff;"';
-        } else {
-            // Nothing to do here
         }
+        // Nothing to do here
 
         return KunenaLayout::factory('Widget/Ranks')
             ->set('type', $this->getType($catid, true))
@@ -1904,7 +1904,7 @@ class KunenaUser
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public function profileIcon(string $name): string
@@ -1966,9 +1966,9 @@ class KunenaUser
                 return '<span data-bs-toggle="tooltip" data-placement="right" title="' . Text::_('COM_KUNENA_VIEW_PMS') . '" >' . $pms->showIcon($this->userid) . '</span>';
                 break;
             case 'email':
-				 if (empty($this->email)) {
-        			return '';
-    		}
+                if (empty($this->email)) {
+                    return '';
+                }
 
                 return '<a href="mailto:' . $this->email . '" data-bs-toggle="tooltip" data-placement="right" title="' . $this->escape($this->email) . '">' . KunenaIcons::email() . '</a>';
                 break;
@@ -2218,9 +2218,9 @@ class KunenaUser
 
     /**
      * Get user socials info for the userprofile
-     * 
+     *
      * @throws Exception
-     * @since Kunena 6.4.0 
+     * @since Kunena 6.4.0
      */
     public function getSocialInfoUserProfile()
     {

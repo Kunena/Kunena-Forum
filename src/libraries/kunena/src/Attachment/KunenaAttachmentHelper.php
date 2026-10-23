@@ -17,8 +17,8 @@ namespace Kunena\Forum\Libraries\Attachment;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\File;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Filesystem\File;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -428,7 +428,7 @@ abstract class KunenaAttachmentHelper
 
         $user   = KunenaUserHelper::get($user);
         $config = KunenaFactory::getConfig();
-        $types = array_values(array_filter(array_map('trim', explode(',', $config->imageTypes)), 'strlen'));
+        $types  = array_values(array_filter(array_map('trim', explode(',', $config->imageTypes)), 'strlen'));
 
         // Check if attachments are allowed at all
         if (!$config->imageUpload) {
@@ -483,7 +483,7 @@ abstract class KunenaAttachmentHelper
         $category = KunenaCategoryHelper::get($category);
         $user     = KunenaUserHelper::get($user);
         $config   = KunenaFactory::getConfig();
-        $types = array_values(array_filter(array_map('trim', explode(',', $config->fileTypes)), 'strlen'));
+        $types    = array_values(array_filter(array_map('trim', explode(',', $config->fileTypes)), 'strlen'));
 
         // Check if attachments are allowed at all
         if (!$config->fileUpload) {
@@ -528,7 +528,7 @@ abstract class KunenaAttachmentHelper
      * @return bool
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public static function cleanup(): bool
     {
@@ -635,8 +635,6 @@ abstract class KunenaAttachmentHelper
             $query->where($db->quoteName('filetype') . '=' . $db->quote(''));
         } elseif ($params['image'] == '1' && $params['file'] != '1') {
             $query->where($db->quoteName('filetype') . '!=' . $db->quote(''));
-        } else {
-
         }
 
         if ($params['orderby'] == 'desc') {
@@ -683,7 +681,7 @@ abstract class KunenaAttachmentHelper
      *
      * @return bool|null
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 5.1
      */
     public static function getTotalAttachments(): ?int
@@ -742,7 +740,7 @@ abstract class KunenaAttachmentHelper
         if ($by === 'date') {
             foreach ($attachments as $id => $attachment) {
                 $path        = $attachment->getPath();
-                $dates[$id] = $path ? (int) filemtime($path) : 0;
+                $dates[$id]  = $path ? (int) filemtime($path) : 0;
             }
         }
 

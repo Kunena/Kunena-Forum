@@ -19,9 +19,9 @@ use Joomla\CMS\Component\Router\RouterServiceTrait;
 use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
-use Psr\Container\ContainerInterface;
-use Kunena\Forum\Site\Service\Html\Kunenagrid;
 use Kunena\Forum\Site\Service\Html\Kunenaforum;
+use Kunena\Forum\Site\Service\Html\Kunenagrid;
+use Psr\Container\ContainerInterface;
 
 \defined('_JEXEC') or die;
 

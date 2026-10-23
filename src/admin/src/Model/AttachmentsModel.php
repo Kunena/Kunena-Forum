@@ -88,7 +88,7 @@ class AttachmentsModel extends ListModel
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
-        $layout = $app->getInput()->get('layout');
+        $layout        = $app->getInput()->get('layout');
         $this->context = 'com_kunena.admin.attachments';
 
         if ($layout) {

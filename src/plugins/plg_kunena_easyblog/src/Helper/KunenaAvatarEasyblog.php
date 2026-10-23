@@ -15,6 +15,8 @@ namespace Kunena\Forum\Plugin\Kunena\Easyblog\Helper;
 
 \defined('_JEXEC') or die();
 
+use EB;
+use Exception;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -42,7 +44,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
     /**
      * @return string
      * @since Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getEditURL(): string
     {
@@ -58,13 +60,13 @@ class KunenaAvatarEasyblog extends KunenaAvatar
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
     {
         if (!$user->userid == 0) {
             $user   = KunenaFactory::getUser($user->userid);
-            $user   = \EB::user($user->userid);
+            $user   = EB::user($user->userid);
             $avatar = $user->getAvatar();
         } else {
             $avatar = Uri::root(true) . '/components/com_easyblog/assets/images/default_blogger.png';

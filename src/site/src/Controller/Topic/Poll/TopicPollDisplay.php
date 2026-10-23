@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site\Controller\Topic\Poll;
 
 \defined('_JEXEC') or die();
 
+use DateTimeImmutable;
 use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -103,8 +104,8 @@ class TopicPollDisplay extends KunenaControllerDisplay
 
         // Check if the poll has ended or if it still active
         if ($this->poll->polltimetolive != '1000-01-01 00:00:00') {
-            $origin = new \DateTimeImmutable('now');
-            $target = new \DateTimeImmutable($this->poll->polltimetolive);
+            $origin                   = new DateTimeImmutable('now');
+            $target                   = new DateTimeImmutable($this->poll->polltimetolive);
             $this->intervalTimeToLive = $origin->diff($target);
         }
 

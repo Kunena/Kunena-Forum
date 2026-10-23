@@ -20,12 +20,12 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use RuntimeException;
 
 /**
@@ -80,7 +80,7 @@ class TopicListingModeratorDisplay extends ListDisplay
                 } else {
                     $menu      = $this->app->getMenu();
                     $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=moderator"));
-                    $itemid = $getid->id;
+                    $itemid    = $getid->id;
                 }
 
                 if (!$itemid) {
@@ -89,15 +89,13 @@ class TopicListingModeratorDisplay extends ListDisplay
 
                 $params = [
                     'option' => 'com_kunena',
-                    'view' => 'topics',
+                    'view'   => 'topics',
                     'layout' => 'moderator',
                     'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
-            }
-
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }
@@ -121,7 +119,7 @@ class TopicListingModeratorDisplay extends ListDisplay
 
         $categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse);
 
-        $threadsId = KunenaMessageHelper::getMessagesFromUsers(array_keys($access->getModerators() + $access->getAdmins()));
+        $threadsId    = KunenaMessageHelper::getMessagesFromUsers(array_keys($access->getModerators() + $access->getAdmins()));
         $threadSearch = [];
 
         foreach ($threadsId as $thread) {
@@ -153,7 +151,7 @@ class TopicListingModeratorDisplay extends ListDisplay
         }
 
         $actions        = ['delete', 'approve', 'undelete', 'move', 'status', 'permdelete'];
-        $this->actions = $this->getTopicActions($this->topics, $actions);
+        $this->actions  = $this->getTopicActions($this->topics, $actions);
 
         $this->headerText = Text::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
     }

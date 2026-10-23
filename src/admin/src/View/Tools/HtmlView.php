@@ -259,7 +259,7 @@ class HtmlView extends BaseHtmlView
         /*
         // Get the toolbar object instance
         $bar = $this->getDocument()->getToolbar();
-        
+
         HTMLHelper::_('bootstrap.renderModal', 'trashmenuconfirmationModal');
 
         $title = Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH');

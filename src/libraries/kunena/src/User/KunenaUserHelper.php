@@ -128,7 +128,7 @@ abstract class KunenaUserHelper
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getAuthor($id, $name): ?KunenaUser
     {
@@ -162,7 +162,7 @@ abstract class KunenaUserHelper
      *
      * @return \Kunena\Forum\Libraries\User\KunenaUser|null
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public static function get($identifier = null, $reload = false): ?KunenaUser
@@ -201,7 +201,7 @@ abstract class KunenaUserHelper
         if ($id === 0) {
             KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-            $newUser = new KunenaUser($id);
+            $newUser         = new KunenaUser($id);
             $newUser->userid = $id;
 
             return $newUser;
@@ -378,7 +378,7 @@ abstract class KunenaUserHelper
      *
      * @return array|null
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public static function getTopPosters($limit = 0): ?array
@@ -533,7 +533,7 @@ abstract class KunenaUserHelper
      *
      * @return array|null
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public static function getOnlineUsers(): ?array

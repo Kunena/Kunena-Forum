@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
 
 \defined('_JEXEC') or die();
 
+use CRoute;
 use Joomla\CMS\Component\ComponentHelper;
 use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 
@@ -32,7 +33,7 @@ class KunenaLoginCommunity extends KunenaLoginAbstract
      */
     public function getLoginURL(): string
     {
-        return \CRoute::_('index.php?option=com_community&view=frontpage');
+        return CRoute::_('index.php?option=com_community&view=frontpage');
     }
 
     /**
@@ -42,7 +43,7 @@ class KunenaLoginCommunity extends KunenaLoginAbstract
      */
     public function getLogoutURL(): string
     {
-        return \CRoute::_('index.php?option=com_community&view=frontpage');
+        return CRoute::_('index.php?option=com_community&view=frontpage');
     }
 
     /**
@@ -54,7 +55,7 @@ class KunenaLoginCommunity extends KunenaLoginAbstract
         $usersConfig = ComponentHelper::getParams('com_users');
 
         if ($usersConfig->get('allowUserRegistration')) {
-            return \CRoute::_('index.php?option=com_community&view=register');
+            return CRoute::_('index.php?option=com_community&view=register');
         }
     }
 }

@@ -740,9 +740,10 @@ class KunenaIcons
         if ($topicicontype == 'fa') {
             if ($text != null) {
                 return '<i class="fa fa-minus" aria-hidden="true" title="' . $text . '"></i>';
-            } else {
-                return '<i class="fa fa-minus" aria-hidden="true"></i>';
             }
+
+            return '<i class="fa fa-minus" aria-hidden="true"></i>';
+
         }
 
         return KunenaSvgIcons::loadsvg('minus');
@@ -764,9 +765,10 @@ class KunenaIcons
         if ($topicicontype == 'fa') {
             if ($text != null) {
                 return '<i class="fa fa-plus" aria-hidden="true" title="' . $text . '"></i>';
-            } else {
-                return '<i class="fa fa-plus" aria-hidden="true"></i>';
             }
+
+            return '<i class="fa fa-plus" aria-hidden="true"></i>';
+
         }
 
         return KunenaSvgIcons::loadsvg('plus');
@@ -1093,16 +1095,17 @@ class KunenaIcons
             if (!$categoryicon) {
                 if ($newchar) {
                     return KunenaSvgIcons::loadsvg('folder-fill');
-                } else {
-                    return KunenaSvgIcons::loadsvg('folder');
                 }
-            } else {
-                if (is_file(JPATH_SITE . '/media/kunena/core/svg/' . $categoryicon . '.svg')) {
-                    return KunenaSvgIcons::loadsvg($categoryicon);
-                } else {
-                    return '<span class="icon ' . $categoryicon . $bigicon . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"></span>';
-                }
+
+                return KunenaSvgIcons::loadsvg('folder');
+
             }
+            if (is_file(JPATH_SITE . '/media/kunena/core/svg/' . $categoryicon . '.svg')) {
+                return KunenaSvgIcons::loadsvg($categoryicon);
+            }
+
+            return '<span class="icon ' . $categoryicon . $bigicon . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"></span>';
+
         }
 
         if ($topicicontype == 'image') {

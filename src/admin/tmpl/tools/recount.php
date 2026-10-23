@@ -16,8 +16,8 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 Text::script('COM_KUNENA_MODAL_CLOSE');
 Text::script('COM_KUNENA_AJAXMODAL_START_HEADER');

@@ -16,12 +16,12 @@ namespace Kunena\Forum\Administrator\Controller;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
@@ -75,9 +75,9 @@ class TemplateController extends FormController
     {
         parent::__construct($config, $factory, $app, $input);
 
-        $this->baseurl = 'administrator/index.php?option=com_kunena&view=templates';
+        $this->baseurl         = 'administrator/index.php?option=com_kunena&view=templates';
         $this->baseurlTemplate = 'administrator/index.php?option=com_kunena&view=template';
-        $this->config  = KunenaFactory::getConfig();
+        $this->config          = KunenaFactory::getConfig();
     }
 
     /**
@@ -779,8 +779,8 @@ class TemplateController extends FormController
         $template     = $this->app->getInput()->getArray(['cid' => '']);
         $templatename = array_shift($template['cid']);
 
-        $filename    = $this->app->getInput()->get('filename');
-        $filecontent = $this->app->getInput()->get('filecontent', '', 'raw');
+        $filename     = $this->app->getInput()->get('filename');
+        $filecontent  = $this->app->getInput()->get('filecontent', '', 'raw');
         $task         = $this->app->getInput()->get('task');
 
         if (!Session::checkToken('post')) {

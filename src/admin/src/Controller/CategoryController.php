@@ -25,13 +25,14 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryIcon;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryTranslation;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
-use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
-use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use RuntimeException;
 
 /**
  * Kunena Category Controller
@@ -154,7 +155,7 @@ class CategoryController extends KunenaController
         }
 
         if (($post['task'] ?? '') === 'category.save2copycategory') {
-            $post['name'] = $this->app->getUserState('com_kunena.category_title');
+            $post['name']  = $this->app->getUserState('com_kunena.category_title');
             $post['alias'] = $this->app->getUserState('com_kunena.category_alias');
             $post['catid'] = $this->app->getUserState('com_kunena.category_catid');
         }
@@ -169,8 +170,7 @@ class CategoryController extends KunenaController
         // A request without an access level keeps the level of the category (a new category is for everybody).
         $post['access'] = $this->input->getInt("access-{$accesstype}", $this->input->getInt('access', $category->exists() ? (int) $category->access : 1));
 
-        unset($post['params-joomla-level']);
-        unset($post['params-joomla-group']);
+        unset($post['params-joomla-level'], $post['params-joomla-group']);
 
         // The translations of the name and the descriptions are saved after the category, they are no property of it.
         $translations = (array) ($post['translations'] ?? []);
@@ -204,7 +204,7 @@ class CategoryController extends KunenaController
             // User needs to be admin in parent (both new and old) in order to move category, parentid=0 needs global admin rights
             if (!$me->isAdmin($parent) || ($category->exists() && !$me->isAdmin($category->getParent()))) {
                 $ignore            = array_merge($ignore, ['parentid', 'ordering']);
-                $post['parentid'] = $category->parentid;
+                $post['parentid']  = $category->parentid;
             }
 
             // Only global admin can change access control and class_sfx (others are inherited from parent)
@@ -212,15 +212,15 @@ class CategoryController extends KunenaController
                 $access = ['accesstype', 'access', 'pubAccess', 'pubRecurse', 'adminAccess', 'adminRecurse', 'channels', 'class_sfx', 'params'];
 
                 $data = [
-                    'accesstype' => $parent->accesstype,
-                    'access' => $parent->access,
-                    'pubAccess' => $parent->pubAccess,
-                    'pubRecurse' => $parent->pubRecurse,
-                    'adminAccess' => $parent->adminAccess,
+                    'accesstype'   => $parent->accesstype,
+                    'access'       => $parent->access,
+                    'pubAccess'    => $parent->pubAccess,
+                    'pubRecurse'   => $parent->pubRecurse,
+                    'adminAccess'  => $parent->adminAccess,
                     'adminRecurse' => $parent->adminRecurse,
-                    'channels' => $parent->channels,
-                    'class_sfx' => $parent->class_sfx,
-                    'params' => $parent->params,
+                    'channels'     => $parent->channels,
+                    'class_sfx'    => $parent->class_sfx,
+                    'params'       => $parent->params,
                 ];
 
                 if (!$category->exists() || $parent->id != $category->parentid) {
@@ -231,7 +231,7 @@ class CategoryController extends KunenaController
                 $ignore = array_merge($ignore, $access);
             }
 
-            if(!isset($post['iconset'])) {
+            if (!isset($post['iconset'])) {
                 $post['iconset'] = 'default';
             }
 
@@ -260,7 +260,7 @@ class CategoryController extends KunenaController
                         if (\is_array($iconFile) && !empty($iconFile)) {
                             KunenaCategoryIcon::save((int) $category->id, $iconFile);
                         }
-                    } catch (\RuntimeException $e) {
+                    } catch (RuntimeException $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'warning');
                     }
                 }
@@ -562,7 +562,7 @@ class CategoryController extends KunenaController
 
     /**
      * Check if the alias given is already in use in the categories
-     * 
+     *
      * @return  void
      *
      * @since   Kunena 6.0

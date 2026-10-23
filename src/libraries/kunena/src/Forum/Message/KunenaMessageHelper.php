@@ -22,9 +22,9 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
@@ -238,9 +238,9 @@ abstract class KunenaMessageHelper
             foreach ($results as $id => $result) {
                 $instance = new KunenaMessage($result);
                 $instance->exists(true);
-                self::$_instances[$id]             = $instance;
+                self::$_instances[$id]              = $instance;
                 $list[$orderbyid ? $id : $location] = $instance;
-                $location                           += $order;
+                $location += $order;
             }
         }
 
@@ -421,7 +421,7 @@ abstract class KunenaMessageHelper
             foreach ($results as $result) {
                 $instance = new KunenaMessage($result);
                 $instance->exists(true);
-                self::$_instances[$instance->id] = $instance;
+                self::$_instances[$instance->id]  = $instance;
                 $messages[$instance->id]          = $instance;
             }
         }
@@ -542,8 +542,8 @@ abstract class KunenaMessageHelper
 
             if (!isset(self::$_location[$id])) {
                 $ids[$id]                    = $id;
-                self::$_location[$id]       = new stdClass();
-                self::$_location[$id]->hold = ['before' => 0, 'after' => 0];
+                self::$_location[$id]        = new stdClass();
+                self::$_location[$id]->hold  = ['before' => 0, 'after' => 0];
             }
         }
 
@@ -581,7 +581,7 @@ abstract class KunenaMessageHelper
                     $instance->id                    = $result->id;
                     $instance->category_id           = $result->category_id;
                     $instance->topic_id              = $result->topic_id;
-                    self::$_location[$instance->id] = $instance;
+                    self::$_location[$instance->id]  = $instance;
                 }
 
                 $instance->hold[$result->hold] = ['before' => $result->before_count, 'after' => $result->after_count];
@@ -672,7 +672,7 @@ abstract class KunenaMessageHelper
 
         $idlist = implode(',', $ids);
         $query  = $db->createQuery();
-        $query->select(array('m.*', 't.message'))
+        $query->select(['m.*', 't.message'])
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
             ->where($db->quoteName('m.thread') . ' IN (' . $idlist . ')')
@@ -699,7 +699,7 @@ abstract class KunenaMessageHelper
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getLastUserIP(int $userid): string|false
     {
@@ -737,7 +737,7 @@ abstract class KunenaMessageHelper
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getMessagesFromUsers(array $users)
     {

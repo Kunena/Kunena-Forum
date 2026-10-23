@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Profiler;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Profiler\Profiler;
+use Throwable;
 
 /**
  * Class KunenaProfiler
@@ -153,7 +154,7 @@ class KunenaProfiler extends Profiler
             if (method_exists($db, 'getMonitor') && method_exists($db, 'setMonitor') && !$db->getMonitor()) {
                 $db->setMonitor(new \Joomla\Database\Monitor\DebugMonitor(true));
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             // The queries are optional information of the panel.
         }
     }
@@ -186,11 +187,11 @@ class KunenaProfiler extends Profiler
             $exact   = [];
 
             foreach ($logs as $i => $sql) {
-                $start = $timings[$i * 2] ?? null;
-                $stop  = $timings[$i * 2 + 1] ?? $start;
-                $norm  = trim((string) preg_replace('/\s+/', ' ', (string) preg_replace(["/'(?:[^'\\\\]|\\\\.)*'/", '/\b\d+\b/'], '?', (string) $sql)));
-                $seen[$norm] = ($seen[$norm] ?? 0) + 1;
-                $text        = trim((string) preg_replace('/\s+/', ' ', (string) $sql));
+                $start        = $timings[$i * 2] ?? null;
+                $stop         = $timings[$i * 2 + 1] ?? $start;
+                $norm         = trim((string) preg_replace('/\s+/', ' ', (string) preg_replace(["/'(?:[^'\\\\]|\\\\.)*'/", '/\b\d+\b/'], '?', (string) $sql)));
+                $seen[$norm]  = ($seen[$norm] ?? 0) + 1;
+                $text         = trim((string) preg_replace('/\s+/', ' ', (string) $sql));
                 $exact[$text] = ($exact[$text] ?? 0) + 1;
 
                 $queries[] = [
@@ -213,7 +214,7 @@ class KunenaProfiler extends Profiler
             }
 
             unset($query);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return [];
         }
 
@@ -342,7 +343,7 @@ class KunenaProfiler extends Profiler
 
         if (!self::$cssPrinted) {
             self::$cssPrinted = true;
-            $assets = '<style>' . self::panelCss() . '</style><script>' . self::panelScript() . '</script>';
+            $assets           = '<style>' . self::panelCss() . '</style><script>' . self::panelScript() . '</script>';
         }
 
         $rows = '';
@@ -370,7 +371,7 @@ class KunenaProfiler extends Profiler
             $share = max(0.5, min(100, $tot / $pageTime * 100));
 
             $data[] = [
-                'name' => $name, 'type' => $type, 'calls' => (int) $item->calls, 'own_ms' => round($own * 1000, 3), 'total_ms' => round($tot * 1000, 3),
+                'name'         => $name, 'type' => $type, 'calls' => (int) $item->calls, 'own_ms' => round($own * 1000, 3), 'total_ms' => round($tot * 1000, 3),
                 'memory_bytes' => (int) $item->memory, 'callers' => (object) $item->callers, 'log' => $item->log,
             ];
 
@@ -854,10 +855,10 @@ class KunenaProfilerItem
     public function start($starttime, string $parent = ''): float
     {
         $this->calls++;
-        $this->openCallers[] = $parent;
+        $this->openCallers[]    = $parent;
         $this->callers[$parent] = ($this->callers[$parent] ?? 0) + 1;
-        $this->start[] = $starttime;
-        $this->memoryStart[] = memory_get_usage();
+        $this->start[]          = $starttime;
+        $this->memoryStart[]    = memory_get_usage();
 
         return $starttime;
     }
@@ -871,9 +872,9 @@ class KunenaProfilerItem
      */
     public function stop($stoptime): float
     {
-        $starttime = array_pop($this->start);
+        $starttime   = array_pop($this->start);
         $memoryStart = array_pop($this->memoryStart);
-        $parent = (string) array_pop($this->openCallers);
+        $parent      = (string) array_pop($this->openCallers);
 
         if ($memoryStart !== null) {
             $this->memory += memory_get_usage() - $memoryStart;
@@ -887,7 +888,7 @@ class KunenaProfilerItem
         $this->total += $delta;
 
         if (\count($this->log) < 300) {
-            $origin = (float) ($_SERVER['REQUEST_TIME_FLOAT'] ?? $starttime);
+            $origin      = (float) ($_SERVER['REQUEST_TIME_FLOAT'] ?? $starttime);
             $this->log[] = [round(($starttime - $origin) * 1000, 3), round($delta * 1000, 3), $parent];
         }
 

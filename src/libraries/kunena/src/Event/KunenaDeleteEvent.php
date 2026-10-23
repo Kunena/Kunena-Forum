@@ -24,7 +24,9 @@ use Joomla\CMS\Event\Model\DeleteEvent;
  *  new KunenaDeleteEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
  *
  * Joomla Core doesn't have a Finder\BeforeDeleteEvent
- * 
+ *
  * @since  7.1.0
  */
-class KunenaDeleteEvent extends DeleteEvent implements FinderEventInterface {}
+class KunenaDeleteEvent extends DeleteEvent implements FinderEventInterface
+{
+}

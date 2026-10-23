@@ -18,8 +18,8 @@ namespace Kunena\Forum\Site\Controller\User\Edit\Profile;
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
+use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
 
 /**
  * Class ComponentUserControllerEditProfileDisplay

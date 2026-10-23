@@ -230,7 +230,7 @@ class KunenaMessageFinder extends KunenaFinder
      * @return array
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function find($access = 'read'): array
     {

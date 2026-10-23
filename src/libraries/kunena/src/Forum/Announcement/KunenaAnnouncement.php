@@ -17,8 +17,8 @@ namespace Kunena\Forum\Libraries\Forum\Announcement;
 
 use Exception;
 use InvalidArgumentException;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
@@ -276,7 +276,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
      * @return \Kunena\Forum\Libraries\User\KunenaUser|null
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAuthor(): ?KunenaUser
     {
@@ -392,7 +392,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
     protected function saveInternal()
     {
         $options = ['defaultgroup' => 'com_kunena'];
-        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
         $cache->remove('announcement', 'global');
 
         return true;
@@ -475,9 +475,10 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 
             if (!$banned->isLifetime()) {
                 return new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
-            } else {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
             }
+
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
+
         }
 
         return;
@@ -507,15 +508,15 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 
     /**
      * Get the table relevant properties. Override for your specific Object
-     * 
+     *
      * @return array    Assocative array with the propertie values of table
-     * 
+     *
      * @since   Kunena 6.4
      */
     protected function getTableProperties(): array
     {
         $properties = [
-            'id'           => $this->id,
+            'id' => $this->id,
             // TINYTEXT: 255 bytes (a longer title was an error of a strict database, the announcement was not saved).
             'title'        => mb_strcut((string) $this->title, 0, 255, 'UTF-8'),
             'created_by'   => $this->created_by,

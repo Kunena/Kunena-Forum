@@ -24,9 +24,9 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
@@ -232,7 +232,7 @@ abstract class KunenaCategoryHelper
             } elseif (isset(self::$_instances [$instance->parentid])) {
                 $instance->level = self::$_instances [$instance->parentid]->level + 1;
             } else {
-                $parentCategory = self::get($instance->parentid);
+                $parentCategory  = self::get($instance->parentid);
                 $instance->level = $parentCategory->level + 1;
             }
 
@@ -243,8 +243,8 @@ abstract class KunenaCategoryHelper
                 self::$_tree [$instance->parentid][$instance->id] = &self::$_tree [$instance->id];
             }
         } else {
-            unset(self::$_instances [$instance->id]);
-            unset(self::$_tree [$instance->id], self::$_tree [$instance->parentid][$instance->id]);
+            unset(self::$_instances [$instance->id], self::$_tree [$instance->id], self::$_tree [$instance->parentid][$instance->id]);
+
         }
     }
 
@@ -474,7 +474,7 @@ abstract class KunenaCategoryHelper
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getCategories($ids = false, $reverse = false, $authorise = 'read'): array
     {
@@ -686,7 +686,7 @@ abstract class KunenaCategoryHelper
         $db      = Factory::getContainer()->get('DatabaseDriver');
         $query   = $db->createQuery();
 
-        $query->select(array($db->quoteName('t.category_id'), 'COUNT(*) AS new'))
+        $query->select([$db->quoteName('t.category_id'), 'COUNT(*) AS new'])
             ->from($db->quoteName('#__kunena_topics', 't'))
             ->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON ' . $db->quoteName('uc.category_id') . ' = ' . $db->quoteName('t.category_id') . ' AND ' . $db->quoteName('uc.user_id') . ' = ' . $db->quote($user->userid))
             ->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('t.id') . ' AND ' . $db->quoteName('ur.user_id') . ' = ' . $db->quote($user->userid))
@@ -847,7 +847,7 @@ abstract class KunenaCategoryHelper
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public static function getChildren($parents = 0, $levels = 0, $params = []): array
@@ -872,7 +872,7 @@ abstract class KunenaCategoryHelper
         $parents             = (array) $parents;
         $params              = (array) $params;
         $optimize            = empty($params);
-        $params              += $defaults;
+        $params += $defaults;
         $params['published'] = isset($params['published']) ? (int) $params['published'] : (empty($params['unpublished']) ? 1 : null);
 
         $authoriseCache = [];
@@ -892,7 +892,7 @@ abstract class KunenaCategoryHelper
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     protected static function _getChildren(array $parents, int $levels, array $params, bool $optimize, array &$authoriseCache = []): array
@@ -1018,12 +1018,12 @@ abstract class KunenaCategoryHelper
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * 
+     *
      * @deprecated Kunena 7.0
      */
     public static function recount($categories = '')
     {
-        $db = Factory::getContainer()->get('DatabaseDriver');
+        $db          = Factory::getContainer()->get('DatabaseDriver');
         $categoryIds = [];
 
         if (\is_array($categories)) {
@@ -1085,14 +1085,14 @@ abstract class KunenaCategoryHelper
         $rows = $db->getAffectedRows();
 
         // Update categories which have no published topics
-        $query = $db->createQuery();
-        $fields = array(
+        $query  = $db->createQuery();
+        $fields = [
             $db->quoteName('c.numTopics') . ' = 0',
             $db->quoteName('c.numPosts') . ' = 0',
             $db->quoteName('c.last_topic_id') . ' = 0',
             $db->quoteName('c.last_post_id') . ' = 0',
             $db->quoteName('c.last_post_time') . ' = 0',
-        );
+        ];
 
         $query
             ->update($db->quoteName('#__kunena_categories', 'c'))
@@ -1133,7 +1133,7 @@ abstract class KunenaCategoryHelper
      */
     public static function recountBatch($categories = '', $batchSize = 50)
     {
-        $db = Factory::getContainer()->get('DatabaseDriver');
+        $db          = Factory::getContainer()->get('DatabaseDriver');
         $categoryIds = [];
 
         $recountAll = $categories === '' || $categories === null || $categories === [];
@@ -1208,46 +1208,46 @@ abstract class KunenaCategoryHelper
 					c.last_post_id = tt.last_post_id,
 					c.last_post_time = tt.last_post_time";
 
-				$db->setQuery($query);
+            $db->setQuery($query);
 
-				try {
-				    $db->execute();
-				} catch (ExecutionFailureException $e) {
-				    KunenaError::displayDatabaseError($e);
+            try {
+                $db->execute();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
 
-				    return false;
-				}
+                return false;
+            }
 
-				$totalRows += $db->getAffectedRows();
+            $totalRows += $db->getAffectedRows();
 
-				// Update categories which have no published topics
-				$query = $db->createQuery();
-				$fields = array(
-				    $db->quoteName('c.numTopics') . ' = 0',
-				    $db->quoteName('c.numPosts') . ' = 0',
-				    $db->quoteName('c.last_topic_id') . ' = 0',
-				    $db->quoteName('c.last_post_id') . ' = 0',
-				    $db->quoteName('c.last_post_time') . ' = 0',
-				);
+            // Update categories which have no published topics
+            $query  = $db->createQuery();
+            $fields = [
+                $db->quoteName('c.numTopics') . ' = 0',
+                $db->quoteName('c.numPosts') . ' = 0',
+                $db->quoteName('c.last_topic_id') . ' = 0',
+                $db->quoteName('c.last_post_id') . ' = 0',
+                $db->quoteName('c.last_post_time') . ' = 0',
+            ];
 
-				$query
-				->update($db->quoteName('#__kunena_categories', 'c'))
-				->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0 AND ' . $db->quoteName('tt.moved_id') . ' = 0')
-				->set($fields)
-				->where($db->quoteName('c.id') . ' IN (' . $categoryList . ')')
-				->where($db->quoteName('tt.id') . ' IS NULL');
+            $query
+            ->update($db->quoteName('#__kunena_categories', 'c'))
+            ->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0 AND ' . $db->quoteName('tt.moved_id') . ' = 0')
+            ->set($fields)
+            ->where($db->quoteName('c.id') . ' IN (' . $categoryList . ')')
+            ->where($db->quoteName('tt.id') . ' IS NULL');
 
-				$db->setQuery($query);
+            $db->setQuery($query);
 
-				try {
-				    $db->execute();
-				} catch (ExecutionFailureException $e) {
-				    KunenaError::displayDatabaseError($e);
+            try {
+                $db->execute();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
 
-				    return false;
-				}
+                return false;
+            }
 
-				$totalRows += $db->getAffectedRows();
+            $totalRows += $db->getAffectedRows();
         }
 
         if ($totalRows) {
@@ -1330,7 +1330,7 @@ abstract class KunenaCategoryHelper
      *
      * @return bool
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
     public static function getAlias($categoryId, $alias): bool

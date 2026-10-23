@@ -17,10 +17,10 @@ namespace Kunena\Forum\Administrator\View\Template;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\Filesystem\Folder;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 /**
@@ -104,33 +104,33 @@ class HtmlView extends BaseHtmlView
             $this->setToolBarAddnew();
 
             return parent::display($tpl);
-        } else {
-            $this->form         = $model->getForm();
-            $this->details      = $model->getTemplatedetails();
-            $this->templatename = Factory::getApplication()->getUserState('kunena.edit.templatename');
-
-            // A template has to be chosen in the list first: without a template there is nothing to edit.
-            if (!$this->details || empty($this->templatename)) {
-                Factory::getApplication()->redirect('index.php?option=com_kunena&view=templates');
-            }
-
-            $template           = KunenaTemplate::getInstance($this->templatename);
-            $template->initializeBackend();
-
-            $this->templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
-
-            if (!file_exists($this->templateFile) && is_dir(KPATH_SITE . '/template/' . $this->templatename . '/config/')) {
-                $ourFileHandle = fopen($this->templateFile, 'w');
-
-                if ($ourFileHandle) {
-                    fclose($ourFileHandle);
-                }
-            }
-
-            $this->addToolbar();
-
-            return parent::display($tpl);
         }
+        $this->form         = $model->getForm();
+        $this->details      = $model->getTemplatedetails();
+        $this->templatename = Factory::getApplication()->getUserState('kunena.edit.templatename');
+
+        // A template has to be chosen in the list first: without a template there is nothing to edit.
+        if (!$this->details || empty($this->templatename)) {
+            Factory::getApplication()->redirect('index.php?option=com_kunena&view=templates');
+        }
+
+        $template           = KunenaTemplate::getInstance($this->templatename);
+        $template->initializeBackend();
+
+        $this->templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
+
+        if (!file_exists($this->templateFile) && is_dir(KPATH_SITE . '/template/' . $this->templatename . '/config/')) {
+            $ourFileHandle = fopen($this->templateFile, 'w');
+
+            if ($ourFileHandle) {
+                fclose($ourFileHandle);
+            }
+        }
+
+        $this->addToolbar();
+
+        return parent::display($tpl);
+
     }
 
     /**

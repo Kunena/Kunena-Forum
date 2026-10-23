@@ -16,13 +16,16 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 \defined('_JEXEC') or die();
 
 use CB\Database\Table\UserTable;
+use CBuser;
+use Exception;
 use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Joomla\Registry\Registry;
+use RuntimeException;
 
 /**
  * Class KunenaProfileComprofiler
@@ -47,7 +50,7 @@ class KunenaProfileComprofiler extends KunenaProfile
      *
      * @return  void
      *
-     * @throws  \Exception
+     * @throws  Exception
      *
      * @since   Kunena 5.0
      */
@@ -59,7 +62,7 @@ class KunenaProfileComprofiler extends KunenaProfile
     /**
      * @return  void
      *
-     * @throws  \Exception
+     * @throws  Exception
      *
      * @since   Kunena 5.0
      */
@@ -71,7 +74,7 @@ class KunenaProfileComprofiler extends KunenaProfile
     /**
      * @return  void
      *
-     * @throws  \Exception
+     * @throws  Exception
      *
      * @since   Kunena 5.0
      */
@@ -89,7 +92,7 @@ class KunenaProfileComprofiler extends KunenaProfile
      * @return string
      *
      * @since   Kunena 5.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getUserListURL(string $action = '', bool $xhtml = true): string
     {
@@ -115,7 +118,7 @@ class KunenaProfileComprofiler extends KunenaProfile
      *
      * @return  string|false
      * @since   Kunena 5.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
     {
@@ -167,7 +170,7 @@ class KunenaProfileComprofiler extends KunenaProfile
      *
      * @return  array
      *
-     * @throws  \Exception
+     * @throws  Exception
      *
      * @since   Kunena 5.0
      */
@@ -187,7 +190,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 
         try {
             $top = (array) $db->loadObjectList();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             KunenaError::displayDatabaseError($e);
         }
 
@@ -223,7 +226,7 @@ class KunenaProfileComprofiler extends KunenaProfile
     public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
     {
         if ($user->exists()) {
-            return \CBuser::getUserDataInstance($user->userid)->getFormattedName();
+            return CBuser::getUserDataInstance($user->userid)->getFormattedName();
         }
 
         if (! $visitorname) {

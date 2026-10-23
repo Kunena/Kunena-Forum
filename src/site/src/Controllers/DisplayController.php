@@ -12,6 +12,7 @@ namespace Kunena\Forum\Site\Controllers;
 
 \defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Kunena\Forum\Libraries\Controller\KunenaController;
@@ -39,7 +40,7 @@ class DisplayController extends KunenaController
      * @param   null                      $app      The JApplication for the dispatcher
      * @param   null                      $input    Input
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   3.0.1
      */
     public function __construct($config = [], ?MVCFactoryInterface $factory = null, $app = null, $input = null)
@@ -57,21 +58,21 @@ class DisplayController extends KunenaController
      *
      * @return  KunenaController  This object to support chaining.
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   1.5
      */
     public function display($cachable = false, $urlparams = false): KunenaController
     {
         try {
             return parent::display($cachable, $urlparams);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $trace = $e->getTrace();
 
             $thrower = $trace[0];
 
             // If this is the "view not found" error, the thrower is JControllerLegacy::getView(); standardize to lowercased strings just in case
             if (strtolower($thrower['class']) === 'basecontroller' && strtolower($thrower['function']) === 'getview') {
-                throw new \Exception(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404, $e);
+                throw new Exception(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404, $e);
             }
 
             // Some other error, just let it bubble up

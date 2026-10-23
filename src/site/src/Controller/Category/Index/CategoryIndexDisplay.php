@@ -27,8 +27,8 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -126,28 +126,26 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
                     $itemid = $getid->id;
                 }
 
-                if(!$itemid) {
+                if (!$itemid) {
                     $itemid = KunenaRoute::fixMissingItemID();
                 }
 
                 $params = [
                     'option' => 'com_kunena',
-                    'view' => 'category',
+                    'view'   => 'category',
                     'layout' => 'list',
                     'Itemid' => $itemid,
                 ];
 
                 if ($view == 'home') {
                     if ($defaultmenu) {
-						$params['view'] = 'home';
+                        $params['view']        = 'home';
                         $params['defaultmenu'] = $defaultmenu;
                     }
                 }
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
-            }
-
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }

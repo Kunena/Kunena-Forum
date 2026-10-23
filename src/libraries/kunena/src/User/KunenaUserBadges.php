@@ -92,7 +92,7 @@ abstract class KunenaUserBadges
             return self::$cache[$userid];
         }
 
-        $definitions = self::getDefinitions();
+        $definitions          = self::getDefinitions();
         self::$cache[$userid] = [];
 
         if (!$definitions) {

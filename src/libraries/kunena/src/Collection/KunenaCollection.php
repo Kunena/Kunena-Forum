@@ -18,6 +18,7 @@ use ArrayIterator;
 use Closure;
 use Countable;
 use IteratorAggregate;
+use ReturnTypeWillChange;
 
 \defined('_JEXEC') or die();
 
@@ -177,7 +178,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @since   Kunena 6.0
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetGet($key)
     {
         return $this->items[$key];
@@ -193,7 +194,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @since   Kunena 6.0
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetSet($key, $value)
     {
         if (\is_null($key)) {
@@ -212,7 +213,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @since   Kunena 6.0
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetUnset($key)
     {
         unset($this->items[$key]);

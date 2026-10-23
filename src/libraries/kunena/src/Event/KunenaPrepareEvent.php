@@ -24,4 +24,6 @@ use Joomla\CMS\Event\Content\ContentPrepareEvent;
  *
  * @since  7.0.0
  */
-class KunenaPrepareEvent extends ContentPrepareEvent {}
+class KunenaPrepareEvent extends ContentPrepareEvent
+{
+}

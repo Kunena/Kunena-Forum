@@ -96,7 +96,7 @@ class TopicListingUnreadDisplay extends ListDisplay
                 } else {
                     $menu      = $this->app->getMenu();
                     $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=unread"));
-                    $itemid = $getid->id;
+                    $itemid    = $getid->id;
                 }
 
                 if (!$itemid) {
@@ -105,15 +105,13 @@ class TopicListingUnreadDisplay extends ListDisplay
 
                 $params = [
                     'option' => 'com_kunena',
-                    'view' => 'topics',
+                    'view'   => 'topics',
                     'layout' => 'unread',
                     'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
-            }
-
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }

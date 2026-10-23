@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Joomla\Helper;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -26,6 +27,7 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use StdClass;
 
 /**
  * Kunena Access Control for Joomla 4.0
@@ -79,7 +81,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
 
             $list["joomla.group.{$category->pubAccess}"] = [
                 'type'  => 'joomla.group',
-                'id' => $category->pubAccess,
+                'id'    => $category->pubAccess,
                 'alias' => $accessname,
                 'title' => $accessname,
             ];
@@ -90,7 +92,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
                 $accessname                                    = Text::sprintf($category->adminRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', Text::_((string) $groupname));
                 $list["joomla.group.{$category->adminAccess}"] = [
                     'type'  => 'joomla.group',
-                    'id' => $category->adminAccess,
+                    'id'    => $category->adminAccess,
                     'alias' => $accessname,
                     'title' => $accessname,
                 ];
@@ -99,7 +101,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
             $groupname                                = (string) $this->getGroupName($category->accesstype, $category->access);
             $list["joomla.level.{$category->access}"] = [
                 'type'  => 'joomla.level',
-                'id' => $category->access,
+                'id'    => $category->access,
                 'alias' => $groupname,
                 'title' => $groupname,
             ];
@@ -156,7 +158,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
      *
      * @return  array
      *
-     * @throws  \Exception
+     * @throws  Exception
      * @since   Kunena 6.0
      */
     public function getAccessOptions($accesstype, KunenaCategory $category): array
@@ -198,8 +200,8 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
 
         if (!$accesstype || $accesstype == 'joomla.group') {
             $yesno    = [];
-            $yesno[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
-            $yesno[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
+            $yesno[]  = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+            $yesno[]  = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 
             $html['joomla-group']['pubAccess'] = [
                 'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_TITLE'),
@@ -290,7 +292,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
         $admins = array_merge($this->getAuthorisedUsers('core.admin', 'com_kunena'), $this->getAuthorisedUsers('core.manage', 'com_kunena'));
 
         foreach ($admins as $userid) {
-            $item              = new \StdClass();
+            $item              = new StdClass();
             $item->user_id     = (int) $userid;
             $item->category_id = 0;
             $item->role        = KunenaForum::ADMINISTRATOR;

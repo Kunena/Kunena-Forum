@@ -132,7 +132,7 @@ abstract class KunenaTableObject
             // Build storage key for the object.
             foreach (static::$tbl_keys as $keyName) {
                 $keyValue           = isset($this->$keyName) ? $this->$keyName : null;
-                $exists             |= ($keyValue !== null);
+                $exists |= ($keyValue !== null);
                 $tbl_keys[$keyName] = $keyValue;
             }
 
@@ -1003,7 +1003,7 @@ abstract class KunenaTableObject
         }
 
         static::$db = Factory::getContainer()->get('DatabaseDriver');
-        $query = static::$db->createQuery();
+        $query      = static::$db->createQuery();
         $query->select('COUNT(' . static::$db->quoteName('userid') . ')')
             ->from(static::$db->quoteName('#__session'))
             ->where(static::$db->quoteName('userid') . ' = ' . static::$db->quote((int) $against));

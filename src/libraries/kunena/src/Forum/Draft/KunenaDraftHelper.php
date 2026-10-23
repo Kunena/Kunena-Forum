@@ -170,7 +170,7 @@ abstract class KunenaDraftHelper
             return null;
         }
 
-        $fields = json_decode((string) $draft->fields, true);
+        $fields        = json_decode((string) $draft->fields, true);
         $draft->fields = array_intersect_key(\is_array($fields) ? $fields : [], static::$defaults) + static::$defaults;
 
         return $draft;
@@ -200,6 +200,7 @@ abstract class KunenaDraftHelper
             ->bind(':userid', $userid, ParameterType::INTEGER);
 
         $query->setLimit(static::MAX_DRAFTS, 0);
+
         return (array) $db->setQuery($query)->loadObjectList();
     }
 

@@ -126,7 +126,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
                 $params = [
                     'option' => 'com_kunena',
-                    'view' => 'topic',
+                    'view'   => 'topic',
                     'layout' => 'create',
                     'Itemid' => $itemid,
                 ];
@@ -136,9 +136,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
                 }
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
-            }
-
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }
@@ -170,7 +168,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
         $this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
         $this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
-        $this->category = KunenaCategoryHelper::get($catid);
+        $this->category                    = KunenaCategoryHelper::get($catid);
         list($this->topic, $this->message) = $this->category->newTopic($saved);
 
         // When no categoy set, use default icon set

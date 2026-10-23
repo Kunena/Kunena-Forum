@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Inbox\Extension;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Event\GenericEvent;
 use Joomla\CMS\Event\Plugin\AjaxEvent;
 use Joomla\CMS\Factory;
@@ -32,6 +33,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Plugin\Kunena\Inbox\Helper\InboxAttachments;
 use Kunena\Forum\Plugin\Kunena\Inbox\Helper\InboxHelper;
 use Kunena\Forum\Plugin\Kunena\Inbox\Helper\KunenaPrivateInbox;
+use RuntimeException;
 use stdClass;
 
 /**
@@ -196,7 +198,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
      * @param   AjaxEvent  $event  The event instance
      *
      * @return  void
-     * @throws  \Exception
+     * @throws  Exception
      * @since   Kunena 7.2
      */
     public function onAjaxInbox(AjaxEvent $event): void
@@ -212,7 +214,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
         $this->loadLanguage();
 
         if (!$me->exists()) {
-            throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_LOGIN'), 403);
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_LOGIN'), 403);
         }
 
         $userid = (int) $me->userid;
@@ -220,7 +222,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
 
         // Everything which changes something needs the token.
         if (!\in_array($task, ['list', 'view', 'download', 'blocked'], true) && !Session::checkToken('request')) {
-            throw new \RuntimeException(Text::_('JINVALID_TOKEN_NOTICE'), 403);
+            throw new RuntimeException(Text::_('JINVALID_TOKEN_NOTICE'), 403);
         }
 
         $ids = array_filter(array_map('intval', (array) $input->get('ids', [], 'array')));
@@ -239,12 +241,12 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
                 break;
             case 'send':
                 if (!$this->params->get('private', 1)) {
-                    throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
+                    throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
                 }
 
                 // A user who is banned from the forum can not write to others, like he can not post.
                 if ($me->isBanned()) {
-                    throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_BANNED'), 403);
+                    throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_BANNED'), 403);
                 }
 
                 $replyTo  = $input->getInt('reply', 0);
@@ -261,7 +263,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
                     $toId = (int) $db->setQuery($query)->loadResult();
 
                     if (!$toId) {
-                        throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_RECIPIENT'));
+                        throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_RECIPIENT'));
                     }
                 }
 
@@ -317,7 +319,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
                 $result = ['value' => $value];
                 break;
             default:
-                throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
+                throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
         }
 
         $event->addResult($result);

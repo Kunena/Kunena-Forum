@@ -89,7 +89,7 @@ class Joomla extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
     /**
      * Function to get the KunenaAccessControl for this integration
-     * 
+     *
      * @param   KunenaGetAccessControlEvent  $event  The event instance
      *
      * @return  void
@@ -106,7 +106,7 @@ class Joomla extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
     /**
      * Function to get the KunenaLogin for this integration
-     * 
+     *
      * @param   KunenaGetLoginEvent  $event  The event instance
      *
      * @return  void

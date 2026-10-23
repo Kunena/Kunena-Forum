@@ -22,4 +22,6 @@ namespace Kunena\Forum\Libraries\Event;
  *
  * @since  7.1.0
  */
-class KunenaAfterRenderEvent extends KunenaContentEvent {}
+class KunenaAfterRenderEvent extends KunenaContentEvent
+{
+}

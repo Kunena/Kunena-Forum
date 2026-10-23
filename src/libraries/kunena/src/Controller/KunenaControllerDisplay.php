@@ -166,9 +166,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
             if ($this->primary) {
                 KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
                 throw $e;
-            } else {
-                $this->output = KunenaLayout::factory('Empty')->setOptions($this->getOptions());
             }
+            $this->output = KunenaLayout::factory('Empty')->setOptions($this->getOptions());
+
         }
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;

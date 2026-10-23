@@ -11,7 +11,7 @@
  * @link           https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
@@ -77,7 +77,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
 
     /**
      * Function to enable the plugin after installation
-     * 
+     *
      * @param   string  $pluginName
      *
      * @return  boolean
@@ -148,7 +148,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
 
     /**
      * Function to enable the Remove Expired bans task
-     * 
+     *
      * @return  void
      * @since   7.0.0
      */
@@ -217,10 +217,10 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             'title'           => 'Kunena - Send the mail nofitications queued',
             'type'            => 'add.mailsqueue',
             'execution_rules' => [
-                'rule-type'      => 'interval-minutes',
+                'rule-type'        => 'interval-minutes',
                 'interval-minutes' => 5,
-                'exec-time'      => gmdate('H:i'),
-                'exec-day'       => gmdate('d'),
+                'exec-time'        => gmdate('H:i'),
+                'exec-day'         => gmdate('d'),
             ],
             'state'  => 1,
             'params' => [],

@@ -65,8 +65,9 @@ class KunenaSvgIcons
 
         if ($iconfile->load($file . '.svg')) {
             return $iconfile->saveHTML($iconfile->getElementsByTagName('svg')[0]);
-        } else {
-            return '';
         }
+
+        return '';
+
     }
 }

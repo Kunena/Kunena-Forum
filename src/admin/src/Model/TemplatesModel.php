@@ -94,7 +94,7 @@ class TemplatesModel extends AdminModel
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getForm($data = [], $loadData = true): \Joomla\CMS\Form\Form|false
     {
@@ -414,7 +414,7 @@ class TemplatesModel extends AdminModel
      *
      * @since   Kunena 6.0
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function loadFormData(): array
     {

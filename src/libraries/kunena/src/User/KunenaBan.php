@@ -44,8 +44,8 @@ use stdClass;
  * @property    string  $reason_private
  * @property    string  $reason_public
  * @property    int $modified_by
- * @property    string $modified_time 
- * @property    array   $comments 
+ * @property    string $modified_time
+ * @property    array   $comments
  * @property    array  $params
  * @since   Kunena 6.0
  */
@@ -134,14 +134,14 @@ class KunenaBan
      *
      * @since   Kunena 6.0
      */
-    const ANY = 0;
+    public const ANY = 0;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    const ACTIVE = 1;
+    public const ACTIVE = 1;
 
     /**
      * @var     array|KunenaBan[]
@@ -275,7 +275,7 @@ class KunenaBan
         }
 
         // Create the user table object
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
         $tableObject = new KunenaUserBans($db);
 
         return $tableObject;
@@ -291,8 +291,9 @@ class KunenaBan
     protected function bind($data): void
     {
         foreach ((array) $data as $property => $value) {
-            if (!\is_null($value) && !\in_array($property, ['comments', 'params']))
+            if (!\is_null($value) && !\in_array($property, ['comments', 'params'])) {
                 $this->$property = $value;
+            }
         }
 
         $this->comments = !empty($data['comments']) ? json_decode((string) $data['comments']) : [];
@@ -768,7 +769,7 @@ class KunenaBan
         }
 
         if (!empty($comment)) {
-           $this->addComment($comment);
+            $this->addComment($comment);
         }
     }
 

@@ -14,6 +14,7 @@ namespace Kunena\Forum\Libraries\Date;
 
 \defined('_JEXEC') or die();
 
+use DateTime;
 use DateTimeZone;
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -81,7 +82,7 @@ class KunenaDate extends Date
             $format = (string) KunenaFactory::getConfig()->datePickerFormat;
         }
 
-        $value = \DateTime::createFromFormat('!Y-m-d', substr($date, 0, 10));
+        $value = DateTime::createFromFormat('!Y-m-d', substr($date, 0, 10));
 
         if (!$value) {
             return '';
@@ -115,9 +116,9 @@ class KunenaDate extends Date
         }
 
         if ($format !== '') {
-            $php  = self::pickerToPhp($format);
-            $date = \DateTime::createFromFormat('!' . $php, $value);
-            $errors = \DateTime::getLastErrors();
+            $php    = self::pickerToPhp($format);
+            $date   = DateTime::createFromFormat('!' . $php, $value);
+            $errors = DateTime::getLastErrors();
 
             if ($date && (!$errors || (!$errors['warning_count'] && !$errors['error_count']))) {
                 return $date->format('Y-m-d');
@@ -125,8 +126,8 @@ class KunenaDate extends Date
         }
 
         try {
-            return (new \DateTime($value))->format('Y-m-d');
-        } catch (\Exception $e) {
+            return (new DateTime($value))->format('Y-m-d');
+        } catch (Exception $e) {
             return null;
         }
     }
@@ -294,7 +295,7 @@ class KunenaDate extends Date
                 $weeks = (int) ($count / 7);
 
                 if ($weeks) {
-                    $count  %= 7;
+                    $count %= 7;
                     $output .= ($weeks == 1) ? " 1 {$chunks['w'][0]}" : " {$weeks} {$chunks['w'][1]}";
 
                     if (2 == ++$tick) {

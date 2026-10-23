@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Response;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Response\JsonResponse;
+use Throwable;
 
 /**
  * Kunena JSON Response, extends Joomla\CMS\Response\JsonResponse.
@@ -50,7 +51,7 @@ class KunenaResponseJson extends JsonResponse
     {
         parent::__construct($response, $message, $error, $ignoreMessages);
 
-        if ($response instanceof \Throwable) {
+        if ($response instanceof Throwable) {
             $this->code = $response->getCode();
             $exceptions = [];
             $e          = $response;

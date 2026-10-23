@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -8,11 +9,11 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 
 // Kunena 5.2.0: Convert all configuration options to the news ones in K6.0
@@ -23,7 +24,8 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @throws Exception
  * @since Kunena 5.2.4
  */
-function kunena_5215_2021_07_24_update_configuration($parent) {
+function kunena_5215_2021_07_24_update_configuration($parent)
+{
     $db    = Factory::getContainer()->get('DatabaseDriver');
 
     $query = $db->createQuery();
@@ -101,5 +103,5 @@ function kunena_5215_2021_07_24_update_configuration($parent) {
         $i++;
     }
 
-    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_5215_UPDATE_CONFIGURATION'), 'success' => true);
+    return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_5215_UPDATE_CONFIGURATION'), 'success' => true];
 }

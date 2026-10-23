@@ -21,6 +21,7 @@ use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Throwable;
 
 /**
  * The card of a link (title, description and image of the page, from its Open Graph data), kept in the Joomla cache.
@@ -198,7 +199,7 @@ Accept: text/html,application/xhtml+xml
         if ($charset !== '' && strcasecmp($charset, 'utf-8') !== 0 && strcasecmp($charset, 'utf8') !== 0) {
             try {
                 $body = mb_convert_encoding($body, 'UTF-8', $charset);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 // Unknown character set: the text is read as it is.
             }
         }

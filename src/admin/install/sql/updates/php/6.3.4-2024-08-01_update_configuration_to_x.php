@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -8,7 +9,7 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -20,7 +21,8 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  * @throws Exception
  * @since Kunena 6.3.4
  */
-function kunena_634_2024_08_01_update_configuration_to_x($parent) {
+function kunena_634_2024_08_01_update_configuration_to_x($parent)
+{
     $config = KunenaFactory::getConfig();
 
     if (isset($config->twitterConsumerKey)) {
@@ -38,5 +40,5 @@ function kunena_634_2024_08_01_update_configuration_to_x($parent) {
     // Save configuration
     $config->save();
 
-    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_634_UPDATE_CONFIGURATION'), 'success' => true);
+    return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_634_UPDATE_CONFIGURATION'), 'success' => true];
 }

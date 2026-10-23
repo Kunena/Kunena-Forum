@@ -16,18 +16,18 @@ namespace Kunena\Forum\Site\Controller\Application\Topics\Feed;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\User\UserFactoryInterface;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Site\Model\TopicsModel;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Html\KunenaParser;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Document\Feed\FeedImage;
 use Joomla\CMS\Document\Feed\FeedItem;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\User\UserFactoryInterface;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Model\TopicsModel;
 
 /**
  * CategoryDisplay
@@ -72,18 +72,18 @@ class TopicsDisplay extends KunenaControllerDisplay
     {
         $this->config = KunenaFactory::getConfig();
         $this->checkForumIsOpen();
-        $this->document = Factory::getApplication()->getDocument();
+        $this->document    = Factory::getApplication()->getDocument();
         $this->topicsModel = new TopicsModel();
-        $mode = $this->getInput()->getWord('mode', 'topics');
-        $this->me        = KunenaUserHelper::getMyself();
+        $mode              = $this->getInput()->getWord('mode', 'topics');
+        $this->me          = KunenaUserHelper::getMyself();
 
         if (!$this->config->enableRss) {
             throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 500);
         }
 
         KunenaParser::$relative = false;
-        $options = ['defaultgroup' => 'com_kunena_rss'];
-        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $options                = ['defaultgroup' => 'com_kunena_rss'];
+        $cache                  = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if (!$this->config->cache) {
             $cache->setCaching(0);

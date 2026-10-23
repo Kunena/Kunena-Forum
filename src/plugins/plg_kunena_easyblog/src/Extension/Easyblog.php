@@ -103,7 +103,7 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
 
     /**
      * Get Kunena avatar integration object.
-     * 
+     *
      * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return void
@@ -125,7 +125,7 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
 
     /**
      * Get Kunena profile integration object.
-     * 
+     *
      * @param   KunenaGetProfileEvent  $event  The event instance
      *
      * @return void

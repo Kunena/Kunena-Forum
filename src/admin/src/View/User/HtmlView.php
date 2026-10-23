@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\View\User;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -24,7 +25,6 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use StdClass;
-use Joomla\CMS\Factory;
 
 /**
  * User view for Kunena backend
@@ -116,7 +116,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $userids = (array) Factory::getApplication()->getUserState('kunena.usermove.userids');
+        $userids          = (array) Factory::getApplication()->getUserState('kunena.usermove.userids');
         $model            = $this->getModel();
 
         if ($userids && $this->getLayout() == 'move') {

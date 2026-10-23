@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Kunena\Helper;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseDriver;
@@ -27,6 +28,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserName;
+use RuntimeException;
 
 /**
  * Class KunenaProfile
@@ -47,7 +49,7 @@ class KunenaProfileKunena extends KunenaProfile
 
     /**
      * Function to get User List URL
-     * 
+     *
      * @param   string  $action  action
      * @param   bool    $xhtml   xhtml
      *
@@ -68,12 +70,12 @@ class KunenaProfileKunena extends KunenaProfile
 
     /**
      * Function to get Top Hits
-     * 
+     *
      * @param   int  $limit  limit
      *
      * @return  array
      * @since   Kunena 6.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function getTopHits(int $limit = 0): array
     {
@@ -97,7 +99,7 @@ class KunenaProfileKunena extends KunenaProfile
 
         try {
             $top = $db->loadObjectList() ?? [];
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             KunenaError::displayDatabaseError($e);
         }
 
@@ -106,7 +108,7 @@ class KunenaProfileKunena extends KunenaProfile
 
     /**
      * Function to get the User Profile
-     * 
+     *
      * @param   KunenaLayout  $view    view
      * @param   Registry      $params  params
      *
@@ -121,7 +123,7 @@ class KunenaProfileKunena extends KunenaProfile
 
     /**
      * Function to get User Profile Edit URL
-     * 
+     *
      * @param   int   $userid  userid
      * @param   bool  $xhtml   xhtml
      *
@@ -137,7 +139,7 @@ class KunenaProfileKunena extends KunenaProfile
 
     /**
      * Function to get User Profile URL
-     * 
+     *
      * @param   int     $userid     userid
      * @param   string  $task       task
      * @param   bool    $xhtml      xhtml
@@ -145,7 +147,7 @@ class KunenaProfileKunena extends KunenaProfile
      *
      * @return  string|false
      * @since   Kunena 5.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
     {
@@ -164,7 +166,7 @@ class KunenaProfileKunena extends KunenaProfile
         $userid = "&userid={$user->userid}";
 
         if ($task && $task != 'edit') {
-            throw new \Exception('Sorry, Kunena 6.0 no support url with func in method getProfileURL class KunenaProfileKunena');
+            throw new Exception('Sorry, Kunena 6.0 no support url with func in method getProfileURL class KunenaProfileKunena');
         }
 
         $layout = $task ? '&layout=' . $task : '';
@@ -185,7 +187,7 @@ class KunenaProfileKunena extends KunenaProfile
      *
      * @return  string
      * @since   Kunena 5.2
-     * @throws  \Exception
+     * @throws  Exception
      * @see     KunenaProfile::getProfileName()
      */
     public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string

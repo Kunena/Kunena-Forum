@@ -17,9 +17,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 $user = Factory::getApplication()->getIdentity();
@@ -47,8 +47,8 @@ if ($userLanguage != 'default' && $userLanguage != 'active') {
 } elseif (is_file('media/kunena/core/js/sceditor/languages/' . $jlang . '.js')) {
     $this->wa->registerAndUseScript('sceditor/sclang', 'media/kunena/core/js/sceditor/languages/' . $jlang . '.js');
     $this->doc->addScriptOptions('com_kunena.sceditor_joomladefaultlanguage', $jlang);
-} else
-    $this->doc->addScriptOptions('com_kunena.sceditor_joomladefaultlanguage', '');
+} else {
+    $this->doc->addScriptOptions('com_kunena.sceditor_joomladefaultlanguage', ''); }
 
 // Load undo plugin in first before loading sceditor.js config script
 $this->wa->registerAndUseScript('sceditor/autoyoubutbe', 'media/kunena/core/js/sceditor/autoyoutube.js')

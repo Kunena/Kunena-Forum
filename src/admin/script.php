@@ -11,7 +11,7 @@
  * @link           https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
@@ -121,7 +121,7 @@ class Com_KunenaInstallerScript extends InstallerScript
                     ];
 
                     foreach ($keyConversions as $oldKey => $newKey) {
-                        if (array_key_exists($oldKey, $processConfig)) {
+                        if (\array_key_exists($oldKey, $processConfig)) {
                             $processConfig[$newKey] = $processConfig[$oldKey];
                             unset($processConfig[$oldKey]);
                         }
@@ -131,7 +131,7 @@ class Com_KunenaInstallerScript extends InstallerScript
                     $arrayConversions = ['latestCategory', 'rssExcludedCategories', 'rssIncludedCategories'];
 
                     foreach ($processConfig as $param => $value) {
-                        if (in_array($param, $arrayConversions) && is_string($value)) {
+                        if (\in_array($param, $arrayConversions) && \is_string($value)) {
                             $processConfig[$param] = explode(',', $value);
                         }
                     }
@@ -181,16 +181,16 @@ class Com_KunenaInstallerScript extends InstallerScript
 
     /**
      * Function to get the Component ID in the #__etensions table
-     * 
+     *
      * @return integer
      * @since  7.0.0
      */
     private function getComponentId(): int
     {
         /** @var \Joomla\Database\DatabaseDriver  $db */
-        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $db         = Factory::getContainer()->get('DatabaseDriver');
         $bindValues = ['component', $this->extension];
-        $query = $db->createQuery();
+        $query      = $db->createQuery();
         $query->select('extension_id')
             ->from($db->quoteName('#__extensions'))
             ->where($db->quotename('type') . ' = :type')

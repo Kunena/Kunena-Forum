@@ -57,7 +57,7 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
             return false;
         }
 
-        $id = $this->input->getInt('id', null);
+        $id                 = $this->input->getInt('id', null);
         $this->announcement = KunenaAnnouncementHelper::get($id);
 
         if (!$this->announcement) {
@@ -74,7 +74,7 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
 
                 $params = [
                     'option' => 'com_kunena',
-                    'view' => 'announcement',
+                    'view'   => 'announcement',
                     'layout' => $id ? 'edit' : 'create',
                     'Itemid' => $itemid,
                 ];
@@ -84,9 +84,7 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
                 }
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
-            }
-
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }

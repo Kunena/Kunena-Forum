@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Layout;
 
 \defined('_JEXEC') or die();
 
+use AllowDynamicProperties;
 use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
@@ -60,7 +61,7 @@ use Throwable;
  *
  * @since   Kunena 6.0
  */
-#[\AllowDynamicProperties]
+#[AllowDynamicProperties]
 class KunenaBase extends KunenaLayoutBase
 {
     /**
@@ -351,7 +352,7 @@ class KunenaBase extends KunenaLayoutBase
             }
 
             if (
-                isset($caller['class']) && isset($caller['function'])
+                isset($caller['class'], $caller['function'])
                 && $caller['function'] == '__toString' && $caller['class'] == __CLASS__
             ) {
                 break;
@@ -737,7 +738,7 @@ class KunenaBase extends KunenaLayoutBase
             }
 
             // Attempt to load layout class if it doesn't exist.
-            $ex    = explode('/', $path);
+            $ex      = explode('/', $path);
             $subpart = '';
 
             if (\count($ex) == 3) {

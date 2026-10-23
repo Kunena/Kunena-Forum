@@ -245,14 +245,14 @@ EOF;
 				{$text}
 				</a>
 HTML;
-        } else {
+        }
             return <<<HTML
 				<a {$id} style="" href="{$link}" rel="nofollow" data-bs-toggle="tooltip" title="{$title}">
 				<span class="{$name}"></span>
 				{$text}
 				</a>
 HTML;
-        }
+
     }
 
     /**

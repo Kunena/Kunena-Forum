@@ -10,7 +10,7 @@
  * @link           https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -36,46 +36,46 @@ function kunena_624_2022_01_24_change_collation_columns_on_tables($parent)
          $db->getPrefix() . 'kunena_ranks', $db->getPrefix() . 'kunena_rate', $db->getPrefix() . 'kunena_sessions', $db->getPrefix() . 'kunena_smileys', $db->getPrefix() . 'kunena_thankyou', $db->getPrefix() . 'kunena_user_categories',
          $db->getPrefix() . 'kunena_user_read', $db->getPrefix() . 'kunena_user_topics', $db->getPrefix() . 'kunena_users', $db->getPrefix() . 'kunena_users_banned', $db->getPrefix() . 'kunena_logs', $db->getPrefix() . 'kunena_version'];
 
-        // Get collations from all Kunena tables et convert the column when needed
-        foreach ($listKunenaTables as $kunenatable) {
-            // Fisrt check if the table exist
-            $db->setQuery("SHOW TABLES LIKE {$db->quote($kunenatable)}");
-            if ($db->loadResult() == $kunenatable) {
-                $query = 'SHOW FULL COLUMNS FROM ' . $db->quoteName($kunenatable);
-                $db->setQuery($query);
+    // Get collations from all Kunena tables et convert the column when needed
+    foreach ($listKunenaTables as $kunenatable) {
+        // Fisrt check if the table exist
+        $db->setQuery("SHOW TABLES LIKE {$db->quote($kunenatable)}");
+        if ($db->loadResult() == $kunenatable) {
+            $query = 'SHOW FULL COLUMNS FROM ' . $db->quoteName($kunenatable);
+            $db->setQuery($query);
 
-                $tableColumns = $db->loadobjectList();
+            $tableColumns = $db->loadobjectList();
 
-                // Check column and set to ut8_mb4 when needed
-                foreach ($tableColumns as $column) {
-                    if ($column->Collation == 'utf8_general_ci' || $column->Collation == 'utf8mb3_general_ci' || $column->Collation == 'utf8_unicode_ci' || $column->Collation == 'utf8mb3_unicode_ci') {
-                        if ($column->Type == 'VARCHAR(255)' || $column->Type == 'varchar(255)') {
-                            $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' VARCHAR(250);';
-                            $db->setQuery($query);
+            // Check column and set to ut8_mb4 when needed
+            foreach ($tableColumns as $column) {
+                if ($column->Collation == 'utf8_general_ci' || $column->Collation == 'utf8mb3_general_ci' || $column->Collation == 'utf8_unicode_ci' || $column->Collation == 'utf8mb3_unicode_ci') {
+                    if ($column->Type == 'VARCHAR(255)' || $column->Type == 'varchar(255)') {
+                        $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' VARCHAR(250);';
+                        $db->setQuery($query);
+                        $db->execute();
+
+                        $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' VARCHAR(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
+                        $db->setQuery($query);
+
+                        try {
                             $db->execute();
-
-                            $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' VARCHAR(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
-                            $db->setQuery($query);
-
-                            try {
-                                $db->execute();
-                            } catch (Exception $e) {
-                                throw new Exception($e->getMessage(), $e->getCode());
-                            }
-                        } else {
-                            $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' ' . $column->Type . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
-                            $db->setQuery($query);
-
-                            try {
-                                $db->execute();
-                            } catch (Exception $e) {
-                                throw new Exception($e->getMessage(), $e->getCode());
-                            }
+                        } catch (Exception $e) {
+                            throw new Exception($e->getMessage(), $e->getCode());
                         }
-                   }
+                    } else {
+                        $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' ' . $column->Type . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
+                        $db->setQuery($query);
+
+                        try {
+                            $db->execute();
+                        } catch (Exception $e) {
+                            throw new Exception($e->getMessage(), $e->getCode());
+                        }
+                    }
                 }
             }
         }
+    }
 
-    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_624_CHANGE_COLLATION_ON_COLUMNS_TO_UTF8MB4'), 'success' => true);
+    return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_624_CHANGE_COLLATION_ON_COLUMNS_TO_UTF8MB4'), 'success' => true];
 }

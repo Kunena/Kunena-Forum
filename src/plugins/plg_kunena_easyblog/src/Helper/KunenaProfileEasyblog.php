@@ -15,12 +15,13 @@ namespace Kunena\Forum\Plugin\Kunena\Easyblog\Helper;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /**
@@ -49,7 +50,7 @@ class KunenaProfileEasyblog extends KunenaProfile
      * @return string
      *
      * @since   Kunena 5.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function getUserListURL(string $action = '', bool $xhtml = true): string
     {
@@ -73,7 +74,7 @@ class KunenaProfileEasyblog extends KunenaProfile
      *
      * @return  string|false
      * @since   Kunena 5.0
-     * @throws  \Exception
+     * @throws  Exception
      */
     public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
     {

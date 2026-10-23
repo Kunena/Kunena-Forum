@@ -15,12 +15,15 @@ namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
 
 \defined('_JEXEC') or die();
 
+use CFactory;
+use CRoute;
+use Exception;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Joomla\Registry\Registry;
 
 /**
  * Class \Kunena\Forum\Libraries\Integration\AvatarCommunity
@@ -50,7 +53,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         if (class_exists('CFactory') && method_exists('CFactory', 'loadUsers')) {
-            \CFactory::loadUsers($userlist);
+            CFactory::loadUsers($userlist);
         }
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -63,7 +66,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
      */
     public function getEditURL(): string
     {
-        return \CRoute::_('index.php?option=com_community&view=profile&task=uploadAvatar');
+        return CRoute::_('index.php?option=com_community&view=profile&task=uploadAvatar');
     }
 
     /**
@@ -75,14 +78,14 @@ class KunenaAvatarCommunity extends KunenaAvatar
      *
      * @since   Kunena 6.0
      *
-     * @throws  \Exception
+     * @throws  Exception
      */
     protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
     {
         $kuser = KunenaFactory::getUser($user);
 
         // Get CUser object
-        $user = \CFactory::getUser($kuser->userid);
+        $user = CFactory::getUser($kuser->userid);
 
         if ($kuser->userid == 0) {
             $avatar = Uri::root() . "components/com_community/assets/user-Male.png";

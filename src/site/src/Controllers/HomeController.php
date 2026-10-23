@@ -59,7 +59,7 @@ class HomeController extends KunenaController
         static $depth = 0;
 
         if ($depth > 2) {
-            throw new \Exception(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404);
+            throw new Exception(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404);
         }
 
         $depth++;

@@ -18,7 +18,6 @@ namespace Kunena\Forum\Administrator\Model;
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Form\FormFactoryAwareTrait;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -27,6 +26,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\FormBehaviorTrait;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Table\Table;
+use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -35,6 +35,7 @@ use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use RuntimeException;
+use stdClass;
 
 /**
  * Categories Model for Kunena
@@ -166,18 +167,18 @@ class CategoriesModel extends KunenaModel
 
         // Make a standard yes/no list
         $published    = [];
-        $published[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_PUBLISHED'));
-        $published[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_UNPUBLISHED'));
+        $published[]  = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_PUBLISHED'));
+        $published[]  = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_UNPUBLISHED'));
 
         // Make a standard yes/no list
         $yesno    = [];
-        $yesno[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
-        $yesno[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
+        $yesno[]  = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+        $yesno[]  = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 
         // Anonymous posts default
         $postAnonymous    = [];
-        $postAnonymous[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG'));
-        $postAnonymous[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO'));
+        $postAnonymous[]  = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG'));
+        $postAnonymous[]  = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO'));
 
         $catParams                = [];
         $catParams['ordering']    = 'ordering';
@@ -192,8 +193,8 @@ class CategoriesModel extends KunenaModel
         $channelsParams['action'] = 'admin';
 
         $channelsOptions    = [];
-        $channelsOptions[] = HTMLHelper::_('select.option', 'THIS', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS'));
-        $channelsOptions[] = HTMLHelper::_('select.option', 'CHILDREN', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN'));
+        $channelsOptions[]  = HTMLHelper::_('select.option', 'THIS', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS'));
+        $channelsOptions[]  = HTMLHelper::_('select.option', 'CHILDREN', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN'));
 
         if (empty($category->channels)) {
             $category->channels = 'THIS';
@@ -209,19 +210,19 @@ class CategoriesModel extends KunenaModel
         $aliases = array_keys($category->getAliases());
 
         $lists                    = [];
-        $lists['accesstypes']    = KunenaAccess::getInstance()->getAccessTypesList($category);
-        $lists['accesslists']    = KunenaAccess::getInstance()->getAccessOptions($category);
-        $lists['categories']     = HTMLHelper::_('kunenaforum.categorylist', 'parentid', 0, null, $catParams, 'class="inputbox form-select"', 'value', 'text', $category->parentid);
-        $lists['channels']       = HTMLHelper::_('kunenaforum.categorylist', 'channels[]', 0, $channelsOptions, $channelsParams, 'class="inputbox form-select" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
-        $lists['aliases']        = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
-        $lists['published']      = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-select"', 'value', 'text', $category->published);
-        $lists['forumLocked']    = HTMLHelper::_('select.genericlist', $yesno, 'locked', 'class="inputbox form-select" size="1"', 'value', 'text', $category->locked);
-        $lists['forumReview']    = HTMLHelper::_('select.genericlist', $yesno, 'review', 'class="inputbox form-select" size="1"', 'value', 'text', $category->review);
-        $lists['allowPolls']     = HTMLHelper::_('select.genericlist', $yesno, 'allowPolls', 'class="inputbox form-select" size="1"', 'value', 'text', $category->allowPolls);
-        $lists['allowAnonymous'] = HTMLHelper::_('select.genericlist', $yesno, 'allowAnonymous', 'class="inputbox form-select" size="1"', 'value', 'text', $category->allowAnonymous);
-        $lists['postAnonymous']  = HTMLHelper::_('select.genericlist', $postAnonymous, 'postAnonymous', 'class="inputbox form-select" size="1"', 'value', 'text', $category->postAnonymous);
-        $lists['topicOrdering']  = HTMLHelper::_('select.genericlist', $topicOrderingOptions, 'topicOrdering', 'class="inputbox form-select" size="1"', 'value', 'text', $category->topicOrdering);
-        $lists['allowRatings']   = HTMLHelper::_('select.genericlist', $yesno, 'allowRatings', 'class="inputbox form-select" size="1"', 'value', 'text', $category->allowRatings);
+        $lists['accesstypes']     = KunenaAccess::getInstance()->getAccessTypesList($category);
+        $lists['accesslists']     = KunenaAccess::getInstance()->getAccessOptions($category);
+        $lists['categories']      = HTMLHelper::_('kunenaforum.categorylist', 'parentid', 0, null, $catParams, 'class="inputbox form-select"', 'value', 'text', $category->parentid);
+        $lists['channels']        = HTMLHelper::_('kunenaforum.categorylist', 'channels[]', 0, $channelsOptions, $channelsParams, 'class="inputbox form-select" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
+        $lists['aliases']         = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
+        $lists['published']       = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-select"', 'value', 'text', $category->published);
+        $lists['forumLocked']     = HTMLHelper::_('select.genericlist', $yesno, 'locked', 'class="inputbox form-select" size="1"', 'value', 'text', $category->locked);
+        $lists['forumReview']     = HTMLHelper::_('select.genericlist', $yesno, 'review', 'class="inputbox form-select" size="1"', 'value', 'text', $category->review);
+        $lists['allowPolls']      = HTMLHelper::_('select.genericlist', $yesno, 'allowPolls', 'class="inputbox form-select" size="1"', 'value', 'text', $category->allowPolls);
+        $lists['allowAnonymous']  = HTMLHelper::_('select.genericlist', $yesno, 'allowAnonymous', 'class="inputbox form-select" size="1"', 'value', 'text', $category->allowAnonymous);
+        $lists['postAnonymous']   = HTMLHelper::_('select.genericlist', $postAnonymous, 'postAnonymous', 'class="inputbox form-select" size="1"', 'value', 'text', $category->postAnonymous);
+        $lists['topicOrdering']   = HTMLHelper::_('select.genericlist', $topicOrderingOptions, 'topicOrdering', 'class="inputbox form-select" size="1"', 'value', 'text', $category->topicOrdering);
+        $lists['allowRatings']    = HTMLHelper::_('select.genericlist', $yesno, 'allowRatings', 'class="inputbox form-select" size="1"', 'value', 'text', $category->allowRatings);
 
         $options                 = [];
         $options[0]              = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_NEVER'));
@@ -328,7 +329,7 @@ class CategoriesModel extends KunenaModel
 
     /**
      * Save the new order of categories choosed by user in the table TableKunenaCategories
-     * 
+     *
      * @param   TableKunenaCategories $tableObject
      * @param   null                  $pks    pks
      * @param   null                  $order  order
@@ -415,7 +416,7 @@ class CategoriesModel extends KunenaModel
     public function getBatchCategories(): string
     {
         $categories         = $this->getAdminCategories();
-        $batch_categories   = array();
+        $batch_categories   = [];
         $batch_categories[] = HTMLHelper::_('select.option', 'select', Text::_('JSELECT'));
 
         foreach ($categories as $category) {
@@ -455,7 +456,7 @@ class CategoriesModel extends KunenaModel
             $catid      = $this->getState('filter.category', '') === '' ? $this->getState('item.id', 0) : $this->getState('filter.category', '');
             $categories = [];
             $orphans    = [];
-            $levels     = $this->getState('filter.levels', '')   === '' ? 0 : $this->getState('filter.levels');
+            $levels     = $this->getState('filter.levels', '') === '' ? 0 : $this->getState('filter.levels');
 
             if ($catid) {
                 $categories   = KunenaCategoryHelper::getParents($catid, $levels - 1, ['unpublished' => 1, 'action' => 'none']);
@@ -628,7 +629,7 @@ class CategoriesModel extends KunenaModel
         try {
             // Get the form.
             return $this->loadForm($this->context . '.filter', $this->filterFormName, ['control' => '', 'load_data' => $loadData]);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
         }
 
         return;
@@ -644,7 +645,7 @@ class CategoriesModel extends KunenaModel
     protected function loadFormData()
     {
         // Check the session for previously entered form data.
-        $data = Factory::getApplication()->getUserState($this->context, new \stdClass());
+        $data = Factory::getApplication()->getUserState($this->context, new stdClass());
 
         // Pre-fill the list options
         if (!property_exists($data, 'list')) {
@@ -770,8 +771,7 @@ class CategoriesModel extends KunenaModel
                         $this->setState('list.' . $name, $value);
                     }
                 }
-            } else // Keep B/C for components previous to jform forms for filters
-            {
+            } else { // Keep B/C for components previous to jform forms for filters
                 // Pre-fill the limits
                 $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->get('list_limit'), 'uint');
                 $this->setState('list.limit', $limit);
@@ -811,7 +811,7 @@ class CategoriesModel extends KunenaModel
                 $this->setState('list.direction', $oldDirection);
             }
 
-            $value = $app->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0, 'int');
+            $value      = $app->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0, 'int');
             $limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
             $this->setState('list.start', $limitstart);
         } else {

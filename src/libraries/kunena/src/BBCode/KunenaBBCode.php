@@ -20,7 +20,6 @@ use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Http\Http;
 use Joomla\CMS\Http\Transport\StreamTransport;
@@ -29,6 +28,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Uri\UriHelper;
@@ -260,9 +260,10 @@ class KunenaBBCode extends BBCode
 
                 if ($this->canCloakEmail($params)) {
                     return HTMLHelper::_('email.cloak', $email, $this->IsValidEmail($email));
-                } else {
-                    return '<a href="mailto:' . $email . '">' . $email . '</a>';
                 }
+
+                return '<a href="mailto:' . $email . '">' . $email . '</a>';
+
             }
 
             // Remove http(s):// from the text
@@ -328,9 +329,10 @@ class KunenaBBCode extends BBCode
 
                 if ($uri->isSSL()) {
                     return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="https://www.youtube-nocookie.com/embed/' . urlencode($video) . '" allowfullscreen style="border: 0"></iframe></div>';
-                } else {
-                    return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="http://www.youtube-nocookie.com/embed/' . urlencode($video) . '" allowfullscreen style="border: 0"></iframe></div>';
                 }
+
+                return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="http://www.youtube-nocookie.com/embed/' . urlencode($video) . '" allowfullscreen style="border: 0"></iframe></div>';
+
             }
         }
 
@@ -421,9 +423,10 @@ class KunenaBBCode extends BBCode
 
             if (strpos($url, '/index.php') !== 0) {
                 return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">{$text}</a>";
-            } else {
-                return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\">{$text}</a>";
             }
+
+            return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\">{$text}</a>";
+
         }
 
         // Auto-linking has been disabled.
@@ -438,7 +441,9 @@ class KunenaBBCode extends BBCode
      * @return  void
      * @since   Kunena 6.0
      */
-    public function IsValidEmail($email) {}
+    public function IsValidEmail($email)
+    {
+    }
 
     /**
      * @param   mixed  $params  params
@@ -624,7 +629,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      * @since   Kunena 6.0
      */
     public $default_tag_rules = [
-        'b'            => [
+        'b' => [
             'simple_start' => "<b>",
             'simple_end'   => "</b>",
             'class'        => 'inline',
@@ -633,7 +638,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'    => "</b>",
             'allow_params' => false,
         ],
-        'i'            => [
+        'i' => [
             'simple_start' => "<i>",
             'simple_end'   => "</i>",
             'class'        => 'inline',
@@ -642,7 +647,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'    => "</i>",
             'allow_params' => false,
         ],
-        'u'            => [
+        'u' => [
             'simple_start' => "<u>",
             'simple_end'   => "</u>",
             'class'        => 'inline',
@@ -651,7 +656,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'    => "</u>",
             'allow_params' => false,
         ],
-        's'            => [
+        's' => [
             'simple_start' => "<s>",
             'simple_end'   => "</s>",
             'class'        => 'inline',
@@ -660,7 +665,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'    => "</s>",
             'allow_params' => false,
         ],
-        'pre'          => [
+        'pre' => [
             'simple_start' => "<pre>",
             'simple_end'   => "</pre>",
             'class'        => 'block',
@@ -668,42 +673,42 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'  => "<i>",
             'plain_end'    => "</i>",
         ],
-        'font'         => [
+        'font' => [
             'mode'     => BBCode::BBCODE_MODE_LIBRARY,
             'allow'    => ['_default' => '/^[a-zA-Z0-9._, -]+$/'],
             'method'   => 'doFont',
             'class'    => 'inline',
             'allow_in' => ['listitem', 'block', 'columns', 'inline', 'link'],
         ],
-        'color'        => [
+        'color' => [
             'mode'     => BBCode::BBCODE_MODE_ENHANCED,
             'allow'    => ['_default' => '/^#?[a-zA-Z0-9._ -]+$/'],
             'template' => '<span style="color: {$_default/tw};">{$_content/v}</span>',
             'class'    => 'inline',
             'allow_in' => ['listitem', 'block', 'columns', 'inline', 'link'],
         ],
-        'size'         => [
+        'size' => [
             'mode'     => BBCode::BBCODE_MODE_LIBRARY,
             'allow'    => ['_default' => '/^[0-9.]+$/D'],
             'method'   => 'doSize',
             'class'    => 'inline',
             'allow_in' => ['listitem', 'block', 'columns', 'inline', 'link'],
         ],
-        'sup'          => [
+        'sup' => [
             'simple_start' => "<sup>",
             'simple_end'   => "</sup>",
             'class'        => 'inline',
             'allow_in'     => ['listitem', 'block', 'columns', 'inline', 'link'],
             'allow_params' => false,
         ],
-        'sub'          => [
+        'sub' => [
             'simple_start' => "<sub>",
             'simple_end'   => "</sub>",
             'class'        => 'inline',
             'allow_in'     => ['listitem', 'block', 'columns', 'inline', 'link'],
             'allow_params' => false,
         ],
-        'spoiler'      => [
+        'spoiler' => [
             'mode'        => BBCode::BBCODE_MODE_LIBRARY,
             'method'      => 'DoSpoiler',
             'class'       => 'block',
@@ -712,7 +717,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start' => "\nSpoiler:\n<i>",
             'plain_end'   => "</i>",
         ],
-        'hide'         => [
+        'hide' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoHide',
             'class'         => 'block',
@@ -728,7 +733,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'content'       => BBCode::BBCODE_REQUIRED,
             'plain_content' => [],
         ],
-        'map'          => [
+        'map' => [
             'mode'     => BBCode::BBCODE_MODE_LIBRARY,
             'method'   => 'DoMap',
             'class'    => 'block',
@@ -736,7 +741,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'allow_in' => ['listitem', 'block', 'columns'],
             'content'  => BBCode::BBCODE_VERBATIM,
         ],
-        'ebay'         => [
+        'ebay' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoEbay',
             'class'         => 'block',
@@ -746,7 +751,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
-        'article'      => [
+        'article' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoArticle',
             'class'         => 'block',
@@ -756,7 +761,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
-        'tableau'      => [
+        'tableau' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoTableau',
             'class'         => 'block',
@@ -766,7 +771,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
-        'video'        => [
+        'video' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoVideo',
             'allow'         => ['type' => '/^[\w\d.-_]*$/', 'param' => '/^[\w]*$/', 'size' => '/^\d*$/', 'width' => '/^\d*$/', 'height' => '/^\d*$/'],
@@ -777,7 +782,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
-        'img'          => [
+        'img' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoImage',
             'allow'         => ['size' => '/^\d*x?\d*$/', 'alt' => '/^[\w]*$/', 'float' => '/\bleft\b|\bright\b/' ],
@@ -788,7 +793,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
-        'file'         => [
+        'file' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoFile',
             'allow'         => ['size' => '/^\d*$/'],
@@ -799,7 +804,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
-        'attachment'   => [
+        'attachment' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoAttachment',
             'allow'         => ['_default' => '/^\d*$/'],
@@ -810,7 +815,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
-        'highlight'    => [
+        'highlight' => [
             'simple_start' => "<span style='font-weight: 700;'>",
             'simple_end'   => "</span>",
             'class'        => 'inline',
@@ -818,13 +823,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'  => "<i>",
             'plain_end'    => "</i>",
         ],
-        'acronym'      => [
+        'acronym' => [
             'mode'     => BBCode::BBCODE_MODE_ENHANCED,
             'template' => '<span class="bbcode_acronym" data-bs-toggle="tooltip" title="{$_default/e}">{$_content/v}</span>',
             'class'    => 'inline',
             'allow_in' => ['listitem', 'block', 'columns', 'inline', 'link'],
         ],
-        'url'          => [
+        'url' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoUrl',
             'class'         => 'link',
@@ -833,7 +838,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_content' => ['_content', '_default'],
             'plain_link'    => ['_default', '_content'],
         ],
-        'email'        => [
+        'email' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'doEmail',
             'class'         => 'link',
@@ -844,7 +849,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_content' => ['_content', '_default'],
             'plain_link'    => ['_default', '_content'],
         ],
-        'wiki'         => [
+        'wiki' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => "doWiki",
             'class'         => 'link',
@@ -856,7 +861,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_content' => ['title', '_default'],
             'plain_link'    => ['_default', '_content'],
         ],
-        'rule'         => [
+        'rule' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => "doRule",
             'class'         => 'block',
@@ -869,7 +874,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
-        'br'           => [
+        'br' => [
             'mode'          => BBCode::BBCODE_MODE_SIMPLE,
             'simple_start'  => "<br>\n",
             'simple_end'    => "",
@@ -883,7 +888,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
-        'left'         => [
+        'left' => [
             'simple_start'  => "\n<div class=\"bbcode_left\" style=\"text-align:left\">\n",
             'simple_end'    => "\n</div>\n",
             'allow_in'      => ['listitem', 'block', 'columns'],
@@ -894,7 +899,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'right'        => [
+        'right' => [
             'simple_start'  => "\n<div class=\"bbcode_right\" style=\"text-align:right\">\n",
             'simple_end'    => "\n</div>\n",
             'allow_in'      => ['listitem', 'block', 'columns'],
@@ -905,7 +910,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'center'       => [
+        'center' => [
             'simple_start'  => "\n<div class=\"bbcode_center\" style=\"text-align:center\">\n",
             'simple_end'    => "\n</div>\n",
             'allow_in'      => ['listitem', 'block', 'columns'],
@@ -916,13 +921,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'rtl'          => [
+        'rtl' => [
             'simple_start' => '<div style="direction: rtl;">',
             'simple_end'   => '</div>',
             'class'        => 'inline',
             'allow_in'     => ['listitem', 'block', 'columns', 'inline', 'link'],
         ],
-        'indent'       => [
+        'indent' => [
             'simple_start'  => "\n<div class=\"bbcode_indent\" style=\"margin-left:4em\">\n",
             'simple_end'    => "\n</div>\n",
             'allow_in'      => ['listitem', 'block', 'columns'],
@@ -933,7 +938,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'table'        => [
+        'table' => [
             'simple_start'  => "\n<table>",
             'simple_end'    => "</table>\n",
             'class'         => 'table',
@@ -947,7 +952,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'tr'           => [
+        'tr' => [
             'simple_start'  => "\n<tr>",
             'simple_end'    => "</tr>\n",
             'class'         => 'tr',
@@ -961,7 +966,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'th'           => [
+        'th' => [
             'simple_start'  => "<th>",
             'simple_end'    => "</th>",
             'class'         => 'columns',
@@ -973,7 +978,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'td'           => [
+        'td' => [
             'simple_start'  => "<td>",
             'simple_end'    => "</td>",
             'class'         => 'columns',
@@ -985,7 +990,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'columns'      => [
+        'columns' => [
             'simple_start'  => "\n<table class=\"bbcode_columns\"><tbody><tr><td class=\"bbcode_column bbcode_firstcolumn\">\n",
             'simple_end'    => "\n</td></tr></tbody></table>\n",
             'class'         => 'columns',
@@ -999,7 +1004,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'nextcol'      => [
+        'nextcol' => [
             'simple_start'  => "\n</td><td class=\"bbcode_column\">\n",
             'class'         => 'nextcol',
             'allow_in'      => ['columns'],
@@ -1012,7 +1017,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "",
         ],
-        'code'         => [
+        'code' => [
             'mode'          => BBCode::BBCODE_MODE_ENHANCED,
             'template'      => "\n<div class=\"bbcode_code\">\n<div class=\"bbcode_code_head\">Code:</div>\n<div class=\"bbcode_code_body\" style=\"white-space:pre\">{\$_content/v}</div>\n</div>\n",
             'class'         => 'code',
@@ -1025,7 +1030,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n<b>Code:</b>\n",
             'plain_end'     => "\n",
         ],
-        'quote'        => [
+        'quote' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => "DoQuote",
             'allow_in'      => ['listitem', 'block', 'columns'],
@@ -1036,7 +1041,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n<b>Quote:</b>\n",
             'plain_end'     => "\n",
         ],
-        'list'         => [
+        'list' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoList',
             'class'         => 'list',
@@ -1048,7 +1053,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'ul'           => [
+        'ul' => [
             'mode'          => BBcode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoList',
             'default'       => ['_default' => 'disc'],
@@ -1061,7 +1066,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        'ol'           => [
+        'ol' => [
             'mode'          => BBcode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoList',
             'allow'         => ['_default' => '/^[\d\w]*$/'],
@@ -1075,7 +1080,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n",
             'plain_end'     => "\n",
         ],
-        '*'            => [
+        '*' => [
             'simple_start'  => "<li>",
             'simple_end'    => "</li>\n",
             'class'         => 'listitem',
@@ -1088,7 +1093,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n * ",
             'plain_end'     => "\n",
         ],
-        'li'           => [
+        'li' => [
             'simple_start'  => "<li>",
             'simple_end'    => "</li>\n",
             'class'         => 'listitem',
@@ -1100,7 +1105,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\n * ",
             'plain_end'     => "\n",
         ],
-        'terminal'     => [
+        'terminal' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoTerminal',
             'allow_in'      => ['listitem', 'block', 'columns'],
@@ -1114,7 +1119,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_start'   => "\nTerminal:\n",
             'plain_end'     => "\n",
         ],
-        'tweet'        => [
+        'tweet' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoTweet',
             'class'         => 'block',
@@ -1122,7 +1127,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'content'       => BBCode::BBCODE_REQUIRED,
             'plain_content' => [],
         ],
-        'soundcloud'   => [
+        'soundcloud' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoSoundcloud',
             'class'         => 'block',
@@ -1132,7 +1137,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
-        'instagram'    => [
+        'instagram' => [
             'mode'     => BBCode::BBCODE_MODE_LIBRARY,
             'method'   => 'DoInstagram',
             'allow_in' => ['listitem', 'block', 'columns'],
@@ -1140,7 +1145,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'allow'    => ['colortext' => '/^[\w\d.-_]*$/'],
             'content'  => BBCode::BBCODE_PROHIBIT,
         ],
-        'private'      => [
+        'private' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoPrivate',
             'class'         => 'block',
@@ -1148,7 +1153,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'content'       => BBCode::BBCODE_REQUIRED,
             'plain_content' => [],
         ],
-        'mention'      => [
+        'mention' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoMention',
             'class'         => 'block',
@@ -1216,14 +1221,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $data = ['grant_type' => 'client_credentials', 'scope' => 'https://api.ebay.com/oauth/api_scope'];
 
         $headersOauth = [
-            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Content-Type'  => 'application/x-www-form-urlencoded',
             'Authorization' => 'Basic ' . base64_encode($config->ebayApiKey . ':' . $config->ebayCertId),
         ];
 
         $responseOauth = $http->post('https://api.ebay.com/identity/v1/oauth2/token', $data, $headersOauth);
 
         if ($responseOauth->code == '200') {
-            $resp = json_decode($responseOauth->body);
+            $resp  = json_decode($responseOauth->body);
             $token = $resp->access_token;
 
             $headers = ['X-EBAY-API-IAF-TOKEN' => $token, 'X-EBAY-API-CALL-NAME' => 'GetSingleItem', 'X-EBAY-API-VERSION' => 1157];
@@ -1236,11 +1241,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
                 if ($responseItem->Ack == 'Success') {
                     return $responseItem->Item;
-                } else {
-                    $errors = $responseItem->Errors;
-
-                    throw new Exception('Render ebay item ' . $errors[0]->LongMessage);
                 }
+                $errors = $responseItem->Errors;
+
+                throw new Exception('Render ebay item ' . $errors[0]->LongMessage);
+
             }
 
             throw new Exception('Render ebay item: the eBay API answered with HTTP status ' . $response->code);
@@ -1343,14 +1348,16 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         }
 
         $email     = \is_string($default) ? $default : $bbcode->UnHTMLEncode($content);
-        $result = filter_var($email, FILTER_VALIDATE_EMAIL);
+        $result    = filter_var($email, FILTER_VALIDATE_EMAIL);
 
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
 
         $text      = \is_string($default) ? $bbcode->UnHTMLEncode($content) : $default;
         $text      = trim($text && $email != $text ? $text : '');
         $mailto    = $bbcode->IsValidEmail($email);
-        $result = filter_var($email, FILTER_VALIDATE_EMAIL);
+        $result    = filter_var($email, FILTER_VALIDATE_EMAIL);
 
         if (\is_string($result)) {
             $isLink = true;
@@ -1371,9 +1378,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if ($bbcode->canCloakEmail($params)) {
             return HTMLHelper::_('email.cloak', htmlspecialchars($email), $bbcode->IsValidEmail($email), htmlspecialchars($text), $bbcode->IsValidEmail($text));
-        } else {
-            return '<a href="mailto:' . htmlspecialchars($email) . '">' . htmlspecialchars($text) . '</a>';
         }
+
+        return '<a href="mailto:' . htmlspecialchars($email) . '">' . htmlspecialchars($text) . '</a>';
+
     }
 
     // Format a [size] tag by producing a <span> with a style with a different font-size.
@@ -1425,9 +1433,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if (!$bbcode->IsValidURL($url, false, true)) {
             if (KunenaFactory::getConfig()->autoEmbedYoutube) {
                 return $content;
-            } else {
-                return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
             }
+
+            return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
+
         }
 
         if (isset($params['target'])) {
@@ -1556,7 +1565,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             if (isset($tag_rule['default'])) {
                 $default = $tag_rule['default']['_default'];
             } else {
-                $default = $tag_rule['default'] = array();
+                $default = $tag_rule['default'] = [];
             }
         }
 
@@ -1567,9 +1576,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 return true;
             } elseif (isset($ci_list_styles[strtolower($default)])) {
                 return true;
-            } else {
-                return false;
             }
+
+            return false;
+
         }
 
         // Choose a list element (<ul> or <ol>) and a style.
@@ -1598,9 +1608,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         // Generate the HTML for it.
         if (\strlen($type)) {
             return "\n<$elem class=\"bbcode_list\" style=\"list-style-type:$type\">\n$content</$elem>\n";
-        } else {
-            return "\n<$elem class=\"bbcode_list\">\n$content</$elem>\n";
         }
+
+        return "\n<$elem class=\"bbcode_list\">\n$content</$elem>\n";
+
     }
 
     /**
@@ -1735,10 +1746,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $me        = KunenaUserHelper::getMyself();
 
         if (($bbcode->parent->message ?? null) instanceof KunenaMessage) {
-            $message_userid = $bbcode->parent->message->userid;
+            $message_userid     = $bbcode->parent->message->userid;
             $KunenaForumMessage = $bbcode->parent->message;
         } elseif ($bbcode->parent instanceof KunenaMessage) {
-            $message_userid = $bbcode->parent->userid;
+            $message_userid     = $bbcode->parent->userid;
             $KunenaForumMessage = $bbcode->parent;
         } else {
             $message_userid = 0;
@@ -1911,11 +1922,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                     ->set('status', $ebay->ListingStatus)
                     ->set('title', $ebay->Title)
                     ->setLayout(is_numeric($ItemID) ? 'default' : 'search');
-            } else {
-                echo '<b>' . $ebay . '</b>';
-
-                return false;
             }
+            echo '<b>' . $ebay . '</b>';
+
+            return false;
+
         }
 
         return false;
@@ -1935,7 +1946,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     public static function getEbayItemFromCache(int $ItemID, KunenaConfig $config): stdClass
     {
         $options = ['defaultgroup' => 'Kunena_ebay_request'];
-        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
         $cache->setCaching(true);
 
         if ($config->cacheTime == 0) {
@@ -2036,7 +2047,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                     }
                     break;
 
-                // Continue to intro if fulltext is empty
+                    // Continue to intro if fulltext is empty
                 case 'intro':
                     if (!empty($article->introtext)) {
                         $article->text = $article->introtext;
@@ -2049,7 +2060,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                     }
                     break;
 
-                // Continue to link if introtext is empty
+                    // Continue to link if introtext is empty
                 case 'link':
                 default:
                     $link = '<a href="' . $url . '" class="readon">' . $article->title . '</a>';
@@ -2133,7 +2144,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if ($postid > 0) {
             $message = KunenaMessageHelper::get($postid);
-            $msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
+            $msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getUrl(null, false);
         }
 
         // Support bbcode quote tag done in K5.1 and first versions of K5.2
@@ -2237,8 +2248,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $maxheight = (isset($params["height"]) && is_numeric($params["height"])) ? (int) $params["height"] : 0;
 
         if (preg_match('/(https:\/\/public.tableau.com\/views)\/(.*)\/(.*)\?.*/', $content, $matches)) {
-            $tableauserver = $matches[1];
-            $vizualization = $matches[2];
+            $tableauserver    = $matches[1];
+            $vizualization    = $matches[2];
             $vizualizationTab = $matches[3];
 
             if ($tableauserver != 'https://public.tableau.com/views') {
@@ -2399,7 +2410,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             $vid_height = (int) ($vid_height * $vid_size / 100);
         }
 
-        $vid_width  += $vid_addx;
+        $vid_width += $vid_addx;
         $vid_height += $vid_addy;
 
         if (!isset($params["size"])) {
@@ -2767,7 +2778,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         }
 
         // Get the words set on alt params when alt is used like that : alt=my words; see issue #6751
-        $matches = array();
+        $matches = [];
         $altText = null;
         preg_match('/\balt=([^\]=]*?)(?=\s+\w+=|\s*\]|$)/', $params['_tag'], $matches);
         if (\count($matches) > 0) {
@@ -2800,9 +2811,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
                     // TODO: call URL layout instead..
                     return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $bbcode->HTMLEncode($fileurl) . '</a>';
-                } else {
-                    return $bbcode->HTMLEncode($fileurl);
                 }
+
+                return $bbcode->HTMLEncode($fileurl);
+
             }
         }
 
@@ -2900,7 +2912,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      * @return string
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function renderTweet(int $tweetid): string
     {
@@ -3082,12 +3094,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 file_put_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json', json_encode($tweet_data));
 
                 return $tweet_data;
-            } else {
-                $tweet        = new stdClass();
-                $tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_X_SOCIAL_INVALID_TWEET_ID');
-
-                return $tweet;
             }
+            $tweet        = new stdClass();
+            $tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_X_SOCIAL_INVALID_TWEET_ID');
+
+            return $tweet;
+
         }
 
         return false;

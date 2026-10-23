@@ -194,13 +194,13 @@ abstract class KunenaDatabaseObject
     protected function getTable()
     {
         $className = 'Kunena\Forum\Libraries\Tables\\' . $this->_table;
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db        = Factory::getContainer()->get(DatabaseInterface::class);
 
         if (class_exists($className)) {
             $table = new $className($db);
         } else {
             $className = 'Kunena\Forum\Libraries\Tables\Table' . $this->_table;
-            $table = new $className($db);
+            $table     = new $className($db);
         }
 
         return $table;
@@ -391,9 +391,9 @@ abstract class KunenaDatabaseObject
 
     /**
      * Get the table relevant properties. Override for your specific Object
-     * 
+     *
      * @return array    Assocative array with the propertie values of table
-     * 
+     *
      * @since   Kunena 6.4
      */
     protected function getTableProperties(): array

@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site\Model;
 
 \defined('_JEXEC') or die();
 
+use DateTime;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -110,11 +111,11 @@ class TopicsModel extends KunenaModel
             }
         }
 
-        $params              = [];
-        $params['mode']      = $this->getState('list.mode');
-        $params['reverse']   = !$this->getState('list.categories.in');
-        $params['starttime'] = $time;
-        $params['user']      = $this->getState('user');
+        $params                             = [];
+        $params['mode']                     = $this->getState('list.mode');
+        $params['reverse']                  = !$this->getState('list.categories.in');
+        $params['starttime']                = $time;
+        $params['user']                     = $this->getState('user');
         list($this->total, $this->messages) = KunenaMessageHelper::getLatestMessages($this->getState('list.categories'), $start, $limit, $params);
 
         $topicids = [];
@@ -328,7 +329,7 @@ class TopicsModel extends KunenaModel
                 $time = Factory::getDate()->toUnix() - ((int) $time * 3600);
             }
         } else {
-            $time = new \DateTime($time . ' ago');
+            $time = new DateTime($time . ' ago');
             $time = $time->getTimestamp();
         }
 
@@ -620,7 +621,7 @@ class TopicsModel extends KunenaModel
                 // Get configuration the categories selected from kunena latest module params when installed
                 $klatestCategory    = $params->get('topics_categories_klatest', []);
                 $klatestCategorySel = $params->get('topics_catselection_klatest', -1);
-                $klatestContext = $params->get('modlastestcontext', false);
+                $klatestContext     = $params->get('modlastestcontext', false);
                 // Get configuration the categories selected from the active menu item
                 $latestCategory   = $params->get('topics_categories', []);
                 $latestCategoryIn = $params->get('topics_catselection', -1);
@@ -654,7 +655,7 @@ class TopicsModel extends KunenaModel
                         $latestCategory = $klatestCategory;
                     } elseif ($klatestCategorySel == 2) {
                         // Hide categories in the category list selected
-                        $latestCategory = $klatestCategory;
+                        $latestCategory   = $klatestCategory;
                         $latestCategoryIn = 0;
                     } else {
                         // Use global setting
@@ -688,7 +689,7 @@ class TopicsModel extends KunenaModel
                             $latestCategory = explode(',', $latestCategory);
                         }
                     } else {
-                        $latestCategory = array();
+                        $latestCategory = [];
                     }
                 }
             } else {

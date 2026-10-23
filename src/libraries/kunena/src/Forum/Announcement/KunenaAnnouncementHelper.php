@@ -225,7 +225,7 @@ abstract class KunenaAnnouncementHelper
 
             $instance = new KunenaAnnouncement($announcement);
             $instance->exists(true);
-            self::$_instances[$instance->id] = $instance;
+            self::$_instances[$instance->id]  = $instance;
             $list[]                           = $instance;
         }
 

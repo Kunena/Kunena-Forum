@@ -92,7 +92,7 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
             $who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
         }
 
-        $who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
+        $who .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
         $this->membersOnline = $who;
 
         $this->onlineList = [];

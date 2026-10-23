@@ -75,7 +75,8 @@ class MessageItem extends KunenaLayout
      *
      * @since   Kunena 6.4.3
      */
-    public function canSeeAttachments($attachments) {
+    public function canSeeAttachments($attachments)
+    {
         $attachs = $this->message->getNbAttachments();
 
         if (!$this->me->exists()) {
@@ -102,7 +103,8 @@ class MessageItem extends KunenaLayout
      *
      * @since   Kunena 6.4.3
      */
-    public function getNumlink($location) {
+    public function getNumlink($location)
+    {
         if ($this->config->orderingSystem == 'mesid') {
             $numlink = $location;
         } else {

@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use KunenaAdminTemplate;
+use RuntimeException;
 
 /**
  * Class KunenaFactory
@@ -106,7 +107,7 @@ abstract class KunenaFactory
      * @return \Kunena\Forum\Libraries\Session\KunenaSession|null
      *
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getSession($update = false): ?KunenaSession
     {
@@ -321,12 +322,12 @@ abstract class KunenaFactory
      * In CLI context, returns the application for the given client name (e.g. 'site', 'administrator', or any valid custom client),
      * falling back to 'site' if not specified.
      * In non-CLI contexts, returns the current application instance.
-     * 
+     *
      * @param   string  $client  The fallback Application Instance to return when run from 'cli' (Console)
      *
      * @return  SiteApplication|AdministratorApplication
      *
-     * @throws  \RuntimeException
+     * @throws  RuntimeException
      * @since   Kunena 6.4.3
      */
     public static function getApplication(string $client = ''): SiteApplication|AdministratorApplication
@@ -349,7 +350,7 @@ abstract class KunenaFactory
                     $applicationClass = '\\Joomla\\CMS\\Application\\' . ucfirst($client) . 'Application';
 
                     if (!class_exists($applicationClass)) {
-                        throw new \RuntimeException('Joomla Application class not found: ' . $applicationClass);
+                        throw new RuntimeException('Joomla Application class not found: ' . $applicationClass);
                     }
                     break;
             }

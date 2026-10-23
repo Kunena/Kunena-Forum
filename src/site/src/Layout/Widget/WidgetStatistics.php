@@ -2,7 +2,7 @@
 
 /**
  * Kunena Component
- * 
+ *
  * @package         Kunena.Site
  * @subpackage      Layout.widget
  *

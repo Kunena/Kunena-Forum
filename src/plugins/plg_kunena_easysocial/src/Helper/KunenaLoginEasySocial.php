@@ -20,6 +20,7 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial\Helper;
 
 \defined('_JEXEC') or die('Unauthorized Access');
 
+use FRoute;
 use Joomla\CMS\Component\ComponentHelper;
 use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 
@@ -37,7 +38,7 @@ class KunenaLoginEasySocial extends KunenaLoginAbstract
      */
     public function getLoginURL()
     {
-        return \FRoute::dashboard();
+        return FRoute::dashboard();
     }
 
     /**
@@ -47,7 +48,7 @@ class KunenaLoginEasySocial extends KunenaLoginAbstract
      */
     public function getLogoutURL()
     {
-        return \FRoute::dashboard();
+        return FRoute::dashboard();
     }
 
     /**
@@ -60,7 +61,7 @@ class KunenaLoginEasySocial extends KunenaLoginAbstract
         $usersConfig = ComponentHelper::getParams('com_users');
 
         if ($usersConfig->get('allowUserRegistration')) {
-            return \FRoute::registration();
+            return FRoute::registration();
         }
 
         return;

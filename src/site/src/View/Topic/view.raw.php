@@ -19,13 +19,13 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\KunenaView;
 use stdClass;
 
@@ -52,7 +52,7 @@ class raw extends KunenaView
 
         if ($this->me->exists() || $this->config->pubWrite) {
             $msgbody              = KunenaParser::parseBBCode($body, $this);
-            $response['preview'] = $msgbody;
+            $response['preview']  = $msgbody;
         }
 
         // Set the MIME type and header for JSON output.
@@ -131,7 +131,7 @@ class raw extends KunenaView
         $catid = $this->app->getInput()->getInt('catid', 0);
 
         $category         = KunenaCategoryHelper::get($catid);
-        $categoryIconset = $category->iconset;
+        $categoryIconset  = $category->iconset;
         $app              = Factory::getApplication();
 
         if (empty($categoryIconset)) {

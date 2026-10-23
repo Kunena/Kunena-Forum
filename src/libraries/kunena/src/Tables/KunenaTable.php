@@ -14,6 +14,7 @@
 namespace Kunena\Forum\Libraries\Tables;
 
 use Exception;
+use InvalidArgumentException;
 use Joomla\CMS\Event\AbstractEvent;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Exception\KunenaException;
@@ -77,12 +78,12 @@ abstract class KunenaTable extends Table
 
             if ($keyCount) {
                 if ($keyCount > 1) {
-                    throw new \InvalidArgumentException('Table has multiple primary keys specified, only one primary key value provided.');
+                    throw new InvalidArgumentException('Table has multiple primary keys specified, only one primary key value provided.');
                 }
 
                 $keys = [$this->getKeyName() => $keys];
             } else {
-                throw new \RuntimeException('No table keys defined.');
+                throw new RuntimeException('No table keys defined.');
             }
         }
 
@@ -99,7 +100,7 @@ abstract class KunenaTable extends Table
         foreach ($keys as $field => $value) {
             // Check that $field is in the table.
             if (!\in_array($field, $fields)) {
-                throw new \UnexpectedValueException(\sprintf('Missing field in database: %s &#160; %s.', \get_class($this), $field));
+                throw new UnexpectedValueException(\sprintf('Missing field in database: %s &#160; %s.', \get_class($this), $field));
             }
 
             // Add the search tuple to the query.

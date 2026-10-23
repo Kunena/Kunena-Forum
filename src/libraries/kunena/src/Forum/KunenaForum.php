@@ -43,49 +43,49 @@ abstract class KunenaForum
      *
      * @since   Kunena 6.0
      */
-    const PUBLISHED = 0;
+    public const PUBLISHED = 0;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    const UNAPPROVED = 1;
+    public const UNAPPROVED = 1;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    const DELETED = 2;
+    public const DELETED = 2;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    const TOPIC_DELETED = 3;
+    public const TOPIC_DELETED = 3;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    const TOPIC_CREATION = 4;
+    public const TOPIC_CREATION = 4;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    const MODERATOR = 1;
+    public const MODERATOR = 1;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    const ADMINISTRATOR = 2;
+    public const ADMINISTRATOR = 2;
 
     /**
      * @var     boolean
@@ -166,9 +166,9 @@ abstract class KunenaForum
     /**
      * Check if Kunena Forum is safe to be used.
      *
-     * Legacy method which check if installer is running, it's unsafe to use our framework. Files may be 
-     * currently replaced with new ones and the database structure might be inconsistent. Using forum 
-     * during installation will likely cause fatal errors and data corruption if you attempt to update 
+     * Legacy method which check if installer is running, it's unsafe to use our framework. Files may be
+     * currently replaced with new ones and the database structure might be inconsistent. Using forum
+     * during installation will likely cause fatal errors and data corruption if you attempt to update
      * bjects in the database.
      *
      * Always detect Kunena in your code before you start using the framework:
@@ -260,7 +260,7 @@ abstract class KunenaForum
 
         // Setup output caching.
         $options = ['defaultgroup' => 'com_kunena'];
-        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if (!$config->cache) {
             $cache->setCaching(0);
@@ -542,7 +542,8 @@ abstract class KunenaForum
      *
      * @since   Kunena 7.0
      */
-    public static function loadApi() {
+    public static function loadApi()
+    {
         require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
     }
 }

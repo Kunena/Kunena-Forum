@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 $author            = $this->message->getAuthor();
 $config            = KunenaConfig::getInstance();
 $subject           = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
-$this->messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
+$this->messageLink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->message->getUrl(null, false);
 
 if (empty($this->message->modified_time)) {
     $msg1 = Text::_('COM_KUNENA_POST_EMAIL_MOD1');

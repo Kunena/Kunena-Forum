@@ -33,6 +33,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use RuntimeException;
 
 KunenaRoute::initialize();
 
@@ -427,7 +428,7 @@ abstract class KunenaRoute
     protected static function getCache(): CacheController
     {
         $options = ['defaultgroup' => 'mod_menu'];
-        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         return $cache;
     }
@@ -546,8 +547,8 @@ abstract class KunenaRoute
     protected static function checkCategory($item, Uri $uri)
     {
         static $cache = [];
-        $catid = (int) $uri->getVar('catid');
-        $check = self::check($item, $uri);
+        $catid        = (int) $uri->getVar('catid');
+        $check        = self::check($item, $uri);
 
         if (!$check || !$catid) {
             return $check;
@@ -828,7 +829,7 @@ abstract class KunenaRoute
 
         try {
             $aliases = (array) $db->loadObjectList();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $app->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -837,7 +838,7 @@ abstract class KunenaRoute
         foreach ($aliases as $object) {
             if (StringHelper::strtolower($alias) == StringHelper::strtolower($object->alias)) {
                 $var         = $object->type != 'legacy' ? $object->type : 'view';
-                $vars[$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
+                $vars[$var]  = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
 
                 if ($var == 'catid') {
                     $vars['view'] = 'category';
@@ -870,7 +871,7 @@ abstract class KunenaRoute
             return;
         }
 
-        $app = KunenaFactory::getApplication();
+        $app   = KunenaFactory::getApplication();
         $input = $app->getInput();
 
         self::$menus   = $app->getMenu();

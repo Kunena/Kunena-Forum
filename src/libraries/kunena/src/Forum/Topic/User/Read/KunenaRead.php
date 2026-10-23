@@ -21,8 +21,8 @@ use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Tables\KunenaUserRead;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read
@@ -139,7 +139,7 @@ class KunenaRead
         }
 
         // Create the KunenaUserRead table object
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
         $tableObject = new KunenaUserRead($db);
 
         return $tableObject;

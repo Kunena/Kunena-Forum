@@ -273,7 +273,7 @@ abstract class KunenaUserName
         }
 
         $nickname = trim(preg_replace('/\s+/', ' ', strip_tags($nickname)));
-        $nickname = function_exists('mb_substr') ? mb_substr($nickname, 0, 100) : substr($nickname, 0, 100);
+        $nickname = \function_exists('mb_substr') ? mb_substr($nickname, 0, 100) : substr($nickname, 0, 100);
 
         try {
             $db     = Factory::getContainer()->get(DatabaseInterface::class);
@@ -331,8 +331,8 @@ abstract class KunenaUserName
      */
     public static function getSearchCondition(string $search, string $alias = 'a'): string
     {
-        $db   = Factory::getContainer()->get(DatabaseInterface::class);
-        $like = $db->quote('%' . $db->escape($search, true) . '%', false);
+        $db         = Factory::getContainer()->get(DatabaseInterface::class);
+        $like       = $db->quote('%' . $db->escape($search, true) . '%', false);
         $conditions = [
             $db->quoteName($alias . '.username') . ' LIKE ' . $like,
             $db->quoteName($alias . '.name') . ' LIKE ' . $like,

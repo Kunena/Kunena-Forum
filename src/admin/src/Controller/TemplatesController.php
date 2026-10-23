@@ -17,10 +17,10 @@ namespace Kunena\Forum\Administrator\Controller;
 
 use Exception;
 use Joomla\Archive\Archive;
-use Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Path\KunenaPath;
@@ -66,7 +66,7 @@ class TemplatesController extends KunenaController
      * @return bool
      *
      * @since   Kunena 2.0
-     * @throws \Exception
+     * @throws Exception
      */
     public function install(): bool
     {

@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Html\KunenaMap;
 
 // [map type=roadmap zoom=10 control=0]London, UK[/map]

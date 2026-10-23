@@ -183,7 +183,9 @@ class HtmlView extends KunenaView
      *
      * @since   Kunena 6.0
      */
-    protected function _prepareDocument() {}
+    protected function _prepareDocument()
+    {
+    }
 
     /**
      * @param   null  $tpl  tpl

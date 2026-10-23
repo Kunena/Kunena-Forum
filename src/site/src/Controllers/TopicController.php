@@ -16,37 +16,35 @@ namespace Kunena\Forum\Site\Controllers;
 \defined('_JEXEC') or die();
 
 use Exception;
-use RuntimeException;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Captcha\Captcha;
 use Joomla\CMS\Date\Date;
+use Joomla\CMS\Event\GenericEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\OutputFilter;
-use Joomla\Http\HttpFactory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Mail\MailerFactoryInterface;
-use Joomla\CMS\Event\GenericEvent;
+use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Http\HttpFactory;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
@@ -55,11 +53,12 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
-use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Image\KunenaImage;
+use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
@@ -67,6 +66,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use RuntimeException;
 use stdClass;
 
 /**
@@ -568,7 +568,7 @@ class TopicController extends KunenaController
         // The evidence: where the message is, and the start of it.
         $url      = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getPermaUrl(null, false);
         $text     = trim(preg_replace('/\s+/', ' ', strip_tags(KunenaParser::stripBBCode((string) $message->message, 0, false))));
-        $evidence = $url . ' - ' . (function_exists('mb_substr') ? mb_substr($text, 0, 800) : substr($text, 0, 800));
+        $evidence = $url . ' - ' . (\function_exists('mb_substr') ? mb_substr($text, 0, 800) : substr($text, 0, 800));
 
         $data = [
             'username'         => $author ? $author->username : (string) $message->name,
@@ -767,9 +767,9 @@ class TopicController extends KunenaController
 
             if (!empty($response->completed)) {
                 // We have it all, lets create the attachment.
-                $uploadFile = $upload->getProtectedFile();
+                $uploadFile                 = $upload->getProtectedFile();
                 list($basename, $extension) = $upload->splitFilename();
-                $attachment = new KunenaAttachment();
+                $attachment                 = new KunenaAttachment();
                 $attachment->bind(
                     [
                         'mesid'         => 0,
@@ -954,11 +954,11 @@ class TopicController extends KunenaController
             }
 
             list($topic, $message) = $parent->newReply($fields);
-            $category = $topic->getCategory();
+            $category              = $topic->getCategory();
         }
 
         if ($this->me->canDoCaptcha()) {
-            $app = Factory::getApplication();
+            $app    = Factory::getApplication();
             $plugin = $app->get('captcha', '0');
 
             if ($plugin !== '0' && $plugin !== '' && $plugin !== null) {
@@ -971,7 +971,7 @@ class TopicController extends KunenaController
 
                             return;
                         }
-                    } catch (\RuntimeException $e) {
+                    } catch (RuntimeException $e) {
                         $app->enqueueMessage($e->getMessage(), 'error');
                         $this->setRedirectBack();
 
@@ -1143,7 +1143,7 @@ class TopicController extends KunenaController
         if (!$text) {
             if (trim($fields['private'])) {
                 // Allow empty message if private message part has been filled up by setting a timestapm to avoid the identical message error.
-                $date = new Date();
+                $date             = new Date();
                 $message->message = trim($message->message) ? $message->message : "[PRIVATE={$message->userid}{$date->getTimestamp()}]";
             } else {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
@@ -1313,18 +1313,18 @@ class TopicController extends KunenaController
         }
     }
 
-    /**    
+    /**
      * Remove orhpaned attachments when submit (which have mesid=0).
-     *    
+     *
      * @return  void
-     *    
+     *
      * @throws  Exception
-     * 
-     * @since   Kunena 6.4    
+     *
+     * @since   Kunena 6.4
      */
     protected function removeOrphanedAttachments()
     {
-        $params['file'] = '1';
+        $params['file']  = '1';
         $params['image'] = '1';
         $params['mesid'] = '0';
 
@@ -1357,7 +1357,7 @@ class TopicController extends KunenaController
             $ip = '[' . $ip . ']';
         }
 
-        $url = 'https://api.stopforumspam.org/api';
+        $url         = 'https://api.stopforumspam.org/api';
         $requestData = [
             'ip' => $ip,
         ];
@@ -1399,7 +1399,7 @@ class TopicController extends KunenaController
                         'Accept'       => 'application/json',
                         'Content-Type' => 'application/json',
                     ], self::STOPFORUMSPAM_TIMEOUT);
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     return false;
                 }
 
@@ -2034,7 +2034,7 @@ class TopicController extends KunenaController
         }
 
         $private->subject = $message->subject;
-        $attachs = $message->getAttachments();
+        $attachs          = $message->getAttachments();
 
         if ($message->message && trim($body)) {
             $private->body      = $body;
@@ -3084,140 +3084,139 @@ class TopicController extends KunenaController
             $this->setRedirectBack();
 
             return;
-        } else {
-            $acl         = KunenaAccess::getInstance();
-            $emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false);
-            $msglink     = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $target->getPermaUrl(null, false);
+        }
+        $acl         = KunenaAccess::getInstance();
+        $emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false);
+        $msglink     = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $target->getPermaUrl(null, false);
 
-            // A plugin can handle the report (a topic in a category of the moderators, a message to them, ...).
-            PluginHelper::importPlugin('kunena');
+        // A plugin can handle the report (a topic in a category of the moderators, a message to them, ...).
+        PluginHelper::importPlugin('kunena');
 
-            $reportEvent = new GenericEvent(
-                'onKunenaReportMessage',
-                ['message' => $message, 'topic' => $topic, 'target' => $target, 'reporter' => $this->me, 'reason' => (string) $reason, 'text' => (string) $text, 'url' => $msglink, 'handled' => false]
-            );
-            $this->app->getDispatcher()->dispatch('onKunenaReportMessage', $reportEvent);
-            $handled = (bool) $reportEvent->getArgument('handled', false);
+        $reportEvent = new GenericEvent(
+            'onKunenaReportMessage',
+            ['message' => $message, 'topic' => $topic, 'target' => $target, 'reporter' => $this->me, 'reason' => (string) $reason, 'text' => (string) $text, 'url' => $msglink, 'handled' => false]
+        );
+        $this->app->getDispatcher()->dispatch('onKunenaReportMessage', $reportEvent);
+        $handled = (bool) $reportEvent->getArgument('handled', false);
 
-            // An inbox stores the report for the moderators, and tells which of them do not want the e-mail as well.
-            $moderatorIds = array_values(array_filter(array_map(static fn ($moderator) => (int) ($moderator->id ?? 0), (array) $emailToList)));
+        // An inbox stores the report for the moderators, and tells which of them do not want the e-mail as well.
+        $moderatorIds = array_values(array_filter(array_map(static fn ($moderator) => (int) ($moderator->id ?? 0), (array) $emailToList)));
 
-            if ($moderatorIds) {
-                $noMail = KunenaPrivate::getInstance()->notify($message, 'report', $moderatorIds, (int) $this->me->userid);
+        if ($moderatorIds) {
+            $noMail = KunenaPrivate::getInstance()->notify($message, 'report', $moderatorIds, (int) $this->me->userid);
 
-                if ($noMail) {
-                    $emailToList = array_values(array_filter((array) $emailToList, static fn ($moderator) => !\in_array((int) ($moderator->id ?? 0), $noMail, true)));
-                }
+            if ($noMail) {
+                $emailToList = array_values(array_filter((array) $emailToList, static fn ($moderator) => !\in_array((int) ($moderator->id ?? 0), $noMail, true)));
             }
+        }
 
-            // The e-mail to the moderators (it is an option) needs working mail settings.
-            $mailWanted = !empty($this->config->reportMail);
-            $canMail    = $mailWanted && $this->config->sendEmails && $this->config->email && MailHelper::isEmailAddress($this->config->email);
+        // The e-mail to the moderators (it is an option) needs working mail settings.
+        $mailWanted = !empty($this->config->reportMail);
+        $canMail    = $mailWanted && $this->config->sendEmails && $this->config->email && MailHelper::isEmailAddress($this->config->email);
 
-            if (!$handled && !$canMail) {
-                $this->app->enqueueMessage(Text::_(!$this->config->sendEmails ? 'COM_KUNENA_EMAIL_DISABLED' : 'COM_KUNENA_EMAIL_INVALID'), 'warning');
-                $this->setRedirectBack();
+        if (!$handled && !$canMail) {
+            $this->app->enqueueMessage(Text::_(!$this->config->sendEmails ? 'COM_KUNENA_EMAIL_DISABLED' : 'COM_KUNENA_EMAIL_INVALID'), 'warning');
+            $this->setRedirectBack();
 
-                return;
-            }
+            return;
+        }
 
-            $mailSent = false;
+        $mailSent = false;
 
-            if ($canMail && !empty($emailToList)) {
-                $mailnamesender = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle . ': ' . $this->me->getName());
-                $mailsubject    = "[" . $this->config->boardTitle . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
+        if ($canMail && !empty($emailToList)) {
+            $mailnamesender = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle . ': ' . $this->me->getName());
+            $mailsubject    = "[" . $this->config->boardTitle . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
 
-                if ($reason) {
-                    $mailsubject .= $reason;
-                } else {
-                    $mailsubject .= $topic->subject;
-                }
-
-                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                $mail->setSender([$this->config->email, $mailnamesender]);
-                $mail->setSubject($mailsubject);
-                $mail->addReplyTo($this->me->email, $this->me->username);
-
-                if (KunenaMailTemplate::isUsed('com_kunena.reportmessage')) {
-                    // The mail template of Joomla (Users, Mail Templates): one mail for each moderator.
-                    $poster = $message->getAuthor();
-                    $common = [
-                        'sitename'   => $this->app->get('sitename'),
-                        'boardtitle' => $this->config->boardTitle,
-                        'title'      => $reason ?: $topic->subject,
-                        'sender'     => $this->me->username . ' (' . $this->me->name . ')',
-                        'reason'     => (string) $reason,
-                        'report'     => (string) $text,
-                        'poster'     => $poster->username . ' (' . $poster->name . ')',
-                        'subject'    => $topic->subject,
-                        'url'        => $msglink,
-                    ];
-                    $html   = $common + ['message' => '<div style="border-left:3px solid #dddddd;padding:4px 14px;margin:14px 0">' . $message->displayField('message') . '</div>'];
-                    $plain  = $common + ['message' => $message->displayField('message', false)];
-
-                    foreach ($emailToList as $emailTo) {
-                        if (!MailHelper::isEmailAddress($emailTo->email)) {
-                            continue;
-                        }
-
-                        $language = !empty($emailTo->id) ? (string) KunenaUserHelper::get((int) $emailTo->id)->language : '';
-
-                        if (KunenaMailTemplate::send('com_kunena.reportmessage', $language, $mail, $html, $plain, ['sitename', 'boardtitle', 'title', 'sender', 'reason', 'report', 'poster', 'subject', 'url'], (string) $emailTo->email)) {
-                            $mailSent = true;
-                        }
-                    }
-                } else {
-                    // Render the email.
-                    $layout = KunenaLayout::factory('Email/Report')->debug(false)
-                        ->set('mail', $mail)
-                        ->set('message', $message)
-                        ->set('me', $this->me)
-                        ->set('title', $reason)
-                        ->set('content', $text)
-                        ->set('messageLink', $msglink);
-
-                    try {
-                        $body = trim($layout->render());
-                        $mail->setBody($body);
-                    } catch (Exception $e) {
-                        // TODO: display exception
-                    }
-
-                    $receivers = [];
-
-                    foreach ($emailToList as $emailTo) {
-                        if (!MailHelper::isEmailAddress($emailTo->email)) {
-                            continue;
-                        } else {
-                            $receivers[] = $emailTo->email;
-                        }
-                    }
-
-                    KunenaEmail::send($mail, $receivers);
-                    $mailSent = true;
-                }
-            }
-
-            if ($handled || $mailSent) {
-                if ($this->config->logModeration) {
-                    KunenaLog::log(
-                        KunenaLog::TYPE_REPORT,
-                        $log,
-                        [
-                            'mesid'   => $message->id,
-                            'reason'  => $reason,
-                            'message' => $text,
-                        ],
-                        $topic->getCategory(),
-                        $topic,
-                        $message->getAuthor()
-                    );
-                }
-
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_SUCCESS'), 'success');
+            if ($reason) {
+                $mailsubject .= $reason;
             } else {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_NOT_SEND'), 'success');
+                $mailsubject .= $topic->subject;
             }
+
+            $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+            $mail->setSender([$this->config->email, $mailnamesender]);
+            $mail->setSubject($mailsubject);
+            $mail->addReplyTo($this->me->email, $this->me->username);
+
+            if (KunenaMailTemplate::isUsed('com_kunena.reportmessage')) {
+                // The mail template of Joomla (Users, Mail Templates): one mail for each moderator.
+                $poster = $message->getAuthor();
+                $common = [
+                    'sitename'   => $this->app->get('sitename'),
+                    'boardtitle' => $this->config->boardTitle,
+                    'title'      => $reason ?: $topic->subject,
+                    'sender'     => $this->me->username . ' (' . $this->me->name . ')',
+                    'reason'     => (string) $reason,
+                    'report'     => (string) $text,
+                    'poster'     => $poster->username . ' (' . $poster->name . ')',
+                    'subject'    => $topic->subject,
+                    'url'        => $msglink,
+                ];
+                $html   = $common + ['message' => '<div style="border-left:3px solid #dddddd;padding:4px 14px;margin:14px 0">' . $message->displayField('message') . '</div>'];
+                $plain  = $common + ['message' => $message->displayField('message', false)];
+
+                foreach ($emailToList as $emailTo) {
+                    if (!MailHelper::isEmailAddress($emailTo->email)) {
+                        continue;
+                    }
+
+                    $language = !empty($emailTo->id) ? (string) KunenaUserHelper::get((int) $emailTo->id)->language : '';
+
+                    if (KunenaMailTemplate::send('com_kunena.reportmessage', $language, $mail, $html, $plain, ['sitename', 'boardtitle', 'title', 'sender', 'reason', 'report', 'poster', 'subject', 'url'], (string) $emailTo->email)) {
+                        $mailSent = true;
+                    }
+                }
+            } else {
+                // Render the email.
+                $layout = KunenaLayout::factory('Email/Report')->debug(false)
+                    ->set('mail', $mail)
+                    ->set('message', $message)
+                    ->set('me', $this->me)
+                    ->set('title', $reason)
+                    ->set('content', $text)
+                    ->set('messageLink', $msglink);
+
+                try {
+                    $body = trim($layout->render());
+                    $mail->setBody($body);
+                } catch (Exception $e) {
+                    // TODO: display exception
+                }
+
+                $receivers = [];
+
+                foreach ($emailToList as $emailTo) {
+                    if (!MailHelper::isEmailAddress($emailTo->email)) {
+                        continue;
+                    }
+                    $receivers[] = $emailTo->email;
+
+                }
+
+                KunenaEmail::send($mail, $receivers);
+                $mailSent = true;
+            }
+        }
+
+        if ($handled || $mailSent) {
+            if ($this->config->logModeration) {
+                KunenaLog::log(
+                    KunenaLog::TYPE_REPORT,
+                    $log,
+                    [
+                        'mesid'   => $message->id,
+                        'reason'  => $reason,
+                        'message' => $text,
+                    ],
+                    $topic->getCategory(),
+                    $topic,
+                    $message->getAuthor()
+                );
+            }
+
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_SUCCESS'), 'success');
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_NOT_SEND'), 'success');
         }
 
         $this->setRedirect($target->getUrl($this->return, false));
@@ -3333,7 +3332,7 @@ class TopicController extends KunenaController
     }
 
     /**
-     * Returns the topic icons set corresponding at the category selected 
+     * Returns the topic icons set corresponding at the category selected
      *
      @return  void
      *

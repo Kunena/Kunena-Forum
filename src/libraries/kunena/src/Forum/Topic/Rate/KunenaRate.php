@@ -24,9 +24,9 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Tables\TableKunenaRate;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 
 /**
@@ -162,7 +162,7 @@ class KunenaRate
         }
 
         // Create the TableKunenaRate table object
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
         $tableObject = new TableKunenaRate($db);
 
         return $tableObject;
@@ -235,8 +235,8 @@ class KunenaRate
             return new KunenaResponseJson($exception);
         }
 
-        $time  = Factory::getDate();
-        $query = $this->_db->createQuery();
+        $time   = Factory::getDate();
+        $query  = $this->_db->createQuery();
         $values = [
             $this->_db->quote($this->topic_id),
             $this->_db->quote($user->userid),

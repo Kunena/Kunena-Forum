@@ -18,6 +18,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Administrator\Controller\CpanelController;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
@@ -26,7 +27,6 @@ use Kunena\Forum\Libraries\Integration\KunenaPlugins;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
-use Kunena\Forum\Administrator\Controller\CpanelController;
 
 // Is there a newer Kunena release, or are there updates for the Kunena add-ons?
 $updateInfo = CpanelController::getUpdateInfo();

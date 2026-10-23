@@ -131,7 +131,7 @@ class UserItemDisplay extends KunenaControllerDisplay
         $this->user    = $userid > 0 ? $this->profile : KunenaUserHelper::getJoomlaUser($this->input->getInt('userid', 0));
         $this->profile->tryAuthorise('read');
         $this->candisplaymail = $this->me->canDisplayEmail($this->profile);
-        $this->ktemplate = KunenaFactory::getTemplate();
+        $this->ktemplate      = KunenaFactory::getTemplate();
 
         $activityIntegration = KunenaFactory::getActivityIntegration();
         $this->points        = $activityIntegration->getUserPoints($this->profile->userid);
@@ -170,7 +170,7 @@ class UserItemDisplay extends KunenaControllerDisplay
                 } else {
                     $menu      = $this->app->getMenu();
                     $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
-                    $itemid = $getid->id;
+                    $itemid    = $getid->id;
                 }
 
                 if (!$itemid) {
@@ -179,7 +179,7 @@ class UserItemDisplay extends KunenaControllerDisplay
 
                 $params = [
                     'option' => 'com_kunena',
-                    'view' => 'user',
+                    'view'   => 'user',
                     'Itemid' => $itemid,
                 ];
 
@@ -188,9 +188,7 @@ class UserItemDisplay extends KunenaControllerDisplay
                 }
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
-            }
-
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }

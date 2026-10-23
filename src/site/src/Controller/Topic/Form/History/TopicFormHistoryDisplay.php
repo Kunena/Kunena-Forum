@@ -149,5 +149,7 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
      *
      * @since   Kunena 6.0
      */
-    protected function prepareDocument() {}
+    protected function prepareDocument()
+    {
+    }
 }

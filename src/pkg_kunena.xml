@@ -5,8 +5,8 @@
     method="upgrade">
     <name>pkg_kunena</name>
     <packagename>kunena</packagename>
-    <version>7.1.0-RC2</version>
-    <versionname>RC2</versionname>
+    <version>7.1.0-RC3-DEV</version>
+    <versionname>RC3</versionname>
     <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>
     <authorEmail>kunena@kunena.org</authorEmail>

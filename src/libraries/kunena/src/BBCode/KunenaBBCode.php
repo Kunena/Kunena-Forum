@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Html\KunenaLinkPreview;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Nbbc\BBCode;
@@ -418,36 +419,11 @@ class KunenaBBCode extends BBCode
      */
     public function get_title(string $url): string
     {
-        $str = @file_get_contents($url);        
-
-        if (!$ips) {
-            return '';
-        }
-
-        foreach ($ips as $ip) {
-            if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-                return '';
-            }
-        }
-
-        // Short timeout, no redirects (they could lead to an internal address), and only the start of the page.
-        $context = stream_context_create(['http' => ['timeout' => 3, 'follow_location' => 0, 'ignore_errors' => true]]);
-        $str     = @file_get_contents($url, false, $context, 0, 262144);
-
-        if ($str !== false && \strlen($str) > 0) {
-            // Supports line breaks inside <title>
-            $str = trim(preg_replace('/\s+/', ' ', $str));
-
-            // Ignore case
-            if (preg_match("/\<title[^>]*\>(.*?)\<\/title\>/i", $str, $title)) {
-                // The title belongs to a foreign page: decode its entities, drop any markup, and encode it again for our html.
-                $text = trim(strip_tags(html_entity_decode($title[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')));
-
-                return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
-            }
-        }
-
-        return '';
+        // The title comes from the cache of the link cards: the other site is asked once for a week, not at every view of the topic
+        // (and at most a few times for a page). It is plain text, so it is only encoded for our html.
+        $card = KunenaLinkPreview::get($url);
+        
+        return $card ? htmlspecialchars((string) $card['title'], ENT_QUOTES, 'UTF-8') : '';
     }
 
     /**

@@ -106,4 +106,51 @@ class LanguageFilesTest extends UnitTestCase
 
         $this->assertStringContainsString('%d', $strings['COM_KUNENA_POPUP_MORE']);
     }
+
+    /**
+     * Every text which the code asks for (Text::_('COM_KUNENA_...'), Text::sprintf(...)) is in an English language file of the
+     * package: a missing one is shown as its key (for example the messages of the steps of an update in the installer).
+     * Keys which the code puts together (a prefix which ends with "_") and code in comments are left out.
+     */
+    public function testEveryTextOfTheCodeIsInALanguageFile(): void
+    {
+        $keys = [];
+
+        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(Files::path('src'), \FilesystemIterator::SKIP_DOTS)) as $file) {
+            if ($file->getExtension() === 'ini' && str_contains(str_replace('\\', '/', $file->getPathname()), '/en-GB/')) {
+                foreach (file($file->getPathname()) ?: [] as $line) {
+                    if (preg_match('/^\s*([A-Z0-9_]+)\s*=/', $line, $match)) {
+                        $keys[$match[1]] = true;
+                    }
+                }
+            }
+        }
+
+        $missing = [];
+
+        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(Files::path('src'), \FilesystemIterator::SKIP_DOTS)) as $file) {
+            $name = str_replace('\\', '/', $file->getPathname());
+
+            if ($file->getExtension() !== 'php' || str_contains($name, '/External/')) {
+                continue;
+            }
+
+            foreach (file($file->getPathname()) ?: [] as $number => $line) {
+                // Code in a comment does not ask for a text.
+                $code = preg_replace('#(//|^\s*\*|^\s*/\*).*$#', '', $line);
+
+                if (!preg_match_all("/Text::(?:_|sprintf|plural|script)\(\s*'((?:COM|PLG)_KUNENA[A-Z0-9_]*)'/", (string) $code, $matches)) {
+                    continue;
+                }
+
+                foreach ($matches[1] as $key) {
+                    if (!str_ends_with($key, '_') && !isset($keys[$key])) {
+                        $missing[] = $key . ' (' . substr($name, \strlen(str_replace('\\', '/', Files::path('src'))) + 1) . ':' . ($number + 1) . ')';
+                    }
+                }
+            }
+        }
+
+        $this->assertSame([], $missing, 'Texts which the code uses and no English language file has.');
+    }
 }

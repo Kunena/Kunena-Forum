@@ -63,4 +63,13 @@ describe('Kunena profile: texts longer than their field', () => {
       expect(row.signature.length, 'the length of the signature').to.be.at.most(30);
     });
   });
+
+  it('keeps the personal text to the maximum length of the template (50)', () => {
+    cy.doFrontendLogin(user.name, user.password, false);
+    save({ personalText: `A personal text ${'p'.repeat(80)}` });
+    profile().then((row) => {
+      expect(row.personalText.startsWith('A personal text'), 'the personal text is saved').to.eq(true);
+      expect(row.personalText.length, 'the length of the personal text').to.be.at.most(50);
+    });
+  });
 });

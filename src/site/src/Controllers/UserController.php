@@ -630,6 +630,13 @@ class UserController extends KunenaController
         $socials->save();
 
         $user->personalText = $input->$method->get('personalText', '', 'string');
+
+        // The maximum length of the template (the form only stops typing, a request can send more).
+        $maxPersonalText = (int) KunenaFactory::getTemplate()->params->get('maxPersonalText', 50);
+
+        if ($maxPersonalText > 0 && mb_strlen((string) $user->personalText) > $maxPersonalText) {
+            $user->personalText = mb_substr((string) $user->personalText, 0, $maxPersonalText);
+        }
         $birthdate          = $input->$method->get('birthdate', '', 'string');
 
         if ($birthdate) {

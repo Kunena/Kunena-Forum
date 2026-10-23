@@ -19,7 +19,7 @@ jobs:
         php-version: ${{ matrix.php-versions }}
         extensions: intl, fileinfo, mbstring
         ini-values: post_max_size=256M, upload_max_filesize=256M, max_execution_time=300, max_input_time=300
-        tools: cs2pr, phpcs
+        tools: cs2pr
     - name: Check PHP Version
       run: php -v
     - name: Composer & Npm Install
@@ -27,10 +27,10 @@ jobs:
        composer validate --no-check-all --strict
        composer install --no-progress --no-suggest --no-interaction --optimize-autoloader
        pwd
-    - name: Run phpcs
+    - name: Check the code style (php-cs-fixer)
       continue-on-error: true
       run: |
-        phpcs --extensions=php -p --standard=$GITHUB_WORKSPACE/vendor/kunena/codestyle/Kunena/ruleset.xml --report=checkstyle $GITHUB_WORKSPACE/src --report-checkstyle=$GITHUB_WORKSPACE/phpcs-report.xml
-    - name: Show PHPCS results in PR
+        vendor/bin/php-cs-fixer fix --dry-run --config=.php-cs-fixer.dist.php --format=checkstyle > $GITHUB_WORKSPACE/php-cs-fixer-report.xml
+    - name: Show the code style results in PR
       continue-on-error: true
-      run: cs2pr $GITHUB_WORKSPACE/phpcs-report.xml --graceful-warnings --colorize
+      run: cs2pr $GITHUB_WORKSPACE/php-cs-fixer-report.xml --graceful-warnings --colorize

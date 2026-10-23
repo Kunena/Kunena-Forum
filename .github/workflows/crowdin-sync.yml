@@ -53,4 +53,5 @@ jobs:
         add-paths: |
           src/admin/language
           src/site/language
+          src/plugins/**/language
         delete-branch: true

@@ -8,3 +8,5 @@ files:
     translation: /src/admin/language/%locale%/%original_file_name%
   - source: /src/site/language/en-GB/*.ini
     translation: /src/site/language/%locale%/%original_file_name%
+  - source: /src/plugins/**/language/en-GB/*.ini
+    translation: /src/plugins/**/language/%locale%/%original_file_name%

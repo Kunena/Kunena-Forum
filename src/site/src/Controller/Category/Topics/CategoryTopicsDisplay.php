@@ -30,6 +30,7 @@ use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Site\Model\CategoryModel;
 use RuntimeException;
 
@@ -171,6 +172,13 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 
         // On a multilingual site: the topics of the language of the page, or the language chosen in the address (flang).
         $params['language'] = $this->input->getString('flang', '');
+
+        // The topics of the users whom the logged in user ignores are left out, as in the other lists of topics.
+        $ignored = KunenaUserIgnore::getIgnored((int) $this->me->userid);
+
+        if ($ignored) {
+            $params['where'] = ' AND tt.first_post_userid NOT IN (' . implode(',', array_map('intval', $ignored)) . ')';
+        }
 
         list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 

@@ -52,6 +52,16 @@ class KunenaMarkupTest extends UnitTestCase
         $this->assertSame('', KunenaMarkup::toBBCode('', true, true));
     }
 
+    public function testQuotesInQuotesStopAfterTenLevels(): void
+    {
+        $this->assertSame(str_repeat('[quote]', 10) . '> x' . str_repeat('[/quote]', 10), KunenaMarkup::toBBCode(str_repeat('> ', 11) . 'x', true, false));
+
+        // Thousands of quote marks used all the memory of the page.
+        $before = memory_get_usage();
+        KunenaMarkup::toBBCode(str_repeat('> ', 50000) . 'x', true, false);
+        $this->assertLessThan(16 * 1024 * 1024, memory_get_peak_usage() - $before);
+    }
+
     public static function addresses(): array
     {
         return [

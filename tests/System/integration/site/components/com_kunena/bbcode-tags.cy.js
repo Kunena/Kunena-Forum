@@ -3,12 +3,24 @@
 describe('Kunena BBCode tags', () => {
   const user = { name: 'ci-user', password: 'ci-user-17082005-x' };
   let topic;
+  const messages = [];
 
-  // A message in the first topic which the user can read (the task of the database removes it again after the test).
+  // A message in the first topic which the user can read (the task of the database removes it again after the test, its text is
+  // removed by the afterEach: the text has no id of its own).
   const addMessage = (text) => cy.task(
     'queryDB',
     `INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon, locked, hold, ordering, hits, moved, modified_by, modified_time, modified_reason) VALUES (${topic.id}, ${topic.id}, ${topic.category_id}, 'ci-admin', 797, '', 'Re: bbcode', UNIX_TIMESTAMP(), '127.0.0.1', 0, 0, 0, 0, 0, 0, 0, 0, '')`,
-  ).then((info) => cy.task('queryDB', `INSERT INTO #__kunena_messages_text (mesid, message) VALUES (${info.insertId}, '${text.replaceAll('\\', '\\\\').replaceAll("'", "\\'")}')`));
+  ).then((info) => {
+    messages.push(info.insertId);
+
+    return cy.task('queryDB', `INSERT INTO #__kunena_messages_text (mesid, message) VALUES (${info.insertId}, '${text.replaceAll('\\', '\\\\').replaceAll("'", "\\'")}')`);
+  });
+
+  afterEach(() => {
+    if (messages.length) {
+      cy.task('queryDB', `DELETE FROM #__kunena_messages_text WHERE mesid IN (${messages.splice(0).join(',')})`);
+    }
+  });
 
   const open = () => {
     cy.doFrontendLogin(user.name, user.password);

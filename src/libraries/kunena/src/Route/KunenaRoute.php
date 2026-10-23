@@ -603,7 +603,7 @@ abstract class KunenaRoute
     public static function keepQuery(array $params): array
     {
         static $names = ['limitstart', 'start', 'limit', 'mesid', 'mode', 'sel', 'search', 'userid', 'layout', 'filter_order', 'filter_order_Dir',
-            'usertype', 'query', 'topic_id', 'titleonly', 'searchuser', 'searchdate', 'order', 'sortby'];
+            'usertype', 'query', 'topic_id', 'titleonly', 'searchuser', 'searchdate', 'order', 'sortby', 'fq', 'fauthor', 'fstatus', 'ftag', 'flang'];
 
         // The input has the parameters of the query and those which the router read from the path (a message number, for example).
         $get = Factory::getApplication()->getInput()->getArray();

@@ -30,6 +30,14 @@ namespace Kunena\Forum\Libraries\BBCode;
 final class KunenaMarkup
 {
     /**
+     * The deepest quote in a quote which Markdown makes.
+     *
+     * @var     int
+     * @since   Kunena 7.2
+     */
+    private const MAX_QUOTE_DEPTH = 10;
+
+    /**
      * Pieces of text which are protected against the conversion, restored at the end.
      *
      * @var     array
@@ -265,13 +273,14 @@ final class KunenaMarkup
     /**
      * Markdown, line by line: headings, quotes, lists and tables. The text of the lines is converted by inline().
      *
-     * @param   string  $text  The message.
+     * @param   string  $text   The message.
+     * @param   int     $depth  The number of quotes around the text.
      *
      * @return  string
      *
      * @since   Kunena 7.2
      */
-    private function markdown(string $text): string
+    private function markdown(string $text, int $depth = 0): string
     {
         $lines = explode("\n", $text);
         $out   = [];
@@ -319,8 +328,9 @@ final class KunenaMarkup
                 continue;
             }
 
-            // Quote: all following lines which start with ">".
-            if (preg_match('/^[ \t]{0,3}>[ \t]?(.*)$/', $line, $m)) {
+            // Quote: all following lines which start with ">". Every level copies the text of the quote, so the levels are
+            // limited: thousands of ">" used all the memory of the page. Deeper marks stay text.
+            if ($depth < self::MAX_QUOTE_DEPTH && preg_match('/^[ \t]{0,3}>[ \t]?(.*)$/', $line, $m)) {
                 $quote = [$m[1]];
 
                 while ($i + 1 < $count && preg_match('/^[ \t]{0,3}>[ \t]?(.*)$/', $lines[$i + 1], $next)) {
@@ -328,7 +338,7 @@ final class KunenaMarkup
                     $i++;
                 }
 
-                $out[] = '[quote]' . $this->markdown(implode("\n", $quote)) . '[/quote]';
+                $out[] = '[quote]' . $this->markdown(implode("\n", $quote), $depth + 1) . '[/quote]';
 
                 continue;
             }

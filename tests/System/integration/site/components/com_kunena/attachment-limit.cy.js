@@ -43,7 +43,7 @@ describe('Kunena attachments: the maximum number of files of a message', () => {
     cy.task('queryDB', 'DELETE FROM #__kunena_attachments WHERE userid = 798 AND mesid = 0');
     cy.task('deleteRelativePath', folder);
     cy.kunena_fixUserCounters();
-    cy.task('queryDB', "UPDATE #__kunena_categories c SET numTopics = (SELECT COUNT(*) FROM #__kunena_topics t WHERE t.category_id = c.id AND t.hold = 0 AND t.moved_id = 0), numPosts = (SELECT COALESCE(SUM(t.posts), 0) FROM #__kunena_topics t WHERE t.category_id = c.id AND t.hold = 0 AND t.moved_id = 0) WHERE c.id = 3");
+    cy.kunena_fixCategoryCounters();
   });
 
   it('keeps no more files in a new message than the maximum', () => {

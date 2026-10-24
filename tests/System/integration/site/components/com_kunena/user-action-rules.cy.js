@@ -83,6 +83,7 @@ describe('Kunena user actions: the rules', () => {
     cy.task('queryDB', `DELETE FROM #__kunena_aliases WHERE alias = 'cypress-rules-${stamp}'`);
     cy.task('queryDB', `DELETE FROM #__kunena_categories WHERE name = 'Cypress rules restricted ${stamp}'`);
     cy.task('queryDB', 'DELETE x FROM #__kunena_messages_text AS x LEFT JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.id IS NULL');
+    cy.kunena_fixCategoryCounters();
   });
 
   it('counts a thank you once, and none for an own message or from a guest', () => {

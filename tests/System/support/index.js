@@ -24,6 +24,8 @@ afterEach(() => {
 });
 
 after(() => {
+  cy.kunena_fixCategoryCounters();
+
   if (adminParams) {
     cy.task('queryDB', `UPDATE #__users SET params = '${adminParams.params.replaceAll('\\', '\\\\').replaceAll("'", "\\'")}' WHERE id = ${adminParams.id}`);
   }

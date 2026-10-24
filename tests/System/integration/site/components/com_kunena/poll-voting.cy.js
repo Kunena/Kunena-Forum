@@ -70,6 +70,10 @@ describe('Kunena polls: the votes', () => {
   });
 
   afterEach(() => {
+    if ('pollAllowVoteOne' in old) {
+      cy.kunena_setOption('pollAllowVoteOne', old.pollAllowVoteOne === undefined ? null : old.pollAllowVoteOne);
+      delete old.pollAllowVoteOne;
+    }
     cy.task('queryDB', `SELECT id, poll_id FROM #__kunena_topics WHERE subject LIKE 'Cypress poll % ${stamp}'`).then((rows) => {
       rows.forEach(({ id, poll_id: poll }) => {
         cy.task('queryDB', `DELETE x FROM #__kunena_messages_text AS x INNER JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.thread = ${id}`);
@@ -115,6 +119,29 @@ describe('Kunena polls: the votes', () => {
     vote(ids.open, ids.open.second);
     vote(ids.open, ids.open.second);
     totalVotes(ids.open.poll).should('eq', 1);
+  });
+
+  it('lets a user change his vote after the time between votes, also a day later, and not before', () => {
+    const lastVote = () => cy.task('queryDB', `SELECT lastvote FROM #__kunena_polls_users WHERE pollid = ${ids.open.poll} AND userid = ${user.id}`).then((rows) => Number(rows[0].lastvote));
+    const votedAgo = (interval) => cy.task('queryDB', `INSERT INTO #__kunena_polls_users (pollid, userid, votes, lasttime, lastvote) VALUES (${ids.open.poll}, ${user.id}, 1, UTC_TIMESTAMP() - INTERVAL ${interval}, ${ids.open.first}) ON DUPLICATE KEY UPDATE lasttime = UTC_TIMESTAMP() - INTERVAL ${interval}, lastvote = ${ids.open.first}`);
+
+    // A vote may be changed (not only one vote), 15 minutes after the last one (the default time between votes).
+    cy.kunena_setOption('pollAllowVoteOne', '0').then((value) => {
+      old.pollAllowVoteOne = value;
+    });
+    cy.kunena_setOption('pollTimeBtVotes', '00:15:00');
+    cy.then(() => cy.task('queryDB', `UPDATE #__kunena_polls_options SET votes = 1 WHERE id = ${ids.open.first}`));
+    cy.doFrontendLogin(user.name, user.password, false);
+
+    // 5 minutes ago: too early.
+    cy.then(() => votedAgo('5 MINUTE'));
+    cy.then(() => vote(ids.open, ids.open.second));
+    cy.then(() => lastVote()).should('eq', ids.open.first);
+
+    // A day and 5 minutes ago: long enough (the hours of the difference started again at 0 after a day).
+    cy.then(() => votedAgo('1 DAY - INTERVAL 5 MINUTE'));
+    cy.then(() => vote(ids.open, ids.open.second));
+    cy.then(() => lastVote()).should('eq', ids.open.second);
   });
 
   it('does not count a vote in a topic which is locked or a poll which has ended', () => {

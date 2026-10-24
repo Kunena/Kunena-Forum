@@ -552,9 +552,13 @@ final class Kunena extends Adapter implements SubscriberInterface
         $item->title = $subject;
 
         // Build the necessary url, route, path and alias information.
+        // The url is the key of the item in the index: the one of the adapter, which remove() looks for when a message is deleted.
+        // The route opens the message; it is not routed here: made from the console (the indexer of the scheduler) a routed
+        // address carries the placeholder of the console for the root of the site.
         $itemid      = KunenaRoute::fixMissingItemID();
-        $item->url   = $message->getUrl($message->catid, 'last', $itemid);
-        $item->route = $item->url;
+        $item->url   = $this->getUrl($message->id, $this->extension, $this->layout);
+        $item->route = 'index.php?option=com_kunena&view=topic&catid=' . (int) $message->catid . '&id=' . (int) $message->thread
+            . '&mesid=' . (int) $message->id . ($itemid ? '&Itemid=' . (int) $itemid : '');
         $item->alias = KunenaRoute::stringURLSafe($subject);
 
         // Set body context.
@@ -564,8 +568,19 @@ final class Kunena extends Adapter implements SubscriberInterface
         $item->summary = $item->body;
 
         // Set other information.
+        // The indexer of Joomla stores only the state (not the published value of the result) and the search shows the items of
+        // state 1: a message which waits for approval or is deleted is not in the results, nor are the messages of a category
+        // where the users see only their own topics (a helpdesk: the access level of the category would show them to every user).
+        $category        = $message->getCategory();
+        $visible         = $message->hold == 0 && $category->published == 1 && !$category->params->get('ownTopicsOnly');
+
+        // A category in an unpublished section or category is hidden with it.
+        for ($parent = $category->getParent(), $depth = 0; $visible && $parent->exists() && $depth < 100; $parent = $parent->getParent(), $depth++) {
+            $visible = $parent->published == 1;
+        }
+
         $item->published = \intval($message->hold == 0);
-        $item->state     = \intval($message->getCategory()->published == 1);
+        $item->state     = \intval($visible);
         $item->language  = '*';
 
         // TODO: add access control

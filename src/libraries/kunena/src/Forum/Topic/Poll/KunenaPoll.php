@@ -281,6 +281,14 @@ class KunenaPoll
             }
         }
 
+        // No more options than the configuration allows (the editor offers no more fields); a poll which has more already keeps
+        // its number (the limit may have been lowered after it was made).
+        $max = (int) KunenaFactory::getConfig()->pollNbOptions;
+
+        if ($max > 0) {
+            $newOptions = \array_slice($newOptions, 0, max($max, \count($this->getOptions())), true);
+        }
+
         $this->newOptions = $newOptions;
     }
 

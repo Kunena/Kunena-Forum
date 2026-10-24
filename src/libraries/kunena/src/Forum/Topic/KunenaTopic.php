@@ -2425,16 +2425,17 @@ class KunenaTopic extends KunenaDatabaseObject
         $votes  = $poll->getMyVotes($user);
 
         if (!$config->pollAllowVoteOne && $votes) {
+            // The time between two votes, "HH:MM:SS" (a number alone is seconds). The seconds are compared: the text of the
+            // difference ("%H:%I:%S") started again at 00 after a day, and refused a vote a day later.
+            $parts = array_reverse(array_map('intval', explode(':', (string) $config->pollTimeBtVotes)));
+            $wait  = ($parts[0] ?? 0) + 60 * ($parts[1] ?? 0) + 3600 * ($parts[2] ?? 0);
+
             // The vote time is stored in UTC
             $objTimeZone = new DateTimeZone('UTC');
+            $date_a      = new DateTime((string) $poll->getMyTime($user), $objTimeZone);
+            $date_b      = new DateTime('now', $objTimeZone);
 
-            // Check the time between two votes
-            $date_a = new DateTime($poll->getMyTime(), $objTimeZone);
-            $date_b = new DateTime('now', $objTimeZone);
-
-            $interval = date_diff($date_a, $date_b);
-
-            if ($interval->format('%H:%I:%S') < $config->pollTimeBtVotes) {
+            if ($wait > 0 && $date_b->getTimestamp() - $date_a->getTimestamp() < $wait) {
                 return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_TOPIC_VOTE_NEED_TO_WAIT_BEFORE_TO_CHANGE_VOTE'), 403);
             }
         }

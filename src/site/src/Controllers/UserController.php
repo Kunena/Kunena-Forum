@@ -1222,6 +1222,11 @@ class UserController extends KunenaController
         $joomlaUserId = Factory::getApplication()->getIdentity()->id;
         $user         = KunenaFactory::getUser($joomlaUserId);
 
+        // The rule of the profile form: a guest has no avatar, and a banned user may not change his profile.
+        if (!$user->exists() || !$user->isAuthorised('edit')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
         // We are converting all exceptions into JSON.
         try {
             $caption = $this->input->getString('caption');
@@ -1645,14 +1650,21 @@ class UserController extends KunenaController
         if (($this->me->exists() || $this->config->userlistAllowed) && $user !== '') {
             $db     = Factory::getContainer()->get('DatabaseDriver');
             $query  = $db->createQuery();
-            $query->select($db->quoteName(['name', 'username']))
+            $query->select($db->quoteName(['id', 'username']))
                 ->from($db->quoteName('#__users'))
                 ->where($db->quoteName('block') . ' = 0')
                 ->where($db->quoteName('username') . ' LIKE ' . $db->quote('%' . $db->escape($user, true) . '%'))
                 ->order($db->quoteName('username') . ' ASC')
                 ->setLimit(10);
             $db->setQuery($query);
-            $row = $db->loadObjectList();
+
+            // The name which the forum shows (not the real name of Joomla when the forum shows usernames).
+            foreach ((array) $db->loadObjectList() as $found) {
+                $row[] = (object) [
+                    'name'     => KunenaUserHelper::get((int) $found->id)->getName('', false),
+                    'username' => $found->username,
+                ];
+            }
         }
 
         header('Content-type: application/json');

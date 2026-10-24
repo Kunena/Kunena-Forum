@@ -1,6 +1,8 @@
 import { getMails, clearEmails, startMailServer } from './mail.mjs';
 import { writeRelativeFile, deleteRelativePath, copyRelativeFile } from './fs.mjs';
 import { queryTestDB, deleteInsertedItems } from './db.mjs';
+import { execFileSync } from 'node:child_process';
+import { join } from 'node:path';
 import { checkForLogs, clearLogs } from './logs.mjs';
 
 /**
@@ -23,5 +25,7 @@ export default function setupPlugins(on, config) {
     getMails: () => getMails(),
     clearEmails: () => clearEmails(),
     startMailServer: () => startMailServer(config),
+    // Runs a command of the console of Joomla of the test site (php cli/joomla.php ...), for example the indexer of Smart Search.
+    joomlaCli: (args) => execFileSync('php', [join(config.env.cmsPath, 'cli', 'joomla.php'), ...args], { encoding: 'utf8', timeout: 300000 }),
   });
 }

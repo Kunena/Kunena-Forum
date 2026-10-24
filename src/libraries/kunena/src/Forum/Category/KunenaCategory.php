@@ -117,6 +117,7 @@ class KunenaCategory extends KunenaDatabaseObject
         'topic.sticky'                      => ['Read', 'NotBanned', 'Moderate'],
         'topic.lock'                        => ['Read', 'NotBanned', 'Moderate'],
         'topic.status'                      => ['Read', 'NotBanned', 'Moderate'],
+        'topic.rate'                        => ['Read', 'NotBanned'],
         'topic.poll.read'                   => ['Read', 'Poll'],
         'topic.poll.create'                 => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Poll'],
         'topic.poll.edit'                   => ['Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'],

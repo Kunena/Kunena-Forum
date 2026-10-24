@@ -515,10 +515,20 @@ jQuery(document).ready(function ($) {
             if ($read[$id] === null) {
                 $list       = [];
                 $categories = KunenaCategoryHelper::getCategories(false, false, 'none');
+                $all        = $categories;
 
                 foreach ($categories as $category) {
-                    // Remove unpublished categories
-                    if ($category->published != 1) {
+                    // Remove unpublished categories, and the categories in an unpublished section or category: what is in it is
+                    // hidden with it (the index does not show it, its topics must not stay open by their addresses and lists).
+                    $published = $category->published == 1;
+                    $parent    = $all[$category->parentid] ?? null;
+
+                    for ($depth = 0; $published && $parent && $depth < 100; $depth++) {
+                        $published = $parent->published == 1;
+                        $parent    = $all[$parent->parentid] ?? null;
+                    }
+
+                    if (!$published) {
                         unset($categories[$category->id]);
                     }
 

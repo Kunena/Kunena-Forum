@@ -42,6 +42,10 @@ describe('Kunena ratings: only of topics the reader may see', () => {
   });
 
   afterEach(() => {
+    if ('ratingEnabled' in ids) {
+      cy.kunena_setOption('ratingEnabled', ids.ratingEnabled === undefined ? null : ids.ratingEnabled);
+      delete ids.ratingEnabled;
+    }
     ['public', 'closed'].forEach((name) => {
       cy.task('queryDB', `DELETE FROM #__kunena_rate WHERE topic_id IN (SELECT id FROM #__kunena_topics WHERE category_id = ${ids[name]})`);
       cy.task('queryDB', `DELETE FROM #__kunena_user_read WHERE category_id = ${ids[name]}`);
@@ -56,5 +60,28 @@ describe('Kunena ratings: only of topics the reader may see', () => {
     cy.then(() => loadrate(ids.visible)).its('body').should('deep.include', { data: 4 });
     cy.then(() => loadrate(ids.unapproved)).its('body.data').should('not.eq', 4);
     cy.then(() => loadrate(ids.restricted)).its('body.data').should('not.eq', 4);
+  });
+
+  it('lets a user rate an open topic, and not a locked one (the rule "rate" of the topic)', () => {
+    const userRating = (topic) => cy.task('queryDB', `SELECT rate FROM #__kunena_rate WHERE topic_id = ${topic} AND userid = 798`).then((rows) => rows.length);
+    const rate = (topic) => cy.request(`${base}&view=home`).then((page) => {
+      const token = /name="([0-9a-f]{32})" value="1"/.exec(page.body)?.[1] ?? 'x';
+
+      return cy.request({ url: `${base}&view=topic&task=setrate&format=json&topic_id=${topic}&starid=5&${token}=1`, failOnStatusCode: false });
+    });
+
+    cy.kunena_setOption('ratingEnabled', '1').then((previous) => {
+      ids.ratingEnabled = previous;
+    });
+    cy.then(() => cy.task('queryDB', `UPDATE #__kunena_categories SET allowRatings = 1 WHERE id = ${ids.public}`));
+    // ci-user has not rated the topics yet; the second one is locked.
+    cy.then(() => cy.task('queryDB', `DELETE FROM #__kunena_rate WHERE userid = 798 AND topic_id IN (${ids.visible}, ${ids.unapproved})`));
+    cy.then(() => cy.task('queryDB', `UPDATE #__kunena_topics SET hold = 0, locked = 1 WHERE id = ${ids.unapproved}`));
+    cy.doFrontendLogin('ci-user', 'ci-user-17082005-x', false);
+
+    cy.then(() => rate(ids.visible));
+    cy.then(() => userRating(ids.visible)).should('eq', 1);
+    cy.then(() => rate(ids.unapproved));
+    cy.then(() => userRating(ids.unapproved)).should('eq', 0);
   });
 });

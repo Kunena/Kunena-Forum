@@ -766,6 +766,15 @@ class KunenaMessage extends KunenaDatabaseObject
             $emailToList = array_values($emailToList);
         }
 
+        // Only who may read the message: the access of the category does not say it in a category where the users see only their
+        // own topics (a follower of such a category would get the topics of the others).
+        if ($emailToList && $this->getCategory()->params->get('ownTopicsOnly')) {
+            $emailToList = array_values(array_filter(
+                $emailToList,
+                fn ($emailTo) => !empty($emailTo->id) && $this->isAuthorised('read', KunenaUserHelper::get((int) $emailTo->id))
+            ));
+        }
+
         $sentusers = [];
 
         if ($emailToList) {
@@ -1231,6 +1240,27 @@ class KunenaMessage extends KunenaDatabaseObject
         // Save new attachments and update message text
         $message = $this->message;
         $app     = Factory::getApplication();
+
+        // No more files in a message than the option attachmentLimit allows (the uploader stops there, a request did not): the files
+        // which stay in the message count, the new ones which do not fit are left out.
+        $limit = (int) $this->_config->attachmentLimit;
+
+        if ($limit > 0) {
+            $kept = $this->id ? array_diff_key($this->getAttachments(false, 'none'), $this->_attachments_del) : [];
+            $room = max(0, $limit - \count($kept));
+
+            foreach ($this->_attachments_add as $tmpid => $attachment) {
+                if (isset($kept[$attachment->id])) {
+                    continue;
+                }
+
+                if ($room > 0) {
+                    $room--;
+                } else {
+                    unset($this->_attachments_add[$tmpid]);
+                }
+            }
+        }
 
         foreach ($this->_attachments_add as $tmpid => $attachment) {
             if ($attachment->exists() && $attachment->mesid) {

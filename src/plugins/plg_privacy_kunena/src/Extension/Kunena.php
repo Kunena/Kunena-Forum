@@ -16,6 +16,7 @@ namespace Kunena\Forum\Plugin\Privacy\Kunena\Extension;
 // No direct access
 \defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Event\Privacy\CanRemoveDataEvent;
 use Joomla\CMS\Event\Privacy\CollectCapabilitiesEvent;
 use Joomla\CMS\Event\Privacy\ExportRequestEvent;
@@ -146,6 +147,18 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         $domains[] = $this->createKunenaTopicsDomain($user->id);
         $domains[] = $this->createKunenaUserbannedDomain($user->id);
 
+        // The data of Kunena 7.2.
+        $domains[] = $this->createKunenaTableDomain('drafts', '#__kunena_drafts', 'user_id', $user->id);
+        $domains[] = $this->createKunenaTableDomain('follows', '#__kunena_user_follow', 'user_id', $user->id);
+        $domains[] = $this->createKunenaTableDomain('ignores', '#__kunena_user_ignore', 'user_id', $user->id);
+
+        try {
+            $domains[] = $this->createKunenaTableDomain('inbox_received', '#__kunena_inbox', 'user_id', $user->id);
+            $domains[] = $this->createKunenaTableDomain('inbox_sent', '#__kunena_inbox', 'sender_id', $user->id);
+        } catch (Exception $e) {
+            // The inbox plugin is not installed.
+        }
+
         $event->addResult($domains);
     }
 
@@ -194,6 +207,36 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         KunenaHelper::deleteUserData('#__kunena_thankyou', 'userid', $user->id);
         KunenaHelper::deleteUserData('#__kunena_thankyou', 'targetuserid', $user->id);
         KunenaHelper::deleteUserData('#__kunena_users_banned', 'userid', $user->id);
+
+        // The data of Kunena 7.2: drafts, follows, ignore list, karma, session, poll votes and the private parts he may read.
+        KunenaHelper::deleteUserData('#__kunena_drafts', 'user_id', $user->id);
+        KunenaHelper::deleteUserData('#__kunena_user_follow', 'user_id', $user->id);
+        KunenaHelper::deleteUserData('#__kunena_user_follow', 'followed_id', $user->id);
+        KunenaHelper::deleteUserData('#__kunena_user_ignore', 'user_id', $user->id);
+        KunenaHelper::deleteUserData('#__kunena_user_ignore', 'ignored_id', $user->id);
+        KunenaHelper::deleteUserData('#__kunena_karma', 'userid', $user->id);
+        KunenaHelper::deleteUserData('#__kunena_sessions', 'userid', $user->id);
+        KunenaHelper::deleteUserData('#__kunena_polls_users', 'userid', $user->id);
+        KunenaHelper::deleteUserData('#__kunena_private_user_map', 'user_id', $user->id);
+
+        // The inbox (plugin Kunena - Inbox): his side of every message and notification is deleted as if he deleted it himself, so a
+        // message stays for the other user until he deletes it too, and the blocks of and against him go.
+        $inbox = 'Kunena\\Forum\\Plugin\\Kunena\\Inbox\\Helper\\InboxHelper';
+
+        if (class_exists($inbox)) {
+            try {
+                $db    = Factory::getContainer()->get('DatabaseDriver');
+                $query = $db->createQuery()
+                    ->select($db->quoteName('id'))
+                    ->from($db->quoteName('#__kunena_inbox'))
+                    ->where('(' . $db->quoteName('user_id') . ' = ' . (int) $user->id . ' OR ' . $db->quoteName('sender_id') . ' = ' . (int) $user->id . ')');
+                $inbox::delete((int) $user->id, array_map('intval', (array) $db->setQuery($query)->loadColumn()));
+                KunenaHelper::deleteUserData('#__kunena_inbox_blocks', 'user_id', $user->id);
+                KunenaHelper::deleteUserData('#__kunena_inbox_blocks', 'blocked_id', $user->id);
+            } catch (Exception $e) {
+                // The inbox is not installed.
+            }
+        }
     }
 
     /**
@@ -409,6 +452,32 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
             $data = KunenaHelper::processUserData($item, $excluded, $redacted);
 
             $domain->addItem($this->createItemFromArray($data, $data['id']));
+        }
+
+        return $domain;
+    }
+
+    /**
+     * Create the domain of the rows of a table which belong to the user.
+     *
+     * @param   string  $name    The name of the domain (kunena_user_<name>).
+     * @param   string  $table   The table.
+     * @param   string  $field   The column with the id of the user.
+     * @param   int     $userid  The User ID
+     *
+     * @return  Domain
+     *
+     * @since   7.2
+     */
+    private function createKunenaTableDomain(string $name, string $table, string $field, int $userid): Domain
+    {
+        $domain = $this->createDomain('kunena_user_' . $name, 'kunena_user_' . $name . '_data');
+
+        foreach (KunenaHelper::getUserItems($table, $field, $userid) as $item) {
+            $data = KunenaHelper::processUserData($item, [], []);
+
+            // The follows and the ignore list have no id of their own.
+            $domain->addItem($this->createItemFromArray($data, $data['id'] ?? null));
         }
 
         return $domain;

@@ -670,7 +670,8 @@ class TopicController extends KunenaController
             throw new RuntimeException(Text::_('Bad Request'), 400);
         }
 
-        if (!$ratedTopic->isAuthorised('read')) {
+        // The rule of the rating of a topic: the topic can be read and is not locked.
+        if (!$ratedTopic->isAuthorised('rate')) {
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
 

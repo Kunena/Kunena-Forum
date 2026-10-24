@@ -665,7 +665,7 @@
             <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':rolleyes:', '20.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':rolleyes:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
         </version>
         <version
-            version="7.2.0-DEV"
+            version="8.0.0-DEV"
             versiondate="2026-10-18"
             versionname="Internal">
             <!-- Real primary keys instead of unique keys: a table without a primary key has a hidden row id in InnoDB -->

@@ -47,6 +47,8 @@ describe('Kunena review: topics and messages which wait for a moderator', () => 
     cy.task('queryDB', `DELETE FROM #__kunena_aliases WHERE alias = 'cypress-review-${stamp}'`);
     cy.task('queryDB', 'DELETE x FROM #__kunena_messages_text AS x LEFT JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.id IS NULL');
     cy.task('queryDB', `DELETE FROM #__kunena_categories WHERE id = ${ids.category}`);
+    // The rows of the users and the notifications of the inbox about the messages which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   it('keeps a new topic back until it is approved', () => {

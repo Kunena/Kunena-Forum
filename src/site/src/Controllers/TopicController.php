@@ -2902,7 +2902,13 @@ class TopicController extends KunenaController
         $modifiedByAuthor = ($message->modified_by == $message->userid);
 
         if (!$modifiedByAuthor) {
-            $target->sendNotification(null, true, true);
+            // A topic sends the notification of its first post; a message (a reply) sends its own (KunenaMessage has no
+            // sendNotification() anymore).
+            if ($target instanceof KunenaMessage) {
+                $target->processNotification(null, true, true);
+            } else {
+                $target->sendNotification(null, true, true);
+            }
         }
 
         $this->setRedirect($target->getUrl($this->return, false));

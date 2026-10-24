@@ -6,11 +6,17 @@ describe('Kunena permissions: what may not be read', () => {
   const stamp = Date.now();
   const secret = { restricted: `SECRETRESTRICTED${stamp}`, waiting: `SECRETWAITING${stamp}`, deleted: `SECRETDELETED${stamp}`, unapproved: `SECRETUNAPPROVED${stamp}` };
   const ids = {};
+  // The texts of the messages: the task of the database removes the messages (they have an id), not their texts.
+  const messages = [];
 
   const addMessage = (parent, thread, category, subject, text, hold) => cy.task(
     'queryDB',
     `INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon, locked, hold, ordering, hits, moved, modified_by, modified_time, modified_reason) VALUES (${parent}, ${thread}, ${category}, 'ci-admin', 797, '', '${subject}', UNIX_TIMESTAMP(), '127.0.0.1', 0, 0, ${hold}, 0, 0, 0, 0, 0, '')`,
-  ).then((message) => cy.task('queryDB', `INSERT INTO #__kunena_messages_text (mesid, message) VALUES (${message.insertId}, '${text}')`).then(() => message.insertId));
+  ).then((message) => {
+    messages.push(message.insertId);
+
+    return cy.task('queryDB', `INSERT INTO #__kunena_messages_text (mesid, message) VALUES (${message.insertId}, '${text}')`).then(() => message.insertId);
+  });
 
   const addTopic = (category, subject, text, hold) => cy.task(
     'queryDB',
@@ -55,7 +61,9 @@ describe('Kunena permissions: what may not be read', () => {
   // What the task does not remove: the alias of the category, and the texts of the messages which it removed.
   afterEach(() => {
     cy.task('queryDB', `DELETE FROM #__kunena_aliases WHERE alias LIKE 'cypress-restricted-%'`);
-    cy.task('queryDB', 'DELETE x FROM #__kunena_messages_text AS x LEFT JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.id IS NULL');
+    if (messages.length) {
+      cy.task('queryDB', `DELETE FROM #__kunena_messages_text WHERE mesid IN (${messages.splice(0).join(',')})`);
+    }
     cy.task('queryDB', 'DELETE x FROM #__kunena_user_topics AS x LEFT JOIN #__kunena_topics AS t ON t.id = x.topic_id WHERE t.id IS NULL');
   });
 

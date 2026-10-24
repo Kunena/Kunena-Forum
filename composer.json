@@ -8,7 +8,8 @@
 		"friendsofphp/php-cs-fixer" : "~3.95",
 		"codeception/codeception" : "~5.3.5",
 		"symfony/css-selector" : "^7.3",
-		"phing/phing" : "dev-main"
+		"phing/phing" : "dev-main",
+		"squizlabs/php_codesniffer": "^4.0"
 	},
 	"autoload" : {
 		"psr-4" : {

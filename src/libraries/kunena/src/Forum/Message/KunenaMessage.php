@@ -57,6 +57,7 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
+use Kunena\Forum\Libraries\User\KunenaUserName;
 use StdClass;
 
 /**
@@ -1873,6 +1874,20 @@ class KunenaMessage extends KunenaDatabaseObject
                     ->select($this->_db->quoteName('id'))
                     ->from($this->_db->quoteName('#__users'))
                     ->where('LOWER(' . $this->_db->quoteName('name') . ') = LOWER(' . $this->_db->quote($this->name) . ')');
+                $this->_db->setQuery($query, 0, 1);
+                $nicktaken = (int) $this->_db->loadResult();
+            }
+
+            // Nor the nickname of a user (when the forum shows the nicknames): the name of an anonymous post of a logged-in
+            // user is his own name by default, which is his nickname then.
+            $nicknameField = KunenaUserName::getDisplayNameField();
+
+            if (!$nicktaken && $this->name !== '' && $nicknameField) {
+                $query = $this->_db->createQuery()
+                    ->select($this->_db->quoteName('item_id'))
+                    ->from($this->_db->quoteName('#__fields_values'))
+                    ->where($this->_db->quoteName('field_id') . ' = ' . (int) $nicknameField)
+                    ->where('LOWER(' . $this->_db->quoteName('value') . ') = LOWER(' . $this->_db->quote($this->name) . ')');
                 $this->_db->setQuery($query, 0, 1);
                 $nicktaken = (int) $this->_db->loadResult();
             }

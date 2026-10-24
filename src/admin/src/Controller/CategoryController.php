@@ -199,7 +199,8 @@ class CategoryController extends KunenaController
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape((string) ($parent->name ?: Text::_('COM_KUNENA_TOPLEVEL')))), 'error');
         } elseif (!$category->isCheckedOut($me->userid)) {
             // Nobody can change id or statistics
-            $ignore = ['option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliasesAll', 'submit'];
+            $ignore = ['option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'last_topic_id', 'last_post_id',
+                'last_post_time', 'hits', 'checked_out', 'checked_out_time', 'aliases', 'aliasesAll', 'submit'];
 
             // User needs to be admin in parent (both new and old) in order to move category, parentid=0 needs global admin rights
             if (!$me->isAdmin($parent) || ($category->exists() && !$me->isAdmin($category->getParent()))) {

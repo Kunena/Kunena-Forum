@@ -93,6 +93,15 @@ $attachments = $this->attachments;
                         // and the topic): without "Protect Attachments" the right of the file alone does not look at the message.
                         $readable = $message->exists() ? $message->isAuthorised('read', $this->me) : $attachment->userid == $this->me->userid;
 
+                        // The file of an anonymous message (the message has no longer the user of the file) would tell who wrote
+                        // it: only for the user himself and the moderators.
+                        if (
+                            $readable && $message->exists() && (int) $message->userid !== (int) $attachment->userid
+                            && (int) $attachment->userid !== (int) $this->me->userid && !$this->me->isModerator($message->getCategory())
+                        ) {
+                            $readable = false;
+                        }
+
                         if ($readable && $attachment->isAuthorised('read', $this->me)) :
                     ?>
                             <tr>

@@ -52,6 +52,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Image\KunenaImage;
@@ -207,7 +208,7 @@ class TopicController extends KunenaController
 
         // Only the owner of an attachment, or a moderator, may change it.
         foreach ($instances as $instance) {
-            $this->checkpermissions($instance->userid);
+            $this->checkpermissions($instance);
         }
 
         $this->changeinline($instances, '1');
@@ -321,21 +322,24 @@ class TopicController extends KunenaController
 
         $instance = KunenaAttachmentHelper::get($attach_id);
 
-        $this->checkpermissions($instance->userid);
+        $this->checkpermissions($instance);
 
         $this->changeinline($instance, '0');
     }
 
     /**
-     * Check permissions.
+     * Check that the user may change or remove the attachment: the rule of the attachment itself (its uploader when he is not
+     * banned, or a moderator of the category of its message).
+     *
+     * @param   KunenaAttachment  $attachment  The attachment.
      *
      * @return void
      * @throws Exception
      * @since Kunena 5.1
      */
-    protected function checkpermissions($attachment_userid)
+    protected function checkpermissions(KunenaAttachment $attachment)
     {
-        if ($this->me->userid != $attachment_userid && !$this->me->isAdmin() && !$this->me->isModerator()) {
+        if (!$attachment->isAuthorised('delete')) {
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
     }
@@ -363,11 +367,8 @@ class TopicController extends KunenaController
         $success   = [];
         $instance  = KunenaAttachmentHelper::get($attach_id);
 
-        // The owner comes from the attachment itself, never from the request.
-        if (
-            ($instance->exists() && $this->me->userid == $instance->userid) || $this->me->isAdmin()
-            || $this->me->isModerator()
-        ) {
+        // The rule of the attachment itself: its uploader (not banned) or a moderator of the category of its message.
+        if ($instance->isAuthorised('delete')) {
             $editor_text = $this->app->getInput()->get->get('editor_text', '', 'raw');
 
             $success['text_prepared'] = $instance->removeBBCodeInMessage($editor_text);
@@ -617,8 +618,14 @@ class TopicController extends KunenaController
         $user = $this->app->getIdentity();
 
         $topicid  = $this->app->getInput()->get('topic_id', 0, 'int');
+        $topic    = KunenaTopicHelper::get($topicid);
 
-        if ($user->id == 0 || KunenaTopicHelper::get($topicid)->first_post_userid == $this->me->userid) {
+        // The rating of a topic which the user may not see (unapproved, deleted, in a closed category) is not given.
+        if (!$topic->isAuthorised('read')) {
+            throw new RuntimeException(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+        }
+
+        if ($user->id == 0 || $topic->first_post_userid == $this->me->userid) {
             $response = KunenaRateHelper::getSelected($topicid);
         } else {
             $response = KunenaRateHelper::getRate($topicid, $user->id);
@@ -1832,7 +1839,10 @@ class TopicController extends KunenaController
         }
 
         $subscribe = $this->app->getInput()->getInt('subscribeMe');
-        $usertopic = $topic->getUserTopic();
+
+        // Loaded again: the save of the message has counted the posts of the user in the topic anew (a message which was made
+        // anonymous is no longer his), and the save below writes all the values of the row.
+        $usertopic = KunenaTopicUserHelper::get($topic, null, true);
 
         if ($topic->isAuthorised('subscribe')) {
             if ($subscribe) {
@@ -2482,9 +2492,10 @@ class TopicController extends KunenaController
             return; // -- abort
         }
 
-        // The author of the topic (when it is not locked) and the moderators of the category.
+        // The author of the topic (when it is not locked and he is not banned) and the moderators of the category.
         $moderator = $this->me->isModerator($category);
-        $owner     = $this->me->exists() && (int) $topic->first_post_userid === (int) $this->me->userid && !$topic->locked;
+        $owner     = $this->me->exists() && (int) $topic->first_post_userid === (int) $this->me->userid && !$topic->locked
+            && !$this->me->isBanned();
         $icons     = KunenaFactory::getTemplate()->getUserTopicIcons();
 
         if (!$this->config->topicIcons || !isset($icons[KunenaTopic::ICON_SOLVED]) || (!$moderator && !$owner)) {

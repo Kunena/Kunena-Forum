@@ -326,6 +326,15 @@ abstract class KunenaTopicUserHelper
             ->where($db->quoteName('topic_id') . ' = ' . $db->quote($old->id));
         $queries[] = $query3;
 
+        // The owner of the merged topic is the author of its first post (the starter of the old topic is not, unless his post
+        // became the first one): an owner may edit the poll and the topic.
+        $query4 = $db->createQuery();
+        $query4->update($db->quoteName('#__kunena_user_topics', 'ut'))
+            ->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('ut.topic_id'))
+            ->set($db->quoteName('ut.owner') . ' = IF(' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('t.first_post_userid') . ', 1, 0)')
+            ->where($db->quoteName('ut.topic_id') . ' = ' . $db->quote($new->id));
+        $queries[] = $query4;
+
         foreach ($queries as $query) {
             $db->setQuery($query);
 
@@ -449,8 +458,10 @@ abstract class KunenaTopicUserHelper
                          $db->quoteName('m.catid') . ' AS ' . $db->quoteName('category_id') . ', ' .
                          'SUM(' . $db->quoteName('m.hold') . '=0) AS ' . $db->quoteName('posts') . ', ' .
                          'MAX(IF(' . $db->quoteName('m.hold') . '=0,' . $db->quoteName('m.id') . ',0)) AS ' . $db->quoteName('last_post_id') . ', ' .
-                         'MAX(IF(' . $db->quoteName('m.parent') . '=0,1,0)) AS ' . $db->quoteName('owner'))
+                         // The owner wrote the first post of the topic (a merged topic brings a message without a parent).
+                         'MAX(IF(' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.first_post_id') . ',1,0)) AS ' . $db->quoteName('owner'))
             ->from($db->quoteName('#__kunena_messages', 'm'))
+            ->leftJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('m.thread'))
             ->where($db->quoteName('m.userid') . ' > 0 AND ' . $db->quoteName('m.moved') . ' = 0 ' . $where)
             ->group($db->quoteName('m.userid') . ', ' . $db->quoteName('m.thread'));
 
@@ -463,7 +474,8 @@ abstract class KunenaTopicUserHelper
         $query .= ' ON DUPLICATE KEY UPDATE ' .
                   $db->quoteName('category_id') . ' = VALUES(' . $db->quoteName('category_id') . '), ' .
                   $db->quoteName('posts') . ' = VALUES(' . $db->quoteName('posts') . '), ' .
-                  $db->quoteName('last_post_id') . ' = VALUES(' . $db->quoteName('last_post_id') . ')';
+                  $db->quoteName('last_post_id') . ' = VALUES(' . $db->quoteName('last_post_id') . '), ' .
+                  $db->quoteName('owner') . ' = VALUES(' . $db->quoteName('owner') . ')';
         $db->setQuery($query);
 
         try {
@@ -476,12 +488,17 @@ abstract class KunenaTopicUserHelper
 
         $rows = $db->getAffectedRows();
 
-        // Find user topics where last post doesn't exist and reset values in it
+        // Find user topics where last post doesn't exist (or is no longer a post of the user: a message which was made anonymous) and
+        // reset values in it: the user has no post in the topic, so he did not start it either.
         $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_user_topics', 'ut'))
-            ->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('ut.last_post_id') . ' = ' . $db->quoteName('m.id') . ' AND ' . $db->quoteName('m.hold') . ' = 0')
+            ->leftJoin(
+                $db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('ut.last_post_id') . ' = ' . $db->quoteName('m.id')
+                . ' AND ' . $db->quoteName('m.hold') . ' = 0 AND ' . $db->quoteName('m.userid') . ' = ' . $db->quoteName('ut.user_id')
+            )
             ->set($db->quoteName('posts') . ' = 0')
             ->set($db->quoteName('last_post_id') . ' = 0')
+            ->set($db->quoteName('owner') . ' = 0')
             ->where($db->quoteName('m.id') . ' IS NULL ' . $where2);
         $db->setQuery($query);
 

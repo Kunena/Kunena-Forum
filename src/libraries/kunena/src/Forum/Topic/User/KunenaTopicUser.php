@@ -304,8 +304,11 @@ class KunenaTopicUser
         $this->posts += $postDelta;
         $this->category_id = $this->getTopic()->category_id;
 
+        // The owner wrote the first post of the topic (a merged topic brings a message without a parent).
+        $firstPostId = (int) $this->getTopic()->first_post_id;
+
         if ($message && !$message->hold && $message->thread == $this->topic_id) {
-            if ($message->parent == 0) {
+            if ((int) $message->id === $firstPostId) {
                 $this->owner = 1;
             }
 
@@ -314,7 +317,7 @@ class KunenaTopicUser
             }
         } elseif (!$message || (($message->hold || $message->thread != $this->topic_id) && $this->last_post_id == $message->id)) {
             $query = $this->_db->createQuery();
-            $query->select('COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner')
+            $query->select('COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(id=' . $firstPostId . ',1,0)) AS owner')
                 ->from($this->_db->quoteName('#__kunena_messages'))
                 ->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($this->user_id))
                 ->andWhere($this->_db->quoteName('thread') . ' = ' . $this->_db->quote($this->topic_id))

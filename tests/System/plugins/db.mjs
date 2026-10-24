@@ -176,6 +176,11 @@ function deleteInsertedItems(config) {
       if (item.table === `${config.env.db_prefix}modules`) {
         promises.push(queryTestDB(`DELETE FROM #__modules_menu WHERE moduleid IN (${item.rows.join(',')})`, config));
       }
+
+      // The text of a message of the forum is a row of its own, without an id: it goes with the message.
+      if (item.table === `${config.env.db_prefix}kunena_messages`) {
+        promises.push(queryTestDB(`DELETE FROM #__kunena_messages_text WHERE mesid IN (${item.rows.join(',')})`, config));
+      }
     }));
   });
 

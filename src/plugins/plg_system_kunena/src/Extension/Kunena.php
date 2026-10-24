@@ -239,14 +239,20 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
         foreach (
             [
-                '#__kunena_users'           => ['userid'],
-                '#__kunena_user_categories' => ['user_id'],
-                '#__kunena_user_topics'     => ['user_id'],
-                '#__kunena_user_read'       => ['user_id'],
-                '#__kunena_user_follow'     => ['user_id', 'followed_id'],
-                '#__kunena_user_ignore'     => ['user_id', 'ignored_id'],
-                '#__kunena_users_banned'    => ['userid'],
-                '#__kunena_rate'            => ['userid'],
+                '#__kunena_users'            => ['userid'],
+                '#__kunena_user_categories'  => ['user_id'],
+                '#__kunena_user_topics'      => ['user_id'],
+                '#__kunena_user_read'        => ['user_id'],
+                '#__kunena_user_follow'      => ['user_id', 'followed_id'],
+                '#__kunena_user_ignore'      => ['user_id', 'ignored_id'],
+                '#__kunena_users_banned'     => ['userid'],
+                '#__kunena_rate'             => ['userid'],
+                '#__kunena_drafts'           => ['user_id'],
+                '#__kunena_sessions'         => ['userid'],
+                '#__kunena_karma'            => ['userid'],
+                '#__kunena_polls_users'      => ['userid'],
+                '#__kunena_private_user_map' => ['user_id'],
+                '#__kunena_inbox_blocks'     => ['user_id', 'blocked_id'],
             ] as $table => $fields
         ) {
             foreach ($fields as $field) {
@@ -258,6 +264,22 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
                 } catch (Exception $e) {
                     // A table of a plugin which is not installed: nothing to delete there.
                 }
+            }
+        }
+
+        // His inbox (plugin Kunena - Inbox): every message and notification of his side is deleted as if he deleted it himself, so
+        // a message stays for the other user until he deletes it too, and the files go with the messages which are removed.
+        $inbox = 'Kunena\\Forum\\Plugin\\Kunena\\Inbox\\Helper\\InboxHelper';
+
+        if (class_exists($inbox)) {
+            try {
+                $query = $db->createQuery()
+                    ->select($db->quoteName('id'))
+                    ->from($db->quoteName('#__kunena_inbox'))
+                    ->where('(' . $db->quoteName('user_id') . ' = ' . $userid . ' OR ' . $db->quoteName('sender_id') . ' = ' . $userid . ')');
+                $inbox::delete($userid, array_map('intval', (array) $db->setQuery($query)->loadColumn()));
+            } catch (Exception $e) {
+                // The inbox is not installed.
             }
         }
 

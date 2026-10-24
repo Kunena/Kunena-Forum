@@ -116,7 +116,7 @@ class TopicListingUserDisplay extends ListDisplay
             ->filterByHold([$hold])
             ->filterByTime($time);
 
-        // What a user favorites and subscribes to is for him (and the moderators): it shows who wrote an anonymous topic, because the
+        // What a user favorites, subscribes to and follows is for him (and the moderators): it shows who wrote an anonymous topic, because the
         // author is subscribed to it. The others see the topics where the user wrote.
         $private = $this->user->userid && $this->user->userid != $this->me->userid && !$this->me->isModerator();
 
@@ -140,7 +140,11 @@ class TopicListingUserDisplay extends ListDisplay
                 break;
 
             case 'following':
-                // The topics which the users whom the user follows started.
+                // The topics which the users whom the user follows started: the list shows whom he follows.
+                if ($private) {
+                    throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $this->me->exists() ? 403 : 401);
+                }
+
                 $finder->filterByAuthors(KunenaUserFollow::getFollowing((int) $this->user->userid));
                 break;
 

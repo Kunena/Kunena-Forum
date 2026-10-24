@@ -25,6 +25,11 @@ describe('Kunena users: the deletion of a user in Joomla', () => {
     cy.task('queryDB', `DELETE FROM #__kunena_user_topics WHERE user_id = ${second}`);
     cy.task('queryDB', `DELETE FROM #__kunena_user_follow WHERE user_id = ${second}`);
     cy.task('deleteRelativePath', `media/kunena/avatars/users/avatar${second}.png`);
+    cy.task('queryDB', `DELETE FROM #__kunena_drafts WHERE user_id = ${second}`);
+    cy.task('queryDB', `DELETE FROM #__kunena_inbox_blocks WHERE user_id = ${second} OR blocked_id = ${second}`);
+    cy.task('queryDB', `DELETE FROM #__kunena_karma WHERE userid = ${second} OR target_userid = ${second}`);
+    cy.task('queryDB', `DELETE FROM #__kunena_sessions WHERE userid = ${second}`);
+    cy.task('queryDB', `DELETE FROM #__kunena_inbox WHERE user_id = ${second} OR sender_id = ${second}`);
   });
 
   it('removes the profile, the avatar, the subscriptions and the follows of the user', () => {
@@ -46,5 +51,37 @@ describe('Kunena users: the deletion of a user in Joomla', () => {
     cy.task('queryDB', `SELECT user_id FROM #__kunena_user_topics WHERE user_id = ${second}`).then((rows) => expect(rows, 'the subscriptions').to.have.length(0));
     cy.task('queryDB', `SELECT user_id FROM #__kunena_user_follow WHERE user_id = ${second}`).then((rows) => expect(rows, 'the follows').to.have.length(0));
     cy.readFile(`${root}/media/kunena/avatars/users/avatar${second}.png`, { log: false }).should('not.exist');
+  });
+
+  it('removes the drafts, the inbox, the blocks, the karma and the session of the user; the other side keeps its messages', () => {
+    const rows = (sql) => cy.task('queryDB', sql).then((result) => result.length);
+
+    cy.task('queryDB', `INSERT INTO #__kunena_drafts (user_id, catid, parent_id, topic_id, message_id, subject, message, fields, created_time, modified_time) VALUES (${second}, 3, 0, 0, 0, 'A draft', 'The private text of a draft.', '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP())`);
+    cy.task('queryDB', `INSERT INTO #__kunena_inbox_blocks (user_id, blocked_id, created_time) VALUES (${second}, 797, UNIX_TIMESTAMP())`);
+    cy.task('queryDB', `INSERT INTO #__kunena_karma (userid, target_userid, time) VALUES (${second}, 797, UNIX_TIMESTAMP())`);
+    cy.task('queryDB', `INSERT INTO #__kunena_sessions (userid, allowed, lasttime, readtopics, currvisit) VALUES (${second}, 'na', UNIX_TIMESTAMP(), '0', UNIX_TIMESTAMP())`);
+    // His inbox: a message from ci-user and a notification; and a message he sent to ci-user.
+    cy.task('queryDB', `INSERT INTO #__kunena_inbox (user_id, sender_id, type, conversation_id, subject, body, created_time) VALUES (${second}, 798, 'message', 0, 'To him', 'A message to him.', UNIX_TIMESTAMP())`).then((result) => {
+      cy.wrap(result.insertId).as('toHim');
+    });
+    cy.task('queryDB', `INSERT INTO #__kunena_inbox (user_id, sender_id, type, conversation_id, subject, body, created_time) VALUES (${second}, 0, 'notification', 0, 'A reply', 'A notification.', UNIX_TIMESTAMP())`);
+    cy.task('queryDB', `INSERT INTO #__kunena_inbox (user_id, sender_id, type, conversation_id, subject, body, created_time) VALUES (798, ${second}, 'message', 0, 'From him', 'A message from him.', UNIX_TIMESTAMP())`).then((result) => {
+      cy.wrap(result.insertId).as('fromHim');
+    });
+
+    cy.doAdministratorLogin();
+    cy.request('/administrator/index.php?option=com_users&view=users').then((page) => {
+      const token = /name="([0-9a-f]{32})" value="1"/.exec(page.body)[1];
+
+      return cy.request({ method: 'POST', url: '/administrator/index.php?option=com_users&task=users.delete', form: true, body: { 'cid[]': second, [token]: '1' }, followRedirect: false });
+    });
+
+    cy.then(() => rows(`SELECT id FROM #__kunena_drafts WHERE user_id = ${second}`)).should('eq', 0);
+    cy.then(() => rows(`SELECT user_id FROM #__kunena_inbox_blocks WHERE user_id = ${second} OR blocked_id = ${second}`)).should('eq', 0);
+    cy.then(() => rows(`SELECT id FROM #__kunena_karma WHERE userid = ${second}`)).should('eq', 0);
+    cy.then(() => rows(`SELECT userid FROM #__kunena_sessions WHERE userid = ${second}`)).should('eq', 0);
+    // Nothing is left in his inbox; the message of ci-user stays in the sent messages of ci-user, his message in the inbox of ci-user.
+    cy.then(() => rows(`SELECT id FROM #__kunena_inbox WHERE user_id = ${second} AND deleted_recipient = 0`)).should('eq', 0);
+    cy.get('@fromHim').then((id) => rows(`SELECT id FROM #__kunena_inbox WHERE id = ${id} AND deleted_recipient = 0`)).should('eq', 1);
   });
 });

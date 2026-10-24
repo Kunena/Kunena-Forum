@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 
 /**
  * The popups (toasts) of a user: somebody mentions him, replies in his topic or in a topic he follows, or starts a topic in
@@ -207,7 +208,8 @@ abstract class KunenaPopupNotification
         foreach ($rows as $row) {
             $message = $messages[(int) $row->id] ?? null;
 
-            if (!$message) {
+            // No popup for a message of a user whom the user ignores (he gets no e-mail about it either).
+            if (!$message || KunenaUserIgnore::isIgnoring($userid, (int) $message->userid)) {
                 continue;
             }
 

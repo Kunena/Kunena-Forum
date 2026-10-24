@@ -1293,8 +1293,9 @@ class KunenaCategory extends KunenaDatabaseObject
     {
         $topic = KunenaTopicHelper::get($this->getLastCategory()->last_topic_id);
 
-        // The last topic of a category where the users only see their own topics is not shown to the others.
-        if ($topic->exists() && $topic->getCategory()->params->get('ownTopicsOnly') && !$topic->isAuthorised('read')) {
+        // The last topic is shown only to those who may read it: a category where the users only see their own topics, or a
+        // last topic which is not in a category the user may see.
+        if ($topic->exists() && !$topic->isAuthorised('read')) {
             return KunenaTopicHelper::get(0);
         }
 

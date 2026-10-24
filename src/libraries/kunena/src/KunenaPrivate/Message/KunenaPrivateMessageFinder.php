@@ -35,25 +35,6 @@ class KunenaPrivateMessageFinder extends KunenaFinder
     protected $table = '#__kunena_private';
 
     /**
-     * @param   KunenaUser  $user  user object
-     *
-     * @return  $this
-     *
-     * @since   Kunena 6.0
-     */
-    public function filterByUser(KunenaUser $user): KunenaPrivateMessageFinder
-    {
-        if (!$user->userid) {
-            $this->skip = true;
-        } else {
-            $this->query->innerJoin('#__kunena_private_user_map AS um ON a.id=um.private_id');
-            $this->query->where("um.user_id = {$this->db->quote($user->userid)}");
-        }
-
-        return $this;
-    }
-
-    /**
      * @param   KunenaMessage  $message  message object
      *
      * @return  $this
@@ -92,18 +73,22 @@ class KunenaPrivateMessageFinder extends KunenaFinder
     }
 
     /**
-     * @return \Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage
+     * @param   KunenaUser  $user  user object
+     *
+     * @return  $this
      *
      * @since   Kunena 6.0
-     *
-     * @throws Exception
      */
-    public function firstOrNew(): KunenaPrivateMessage
+    public function filterByUser(KunenaUser $user): KunenaPrivateMessageFinder
     {
-        $results = $this->find();
-        $first   = array_shift($results);
+        if (!$user->userid) {
+            $this->skip = true;
+        } else {
+            $this->query->innerJoin('#__kunena_private_user_map AS um ON a.id=um.private_id');
+            $this->query->where("um.user_id = {$this->db->quote($user->userid)}");
+        }
 
-        return $first ?: new KunenaPrivateMessage();
+        return $this;
     }
 
     /**
@@ -117,6 +102,21 @@ class KunenaPrivateMessageFinder extends KunenaFinder
     public function find(): array
     {
         return $this->load(parent::find());
+    }
+
+    /**
+     * @return KunenaPrivateMessage
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public function firstOrNew(): KunenaPrivateMessage
+    {
+        $results = $this->find();
+        $first   = array_shift($results);
+
+        return $first ?: new KunenaPrivateMessage();
     }
 
     /**

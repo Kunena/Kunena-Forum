@@ -93,19 +93,83 @@ abstract class KunenaFinder
     }
 
     /**
-     * Set limitstart for the query.
+     * Override to include your own static filters.
      *
-     * @param   int  $limitstart  limitstart
+     * @param   QueryInterface|null  $query  query
      *
-     * @return  $this
+     * @return  void
      *
      * @since   Kunena 6.0
      */
-    public function start($limitstart = 0): KunenaFinder
+    protected function build(?QueryInterface $query = null): void
     {
-        $this->start = $limitstart;
+    }
 
-        return $this;
+    /**
+     * Count items.
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function count(): int
+    {
+        $query = clone $this->query;
+        $this->build($query);
+
+        if ($query->group) {
+            $query->select('COUNT(*)')->from($this->db->quoteName($query, 's'));
+            $this->db->setQuery($query);
+        } else {
+            $query->clear('select')->select('COUNT(*)');
+            $this->db->setQuery($query);
+        }
+
+        $count = 0;
+
+        try {
+            $count = (int) $this->db->loadResult();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return $count;
+    }
+
+    /**
+     * Get items.
+     *
+     * Derived classes should generally override this function to return correct objects.
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function find()
+    {
+        if ($this->skip) {
+            return [];
+        }
+
+        $query = clone $this->query;
+        $this->build($query);
+        $query->select('a.' . $this->primaryKey);
+        $query->setLimit($this->limit, $this->start);
+        $this->db->setQuery($query);
+
+        $results = [];
+
+        try {
+            $results = (array) $this->db->loadColumn();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return $results;
     }
 
     /**
@@ -146,6 +210,22 @@ abstract class KunenaFinder
         $direction = $direction > 0 ? 'ASC' : 'DESC';
         $by        = (!empty($alias) ? ($alias . '.') : '') . $this->db->quoteName($by);
         $this->query->order("{$by} {$direction}");
+
+        return $this;
+    }
+
+    /**
+     * Set limitstart for the query.
+     *
+     * @param   int  $limitstart  limitstart
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.0
+     */
+    public function start($limitstart = 0): KunenaFinder
+    {
+        $this->start = $limitstart;
 
         return $this;
     }
@@ -211,85 +291,5 @@ abstract class KunenaFinder
         }
 
         return $this;
-    }
-
-    /**
-     * Get items.
-     *
-     * Derived classes should generally override this function to return correct objects.
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function find()
-    {
-        if ($this->skip) {
-            return [];
-        }
-
-        $query = clone $this->query;
-        $this->build($query);
-        $query->select('a.' . $this->primaryKey);
-        $query->setLimit($this->limit, $this->start);
-        $this->db->setQuery($query);
-
-        $results = [];
-
-        try {
-            $results = (array) $this->db->loadColumn();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return $results;
-    }
-
-    /**
-     * Override to include your own static filters.
-     *
-     * @param   QueryInterface|null  $query  query
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function build(?QueryInterface $query = null): void
-    {
-    }
-
-    /**
-     * Count items.
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function count(): int
-    {
-        $query = clone $this->query;
-        $this->build($query);
-
-        if ($query->group) {
-            $query->select('COUNT(*)')->from($this->db->quoteName($query, 's'));
-            $this->db->setQuery($query);
-        } else {
-            $query->clear('select')->select('COUNT(*)');
-            $this->db->setQuery($query);
-        }
-
-        $count = 0;
-
-        try {
-            $count = (int) $this->db->loadResult();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return $count;
     }
 }

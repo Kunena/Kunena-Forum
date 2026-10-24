@@ -14,7 +14,10 @@ namespace Kunena\Forum\Libraries\Profiler;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Profiler\Profiler;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Database\Monitor\DebugMonitor;
 use Throwable;
 
 /**
@@ -43,123 +46,6 @@ class KunenaProfiler extends Profiler
     protected $_heap = [];
 
     /**
-     * @param   string  $prefix  string
-     *
-     * @return  KunenaProfiler
-     *
-     * @fixme   override getInstance() and fix the function into Joomla
-     * @since   Kunena 6.0
-     */
-    public static function instance($prefix = 'Kunena'): KunenaProfiler
-    {
-        if (empty(self::$_instances[$prefix])) {
-            $c                         = __CLASS__;
-            self::$_instances[$prefix] = new $c($prefix);
-        }
-
-        return self::$_instances[$prefix];
-    }
-
-    /**
-     * @param   string  $name  name
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function start(string $name): void
-    {
-        $item   = KunenaProfilerItem::getInstance($name);
-        $parent = end($this->_heap);
-        $item->start(microtime(true), $parent ? (string) $parent->name : '');
-        $this->_heap[] = $item;
-    }
-
-    /**
-     * @param   string  $name  name
-     *
-     * @return  float
-     *
-     * @since   Kunena 6.0
-     */
-    public function getTime(string $name): float
-    {
-        $item = KunenaProfilerItem::getInstance($name);
-
-        return microtime(true) - $item->getStartTime();
-    }
-
-    /**
-     * @param   string  $name  name
-     *
-     * @return  mixed
-     *
-     * @since   Kunena 6.0
-     */
-    public function stop(string $name)
-    {
-        // Find the innermost open item with this name; items above it were left open by code paths which skipped stop().
-        $found = null;
-
-        for ($i = \count($this->_heap) - 1; $i >= 0; $i--) {
-            if ($this->_heap[$i]->name == $name) {
-                $found = $i;
-                break;
-            }
-        }
-
-        if ($found === null) {
-            trigger_error(__CLASS__ . '::' . __FUNCTION__ . "('$name') is missing start()");
-
-            return KunenaProfilerItem::getInstance($name);
-        }
-
-        $item = $this->_heap[$found];
-        array_splice($this->_heap, $found);
-
-        $delta = $item->stop(microtime(true));
-
-        if (end($this->_heap)) {
-            $this->_heap[key($this->_heap)]->external($delta);
-        }
-
-        return $item;
-    }
-
-    /**
-     * @return array
-     *
-     * @since   Kunena 6.0
-     */
-    public function getAll(): array
-    {
-        $items = KunenaProfilerItem::getAll();
-        $this->sort($items);
-
-        return $items;
-    }
-
-    /**
-     * Make sure that the database queries of the page are recorded (Joomla debug mode records them already).
-     *
-     * @return  void
-     *
-     * @since   Kunena 7.2
-     */
-    public function watchQueries(): void
-    {
-        try {
-            $db = \Joomla\CMS\Factory::getContainer()->get(\Joomla\Database\DatabaseInterface::class);
-
-            if (method_exists($db, 'getMonitor') && method_exists($db, 'setMonitor') && !$db->getMonitor()) {
-                $db->setMonitor(new \Joomla\Database\Monitor\DebugMonitor(true));
-            }
-        } catch (Throwable $e) {
-            // The queries are optional information of the panel.
-        }
-    }
-
-    /**
      * Collect the database queries which were recorded by the query monitor.
      *
      * @return  array  List of arrays: sql, ms (duration), at (ms since the start of the request), caller, memory (bytes), dup (times the same statement ran), similar (times the statement ran with any values).
@@ -171,7 +57,7 @@ class KunenaProfiler extends Profiler
         $queries = [];
 
         try {
-            $db      = \Joomla\CMS\Factory::getContainer()->get(\Joomla\Database\DatabaseInterface::class);
+            $db      = Factory::getContainer()->get(DatabaseInterface::class);
             $monitor = method_exists($db, 'getMonitor') ? $db->getMonitor() : null;
 
             if (!$monitor || !method_exists($monitor, 'getLogs')) {
@@ -222,232 +108,48 @@ class KunenaProfiler extends Profiler
     }
 
     /**
-     * The calls which led to a query, the innermost first (frames of the database package are left out).
+     * @return array
      *
-     * @param   array  $stack  Frames of debug_backtrace().
-     *
-     * @return  array  Lines like "Class::method() File.php:123".
-     *
-     * @since   Kunena 7.2
+     * @since   Kunena 6.0
      */
-    protected static function queryStack(array $stack): array
+    public function getAll(): array
     {
-        $lines = [];
+        $items = KunenaProfilerItem::getAll();
+        $this->sort($items);
 
-        foreach ($stack as $frame) {
-            $class = (string) ($frame['class'] ?? '');
-
-            if (!isset($frame['function']) || ($class !== '' && (str_starts_with($class, 'Joomla\\Database\\') || str_contains($class, 'DebugMonitor')))) {
-                continue;
-            }
-
-            $where   = isset($frame['file']) ? basename((string) $frame['file']) . ':' . ($frame['line'] ?? '?') : '';
-            $lines[] = ($class !== '' ? substr(strrchr('\\' . $class, '\\'), 1) . ($frame['type'] ?? '::') : '') . $frame['function'] . '()' . ($where !== '' ? ' ' . $where : '');
-
-            if (\count($lines) >= 14) {
-                break;
-            }
-        }
-
-        return $lines;
+        return $items;
     }
 
     /**
-     * Find the code which ran a query: the first frame of the call stack outside the database package.
+     * @param   string  $name  name
      *
-     * @param   array  $stack  Frames of debug_backtrace().
+     * @return  float
      *
-     * @return  string
-     *
-     * @since   Kunena 7.2
+     * @since   Kunena 6.0
      */
-    protected static function queryCaller(array $stack): string
+    public function getTime(string $name): float
     {
-        foreach ($stack as $frame) {
-            $class = (string) ($frame['class'] ?? '');
+        $item = KunenaProfilerItem::getInstance($name);
 
-            if ($class !== '' && (str_starts_with($class, 'Joomla\\Database\\') || str_contains($class, 'DebugMonitor'))) {
-                continue;
-            }
-
-            if (!isset($frame['function'])) {
-                continue;
-            }
-
-            $where = isset($frame['file']) ? basename((string) $frame['file']) . ':' . ($frame['line'] ?? '?') : '';
-            $short = $class !== '' ? substr(strrchr('\\' . $class, '\\'), 1) . ($frame['type'] ?? '::') . $frame['function'] : $frame['function'];
-
-            return $short . '()' . ($where !== '' ? ' ' . $where : '');
-        }
-
-        return '';
+        return microtime(true) - $item->getStartTime();
     }
 
     /**
-     * Render the collected profiler data as a collapsible html panel (debug mode only).
+     * @param   string  $prefix  string
      *
-     * Tabs: the profiled items (sortable, filterable, a click shows who called an item and the single calls),
-     * the database queries of the page (duration, caller, slow and repeated queries) and a timeline of the calls.
-     * The data can be copied as json or csv. The state (open, tab, sort, filters) is kept in the localStorage of
-     * the browser. Styles and script are printed once per request.
+     * @return  KunenaProfiler
      *
-     * @param   string  $title  Title of the panel.
-     *
-     * @return  string  Html.
-     *
-     * @since   Kunena 7.2
+     * @fixme   override getInstance() and fix the function into Joomla
+     * @since   Kunena 6.0
      */
-    public function render(string $title = 'Kunena Profile Information'): string
+    public static function instance($prefix = 'Kunena'): KunenaProfiler
     {
-        $items = $this->getAll();
-
-        if (!$items) {
-            return '';
+        if (empty(self::$_instances[$prefix])) {
+            $c                         = __CLASS__;
+            self::$_instances[$prefix] = new $c($prefix);
         }
 
-        $esc = static fn ($text): string => htmlspecialchars((string) $text, ENT_QUOTES, 'UTF-8');
-        $fmt = static function (float $seconds): string {
-            return $seconds >= 1 ? number_format($seconds, 2) . ' s' : number_format($seconds * 1000, 1) . ' ms';
-        };
-        $mem = static function (float $bytes): string {
-            $sign = $bytes < 0 ? '-' : '';
-            $abs  = abs($bytes);
-
-            if ($abs >= 1048576) {
-                return $sign . number_format($abs / 1048576, 1) . ' MB';
-            }
-
-            return $sign . number_format($abs / 1024, 0) . ' KB';
-        };
-
-        $pageTime = 0.0;
-        $calls    = 0;
-
-        foreach ($items as $item) {
-            $calls += (int) $item->calls;
-            $pageTime = max($pageTime, $item->getTotalTime());
-
-            if ($item->name === 'Total Time') {
-                $pageTime = $item->getTotalTime();
-                break;
-            }
-        }
-
-        $pageTime = $pageTime > 0 ? $pageTime : 1.0;
-        $queries  = $this->collectQueries();
-        $sqlTime  = array_sum(array_column($queries, 'ms'));
-        $repeated = \count(array_filter($queries, static fn ($q): bool => $q['dup'] > 1));
-        $similar  = \count(array_filter($queries, static fn ($q): bool => $q['dup'] <= 1 && $q['similar'] > 1));
-
-        $assets = '';
-
-        if (!self::$cssPrinted) {
-            self::$cssPrinted = true;
-            $assets           = '<style>' . self::panelCss() . '</style><script>' . self::panelScript() . '</script>';
-        }
-
-        $rows = '';
-        $data = [];
-
-        foreach (array_values($items) as $idx => $item) {
-            $name = (string) $item->name;
-            $own  = $name === 'Total Time' ? 0.0 : $item->getInternalTime();
-            $tot  = $item->getTotalTime();
-
-            if (str_starts_with($name, 'function ')) {
-                $type  = 'func';
-                $label = substr($name, 9);
-            } elseif (str_starts_with($name, 'render layout')) {
-                $type  = 'layout';
-                $label = trim(substr($name, 13), " '");
-            } else {
-                $type  = 'other';
-                $label = $name;
-            }
-
-            // Keep the readable part of "Kunena\Forum\Libraries\Foo\Bar::method()".
-            $short = preg_replace('/^(?:\\\\?[A-Za-z0-9_]+\\\\)+/', '', $label);
-            $class = $name === 'Total Time' ? '' : ($own > 0.15 ? ' class="kp-bad"' : ($own > 0.05 ? ' class="kp-warn"' : ''));
-            $share = max(0.5, min(100, $tot / $pageTime * 100));
-
-            $data[] = [
-                'name'         => $name, 'type' => $type, 'calls' => (int) $item->calls, 'own_ms' => round($own * 1000, 3), 'total_ms' => round($tot * 1000, 3),
-                'memory_bytes' => (int) $item->memory, 'callers' => (object) $item->callers, 'log' => $item->log,
-            ];
-
-            $rows .= '<tr class="kp-item" data-idx="' . $idx . '" data-name="' . $esc(strtolower($name)) . '" data-type="' . $type . '" data-calls="' . (int) $item->calls . '" data-own="' . round($own * 1000, 3)
-                . '" data-total="' . round($tot * 1000, 3) . '" data-mem="' . (int) $item->memory . '">'
-                . '<td title="' . $esc($name) . '"><span class="kp-tag kp-' . $type . '">' . $type . '</span>' . $esc($short) . '</td>'
-                . '<td>' . (int) $item->calls . '</td>'
-                . '<td' . $class . '>' . ($name === 'Total Time' ? '&mdash;' : $fmt($own)) . '</td>'
-                . '<td>' . $fmt($tot) . '</td>'
-                . '<td>' . $mem((float) $item->memory) . '</td>'
-                . '<td><span class="kp-meter"><i style="width:' . number_format($share, 1, '.', '') . '%"></i></span></td></tr>';
-        }
-
-        $queryRows = '';
-
-        foreach ($queries as $i => $query) {
-            $cls = $query['ms'] > 20 ? ' kp-bad' : ($query['ms'] > 5 ? ' kp-warn' : '');
-            $queryRows .= '<tr class="kp-query" data-ms="' . $query['ms'] . '" data-at="' . $query['at'] . '" data-order="' . $i . '" data-dup="' . $query['dup'] . '" data-similar="' . $query['similar'] . '">'
-                . '<td>' . ($i + 1) . '</td><td>' . number_format($query['at'], 1) . ' ms</td>'
-                . '<td class="' . trim($cls) . '">' . number_format($query['ms'], 2) . ' ms</td>'
-                . '<td class="kp-sql"><code>' . $esc(mb_strimwidth($query['sql'], 0, 4000, '...')) . '</code>'
-                . ($query['dup'] > 1 ? ' <span class="kp-dup" title="The same statement ran ' . $query['dup'] . ' times">x' . $query['dup'] . '</span>'
-                    : ($query['similar'] > 1 ? ' <span class="kp-sim" title="The same statement ran ' . $query['similar'] . ' times with other values: load them with one query?">~' . $query['similar'] . '</span>' : ''))
-                . ($query['caller'] !== '' ? '<div class="kp-caller">' . $esc($query['caller']) . '</div>' : '')
-                . ($query['stack'] ? '<ol class="kp-stack">' . implode('', array_map(static fn ($line): string => '<li>' . htmlspecialchars($line, ENT_QUOTES, 'UTF-8') . '</li>', $query['stack'])) . '</ol>' : '')
-                . '</td></tr>';
-        }
-
-        $chips = '<span class="kp-chip" title="Time of the Kunena code (the Joomla startup is not included)">Kunena <b>' . $fmt($pageTime) . '</b></span>'
-            . '<span class="kp-chip">Items <b>' . \count($items) . '</b></span>'
-            . '<span class="kp-chip">Calls <b>' . $calls . '</b></span>'
-            . '<span class="kp-chip">Queries <b>' . \count($queries) . '</b> &middot; ' . number_format($sqlTime, 1) . ' ms</span>'
-            . ($repeated ? '<span class="kp-chip kp-chip-warn" title="The same statement ran more than once">Repeated <b>' . $repeated . '</b></span>' : '')
-            . ($similar ? '<span class="kp-chip" title="The same statement ran with other values (one query for each value)">Similar <b>' . $similar . '</b></span>' : '')
-            . '<span class="kp-chip">Peak memory <b>' . $esc($mem((float) memory_get_peak_usage(true))) . '</b></span>';
-
-        $head = static function (string $key, string $label, bool $left = false): string {
-            return '<th data-sort="' . $key . '"' . ($left ? ' class="kp-left"' : '') . ' title="Sort by ' . $label . '">' . $label . '<span class="kp-arrow"></span></th>';
-        };
-
-        $json = (string) json_encode(['page_ms' => round($pageTime * 1000, 3), 'items' => $data, 'queries' => $queries], JSON_INVALID_UTF8_SUBSTITUTE);
-
-        return $assets
-            . '<details class="kprofiler"><summary><span class="kp-title">' . $esc($title) . '</span>' . $chips . '</summary>'
-            . '<div class="kp-tabs"><button type="button" class="kp-tab kp-on" data-tab="items">Items <span>' . \count($items) . '</span></button>'
-            . '<button type="button" class="kp-tab" data-tab="queries">Queries <span>' . \count($queries) . '</span></button>'
-            . '<button type="button" class="kp-tab" data-tab="timeline">Timeline</button>'
-            . '<span class="kp-spacer"></span>'
-            . '<button type="button" class="kp-copy" data-format="json">Copy JSON</button>'
-            . '<button type="button" class="kp-copy" data-format="csv">Copy CSV</button></div>'
-            // Items
-            . '<section class="kp-pane" data-pane="items"><div class="kp-tools">'
-            . '<input type="search" class="kp-filter" placeholder="Filter items" aria-label="Filter items">'
-            . '<button type="button" class="kp-type kp-on" data-type="func">func</button>'
-            . '<button type="button" class="kp-type kp-on" data-type="layout">layout</button>'
-            . '<button type="button" class="kp-type kp-on" data-type="other">other</button>'
-            . '<span class="kp-count"></span><span class="kp-hint">Click a row for its calls</span></div>'
-            . '<div class="kp-scroll"><table class="kp-items"><thead><tr>'
-            . $head('name', 'Item', true) . $head('calls', 'Calls') . $head('own', 'Own time') . $head('total', 'Total time') . $head('mem', 'Memory') . '<th>Share</th>'
-            . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>'
-            // Queries
-            . '<section class="kp-pane" data-pane="queries" hidden><div class="kp-tools">'
-            . '<input type="search" class="kp-qfilter" placeholder="Filter queries" aria-label="Filter queries">'
-            . '<button type="button" class="kp-qtoggle" data-q="slow">Slow &gt; 5 ms</button>'
-            . '<button type="button" class="kp-qtoggle" data-q="dup" title="The same statement ran more than once">Repeated</button>'
-            . '<button type="button" class="kp-qtoggle" data-q="similar" title="The same statement with other values">Similar</button>'
-            . '<span class="kp-qcount"></span>'
-            . '<button type="button" class="kp-copy-sql">Copy SQL</button></div>'
-            . ($queries ? '<div class="kp-scroll"><table class="kp-queries"><thead><tr>'
-                . '<th data-qsort="order" class="kp-left">#</th><th data-qsort="at">At</th><th data-qsort="ms">Time</th><th class="kp-left">Query</th>'
-                . '</tr></thead><tbody>' . $queryRows . '</tbody></table></div>'
-                : '<p class="kp-empty">No queries were recorded. Enable the Joomla debug mode or the Kunena debug mode to record them.</p>')
-            . '</section>'
-            // Timeline
-            . '<section class="kp-pane" data-pane="timeline" hidden><div class="kp-tl"></div></section>'
-            . '<script type="application/json" class="kp-data">' . str_replace('</', '<\/', $json) . '</script></details>';
+        return self::$_instances[$prefix];
     }
 
     /**
@@ -687,6 +389,235 @@ JS;
     }
 
     /**
+     * Find the code which ran a query: the first frame of the call stack outside the database package.
+     *
+     * @param   array  $stack  Frames of debug_backtrace().
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function queryCaller(array $stack): string
+    {
+        foreach ($stack as $frame) {
+            $class = (string) ($frame['class'] ?? '');
+
+            if ($class !== '' && (str_starts_with($class, 'Joomla\\Database\\') || str_contains($class, 'DebugMonitor'))) {
+                continue;
+            }
+
+            if (!isset($frame['function'])) {
+                continue;
+            }
+
+            $where = isset($frame['file']) ? basename((string) $frame['file']) . ':' . ($frame['line'] ?? '?') : '';
+            $short = $class !== '' ? substr(strrchr('\\' . $class, '\\'), 1) . ($frame['type'] ?? '::') . $frame['function'] : $frame['function'];
+
+            return $short . '()' . ($where !== '' ? ' ' . $where : '');
+        }
+
+        return '';
+    }
+
+    /**
+     * The calls which led to a query, the innermost first (frames of the database package are left out).
+     *
+     * @param   array  $stack  Frames of debug_backtrace().
+     *
+     * @return  array  Lines like "Class::method() File.php:123".
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function queryStack(array $stack): array
+    {
+        $lines = [];
+
+        foreach ($stack as $frame) {
+            $class = (string) ($frame['class'] ?? '');
+
+            if (!isset($frame['function']) || ($class !== '' && (str_starts_with($class, 'Joomla\\Database\\') || str_contains($class, 'DebugMonitor')))) {
+                continue;
+            }
+
+            $where   = isset($frame['file']) ? basename((string) $frame['file']) . ':' . ($frame['line'] ?? '?') : '';
+            $lines[] = ($class !== '' ? substr(strrchr('\\' . $class, '\\'), 1) . ($frame['type'] ?? '::') : '') . $frame['function'] . '()' . ($where !== '' ? ' ' . $where : '');
+
+            if (\count($lines) >= 14) {
+                break;
+            }
+        }
+
+        return $lines;
+    }
+
+    /**
+     * Render the collected profiler data as a collapsible html panel (debug mode only).
+     *
+     * Tabs: the profiled items (sortable, filterable, a click shows who called an item and the single calls),
+     * the database queries of the page (duration, caller, slow and repeated queries) and a timeline of the calls.
+     * The data can be copied as json or csv. The state (open, tab, sort, filters) is kept in the localStorage of
+     * the browser. Styles and script are printed once per request.
+     *
+     * @param   string  $title  Title of the panel.
+     *
+     * @return  string  Html.
+     *
+     * @since   Kunena 7.2
+     */
+    public function render(string $title = 'Kunena Profile Information'): string
+    {
+        $items = $this->getAll();
+
+        if (!$items) {
+            return '';
+        }
+
+        $esc = static fn ($text): string => htmlspecialchars((string) $text, ENT_QUOTES, 'UTF-8');
+        $fmt = static function (float $seconds): string {
+            return $seconds >= 1 ? number_format($seconds, 2) . ' s' : number_format($seconds * 1000, 1) . ' ms';
+        };
+        $mem = static function (float $bytes): string {
+            $sign = $bytes < 0 ? '-' : '';
+            $abs  = abs($bytes);
+
+            if ($abs >= 1048576) {
+                return $sign . number_format($abs / 1048576, 1) . ' MB';
+            }
+
+            return $sign . number_format($abs / 1024, 0) . ' KB';
+        };
+
+        $pageTime = 0.0;
+        $calls    = 0;
+
+        foreach ($items as $item) {
+            $calls += (int) $item->calls;
+            $pageTime = max($pageTime, $item->getTotalTime());
+
+            if ($item->name === 'Total Time') {
+                $pageTime = $item->getTotalTime();
+                break;
+            }
+        }
+
+        $pageTime = $pageTime > 0 ? $pageTime : 1.0;
+        $queries  = $this->collectQueries();
+        $sqlTime  = array_sum(array_column($queries, 'ms'));
+        $repeated = \count(array_filter($queries, static fn ($q): bool => $q['dup'] > 1));
+        $similar  = \count(array_filter($queries, static fn ($q): bool => $q['dup'] <= 1 && $q['similar'] > 1));
+
+        $assets = '';
+
+        if (!self::$cssPrinted) {
+            self::$cssPrinted = true;
+            $assets           = '<style>' . self::panelCss() . '</style><script>' . self::panelScript() . '</script>';
+        }
+
+        $rows = '';
+        $data = [];
+
+        foreach (array_values($items) as $idx => $item) {
+            $name = (string) $item->name;
+            $own  = $name === 'Total Time' ? 0.0 : $item->getInternalTime();
+            $tot  = $item->getTotalTime();
+
+            if (str_starts_with($name, 'function ')) {
+                $type  = 'func';
+                $label = substr($name, 9);
+            } elseif (str_starts_with($name, 'render layout')) {
+                $type  = 'layout';
+                $label = trim(substr($name, 13), " '");
+            } else {
+                $type  = 'other';
+                $label = $name;
+            }
+
+            // Keep the readable part of "Kunena\Forum\Libraries\Foo\Bar::method()".
+            $short = preg_replace('/^(?:\\\\?[A-Za-z0-9_]+\\\\)+/', '', $label);
+            $class = $name === 'Total Time' ? '' : ($own > 0.15 ? ' class="kp-bad"' : ($own > 0.05 ? ' class="kp-warn"' : ''));
+            $share = max(0.5, min(100, $tot / $pageTime * 100));
+
+            $data[] = [
+                'name'         => $name, 'type' => $type, 'calls' => (int) $item->calls, 'own_ms' => round($own * 1000, 3), 'total_ms' => round($tot * 1000, 3),
+                'memory_bytes' => (int) $item->memory, 'callers' => (object) $item->callers, 'log' => $item->log,
+            ];
+
+            $rows .= '<tr class="kp-item" data-idx="' . $idx . '" data-name="' . $esc(strtolower($name)) . '" data-type="' . $type . '" data-calls="' . (int) $item->calls . '" data-own="' . round($own * 1000, 3)
+                . '" data-total="' . round($tot * 1000, 3) . '" data-mem="' . (int) $item->memory . '">'
+                . '<td title="' . $esc($name) . '"><span class="kp-tag kp-' . $type . '">' . $type . '</span>' . $esc($short) . '</td>'
+                . '<td>' . (int) $item->calls . '</td>'
+                . '<td' . $class . '>' . ($name === 'Total Time' ? '&mdash;' : $fmt($own)) . '</td>'
+                . '<td>' . $fmt($tot) . '</td>'
+                . '<td>' . $mem((float) $item->memory) . '</td>'
+                . '<td><span class="kp-meter"><i style="width:' . number_format($share, 1, '.', '') . '%"></i></span></td></tr>';
+        }
+
+        $queryRows = '';
+
+        foreach ($queries as $i => $query) {
+            $cls = $query['ms'] > 20 ? ' kp-bad' : ($query['ms'] > 5 ? ' kp-warn' : '');
+            $queryRows .= '<tr class="kp-query" data-ms="' . $query['ms'] . '" data-at="' . $query['at'] . '" data-order="' . $i . '" data-dup="' . $query['dup'] . '" data-similar="' . $query['similar'] . '">'
+                . '<td>' . ($i + 1) . '</td><td>' . number_format($query['at'], 1) . ' ms</td>'
+                . '<td class="' . trim($cls) . '">' . number_format($query['ms'], 2) . ' ms</td>'
+                . '<td class="kp-sql"><code>' . $esc(mb_strimwidth($query['sql'], 0, 4000, '...')) . '</code>'
+                . ($query['dup'] > 1 ? ' <span class="kp-dup" title="The same statement ran ' . $query['dup'] . ' times">x' . $query['dup'] . '</span>'
+                    : ($query['similar'] > 1 ? ' <span class="kp-sim" title="The same statement ran ' . $query['similar'] . ' times with other values: load them with one query?">~' . $query['similar'] . '</span>' : ''))
+                . ($query['caller'] !== '' ? '<div class="kp-caller">' . $esc($query['caller']) . '</div>' : '')
+                . ($query['stack'] ? '<ol class="kp-stack">' . implode('', array_map(static fn ($line): string => '<li>' . htmlspecialchars($line, ENT_QUOTES, 'UTF-8') . '</li>', $query['stack'])) . '</ol>' : '')
+                . '</td></tr>';
+        }
+
+        $chips = '<span class="kp-chip" title="Time of the Kunena code (the Joomla startup is not included)">Kunena <b>' . $fmt($pageTime) . '</b></span>'
+            . '<span class="kp-chip">Items <b>' . \count($items) . '</b></span>'
+            . '<span class="kp-chip">Calls <b>' . $calls . '</b></span>'
+            . '<span class="kp-chip">Queries <b>' . \count($queries) . '</b> &middot; ' . number_format($sqlTime, 1) . ' ms</span>'
+            . ($repeated ? '<span class="kp-chip kp-chip-warn" title="The same statement ran more than once">Repeated <b>' . $repeated . '</b></span>' : '')
+            . ($similar ? '<span class="kp-chip" title="The same statement ran with other values (one query for each value)">Similar <b>' . $similar . '</b></span>' : '')
+            . '<span class="kp-chip">Peak memory <b>' . $esc($mem((float) memory_get_peak_usage(true))) . '</b></span>';
+
+        $head = static function (string $key, string $label, bool $left = false): string {
+            return '<th data-sort="' . $key . '"' . ($left ? ' class="kp-left"' : '') . ' title="Sort by ' . $label . '">' . $label . '<span class="kp-arrow"></span></th>';
+        };
+
+        $json = (string) json_encode(['page_ms' => round($pageTime * 1000, 3), 'items' => $data, 'queries' => $queries], JSON_INVALID_UTF8_SUBSTITUTE);
+
+        return $assets
+            . '<details class="kprofiler"><summary><span class="kp-title">' . $esc($title) . '</span>' . $chips . '</summary>'
+            . '<div class="kp-tabs"><button type="button" class="kp-tab kp-on" data-tab="items">Items <span>' . \count($items) . '</span></button>'
+            . '<button type="button" class="kp-tab" data-tab="queries">Queries <span>' . \count($queries) . '</span></button>'
+            . '<button type="button" class="kp-tab" data-tab="timeline">Timeline</button>'
+            . '<span class="kp-spacer"></span>'
+            . '<button type="button" class="kp-copy" data-format="json">Copy JSON</button>'
+            . '<button type="button" class="kp-copy" data-format="csv">Copy CSV</button></div>'
+            // Items
+            . '<section class="kp-pane" data-pane="items"><div class="kp-tools">'
+            . '<input type="search" class="kp-filter" placeholder="Filter items" aria-label="Filter items">'
+            . '<button type="button" class="kp-type kp-on" data-type="func">func</button>'
+            . '<button type="button" class="kp-type kp-on" data-type="layout">layout</button>'
+            . '<button type="button" class="kp-type kp-on" data-type="other">other</button>'
+            . '<span class="kp-count"></span><span class="kp-hint">Click a row for its calls</span></div>'
+            . '<div class="kp-scroll"><table class="kp-items"><thead><tr>'
+            . $head('name', 'Item', true) . $head('calls', 'Calls') . $head('own', 'Own time') . $head('total', 'Total time') . $head('mem', 'Memory') . '<th>Share</th>'
+            . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>'
+            // Queries
+            . '<section class="kp-pane" data-pane="queries" hidden><div class="kp-tools">'
+            . '<input type="search" class="kp-qfilter" placeholder="Filter queries" aria-label="Filter queries">'
+            . '<button type="button" class="kp-qtoggle" data-q="slow">Slow &gt; 5 ms</button>'
+            . '<button type="button" class="kp-qtoggle" data-q="dup" title="The same statement ran more than once">Repeated</button>'
+            . '<button type="button" class="kp-qtoggle" data-q="similar" title="The same statement with other values">Similar</button>'
+            . '<span class="kp-qcount"></span>'
+            . '<button type="button" class="kp-copy-sql">Copy SQL</button></div>'
+            . ($queries ? '<div class="kp-scroll"><table class="kp-queries"><thead><tr>'
+                . '<th data-qsort="order" class="kp-left">#</th><th data-qsort="at">At</th><th data-qsort="ms">Time</th><th class="kp-left">Query</th>'
+                . '</tr></thead><tbody>' . $queryRows . '</tbody></table></div>'
+                : '<p class="kp-empty">No queries were recorded. Enable the Joomla debug mode or the Kunena debug mode to record them.</p>')
+            . '</section>'
+            // Timeline
+            . '<section class="kp-pane" data-pane="timeline" hidden><div class="kp-tl"></div></section>'
+            . '<script type="application/json" class="kp-data">' . str_replace('</', '<\/', $json) . '</script></details>';
+    }
+
+    /**
      * @param   array   $array     array
      * @param   string  $property  property
      *
@@ -704,6 +635,78 @@ JS;
 
             return $a->$property < $b->$property ? 1 : -1;
         });
+    }
+
+    /**
+     * @param   string  $name  name
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function start(string $name): void
+    {
+        $item   = KunenaProfilerItem::getInstance($name);
+        $parent = end($this->_heap);
+        $item->start(microtime(true), $parent ? (string) $parent->name : '');
+        $this->_heap[] = $item;
+    }
+
+    /**
+     * @param   string  $name  name
+     *
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     */
+    public function stop(string $name)
+    {
+        // Find the innermost open item with this name; items above it were left open by code paths which skipped stop().
+        $found = null;
+
+        for ($i = \count($this->_heap) - 1; $i >= 0; $i--) {
+            if ($this->_heap[$i]->name == $name) {
+                $found = $i;
+                break;
+            }
+        }
+
+        if ($found === null) {
+            trigger_error(__CLASS__ . '::' . __FUNCTION__ . "('$name') is missing start()");
+
+            return KunenaProfilerItem::getInstance($name);
+        }
+
+        $item = $this->_heap[$found];
+        array_splice($this->_heap, $found);
+
+        $delta = $item->stop(microtime(true));
+
+        if (end($this->_heap)) {
+            $this->_heap[key($this->_heap)]->external($delta);
+        }
+
+        return $item;
+    }
+
+    /**
+     * Make sure that the database queries of the page are recorded (Joomla debug mode records them already).
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public function watchQueries(): void
+    {
+        try {
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+
+            if (method_exists($db, 'getMonitor') && method_exists($db, 'setMonitor') && !$db->getMonitor()) {
+                $db->setMonitor(new DebugMonitor(true));
+            }
+        } catch (Throwable $e) {
+            // The queries are optional information of the panel.
+        }
     }
 }
 
@@ -790,6 +793,28 @@ class KunenaProfilerItem
     }
 
     /**
+     * @param   float  $delta  delta
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function external(float $delta): void
+    {
+        $this->external += $delta;
+    }
+
+    /**
+     * @return array
+     *
+     * @since   Kunena 6.0
+     */
+    public static function getAll(): array
+    {
+        return self::$_instances;
+    }
+
+    /**
      * @param   string  $name  name
      *
      * @return  KunenaProfilerItem
@@ -806,13 +831,13 @@ class KunenaProfilerItem
     }
 
     /**
-     * @return array
+     * @return  float
      *
      * @since   Kunena 6.0
      */
-    public static function getAll(): array
+    public function getInternalTime(): float
     {
-        return self::$_instances;
+        return $this->total - $this->external;
     }
 
     /**
@@ -836,17 +861,8 @@ class KunenaProfilerItem
     }
 
     /**
-     * @return  float
-     *
-     * @since   Kunena 6.0
-     */
-    public function getInternalTime(): float
-    {
-        return $this->total - $this->external;
-    }
-
-    /**
-     * @param   float  $starttime  start time
+     * @param   float   $starttime  start time
+     * @param   string  $parent     The caller, for the call counts.
      *
      * @return  float
      *
@@ -893,17 +909,5 @@ class KunenaProfilerItem
         }
 
         return $delta;
-    }
-
-    /**
-     * @param   float  $delta  delta
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function external(float $delta): void
-    {
-        $this->external += $delta;
     }
 }

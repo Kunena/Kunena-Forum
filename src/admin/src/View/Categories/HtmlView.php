@@ -21,6 +21,7 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Button\DropdownButton;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -121,7 +122,7 @@ class HtmlView extends BaseHtmlView
         $toolbar->addNew('categories.add', 'COM_KUNENA_NEW_CATEGORY');
         $toolbar->edit('categories.edit')->listCheck(true);
 
-        /** @var  \Joomla\CMS\Toolbar\Button\DropdownButton $dropdown */
+        /** @var  DropdownButton $dropdown */
         $dropdown = $toolbar->dropdownButton('status-group')
             ->text('JTOOLBAR_CHANGE_STATUS')
             ->toggleSplit(false)
@@ -142,7 +143,7 @@ class HtmlView extends BaseHtmlView
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            ToolBarHelper::preferences('com_kunena');
+            ToolbarHelper::preferences('com_kunena');
         }
 
         $helpUrl = 'https://docs.kunena.org/en/setup/sections-categories';

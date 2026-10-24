@@ -116,145 +116,35 @@ class KunenaTableMap
     }
 
     /**
-     * Get the columns from database table.
+     * Method to lock the database table for writing.
      *
-     * @return  mixed  An array of the field names, or false if an error occurs.
+     * @return  boolean  True on success.
      *
      * @since   Kunena 6.0
      *
-     * @throws  UnexpectedValueException
+     * @throws  RuntimeException
      */
-    public function getFields(): array
+    protected function _lock(): bool
     {
-        static $cache = [];
+        $this->_db->lockTable($this->_tbl);
+        $this->_locked = true;
 
-        $name = $this->_tbl;
-
-        if (!isset($cache[$name])) {
-            // Lookup the fields for this table only once.
-            $fields = $this->_db->getTableColumns($name, false);
-
-            if (empty($fields)) {
-                throw new UnexpectedValueException(\sprintf('No columns found for %s table', $name));
-            }
-
-            $cache[$name] = $fields;
-        }
-
-        return (array) $cache[$name];
+        return true;
     }
 
     /**
-     * @return  mixed
+     * Method to unlock the database table for writing.
+     *
+     * @return  boolean  True on success.
      *
      * @since   Kunena 6.0
      */
-    public function getMirrorInstance()
+    protected function _unlock(): bool
     {
-        static $instance = [];
+        $this->_db->unlockTables();
+        $this->_locked = false;
 
-        $key = md5(serialize([$this->_tbl, $this->_tbl_mapped, $this->_tbl_key]));
-
-        if (!isset($instance[$key])) {
-            $c              = \get_called_class();
-            $instance[$key] = new $c($this->_tbl, $this->_tbl_mapped, $this->_tbl_key);
-        }
-
-        return $instance[$key];
-    }
-
-    /**
-     * Method to get the database table name for the class.
-     *
-     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getTableName
-     *
-     * @return  string  The name of the database table being modeled.
-     *
-     * @since   Kunena 6.0
-     */
-    public function getTableName(): string
-    {
-        return $this->_tbl;
-    }
-
-    /**
-     * Method to get the primary key field name for the table.
-     *
-     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getKeyName
-     *
-     * @return  string  The name of the primary key for the table.
-     *
-     * @since   Kunena 6.0
-     */
-    public function getKeyName(): string
-    {
-        return $this->_tbl_key;
-    }
-
-    /**
-     * Method to get the mapped field name for the table.
-     *
-     * @return  string  The name of the map field for the table.
-     *
-     * @since   Kunena 6.0
-     */
-    public function getMappedName(): string
-    {
-        return $this->_tbl_mapped;
-    }
-
-    /**
-     * Method to get the DatabaseDriver object.
-     *
-     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getDBO
-     *
-     * @return \Joomla\Database\DatabaseDriver|null The internal database driver object.
-     *
-     * @since   Kunena 6.0
-     */
-    public function getDatabase(): ?DatabaseDriver
-    {
-        return $this->_db;
-    }
-
-    /**
-     * Method to get the primary key.
-     *
-     * @return  integer  Get value for the primary key.
-     *
-     * @since   Kunena 6.0
-     */
-    public function getKey(): int
-    {
-        return $this->{$this->_tbl_key};
-    }
-
-    /**
-     * Method to set the primary key.
-     *
-     * @param   int  $id  Set value for the primary key.
-     *
-     * @return  $this
-     *
-     * @since   Kunena 6.0
-     */
-    public function setKey(int $id): KunenaTableMap
-    {
-        $this->{$this->_tbl_key} = (int) $id;
-
-        return $this;
-    }
-
-    /**
-     * Method to get the mapped value.
-     *
-     * @return  array  Get array of mapped objects.
-     *
-     * @since   Kunena 6.0
-     */
-    public function getMapped(): array
-    {
-        return (array) $this->{$this->_tbl_mapped};
+        return true;
     }
 
     /**
@@ -273,24 +163,6 @@ class KunenaTableMap
         }
 
         return $this;
-    }
-
-    /**
-     * Method to set the DatabaseDriver object.
-     *
-     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/setDbo
-     *
-     * @param   DatabaseDriver  $db  A DatabaseDriver object to be used by the table object.
-     *
-     * @return  boolean  True on success.
-     *
-     * @since   Kunena 6.0
-     */
-    public function setDbo(DatabaseDriver $db): bool
-    {
-        $this->_db = $db;
-
-        return true;
     }
 
     /**
@@ -340,6 +212,180 @@ class KunenaTableMap
     }
 
     /**
+     * Method to perform sanity checks on the Joomla\CMS\Table\Table instance properties to ensure
+     * they are safe to store in the database.  Child classes should override this
+     * method to make sure the data they are storing in the database is safe and
+     * as expected before storage.
+     *
+     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/check
+     * @return  boolean  True if the instance is sane and able to be stored in the database.
+     *
+     * @since   Kunena 6.0
+     */
+    public function check(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Method to delete a row from the database table by primary key value.
+     *
+     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/delete
+     *
+     * @param   int|array  $pk  An optional primary key value (or array of key=>value pairs) to delete.  If not set the
+     *                          instance property value is used.
+     *
+     * @return  boolean  True on success.
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  UnexpectedValueException
+     */
+    public function delete($pk = null): bool
+    {
+        $k  = $this->_tbl_key;
+        $pk = (\is_null($pk)) ? $this->{$k} : $pk;
+
+        // If no primary key is given, return false.
+        if ($pk === null) {
+            throw new UnexpectedValueException('Null primary key not allowed.');
+        }
+
+        // Turn pk into array.
+        if (!\is_array($pk)) {
+            $pk = [$k => (int) $pk];
+        }
+
+        // Delete the row by primary key.
+        $query = $this->_db->createQuery()
+            ->delete()
+            ->from($this->_tbl);
+
+        foreach ($pk as $key => $value) {
+            $query->where($key . ' = ' . $this->_db->quote($value));
+        }
+
+        $this->_db->setQuery($query);
+
+        // Delete items.
+        $this->_db->execute();
+
+        return true;
+    }
+
+    /**
+     * Method to get the DatabaseDriver object.
+     *
+     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getDBO
+     *
+     * @return DatabaseDriver|null The internal database driver object.
+     *
+     * @since   Kunena 6.0
+     */
+    public function getDatabase(): ?DatabaseDriver
+    {
+        return $this->_db;
+    }
+
+    /**
+     * Get the columns from database table.
+     *
+     * @return  mixed  An array of the field names, or false if an error occurs.
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  UnexpectedValueException
+     */
+    public function getFields(): array
+    {
+        static $cache = [];
+
+        $name = $this->_tbl;
+
+        if (!isset($cache[$name])) {
+            // Lookup the fields for this table only once.
+            $fields = $this->_db->getTableColumns($name, false);
+
+            if (empty($fields)) {
+                throw new UnexpectedValueException(\sprintf('No columns found for %s table', $name));
+            }
+
+            $cache[$name] = $fields;
+        }
+
+        return (array) $cache[$name];
+    }
+
+    /**
+     * Method to get the primary key.
+     *
+     * @return  integer  Get value for the primary key.
+     *
+     * @since   Kunena 6.0
+     */
+    public function getKey(): int
+    {
+        return $this->{$this->_tbl_key};
+    }
+
+    /**
+     * Method to get the primary key field name for the table.
+     *
+     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getKeyName
+     *
+     * @return  string  The name of the primary key for the table.
+     *
+     * @since   Kunena 6.0
+     */
+    public function getKeyName(): string
+    {
+        return $this->_tbl_key;
+    }
+
+    /**
+     * Method to get the mapped value.
+     *
+     * @return  array  Get array of mapped objects.
+     *
+     * @since   Kunena 6.0
+     */
+    public function getMapped(): array
+    {
+        return (array) $this->{$this->_tbl_mapped};
+    }
+
+    /**
+     * Method to get the mapped field name for the table.
+     *
+     * @return  string  The name of the map field for the table.
+     *
+     * @since   Kunena 6.0
+     */
+    public function getMappedName(): string
+    {
+        return $this->_tbl_mapped;
+    }
+
+    /**
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     */
+    public function getMirrorInstance()
+    {
+        static $instance = [];
+
+        $key = md5(serialize([$this->_tbl, $this->_tbl_mapped, $this->_tbl_key]));
+
+        if (!isset($instance[$key])) {
+            $c              = \get_called_class();
+            $instance[$key] = new $c($this->_tbl, $this->_tbl_mapped, $this->_tbl_key);
+        }
+
+        return $instance[$key];
+    }
+
+    /**
      * Returns an associative array of public object properties.
      *
      * @return  array
@@ -361,134 +407,17 @@ class KunenaTableMap
     }
 
     /**
-     * Method to provide a shortcut to binding, checking and storing a Joomla\CMS\Table\Table
-     * instance to the database table.
+     * Method to get the database table name for the class.
      *
-     * @param   array|null  $map     An array of mapped Ids.
-     * @param   array|null  $filter  Touch only these filtered items.
+     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getTableName
      *
-     * @return  boolean  True on success.
+     * @return  string  The name of the database table being modeled.
      *
      * @since   Kunena 6.0
      */
-    public function save(?array $map = null, ?array $filter = null): bool
+    public function getTableName(): string
     {
-        if ($map !== null) {
-            $this->setMapped($map);
-        }
-
-        // Run any sanity checks on the instance and verify that it is ready for storage.
-        if (!$this->check()) {
-            return false;
-        }
-
-        // Attempt to store the properties to the database table.
-        if (!$this->store($filter)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Method to set the mapped value.
-     *
-     * @param   array  $list  Set array of mapped objects.
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function setMapped(array $list): void
-    {
-        $list                       = ArrayHelper::toInteger($list);
-        $this->{$this->_tbl_mapped} = $list;
-    }
-
-    /**
-     * Method to perform sanity checks on the Joomla\CMS\Table\Table instance properties to ensure
-     * they are safe to store in the database.  Child classes should override this
-     * method to make sure the data they are storing in the database is safe and
-     * as expected before storage.
-     *
-     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/check
-     * @return  boolean  True if the instance is sane and able to be stored in the database.
-     *
-     * @since   Kunena 6.0
-     */
-    public function check(): bool
-    {
-        return true;
-    }
-
-    /**
-     * Method to store mapped rows in the database from the Joomla\CMS\Table\Table instance properties.
-     *
-     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/store
-     *
-     * @param   array|null  $filter  Touch only these filtered items.
-     *
-     * @return  boolean  True on success.
-     *
-     * @since   Kunena 6.0
-     */
-    public function store(?array $filter = null): bool
-    {
-        $k = $this->_tbl_key;
-        $m = $this->_tbl_mapped;
-
-        if (0 == $this->{$k}) {
-            throw new UnexpectedValueException(\sprintf('No key specified: %s.', \get_class($this)));
-        }
-
-        $id    = $this->{$k};
-        $items = $this->{$m};
-
-        if (!empty($items)) {
-            // Load currently mapped variables from database.
-            $this->load();
-            $filtered = ($filter !== null) ? array_intersect($this->{$m}, $filter) : $this->{$m};
-
-            // Calculate difference (added and deleted items).
-            $added   = array_diff($items, $filtered);
-            $deleted = array_diff($filtered, $items);
-
-            // Create all added items.
-            if ($added) {
-                $values = [];
-
-                foreach ($added as $var) {
-                    $values[] = (int) $id . ',' . (int) $var;
-                }
-
-                $query = $this->_db->createQuery()
-                    ->insert($this->_db->quoteName($this->_tbl))
-                    ->columns([$this->_db->quoteName($this->_tbl_key), $this->_db->quoteName($this->_tbl_mapped)])
-                    ->values($values);
-                $this->_db->setQuery($query);
-                $this->_db->execute();
-            }
-
-            // Remove all deleted items.
-            if ($deleted) {
-                $query = $this->_db->createQuery()
-                    ->delete($this->_db->quoteName($this->_tbl))
-                    ->where($this->_db->quoteName($this->_tbl_key) . ' = ' . $this->_db->quote((int) $id))
-                    ->andWhere($this->_db->quoteName($this->_tbl_mapped) . ' IN (' . implode(',', $deleted) . ')');
-                $this->_db->setQuery($query);
-                $this->_db->execute();
-            }
-        } else {
-            $this->delete();
-        }
-
-        $this->{$m} = $items;
-
-        if ($this->_locked) {
-            $this->_unlock();
-        }
-
-        return true;
+        return $this->_tbl;
     }
 
     /**
@@ -557,6 +486,26 @@ class KunenaTableMap
     }
 
     /**
+     * Method to remove relation.
+     *
+     * @param   int  $id  Add Id.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.0
+     */
+    protected function remove(int $id): KunenaTableMap
+    {
+        $key = array_search((int) $id, $this->{$this->_tbl_mapped});
+
+        if ($key !== false) {
+            unset($this->{$this->_tbl_mapped}[$key]);
+        }
+
+        return $this;
+    }
+
+    /**
      * Method to reset class properties to the defaults set in the class
      * definition. It will ignore the primary key as well as any private class
      * properties.
@@ -579,99 +528,150 @@ class KunenaTableMap
     }
 
     /**
-     * Method to delete a row from the database table by primary key value.
+     * Method to provide a shortcut to binding, checking and storing a Joomla\CMS\Table\Table
+     * instance to the database table.
      *
-     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/delete
-     *
-     * @param   int|array  $pk  An optional primary key value (or array of key=>value pairs) to delete.  If not set the
-     *                          instance property value is used.
-     *
-     * @return  boolean  True on success.
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  UnexpectedValueException
-     */
-    public function delete($pk = null): bool
-    {
-        $k  = $this->_tbl_key;
-        $pk = (\is_null($pk)) ? $this->{$k} : $pk;
-
-        // If no primary key is given, return false.
-        if ($pk === null) {
-            throw new UnexpectedValueException('Null primary key not allowed.');
-        }
-
-        // Turn pk into array.
-        if (!\is_array($pk)) {
-            $pk = [$k => (int) $pk];
-        }
-
-        // Delete the row by primary key.
-        $query = $this->_db->createQuery()
-            ->delete()
-            ->from($this->_tbl);
-
-        foreach ($pk as $key => $value) {
-            $query->where($key . ' = ' . $this->_db->quote($value));
-        }
-
-        $this->_db->setQuery($query);
-
-        // Delete items.
-        $this->_db->execute();
-
-        return true;
-    }
-
-    /**
-     * Method to unlock the database table for writing.
+     * @param   array|null  $map     An array of mapped Ids.
+     * @param   array|null  $filter  Touch only these filtered items.
      *
      * @return  boolean  True on success.
      *
      * @since   Kunena 6.0
      */
-    protected function _unlock(): bool
+    public function save(?array $map = null, ?array $filter = null): bool
     {
-        $this->_db->unlockTables();
-        $this->_locked = false;
+        if ($map !== null) {
+            $this->setMapped($map);
+        }
+
+        // Run any sanity checks on the instance and verify that it is ready for storage.
+        if (!$this->check()) {
+            return false;
+        }
+
+        // Attempt to store the properties to the database table.
+        if (!$this->store($filter)) {
+            return false;
+        }
 
         return true;
     }
 
     /**
-     * Method to remove relation.
+     * Method to set the DatabaseDriver object.
      *
-     * @param   int  $id  Add Id.
+     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/setDbo
+     *
+     * @param   DatabaseDriver  $db  A DatabaseDriver object to be used by the table object.
+     *
+     * @return  boolean  True on success.
+     *
+     * @since   Kunena 6.0
+     */
+    public function setDbo(DatabaseDriver $db): bool
+    {
+        $this->_db = $db;
+
+        return true;
+    }
+
+    /**
+     * Method to set the primary key.
+     *
+     * @param   int  $id  Set value for the primary key.
      *
      * @return  $this
      *
      * @since   Kunena 6.0
      */
-    protected function remove(int $id): KunenaTableMap
+    public function setKey(int $id): KunenaTableMap
     {
-        $key = array_search((int) $id, $this->{$this->_tbl_mapped});
-
-        if ($key !== false) {
-            unset($this->{$this->_tbl_mapped}[$key]);
-        }
+        $this->{$this->_tbl_key} = (int) $id;
 
         return $this;
     }
 
     /**
-     * Method to lock the database table for writing.
+     * Method to set the mapped value.
+     *
+     * @param   array  $list  Set array of mapped objects.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function setMapped(array $list): void
+    {
+        $list                       = ArrayHelper::toInteger($list);
+        $this->{$this->_tbl_mapped} = $list;
+    }
+
+    /**
+     * Method to store mapped rows in the database from the Joomla\CMS\Table\Table instance properties.
+     *
+     * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/store
+     *
+     * @param   array|null  $filter  Touch only these filtered items.
      *
      * @return  boolean  True on success.
      *
      * @since   Kunena 6.0
-     *
-     * @throws  RuntimeException
      */
-    protected function _lock(): bool
+    public function store(?array $filter = null): bool
     {
-        $this->_db->lockTable($this->_tbl);
-        $this->_locked = true;
+        $k = $this->_tbl_key;
+        $m = $this->_tbl_mapped;
+
+        if (0 == $this->{$k}) {
+            throw new UnexpectedValueException(\sprintf('No key specified: %s.', \get_class($this)));
+        }
+
+        $id    = $this->{$k};
+        $items = $this->{$m};
+
+        if (!empty($items)) {
+            // Load currently mapped variables from database.
+            $this->load();
+            $filtered = ($filter !== null) ? array_intersect($this->{$m}, $filter) : $this->{$m};
+
+            // Calculate difference (added and deleted items).
+            $added   = array_diff($items, $filtered);
+            $deleted = array_diff($filtered, $items);
+
+            // Create all added items.
+            if ($added) {
+                $values = [];
+
+                foreach ($added as $var) {
+                    $values[] = (int) $id . ',' . (int) $var;
+                }
+
+                $query = $this->_db->createQuery()
+                    ->insert($this->_db->quoteName($this->_tbl))
+                    ->columns([$this->_db->quoteName($this->_tbl_key), $this->_db->quoteName($this->_tbl_mapped)])
+                    ->values($values);
+                $this->_db->setQuery($query);
+                $this->_db->execute();
+            }
+
+            // Remove all deleted items.
+            if ($deleted) {
+                $query = $this->_db->createQuery()
+                    ->delete($this->_db->quoteName($this->_tbl))
+                    ->where($this->_db->quoteName($this->_tbl_key) . ' = ' . $this->_db->quote((int) $id))
+                    ->andWhere($this->_db->quoteName($this->_tbl_mapped) . ' IN (' . implode(',', $deleted) . ')');
+                $this->_db->setQuery($query);
+                $this->_db->execute();
+            }
+        } else {
+            $this->delete();
+        }
+
+        $this->{$m} = $items;
+
+        if ($this->_locked) {
+            $this->_unlock();
+        }
 
         return true;
     }

@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Html;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
@@ -51,40 +52,25 @@ abstract class KunenaMap
     protected static $lookups = 0;
 
     /**
-     * The provider of the maps: google or osm. Automatic uses Google Maps when an API key is filled in.
+     * The Joomla cache with the coordinates of the addresses: it is kept for a long time (also when the cache of the site is
+     * switched off), and it is emptied with the cache of the site.
      *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    public static function provider(): string
-    {
-        $config = KunenaConfig::getInstance();
-        $value  = (string) ($config->mapProvider ?? 'auto');
-
-        if ($value === 'google' || $value === 'osm') {
-            return $value;
-        }
-
-        return !empty($config->googleMapApiKey) ? 'google' : 'osm';
-    }
-
-    /**
-     * The address of a page with the location on a map.
-     *
-     * @param   string  $address  The address or the place.
-     *
-     * @return  string
+     * @return  Cache|null
      *
      * @since   Kunena 7.2
      */
-    public static function linkUrl(string $address): string
+    protected static function cache()
     {
-        if (self::provider() === 'google') {
-            return 'https://maps.google.com/?q=' . urlencode($address);
-        }
+        try {
+            $controller = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController(
+                'output',
+                ['defaultgroup' => 'com_kunena_geocode', 'caching' => true, 'lifetime' => 60 * 24 * 365]
+            );
 
-        return 'https://www.openstreetmap.org/search?query=' . urlencode($address);
+            return $controller->cache;
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     /**
@@ -104,44 +90,6 @@ abstract class KunenaMap
         }
 
         return self::osmPageUrl($latitude, $longitude, 10);
-    }
-
-    /**
-     * The address of the embedded map of OpenStreetMap for a location.
-     *
-     * @param   float  $latitude   The latitude.
-     * @param   float  $longitude  The longitude.
-     * @param   int    $zoom       The zoom level (1 to 18).
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    public static function osmEmbedUrl(float $latitude, float $longitude, int $zoom = 10): string
-    {
-        $zoom    = max(1, min(18, $zoom));
-        $lonSpan = 360 / (2 ** $zoom) * 2.4;
-        $latSpan = $lonSpan / 2.4;
-        $bbox    = [$longitude - $lonSpan / 2, $latitude - $latSpan / 2, $longitude + $lonSpan / 2, $latitude + $latSpan / 2];
-
-        return 'https://www.openstreetmap.org/export/embed.html?bbox=' . implode(',', array_map(static fn ($value) => rtrim(rtrim(number_format($value, 6, '.', ''), '0'), '.'), $bbox))
-            . '&layer=mapnik&marker=' . rtrim(rtrim(number_format($latitude, 6, '.', ''), '0'), '.') . ',' . rtrim(rtrim(number_format($longitude, 6, '.', ''), '0'), '.');
-    }
-
-    /**
-     * The address of the page of OpenStreetMap with the location (a larger map).
-     *
-     * @param   float  $latitude   The latitude.
-     * @param   float  $longitude  The longitude.
-     * @param   int    $zoom       The zoom level.
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    public static function osmPageUrl(float $latitude, float $longitude, int $zoom = 10): string
-    {
-        return 'https://www.openstreetmap.org/?mlat=' . $latitude . '&mlon=' . $longitude . '#map=' . max(1, min(18, $zoom)) . '/' . $latitude . '/' . $longitude;
     }
 
     /**
@@ -198,25 +146,21 @@ abstract class KunenaMap
     }
 
     /**
-     * The Joomla cache with the coordinates of the addresses: it is kept for a long time (also when the cache of the site is
-     * switched off), and it is emptied with the cache of the site.
+     * The address of a page with the location on a map.
      *
-     * @return  \Joomla\CMS\Cache\Cache|null
+     * @param   string  $address  The address or the place.
+     *
+     * @return  string
      *
      * @since   Kunena 7.2
      */
-    protected static function cache()
+    public static function linkUrl(string $address): string
     {
-        try {
-            $controller = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController(
-                'output',
-                ['defaultgroup' => 'com_kunena_geocode', 'caching' => true, 'lifetime' => 60 * 24 * 365]
-            );
-
-            return $controller->cache;
-        } catch (Exception $e) {
-            return null;
+        if (self::provider() === 'google') {
+            return 'https://maps.google.com/?q=' . urlencode($address);
         }
+
+        return 'https://www.openstreetmap.org/search?query=' . urlencode($address);
     }
 
     /**
@@ -265,5 +209,62 @@ abstract class KunenaMap
             // The service does not answer: the map is not shown, the link is.
             return false;
         }
+    }
+
+    /**
+     * The address of the embedded map of OpenStreetMap for a location.
+     *
+     * @param   float  $latitude   The latitude.
+     * @param   float  $longitude  The longitude.
+     * @param   int    $zoom       The zoom level (1 to 18).
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    public static function osmEmbedUrl(float $latitude, float $longitude, int $zoom = 10): string
+    {
+        $zoom    = max(1, min(18, $zoom));
+        $lonSpan = 360 / (2 ** $zoom) * 2.4;
+        $latSpan = $lonSpan / 2.4;
+        $bbox    = [$longitude - $lonSpan / 2, $latitude - $latSpan / 2, $longitude + $lonSpan / 2, $latitude + $latSpan / 2];
+
+        return 'https://www.openstreetmap.org/export/embed.html?bbox=' . implode(',', array_map(static fn ($value) => rtrim(rtrim(number_format($value, 6, '.', ''), '0'), '.'), $bbox))
+            . '&layer=mapnik&marker=' . rtrim(rtrim(number_format($latitude, 6, '.', ''), '0'), '.') . ',' . rtrim(rtrim(number_format($longitude, 6, '.', ''), '0'), '.');
+    }
+
+    /**
+     * The address of the page of OpenStreetMap with the location (a larger map).
+     *
+     * @param   float  $latitude   The latitude.
+     * @param   float  $longitude  The longitude.
+     * @param   int    $zoom       The zoom level.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    public static function osmPageUrl(float $latitude, float $longitude, int $zoom = 10): string
+    {
+        return 'https://www.openstreetmap.org/?mlat=' . $latitude . '&mlon=' . $longitude . '#map=' . max(1, min(18, $zoom)) . '/' . $latitude . '/' . $longitude;
+    }
+
+    /**
+     * The provider of the maps: google or osm. Automatic uses Google Maps when an API key is filled in.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    public static function provider(): string
+    {
+        $config = KunenaConfig::getInstance();
+        $value  = (string) ($config->mapProvider ?? 'auto');
+
+        if ($value === 'google' || $value === 'osm') {
+            return $value;
+        }
+
+        return !empty($config->googleMapApiKey) ? 'google' : 'osm';
     }
 }

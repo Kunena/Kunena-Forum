@@ -16,8 +16,11 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\User\KunenaUserFollow;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 $topic           = $this->topic;
 $userTopic       = $topic->getUserTopic();
@@ -82,8 +85,8 @@ if (!empty($this->spacing)) : ?>
                 echo $this->getTopicLink($topic, null, null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false);
             }
             echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->set('reviewCount', $this->topic->getReviewCount())->setLayout('default');
-            echo ' ' . \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::render((int) $topic->id, 'd-inline-block mt-1'); ?>
-            <?php if (\Kunena\Forum\Libraries\User\KunenaUserFollow::isFollowing(\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->userid, (int) $topic->first_post_userid)) : ?>
+            echo ' ' . KunenaTopicTags::render((int) $topic->id, 'd-inline-block mt-1'); ?>
+            <?php if (KunenaUserFollow::isFollowing(KunenaUserHelper::getMyself()->userid, (int) $topic->first_post_userid)) : ?>
                 <span class="kfollowed" <?php echo KunenaTemplate::getInstance()->tooltips(true); ?> data-bs-toggle="tooltip" title="<?php echo Text::sprintf('COM_KUNENA_FOLLOW_MARKER', $this->escape($topic->getAuthor()->getName())); ?>"><?php echo KunenaIcons::bookmark(); ?></span>
             <?php endif; ?>
         </div>

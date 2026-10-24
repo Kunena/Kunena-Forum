@@ -32,7 +32,7 @@ use RuntimeException;
 /**
  * Kunena Categories Controller
  *
- * @property  $me  KunenaUser
+ * @property $me KunenaUser
  * @since   Kunena 2.0
  */
 class CategoriesController extends KunenaController

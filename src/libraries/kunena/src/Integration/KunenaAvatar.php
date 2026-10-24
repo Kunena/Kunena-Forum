@@ -60,6 +60,22 @@ class KunenaAvatar
     protected bool $resize = \false;
 
     /**
+     * Function to get the Avatar image for the user
+     *
+     * @param   KunenaUser  $user   user
+     * @param   integer     $sizex  sizex
+     * @param   integer     $sizey  sizey
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
+    {
+        return '';
+    }
+
+    /**
      * Function to get the active KunenaAvatar instance from the integration
      *
      * @return  KunenaAvatar
@@ -86,18 +102,6 @@ class KunenaAvatar
         }
 
         return self::$instance;
-    }
-
-    /**
-     * function to (pre) load the Avatars
-     *
-     * @param   array  $userlist  userlist
-     *
-     * @return  void
-     * @since   Kunena 6.0
-     */
-    public function load(array $userlist): void
-    {
     }
 
     /**
@@ -199,18 +203,14 @@ class KunenaAvatar
     }
 
     /**
-     * Function to get the Avatar image for the user
+     * function to (pre) load the Avatars
      *
-     * @param   KunenaUser  $user   user
-     * @param   integer     $sizex  sizex
-     * @param   integer     $sizey  sizey
+     * @param   array  $userlist  userlist
      *
-     * @return  string
-     *
+     * @return  void
      * @since   Kunena 6.0
      */
-    protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
+    public function load(array $userlist): void
     {
-        return '';
     }
 }

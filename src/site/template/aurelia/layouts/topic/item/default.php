@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 Text::script('COM_KUNENA_RATE_LOGIN');
@@ -87,7 +88,7 @@ if ($this->topic->locked) {
 
     <div class="clearfix"></div>
 
-    <?php $topicTagsHtml = \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::render((int) $this->topic->id, 'mb-2 d-block'); ?>
+    <?php $topicTagsHtml = KunenaTopicTags::render((int) $this->topic->id, 'mb-2 d-block'); ?>
     <?php if ($topicTagsHtml !== '') : ?>
         <?php echo $topicTagsHtml; ?>
     <?php endif; ?>

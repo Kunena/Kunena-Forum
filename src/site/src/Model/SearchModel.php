@@ -20,6 +20,7 @@ use DateTime;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseInterface;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -164,7 +165,7 @@ class SearchModel extends KunenaModel
      * [hide] (for the logged-in users) or in [confidential] (for the author and the moderators) must not give a hit to anybody
      * else: the hit would tell him that the word is in the message.
      *
-     * @param   \Joomla\Database\DatabaseInterface  $db  The database.
+     * @param   DatabaseInterface  $db  The database.
      *
      * @return  string  An SQL expression.
      *

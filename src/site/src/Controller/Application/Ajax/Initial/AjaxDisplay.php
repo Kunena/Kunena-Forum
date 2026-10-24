@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Request\KunenaRequest;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -34,7 +35,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 class AjaxDisplay extends KunenaControllerDisplay
 {
     /**
-     * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+     * @var KunenaUser|null
      * @since Kunena 4.0
      */
     private $me;

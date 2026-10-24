@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\MVC\Model\FormModel;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
 use stdClass;
@@ -31,7 +32,7 @@ use stdClass;
 class TemplateModel extends AdminModel
 {
     /**
-     * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+     * @see     FormModel::getForm()
      *
      * @param   array  $data      data
      *
@@ -211,7 +212,7 @@ class TemplateModel extends AdminModel
      * @return array|mixed
      * @throws Exception
      * @since Kunena 3.0
-     * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+     * @see   FormModel::loadFormData()
      */
     protected function loadFormData()
     {

@@ -50,6 +50,28 @@ abstract class KunenaCategoryIcon
     protected static $files = null;
 
     /**
+     * Remove the icon of the category.
+     *
+     * @param   int  $id  The category id.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public static function delete(int $id): void
+    {
+        foreach (self::TYPES as $extension) {
+            $path = self::folder() . '/icon_' . $id . '.' . $extension;
+
+            if (is_file($path)) {
+                @unlink($path);
+            }
+        }
+
+        self::$files = null;
+    }
+
+    /**
      * The folder of the icons.
      *
      * @return  string
@@ -59,6 +81,27 @@ abstract class KunenaCategoryIcon
     protected static function folder(): string
     {
         return JPATH_ROOT . '/media/kunena/category_images';
+    }
+
+    /**
+     * The tag of the icon of the category.
+     *
+     * @param   int  $id    The category id.
+     * @param   int  $size  The size (the biggest width and height) of the image in pixels.
+     *
+     * @return  string  The image, or an empty string when the category has no icon of its own.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getImage(int $id, int $size = 48): string
+    {
+        $url = self::getUrl($id);
+
+        if ($url === null) {
+            return '';
+        }
+
+        return '<img loading="lazy" class="kcategory-icon-image" style="max-width:' . $size . 'px;max-height:' . $size . 'px" src="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" alt="" />';
     }
 
     /**
@@ -88,27 +131,6 @@ abstract class KunenaCategoryIcon
 
         // The time of the file is in the address: a new icon is shown at once, not the old one from the cache.
         return Uri::root(true) . '/media/kunena/category_images/' . self::$files[$id] . '?' . (int) filemtime(self::folder() . '/' . self::$files[$id]);
-    }
-
-    /**
-     * The tag of the icon of the category.
-     *
-     * @param   int  $id    The category id.
-     * @param   int  $size  The size (the biggest width and height) of the image in pixels.
-     *
-     * @return  string  The image, or an empty string when the category has no icon of its own.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getImage(int $id, int $size = 48): string
-    {
-        $url = self::getUrl($id);
-
-        if ($url === null) {
-            return '';
-        }
-
-        return '<img loading="lazy" class="kcategory-icon-image" style="max-width:' . $size . 'px;max-height:' . $size . 'px" src="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" alt="" />';
     }
 
     /**
@@ -154,28 +176,6 @@ abstract class KunenaCategoryIcon
 
         if (!File::upload($file['tmp_name'], self::folder() . '/icon_' . $id . '.' . self::TYPES[$info[2]])) {
             throw new RuntimeException(Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE_UPLOAD_FAILED'));
-        }
-
-        self::$files = null;
-    }
-
-    /**
-     * Remove the icon of the category.
-     *
-     * @param   int  $id  The category id.
-     *
-     * @return  void
-     *
-     * @since   Kunena 7.2
-     */
-    public static function delete(int $id): void
-    {
-        foreach (self::TYPES as $extension) {
-            $path = self::folder() . '/icon_' . $id . '.' . $extension;
-
-            if (is_file($path)) {
-                @unlink($path);
-            }
         }
 
         self::$files = null;

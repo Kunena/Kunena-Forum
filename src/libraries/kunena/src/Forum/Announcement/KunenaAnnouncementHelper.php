@@ -45,6 +45,18 @@ abstract class KunenaAnnouncementHelper
     protected static $rows = [];
 
     /**
+     * Free up memory by cleaning up all cached items.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public static function cleanup(): void
+    {
+        self::$_instances = [];
+    }
+
+    /**
      * Returns the global Announcement object, only creating it if it doesn't already exist.
      *
      * @param   int   $identifier  Announcement to load - Can be only an integer.
@@ -75,91 +87,6 @@ abstract class KunenaAnnouncementHelper
         }
 
         return self::$_instances[$id];
-    }
-
-    /**
-     * Get url
-     *
-     * @param   null  $layout  layout
-     * @param   bool  $xhtml   xhtml
-     *
-     * @return string
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public static function getUrl($layout = null, $xhtml = true): string
-    {
-        $uri = self::getUri($layout);
-
-        return KunenaRoute::_($uri, $xhtml);
-    }
-
-    /**
-     * Get uri
-     *
-     * @param   string  $layout  layout
-     *
-     * @return  Uri
-     *
-     * @since   Kunena 6.0
-     */
-    public static function getUri($layout = null): Uri
-    {
-        $uri = new Uri('index.php?option=com_kunena&view=announcement');
-
-        if ($layout) {
-            $uri->setVar('layout', $layout);
-        }
-
-        return $uri;
-    }
-
-    /**
-     * The announcement of the banner: the one the admin chose in the list, when it can be seen, else the newest.
-     *
-     * @return  KunenaAnnouncement|null
-     *
-     * @throws  Exception
-     * @since   Kunena 7.2
-     */
-    public static function getBanner(): ?KunenaAnnouncement
-    {
-        $chosen = (int) KunenaConfig::getInstance()->bannerAnnouncement;
-        $items  = self::getAnnouncements(0, $chosen ? 100 : 1);
-
-        if (!$items) {
-            return null;
-        }
-
-        foreach ($chosen ? $items : [] as $item) {
-            if ((int) $item->id === $chosen) {
-                return $item;
-            }
-        }
-
-        return reset($items);
-    }
-
-    /**
-     * Can the announcement be seen now (it is published and inside its dates)?
-     *
-     * @param   int  $id  The id of the announcement.
-     *
-     * @return  boolean
-     *
-     * @throws  Exception
-     * @since   Kunena 7.2
-     */
-    public static function isVisible(int $id): bool
-    {
-        foreach (self::getAnnouncements(0, 100) as $item) {
-            if ((int) $item->id === $id) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -235,6 +162,32 @@ abstract class KunenaAnnouncementHelper
     }
 
     /**
+     * The announcement of the banner: the one the admin chose in the list, when it can be seen, else the newest.
+     *
+     * @return  KunenaAnnouncement|null
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public static function getBanner(): ?KunenaAnnouncement
+    {
+        $chosen = (int) KunenaConfig::getInstance()->bannerAnnouncement;
+        $items  = self::getAnnouncements(0, $chosen ? 100 : 1);
+
+        if (!$items) {
+            return null;
+        }
+
+        foreach ($chosen ? $items : [] as $item) {
+            if ((int) $item->id === $chosen) {
+                return $item;
+            }
+        }
+
+        return reset($items);
+    }
+
+    /**
      * Get Count
      *
      * @param   bool  $filter  filter
@@ -279,14 +232,61 @@ abstract class KunenaAnnouncementHelper
     }
 
     /**
-     * Free up memory by cleaning up all cached items.
+     * Get uri
      *
-     * @return  void
+     * @param   string  $layout  layout
+     *
+     * @return  Uri
      *
      * @since   Kunena 6.0
      */
-    public static function cleanup(): void
+    public static function getUri($layout = null): Uri
     {
-        self::$_instances = [];
+        $uri = new Uri('index.php?option=com_kunena&view=announcement');
+
+        if ($layout) {
+            $uri->setVar('layout', $layout);
+        }
+
+        return $uri;
+    }
+
+    /**
+     * Get url
+     *
+     * @param   null  $layout  layout
+     * @param   bool  $xhtml   xhtml
+     *
+     * @return string
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public static function getUrl($layout = null, $xhtml = true): string
+    {
+        $uri = self::getUri($layout);
+
+        return KunenaRoute::_($uri, $xhtml);
+    }
+
+    /**
+     * Can the announcement be seen now (it is published and inside its dates)?
+     *
+     * @param   int  $id  The id of the announcement.
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public static function isVisible(int $id): bool
+    {
+        foreach (self::getAnnouncements(0, 100) as $item) {
+            if ((int) $item->id === $id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -13,6 +13,7 @@
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
@@ -35,7 +36,7 @@ class plgPrivacyKunenaInstallerScript extends InstallerScript
     protected $extension = 'plg_privacy_kunena';
 
     /**
-     * @var  Joomla\CMS\Application\CMSApplication  Holds the application object
+     * @var  CMSApplication  Holds the application object
      *
      * @since   Kunena 6.0
      */

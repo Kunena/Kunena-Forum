@@ -26,6 +26,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -33,6 +34,7 @@ use Kunena\Forum\Libraries\Event\KunenaDisplayEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
@@ -42,6 +44,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Request\KunenaRequest;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\KunenaView;
 use LogicException;
@@ -130,7 +133,7 @@ class HtmlView extends KunenaView
     public $allowedExtensions;
 
     /**
-     * @var \Kunena\Forum\Libraries\Attachment\KunenaAttachment[]
+     * @var KunenaAttachment[]
      * @since Kunena 6.0
      */
     public $attachments;
@@ -176,7 +179,7 @@ class HtmlView extends KunenaView
     public $topicIcons;
 
     /**
-     * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
+     * @var KunenaCategory
      * @since Kunena 6.0
      */
     public $category;
@@ -200,7 +203,7 @@ class HtmlView extends KunenaView
     public $replynum;
 
     /**
-     * @var \Kunena\Forum\Libraries\User\KunenaUser
+     * @var KunenaUser
      * @since Kunena 6.0
      */
     public $profile;

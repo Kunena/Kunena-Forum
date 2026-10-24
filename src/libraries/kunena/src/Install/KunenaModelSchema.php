@@ -103,58 +103,6 @@ class KunenaModelSchema extends BaseDatabaseModel
     }
 
     /**
-     * Overridden method to get model state variables.
-     *
-     * @param   string  $property  Optional parameter name.
-     * @param   mixed   $default   The default value to use if no state property exists by name.
-     *
-     * @return  object  The property where specified, the state object where omitted.
-     *
-     * @since   Kunena 1.6
-     */
-    public function getState($property = null, $default = null): object
-    {
-        // If the model state is uninitialized lets set some values we will need from the request.
-        if ($this->__state_set === false) {
-            $this->__state_set = true;
-        }
-
-        $value = parent::getState($property);
-
-        return \is_null($value) ? $default : $value;
-    }
-
-    /**
-     * @param   integer  $version  version
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function setVersion(int $version): void
-    {
-        $this->version = $version;
-    }
-
-    /**
-     * @return  array|null
-     *
-     * @since   Kunena 6.0
-     * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws DOMException
-     */
-    public function getCreateSQL(): ?array
-    {
-        if ($this->sql == null) {
-            $from      = $this->createSchema();
-            $diff      = $this->getDiffSchema($from);
-            $this->sql = $this->getSchemaSQL($diff);
-        }
-
-        return $this->sql;
-    }
-
-    /**
      * @return  DOMDocument
      *
      * @since   Kunena 6.0
@@ -170,6 +118,63 @@ class KunenaModelSchema extends BaseDatabaseModel
     }
 
     /**
+     * @param   object  $schema  schema
+     * @param   string  $type    type
+     * @param   object  $table   table
+     * @param   string  $field   field
+     *
+     * @return  null
+     *
+     * @since   Kunena 6.0
+     */
+    protected function findNode(object $schema, string $type, object $table, $field = '')
+    {
+        $rootNode = $schema->documentElement;
+
+        foreach ($rootNode->childNodes as $tableNode) {
+            if (!($tableNode instanceof DOMElement)) {
+                continue;
+            }
+
+            if ($tableNode->tagName == 'table' && $table == $tableNode->getAttribute('name')) {
+                if ($type == 'table') {
+                    return $tableNode;
+                }
+
+                foreach ($tableNode->childNodes as $fieldNode) {
+                    if (!($fieldNode instanceof DOMElement)) {
+                        continue;
+                    }
+
+                    if ($fieldNode->tagName == $type && $field == $fieldNode->getAttribute('name')) {
+                        return $fieldNode;
+                    }
+                }
+            }
+        }
+
+        return;
+    }
+
+    /**
+     * @return  array|null
+     *
+     * @since   Kunena 6.0
+     * @throws KunenaSchemaException
+     * @throws DOMException
+     */
+    public function getCreateSQL(): ?array
+    {
+        if ($this->sql == null) {
+            $from      = $this->createSchema();
+            $diff      = $this->getDiffSchema($from);
+            $this->sql = $this->getSchemaSQL($diff);
+        }
+
+        return $this->sql;
+    }
+
+    /**
      * @param   null  $from   from
      * @param   null  $to     to
      * @param   null  $using  using
@@ -177,7 +182,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      * @return  DOMDocument|null
      *
      * @since   Kunena 6.0
-     * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+     * @throws KunenaSchemaException
      * @throws DOMException
      */
     public function getDiffSchema($from = null, $to = null, $using = null): ?DOMDocument
@@ -208,10 +213,48 @@ class KunenaModelSchema extends BaseDatabaseModel
     }
 
     /**
+     * @param   object  $input  input
+     *
+     * @return  DOMDocument|DOMNode|mixed|null
+     *
+     * @since   Kunena 6.0
+     * @throws KunenaSchemaException
+     * @throws DOMException
+     */
+    protected function getDOMDocument(object $input)
+    {
+        if (($input instanceof DOMNode)) {
+            $schema = $input;
+        } else {
+            if ($input === KUNENA_INPUT_DATABASE) {
+                $schema = $this->getSchemaFromDatabase();
+            } else {
+                if (\is_string($input) && file_exists($input)) {
+                    $schema = $this->getSchemaFromFile($input);
+                } else {
+                    if (\is_string($input)) {
+                        $schema = new DOMDocument('1.0', 'utf-8');
+                        $schema->loadXML($input);
+                    }
+                }
+            }
+        }
+
+        if (!isset($schema) || $schema == false) {
+            return;
+        }
+
+        $schema->formatOutput       = true;
+        $schema->preserveWhiteSpace = false;
+
+        return $schema;
+    }
+
+    /**
      * @return  DOMDocument|null
      *
      * @since   Kunena 6.0
-     * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+     * @throws KunenaSchemaException
      * @throws DOMException
      */
     public function getSchema()
@@ -224,13 +267,53 @@ class KunenaModelSchema extends BaseDatabaseModel
     }
 
     /**
+     * @param   DOMDocument  $old  old
+     * @param   DOMDocument  $new  new
+     *
+     * @return  DOMDocument|null
+     *
+     * @since   Kunena 6.0
+     * @throws KunenaSchemaException
+     * @throws DOMException
+     */
+    public function getSchemaDiff(DOMDocument $old, DOMDocument $new): ?DOMDocument
+    {
+        $old = $this->getDOMDocument($old);
+        $new = $this->getDOMDocument($new);
+
+        if (!$old || !$new) {
+            return false;
+        }
+
+        // $old->validate();
+        // $new->validate();
+        $schema     = $this->createSchema();
+        $schemaNode = $schema->documentElement;
+        $schemaNode->setAttribute('type', 'diff');
+
+        $nodes = $this->listAllNodes(['new' => $new->documentElement->childNodes, 'old' => $old->documentElement->childNodes]);
+
+        foreach ($nodes as $nodeTag => $nodeList) {
+            foreach ($nodeList as $nodeName => $nodeLoc) {
+                $newNode = $this->getSchemaNodeDiff($schema, $nodeTag, $nodeName, $nodeLoc);
+
+                if ($newNode) {
+                    $schemaNode->appendChild($newNode);
+                }
+            }
+        }
+
+        return $schema;
+    }
+
+    /**
      * @param   bool  $reload  reload
      *
      * @return  boolean|DOMDocument
      *
      * @since   Kunena 6.0
      * @throws DOMException
-     * @throws  KunenaSchemaException*@throws \DOMException
+     * @throws  KunenaSchemaException*@throws DOMException
      */
     public function getSchemaFromDatabase($reload = false)
     {
@@ -324,55 +407,6 @@ class KunenaModelSchema extends BaseDatabaseModel
     }
 
     /**
-     * @param   string  $prefix  prefix
-     * @param   bool    $reload  reload
-     *
-     * @return  mixed
-     *
-     * @throws KunenaSchemaException
-     * @since   Kunena 6.0
-     */
-    protected function listTables(string $prefix, $reload = false): array
-    {
-        if (isset($this->tables[$prefix]) && !$reload) {
-            return $this->tables[$prefix];
-        }
-
-        $this->db->setQuery("SHOW TABLES LIKE " . $this->db->quote($this->db->getPrefix() . $prefix . '%'));
-
-        try {
-            $list = $this->db->loadColumn();
-        } catch (Exception $e) {
-            throw new KunenaSchemaException($e->getMessage(), $e->getCode());
-        }
-
-        $this->tables[$prefix] = [];
-
-        foreach ($list as $table) {
-            $table                   = preg_replace('/^' . $this->db->getPrefix() . '/', '', $table);
-            $this->tables[$prefix][] = $table;
-        }
-
-        return $this->tables[$prefix];
-    }
-
-    /**
-     * @param   string  $input  input
-     *
-     * @return  object
-     *
-     * @since   Kunena 6.0
-     */
-    public function getXmlSchema(string $input = KUNENA_SCHEMA_FILE): object
-    {
-        if ($this->xmlschema == null) {
-            $this->xmlschema = $this->getSchemaFromFile($input);
-        }
-
-        return $this->xmlschema;
-    }
-
-    /**
      * @param   string  $filename  filename
      * @param   bool    $reload    reload
      *
@@ -395,310 +429,6 @@ class KunenaModelSchema extends BaseDatabaseModel
         $schema[$filename]->load($filename);
 
         return $schema[$filename];
-    }
-
-    /**
-     * @param   string  $input  input
-     *
-     * @return  DOMDocument|null
-     *
-     * @since   Kunena 6.0
-     */
-    public function getUpgradeSchema($input = KUNENA_UPGRADE_SCHEMA_FILE): ?DOMDocument
-    {
-        if ($this->upgradeschema == null) {
-            $this->upgradeschema = $this->createSchema();
-        }
-
-        // $this->getSchemaFromFile($input);
-        return $this->upgradeschema;
-    }
-
-    /**
-     * @param   object  $dbschema  dbschema
-     * @param   object  $upgrade   upgrade
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws DOMException
-     */
-    public function upgradeSchema(object $dbschema, object $upgrade): void
-    {
-        $dbschema = $this->getDOMDocument($dbschema);
-        $upgrade  = $this->getDOMDocument($upgrade);
-
-        if (!$dbschema || !$upgrade) {
-            return;
-        }
-
-        // $dbschema->validate();
-        // $upgrade->validate();
-
-        $this->upgradeNewAction($dbschema, $upgrade->documentElement);
-    }
-
-    /**
-     * @param   object  $input  input
-     *
-     * @return  DOMDocument|DOMNode|mixed|null
-     *
-     * @since   Kunena 6.0
-     * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws DOMException
-     */
-    protected function getDOMDocument(object $input)
-    {
-        if (($input instanceof DOMNode)) {
-            $schema = $input;
-        } else {
-            if ($input === KUNENA_INPUT_DATABASE) {
-                $schema = $this->getSchemaFromDatabase();
-            } else {
-                if (\is_string($input) && file_exists($input)) {
-                    $schema = $this->getSchemaFromFile($input);
-                } else {
-                    if (\is_string($input)) {
-                        $schema = new DOMDocument('1.0', 'utf-8');
-                        $schema->loadXML($input);
-                    }
-                }
-            }
-        }
-
-        if (!isset($schema) || $schema == false) {
-            return;
-        }
-
-        $schema->formatOutput       = true;
-        $schema->preserveWhiteSpace = false;
-
-        return $schema;
-    }
-
-    /**
-     * @param   object  $dbschema  dbschema
-     * @param   object  $node      node
-     * @param   string  $table     table
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function upgradeNewAction(object $dbschema, object $node, $table = ''): void
-    {
-        if (!$node) {
-            return;
-        }
-
-        foreach ($node->childNodes as $action) {
-            if (!($action instanceof DOMElement)) {
-                continue;
-            }
-
-            switch ($action->tagName) {
-                case 'table':
-                    $this->upgradeNewAction($dbschema, $action, $action->getAttribute('name'));
-                    break;
-                case 'version':
-                    if (!$this->version) {
-                        break;
-                    }
-
-                    $this->upgradeNewAction($dbschema, $action, $table);
-                    break;
-                case 'if':
-                    $table = $action->getAttribute('table');
-                    $field = $action->getAttribute('field');
-                    $key   = $action->getAttribute('key');
-
-                    if (!$field && !$key && !$this->findNode($dbschema, 'table', $table)) {
-                        break;
-                    }
-
-                    if ($field && !$this->findNode($dbschema, 'field', $table, $field)) {
-                        break;
-                    }
-
-                    if ($key && !$this->findNode($dbschema, 'key', $table, $key)) {
-                        break;
-                    }
-
-                    $this->upgradeNewAction($dbschema, $action, $table);
-                    break;
-                default:
-                    $this->upgradeAction($dbschema, $action, $table);
-            }
-        }
-    }
-
-    /**
-     * @param   object  $schema  schema
-     * @param   string  $type    type
-     * @param   object  $table   table
-     * @param   string  $field   field
-     *
-     * @return  null
-     *
-     * @since   Kunena 6.0
-     */
-    protected function findNode(object $schema, string $type, object $table, $field = '')
-    {
-        $rootNode = $schema->documentElement;
-
-        foreach ($rootNode->childNodes as $tableNode) {
-            if (!($tableNode instanceof DOMElement)) {
-                continue;
-            }
-
-            if ($tableNode->tagName == 'table' && $table == $tableNode->getAttribute('name')) {
-                if ($type == 'table') {
-                    return $tableNode;
-                }
-
-                foreach ($tableNode->childNodes as $fieldNode) {
-                    if (!($fieldNode instanceof DOMElement)) {
-                        continue;
-                    }
-
-                    if ($fieldNode->tagName == $type && $field == $fieldNode->getAttribute('name')) {
-                        return $fieldNode;
-                    }
-                }
-            }
-        }
-
-        return;
-    }
-
-    /**
-     * @param   object  $dbschema  dbschema
-     * @param   object  $node      node
-     * @param   string  $table     table
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function upgradeAction(object $dbschema, object $node, $table = ''): void
-    {
-        if (!$table) {
-            $table = $node->getAttribute('table');
-        }
-
-        if (!$table) {
-            return;
-        }
-
-        $tag = $node->tagName;
-
-        // Allow both formats: <drop key="id"/> and <key name="id" action="drop"/>
-        if ($tag != 'table' && $tag != 'field' && $tag != 'key') {
-            $action     = $tag;
-            $attributes = ['field', 'key', 'table'];
-
-            foreach ($attributes as $attribute) {
-                if ($node->hasAttribute($attribute)) {
-                    $tag  = $attribute;
-                    $name = $node->getAttribute($attribute);
-                    break;
-                }
-            }
-
-            if (!isset($name)) {
-                return;
-            }
-        } else {
-            $action = $node->getAttribute('action');
-            $name   = $node->getAttribute('name');
-        }
-
-        $to = $node->getAttribute('to');
-
-        $dbnode = $this->findNode($dbschema, $tag, $table, $name);
-
-        if (!$dbnode) {
-            return;
-        }
-
-        if ($action) {
-            $dbnode->setAttribute('action', $action);
-        }
-
-        if ($to) {
-            if (!$dbnode->hasAttribute('from')) {
-                $dbnode->setAttribute('from', $dbnode->getAttribute('name'));
-            }
-
-            $dbnode->setAttribute('name', $to);
-        }
-    }
-
-    /**
-     * @param   DOMDocument  $old  old
-     * @param   DOMDocument  $new  new
-     *
-     * @return  DOMDocument|null
-     *
-     * @since   Kunena 6.0
-     * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws DOMException
-     */
-    public function getSchemaDiff(DOMDocument $old, DOMDocument $new): ?DOMDocument
-    {
-        $old = $this->getDOMDocument($old);
-        $new = $this->getDOMDocument($new);
-
-        if (!$old || !$new) {
-            return false;
-        }
-
-        // $old->validate();
-        // $new->validate();
-        $schema     = $this->createSchema();
-        $schemaNode = $schema->documentElement;
-        $schemaNode->setAttribute('type', 'diff');
-
-        $nodes = $this->listAllNodes(['new' => $new->documentElement->childNodes, 'old' => $old->documentElement->childNodes]);
-
-        foreach ($nodes as $nodeTag => $nodeList) {
-            foreach ($nodeList as $nodeName => $nodeLoc) {
-                $newNode = $this->getSchemaNodeDiff($schema, $nodeTag, $nodeName, $nodeLoc);
-
-                if ($newNode) {
-                    $schemaNode->appendChild($newNode);
-                }
-            }
-        }
-
-        return $schema;
-    }
-
-    /**
-     * @param   array  $nodeLists  node list
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    protected function listAllNodes(array $nodeLists): array
-    {
-        $list = [];
-
-        foreach ($nodeLists as $k => $nl) {
-            foreach ($nl as $n) {
-                if ($n instanceof DOMAttr) {
-                    $list[$n->name][$k] = $n;
-                } else {
-                    if ($n instanceof DOMElement) {
-                        $list[$n->tagName][$n->getAttribute('name')][$k] = $n;
-                    }
-                }
-            }
-        }
-
-        return $list;
     }
 
     /**
@@ -1027,12 +757,186 @@ class KunenaModelSchema extends BaseDatabaseModel
     }
 
     /**
+     * @return  array|null
+     *
+     * @since   Kunena 6.0
+     * @throws KunenaSchemaException
+     * @throws DOMException
+     */
+    protected function getSQL(): ?array
+    {
+        if ($this->sql == null) {
+            $diff      = $this->getDiffSchema();
+            $this->sql = $this->getSchemaSQL($diff);
+        }
+
+        return $this->sql;
+    }
+
+    /**
+     * Overridden method to get model state variables.
+     *
+     * @param   string  $property  Optional parameter name.
+     * @param   mixed   $default   The default value to use if no state property exists by name.
+     *
+     * @return  object  The property where specified, the state object where omitted.
+     *
+     * @since   Kunena 1.6
+     */
+    public function getState($property = null, $default = null): object
+    {
+        // If the model state is uninitialized lets set some values we will need from the request.
+        if ($this->__state_set === false) {
+            $this->__state_set = true;
+        }
+
+        $value = parent::getState($property);
+
+        return \is_null($value) ? $default : $value;
+    }
+
+    /**
+     * @param   string  $input  input
+     *
+     * @return  DOMDocument|null
+     *
+     * @since   Kunena 6.0
+     */
+    public function getUpgradeSchema($input = KUNENA_UPGRADE_SCHEMA_FILE): ?DOMDocument
+    {
+        if ($this->upgradeschema == null) {
+            $this->upgradeschema = $this->createSchema();
+        }
+
+        // $this->getSchemaFromFile($input);
+        return $this->upgradeschema;
+    }
+
+    /**
+     * @param   string  $input  input
+     *
+     * @return  object
+     *
+     * @since   Kunena 6.0
+     */
+    public function getXmlSchema(string $input = KUNENA_SCHEMA_FILE): object
+    {
+        if ($this->xmlschema == null) {
+            $this->xmlschema = $this->getSchemaFromFile($input);
+        }
+
+        return $this->xmlschema;
+    }
+
+    /**
+     * @param   array  $nodeLists  node list
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     */
+    protected function listAllNodes(array $nodeLists): array
+    {
+        $list = [];
+
+        foreach ($nodeLists as $k => $nl) {
+            foreach ($nl as $n) {
+                if ($n instanceof DOMAttr) {
+                    $list[$n->name][$k] = $n;
+                } else {
+                    if ($n instanceof DOMElement) {
+                        $list[$n->tagName][$n->getAttribute('name')][$k] = $n;
+                    }
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param   string  $prefix  prefix
+     * @param   bool    $reload  reload
+     *
+     * @return  mixed
+     *
+     * @throws KunenaSchemaException
+     * @since   Kunena 6.0
+     */
+    protected function listTables(string $prefix, $reload = false): array
+    {
+        if (isset($this->tables[$prefix]) && !$reload) {
+            return $this->tables[$prefix];
+        }
+
+        $this->db->setQuery("SHOW TABLES LIKE " . $this->db->quote($this->db->getPrefix() . $prefix . '%'));
+
+        try {
+            $list = $this->db->loadColumn();
+        } catch (Exception $e) {
+            throw new KunenaSchemaException($e->getMessage(), $e->getCode());
+        }
+
+        $this->tables[$prefix] = [];
+
+        foreach ($list as $table) {
+            $table                   = preg_replace('/^' . $this->db->getPrefix() . '/', '', $table);
+            $this->tables[$prefix][] = $table;
+        }
+
+        return $this->tables[$prefix];
+    }
+
+    /**
+     * @param   integer  $version  version
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function setVersion(int $version): void
+    {
+        $this->version = $version;
+    }
+
+    /**
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     * @throws KunenaSchemaException
+     * @throws DOMException
+     */
+    public function updateSchema(): array
+    {
+        $sqls    = $this->getSQL();
+        $results = [];
+
+        foreach ($sqls as $sql) {
+            if (!isset($sql['sql'])) {
+                continue;
+            }
+
+            $this->db->setQuery($sql['sql']);
+
+            try {
+                $this->db->execute();
+            } catch (Exception $e) {
+                throw new KunenaSchemaException($e->getMessage(), $e->getCode());
+            }
+
+            $results[] = $sql;
+        }
+
+        return $results;
+    }
+
+    /**
      * @param   string  $table  table
      *
      * @return mixed
      *
      * @since   Kunena 6.0
-     * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+     * @throws KunenaSchemaException
      * @throws DOMException
      */
     public function updateSchemaTable(string $table)
@@ -1058,51 +962,147 @@ class KunenaModelSchema extends BaseDatabaseModel
     }
 
     /**
-     * @return  array|null
+     * @param   object  $dbschema  dbschema
+     * @param   object  $node      node
+     * @param   string  $table     table
+     *
+     * @return  void
      *
      * @since   Kunena 6.0
-     * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws DOMException
      */
-    protected function getSQL(): ?array
+    protected function upgradeAction(object $dbschema, object $node, $table = ''): void
     {
-        if ($this->sql == null) {
-            $diff      = $this->getDiffSchema();
-            $this->sql = $this->getSchemaSQL($diff);
+        if (!$table) {
+            $table = $node->getAttribute('table');
         }
 
-        return $this->sql;
+        if (!$table) {
+            return;
+        }
+
+        $tag = $node->tagName;
+
+        // Allow both formats: <drop key="id"/> and <key name="id" action="drop"/>
+        if ($tag != 'table' && $tag != 'field' && $tag != 'key') {
+            $action     = $tag;
+            $attributes = ['field', 'key', 'table'];
+
+            foreach ($attributes as $attribute) {
+                if ($node->hasAttribute($attribute)) {
+                    $tag  = $attribute;
+                    $name = $node->getAttribute($attribute);
+                    break;
+                }
+            }
+
+            if (!isset($name)) {
+                return;
+            }
+        } else {
+            $action = $node->getAttribute('action');
+            $name   = $node->getAttribute('name');
+        }
+
+        $to = $node->getAttribute('to');
+
+        $dbnode = $this->findNode($dbschema, $tag, $table, $name);
+
+        if (!$dbnode) {
+            return;
+        }
+
+        if ($action) {
+            $dbnode->setAttribute('action', $action);
+        }
+
+        if ($to) {
+            if (!$dbnode->hasAttribute('from')) {
+                $dbnode->setAttribute('from', $dbnode->getAttribute('name'));
+            }
+
+            $dbnode->setAttribute('name', $to);
+        }
     }
 
     /**
-     * @return  array
+     * @param   object  $dbschema  dbschema
+     * @param   object  $node      node
+     * @param   string  $table     table
+     *
+     * @return  void
      *
      * @since   Kunena 6.0
-     * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
-     * @throws DOMException
      */
-    public function updateSchema(): array
+    protected function upgradeNewAction(object $dbschema, object $node, $table = ''): void
     {
-        $sqls    = $this->getSQL();
-        $results = [];
+        if (!$node) {
+            return;
+        }
 
-        foreach ($sqls as $sql) {
-            if (!isset($sql['sql'])) {
+        foreach ($node->childNodes as $action) {
+            if (!($action instanceof DOMElement)) {
                 continue;
             }
 
-            $this->db->setQuery($sql['sql']);
+            switch ($action->tagName) {
+                case 'table':
+                    $this->upgradeNewAction($dbschema, $action, $action->getAttribute('name'));
+                    break;
+                case 'version':
+                    if (!$this->version) {
+                        break;
+                    }
 
-            try {
-                $this->db->execute();
-            } catch (Exception $e) {
-                throw new KunenaSchemaException($e->getMessage(), $e->getCode());
+                    $this->upgradeNewAction($dbschema, $action, $table);
+                    break;
+                case 'if':
+                    $table = $action->getAttribute('table');
+                    $field = $action->getAttribute('field');
+                    $key   = $action->getAttribute('key');
+
+                    if (!$field && !$key && !$this->findNode($dbschema, 'table', $table)) {
+                        break;
+                    }
+
+                    if ($field && !$this->findNode($dbschema, 'field', $table, $field)) {
+                        break;
+                    }
+
+                    if ($key && !$this->findNode($dbschema, 'key', $table, $key)) {
+                        break;
+                    }
+
+                    $this->upgradeNewAction($dbschema, $action, $table);
+                    break;
+                default:
+                    $this->upgradeAction($dbschema, $action, $table);
             }
+        }
+    }
 
-            $results[] = $sql;
+    /**
+     * @param   object  $dbschema  dbschema
+     * @param   object  $upgrade   upgrade
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     * @throws KunenaSchemaException
+     * @throws DOMException
+     */
+    public function upgradeSchema(object $dbschema, object $upgrade): void
+    {
+        $dbschema = $this->getDOMDocument($dbschema);
+        $upgrade  = $this->getDOMDocument($upgrade);
+
+        if (!$dbschema || !$upgrade) {
+            return;
         }
 
-        return $results;
+        // $dbschema->validate();
+        // $upgrade->validate();
+
+        $this->upgradeNewAction($dbschema, $upgrade->documentElement);
     }
 }
 

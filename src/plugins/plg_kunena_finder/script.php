@@ -12,6 +12,7 @@
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 
 /**
@@ -33,7 +34,7 @@ class plgKunenaFinderInstallerScript extends InstallerScript
      * Function called before extension installation/update/removal procedure commences
      *
      * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
-     * @param   \Joomla\CMS\Installer\InstallerAdapter  $parent  The class calling this method
+     * @param   InstallerAdapter  $parent  The class calling this method
      *
      * @return  boolean  True on success
      * @since   Kunena 7.0.0

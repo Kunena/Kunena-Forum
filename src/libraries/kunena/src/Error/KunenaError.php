@@ -65,34 +65,6 @@ abstract class KunenaError
      * @return  void
      *
      * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function initialize(): void
-    {
-        if (!self::$enabled && !KunenaForum::isDev()) {
-            self::$format = Factory::getApplication()->getInput()->getWord('format', 'html');
-            self::$debug  = JDEBUG || KunenaFactory::getConfig()->debug;
-            self::$admin  = Factory::getApplication()->isClient('administrator');
-
-            // Make sure we are able to log fatal errors.
-            register_shutdown_function(['Kunena\Forum\Libraries\Error\KunenaError', 'shutdownHandler'], self::$debug || self::$admin || KUNENA_PROFILER);
-
-            if (!self::$debug) {
-                return;
-            }
-
-            @ini_set('display_errors', 1);
-            self::$handler = true;
-
-            self::$enabled++;
-        }
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
      */
     public static function cleanup(): void
     {
@@ -101,42 +73,6 @@ abstract class KunenaError
                 restore_error_handler();
                 self::$handler = false;
             }
-        }
-    }
-
-    /**
-     * @param   string  $msg    msg
-     * @param   string  $where  where
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function error($msg, $where = 'default'): void
-    {
-        if (self::$debug) {
-            $app = Factory::getApplication();
-            $app->enqueueMessage(Text::sprintf('COM_KUNENA_ERROR_' . strtoupper($where), $msg), 'error');
-        }
-    }
-
-    /**
-     * @param   string  $msg    msg
-     * @param   string  $where  where
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function warning($msg, $where = 'default'): void
-    {
-        if (self::$debug) {
-            $app = Factory::getApplication();
-            $app->enqueueMessage(Text::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'warning');
         }
     }
 
@@ -169,6 +105,24 @@ abstract class KunenaError
         }
 
         KunenaLog::log(KunenaLog::TYPE_ERROR, KunenaLog::LOG_ERROR_FATAL, 'Exception throw at line ' . $exception->getLine() . ' in file ' . $exception->getFile() . ' with message ' . $exception->getMessage());
+    }
+
+    /**
+     * @param   string  $msg    msg
+     * @param   string  $where  where
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function error($msg, $where = 'default'): void
+    {
+        if (self::$debug) {
+            $app = Factory::getApplication();
+            $app->enqueueMessage(Text::sprintf('COM_KUNENA_ERROR_' . strtoupper($where), $msg), 'error');
+        }
     }
 
     /**
@@ -236,6 +190,34 @@ abstract class KunenaError
         }
 
         return true;
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function initialize(): void
+    {
+        if (!self::$enabled && !KunenaForum::isDev()) {
+            self::$format = Factory::getApplication()->getInput()->getWord('format', 'html');
+            self::$debug  = JDEBUG || KunenaFactory::getConfig()->debug;
+            self::$admin  = Factory::getApplication()->isClient('administrator');
+
+            // Make sure we are able to log fatal errors.
+            register_shutdown_function(['Kunena\Forum\Libraries\Error\KunenaError', 'shutdownHandler'], self::$debug || self::$admin || KUNENA_PROFILER);
+
+            if (!self::$debug) {
+                return;
+            }
+
+            @ini_set('display_errors', 1);
+            self::$handler = true;
+
+            self::$enabled++;
+        }
     }
 
     /**
@@ -367,5 +349,23 @@ abstract class KunenaError
 
         // Flush Kunena Logger if it was used.
         KunenaLog::flush();
+    }
+
+    /**
+     * @param   string  $msg    msg
+     * @param   string  $where  where
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function warning($msg, $where = 'default'): void
+    {
+        if (self::$debug) {
+            $app = Factory::getApplication();
+            $app->enqueueMessage(Text::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'warning');
+        }
     }
 }

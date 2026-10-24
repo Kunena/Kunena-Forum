@@ -48,6 +48,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUser;
 use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
@@ -63,26 +64,26 @@ use StdClass;
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\Message
  *
- * @property int     $parent
- * @property int     $thread
- * @property int     $catid
- * @property string  $name
- * @property int     $userid
- * @property string  $email
- * @property string  $subject
- * @property int     $time
- * @property string  $ip
- * @property int     $topic_emoticon
- * @property int     $locked
- * @property int     $hold
- * @property int     $ordering
- * @property int     $hits
- * @property int     $moved
- * @property int     $deleted_time
- * @property int     $modified_by
- * @property string  $modified_time
- * @property string  $modified_reason
- * @property string  $message
+ * @property int    $parent
+ * @property int    $thread
+ * @property int    $catid
+ * @property string $name
+ * @property int    $userid
+ * @property string $email
+ * @property string $subject
+ * @property int    $time
+ * @property string $ip
+ * @property int    $topic_emoticon
+ * @property int    $locked
+ * @property int    $hold
+ * @property int    $ordering
+ * @property int    $hits
+ * @property int    $moved
+ * @property int    $deleted_time
+ * @property int    $modified_by
+ * @property string $modified_time
+ * @property string $modified_reason
+ * @property string $message
  * @since   Kunena 6.0
  */
 class KunenaMessage extends KunenaDatabaseObject
@@ -357,22 +358,6 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
-     * Returns \Kunena\Forum\Libraries\Forum\Message\Message object.
-     *
-     * @param   int   $identifier  The message to load - Can be only an integer.
-     * @param   bool  $reload      reload
-     *
-     * @return  KunenaMessage
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getInstance($identifier = null, $reload = false): KunenaMessage
-    {
-        return KunenaMessageHelper::get($identifier, $reload);
-    }
-
-    /**
      * Destruct
      *
      * @since   Kunena 6.0
@@ -381,1226 +366,6 @@ class KunenaMessage extends KunenaDatabaseObject
     {
         unset($this->_db, $this->_topic);
 
-    }
-
-    /**
-     * @param   mixed  $user  user
-     *
-     * @return  boolean
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function isNew($user = null): bool
-    {
-        $user = KunenaUserHelper::get($user);
-
-        if (!$this->_config->showNew || !$user->exists()) {
-            return false;
-        }
-
-        $session = KunenaFactory::getSession();
-
-        if ($this->time < $session->getAllReadTime()) {
-            return false;
-        }
-
-        $allreadtime = KunenaCategoryUserHelper::get($this->getCategory()->id, $user)->allreadtime;
-
-        if ($allreadtime && $this->time < $allreadtime) {
-            return false;
-        }
-
-        $read = KunenaTopicUserReadHelper::get($this->getTopic(), $user);
-
-        if ($this->id == $read->message_id || $this->time < $read->time) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @return  KunenaCategory
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getCategory(): KunenaCategory
-    {
-        return KunenaCategoryHelper::get($this->catid);
-    }
-
-    /**
-     * @return \Kunena\Forum\Libraries\Forum\Topic\KunenaTopic|null
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public function getTopic(): ?KunenaTopic
-    {
-        if (!$this->_topic) {
-            $this->_topic = KunenaTopicHelper::get($this->thread);
-        }
-
-        return $this->_topic;
-    }
-
-    /**
-     * @param   KunenaTopic  $topic  topic
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function setTopic(KunenaTopic $topic): void
-    {
-        $this->_topic = $topic;
-
-        if ($topic->id) {
-            $this->thread = $topic->id;
-        }
-    }
-
-    /**
-     * Get published state in text.
-     *
-     * @return  string
-     *
-     * @since   Kunena 4.0
-     */
-    public function getState(): string
-    {
-        switch ($this->hold) {
-            case 0:
-                return 'published';
-            case 1:
-                return 'unapproved';
-            case 2:
-            case 3:
-                return 'deleted';
-        }
-
-        return 'unknown';
-    }
-
-    /**
-     * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
-     * @param   bool                 $xhtml     xhtml
-     * @param   int                  $itemid    itemid
-     *
-     * @return string
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function getUrl($category = null, $xhtml = true, $itemid = 0): string
-    {
-        return $this->getTopic()->getUrl($category, $xhtml, $this, $itemid);
-    }
-
-    /**
-     * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
-     *
-     * @return  Uri
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getUri($category = null)
-    {
-        return $this->getTopic()->getUri($category, $this);
-    }
-
-    /**
-     * @param   array       $fields      fields
-     * @param   int         $useridfromparent
-     * @param   null|array  $safefields  safefields
-     *
-     * @return  array
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function newReply($fields = [], $useridfromparent = 0, $safefields = null): array
-    {
-        $user     = KunenaUserHelper::get();
-        $topic    = $this->getTopic();
-        $category = $this->getCategory();
-
-        $message = new KunenaMessage();
-        $message->setTopic($topic);
-        $message->parent  = $this->id;
-        $message->thread  = $topic->id;
-        $message->catid   = $topic->category_id;
-        $message->name    = $user->getName('');
-        $message->userid  = $user->userid;
-        $message->subject = $this->subject;
-        $message->ip      = KunenaUserHelper::getUserIp();
-
-        // Add IP to user.
-        if (KunenaConfig::getInstance()->ipTracking) {
-            if (empty($user->ip)) {
-                $user->ip = KunenaUserHelper::getUserIp();
-            }
-        }
-
-        if (KunenaConfig::getInstance()->allowChangeSubject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator()) {
-            if (isset($fields['subject'])) {
-                $topic->subject = $fields['subject'];
-            }
-        }
-
-        if ($topic->hold) {
-            // If topic was unapproved or deleted, use the same state for the new message
-            $message->hold = $topic->hold;
-        } else {
-            // Otherwise message is either unapproved or published depending if the category is moderated or not
-            $message->hold = $category->review ? (int) !$category->isAuthorised('moderate', $user) : 0;
-        }
-
-        if ($fields['quote'] === true) {
-            $userfromparent     = KunenaUserHelper::get($useridfromparent);
-            $userfromparentname = $userfromparent->getName();
-
-            if (empty($userfromparent->getName())) {
-                $userfromparentname = 'anonymous';
-            }
-
-            $find             = ['/\[confidential\](.*?)\[\/confidential\]/su'];
-            $replace          = '';
-            $text             = preg_replace($find, $replace, $this->message);
-            $message->message = "[quote=\"{$userfromparentname} post={$this->id} userid={$useridfromparent}\"]" . $text . "[/quote]";
-        } else {
-            if (\is_array($safefields)) {
-                $message->bind($safefields);
-            }
-
-            if (\is_array($fields)) {
-                $message->bind($fields, ['name', 'email', 'subject', 'message'], true);
-            }
-        }
-
-        return [$topic, $message];
-    }
-
-    /**
-     * Choose how to handle the notification : store in queue for later in task plugin or send it now
-     *
-     * @param   null|string  $url       url
-     * @param   boolean      $approved  false
-     * @param   boolean      $type  Default on false mean to store the notification in queue (in database)
-     *
-     * @return  boolean|false
-     *
-     * @throws  Exception
-     * @since   Kunena 7.1
-     */
-    public function processNotification($url = null, $approved = false, $type = false)
-    {
-        $this->_approved = $approved;
-
-        // Gather data to be able to the handle to send the notification
-        list($emailToList, $once, $sentusers) = $this->gatherNotificationData();
-
-        // An inbox stores the notification for the users, and tells which of them do not want the e-mail as well.
-        if (!empty($emailToList)) {
-            $inboxUsers = [];
-
-            foreach ($emailToList as $emailTo) {
-                if (!empty($emailTo->id)) {
-                    $inboxUsers[(int) $emailTo->id] = !empty($emailTo->follower) ? 'follow' : ($emailTo->subscription ? 'subscription' : 'moderation');
-                }
-            }
-
-            foreach (array_unique($inboxUsers) as $inboxType) {
-                $noMail = KunenaPrivate::getInstance()->notify($this, $inboxType, array_keys(array_filter($inboxUsers, static fn ($type) => $type === $inboxType)));
-
-                if ($noMail) {
-                    $emailToList = array_values(array_filter($emailToList, static fn ($emailTo) => !\in_array((int) ($emailTo->id ?? 0), $noMail, true)));
-                }
-            }
-        }
-
-        // No need to go further if mail settings are not configured
-        $joomlaConfig = Factory::getApplication()->getConfig();
-
-        if (!$joomlaConfig->get('mailonline') || !$this->_config->sendEmails) {
-            return false;
-        }
-
-        // Nobody to notify: do not queue or send an empty notification
-        if (empty($emailToList)) {
-            return false;
-        }
-
-        if (!$url) {
-            $url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl();
-        }
-
-        $topic = $this->getTopic();
-
-        $subject     = $this->subject ? $this->subject : $topic->subject;
-
-        if ($type) {
-            // Send the notification now
-            return $this->sendNotificationNow($emailToList, $subject, $url, $once, $sentusers);
-        }
-        // Store the notification in queue
-        $columns = ['subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once', 'sentusers'];
-
-        $values = [$this->_db->quote($subject), $this->id, $this->_db->quote($url), $this->_db->quote(json_encode($emailToList)), $this->_db->quote($this->getCategory()->name), (int) $once, $this->_db->quote(json_encode($sentusers))];
-
-        $query     = $this->_db->createQuery()
-            ->insert($this->_db->quoteName('#__kunena_notifications_mailsqueue'))
-            ->columns($this->_db->quoteName($columns))
-            ->values(implode(',', $values));
-
-        $this->_db->setQuery($query);
-
-        try {
-            $this->_db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return true;
-    }
-
-    /**
-     * Gather necessary data to be able to send the notification mail
-     *
-     * @return  array
-     *
-     * @throws  Exception
-     * @since   Kunena 7.1
-     */
-    private function gatherNotificationData()
-    {
-        if ($this->hold > 1) {
-            return [[], false, []];
-        } elseif ($this->hold == 1) {
-            $mailsubs   = 0;
-            $mailmods   = $this->_config->mailModerators >= 0;
-            $mailadmins = $this->_config->mailAdministrators >= 0;
-        } else {
-            $mailsubs   = (bool) $this->_config->allowSubscriptions;
-            $mailmods   = $this->_config->mailModerators >= 1;
-            $mailadmins = $this->_config->mailAdministrators >= 1;
-        }
-
-        $once = false;
-
-        if ($mailsubs) {
-            if (!$this->parent) {
-                // New topic: Send email only to category subscribers
-                $mailsubs = $this->_config->categorySubscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
-                $once     = $this->_config->categorySubscriptions == 'topic';
-            } elseif ($this->_config->categorySubscriptions != 'post') {
-                // Existing topic: Send email only to topic subscribers
-                $mailsubs = $this->_config->topicSubscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
-                $once     = $this->_config->topicSubscriptions == 'first';
-            } else {
-                // Existing topic: Send email to both category and topic subscribers
-                $mailsubs = $this->_config->topicSubscriptions == 'disabled'
-                    ? KunenaAccess::CATEGORY_SUBSCRIPTION
-                    : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
-
-                // FIXME: category subscription can override topic
-                $once = $this->_config->topicSubscriptions == 'first';
-            }
-        }
-
-        // Get all subscribers, moderators and admins who should get the email.
-        $emailToList = KunenaAccess::getInstance()->getSubscribers(
-            $this->catid,
-            $this->thread,
-            $mailsubs,
-            $mailmods,
-            $mailadmins,
-            KunenaUserHelper::getMyself()->userid
-        );
-
-        // The followers of the author get an e-mail about a new topic of him (if they may read the category and do not
-        // get the e-mail already as subscribers of the category).
-        if (!$this->parent && !$this->hold && KunenaUserFollow::isEnabled()) {
-            $known    = array_map(static fn ($recipient) => (int) $recipient->id, (array) $emailToList);
-            $category = $this->getCategory();
-
-            foreach (KunenaUserFollow::getRecipients((int) $this->userid) as $follower) {
-                $followerId = (int) $follower->id;
-
-                if (
-                    $followerId === (int) $this->userid || \in_array($followerId, $known, true)
-                    || !$category->isAuthorised('read', KunenaUserHelper::get($followerId))
-                ) {
-                    continue;
-                }
-
-                $follower->subscription = 1;
-                $follower->moderator    = 0;
-                $follower->admin        = 0;
-                $follower->follower     = 1;
-                $emailToList[]          = $follower;
-                $known[]                = $followerId;
-            }
-        }
-
-        // Nobody gets subscription e-mails about the posts of a user whom he ignores (moderators and administrators
-        // still get the e-mails they get because of their task).
-        $ignoredBy = $emailToList ? KunenaUserIgnore::getIgnoredBy((int) $this->userid) : [];
-
-        if ($ignoredBy) {
-            foreach ($emailToList as $key => $emailTo) {
-                if (!\in_array((int) $emailTo->id, $ignoredBy, true)) {
-                    continue;
-                }
-
-                if ($emailTo->moderator || $emailTo->admin) {
-                    $emailTo->subscription = 0;
-                } else {
-                    unset($emailToList[$key]);
-                }
-            }
-
-            $emailToList = array_values($emailToList);
-        }
-
-        // Only who may read the message: the access of the category does not say it in a category where the users see only their
-        // own topics (a follower of such a category would get the topics of the others).
-        if ($emailToList && $this->getCategory()->params->get('ownTopicsOnly')) {
-            $emailToList = array_values(array_filter(
-                $emailToList,
-                fn ($emailTo) => !empty($emailTo->id) && $this->isAuthorised('read', KunenaUserHelper::get((int) $emailTo->id))
-            ));
-        }
-
-        $sentusers = [];
-
-        if ($emailToList) {
-            foreach ($emailToList as $emailTo) {
-                if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
-                    continue;
-                }
-
-                if (
-                    $this->_config->emailVisibleAddress != $emailTo->email ||
-                    (
-                        \count($emailToList) == 1 &&
-                        ($emailTo->moderator || $emailTo->subscription)
-                    )
-                ) {
-                    $sentusers[] = $emailTo->id;
-                }
-            }
-        }
-
-        return [$emailToList, $once, $sentusers];
-    }
-
-    /**
-     * Send the notification mail
-     *
-     * @param   array    $emailToList  Contains a list of users to whom the notification will be sent
-     * @param   string   $subject  The subject of the notification mail
-     * @param   string   $url  The url of the message of the notification mail
-     * @param   boolean  $once
-     * @param   array    $sentusers
-     * @param   callable|null  $onRecipientSent  Callback for each successfully sent recipient
-     *
-     * @return  boolean
-     *
-     * @throws  Exception
-     * @since   Kunena 7.1
-     */
-    public function sendNotificationNow($emailToList, $subject, $url, $once, $sentusers, ?callable $onRecipientSent = null): bool
-    {
-        $mailnamesender = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
-
-        $app             = Factory::getApplication();
-        $lang            = $app->getLanguage();
-        $currentLanguage = $lang->getTag();
-
-        KunenaFactory::loadLanguage('com_kunena', 'site');
-        KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
-
-        // Send one email per recipient, in their own language.
-        $success = true;
-
-        foreach ($emailToList as $recipientIndex => $emailTo) {
-            if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
-                continue;
-            }
-
-            if (
-                $this->_config->emailVisibleAddress == $emailTo->email &&
-                !(
-                    \count($emailToList) == 1 &&
-                    ($emailTo->moderator || $emailTo->subscription)
-                )
-            ) {
-                continue;
-            }
-
-            // Determine subscription type (1 = subscriber, 0 = moderator/admin).
-            $subscriptionType = $emailTo->subscription ? 1 : 0;
-
-            // Load the recipient's language if it differs from the current one.
-            $recipientLanguage = null;
-
-            if (!empty($emailTo->id)) {
-                $kunenaUser = KunenaUserHelper::get((int) $emailTo->id);
-
-                if (!empty($kunenaUser->language)) {
-                    $recipientLanguage = $kunenaUser->language;
-                }
-            }
-
-            $languageChanged = $recipientLanguage && $recipientLanguage !== $currentLanguage;
-
-            $siteLanguageLoaded = KunenaFactory::loadLanguageMail(
-                'com_kunena',
-                'site',
-                $recipientLanguage
-            );
-
-            $librariesLanguageLoaded = KunenaFactory::loadLanguageMail(
-                'com_kunena.libraries',
-                'admin',
-                $recipientLanguage
-            );
-
-            try {
-                $mailSubject = MailHelper::cleanSubject($subject . " (" . $this->getCategory()->name . ")");
-
-                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                $mail->setSubject($mailSubject);
-                $mail->setSender([$this->_config->email, $mailnamesender]);
-
-                if (!$this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, (string) $recipientLanguage)) {
-                    $success = false;
-                } elseif ($onRecipientSent !== null) {
-                    $onRecipientSent($recipientIndex);
-                }
-            } catch (Exception $e) {
-                throw new Exception($e->getMessage());
-            } finally {
-                // Restore original language regardless of success or failure.
-                if ($languageChanged) {
-                    $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
-                }
-            }
-        }
-
-        // Update subscriptions.
-        if ($success && $once && $sentusers) {
-            $sentusers = implode(',', $sentusers);
-            $query     = $this->_db->createQuery()
-                ->update('#__kunena_user_topics')
-                ->set('subscribed=2')
-                ->where("topic_id={$this->thread}")
-                ->where("user_id IN ({$sentusers})")
-                ->where('subscribed=1');
-
-            $this->_db->setQuery($query);
-
-            try {
-                $this->_db->execute();
-            } catch (ExecutionFailureException $e) {
-                throw new Exception($e->getMessage());
-            }
-        }
-
-        return $success;
-    }
-
-    /**
-     *  Get permament topic URL without domain.
-     *
-     * If you want to add domain (for email etc), you can prepend the output with this:
-     * Uri::getInstance()->toString(array('scheme', 'host', 'port'))
-     *
-     * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
-     * @param   bool                 $xhtml     xhtml
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getPermaUrl($category = null, $xhtml = true): string
-    {
-        $uri = $this->getPermaUri($category);
-
-        return KunenaRoute::_($uri, $xhtml);
-    }
-
-    /**
-     * @param   null|KunenaCategory  $category  category
-     *
-     * @return  Uri|boolean
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getPermaUri($category = null)
-    {
-        $category = $category ? KunenaCategoryHelper::get($category) : $this->getCategory();
-
-        if (!$this->exists() || !$category->exists()) {
-            return false;
-        }
-
-        return Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
-    }
-
-    /**
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function notificationCloseConnection(): void
-    {
-        $app = Factory::getApplication();
-        $app->setHeader('Connection', 'close');
-    }
-
-    /**
-     * @param   int  $value  value
-     *
-     * @return  boolean
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function publish($value = KunenaForum::PUBLISHED)
-    {
-        if ($this->hold == $value) {
-            return true;
-        }
-
-        $this->hold = (int) $value;
-
-        return $this->save();
-    }
-
-    /**
-     * Method to save the \Kunena\Forum\Libraries\Forum\Message\Message object to the database.
-     *
-     * @return bool
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function save(): bool
-    {
-        $user = KunenaUserHelper::getMyself();
-
-        if ($user->userid == 0 && $this->userid) {
-            $user = KunenaUserHelper::get($this->userid);
-        }
-
-        if ($user->userid == 0 && !$this->_config->pubWrite) {
-            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
-        }
-
-        $isNew = !$this->_exists;
-
-        $topic    = $this->getTopic();
-        $newTopic = !$topic->exists();
-
-        if ($newTopic) {
-            // Create topic, but do not cascade changes to category etc..
-            try {
-                $topic->save(false);
-            } catch (Exception $e) {
-                throw new Exception($e->getMessage());
-            }
-
-            $this->_thread = $this->thread = $topic->id;
-        }
-
-        // Create message
-        if (!parent::save()) {
-            // If we created a new topic, remember to delete it too.
-            if ($newTopic) {
-                $topic->delete();
-            }
-
-            return false;
-        }
-
-        if ($isNew) {
-            $this->_hold = 1;
-        }
-
-        // Update attachments and message text
-        $update = $this->updateAttachments();
-
-        // Did we change anything?
-        if ($update) {
-            if ($isNew && trim($this->message) == '') {
-                // Oops, no attachments remain and the message becomes empty.
-                // Let's delete the new message and fail on save.
-                $this->delete();
-
-                // If we created a new topic, remember to delete it too.
-                if ($newTopic) {
-                    $topic->delete();
-                }
-
-                throw new Exception(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
-            }
-
-            $table = $this->getTable();
-            $table->bind($this->getTableProperties());
-            $table->exists(true);
-
-            try {
-                $table->store();
-            } catch (Exception $e) {
-                throw new Exception($e->getMessage());
-            }
-        }
-
-        // Cascade changes to other tables
-        $this->update($newTopic);
-
-        return true;
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    protected function updateAttachments(): bool
-    {
-        // Save new attachments and update message text
-        $message = $this->message;
-        $app     = Factory::getApplication();
-
-        // No more files in a message than the option attachmentLimit allows (the uploader stops there, a request did not): the files
-        // which stay in the message count, the new ones which do not fit are left out.
-        $limit = (int) $this->_config->attachmentLimit;
-
-        if ($limit > 0) {
-            $kept = $this->id ? array_diff_key($this->getAttachments(false, 'none'), $this->_attachments_del) : [];
-            $room = max(0, $limit - \count($kept));
-
-            foreach ($this->_attachments_add as $tmpid => $attachment) {
-                if (isset($kept[$attachment->id])) {
-                    continue;
-                }
-
-                if ($room > 0) {
-                    $room--;
-                } else {
-                    unset($this->_attachments_add[$tmpid]);
-                }
-            }
-        }
-
-        foreach ($this->_attachments_add as $tmpid => $attachment) {
-            if ($attachment->exists() && $attachment->mesid) {
-                try {
-                    $attachment->save();
-                } catch (Exception $e) {
-                    $app->enqueueMessage($e->getMessage(), 'error');
-                }
-            }
-
-            $attachment->mesid = $this->id;
-
-            if ($attachment->IsImage()) {
-                try {
-                    $attachment->tryAuthorise('createimage', null, false);
-                } catch (Exception $e) {
-                    $app->enqueueMessage($e->getMessage(), 'error');
-                }
-            } else {
-                try {
-                    $attachment->tryAuthorise('createfile', null, false);
-                } catch (Exception $e) {
-                    $app->enqueueMessage($e->getMessage(), 'error');
-                }
-            }
-
-            try {
-                $attachment->save();
-            } catch (Exception $e) {
-                $app->enqueueMessage($e->getMessage(), 'error');
-            }
-
-            // Update attachments count and fix attachment name inside message
-            $this->getTopic()->attachments++;
-            $this->message = preg_replace('/\[attachment\:' . $tmpid . '\].*?\[\/attachment\]/u', "[attachment={$attachment->id}]{$attachment->filename}[/attachment]", $this->message);
-        }
-
-        // Delete removed attachments and update attachments count and message text
-        foreach ($this->_attachments_del as $attachment) {
-            if ($attachment->mesid && $attachment->mesid != $this->id) {
-                // Attachment doesn't belong to this message => skip it.
-                continue;
-            }
-
-            $exception = $attachment->tryAuthorise('delete', null, false);
-
-            if ($exception) {
-                throw new Exception($exception->getMessage());
-            }
-
-            try {
-                $attachment->delete();
-            } catch (Exception $e) {
-                throw new Exception($e->getMessage());
-            }
-
-            $this->getTopic()->attachments--;
-
-            $this->message = preg_replace('/\[attachment\=' . $attachment->id . '\].*?\[\/attachment\]/u', '', $this->message);
-            $this->message = preg_replace('/\[attachment\]' . $attachment->filename . '\[\/attachment\]/u', '', $this->message);
-        }
-
-        // Remove missing temporary attachments from the message text
-        $this->message = trim(preg_replace('/\[attachment\:\d+\].*?\[\/attachment\]/u', '', $this->message));
-
-        // Return true if we changed the message contents
-        return $this->message != $message;
-    }
-
-    /**
-     * Method to delete the \Kunena\Forum\Libraries\Forum\Message\Message object from the database.
-     *
-     * @return  boolean  True on success
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function delete(): bool
-    {
-        if (!$this->exists()) {
-            return true;
-        }
-
-        if (!parent::delete()) {
-            return false;
-        }
-
-        $this->hold = 1;
-
-        $attachments = $this->getAttachments();
-
-        foreach ($attachments as $attachment) {
-            $file = JPATH_SITE . '/media/kunena/attachments/' . $attachment->userid . '/' . $attachment->filename;
-            File::delete($file);
-
-            try {
-                $attachment->delete();
-            } catch (Exception $e) {
-                throw new Exception($e->getMessage());
-            }
-        }
-
-        // Delete thank yous
-        $query = $this->_db->createQuery();
-        $query->delete($this->_db->quoteName('#__kunena_thankyou'))
-            ->where($this->_db->quoteName('postid') . ' = ' . $this->_db->quote($this->id));
-        $queries[] = $query;
-
-        // Delete message
-        $query = $this->_db->createQuery();
-        $query->delete($this->_db->quoteName('#__kunena_messages_text'))
-            ->where($this->_db->quoteName('mesid') . ' = ' . $this->_db->quote($this->id));
-        $queries[] = $query;
-
-        // Cascade changes into other tables
-        $this->update();
-
-        foreach ($queries as $query) {
-            $this->_db->setQuery($query);
-
-            try {
-                $this->_db->execute();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-            }
-        }
-
-        KunenaMessageThankyouHelper::recount();
-
-        return true;
-    }
-
-    /**
-     * @param   bool|array  $ids     ids
-     * @param   string      $action  action
-     *
-     * @return  KunenaAttachment[]
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getAttachments($ids = false, $action = 'read'): array
-    {
-        if ($ids === false) {
-            $attachments = KunenaAttachmentHelper::getByMessage($this->id, $action);
-        } else {
-            $attachments = KunenaAttachmentHelper::getById($ids, $action);
-
-            foreach ($attachments as $id => $attachment) {
-                if ($attachment->mesid && $attachment->mesid != $this->id) {
-                    unset($attachments[$id]);
-                }
-            }
-        }
-
-        return $attachments;
-    }
-
-    /**
-     * Get the list of attachments that have been marked to be added to this message.
-     *
-     * @return  KunenaAttachment[]
-     *
-     * @since   Kunena 7.1
-     */
-    public function getAttachmentsToAdd(): array
-    {
-        return $this->_attachments_add;
-    }
-
-    /**
-     * @param   bool  $newTopic  new topic
-     *
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function update($newTopic = false): void
-    {
-        // If post was published and then moved, we need to update old topic
-        if (!$this->_hold && $this->_thread && $this->_thread != $this->thread) {
-            $topic = KunenaTopicHelper::get($this->_thread);
-
-            try {
-                $topic->update($this, -1);
-            } catch (Exception $e) {
-                throw new Exception($e->getMessage());
-            }
-        }
-
-        $postDelta = $this->delta();
-        $topic     = $this->getTopic();
-
-        // New topic
-        if ($newTopic) {
-            $topic->hold = 0;
-        }
-
-        // Update topic
-        if (!$this->hold && $topic->hold && $topic->exists()) {
-            // We published message -> publish and recount topic
-            $topic->hold = 0;
-            $topic->recount();
-        }
-
-        try {
-            $topic->update($this, $postDelta);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-
-        // Activity integration
-        // FIXME : load the plugin finder produce a fatal error
-        // Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
-        $activity = KunenaFactory::getActivityIntegration();
-
-        if ($postDelta < 0) {
-            $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-            $dispatcher->dispatch('onDeleteKunenaPost', new KunenaDeleteEvent('onDeleteKunenaPost', ['context' => 'com_kunena.post', 'subject' => $this, 'ids' => [$this->id]]));
-            $activity->onAfterDelete($this);
-        } elseif ($postDelta > 0) {
-            $topic->markRead();
-
-            if ($this->parent == 0) {
-                $activity->onAfterPost($this);
-            } else {
-                $activity->onAfterReply($this);
-            }
-        }
-    }
-
-    /**
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     */
-    protected function delta(): int
-    {
-        if (!$this->hold && ($this->_hold || $this->thread != $this->_thread)) {
-            // Publish message or move it into new topic
-            return 1;
-        }
-
-        if (!$this->_hold && $this->hold) {
-            // Unpublish message
-            return -1;
-        }
-
-        return 0;
-    }
-
-    /**
-     * @param   mixed  $user  user
-     *
-     * @return  \Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUser
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getUserTopic($user = null)
-    {
-        return $this->getTopic()->getUserTopic($user);
-    }
-
-    /**
-     * @return  KunenaMessage
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getParent(): KunenaMessage
-    {
-        return KunenaMessageHelper::get($this->parent);
-    }
-
-    /**
-     * @return  KunenaUser
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getAuthor(): KunenaUser
-    {
-        return KunenaUserHelper::getAuthor($this->userid, $this->name);
-    }
-
-    /**
-     * @return  KunenaDate
-     *
-     * @since   Kunena 6.0
-     */
-    public function getTime(): KunenaDate
-    {
-        return new KunenaDate($this->time);
-    }
-
-    /**
-     * @return  KunenaUser
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getModifier(): KunenaUser
-    {
-        return KunenaUserHelper::get($this->modified_by);
-    }
-
-    /**
-     * @return  KunenaDate
-     *
-     * @since   Kunena 6.0
-     */
-    public function getModifiedTime(): KunenaDate
-    {
-        return new KunenaDate($this->modified_time);
-    }
-
-    /**
-     * Display required field from message table
-     *
-     * @param   string   $field    field
-     * @param   boolean  $html     html
-     * @param   string   $context  context
-     *
-     * @return  integer|string
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function displayField(string $field, $html = true, $context = '')
-    {
-        switch ($field) {
-            case 'id':
-                return \intval($this->id);
-            case 'subject':
-                return KunenaParser::parseText($this->subject);
-            case 'message':
-                return $html ? KunenaParser::parseBBCode($this->message, $this, 0, $context) : KunenaParser::stripBBCode($this->message, 0, $html);
-        }
-
-        return '';
-    }
-
-    /**
-     * Returns true if user is authorised to do the action.
-     *
-     * @param   string           $action  action
-     * @param   KunenaUser|null  $user    user
-     *
-     * @return  boolean
-     *
-     * @throws Exception
-     * @since   Kunena 4.0
-     */
-    public function isAuthorised(string $action = 'read', ?KunenaUser $user = null)
-    {
-        if ($this->_config->readOnly) {
-            // Special case to ignore authorisation.
-            if ($action != 'read') {
-                return false;
-            }
-        }
-
-        return !$this->tryAuthorise($action, $user, false);
-    }
-
-    /**
-     * Throws an exception if user isn't authorised to do the action.
-     *
-     * @param   string           $action  action
-     * @param   KunenaUser|null  $user    user
-     * @param   bool             $throw   trow
-     *
-     * @return  mixed
-     *
-     * @throws Exception
-     * @since   Kunena 4.0
-     */
-    public function tryAuthorise($action = 'read', ?KunenaUser $user = null, $throw = true)
-    {
-        // Special case to ignore authorisation.
-        if ($action == 'none') {
-            return false;
-        }
-
-        // Load user if not given.
-        if ($user === null) {
-            $user = KunenaUserHelper::getMyself();
-        }
-
-        if (empty($this->_authcache[$user->userid][$action])) {
-            // Unknown action - throw invalid argument exception.
-            if (!isset(self::$actions[$action])) {
-                throw new InvalidArgumentException(Text::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
-            }
-
-            // Load category authorisation.
-            if (!isset($this->_authtcache[$user->userid][$action])) {
-                $this->_authtcache[$user->userid][$action] = $this->getTopic()->tryAuthorise('post.' . $action, $user, false);
-            }
-
-            $this->_authcache[$user->userid][$action] = $this->_authtcache[$user->userid][$action];
-
-            if (empty($this->_authcache[$user->userid][$action])) {
-                foreach (self::$actions[$action] as $function) {
-                    if (!isset($this->_authfcache[$user->userid][$function])) {
-                        $authFunction                                = 'authorise' . $function;
-                        $this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
-                    }
-
-                    $error = $this->_authfcache[$user->userid][$function];
-
-                    if ($error) {
-                        $this->_authcache[$user->userid][$action] = $error;
-                        break;
-                    }
-                }
-            }
-        }
-
-        $exception = $this->_authcache[$user->userid][$action];
-
-        // Throw or return the exception.
-        if ($throw && $exception) {
-            throw $exception;
-        }
-
-        return $exception;
-    }
-
-    /**
-     * @param   array  $fields  fields
-     * @param   mixed  $user    user
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function edit($fields = [], $user = null): void
-    {
-        $user = KunenaUserHelper::get($user);
-
-        $this->bind($fields, ['name', 'email', 'subject', 'message', 'modified_reason'], true);
-
-        // Update rest of the information
-        $category            = $this->getCategory();
-        $this->hold          = $category->review && !$category->isAuthorised('moderate', $user) ? 1 : $this->hold;
-        $this->modified_by   = $user->userid;
-        $this->modified_time = Factory::getDate()->toUnix();
-    }
-
-    /**
-     * @param   mixed  $user  user
-     *
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function makeAnonymous($user = null): void
-    {
-        $user = KunenaUserHelper::get($user);
-
-        if ($user->userid == $this->userid && $this->modified_by == $this->userid) {
-            // I am the author and previous modification was made by me => delete modification information to hide my personality
-            $this->modified_by     = 0;
-            $this->modified_time   = 0;
-            $this->modified_reason = '';
-        } elseif ($user->userid == $this->userid) {
-            // I am the author, but somebody else has modified the message => leave modification information intact
-            $this->modified_by     = null;
-            $this->modified_time   = null;
-            $this->modified_reason = null;
-        }
-
-        // Remove userid, email and ip address
-        $this->userid = 0;
-        $this->ip     = '';
-        $this->email  = null;
-    }
-
-    /**
-     * @param   int         $tmpid    tmpid
-     * @param   string      $postvar  postvar
-     * @param   int|null    $catid    catid
-     *
-     * @return  boolean
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function uploadAttachment(int $tmpid, string $postvar, $catid = null): bool
-    {
-        $attachment                     = new KunenaAttachment();
-        $attachment->userid             = $this->userid;
-        $success                        = $attachment->upload($postvar, $catid);
-        $this->_attachments_add[$tmpid] = $attachment;
-
-        return $success;
     }
 
     /**
@@ -1634,91 +399,449 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
-     * Remove listed attachments from the message.
+     * Add the headers which describe the message (X-Forum-*) and the ones which let the mail program thread the e-mails
+     * of a topic (Message-ID, In-Reply-To and References), so filters and threads can be made.
      *
-     * @param   array  $ids  ids
+     * @param   Mail  $mail  The mail.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    protected function addForumHeaders(Mail $mail): void
+    {
+        // On by default: the option is not in the stored configuration until it has been saved once.
+        if (isset($this->_config->emailForumHeaders) && !$this->_config->emailForumHeaders) {
+            return;
+        }
+
+        $topic    = $this->getTopic();
+        $category = $this->getCategory();
+
+        // A header is one line, and a value with other characters than ASCII is encoded.
+        $clean = static function ($value) use ($mail): string {
+            $value = trim(preg_replace('/\s+/', ' ', strip_tags((string) $value)));
+
+            return $mail->encodeHeader(MailHelper::cleanLine($value));
+        };
+
+        $headers = [
+            'X-Forum'             => 'kunena',
+            'X-Forum-URL'         => Uri::root(),
+            'X-Forum-Name'        => $this->_config->boardTitle,
+            'X-Forum-Category'    => $category->name,
+            'X-Forum-Category-Id' => (int) $category->id,
+            'X-Forum-Topic'       => $topic->subject,
+            'X-Forum-Topic-Id'    => (int) $topic->id,
+            'X-Forum-Post-Id'     => (int) $this->id,
+            'X-Forum-Type'        => $this->parent ? 'reply' : 'new-topic',
+            'X-Forum-Who'         => $this->getAuthor()->getName($this->name),
+        ];
+
+        foreach ($headers as $name => $value) {
+            $mail->addCustomHeader($name, $clean($value));
+        }
+
+        // The threading: the first message of a topic starts the thread, a reply points to the message it answers and to the start.
+        $firstPostId     = (int) $topic->first_post_id;
+        $mail->MessageID = $this->getEmailMessageId((int) $this->id, (int) $topic->id, $firstPostId);
+
+        if ($this->parent && $firstPostId && (int) $this->id !== $firstPostId) {
+            $start  = $this->getEmailMessageId($firstPostId, (int) $topic->id, $firstPostId);
+            $parent = $this->getEmailMessageId((int) $this->parent, (int) $topic->id, $firstPostId);
+
+            $mail->addCustomHeader('In-Reply-To', $parent);
+            $mail->addCustomHeader('References', $parent === $start ? $start : $start . ' ' . $parent);
+        }
+    }
+
+    /**
+     * The headers of the e-mail of a notification (the unsubscribe headers and the headers of the forum).
+     *
+     * @param   Mail   $mail         The mail.
+     * @param   int    $subscription 1 for a subscriber, 0 for a moderator.
+     * @param   int    $recipientId  The user who gets the mail.
+     * @param   bool   $follower     The recipient follows the author.
+     *
+     * @return  string  The address to unsubscribe (empty when the mail has none).
+     *
+     * @since   Kunena 7.2
+     */
+    protected function addNotificationHeaders(Mail $mail, int $subscription, int $recipientId, bool $follower): string
+    {
+        // Subscribers can unsubscribe from the email itself: a reply is a topic subscription, a new topic a category subscription.
+        $unsubscribeUrl = '';
+
+        if ($subscription && $recipientId > 0) {
+            $type = $this->parent ? KunenaEmailUnsubscribe::TOPIC : KunenaEmailUnsubscribe::CATEGORY;
+            $id   = $this->parent ? (int) $this->thread : (int) $this->catid;
+
+            if ($follower) {
+                // The recipient gets this e-mail because he follows the author.
+                $type = KunenaEmailUnsubscribe::FOLLOW;
+                $id   = (int) $this->userid;
+            }
+
+            $unsubscribeUrl = KunenaEmailUnsubscribe::getUrl($type, $id, $recipientId);
+
+            // One-click unsubscribe of mail programs (RFC 8058).
+            $mail->addCustomHeader('List-Unsubscribe', '<' . KunenaEmailUnsubscribe::getPostUrl($type, $id, $recipientId) . '>');
+            $mail->addCustomHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
+        }
+
+        $this->addForumHeaders($mail);
+
+        return $unsubscribeUrl;
+    }
+
+    /**
+     * @param   Mail    $mail          mail
+     * @param   int     $subscription  subscription
+     * @param   string  $subject       subject
+     * @param   string  $url           url
+     * @param   bool    $once          once
+     * @param   int     $recipientId   The user who gets the mail.
+     * @param   bool    $follower      The recipient follows the author.
      *
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 4.0
+     * @since   Kunena 6.0
      */
-    public function removeAttachments(array $ids): void
+    protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId = 0, bool $follower = false): void
     {
-        $this->_attachments_del += $this->getAttachments($ids, 'none');
+        $unsubscribeUrl = $this->addNotificationHeaders($mail, $subscription, $recipientId, $follower);
+
+        $layout = KunenaLayout::factory('Email/Subscription')->debug(false)
+            ->set('mail', $mail)
+            ->set('message', $this)
+            ->set('messageUrl', $url)
+            ->set('once', $once)
+            ->set('unsubscribeUrl', $unsubscribeUrl);
+
+        $msg = '';
+
+        try {
+            $msg = trim($layout->render($subscription ? 'default' : 'moderator'));
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        $mail->setBody($msg);
     }
 
     /**
-     * Get the number of attachments into a message
+     * Check if user has the right to upload file attachment
      *
-     * @return  StdClass
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|void
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getNbAttachments()
+    protected function authoriseAttachmentsFile(KunenaUser $user)
     {
-        $attachments = KunenaAttachmentHelper::getNumberAttachments($this->id);
+        if (empty($this->_config->fileUpload)) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
+        }
 
-        $attachs                       = new StdClass();
-        $attachs->inline               = 0;
-        $attachs->image                = 0;
-        $attachs->file                 = 0;
-        $attachs->totalNonProtected    = 0;
-        $attachs->readable             = 0;
-        $attachs->totalProtected       = 0;
-        $attachs->totalPrivate         = 0;
-
-        foreach ($attachments as $attach) {
-            if ($attach->inline) {
-                $attachs->inline = $attachs->inline + 1;
-            }
-
-            if ($attach->isImage()) {
-                $attachs->image = $attachs->image + 1;
-            } else {
-                $attachs->file = $attachs->file + 1;
-            }
-
-            if ($attach->protected == 0) {
-                $attachs->totalNonProtected = $attachs->totalNonProtected + 1;
-            }
-
-            if ($attach->isAuthorised('read')) {
-                if (!$attach->inline) {
-                    $attachs->readable = $attachs->readable + 1;
-                }
-            }
-
-            if ($attach->protected != 32) {
-                $attachs->totalProtected = $attachs->totalProtected + 1;
-            }
-
-            if ($attach->protected == 32) {
-                $attachs->totalPrivate = $attachs->totalPrivate + 1;
+        if ($this->_config->fileUpload == 'admin') {
+            if (!$user->isAdmin()) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_ADMINISTRATORS'), 403);
             }
         }
 
-        return $attachs;
+        if ($this->_config->fileUpload == 'registered') {
+            if (!$user->userid) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_REGISTERED_USERS'), 403);
+            }
+        }
+
+        if ($this->_config->fileUpload == 'moderator') {
+            $category = $this->getCategory();
+
+            if (!$user->isModerator($category)) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_MODERATORS'), 403);
+            }
+        }
+
+        return;
     }
 
     /**
-     * Method to load a \Kunena\Forum\Libraries\Forum\Message\Message object by id.
+     * Check if user has the right to upload image attachment
      *
-     * @param   mixed  $id  The message id to be loaded
+     * @param   KunenaUser  $user  user
      *
-     * @return  boolean  True on success
+     * @return  KunenaExceptionAuthorise|void
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function load($id = null): bool
+    protected function authoriseAttachmentsImage(KunenaUser $user)
     {
-        $exists        = parent::load($id);
-        $this->_hold   = $exists ? $this->hold : 1;
-        $this->_thread = $this->thread;
+        if (empty($this->_config->imageUpload)) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
+        }
 
-        return $exists;
+        if ($this->_config->imageUpload == 'admin') {
+            if (!$user->isAdmin()) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_ADMINISTRATORS'), 403);
+            }
+        }
+
+        if ($this->_config->imageUpload == 'registered') {
+            if (!$user->userid) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_REGISTERED_USERS'), 403);
+            }
+        }
+
+        if ($this->_config->imageUpload == 'moderator') {
+            $category = $this->getCategory();
+
+            if (!$user->isModerator($category)) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_MODERATORS'), 403);
+            }
+        }
+
+        return;
+    }
+
+    /**
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function authoriseDelete(KunenaUser $user)
+    {
+
+        if (!$user->isModerator($this->getCategory()) && $this->_config->userDeleteMessage != '2') {
+            // Never
+            if ($this->_config->userDeleteMessage == '0') {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+            }
+
+            // When no replies
+            if ($this->_config->userDeleteMessage == '1' && ($this->getTopic()->first_post_id != $this->id || $this->getTopic()->getReplies())) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+            }
+
+            // All except the first message of the topic
+            if ($this->_config->userDeleteMessage == '3' && $this->id == $this->getTopic()->first_post_id) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_ONLY_FIRST_MESSAGE'), 403);
+            }
+
+            // Only the last message
+            if ($this->_config->userDeleteMessage == '4' && $this->id != $this->getTopic()->last_post_id) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_ONLY_LAST_MESSAGE'), 403);
+            }
+        }
+    }
+
+    /**
+     * This function check the edit time from the author of the post and return if the user is allowed to edit his post.
+     *
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|boolean|void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function authoriseEditTime(KunenaUser $user)
+    {
+        // Do not perform rest of the checks to moderators and admins
+        if ($user->isModerator($this->getCategory())) {
+            return false;
+        }
+
+        // User is only allowed to edit post within time specified in the configuration
+
+        if (\intval($this->_config->userEdit) != 1) {
+            // Edit never allowed
+            if (\intval($this->_config->userEdit) == 0) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+            }
+
+            // Edit allowed if replies
+            if (\intval($this->_config->userEdit) == 2 && $this->getTopic()->getReplies()) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_IF_REPLIES'), 403);
+            }
+
+            // Edit allowed for the first message of the topic
+            if (\intval($this->_config->userEdit) == 4 && $this->id != $this->getTopic()->first_post_id) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_FIRST_MESSAGE_OF_TOPIC'), 403);
+            }
+
+            // Edit allowed for the last message of the topic
+            if (\intval($this->_config->userEdit) == 3 && $this->id != $this->getTopic()->last_post_id) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_LAST_MESSAGE_OF_TOPIC'), 403);
+            }
+        }
+
+        if (\intval($this->_config->userEditTime) != 0) {
+            // Check whether edit is in time
+            $modtime = $this->modified_time ? $this->modified_time : $this->time;
+
+            if ($modtime + \intval($this->_config->userEditTime) < Factory::getDate()->toUnix() && \intval($this->_config->userEditTimeGrace) == 0) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+            } elseif (\intval($this->_config->userEditTimeGrace) != 0 && $modtime + \intval($this->_config->userEditTime) + \intval($this->_config->userEditTimeGrace) < Factory::getDate()->toUnix()) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+            }
+        }
+
+        return;
+    }
+
+    /**
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function authoriseGuestWrite(KunenaUser $user)
+    {
+        // Check if user is guest and they can create or reply topics
+        if ($user->userid == 0 && !$this->_config->pubWrite) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
+        }
+
+        return;
+    }
+
+    /**
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function authoriseNotHold(KunenaUser $user)
+    {
+        if ($this->hold) {
+            // Nobody can reply to unapproved or deleted post
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+        }
+
+        return;
+    }
+
+    /**
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function authoriseOwn(KunenaUser $user)
+    {
+        // Guests cannot own posts.
+        if (!$user->exists()) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 401);
+        }
+
+        // Check that topic owned by the user or user is a moderator
+        // TODO: check #__kunena_user_topics
+        if ($this->userid != $user->userid && !$user->isModerator($this->getCategory())) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+        }
+
+        return;
+    }
+
+    /**
+     * Check if user has the right to perm delete the message
+     *
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|bool|void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function authorisePermdelete(KunenaUser $user)
+    {
+
+        if ($user->isAdmin() || $user->isModerator()) {
+            return false;
+        }
+
+        if ($user->isModerator($this->getTopic()->getCategory()) && !$this->_config->moderatorPermDelete || !$user->isModerator($this->getTopic()->getCategory())) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+        }
+
+        return;
+    }
+
+    /**
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function authoriseRead(KunenaUser $user)
+    {
+        // A message of a topic the user can not read, in a category where the users only see their own topics.
+        if ($this->getCategory()->params->get('ownTopicsOnly')) {
+            $topic = $this->getTopic();
+
+            if ($topic && $topic->exists() && !$topic->isAuthorised('read', $user)) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $user->exists() ? 403 : 401);
+            }
+        }
+
+        if ($this->hold && !$user->exists()) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+        }
+
+        // Check that user has the right to see the post (user can see his own unapproved posts)
+        if ($this->hold > 1 || ($this->hold == 1 && $this->userid != $user->userid)) {
+            $access = KunenaAccess::getInstance();
+            $hold   = $access->getAllowedHold($user->userid, $this->catid, false);
+
+            if (!\in_array($this->hold, $hold)) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+            }
+        }
+
+        return;
+    }
+
+    /**
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function authoriseThankyou(KunenaUser $user)
+    {
+        // Check that message is not your own
+        if (!$this->_config->showThankYou) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
+        }
+
+        if (!$user->userid) {
+            // TODO: better error message
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 401);
+        }
+
+        if (!$this->userid || $this->userid == $user->userid) {
+            // TODO: better error message
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
+        }
+
+        return;
     }
 
     /**
@@ -1875,6 +998,639 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
+     * Method to delete the \Kunena\Forum\Libraries\Forum\Message\Message object from the database.
+     *
+     * @return  boolean  True on success
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function delete(): bool
+    {
+        if (!$this->exists()) {
+            return true;
+        }
+
+        if (!parent::delete()) {
+            return false;
+        }
+
+        $this->hold = 1;
+
+        $attachments = $this->getAttachments();
+
+        foreach ($attachments as $attachment) {
+            $file = JPATH_SITE . '/media/kunena/attachments/' . $attachment->userid . '/' . $attachment->filename;
+            File::delete($file);
+
+            try {
+                $attachment->delete();
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
+            }
+        }
+
+        // Delete thank yous
+        $query = $this->_db->createQuery();
+        $query->delete($this->_db->quoteName('#__kunena_thankyou'))
+            ->where($this->_db->quoteName('postid') . ' = ' . $this->_db->quote($this->id));
+        $queries[] = $query;
+
+        // Delete message
+        $query = $this->_db->createQuery();
+        $query->delete($this->_db->quoteName('#__kunena_messages_text'))
+            ->where($this->_db->quoteName('mesid') . ' = ' . $this->_db->quote($this->id));
+        $queries[] = $query;
+
+        // Cascade changes into other tables
+        $this->update();
+
+        foreach ($queries as $query) {
+            $this->_db->setQuery($query);
+
+            try {
+                $this->_db->execute();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+        }
+
+        KunenaMessageThankyouHelper::recount();
+
+        return true;
+    }
+
+    /**
+     * Send the e-mail of a notification to one address: from the mail template of Joomla (the setting of the forum), or from the
+     * layout of the template of the forum.
+     *
+     * @param   Mail    $mail          The mail (the sender is set).
+     * @param   int     $subscription  1 for a subscriber, 0 for a moderator.
+     * @param   string  $subject       The subject (for the layout).
+     * @param   string  $url           The address of the message.
+     * @param   bool    $once          Only the first message is mailed.
+     * @param   int     $recipientId   The user who gets the mail.
+     * @param   bool    $follower      The recipient follows the author.
+     * @param   string  $email         The address.
+     * @param   string  $language      The language of the recipient.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    protected function deliverNotification(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId, bool $follower, string $email, string $language): bool
+    {
+        $templateId = $subscription ? 'com_kunena.subscription' : 'com_kunena.moderator';
+
+        if (KunenaMailTemplate::isUsed($templateId)) {
+            $unsubscribeUrl = $this->addNotificationHeaders($mail, $subscription, $recipientId, $follower);
+            $data           = $this->getMailTemplateData($subscription, $url, $once, $unsubscribeUrl);
+
+            return KunenaMailTemplate::send($templateId, $language, $mail, $data['html'], $data['plain'], ['sitename', 'boardtitle', 'heading', 'subject', 'topic', 'category', 'author', 'url'], $email);
+        }
+
+        $this->attachEmailBody($mail, $subscription, $subject, $url, $once, $recipientId, $follower);
+
+        return KunenaEmail::send($mail, [$email]);
+    }
+
+    /**
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     */
+    protected function delta(): int
+    {
+        if (!$this->hold && ($this->_hold || $this->thread != $this->_thread)) {
+            // Publish message or move it into new topic
+            return 1;
+        }
+
+        if (!$this->_hold && $this->hold) {
+            // Unpublish message
+            return -1;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Display required field from message table
+     *
+     * @param   string   $field    field
+     * @param   boolean  $html     html
+     * @param   string   $context  context
+     *
+     * @return  integer|string
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function displayField(string $field, $html = true, $context = '')
+    {
+        switch ($field) {
+            case 'id':
+                return \intval($this->id);
+            case 'subject':
+                return KunenaParser::parseText($this->subject);
+            case 'message':
+                return $html ? KunenaParser::parseBBCode($this->message, $this, 0, $context) : KunenaParser::stripBBCode($this->message, 0, $html);
+        }
+
+        return '';
+    }
+
+    /**
+     * @param   array  $fields  fields
+     * @param   mixed  $user    user
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function edit($fields = [], $user = null): void
+    {
+        $user = KunenaUserHelper::get($user);
+
+        $this->bind($fields, ['name', 'email', 'subject', 'message', 'modified_reason'], true);
+
+        // Update rest of the information
+        $category            = $this->getCategory();
+        $this->hold          = $category->review && !$category->isAuthorised('moderate', $user) ? 1 : $this->hold;
+        $this->modified_by   = $user->userid;
+        $this->modified_time = Factory::getDate()->toUnix();
+    }
+
+    /**
+     * Gather necessary data to be able to send the notification mail
+     *
+     * @return  array
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    private function gatherNotificationData()
+    {
+        if ($this->hold > 1) {
+            return [[], false, []];
+        } elseif ($this->hold == 1) {
+            $mailsubs   = 0;
+            $mailmods   = $this->_config->mailModerators >= 0;
+            $mailadmins = $this->_config->mailAdministrators >= 0;
+        } else {
+            $mailsubs   = (bool) $this->_config->allowSubscriptions;
+            $mailmods   = $this->_config->mailModerators >= 1;
+            $mailadmins = $this->_config->mailAdministrators >= 1;
+        }
+
+        $once = false;
+
+        if ($mailsubs) {
+            if (!$this->parent) {
+                // New topic: Send email only to category subscribers
+                $mailsubs = $this->_config->categorySubscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
+                $once     = $this->_config->categorySubscriptions == 'topic';
+            } elseif ($this->_config->categorySubscriptions != 'post') {
+                // Existing topic: Send email only to topic subscribers
+                $mailsubs = $this->_config->topicSubscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
+                $once     = $this->_config->topicSubscriptions == 'first';
+            } else {
+                // Existing topic: Send email to both category and topic subscribers
+                $mailsubs = $this->_config->topicSubscriptions == 'disabled'
+                    ? KunenaAccess::CATEGORY_SUBSCRIPTION
+                    : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
+
+                // FIXME: category subscription can override topic
+                $once = $this->_config->topicSubscriptions == 'first';
+            }
+        }
+
+        // Get all subscribers, moderators and admins who should get the email.
+        $emailToList = KunenaAccess::getInstance()->getSubscribers(
+            $this->catid,
+            $this->thread,
+            $mailsubs,
+            $mailmods,
+            $mailadmins,
+            KunenaUserHelper::getMyself()->userid
+        );
+
+        // The followers of the author get an e-mail about a new topic of him (if they may read the category and do not
+        // get the e-mail already as subscribers of the category).
+        if (!$this->parent && !$this->hold && KunenaUserFollow::isEnabled()) {
+            $known    = array_map(static fn ($recipient) => (int) $recipient->id, (array) $emailToList);
+            $category = $this->getCategory();
+
+            foreach (KunenaUserFollow::getRecipients((int) $this->userid) as $follower) {
+                $followerId = (int) $follower->id;
+
+                if (
+                    $followerId === (int) $this->userid || \in_array($followerId, $known, true)
+                    || !$category->isAuthorised('read', KunenaUserHelper::get($followerId))
+                ) {
+                    continue;
+                }
+
+                $follower->subscription = 1;
+                $follower->moderator    = 0;
+                $follower->admin        = 0;
+                $follower->follower     = 1;
+                $emailToList[]          = $follower;
+                $known[]                = $followerId;
+            }
+        }
+
+        // Nobody gets subscription e-mails about the posts of a user whom he ignores (moderators and administrators
+        // still get the e-mails they get because of their task).
+        $ignoredBy = $emailToList ? KunenaUserIgnore::getIgnoredBy((int) $this->userid) : [];
+
+        if ($ignoredBy) {
+            foreach ($emailToList as $key => $emailTo) {
+                if (!\in_array((int) $emailTo->id, $ignoredBy, true)) {
+                    continue;
+                }
+
+                if ($emailTo->moderator || $emailTo->admin) {
+                    $emailTo->subscription = 0;
+                } else {
+                    unset($emailToList[$key]);
+                }
+            }
+
+            $emailToList = array_values($emailToList);
+        }
+
+        // Only who may read the message: the access of the category does not say it in a category where the users see only their
+        // own topics (a follower of such a category would get the topics of the others).
+        if ($emailToList && $this->getCategory()->params->get('ownTopicsOnly')) {
+            $emailToList = array_values(array_filter(
+                $emailToList,
+                fn ($emailTo) => !empty($emailTo->id) && $this->isAuthorised('read', KunenaUserHelper::get((int) $emailTo->id))
+            ));
+        }
+
+        $sentusers = [];
+
+        if ($emailToList) {
+            foreach ($emailToList as $emailTo) {
+                if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
+                    continue;
+                }
+
+                if (
+                    $this->_config->emailVisibleAddress != $emailTo->email ||
+                    (
+                        \count($emailToList) == 1 &&
+                        ($emailTo->moderator || $emailTo->subscription)
+                    )
+                ) {
+                    $sentusers[] = $emailTo->id;
+                }
+            }
+        }
+
+        return [$emailToList, $once, $sentusers];
+    }
+
+    /**
+     * @param   bool|array  $ids     ids
+     * @param   string      $action  action
+     *
+     * @return  KunenaAttachment[]
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getAttachments($ids = false, $action = 'read'): array
+    {
+        if ($ids === false) {
+            $attachments = KunenaAttachmentHelper::getByMessage($this->id, $action);
+        } else {
+            $attachments = KunenaAttachmentHelper::getById($ids, $action);
+
+            foreach ($attachments as $id => $attachment) {
+                if ($attachment->mesid && $attachment->mesid != $this->id) {
+                    unset($attachments[$id]);
+                }
+            }
+        }
+
+        return $attachments;
+    }
+
+    /**
+     * Get the list of attachments that have been marked to be added to this message.
+     *
+     * @return  KunenaAttachment[]
+     *
+     * @since   Kunena 7.1
+     */
+    public function getAttachmentsToAdd(): array
+    {
+        return $this->_attachments_add;
+    }
+
+    /**
+     * @return  KunenaUser
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getAuthor(): KunenaUser
+    {
+        return KunenaUserHelper::getAuthor($this->userid, $this->name);
+    }
+
+    /**
+     * @return  KunenaCategory
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getCategory(): KunenaCategory
+    {
+        return KunenaCategoryHelper::get($this->catid);
+    }
+
+    /**
+     * The Message-ID of the e-mail of a message: the first message of a topic has the id of the topic, the other messages
+     * have the id of the message, so the e-mail of a reply can point to the e-mail of the message it answers.
+     *
+     * @param   int   $messageId    The message id.
+     * @param   int   $topicId      The topic id.
+     * @param   int   $firstPostId  The id of the first message of the topic.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected function getEmailMessageId(int $messageId, int $topicId, int $firstPostId): string
+    {
+        $local = $messageId === $firstPostId || !$firstPostId ? 'kunena-topic-' . $topicId : 'kunena-post-' . $messageId;
+
+        return '<' . $local . '@' . $this->getMessageIdDomain() . '>';
+    }
+
+    /**
+     * Returns \Kunena\Forum\Libraries\Forum\Message\Message object.
+     *
+     * @param   int   $identifier  The message to load - Can be only an integer.
+     * @param   bool  $reload      reload
+     *
+     * @return  KunenaMessage
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getInstance($identifier = null, $reload = false): KunenaMessage
+    {
+        return KunenaMessageHelper::get($identifier, $reload);
+    }
+
+    /**
+     * The values of the tags of the mail template of a notification: for the html body and for the plain text body.
+     *
+     * @param   int     $subscription    1 for a subscriber, 0 for a moderator.
+     * @param   string  $url             The address of the message.
+     * @param   bool    $once            Only the first message is mailed.
+     * @param   string  $unsubscribeUrl  The address to unsubscribe (empty when there is none).
+     *
+     * @return  array  html and plain.
+     *
+     * @since   Kunena 7.2
+     */
+    protected function getMailTemplateData(int $subscription, string $url, bool $once, string $unsubscribeUrl): array
+    {
+        $topic   = $this->getTopic();
+        $subject = $this->subject ?: $topic->subject;
+
+        if ($subscription) {
+            $heading = $this->_approved
+                ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION_APPROVED_MESSAGE')
+                : Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT') . ' ' . $this->_config->boardTitle;
+            $note    = Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
+        } else {
+            $heading = Text::_(empty($this->modified_time) ? 'COM_KUNENA_POST_EMAIL_MOD1' : 'COM_KUNENA_POST_EMAIL_MOD3') . ' ' . $this->_config->boardTitle;
+            $note    = Text::_('COM_KUNENA_POST_EMAIL_MOD2');
+        }
+
+        $more   = $once ? Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') : '';
+        $footer = Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3');
+        $esc    = static fn (string $text): string => htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+
+        $common = [
+            'sitename'   => Factory::getApplication()->get('sitename'),
+            'boardtitle' => $this->_config->boardTitle,
+            'heading'    => $heading,
+            'subject'    => $subject,
+            'topic'      => $topic->subject,
+            'category'   => $this->getCategory()->name,
+            'author'     => $this->getAuthor()->getName('???', false),
+            'url'        => $url,
+        ];
+
+        $html = $common + [
+            'message'     => $this->_config->mailFull ? '<p style="margin:18px 0 4px;color:#888888">' . $esc(Text::_('COM_KUNENA_MESSAGE')) . ':</p><div style="border-left:3px solid #dddddd;padding:4px 14px;margin:0 0 6px">' . $this->displayField('message', true, 'subscription') . '</div>' : '',
+            'more'        => $more ? '<p style="font-size:14px">' . $esc($more) . '</p>' : '',
+            'footer'      => $esc($footer) . '<br>' . $esc($note),
+            'unsubscribe' => $unsubscribeUrl
+                ? '<p style="font-size:12px;color:#999999">' . $esc(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC')) . ' <a href="' . $esc($unsubscribeUrl) . '" style="color:#999999">' . $esc(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE')) . '</a></p>'
+                : '',
+        ];
+
+        $plain = $common + [
+            'message'     => $this->_config->mailFull ? Text::_('COM_KUNENA_MESSAGE') . ":\n" . $this->displayField('message', false) . "\n" : '',
+            'more'        => $more ? $more . "\n" : '',
+            'footer'      => $footer . "\n" . $note,
+            'unsubscribe' => $unsubscribeUrl ? Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC') . "\n" . $unsubscribeUrl : '',
+        ];
+
+        return ['html' => $html, 'plain' => $plain];
+    }
+
+    /**
+     * The ids of the users which are mentioned in a text: [mention userid=1]name[/mention].
+     *
+     * @param   string  $text  The text of a message.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getMentionedUserIds(string $text): array
+    {
+        if (!preg_match_all('/\[mention userid=(\d+)\]/i', $text, $matches)) {
+            return [];
+        }
+
+        return array_values(array_unique(array_map('intval', $matches[1])));
+    }
+
+    /**
+     * The address part of the Message-ID of the e-mails of the forum: the domain of the site.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected function getMessageIdDomain(): string
+    {
+        $host = (string) parse_url(Uri::root(), PHP_URL_HOST);
+        $host = strtolower(preg_replace('/[^a-z0-9.-]/i', '', $host));
+
+        // The Message-ID needs a domain with a dot.
+        return $host !== '' && strpos($host, '.') !== false ? $host : ($host ?: 'localhost') . '.localdomain';
+    }
+
+    /**
+     * @return  KunenaDate
+     *
+     * @since   Kunena 6.0
+     */
+    public function getModifiedTime(): KunenaDate
+    {
+        return new KunenaDate($this->modified_time);
+    }
+
+    /**
+     * @return  KunenaUser
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getModifier(): KunenaUser
+    {
+        return KunenaUserHelper::get($this->modified_by);
+    }
+
+    /**
+     * Get the number of attachments into a message
+     *
+     * @return  StdClass
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getNbAttachments()
+    {
+        $attachments = KunenaAttachmentHelper::getNumberAttachments($this->id);
+
+        $attachs                       = new StdClass();
+        $attachs->inline               = 0;
+        $attachs->image                = 0;
+        $attachs->file                 = 0;
+        $attachs->totalNonProtected    = 0;
+        $attachs->readable             = 0;
+        $attachs->totalProtected       = 0;
+        $attachs->totalPrivate         = 0;
+
+        foreach ($attachments as $attach) {
+            if ($attach->inline) {
+                $attachs->inline = $attachs->inline + 1;
+            }
+
+            if ($attach->isImage()) {
+                $attachs->image = $attachs->image + 1;
+            } else {
+                $attachs->file = $attachs->file + 1;
+            }
+
+            if ($attach->protected == 0) {
+                $attachs->totalNonProtected = $attachs->totalNonProtected + 1;
+            }
+
+            if ($attach->isAuthorised('read')) {
+                if (!$attach->inline) {
+                    $attachs->readable = $attachs->readable + 1;
+                }
+            }
+
+            if ($attach->protected != 32) {
+                $attachs->totalProtected = $attachs->totalProtected + 1;
+            }
+
+            if ($attach->protected == 32) {
+                $attachs->totalPrivate = $attachs->totalPrivate + 1;
+            }
+        }
+
+        return $attachs;
+    }
+
+    /**
+     * @return  KunenaMessage
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getParent(): KunenaMessage
+    {
+        return KunenaMessageHelper::get($this->parent);
+    }
+
+    /**
+     * @param   null|KunenaCategory  $category  category
+     *
+     * @return  Uri|boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getPermaUri($category = null)
+    {
+        $category = $category ? KunenaCategoryHelper::get($category) : $this->getCategory();
+
+        if (!$this->exists() || !$category->exists()) {
+            return false;
+        }
+
+        return Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
+    }
+
+    /**
+     *  Get permament topic URL without domain.
+     *
+     * If you want to add domain (for email etc), you can prepend the output with this:
+     * Uri::getInstance()->toString(array('scheme', 'host', 'port'))
+     *
+     * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
+     * @param   bool                 $xhtml     xhtml
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getPermaUrl($category = null, $xhtml = true): string
+    {
+        $uri = $this->getPermaUri($category);
+
+        return KunenaRoute::_($uri, $xhtml);
+    }
+
+    /**
+     * Get published state in text.
+     *
+     * @return  string
+     *
+     * @since   Kunena 4.0
+     */
+    public function getState(): string
+    {
+        switch ($this->hold) {
+            case 0:
+                return 'published';
+            case 1:
+                return 'unapproved';
+            case 2:
+            case 3:
+                return 'deleted';
+        }
+
+        return 'unknown';
+    }
+
+    /**
      * Get the substring
      *
      * @param   string   $string  string
@@ -1908,21 +1664,500 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
-     * The ids of the users which are mentioned in a text: [mention userid=1]name[/mention].
+     * Get the table relevant properties. Override for your specific Object
      *
-     * @param   string  $text  The text of a message.
+     * @return array    Assocative array with the propertie values of table
      *
-     * @return  int[]
-     *
-     * @since   Kunena 7.2
+     * @since   Kunena 6.4
      */
-    public static function getMentionedUserIds(string $text): array
+    protected function getTableProperties(): array
     {
-        if (!preg_match_all('/\[mention userid=(\d+)\]/i', $text, $matches)) {
-            return [];
+        $properties = [
+            'id'              => $this->id,
+            'parent'          => $this->parent,
+            'thread'          => $this->thread,
+            'catid'           => $this->catid,
+            'name'            => $this->name,
+            'userid'          => $this->userid,
+            'email'           => $this->email,
+            'subject'         => $this->subject,
+            'time'            => $this->time,
+            'ip'              => $this->ip,
+            'topic_emoticon'  => $this->topic_emoticon,
+            'locked'          => $this->locked,
+            'hold'            => $this->hold,
+            'ordering'        => $this->ordering,
+            'hits'            => $this->hits,
+            'moved'           => $this->moved,
+            'deleted_time'    => $this->deleted_time,
+            'modified_by'     => $this->modified_by,
+            'modified_time'   => $this->modified_time,
+            'modified_reason' => $this->modified_reason,
+            'message'         => $this->message,
+        ];
+
+        return $properties;
+    }
+
+    /**
+     * @return  KunenaDate
+     *
+     * @since   Kunena 6.0
+     */
+    public function getTime(): KunenaDate
+    {
+        return new KunenaDate($this->time);
+    }
+
+    /**
+     * @return KunenaTopic|null
+     *
+     * @since   Kunena 6.0
+     * @throws Exception
+     */
+    public function getTopic(): ?KunenaTopic
+    {
+        if (!$this->_topic) {
+            $this->_topic = KunenaTopicHelper::get($this->thread);
         }
 
-        return array_values(array_unique(array_map('intval', $matches[1])));
+        return $this->_topic;
+    }
+
+    /**
+     * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
+     *
+     * @return  Uri
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getUri($category = null)
+    {
+        return $this->getTopic()->getUri($category, $this);
+    }
+
+    /**
+     * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
+     * @param   bool                 $xhtml     xhtml
+     * @param   int                  $itemid    itemid
+     *
+     * @return string
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function getUrl($category = null, $xhtml = true, $itemid = 0): string
+    {
+        return $this->getTopic()->getUrl($category, $xhtml, $this, $itemid);
+    }
+
+    /**
+     * @param   mixed  $user  user
+     *
+     * @return  KunenaTopicUser
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getUserTopic($user = null)
+    {
+        return $this->getTopic()->getUserTopic($user);
+    }
+
+    /**
+     * Returns true if user is authorised to do the action.
+     *
+     * @param   string           $action  action
+     * @param   KunenaUser|null  $user    user
+     *
+     * @return  boolean
+     *
+     * @throws Exception
+     * @since   Kunena 4.0
+     */
+    public function isAuthorised(string $action = 'read', ?KunenaUser $user = null)
+    {
+        if ($this->_config->readOnly) {
+            // Special case to ignore authorisation.
+            if ($action != 'read') {
+                return false;
+            }
+        }
+
+        return !$this->tryAuthorise($action, $user, false);
+    }
+
+    /**
+     * @param   mixed  $user  user
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function isNew($user = null): bool
+    {
+        $user = KunenaUserHelper::get($user);
+
+        if (!$this->_config->showNew || !$user->exists()) {
+            return false;
+        }
+
+        $session = KunenaFactory::getSession();
+
+        if ($this->time < $session->getAllReadTime()) {
+            return false;
+        }
+
+        $allreadtime = KunenaCategoryUserHelper::get($this->getCategory()->id, $user)->allreadtime;
+
+        if ($allreadtime && $this->time < $allreadtime) {
+            return false;
+        }
+
+        $read = KunenaTopicUserReadHelper::get($this->getTopic(), $user);
+
+        if ($this->id == $read->message_id || $this->time < $read->time) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Method to load a \Kunena\Forum\Libraries\Forum\Message\Message object by id.
+     *
+     * @param   mixed  $id  The message id to be loaded
+     *
+     * @return  boolean  True on success
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function load($id = null): bool
+    {
+        $exists        = parent::load($id);
+        $this->_hold   = $exists ? $this->hold : 1;
+        $this->_thread = $this->thread;
+
+        return $exists;
+    }
+
+    /**
+     * @param   mixed  $user  user
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function makeAnonymous($user = null): void
+    {
+        $user = KunenaUserHelper::get($user);
+
+        if ($user->userid == $this->userid && $this->modified_by == $this->userid) {
+            // I am the author and previous modification was made by me => delete modification information to hide my personality
+            $this->modified_by     = 0;
+            $this->modified_time   = 0;
+            $this->modified_reason = '';
+        } elseif ($user->userid == $this->userid) {
+            // I am the author, but somebody else has modified the message => leave modification information intact
+            $this->modified_by     = null;
+            $this->modified_time   = null;
+            $this->modified_reason = null;
+        }
+
+        // Remove userid, email and ip address
+        $this->userid = 0;
+        $this->ip     = '';
+        $this->email  = null;
+    }
+
+    /**
+     * @param   array       $fields      fields
+     * @param   int         $useridfromparent
+     * @param   null|array  $safefields  safefields
+     *
+     * @return  array
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function newReply($fields = [], $useridfromparent = 0, $safefields = null): array
+    {
+        $user     = KunenaUserHelper::get();
+        $topic    = $this->getTopic();
+        $category = $this->getCategory();
+
+        $message = new KunenaMessage();
+        $message->setTopic($topic);
+        $message->parent  = $this->id;
+        $message->thread  = $topic->id;
+        $message->catid   = $topic->category_id;
+        $message->name    = $user->getName('');
+        $message->userid  = $user->userid;
+        $message->subject = $this->subject;
+        $message->ip      = KunenaUserHelper::getUserIp();
+
+        // Add IP to user.
+        if (KunenaConfig::getInstance()->ipTracking) {
+            if (empty($user->ip)) {
+                $user->ip = KunenaUserHelper::getUserIp();
+            }
+        }
+
+        if (KunenaConfig::getInstance()->allowChangeSubject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator()) {
+            if (isset($fields['subject'])) {
+                $topic->subject = $fields['subject'];
+            }
+        }
+
+        if ($topic->hold) {
+            // If topic was unapproved or deleted, use the same state for the new message
+            $message->hold = $topic->hold;
+        } else {
+            // Otherwise message is either unapproved or published depending if the category is moderated or not
+            $message->hold = $category->review ? (int) !$category->isAuthorised('moderate', $user) : 0;
+        }
+
+        if ($fields['quote'] === true) {
+            $userfromparent     = KunenaUserHelper::get($useridfromparent);
+            $userfromparentname = $userfromparent->getName();
+
+            if (empty($userfromparent->getName())) {
+                $userfromparentname = 'anonymous';
+            }
+
+            $find             = ['/\[confidential\](.*?)\[\/confidential\]/su'];
+            $replace          = '';
+            $text             = preg_replace($find, $replace, $this->message);
+            $message->message = "[quote=\"{$userfromparentname} post={$this->id} userid={$useridfromparent}\"]" . $text . "[/quote]";
+        } else {
+            if (\is_array($safefields)) {
+                $message->bind($safefields);
+            }
+
+            if (\is_array($fields)) {
+                $message->bind($fields, ['name', 'email', 'subject', 'message'], true);
+            }
+        }
+
+        return [$topic, $message];
+    }
+
+    /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function notificationCloseConnection(): void
+    {
+        $app = Factory::getApplication();
+        $app->setHeader('Connection', 'close');
+    }
+
+    /**
+     * Choose how to handle the notification : store in queue for later in task plugin or send it now
+     *
+     * @param   null|string  $url       url
+     * @param   boolean      $approved  false
+     * @param   boolean      $type  Default on false mean to store the notification in queue (in database)
+     *
+     * @return  boolean|false
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    public function processNotification($url = null, $approved = false, $type = false)
+    {
+        $this->_approved = $approved;
+
+        // Gather data to be able to the handle to send the notification
+        list($emailToList, $once, $sentusers) = $this->gatherNotificationData();
+
+        // An inbox stores the notification for the users, and tells which of them do not want the e-mail as well.
+        if (!empty($emailToList)) {
+            $inboxUsers = [];
+
+            foreach ($emailToList as $emailTo) {
+                if (!empty($emailTo->id)) {
+                    $inboxUsers[(int) $emailTo->id] = !empty($emailTo->follower) ? 'follow' : ($emailTo->subscription ? 'subscription' : 'moderation');
+                }
+            }
+
+            foreach (array_unique($inboxUsers) as $inboxType) {
+                $noMail = KunenaPrivate::getInstance()->notify($this, $inboxType, array_keys(array_filter($inboxUsers, static fn ($type) => $type === $inboxType)));
+
+                if ($noMail) {
+                    $emailToList = array_values(array_filter($emailToList, static fn ($emailTo) => !\in_array((int) ($emailTo->id ?? 0), $noMail, true)));
+                }
+            }
+        }
+
+        // No need to go further if mail settings are not configured
+        $joomlaConfig = Factory::getApplication()->getConfig();
+
+        if (!$joomlaConfig->get('mailonline') || !$this->_config->sendEmails) {
+            return false;
+        }
+
+        // Nobody to notify: do not queue or send an empty notification
+        if (empty($emailToList)) {
+            return false;
+        }
+
+        if (!$url) {
+            $url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl();
+        }
+
+        $topic = $this->getTopic();
+
+        $subject     = $this->subject ? $this->subject : $topic->subject;
+
+        if ($type) {
+            // Send the notification now
+            return $this->sendNotificationNow($emailToList, $subject, $url, $once, $sentusers);
+        }
+        // Store the notification in queue
+        $columns = ['subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once', 'sentusers'];
+
+        $values = [$this->_db->quote($subject), $this->id, $this->_db->quote($url), $this->_db->quote(json_encode($emailToList)), $this->_db->quote($this->getCategory()->name), (int) $once, $this->_db->quote(json_encode($sentusers))];
+
+        $query     = $this->_db->createQuery()
+            ->insert($this->_db->quoteName('#__kunena_notifications_mailsqueue'))
+            ->columns($this->_db->quoteName($columns))
+            ->values(implode(',', $values));
+
+        $this->_db->setQuery($query);
+
+        try {
+            $this->_db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return true;
+    }
+
+    /**
+     * @param   int  $value  value
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function publish($value = KunenaForum::PUBLISHED)
+    {
+        if ($this->hold == $value) {
+            return true;
+        }
+
+        $this->hold = (int) $value;
+
+        return $this->save();
+    }
+
+    /**
+     * Remove listed attachments from the message.
+     *
+     * @param   array  $ids  ids
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 4.0
+     */
+    public function removeAttachments(array $ids): void
+    {
+        $this->_attachments_del += $this->getAttachments($ids, 'none');
+    }
+
+    /**
+     * Method to save the \Kunena\Forum\Libraries\Forum\Message\Message object to the database.
+     *
+     * @return bool
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function save(): bool
+    {
+        $user = KunenaUserHelper::getMyself();
+
+        if ($user->userid == 0 && $this->userid) {
+            $user = KunenaUserHelper::get($this->userid);
+        }
+
+        if ($user->userid == 0 && !$this->_config->pubWrite) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
+        }
+
+        $isNew = !$this->_exists;
+
+        $topic    = $this->getTopic();
+        $newTopic = !$topic->exists();
+
+        if ($newTopic) {
+            // Create topic, but do not cascade changes to category etc..
+            try {
+                $topic->save(false);
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
+            }
+
+            $this->_thread = $this->thread = $topic->id;
+        }
+
+        // Create message
+        if (!parent::save()) {
+            // If we created a new topic, remember to delete it too.
+            if ($newTopic) {
+                $topic->delete();
+            }
+
+            return false;
+        }
+
+        if ($isNew) {
+            $this->_hold = 1;
+        }
+
+        // Update attachments and message text
+        $update = $this->updateAttachments();
+
+        // Did we change anything?
+        if ($update) {
+            if ($isNew && trim($this->message) == '') {
+                // Oops, no attachments remain and the message becomes empty.
+                // Let's delete the new message and fail on save.
+                $this->delete();
+
+                // If we created a new topic, remember to delete it too.
+                if ($newTopic) {
+                    $topic->delete();
+                }
+
+                throw new Exception(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
+            }
+
+            $table = $this->getTable();
+            $table->bind($this->getTableProperties());
+            $table->exists(true);
+
+            try {
+                $table->store();
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
+            }
+        }
+
+        // Cascade changes to other tables
+        $this->update($newTopic);
+
+        return true;
     }
 
     /**
@@ -2048,612 +2283,380 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
-     * The address part of the Message-ID of the e-mails of the forum: the domain of the site.
+     * Send the notification mail
      *
-     * @return  string
+     * @param   array    $emailToList  Contains a list of users to whom the notification will be sent
+     * @param   string   $subject  The subject of the notification mail
+     * @param   string   $url  The url of the message of the notification mail
+     * @param   boolean  $once
+     * @param   array    $sentusers
+     * @param   callable|null  $onRecipientSent  Callback for each successfully sent recipient
      *
-     * @since   Kunena 7.2
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
      */
-    protected function getMessageIdDomain(): string
+    public function sendNotificationNow($emailToList, $subject, $url, $once, $sentusers, ?callable $onRecipientSent = null): bool
     {
-        $host = (string) parse_url(Uri::root(), PHP_URL_HOST);
-        $host = strtolower(preg_replace('/[^a-z0-9.-]/i', '', $host));
+        $mailnamesender = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
 
-        // The Message-ID needs a domain with a dot.
-        return $host !== '' && strpos($host, '.') !== false ? $host : ($host ?: 'localhost') . '.localdomain';
+        $app             = Factory::getApplication();
+        $lang            = $app->getLanguage();
+        $currentLanguage = $lang->getTag();
+
+        KunenaFactory::loadLanguage('com_kunena', 'site');
+        KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
+
+        // Send one email per recipient, in their own language.
+        $success = true;
+
+        foreach ($emailToList as $recipientIndex => $emailTo) {
+            if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
+                continue;
+            }
+
+            if (
+                $this->_config->emailVisibleAddress == $emailTo->email &&
+                !(
+                    \count($emailToList) == 1 &&
+                    ($emailTo->moderator || $emailTo->subscription)
+                )
+            ) {
+                continue;
+            }
+
+            // Determine subscription type (1 = subscriber, 0 = moderator/admin).
+            $subscriptionType = $emailTo->subscription ? 1 : 0;
+
+            // Load the recipient's language if it differs from the current one.
+            $recipientLanguage = null;
+
+            if (!empty($emailTo->id)) {
+                $kunenaUser = KunenaUserHelper::get((int) $emailTo->id);
+
+                if (!empty($kunenaUser->language)) {
+                    $recipientLanguage = $kunenaUser->language;
+                }
+            }
+
+            $languageChanged = $recipientLanguage && $recipientLanguage !== $currentLanguage;
+
+            $siteLanguageLoaded = KunenaFactory::loadLanguageMail(
+                'com_kunena',
+                'site',
+                $recipientLanguage
+            );
+
+            $librariesLanguageLoaded = KunenaFactory::loadLanguageMail(
+                'com_kunena.libraries',
+                'admin',
+                $recipientLanguage
+            );
+
+            try {
+                $mailSubject = MailHelper::cleanSubject($subject . " (" . $this->getCategory()->name . ")");
+
+                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                $mail->setSubject($mailSubject);
+                $mail->setSender([$this->_config->email, $mailnamesender]);
+
+                if (!$this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, (string) $recipientLanguage)) {
+                    $success = false;
+                } elseif ($onRecipientSent !== null) {
+                    $onRecipientSent($recipientIndex);
+                }
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
+            } finally {
+                // Restore original language regardless of success or failure.
+                if ($languageChanged) {
+                    $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
+                }
+            }
+        }
+
+        // Update subscriptions.
+        if ($success && $once && $sentusers) {
+            $sentusers = implode(',', $sentusers);
+            $query     = $this->_db->createQuery()
+                ->update('#__kunena_user_topics')
+                ->set('subscribed=2')
+                ->where("topic_id={$this->thread}")
+                ->where("user_id IN ({$sentusers})")
+                ->where('subscribed=1');
+
+            $this->_db->setQuery($query);
+
+            try {
+                $this->_db->execute();
+            } catch (ExecutionFailureException $e) {
+                throw new Exception($e->getMessage());
+            }
+        }
+
+        return $success;
     }
 
     /**
-     * The Message-ID of the e-mail of a message: the first message of a topic has the id of the topic, the other messages
-     * have the id of the message, so the e-mail of a reply can point to the e-mail of the message it answers.
-     *
-     * @param   int   $messageId    The message id.
-     * @param   int   $topicId      The topic id.
-     * @param   int   $firstPostId  The id of the first message of the topic.
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    protected function getEmailMessageId(int $messageId, int $topicId, int $firstPostId): string
-    {
-        $local = $messageId === $firstPostId || !$firstPostId ? 'kunena-topic-' . $topicId : 'kunena-post-' . $messageId;
-
-        return '<' . $local . '@' . $this->getMessageIdDomain() . '>';
-    }
-
-    /**
-     * Add the headers which describe the message (X-Forum-*) and the ones which let the mail program thread the e-mails
-     * of a topic (Message-ID, In-Reply-To and References), so filters and threads can be made.
-     *
-     * @param   Mail  $mail  The mail.
+     * @param   KunenaTopic  $topic  topic
      *
      * @return  void
      *
-     * @since   Kunena 7.2
-     */
-    protected function addForumHeaders(Mail $mail): void
-    {
-        // On by default: the option is not in the stored configuration until it has been saved once.
-        if (isset($this->_config->emailForumHeaders) && !$this->_config->emailForumHeaders) {
-            return;
-        }
-
-        $topic    = $this->getTopic();
-        $category = $this->getCategory();
-
-        // A header is one line, and a value with other characters than ASCII is encoded.
-        $clean = static function ($value) use ($mail): string {
-            $value = trim(preg_replace('/\s+/', ' ', strip_tags((string) $value)));
-
-            return $mail->encodeHeader(MailHelper::cleanLine($value));
-        };
-
-        $headers = [
-            'X-Forum'             => 'kunena',
-            'X-Forum-URL'         => Uri::root(),
-            'X-Forum-Name'        => $this->_config->boardTitle,
-            'X-Forum-Category'    => $category->name,
-            'X-Forum-Category-Id' => (int) $category->id,
-            'X-Forum-Topic'       => $topic->subject,
-            'X-Forum-Topic-Id'    => (int) $topic->id,
-            'X-Forum-Post-Id'     => (int) $this->id,
-            'X-Forum-Type'        => $this->parent ? 'reply' : 'new-topic',
-            'X-Forum-Who'         => $this->getAuthor()->getName($this->name),
-        ];
-
-        foreach ($headers as $name => $value) {
-            $mail->addCustomHeader($name, $clean($value));
-        }
-
-        // The threading: the first message of a topic starts the thread, a reply points to the message it answers and to the start.
-        $firstPostId     = (int) $topic->first_post_id;
-        $mail->MessageID = $this->getEmailMessageId((int) $this->id, (int) $topic->id, $firstPostId);
-
-        if ($this->parent && $firstPostId && (int) $this->id !== $firstPostId) {
-            $start  = $this->getEmailMessageId($firstPostId, (int) $topic->id, $firstPostId);
-            $parent = $this->getEmailMessageId((int) $this->parent, (int) $topic->id, $firstPostId);
-
-            $mail->addCustomHeader('In-Reply-To', $parent);
-            $mail->addCustomHeader('References', $parent === $start ? $start : $start . ' ' . $parent);
-        }
-    }
-
-    /**
-     * @param   Mail    $mail          mail
-     * @param   int     $subscription  subscription
-     * @param   string  $subject       subject
-     * @param   string  $url           url
-     * @param   bool    $once          once
-     *
-     * @return  void
-     *
-     * @throws Exception
      * @since   Kunena 6.0
      */
-    protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId = 0, bool $follower = false): void
+    public function setTopic(KunenaTopic $topic): void
     {
-        $unsubscribeUrl = $this->addNotificationHeaders($mail, $subscription, $recipientId, $follower);
+        $this->_topic = $topic;
 
-        $layout = KunenaLayout::factory('Email/Subscription')->debug(false)
-            ->set('mail', $mail)
-            ->set('message', $this)
-            ->set('messageUrl', $url)
-            ->set('once', $once)
-            ->set('unsubscribeUrl', $unsubscribeUrl);
+        if ($topic->id) {
+            $this->thread = $topic->id;
+        }
+    }
 
-        $msg = '';
+    /**
+     * Throws an exception if user isn't authorised to do the action.
+     *
+     * @param   string           $action  action
+     * @param   KunenaUser|null  $user    user
+     * @param   bool             $throw   trow
+     *
+     * @return  mixed
+     *
+     * @throws Exception
+     * @since   Kunena 4.0
+     */
+    public function tryAuthorise($action = 'read', ?KunenaUser $user = null, $throw = true)
+    {
+        // Special case to ignore authorisation.
+        if ($action == 'none') {
+            return false;
+        }
+
+        // Load user if not given.
+        if ($user === null) {
+            $user = KunenaUserHelper::getMyself();
+        }
+
+        if (empty($this->_authcache[$user->userid][$action])) {
+            // Unknown action - throw invalid argument exception.
+            if (!isset(self::$actions[$action])) {
+                throw new InvalidArgumentException(Text::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
+            }
+
+            // Load category authorisation.
+            if (!isset($this->_authtcache[$user->userid][$action])) {
+                $this->_authtcache[$user->userid][$action] = $this->getTopic()->tryAuthorise('post.' . $action, $user, false);
+            }
+
+            $this->_authcache[$user->userid][$action] = $this->_authtcache[$user->userid][$action];
+
+            if (empty($this->_authcache[$user->userid][$action])) {
+                foreach (self::$actions[$action] as $function) {
+                    if (!isset($this->_authfcache[$user->userid][$function])) {
+                        $authFunction                                = 'authorise' . $function;
+                        $this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
+                    }
+
+                    $error = $this->_authfcache[$user->userid][$function];
+
+                    if ($error) {
+                        $this->_authcache[$user->userid][$action] = $error;
+                        break;
+                    }
+                }
+            }
+        }
+
+        $exception = $this->_authcache[$user->userid][$action];
+
+        // Throw or return the exception.
+        if ($throw && $exception) {
+            throw $exception;
+        }
+
+        return $exception;
+    }
+
+    /**
+     * @param   bool  $newTopic  new topic
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function update($newTopic = false): void
+    {
+        // If post was published and then moved, we need to update old topic
+        if (!$this->_hold && $this->_thread && $this->_thread != $this->thread) {
+            $topic = KunenaTopicHelper::get($this->_thread);
+
+            try {
+                $topic->update($this, -1);
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
+            }
+        }
+
+        $postDelta = $this->delta();
+        $topic     = $this->getTopic();
+
+        // New topic
+        if ($newTopic) {
+            $topic->hold = 0;
+        }
+
+        // Update topic
+        if (!$this->hold && $topic->hold && $topic->exists()) {
+            // We published message -> publish and recount topic
+            $topic->hold = 0;
+            $topic->recount();
+        }
 
         try {
-            $msg = trim($layout->render($subscription ? 'default' : 'moderator'));
+            $topic->update($this, $postDelta);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
 
-        $mail->setBody($msg);
+        // Activity integration
+        // FIXME : load the plugin finder produce a fatal error
+        // Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+        $activity = KunenaFactory::getActivityIntegration();
+
+        if ($postDelta < 0) {
+            $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+            $dispatcher->dispatch('onDeleteKunenaPost', new KunenaDeleteEvent('onDeleteKunenaPost', ['context' => 'com_kunena.post', 'subject' => $this, 'ids' => [$this->id]]));
+            $activity->onAfterDelete($this);
+        } elseif ($postDelta > 0) {
+            $topic->markRead();
+
+            if ($this->parent == 0) {
+                $activity->onAfterPost($this);
+            } else {
+                $activity->onAfterReply($this);
+            }
+        }
     }
 
     /**
-     * The headers of the e-mail of a notification (the unsubscribe headers and the headers of the forum).
+     * @return  boolean
      *
-     * @param   Mail   $mail         The mail.
-     * @param   int    $subscription 1 for a subscriber, 0 for a moderator.
-     * @param   int    $recipientId  The user who gets the mail.
-     * @param   bool   $follower     The recipient follows the author.
-     *
-     * @return  string  The address to unsubscribe (empty when the mail has none).
-     *
-     * @since   Kunena 7.2
+     * @since   Kunena 6.0
      */
-    protected function addNotificationHeaders(Mail $mail, int $subscription, int $recipientId, bool $follower): string
+    protected function updateAttachments(): bool
     {
-        // Subscribers can unsubscribe from the email itself: a reply is a topic subscription, a new topic a category subscription.
-        $unsubscribeUrl = '';
+        // Save new attachments and update message text
+        $message = $this->message;
+        $app     = Factory::getApplication();
 
-        if ($subscription && $recipientId > 0) {
-            $type = $this->parent ? KunenaEmailUnsubscribe::TOPIC : KunenaEmailUnsubscribe::CATEGORY;
-            $id   = $this->parent ? (int) $this->thread : (int) $this->catid;
+        // No more files in a message than the option attachmentLimit allows (the uploader stops there, a request did not): the files
+        // which stay in the message count, the new ones which do not fit are left out.
+        $limit = (int) $this->_config->attachmentLimit;
 
-            if ($follower) {
-                // The recipient gets this e-mail because he follows the author.
-                $type = KunenaEmailUnsubscribe::FOLLOW;
-                $id   = (int) $this->userid;
+        if ($limit > 0) {
+            $kept = $this->id ? array_diff_key($this->getAttachments(false, 'none'), $this->_attachments_del) : [];
+            $room = max(0, $limit - \count($kept));
+
+            foreach ($this->_attachments_add as $tmpid => $attachment) {
+                if (isset($kept[$attachment->id])) {
+                    continue;
+                }
+
+                if ($room > 0) {
+                    $room--;
+                } else {
+                    unset($this->_attachments_add[$tmpid]);
+                }
             }
-
-            $unsubscribeUrl = KunenaEmailUnsubscribe::getUrl($type, $id, $recipientId);
-
-            // One-click unsubscribe of mail programs (RFC 8058).
-            $mail->addCustomHeader('List-Unsubscribe', '<' . KunenaEmailUnsubscribe::getPostUrl($type, $id, $recipientId) . '>');
-            $mail->addCustomHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
         }
 
-        $this->addForumHeaders($mail);
+        foreach ($this->_attachments_add as $tmpid => $attachment) {
+            if ($attachment->exists() && $attachment->mesid) {
+                try {
+                    $attachment->save();
+                } catch (Exception $e) {
+                    $app->enqueueMessage($e->getMessage(), 'error');
+                }
+            }
 
-        return $unsubscribeUrl;
+            $attachment->mesid = $this->id;
+
+            if ($attachment->IsImage()) {
+                try {
+                    $attachment->tryAuthorise('createimage', null, false);
+                } catch (Exception $e) {
+                    $app->enqueueMessage($e->getMessage(), 'error');
+                }
+            } else {
+                try {
+                    $attachment->tryAuthorise('createfile', null, false);
+                } catch (Exception $e) {
+                    $app->enqueueMessage($e->getMessage(), 'error');
+                }
+            }
+
+            try {
+                $attachment->save();
+            } catch (Exception $e) {
+                $app->enqueueMessage($e->getMessage(), 'error');
+            }
+
+            // Update attachments count and fix attachment name inside message
+            $this->getTopic()->attachments++;
+            $this->message = preg_replace('/\[attachment\:' . $tmpid . '\].*?\[\/attachment\]/u', "[attachment={$attachment->id}]{$attachment->filename}[/attachment]", $this->message);
+        }
+
+        // Delete removed attachments and update attachments count and message text
+        foreach ($this->_attachments_del as $attachment) {
+            if ($attachment->mesid && $attachment->mesid != $this->id) {
+                // Attachment doesn't belong to this message => skip it.
+                continue;
+            }
+
+            $exception = $attachment->tryAuthorise('delete', null, false);
+
+            if ($exception) {
+                throw new Exception($exception->getMessage());
+            }
+
+            try {
+                $attachment->delete();
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
+            }
+
+            $this->getTopic()->attachments--;
+
+            $this->message = preg_replace('/\[attachment\=' . $attachment->id . '\].*?\[\/attachment\]/u', '', $this->message);
+            $this->message = preg_replace('/\[attachment\]' . $attachment->filename . '\[\/attachment\]/u', '', $this->message);
+        }
+
+        // Remove missing temporary attachments from the message text
+        $this->message = trim(preg_replace('/\[attachment\:\d+\].*?\[\/attachment\]/u', '', $this->message));
+
+        // Return true if we changed the message contents
+        return $this->message != $message;
     }
 
     /**
-     * Send the e-mail of a notification to one address: from the mail template of Joomla (the setting of the forum), or from the
-     * layout of the template of the forum.
-     *
-     * @param   Mail    $mail          The mail (the sender is set).
-     * @param   int     $subscription  1 for a subscriber, 0 for a moderator.
-     * @param   string  $subject       The subject (for the layout).
-     * @param   string  $url           The address of the message.
-     * @param   bool    $once          Only the first message is mailed.
-     * @param   int     $recipientId   The user who gets the mail.
-     * @param   bool    $follower      The recipient follows the author.
-     * @param   string  $email         The address.
-     * @param   string  $language      The language of the recipient.
+     * @param   int         $tmpid    tmpid
+     * @param   string      $postvar  postvar
+     * @param   int|null    $catid    catid
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
-     */
-    protected function deliverNotification(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId, bool $follower, string $email, string $language): bool
-    {
-        $templateId = $subscription ? 'com_kunena.subscription' : 'com_kunena.moderator';
-
-        if (KunenaMailTemplate::isUsed($templateId)) {
-            $unsubscribeUrl = $this->addNotificationHeaders($mail, $subscription, $recipientId, $follower);
-            $data           = $this->getMailTemplateData($subscription, $url, $once, $unsubscribeUrl);
-
-            return KunenaMailTemplate::send($templateId, $language, $mail, $data['html'], $data['plain'], ['sitename', 'boardtitle', 'heading', 'subject', 'topic', 'category', 'author', 'url'], $email);
-        }
-
-        $this->attachEmailBody($mail, $subscription, $subject, $url, $once, $recipientId, $follower);
-
-        return KunenaEmail::send($mail, [$email]);
-    }
-
-    /**
-     * The values of the tags of the mail template of a notification: for the html body and for the plain text body.
-     *
-     * @param   int     $subscription    1 for a subscriber, 0 for a moderator.
-     * @param   string  $url             The address of the message.
-     * @param   bool    $once            Only the first message is mailed.
-     * @param   string  $unsubscribeUrl  The address to unsubscribe (empty when there is none).
-     *
-     * @return  array  html and plain.
-     *
-     * @since   Kunena 7.2
-     */
-    protected function getMailTemplateData(int $subscription, string $url, bool $once, string $unsubscribeUrl): array
-    {
-        $topic   = $this->getTopic();
-        $subject = $this->subject ?: $topic->subject;
-
-        if ($subscription) {
-            $heading = $this->_approved
-                ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION_APPROVED_MESSAGE')
-                : Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT') . ' ' . $this->_config->boardTitle;
-            $note    = Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
-        } else {
-            $heading = Text::_(empty($this->modified_time) ? 'COM_KUNENA_POST_EMAIL_MOD1' : 'COM_KUNENA_POST_EMAIL_MOD3') . ' ' . $this->_config->boardTitle;
-            $note    = Text::_('COM_KUNENA_POST_EMAIL_MOD2');
-        }
-
-        $more   = $once ? Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') : '';
-        $footer = Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3');
-        $esc    = static fn (string $text): string => htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
-
-        $common = [
-            'sitename'   => Factory::getApplication()->get('sitename'),
-            'boardtitle' => $this->_config->boardTitle,
-            'heading'    => $heading,
-            'subject'    => $subject,
-            'topic'      => $topic->subject,
-            'category'   => $this->getCategory()->name,
-            'author'     => $this->getAuthor()->getName('???', false),
-            'url'        => $url,
-        ];
-
-        $html = $common + [
-            'message'     => $this->_config->mailFull ? '<p style="margin:18px 0 4px;color:#888888">' . $esc(Text::_('COM_KUNENA_MESSAGE')) . ':</p><div style="border-left:3px solid #dddddd;padding:4px 14px;margin:0 0 6px">' . $this->displayField('message', true, 'subscription') . '</div>' : '',
-            'more'        => $more ? '<p style="font-size:14px">' . $esc($more) . '</p>' : '',
-            'footer'      => $esc($footer) . '<br>' . $esc($note),
-            'unsubscribe' => $unsubscribeUrl
-                ? '<p style="font-size:12px;color:#999999">' . $esc(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC')) . ' <a href="' . $esc($unsubscribeUrl) . '" style="color:#999999">' . $esc(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE')) . '</a></p>'
-                : '',
-        ];
-
-        $plain = $common + [
-            'message'     => $this->_config->mailFull ? Text::_('COM_KUNENA_MESSAGE') . ":\n" . $this->displayField('message', false) . "\n" : '',
-            'more'        => $more ? $more . "\n" : '',
-            'footer'      => $footer . "\n" . $note,
-            'unsubscribe' => $unsubscribeUrl ? Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC') . "\n" . $unsubscribeUrl : '',
-        ];
-
-        return ['html' => $html, 'plain' => $plain];
-    }
-
-    /**
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise|void
-     *
-     * @throws  Exception
+     * @throws Exception
      * @since   Kunena 6.0
      */
-    protected function authoriseRead(KunenaUser $user)
+    public function uploadAttachment(int $tmpid, string $postvar, $catid = null): bool
     {
-        // A message of a topic the user can not read, in a category where the users only see their own topics.
-        if ($this->getCategory()->params->get('ownTopicsOnly')) {
-            $topic = $this->getTopic();
+        $attachment                     = new KunenaAttachment();
+        $attachment->userid             = $this->userid;
+        $success                        = $attachment->upload($postvar, $catid);
+        $this->_attachments_add[$tmpid] = $attachment;
 
-            if ($topic && $topic->exists() && !$topic->isAuthorised('read', $user)) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $user->exists() ? 403 : 401);
-            }
-        }
-
-        if ($this->hold && !$user->exists()) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
-        }
-
-        // Check that user has the right to see the post (user can see his own unapproved posts)
-        if ($this->hold > 1 || ($this->hold == 1 && $this->userid != $user->userid)) {
-            $access = KunenaAccess::getInstance();
-            $hold   = $access->getAllowedHold($user->userid, $this->catid, false);
-
-            if (!\in_array($this->hold, $hold)) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
-            }
-        }
-
-        return;
-    }
-
-    /**
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise|void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function authoriseNotHold(KunenaUser $user)
-    {
-        if ($this->hold) {
-            // Nobody can reply to unapproved or deleted post
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
-        }
-
-        return;
-    }
-
-    /**
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise|void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authoriseOwn(KunenaUser $user)
-    {
-        // Guests cannot own posts.
-        if (!$user->exists()) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 401);
-        }
-
-        // Check that topic owned by the user or user is a moderator
-        // TODO: check #__kunena_user_topics
-        if ($this->userid != $user->userid && !$user->isModerator($this->getCategory())) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
-        }
-
-        return;
-    }
-
-    /**
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise|void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authoriseThankyou(KunenaUser $user)
-    {
-        // Check that message is not your own
-        if (!$this->_config->showThankYou) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
-        }
-
-        if (!$user->userid) {
-            // TODO: better error message
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 401);
-        }
-
-        if (!$this->userid || $this->userid == $user->userid) {
-            // TODO: better error message
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
-        }
-
-        return;
-    }
-
-    /**
-     * This function check the edit time from the author of the post and return if the user is allowed to edit his post.
-     *
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise|boolean|void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authoriseEditTime(KunenaUser $user)
-    {
-        // Do not perform rest of the checks to moderators and admins
-        if ($user->isModerator($this->getCategory())) {
-            return false;
-        }
-
-        // User is only allowed to edit post within time specified in the configuration
-
-        if (\intval($this->_config->userEdit) != 1) {
-            // Edit never allowed
-            if (\intval($this->_config->userEdit) == 0) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
-            }
-
-            // Edit allowed if replies
-            if (\intval($this->_config->userEdit) == 2 && $this->getTopic()->getReplies()) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_IF_REPLIES'), 403);
-            }
-
-            // Edit allowed for the first message of the topic
-            if (\intval($this->_config->userEdit) == 4 && $this->id != $this->getTopic()->first_post_id) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_FIRST_MESSAGE_OF_TOPIC'), 403);
-            }
-
-            // Edit allowed for the last message of the topic
-            if (\intval($this->_config->userEdit) == 3 && $this->id != $this->getTopic()->last_post_id) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_LAST_MESSAGE_OF_TOPIC'), 403);
-            }
-        }
-
-        if (\intval($this->_config->userEditTime) != 0) {
-            // Check whether edit is in time
-            $modtime = $this->modified_time ? $this->modified_time : $this->time;
-
-            if ($modtime + \intval($this->_config->userEditTime) < Factory::getDate()->toUnix() && \intval($this->_config->userEditTimeGrace) == 0) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
-            } elseif (\intval($this->_config->userEditTimeGrace) != 0 && $modtime + \intval($this->_config->userEditTime) + \intval($this->_config->userEditTimeGrace) < Factory::getDate()->toUnix()) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
-            }
-        }
-
-        return;
-    }
-
-    /**
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise|void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authoriseDelete(KunenaUser $user)
-    {
-
-        if (!$user->isModerator($this->getCategory()) && $this->_config->userDeleteMessage != '2') {
-            // Never
-            if ($this->_config->userDeleteMessage == '0') {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
-            }
-
-            // When no replies
-            if ($this->_config->userDeleteMessage == '1' && ($this->getTopic()->first_post_id != $this->id || $this->getTopic()->getReplies())) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
-            }
-
-            // All except the first message of the topic
-            if ($this->_config->userDeleteMessage == '3' && $this->id == $this->getTopic()->first_post_id) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_ONLY_FIRST_MESSAGE'), 403);
-            }
-
-            // Only the last message
-            if ($this->_config->userDeleteMessage == '4' && $this->id != $this->getTopic()->last_post_id) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_ONLY_LAST_MESSAGE'), 403);
-            }
-        }
-    }
-
-    /**
-     * Check if user has the right to perm delete the message
-     *
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise|bool|void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authorisePermdelete(KunenaUser $user)
-    {
-
-        if ($user->isAdmin() || $user->isModerator()) {
-            return false;
-        }
-
-        if ($user->isModerator($this->getTopic()->getCategory()) && !$this->_config->moderatorPermDelete || !$user->isModerator($this->getTopic()->getCategory())) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
-        }
-
-        return;
-    }
-
-    /**
-     * Check if user has the right to upload image attachment
-     *
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise|void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authoriseAttachmentsImage(KunenaUser $user)
-    {
-        if (empty($this->_config->imageUpload)) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
-        }
-
-        if ($this->_config->imageUpload == 'admin') {
-            if (!$user->isAdmin()) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_ADMINISTRATORS'), 403);
-            }
-        }
-
-        if ($this->_config->imageUpload == 'registered') {
-            if (!$user->userid) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_REGISTERED_USERS'), 403);
-            }
-        }
-
-        if ($this->_config->imageUpload == 'moderator') {
-            $category = $this->getCategory();
-
-            if (!$user->isModerator($category)) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_MODERATORS'), 403);
-            }
-        }
-
-        return;
-    }
-
-    /**
-     * Check if user has the right to upload file attachment
-     *
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise|void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authoriseAttachmentsFile(KunenaUser $user)
-    {
-        if (empty($this->_config->fileUpload)) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
-        }
-
-        if ($this->_config->fileUpload == 'admin') {
-            if (!$user->isAdmin()) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_ADMINISTRATORS'), 403);
-            }
-        }
-
-        if ($this->_config->fileUpload == 'registered') {
-            if (!$user->userid) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_REGISTERED_USERS'), 403);
-            }
-        }
-
-        if ($this->_config->fileUpload == 'moderator') {
-            $category = $this->getCategory();
-
-            if (!$user->isModerator($category)) {
-                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_MODERATORS'), 403);
-            }
-        }
-
-        return;
-    }
-
-    /**
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise|void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authoriseGuestWrite(KunenaUser $user)
-    {
-        // Check if user is guest and they can create or reply topics
-        if ($user->userid == 0 && !$this->_config->pubWrite) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
-        }
-
-        return;
-    }
-
-    /**
-     * Get the table relevant properties. Override for your specific Object
-     *
-     * @return array    Assocative array with the propertie values of table
-     *
-     * @since   Kunena 6.4
-     */
-    protected function getTableProperties(): array
-    {
-        $properties = [
-            'id'              => $this->id,
-            'parent'          => $this->parent,
-            'thread'          => $this->thread,
-            'catid'           => $this->catid,
-            'name'            => $this->name,
-            'userid'          => $this->userid,
-            'email'           => $this->email,
-            'subject'         => $this->subject,
-            'time'            => $this->time,
-            'ip'              => $this->ip,
-            'topic_emoticon'  => $this->topic_emoticon,
-            'locked'          => $this->locked,
-            'hold'            => $this->hold,
-            'ordering'        => $this->ordering,
-            'hits'            => $this->hits,
-            'moved'           => $this->moved,
-            'deleted_time'    => $this->deleted_time,
-            'modified_by'     => $this->modified_by,
-            'modified_time'   => $this->modified_time,
-            'modified_reason' => $this->modified_reason,
-            'message'         => $this->message,
-        ];
-
-        return $properties;
+        return $success;
     }
 }

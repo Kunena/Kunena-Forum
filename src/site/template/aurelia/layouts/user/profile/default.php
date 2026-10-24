@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\User\KunenaUserBadges;
 
 $user            = $this->user;
 $avatar          = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
@@ -74,7 +75,7 @@ $personalText = $user->getPersonalText();
         </li>
     <?php endif; ?>
 
-    <?php $userBadges = \Kunena\Forum\Libraries\User\KunenaUserBadges::render($user); ?>
+    <?php $userBadges = KunenaUserBadges::render($user); ?>
     <?php if ($userBadges !== '') : ?>
         <li>
             <?php echo $userBadges; ?>

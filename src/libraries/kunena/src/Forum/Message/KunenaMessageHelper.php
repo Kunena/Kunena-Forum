@@ -49,204 +49,92 @@ abstract class KunenaMessageHelper
     protected static $_location = [];
 
     /**
-     * @param   bool|array|int  $ids        ids
-     * @param   string          $authorise  authorise
-     *
-     * @return  KunenaMessage[]
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function getMessages($ids = false, $authorise = 'read'): array
-    {
-        if ($ids === false) {
-            return self::$_instances;
-        }
-
-        if (\is_array($ids)) {
-            $ids = array_unique($ids);
-        } else {
-            $ids = [$ids];
-        }
-
-        self::loadMessages($ids);
-
-        // Preload topics once to avoid per-message topic hydration during isAuthorised().
-        $topicids = [];
-
-        foreach ($ids as $id) {
-            if (!empty(self::$_instances[$id])) {
-                $topicids[(int) self::$_instances[$id]->thread] = (int) self::$_instances[$id]->thread;
-            }
-        }
-
-        if (!empty($topicids)) {
-            KunenaTopicHelper::getTopics($topicids);
-        }
-
-        $list = [];
-
-        foreach ($ids as $id) {
-            if (!empty(self::$_instances[$id]) && self::$_instances[$id]->isAuthorised($authorise, null)) {
-                $list[$id] = self::$_instances[$id];
-            }
-        }
-
-        return $list;
-    }
-
-    /**
-     * @param   array  $ids  ids
+     * Free up memory by cleaning up all cached items.
      *
      * @return  void
      *
      * @since   Kunena 6.0
-     *
-     * @throws  Exception
      */
-    protected static function loadMessages(array $ids): void
+    public static function cleanup(): void
     {
-        foreach ($ids as $i => $id) {
-            $id = \intval($id);
-
-            if (!$id || isset(self::$_instances[$id])) {
-                unset($ids[$i]);
-            }
-        }
-
-        if (empty($ids)) {
-            return;
-        }
-
-        $idlist = implode(',', $ids);
-        $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->createQuery();
-        $query->select('m.*, t.message')
-            ->from($db->quoteName('#__kunena_messages', 'm'))
-            ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
-            ->where($db->quoteName('m.id') . ' IN (' . $idlist . ')');
-        $db->setQuery($query);
-
-        $results = [];
-
-        try {
-            $results = (array) $db->loadAssocList('id');
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        foreach ($ids as $id) {
-            if (isset($results[$id])) {
-                $instance = new KunenaMessage($results[$id]);
-                $instance->exists(true);
-                self::$_instances[$id] = $instance;
-            } else {
-                self::$_instances[$id] = null;
-            }
-        }
-
-        unset($results);
+        self::$_instances = [];
+        self::$_location  = [];
     }
 
     /**
-     * @param   mixed   $topic      topic
-     * @param   int     $start      start
-     * @param   int     $limit      limit
-     * @param   string  $ordering   ordering
-     * @param   int     $hold       hold
-     * @param   bool    $orderbyid  orderbyid
+     * Returns \Kunena\Forum\Libraries\Forum\Message\Message object.
      *
-     * @return  KunenaMessage[]
+     * @param   null  $identifier  The message to load - Can be only an integer.
+     * @param   bool  $reload      reload
+     *
+     * @return  KunenaMessage  The message object.
      *
      * @since   Kunena 6.0
      *
      * @throws  Exception
      */
-    public static function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false): array
+    public static function get($identifier = null, $reload = false): KunenaMessage
     {
-        $topic = KunenaTopicHelper::get($topic);
-
-        if (!$topic->exists()) {
-            return [];
+        if ($identifier instanceof KunenaMessage) {
+            return $identifier;
         }
 
-        $total = $topic->getTotal();
+        $id = (int) $identifier;
 
-        if ($start < 0) {
-            $start = 0;
+        if ($id < 1) {
+            return new KunenaMessage();
         }
 
-        if ($limit < 1) {
-            $limit = KunenaFactory::getConfig()->messagesPerPage;
+        if (empty(self::$_instances[$id])) {
+            $instance = new KunenaMessage();
+
+            // Only load messages which haven't been preloaded before (including missing ones).
+            $instance->load(!\array_key_exists($id, self::$_instances) ? $id : null);
+            $instance->id          = $id;
+            self::$_instances[$id] = $instance;
+        } elseif ($reload) {
+            self::$_instances[$id]->load();
         }
 
-        // If out of range, use last page
-        if ($limit && $total <= $start) {
-            $start = max(0, (int) ceil($total / $limit) - 1) * $limit;
-        }
-
-        $ordering = strtoupper($ordering);
-
-        if ($ordering != 'DESC') {
-            $ordering = 'ASC';
-        }
-
-        return self::loadMessagesByTopic($topic->id, $start, $limit, $ordering, $hold, $orderbyid);
+        return self::$_instances[$id];
     }
 
     /**
-     * @param   int     $topic_id   topic id
-     * @param   int     $start      start
-     * @param   int     $limit      limit
-     * @param   string  $ordering   ordering
-     * @param   int     $hold       hold
-     * @param   bool    $orderbyid  orderbyid
+     * Get last IP address used by the user
      *
-     * @return  array
+     * @param   int  $userid  userid
+     *
+     * @return bool
      *
      * @since   Kunena 6.0
      *
      * @throws Exception
      */
-    protected static function loadMessagesByTopic(int $topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false): array
+    public static function getLastUserIP(int $userid): string|false
     {
-        $db    = Factory::getContainer()->get('DatabaseDriver');
+        if (!$userid) {
+            return false;
+        }
+
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
         $query = $db->createQuery();
-        $query->select('m.*,t.message')
-            ->from($db->quoteName('#__kunena_messages', 'm'))
-            ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
-            ->where($db->quoteName('m.thread') . ' = ' . $db->quote($topic_id))
-            ->andWhere($db->quoteName('m.hold') . ' IN (' . $hold . ')')
-            ->order($db->quoteName('m.time') . $ordering);
-        $query->setLimit($limit, $start);
+        $query->select($db->quoteName('ip'))
+            ->from($db->quoteName('#__kunena_messages'))
+            ->where($db->quoteName('userid') . ' = ' . $db->quote($userid))
+            ->order($db->quoteName('time') . ' DESC');
+        $query->setLimit(1);
         $db->setQuery($query);
 
-        $results = [];
-
         try {
-            $results = (array) $db->loadAssocList('id');
+            $ip = $db->loadResult();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
+
+            return false;
         }
 
-        $location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaTopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
-        $order    = ($ordering == 'ASC') ? 1 : -1;
-        $list     = [];
-
-        if (!empty($results)) {
-            foreach ($results as $id => $result) {
-                $instance = new KunenaMessage($result);
-                $instance->exists(true);
-                self::$_instances[$id]              = $instance;
-                $list[$orderbyid ? $id : $location] = $instance;
-                $location += $order;
-            }
-        }
-
-        unset($results);
-
-        return $list;
+        return $ip ?: false;
     }
 
     /**
@@ -478,41 +366,186 @@ abstract class KunenaMessageHelper
     }
 
     /**
-     * Returns \Kunena\Forum\Libraries\Forum\Message\Message object.
+     * @param   bool|array|int  $ids        ids
+     * @param   string          $authorise  authorise
      *
-     * @param   null  $identifier  The message to load - Can be only an integer.
-     * @param   bool  $reload      reload
-     *
-     * @return  KunenaMessage  The message object.
+     * @return  KunenaMessage[]
      *
      * @since   Kunena 6.0
      *
      * @throws  Exception
      */
-    public static function get($identifier = null, $reload = false): KunenaMessage
+    public static function getMessages($ids = false, $authorise = 'read'): array
     {
-        if ($identifier instanceof KunenaMessage) {
-            return $identifier;
+        if ($ids === false) {
+            return self::$_instances;
         }
 
-        $id = (int) $identifier;
-
-        if ($id < 1) {
-            return new KunenaMessage();
+        if (\is_array($ids)) {
+            $ids = array_unique($ids);
+        } else {
+            $ids = [$ids];
         }
 
-        if (empty(self::$_instances[$id])) {
-            $instance = new KunenaMessage();
+        self::loadMessages($ids);
 
-            // Only load messages which haven't been preloaded before (including missing ones).
-            $instance->load(!\array_key_exists($id, self::$_instances) ? $id : null);
-            $instance->id          = $id;
-            self::$_instances[$id] = $instance;
-        } elseif ($reload) {
-            self::$_instances[$id]->load();
+        // Preload topics once to avoid per-message topic hydration during isAuthorised().
+        $topicids = [];
+
+        foreach ($ids as $id) {
+            if (!empty(self::$_instances[$id])) {
+                $topicids[(int) self::$_instances[$id]->thread] = (int) self::$_instances[$id]->thread;
+            }
         }
 
-        return self::$_instances[$id];
+        if (!empty($topicids)) {
+            KunenaTopicHelper::getTopics($topicids);
+        }
+
+        $list = [];
+
+        foreach ($ids as $id) {
+            if (!empty(self::$_instances[$id]) && self::$_instances[$id]->isAuthorised($authorise, null)) {
+                $list[$id] = self::$_instances[$id];
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param   mixed   $topic      topic
+     * @param   int     $start      start
+     * @param   int     $limit      limit
+     * @param   string  $ordering   ordering
+     * @param   int     $hold       hold
+     * @param   bool    $orderbyid  orderbyid
+     *
+     * @return  KunenaMessage[]
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false): array
+    {
+        $topic = KunenaTopicHelper::get($topic);
+
+        if (!$topic->exists()) {
+            return [];
+        }
+
+        $total = $topic->getTotal();
+
+        if ($start < 0) {
+            $start = 0;
+        }
+
+        if ($limit < 1) {
+            $limit = KunenaFactory::getConfig()->messagesPerPage;
+        }
+
+        // If out of range, use last page
+        if ($limit && $total <= $start) {
+            $start = max(0, (int) ceil($total / $limit) - 1) * $limit;
+        }
+
+        $ordering = strtoupper($ordering);
+
+        if ($ordering != 'DESC') {
+            $ordering = 'ASC';
+        }
+
+        return self::loadMessagesByTopic($topic->id, $start, $limit, $ordering, $hold, $orderbyid);
+    }
+
+    /**
+     * @param   array  $ids  ids
+     *
+     * @return  array|boolean
+     *
+     * @since   Kunena 5.0.3
+     *
+     * @throws  Exception
+     */
+    public static function getMessagesByTopics(array $ids)
+    {
+        if (empty($ids)) {
+            return false;
+        }
+
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        $idlist = implode(',', $ids);
+        $query  = $db->createQuery();
+        $query->select(['m.*', 't.message'])
+            ->from($db->quoteName('#__kunena_messages', 'm'))
+            ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
+            ->where($db->quoteName('m.thread') . ' IN (' . $idlist . ')')
+            ->andWhere($db->quoteName('m.hold') . ' = 0');
+        $db->setQuery($query);
+
+        $results = [];
+
+        try {
+            $results = (array) $db->loadAssocList('id');
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return $results;
+    }
+
+    /**
+     * Get the messages from users given
+     *
+     * @param   array  $users
+     *
+     * @return object
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public static function getMessagesFromUsers(array $users)
+    {
+        $list = [];
+
+        foreach ($users as $user) {
+            if ($user instanceof KunenaUser) {
+                $list[] = (int) $user->userid;
+            } elseif ($user instanceof User) {
+                $list[] = (int) $user->id;
+            } else {
+                $list[] = (int) $user;
+            }
+        }
+
+        if (empty($list)) {
+            return;
+        }
+
+        $userlist = implode(',', $list);
+
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        $query = $db->createQuery();
+        $query->select($db->quoteName('thread'))
+            ->from($db->quoteName('#__kunena_messages'))
+            ->where($db->quoteName('userid') . ' IN (' . $userlist . ')')
+            ->group($db->quoteName('thread'));
+
+        $db->setQuery($query);
+
+        $threads = [];
+
+        try {
+            $threads = (array) $db->loadObjectList();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return $threads;
     }
 
     /**
@@ -590,16 +623,110 @@ abstract class KunenaMessageHelper
     }
 
     /**
-     * Free up memory by cleaning up all cached items.
+     * @param   array  $ids  ids
      *
      * @return  void
      *
      * @since   Kunena 6.0
+     *
+     * @throws  Exception
      */
-    public static function cleanup(): void
+    protected static function loadMessages(array $ids): void
     {
-        self::$_instances = [];
-        self::$_location  = [];
+        foreach ($ids as $i => $id) {
+            $id = \intval($id);
+
+            if (!$id || isset(self::$_instances[$id])) {
+                unset($ids[$i]);
+            }
+        }
+
+        if (empty($ids)) {
+            return;
+        }
+
+        $idlist = implode(',', $ids);
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        $query  = $db->createQuery();
+        $query->select('m.*, t.message')
+            ->from($db->quoteName('#__kunena_messages', 'm'))
+            ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
+            ->where($db->quoteName('m.id') . ' IN (' . $idlist . ')');
+        $db->setQuery($query);
+
+        $results = [];
+
+        try {
+            $results = (array) $db->loadAssocList('id');
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        foreach ($ids as $id) {
+            if (isset($results[$id])) {
+                $instance = new KunenaMessage($results[$id]);
+                $instance->exists(true);
+                self::$_instances[$id] = $instance;
+            } else {
+                self::$_instances[$id] = null;
+            }
+        }
+
+        unset($results);
+    }
+
+    /**
+     * @param   int     $topic_id   topic id
+     * @param   int     $start      start
+     * @param   int     $limit      limit
+     * @param   string  $ordering   ordering
+     * @param   int     $hold       hold
+     * @param   bool    $orderbyid  orderbyid
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    protected static function loadMessagesByTopic(int $topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false): array
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select('m.*,t.message')
+            ->from($db->quoteName('#__kunena_messages', 'm'))
+            ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
+            ->where($db->quoteName('m.thread') . ' = ' . $db->quote($topic_id))
+            ->andWhere($db->quoteName('m.hold') . ' IN (' . $hold . ')')
+            ->order($db->quoteName('m.time') . $ordering);
+        $query->setLimit($limit, $start);
+        $db->setQuery($query);
+
+        $results = [];
+
+        try {
+            $results = (array) $db->loadAssocList('id');
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        $location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaTopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
+        $order    = ($ordering == 'ASC') ? 1 : -1;
+        $list     = [];
+
+        if (!empty($results)) {
+            foreach ($results as $id => $result) {
+                $instance = new KunenaMessage($result);
+                $instance->exists(true);
+                self::$_instances[$id]              = $instance;
+                $list[$orderbyid ? $id : $location] = $instance;
+                $location += $order;
+            }
+        }
+
+        unset($results);
+
+        return $list;
     }
 
     /**
@@ -651,132 +778,5 @@ abstract class KunenaMessageHelper
         }
 
         return $db->getAffectedRows();
-    }
-
-    /**
-     * @param   array  $ids  ids
-     *
-     * @return  array|boolean
-     *
-     * @since   Kunena 5.0.3
-     *
-     * @throws  Exception
-     */
-    public static function getMessagesByTopics(array $ids)
-    {
-        if (empty($ids)) {
-            return false;
-        }
-
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
-        $idlist = implode(',', $ids);
-        $query  = $db->createQuery();
-        $query->select(['m.*', 't.message'])
-            ->from($db->quoteName('#__kunena_messages', 'm'))
-            ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
-            ->where($db->quoteName('m.thread') . ' IN (' . $idlist . ')')
-            ->andWhere($db->quoteName('m.hold') . ' = 0');
-        $db->setQuery($query);
-
-        $results = [];
-
-        try {
-            $results = (array) $db->loadAssocList('id');
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return $results;
-    }
-
-    /**
-     * Get last IP address used by the user
-     *
-     * @param   int  $userid  userid
-     *
-     * @return bool
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws Exception
-     */
-    public static function getLastUserIP(int $userid): string|false
-    {
-        if (!$userid) {
-            return false;
-        }
-
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
-        $query = $db->createQuery();
-        $query->select($db->quoteName('ip'))
-            ->from($db->quoteName('#__kunena_messages'))
-            ->where($db->quoteName('userid') . ' = ' . $db->quote($userid))
-            ->order($db->quoteName('time') . ' DESC');
-        $query->setLimit(1);
-        $db->setQuery($query);
-
-        try {
-            $ip = $db->loadResult();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        return $ip ?: false;
-    }
-
-    /**
-     * Get the messages from users given
-     *
-     * @param   array  $users
-     *
-     * @return object
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws Exception
-     */
-    public static function getMessagesFromUsers(array $users)
-    {
-        $list = [];
-
-        foreach ($users as $user) {
-            if ($user instanceof KunenaUser) {
-                $list[] = (int) $user->userid;
-            } elseif ($user instanceof User) {
-                $list[] = (int) $user->id;
-            } else {
-                $list[] = (int) $user;
-            }
-        }
-
-        if (empty($list)) {
-            return;
-        }
-
-        $userlist = implode(',', $list);
-
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
-        $query = $db->createQuery();
-        $query->select($db->quoteName('thread'))
-            ->from($db->quoteName('#__kunena_messages'))
-            ->where($db->quoteName('userid') . ' IN (' . $userlist . ')')
-            ->group($db->quoteName('thread'));
-
-        $db->setQuery($query);
-
-        $threads = [];
-
-        try {
-            $threads = (array) $db->loadObjectList();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return $threads;
     }
 }

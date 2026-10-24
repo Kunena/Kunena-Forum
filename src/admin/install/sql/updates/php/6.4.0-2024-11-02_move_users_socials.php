@@ -17,11 +17,15 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
 
 /**
- *  Handle the data by group of 100 lines
+ * Handle the data by group of 100 lines
  *
- * @param array $array
- * @param integer $numRows
- * @param integer $size
+ * @param   array    $array    The rows.
+ * @param   integer  $numRows  The number of rows.
+ * @param   integer  $size     The size of a group.
+ *
+ * @return  array  The first group.
+ *
+ * @since   Kunena 6.4.0
  */
 function chunk($array, $numRows, $size)
 {
@@ -34,11 +38,12 @@ function chunk($array, $numRows, $size)
 }
 
 /**
- * @param $parent
+ * @param   mixed  $parent  The installer.
  *
- * @return array
- * @throws Exception
- * @since Kunena 6.4.0
+ * @return  array
+ *
+ * @throws  Exception
+ * @since   Kunena 6.4.0
  */
 function kunena_640_2024_11_02_move_users_socials($parent)
 {

@@ -28,6 +28,7 @@ use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use stdClass;
@@ -50,11 +51,12 @@ class KunenaActivityCommunity extends KunenaActivity
     }
 
     /**
-     * @param $message
+     * @param   KunenaMessage  $message  message
      *
-     * @since   Kunena 6.0
+     * @return  void
      *
      * @throws  Exception
+     * @since   Kunena 6.0
      */
     public function onAfterPost($message): void
     {
@@ -159,11 +161,12 @@ class KunenaActivityCommunity extends KunenaActivity
     }
 
     /**
-     * @param $message
+     * @param   KunenaMessage  $message  message
      *
-     * @since   Kunena 6.0
+     * @return  void
      *
      * @throws  Exception
+     * @since   Kunena 6.0
      */
     public function onAfterReply($message): void
     {
@@ -238,6 +241,8 @@ class KunenaActivityCommunity extends KunenaActivity
      * @param   int            $target   target
      * @param   KunenaMessage  $message  message
      *
+     * @return  void
+     *
      * @since   Kunena 6.0
      */
     public function onAfterThankyou(int $actor, int $target, KunenaMessage $message): void
@@ -310,7 +315,9 @@ class KunenaActivityCommunity extends KunenaActivity
     }
 
     /**
-     * @param $target
+     * @param   KunenaTopic  $target  The topic which was deleted.
+     *
+     * @return  void
      *
      * @since   Kunena 6.0
      */

@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\FormFactoryAwareTrait;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -391,7 +392,7 @@ class CategoriesModel extends KunenaModel
     }
 
     /**
-     * @param   \Joomla\CMS\Table\Table  $table  table
+     * @param   Table  $table  table
      *
      * @return  array
      *
@@ -607,7 +608,7 @@ class CategoriesModel extends KunenaModel
      * @param   array    $data      data
      * @param   boolean  $loadData  load current data
      *
-     * @return  \Joomla\CMS\Form\Form|null  The \JForm object or null if the form can't be found
+     * @return  Form|null  The \JForm object or null if the form can't be found
      *
      * @since   Kunena 6.3.0-BETA3
      */

@@ -64,33 +64,6 @@ class KunenaInstaller
     }
 
     /**
-     * Get Kunena database schema version.
-     *
-     * @return  string  Version number or null.
-     *
-     * @since   Kunena 6.0
-     */
-    public static function getSchemaVersion()
-    {
-        // Check if Kunena can be found from the database.
-        if (!self::detectTable('kunena_version')) {
-            return false;
-        }
-
-        // Get installed version.
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select('version')
-            ->from($db->quoteName('#__kunena_version'))
-            ->where($db->quoteName('state') . "=''")
-            ->order($db->quoteName('id') . ' DESC');
-        $query->setLimit(1);
-        $db->setQuery($query);
-
-        return $db->loadResult();
-    }
-
-    /**
      * Detect if table exists in the database.
      *
      * @param   string  $table   Table name to be found.
@@ -122,6 +95,33 @@ class KunenaInstaller
         $table = $prefix . $table;
 
         return isset(self::$tables[$table]);
+    }
+
+    /**
+     * Get Kunena database schema version.
+     *
+     * @return  string  Version number or null.
+     *
+     * @since   Kunena 6.0
+     */
+    public static function getSchemaVersion()
+    {
+        // Check if Kunena can be found from the database.
+        if (!self::detectTable('kunena_version')) {
+            return false;
+        }
+
+        // Get installed version.
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select('version')
+            ->from($db->quoteName('#__kunena_version'))
+            ->where($db->quoteName('state') . "=''")
+            ->order($db->quoteName('id') . ' DESC');
+        $query->setLimit(1);
+        $db->setQuery($query);
+
+        return $db->loadResult();
     }
 
     /**

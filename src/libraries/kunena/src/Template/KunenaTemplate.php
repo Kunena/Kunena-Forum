@@ -43,6 +43,7 @@ use KunenaScssPhp\ScssPhp\OutputStyle;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
+use ScssPhp\ScssPhp\Exception\SassException;
 use SimpleXMLElement;
 use StdClass;
 
@@ -411,22 +412,81 @@ class KunenaTemplate
     }
 
     /**
-     * @return  boolean
+     * @param   string  $filename   filename
+     * @param   string  $condition  condition
      *
-     * @throws  Exception
+     * @return  void
+     *
+     * @throws Exception
      * @since   Kunena 6.0
      */
-    public function isHmvc()
+    public function addIEStyleSheet(string $filename, $condition = 'IE'): void
     {
-        if (\is_null($this->hmvc)) {
-            if (is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages")) {
-                $this->hmvc = is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages");
-            } else {
-                $this->hmvc = is_dir(KPATH_SITE . "/template/{$this->name}/pages");
-            }
+        $filename  = preg_replace('|^css/|u', '', $filename);
+        $url       = $this->getFile($filename, true, $this->pathTypes['css'], 'media/kunena/css');
+        $stylelink = "<!--[if {$condition}]>\n";
+        $stylelink .= '<link rel="stylesheet" href="' . $url . '" />' . "\n";
+        $stylelink .= "<![endif]-->\n";
+        Factory::getApplication()->getDocument()->addCustomTag($stylelink);
+    }
+
+    /**
+     * @param   string  $path  path
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function addPath(string $path): void
+    {
+        $this->paths[] = KunenaPath::clean("/$path");
+    }
+
+    /**
+     * Wrapper to addScript
+     *
+     * @param   string  $filename  filename
+     * @param   array   $options   options
+     * @param   array   $attribs   attribs
+     *
+     * @return  Document|void
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function addScript(string $filename, $options = [], $attribs = [])
+    {
+        $format = $this->input->getCmd('format');
+
+        if (!empty($format) && $format != 'html') {
+            return false;
         }
 
-        return $this->hmvc;
+        if (!preg_match('|https?://|', $filename)) {
+            if (preg_match('/assets/', $filename)) {
+                $filename = preg_replace('|^css/|u', '', $filename);
+                $filename = preg_replace('/^assets\//', '', $filename);
+                $filename = $this->getFile($filename, false, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name . '/assets');
+            } else {
+                $filename = $this->getFile($filename, false, $this->pathTypes['js'], $this->pathTypes['js']);
+            }
+
+            $filemin       = $filename;
+            $filemin_path  = preg_replace('/\.js$/u', '-min.js', $filename);
+            $minPathStat   = $this->getPathStatCached(JPATH_ROOT . "/$filemin_path");
+
+            if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && $minPathStat['exists']) {
+                $filemin = preg_replace('/\.js$/u', '-min.js', $filename);
+            }
+
+            if ($this->getPathStatCached(JPATH_ROOT . "/$filemin")['exists']) {
+                $filename = $filemin;
+            }
+
+            $filename = Uri::root(false) . $filename;
+        }
+
+        return HTMLHelper::_('script', $filename, $options, $attribs);
     }
 
     /**
@@ -435,7 +495,7 @@ class KunenaTemplate
      * @param   string  $content  content
      * @param   string  $type     type
      *
-     * @return \Joomla\CMS\Document\Document|boolean
+     * @return Document|boolean
      *
      * @since   Kunena 6.0
      * @throws Exception
@@ -449,6 +509,790 @@ class KunenaTemplate
         }
 
         return Factory::getApplication()->getDocument()->addScriptDeclaration($content, $type);
+    }
+
+    /**
+     * Add option for script
+     *
+     * @param   string  $key      Name in Storage
+     * @param   mixed   $options  Scrip options as array or string
+     * @param   bool    $merge    Whether merge with existing (true) or replace (false)
+     *
+     * @return Document|boolean
+     *
+     * @throws Exception
+     * @since   Kunena 3.5
+     */
+    public function addScriptOptions(string $key, $options, $merge = true)
+    {
+        $format = $this->input->getCmd('format');
+
+        if (!empty($format) && $format != 'html') {
+            return false;
+        }
+
+        return Factory::getApplication()->getDocument()->addScriptOptions($key, $options, $merge);
+    }
+
+    /**
+     * Set the Scss file into the document head
+     *
+     * @param   string  $filename  filename
+     *
+     * @return  mixed|void
+     *
+     * @throws Exception
+     * @since   Kunena 5.1.3
+     */
+    public function addScssSheet(string $filename)
+    {
+        $format = $this->input->getCmd('format');
+
+        if (!empty($format) && $format != 'html') {
+            return;
+        }
+
+        $filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
+
+        return HTMLHelper::_('stylesheet', $filename);
+    }
+
+    /**
+     * @param   string  $style  style
+     *
+     * @return  string|void
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function addStyleDeclaration(string $style)
+    {
+        $format = $this->input->getCmd('format');
+
+        if (!empty($format) && $format != 'html') {
+            return false;
+        }
+
+        return Factory::getApplication()->getDocument()->addStyleDeclaration($style);
+    }
+
+    /**
+     * @param   string  $filename  filename
+     * @param   string  $group     group
+     *
+     * @return  mixed|void
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function addStyleSheet(string $filename, $group = 'forum')
+    {
+        $format = $this->input->getCmd('format');
+
+        if (!empty($format) && $format != 'html') {
+            return;
+        }
+
+        if (!preg_match('|https?://|', $filename) && !preg_match('|media/jui|', $filename)) {
+            if (preg_match('/assets/', $filename)) {
+                $filename = preg_replace('|^css/|u', '', $filename);
+                $filename = preg_replace('/^assets\//', '', $filename);
+                $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
+            } elseif (preg_match('/kunena.css/', $filename) || preg_match('/kunena-custom.css/', $filename)) {
+                $filename = preg_replace('|^css/|u', '', $filename);
+                $filename = preg_replace('/^assets\//', '', $filename);
+                $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'media/kunena/cache/' . $this->name . '/css');
+            } else {
+                $filename = $this->getFile($filename, false, $this->pathTypes['css'], $this->pathTypes['css']);
+            }
+
+            $filemin      = $filename;
+            $filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
+            $fileminAbs   = JPATH_ROOT . "/$filemin_path";
+
+            if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && $this->isFileCached($fileminAbs)) {
+                $filemin = preg_replace('/\.css$/u', '-min.css', $filename);
+            }
+
+            if ($this->isFileCached(JPATH_ROOT . "/$filemin")) {
+                $filename = $filemin;
+            }
+
+            $filename = Uri::root(false) . $filename;
+        }
+
+        return HTMLHelper::_('stylesheet', $filename);
+    }
+
+    /**
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function borderless(): string
+    {
+        $borderless = $this->params->get('borderless');
+
+        if ($borderless) {
+            return '';
+        }
+
+        return ' table-bordered';
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function clearCache(): void
+    {
+        $path = JPATH_ROOT . "/media/kunena/cache/{$this->name}";
+
+        if (is_dir($path)) {
+            Folder::delete($path);
+        }
+    }
+
+    /**
+     * @param   string  $inputFile   input
+     * @param   string  $outputFile  output
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     * @throws SassException
+     * @throws Exception
+     */
+    public function compileScss(string $inputFile, string $outputFile): void
+    {
+        // Load the cache.
+        $cacheDir = JPATH_SITE . '/cache/kunena';
+
+        if (!is_dir($cacheDir)) {
+            Folder::create($cacheDir);
+        }
+
+        if (!is_file($inputFile)) {
+            $inputFile = KPATH_SITE . '/template/' . $this->name . '/' . $inputFile;
+        }
+
+        $outputDir = KPATH_MEDIA . "/cache/{$this->name}/css";
+
+        if (!is_dir($outputDir)) {
+            Folder::create($outputDir);
+        }
+
+        $outputPath = $outputDir . "/" . $outputFile;
+
+        if (!$this->shouldCompileScss($inputFile, $outputPath)) {
+            return;
+        }
+
+        $scss = new Compiler();
+        $scss->addImportPath(\dirname($inputFile));
+        $scss->setOutputStyle(OutputStyle::COMPRESSED);
+        $scssContent = file_get_contents($inputFile);
+        $style       = $scss->compileString($scssContent, $inputFile);
+
+        file_put_contents($outputPath, $style->getCss());
+    }
+
+    /**
+     * Compile SCSS in case of the cache directory is not created or it's deleted
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.1
+     */
+    public function createCacheDir()
+    {
+        // Compile CSS from SCSS files.
+        $ktemplate = KunenaFactory::getTemplate();
+        $ktemplate->compileScss("assets/scss/{$this->name}.scss", 'kunena.css');
+
+        $filenamescss = JPATH_SITE . "/components/com_kunena/template/{$this->name}/assets/scss/custom.scss";
+
+        if (file_exists($filenamescss) && 0 != fileSize($filenamescss)) {
+            $this->compileScss('assets/scss/custom.scss', 'kunena-custom.css');
+            $this->addStyleSheet('kunena-custom.css');
+        }
+    }
+
+    /**
+     * @param   mixed  $matches  matches
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function findUrl($matches): string
+    {
+        $file = trim($matches[1], ' \'"');
+
+        if (preg_match('#^../#', $file)) {
+            $file = $this->getFile(substr($file, 3), true, '', 'media/kunena');
+        }
+
+        return "url('{$file}')";
+    }
+
+    /**
+     * Return the icon attributes from the XML file given
+     *
+     * @param   mixed   $src    src
+     * @param   int     $id     Icon id
+     * @param   string  $style  Icon style, e.g. src
+     *
+     * @return  StdClass
+     *
+     * @since   Kunena 6.0
+     */
+    public function get_xml_icon($src, $id = 0, $style = 'src')
+    {
+        if (isset($src->icons)) {
+            $icon = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+
+            if (!$icon) {
+                $icon = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+            }
+
+            if ($icon) {
+                return $this->getIconsAttributes($icon);
+            }
+        }
+
+        // No icon file or no icon with this id: an empty icon.
+        return $this->getEmptyIcon();
+    }
+
+    /**
+     * @param   mixed   $src    src
+     * @param   int     $id     id
+     * @param   string  $style  style
+     *
+     * @return StdClass
+     *
+     * @since   Kunena 6.0
+     */
+    public function get_xml_label($src, $id = 0, $style = 'src'): StdClass
+    {
+        if (isset($src->labels)) {
+            $label = $src->xpath('/kunena-topiclabels/labels/label[@id=' . $id . ']');
+
+            if (!$label) {
+                $label = $src->xpath('/kunena-topiclabels/labels/label[@id=0]');
+            }
+
+            $attributes       = $label[0]->attributes();
+            $label            = new StdClass();
+            $label->id        = (int) $attributes->id;
+            $label->svg       = (string) $attributes->svg;
+            $label->fa        = (string) $attributes->fa;
+            $label->src       = (string) $attributes->src;
+            $label->name      = (string) $attributes->name;
+            $label->new       = (string) $attributes->new;
+            $label->labeltype = (string) $attributes->labeltype;
+
+            return $label;
+        }
+    }
+
+    /**
+     * @param   mixed   $src    src
+     * @param   int     $id     id
+     * @param   string  $style  style
+     *
+     * @return StdClass
+     *
+     * @since      Kunena 5.0.0-Beta4
+     */
+    public function get_xml_systemicon($src, $id = 0, $style = 'src'): StdClass
+    {
+        if (isset($src->icons)) {
+            $icon = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
+
+            if (!$icon) {
+                $icon = $src->xpath('/kunena-systemicons/icons/icon[@id=0]');
+            }
+
+            if ($icon) {
+                return $this->getIconsAttributesSystem($icon);
+            }
+        }
+
+        // No icon file or no icon with this id: an empty icon.
+        return $this->getEmptyIcon();
+    }
+
+    /**
+     * @param   string  $filename  filename
+     * @param   bool    $url       url
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getAvatarPath($filename = '', $url = false): string
+    {
+        return $this->getFile($filename, $url, $this->pathTypes['avatars'], 'media/kunena/avatars');
+    }
+
+    /**
+     * @param   string  $link   link
+     * @param   string  $name   name
+     * @param   string  $scope  scope
+     * @param   string  $type   type
+     * @param   null    $id     id
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getButton(string $link, string $name, string $scope, string $type, $id = null): string
+    {
+        $types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
+        $names = [
+            'unsubscribe' => 'subscribe',
+            'unfavorite'  => 'favorite',
+            'unsticky'    => 'sticky',
+            'unlock'      => 'lock',
+            'create'      => 'newtopic',
+            'quickReply'  => 'reply',
+            'quote'       => 'kquote',
+            'edit'        => 'kedit',
+        ];
+
+        $text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+        $title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
+
+        if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG") {
+            $title = '';
+        }
+
+        if ($id) {
+            $id = 'id="' . $id . '"';
+        }
+
+        if (isset($types[$type])) {
+            $type = $types[$type];
+        }
+
+        if ($name == 'quickReply') {
+            $type .= ' kqreply';
+        }
+
+        if (isset($names[$name])) {
+            $name = $names[$name];
+        }
+
+        return <<<HTML
+					<a {$id} class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" data-bs-toggle="tooltip" title="{$title}">
+						<span class="{$name}"><span>{$text}</span></span>
+					</a>
+HTML;
+    }
+
+    /**
+     * @param   string  $filename  filename
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getCachePath($filename = ''): string
+    {
+        if ($filename) {
+            $filename = '/' . $filename;
+        }
+
+        if (JDEBUG || $this->config->debug) {
+            $filename = "media/kunena/cache/{$this->name}/debug{$filename}";
+        } else {
+            $filename = "media/kunena/cache/{$this->name}{$filename}";
+        }
+
+        return $filename;
+    }
+
+    /**
+     * Function to get the Global Configured Captcha
+     *
+     * @return string
+     *
+     * @throws Exception
+     * @since   Kunena 6.3
+     */
+    public function getCaptcha(): string
+    {
+        $app    = Factory::getApplication();
+        $plugin = $app->get('captcha', '0');
+        $result = '';
+
+        if ($plugin === 0 || $plugin === '0' || $plugin === '' || $plugin === null || !PluginHelper::isEnabled('captcha', $plugin)) {
+            return $result;
+        }
+
+        try {
+            // Get an instance of the captcha class that we are using
+            $result  = '';
+            $id      = 'kunena_captcha';
+            $captcha = Captcha::getInstance((string) $plugin, ['namespace' => $id]);
+
+            if ($captcha->initialise($id)) {
+                $result = $captcha->display('captcha', $id, 'required');
+            }
+        } catch (RuntimeException $e) {
+            $result = '';
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param   KunenaCategory  $category  category
+     *
+     * @return  string
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function getCategoryIcon(KunenaCategory $category): string
+    {
+        if ($this->config->categoryIcons) {
+            $icon    = $category->icon_id;
+            $iconurl = $this->getCategoryIconIndexPath($icon, true);
+        } else {
+            $icon    = 'folder';
+            $iconurl = $this->getCategoryIconPath("system/{$icon}.png", true);
+        }
+
+        return '<img loading=lazy src="' . $iconurl . '" alt="emo" />';
+    }
+
+    /**
+     * @param   mixed  $index  index
+     * @param   bool   $url    url
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getCategoryIconIndexPath($index, $url = false): string
+    {
+        if (empty($this->categoryIcons)) {
+            $this->getCategoryIcons();
+        }
+
+        if (empty($this->categoryIcons[$index]->published)) {
+            $index = 0;
+        }
+
+        $icon = $this->categoryIcons[$index];
+
+        return $this->getCategoryIconPath($icon->filename, $url);
+    }
+
+    /**
+     * @param   string  $filename         filename
+     * @param   bool    $url              url
+     * @param   mixed   $categoryIconset  category
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getCategoryIconPath($filename = '', $url = true, $categoryIconset = 'default'): string
+    {
+        $set = '';
+
+        if (!$this->isHmvc()) {
+            $categoryIconset = 'default';
+        }
+
+        return $this->getFile($filename, $url, $this->pathTypes['categoryIcons'] . $set, 'media/kunena/category_icons/' . $categoryIconset);
+    }
+
+    /**
+     * @param   bool  $all      all
+     * @param   int   $checked  checked
+     *
+     * @return  array
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getCategoryIcons($all = false, $checked = 0)
+    {
+        if (empty($this->categoryIcons)) {
+            $xmlfile = $this->getCategoryIconPath('categoryIcons.xml', false);
+
+            if (is_file($xmlfile)) {
+                $cacheId = $this->getTemplateCacheId('categoryicons', $xmlfile);
+                $cached  = $this->getPersistentTemplateCache()->get($cacheId);
+
+                if (
+                    \is_array($cached)
+                    && isset($cached[0])
+                ) {
+                    $this->categoryIcons = $cached;
+                } else {
+                    $xml = $this->loadXmlFileCached($xmlfile);
+
+                    if ($xml && isset($xml->icons)) {
+                        foreach ($xml->icons as $icons) {
+                            $type   = (string) $icons->attributes()->type;
+                            $width  = (int) $icons->attributes()->width;
+                            $height = (int) $icons->attributes()->height;
+
+                            foreach ($icons->icon as $icon) {
+                                $attributes = $icon->attributes();
+                                $icon       = new StdClass();
+                                $icon->id   = (int) $attributes->id;
+                                $icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
+                                $icon->name = (string) $attributes->name;
+
+                                if ($icon->type != 'user') {
+                                    $icon->id = $icon->type . '_' . $icon->name;
+                                }
+
+                                $icon->published                = (int) $attributes->published;
+                                $icon->title                    = (string) $attributes->title;
+                                $icon->filename                 = (string) $attributes->src;
+                                $icon->width                    = (int) $attributes->width ? (int) $attributes->width : $width;
+                                $icon->height                   = (int) $attributes->height ? (int) $attributes->height : $height;
+                                $this->categoryIcons[$icon->id] = $icon;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Make sure that default icon exists (use user/default.png in current template)
+            if (!isset($this->categoryIcons[0])) {
+                $icon                   = new StdClass();
+                $icon->id               = 0;
+                $icon->type             = 'user';
+                $icon->name             = 'default';
+                $icon->published        = 0;
+                $icon->title            = 'Default';
+                $icon->filename         = 'default.png';
+                $icon->width            = 48;
+                $icon->height           = 48;
+                $icon->relpath          = $this->getCategoryIconPath("user/{$icon->filename}", false);
+                $this->categoryIcons[0] = $icon;
+            }
+
+            if (isset($cacheId) && !empty($this->categoryIcons)) {
+                $this->getPersistentTemplateCache()->store($this->categoryIcons, $cacheId);
+            }
+        }
+
+        if ($all) {
+            $icons = $this->categoryIcons;
+        } else {
+            $icons = [];
+
+            foreach ($this->categoryIcons as $icon) {
+                if ($icon->published && is_numeric($icon->id)) {
+                    $icons[$icon->id]          = clone $icon;
+                    $icons[$icon->id]->checked = ($checked == $icon->id);
+                }
+            }
+        }
+
+        return $icons;
+    }
+
+    /**
+     * @param   string  $class      class
+     * @param   string  $class_sfx  class_sfx
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getClass(string $class, $class_sfx = ''): string
+    {
+        return $class . ($class_sfx ? " {$class}.{$class_sfx}" : '');
+    }
+
+    /**
+     * getconfigxml
+     *
+     * @return  array|false|string|string[]|null
+     *
+     * @since   Kunena 6.0
+     */
+    public function getConfigXml()
+    {
+        // Find configuration file.
+        $xml_path = KPATH_SITE . "/template/{$this->name}/config/config.xml";
+
+        if (!is_file($xml_path)) {
+            return false;
+        }
+
+        $xml = file_get_contents($xml_path);
+
+        if (!strstr($xml, '<config>')) {
+            // Update old template files to new format.
+            $xml = preg_replace(
+                ['|<params|', '|</params>|', '|<param\s+|', '|</param>|'],
+                ['<config', '</config>', '<field ', '</field>'],
+                $xml
+            );
+        }
+
+        return $xml;
+    }
+
+    /**
+     * An icon without any data, returned when the icon definition cannot be found
+     *
+     * @return StdClass
+     * @since Kunena 7.2
+     */
+    private function getEmptyIcon()
+    {
+        $icon       = new StdClass();
+        $icon->id   = 0;
+        $icon->name = '';
+        $icon->svg  = '';
+        $icon->fa   = '';
+        $icon->src  = '';
+        $icon->new  = '';
+
+        return $icon;
+    }
+
+    /**
+     * @param   string  $file      file
+     * @param   bool    $url       url
+     * @param   string  $basepath  basepath
+     * @param   null    $default   default
+     * @param   null    $ignore    ignore
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getFile(string $file, $url = false, $basepath = '', $default = null, $ignore = null): string
+    {
+        if ($basepath) {
+            $basepath = '/' . $basepath;
+        }
+
+        $filepath = "{$basepath}/{$file}";
+
+        if (!isset($this->filecache[$filepath])) {
+            $this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE . "/template/{$this->name}/{$file}";
+
+            foreach ($this->default as $template) {
+                if ($template == $ignore) {
+                    continue;
+                }
+
+                $path = "template/{$template}{$basepath}";
+
+                if ($this->getPathStatCached(KPATH_SITE . "/{$path}/{$file}")['exists']) {
+                    $this->filecache[$filepath] = KPATH_COMPONENT_RELATIVE . "/{$path}/{$file}";
+                    break;
+                }
+            }
+        }
+
+        return ($url ? Uri::root(true) . '/' : '') . $this->filecache[$filepath];
+    }
+
+    /**
+     * @param   string  $name   name
+     * @param   string  $title  title
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getIcon(string $name, $title = ''): string
+    {
+        return '<span class="kicon ' . $name . '" data-bs-toggle="tooltip" title="' . $title . '"></span>';
+    }
+
+    /**
+     * Retrieve icons attributes
+     *
+     * @param   SimpleXMLElement[]  $icon  The icon elements of the XML file.
+     *
+     * @return  StdClass
+     *
+     * @since   Kunena 5.2
+     */
+    private function getIconsAttributes($icon)
+    {
+        $attributes = $icon[0]->attributes();
+        $icon       = new StdClass();
+        $icon->id   = (int) $attributes->id;
+        $icon->name = (string) $attributes->name;
+        $icon->svg  = (string) $attributes->svg;
+        $icon->fa   = (string) $attributes->fa;
+        $icon->src  = (string) $attributes->src;
+        $icon->new  = (string) $attributes->new;
+
+        return $icon;
+    }
+
+    /**
+     * Retrieve icons attributes
+     *
+     * @param   SimpleXMLElement[]  $icon  The icon elements of the XML file.
+     *
+     * @return  StdClass
+     *
+     * @since   Kunena 6.0
+     */
+    private function getIconsAttributesSystem($icon)
+    {
+        $attributes = $icon[0]->attributes();
+        $icon       = new StdClass();
+        $icon->id   = (int) $attributes->id;
+        $icon->name = (string) $attributes->name;
+        $icon->svg  = (string) $attributes->svg;
+        $icon->fa   = (string) $attributes->fa;
+        $icon->src  = (string) $attributes->src;
+        $icon->new  = (string) $attributes->new;
+
+        return $icon;
+    }
+
+    /**
+     * @param   string  $image  image
+     * @param   string  $alt    alt
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getImage(string $image, $alt = ''): string
+    {
+        return '<img loading=lazy src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
+    }
+
+    /**
+     * @param   string  $filename  filename
+     * @param   bool    $url       url
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getImagePath($filename = '', $url = true): string
+    {
+        return $this->getFile($filename, $url, $this->pathTypes['images'], 'media/kunena/images');
     }
 
     /**
@@ -517,249 +1361,56 @@ class KunenaTemplate
     }
 
     /**
-     * getconfigxml
+     * Compute and cache latest SCSS source mtime for a directory.
      *
-     * @return  array|false|string|string[]|null
+     * @param   string  $inputDir  SCSS source directory.
      *
-     * @since   Kunena 6.0
+     * @return  int
+     *
+     * @since   Kunena 7.1
      */
-    public function getConfigXml()
+    protected function getMaxScssMtimeCached(string $inputDir): int
     {
-        // Find configuration file.
-        $xml_path = KPATH_SITE . "/template/{$this->name}/config/config.xml";
-
-        if (!is_file($xml_path)) {
-            return false;
+        if (isset(self::$scssDirectoryMtimeCache[$inputDir])) {
+            return self::$scssDirectoryMtimeCache[$inputDir];
         }
 
-        $xml = file_get_contents($xml_path);
+        $maxMtime = 0;
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($inputDir, FilesystemIterator::SKIP_DOTS));
 
-        if (!strstr($xml, '<config>')) {
-            // Update old template files to new format.
-            $xml = preg_replace(
-                ['|<params|', '|</params>|', '|<param\s+|', '|</param>|'],
-                ['<config', '</config>', '<field ', '</field>'],
-                $xml
-            );
-        }
-
-        return $xml;
-    }
-
-    /**
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function initialize(): void
-    {
-        $this->loadLanguage();
-
-        if ($this->config->sef) {
-            $sef = '/forum';
-        } else {
-            $sef = '/index.php?option=com_kunena';
-        }
-
-        if (strpos($_SERVER['REQUEST_URI'], $sef) !== false) {
-            $isForumActive = true;
-        } else {
-            $isForumActive = false;
-        }
-
-        if ($isForumActive) {
-            $this->addScriptDeclaration(
-                '
-				document.addEventListener("DOMContentLoaded", () => {
-					let currentMenuItem = document.querySelector(".current");
-					let parentMenuItem = document.querySelector(".alias-parent-active");
-
-					if (currentMenuItem) {
-						currentMenuItem.classList.add("active");
-						currentMenuItem.classList.add("alias-parent-active");
-					}
-					if (parentMenuItem) {
-						parentMenuItem.classList.add("active");
-						parentMenuItem.classList.add("alias-parent-active");
-					}
-				});
-			'
-            );
-        }
-    }
-
-    /**
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function loadLanguage(): void
-    {
-        // Loading language strings for the template
-        $lang = Factory::getApplication()->getLanguage();
-        KunenaFactory::loadLanguage('com_kunena.templates', 'site');
-
-        foreach (array_reverse($this->default) as $template) {
-            $lang->load('kunena_tmpl_' . $template, JPATH_SITE)
-                || $lang->load('kunena_tmpl_' . $template, KPATH_SITE)
-                || $lang->load('kunena_tmpl_' . $template, KPATH_SITE . '/template/' . $template);
-        }
-    }
-
-    /**
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function initializeBackend(): void
-    {
-        $this->loadLanguage();
-    }
-
-    /**
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    public function getUserClasses(): array
-    {
-        return $this->userClasses;
-    }
-
-    /**
-     * @param   string  $link   link
-     * @param   string  $name   name
-     * @param   string  $scope  scope
-     * @param   string  $type   type
-     * @param   null    $id     id
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getButton(string $link, string $name, string $scope, string $type, $id = null): string
-    {
-        $types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
-        $names = [
-            'unsubscribe' => 'subscribe',
-            'unfavorite'  => 'favorite',
-            'unsticky'    => 'sticky',
-            'unlock'      => 'lock',
-            'create'      => 'newtopic',
-            'quickReply'  => 'reply',
-            'quote'       => 'kquote',
-            'edit'        => 'kedit',
-        ];
-
-        $text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
-        $title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
-
-        if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG") {
-            $title = '';
-        }
-
-        if ($id) {
-            $id = 'id="' . $id . '"';
-        }
-
-        if (isset($types[$type])) {
-            $type = $types[$type];
-        }
-
-        if ($name == 'quickReply') {
-            $type .= ' kqreply';
-        }
-
-        if (isset($names[$name])) {
-            $name = $names[$name];
-        }
-
-        return <<<HTML
-					<a {$id} class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" data-bs-toggle="tooltip" title="{$title}">
-						<span class="{$name}"><span>{$text}</span></span>
-					</a>
-HTML;
-    }
-
-    /**
-     * @param   string  $name   name
-     * @param   string  $title  title
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getIcon(string $name, $title = ''): string
-    {
-        return '<span class="kicon ' . $name . '" data-bs-toggle="tooltip" title="' . $title . '"></span>';
-    }
-
-    /**
-     * @param   string  $image  image
-     * @param   string  $alt    alt
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getImage(string $image, $alt = ''): string
-    {
-        return '<img loading=lazy src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
-    }
-
-    /**
-     * @param   string  $filename  filename
-     * @param   bool    $url       url
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getImagePath($filename = '', $url = true): string
-    {
-        return $this->getFile($filename, $url, $this->pathTypes['images'], 'media/kunena/images');
-    }
-
-    /**
-     * @param   string  $file      file
-     * @param   bool    $url       url
-     * @param   string  $basepath  basepath
-     * @param   null    $default   default
-     * @param   null    $ignore    ignore
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getFile(string $file, $url = false, $basepath = '', $default = null, $ignore = null): string
-    {
-        if ($basepath) {
-            $basepath = '/' . $basepath;
-        }
-
-        $filepath = "{$basepath}/{$file}";
-
-        if (!isset($this->filecache[$filepath])) {
-            $this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE . "/template/{$this->name}/{$file}";
-
-            foreach ($this->default as $template) {
-                if ($template == $ignore) {
-                    continue;
-                }
-
-                $path = "template/{$template}{$basepath}";
-
-                if ($this->getPathStatCached(KPATH_SITE . "/{$path}/{$file}")['exists']) {
-                    $this->filecache[$filepath] = KPATH_COMPONENT_RELATIVE . "/{$path}/{$file}";
-                    break;
-                }
+        foreach ($iterator as $fileInfo) {
+            if ($fileInfo->isFile() && strtolower($fileInfo->getExtension()) === 'scss') {
+                $maxMtime = max($maxMtime, $fileInfo->getMTime());
             }
         }
 
-        return ($url ? Uri::root(true) . '/' : '') . $this->filecache[$filepath];
+        self::$scssDirectoryMtimeCache[$inputDir] = $maxMtime;
+
+        return $maxMtime;
+    }
+
+    /**
+     * @param   object  $item  item
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getPaginationItemActive(object $item): string
+    {
+        return '<a data-bs-toggle="tooltip" title="' . $item->text . '" href="' . $item->link . '" class="pagenav">' . $item->text . '</a>';
+    }
+
+    /**
+     * @param   object  $item  item
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getPaginationItemInactive(object $item): string
+    {
+        return '<span class="pagenav">' . $item->text . '</span>';
     }
 
     /**
@@ -809,50 +1460,86 @@ HTML;
     }
 
     /**
-     * @param   object  $item  item
+     * Return cached path metadata to avoid repeated realpath/filemtime calls.
+     *
+     * @param   string  $path  File path.
+     *
+     * @return  array{exists: bool, cacheKey: string, mtime: int}
+     *
+     * @since   Kunena 7.1
+     */
+    protected function getPathStatCached(string $path): array
+    {
+        if (isset(self::$pathStatCache[$path])) {
+            return self::$pathStatCache[$path];
+        }
+
+        $resolved = realpath($path);
+        $cacheKey = $resolved ?: $path;
+        $exists   = $resolved !== false || is_file($path);
+        $mtime    = 0;
+
+        if ($exists) {
+            $mtime = (int) filemtime($cacheKey);
+        }
+
+        self::$pathStatCache[$path] = [
+            'exists'   => $exists,
+            'cacheKey' => $cacheKey,
+            'mtime'    => $mtime,
+        ];
+
+        return self::$pathStatCache[$path];
+    }
+
+    /**
+     * Return a persistent cache controller for template metadata.
+     *
+     * @return  mixed
+     *
+     * @since   Kunena 7.1
+     */
+    protected function getPersistentTemplateCache()
+    {
+        if (self::$persistentTemplateCache) {
+            return self::$persistentTemplateCache;
+        }
+
+        $options = [
+            'defaultgroup' => 'com_kunena_template',
+            'caching'      => true,
+            'lifetime'     => 86400,
+        ];
+
+        self::$persistentTemplateCache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+
+        return self::$persistentTemplateCache;
+    }
+
+    /**
+     * @param   string  $filename  filename
+     * @param   bool    $url       url
      *
      * @return  string
      *
      * @since   Kunena 6.0
      */
-    public function getPaginationItemActive(object $item): string
+    public function getRankPath($filename = '', $url = false): string
     {
-        return '<a data-bs-toggle="tooltip" title="' . $item->text . '" href="' . $item->link . '" class="pagenav">' . $item->text . '</a>';
+        return $this->getFile($filename, $url, $this->pathTypes['ranks'], 'media/kunena/ranks');
     }
 
     /**
-     * @param   object  $item  item
+     * @param   string  $filename  filename
+     * @param   bool    $url       url
      *
      * @return  string
      *
      * @since   Kunena 6.0
      */
-    public function getPaginationItemInactive(object $item): string
+    public function getSmileyPath($filename = '', $url = false): string
     {
-        return '<span class="pagenav">' . $item->text . '</span>';
-    }
-
-    /**
-     * @param   string  $class      class
-     * @param   string  $class_sfx  class_sfx
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getClass(string $class, $class_sfx = ''): string
-    {
-        return $class . ($class_sfx ? " {$class}.{$class_sfx}" : '');
-    }
-
-    /**
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    public function getStyleVariables(): array
-    {
-        return $this->style_variables;
+        return $this->getFile($filename, $url, $this->pathTypes['emoticons'], 'media/kunena/emoticons');
     }
 
     /**
@@ -869,236 +1556,42 @@ HTML;
     }
 
     /**
-     * @param   string   $name   name
-     * @param   integer  $value  value
-     *
-     * @return  mixed
+     * @return  array
      *
      * @since   Kunena 6.0
      */
-    public function setStyleVariable(string $name, int $value): int
+    public function getStyleVariables(): array
     {
-        $this->compiled_style_variables = null;
-
-        return $this->style_variables[$name] = $value;
+        return $this->style_variables;
     }
 
     /**
-     * @param   string  $filename  filename
-     * @param   string  $group     group
+     * Build a cache key that is automatically invalidated when XML files change.
      *
-     * @return  mixed|void
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function addStyleSheet(string $filename, $group = 'forum')
-    {
-        $format = $this->input->getCmd('format');
-
-        if (!empty($format) && $format != 'html') {
-            return;
-        }
-
-        if (!preg_match('|https?://|', $filename) && !preg_match('|media/jui|', $filename)) {
-            if (preg_match('/assets/', $filename)) {
-                $filename = preg_replace('|^css/|u', '', $filename);
-                $filename = preg_replace('/^assets\//', '', $filename);
-                $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
-            } elseif (preg_match('/kunena.css/', $filename) || preg_match('/kunena-custom.css/', $filename)) {
-                $filename = preg_replace('|^css/|u', '', $filename);
-                $filename = preg_replace('/^assets\//', '', $filename);
-                $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'media/kunena/cache/' . $this->name . '/css');
-            } else {
-                $filename = $this->getFile($filename, false, $this->pathTypes['css'], $this->pathTypes['css']);
-            }
-
-            $filemin      = $filename;
-            $filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
-            $fileminAbs   = JPATH_ROOT . "/$filemin_path";
-
-            if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && $this->isFileCached($fileminAbs)) {
-                $filemin = preg_replace('/\.css$/u', '-min.css', $filename);
-            }
-
-            if ($this->isFileCached(JPATH_ROOT . "/$filemin")) {
-                $filename = $filemin;
-            }
-
-            $filename = Uri::root(false) . $filename;
-        }
-
-        return HTMLHelper::_('stylesheet', $filename);
-    }
-
-    /**
-     * Compile SCSS in case of the cache directory is not created or it's deleted
-     *
-     * @since   Kunena 6.1
-     */
-    public function createCacheDir()
-    {
-        // Compile CSS from SCSS files.
-        $ktemplate = KunenaFactory::getTemplate();
-        $ktemplate->compileScss("assets/scss/{$this->name}.scss", 'kunena.css');
-
-        $filenamescss = JPATH_SITE . "/components/com_kunena/template/{$this->name}/assets/scss/custom.scss";
-
-        if (file_exists($filenamescss) && 0 != fileSize($filenamescss)) {
-            $this->compileScss('assets/scss/custom.scss', 'kunena-custom.css');
-            $this->addStyleSheet('kunena-custom.css');
-        }
-    }
-
-    /**
-     * Set the Scss file into the document head
-     *
-     * @param   string  $filename  filename
-     *
-     * @return  mixed|void
-     *
-     * @throws Exception
-     * @since   Kunena 5.1.3
-     */
-    public function addScssSheet(string $filename)
-    {
-        $format = $this->input->getCmd('format');
-
-        if (!empty($format) && $format != 'html') {
-            return;
-        }
-
-        $filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
-
-        return HTMLHelper::_('stylesheet', $filename);
-    }
-
-    /**
-     * @param   string  $style  style
-     *
-     * @return  string|void
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function addStyleDeclaration(string $style)
-    {
-        $format = $this->input->getCmd('format');
-
-        if (!empty($format) && $format != 'html') {
-            return false;
-        }
-
-        return Factory::getApplication()->getDocument()->addStyleDeclaration($style);
-    }
-
-    /**
-     * @param   string  $filename   filename
-     * @param   string  $condition  condition
-     *
-     * @return  void
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function addIEStyleSheet(string $filename, $condition = 'IE'): void
-    {
-        $filename  = preg_replace('|^css/|u', '', $filename);
-        $url       = $this->getFile($filename, true, $this->pathTypes['css'], 'media/kunena/css');
-        $stylelink = "<!--[if {$condition}]>\n";
-        $stylelink .= '<link rel="stylesheet" href="' . $url . '" />' . "\n";
-        $stylelink .= "<![endif]-->\n";
-        Factory::getApplication()->getDocument()->addCustomTag($stylelink);
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function clearCache(): void
-    {
-        $path = JPATH_ROOT . "/media/kunena/cache/{$this->name}";
-
-        if (is_dir($path)) {
-            Folder::delete($path);
-        }
-    }
-
-    /**
-     * @param   string  $filename  filename
+     * @param   string  $prefix   Cache domain prefix.
+     * @param   string  $xmlfile  XML source file.
      *
      * @return  string
      *
-     * @throws  Exception
-     * @since   Kunena 6.0
+     * @since   Kunena 7.1
      */
-    public function getCachePath($filename = ''): string
+    protected function getTemplateCacheId(string $prefix, string $xmlfile): string
     {
-        if ($filename) {
-            $filename = '/' . $filename;
-        }
+        $stat     = $this->getPathStatCached($xmlfile);
+        $cacheKey = $stat['cacheKey'];
+        $mtime    = $stat['mtime'];
 
-        if (JDEBUG || $this->config->debug) {
-            $filename = "media/kunena/cache/{$this->name}/debug{$filename}";
-        } else {
-            $filename = "media/kunena/cache/{$this->name}{$filename}";
-        }
-
-        return $filename;
+        return $prefix . '.' . md5($cacheKey . '|' . $mtime . '|v2');
     }
 
     /**
-     * @param   mixed  $matches  matches
-     *
-     * @return  string
+     * @return  SimpleXMLElement
      *
      * @since   Kunena 6.0
      */
-    public function findUrl($matches): string
+    public function getTemplateDetails(): SimpleXMLElement
     {
-        $file = trim($matches[1], ' \'"');
-
-        if (preg_match('#^../#', $file)) {
-            $file = $this->getFile(substr($file, 3), true, '', 'media/kunena');
-        }
-
-        return "url('{$file}')";
-    }
-
-    /**
-     * Add option for script
-     *
-     * @param   string  $key      Name in Storage
-     * @param   mixed   $options  Scrip options as array or string
-     * @param   bool    $merge    Whether merge with existing (true) or replace (false)
-     *
-     * @return \Joomla\CMS\Document\Document|boolean
-     *
-     * @throws Exception
-     * @since   Kunena 3.5
-     */
-    public function addScriptOptions(string $key, $options, $merge = true)
-    {
-        $format = $this->input->getCmd('format');
-
-        if (!empty($format) && $format != 'html') {
-            return false;
-        }
-
-        return Factory::getApplication()->getDocument()->addScriptOptions($key, $options, $merge);
-    }
-
-    /**
-     * @param   string  $path  path
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function addPath(string $path): void
-    {
-        $this->paths[] = KunenaPath::clean("/$path");
+        return simplexml_load_file(KPATH_SITE . "/template/{$this->name}/config/template.xml");
     }
 
     /**
@@ -1128,211 +1621,6 @@ HTML;
         }
 
         return $array;
-    }
-
-    /**
-     * @param   string  $filename  filename
-     * @param   bool    $url       url
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getAvatarPath($filename = '', $url = false): string
-    {
-        return $this->getFile($filename, $url, $this->pathTypes['avatars'], 'media/kunena/avatars');
-    }
-
-    /**
-     * @param   string  $filename  filename
-     * @param   bool    $url       url
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getSmileyPath($filename = '', $url = false): string
-    {
-        return $this->getFile($filename, $url, $this->pathTypes['emoticons'], 'media/kunena/emoticons');
-    }
-
-    /**
-     * @param   string  $filename  filename
-     * @param   bool    $url       url
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getRankPath($filename = '', $url = false): string
-    {
-        return $this->getFile($filename, $url, $this->pathTypes['ranks'], 'media/kunena/ranks');
-    }
-
-    /**
-     * @param   mixed  $index  index
-     * @param   bool   $url    url
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getTopicIconIndexPath($index, $url = false): string
-    {
-        if (empty($this->topicIcons)) {
-            $this->getTopicIcons(false, 0);
-        }
-
-        if (empty($this->topicIcons[$index]->published)) {
-            $index = 0;
-        }
-
-        $icon = $this->topicIcons[$index];
-
-        return $this->getTopicIconPath($icon->filename, $url);
-    }
-
-    /**
-     * The published topic icons (the statuses of a topic) of the icon set which is in use, also when no category has chosen
-     * the icon set yet (the default one).
-     *
-     * @return  array  The icons, by id.
-     *
-     * @throws  Exception
-     * @since   Kunena 7.2
-     */
-    public function getUserTopicIcons(): array
-    {
-        if ($this->categoryIconset === '') {
-            $this->categoryIconset = '/default';
-            $this->topicIcons      = [];
-        }
-
-        return $this->getTopicIcons(false);
-    }
-
-    /**
-     * @param   bool  $all      all
-     * @param   int   $checked  checked
-     *
-     * @return  array
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getTopicIcons($all = false, $checked = 0)
-    {
-        $categoryIconset = $this->categoryIconset;
-
-        if (empty($this->topicIcons)) {
-            $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons' . $categoryIconset . '/topicicons.xml';
-
-            if (is_file($xmlfile)) {
-                $cacheId = $this->getTemplateCacheId('topicicons', $xmlfile);
-                $cached  = $this->getPersistentTemplateCache()->get($cacheId);
-
-                if (
-                    \is_array($cached)
-                    && isset($cached[0])
-                ) {
-                    $this->topicIcons = $cached;
-                } else {
-                    $xml = $this->loadXmlFileCached($xmlfile);
-
-                    if ($xml && isset($xml->icons)) {
-                        foreach ($xml->icons as $icons) {
-                            $type   = (string) $icons->attributes()->type;
-                            $width  = (int) $icons->attributes()->width;
-                            $height = (int) $icons->attributes()->height;
-
-                            foreach ($icons->icon as $icon) {
-                                $attributes = $icon->attributes();
-                                $icon       = new stdClass();
-                                $icon->id   = (int) $attributes->id;
-                                $icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
-                                $icon->name = (string) $attributes->name;
-
-                                if ($icon->type != 'user') {
-                                    $icon->id = $icon->type . '_' . $icon->name;
-                                }
-
-                                $icon->published             = (int) $attributes->published;
-                                $icon->title                 = (string) $attributes->title;
-                                $icon->svg                   = (string) $attributes->svg;
-                                $icon->fa                    = (string) $attributes->fa;
-                                $icon->filename              = (string) $attributes->src;
-                                $icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
-                                $icon->height                = (int) $attributes->height ? (int) $attributes->height : $height;
-                                $icon->relpath               = $this->getTopicIconPath("{$icon->filename}", false);
-                                $this->topicIcons[$icon->id] = $icon;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Make sure that default icon exists (use user/default.png in current template)
-            if (!isset($this->topicIcons[0])) {
-                $icon                = new StdClass();
-                $icon->id            = 0;
-                $icon->type          = 'user';
-                $icon->name          = 'default';
-                $icon->published     = 0;
-                $icon->title         = 'Default';
-                $icon->filename      = 'default.png';
-                $icon->width         = 48;
-                $icon->height        = 48;
-                $icon->relpath       = $this->getTopicIconPath("user/{$icon->filename}", false);
-                $this->topicIcons[0] = $icon;
-            }
-
-            if (isset($cacheId) && !empty($this->topicIcons)) {
-                $this->getPersistentTemplateCache()->store($this->topicIcons, $cacheId);
-            }
-        }
-
-        if ($all) {
-            $icons = $this->topicIcons;
-        } else {
-            $icons = [];
-
-            foreach ($this->topicIcons as $icon) {
-                if ($icon->published && is_numeric($icon->id)) {
-                    $icons[$icon->id]          = clone $icon;
-                    $icons[$icon->id]->checked = ($checked == $icon->id);
-                }
-            }
-        }
-
-        return $icons;
-    }
-
-    /**
-     * @param   string  $filename  filename
-     * @param   bool    $url       url
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getTopicIconPath($filename = '', $url = true): string
-    {
-        $categoryIconset       = 'images/topic_icons';
-        $defaultIconPathExists = $this->getPathStatCached($categoryIconset)['exists'];
-
-        if ($this->config->topicIcons) {
-            if (!$defaultIconPathExists) {
-                $categoryIconset = 'media/kunena/topic_icons' . $this->categoryIconset;
-            }
-        } else {
-            if (!$defaultIconPathExists) {
-                $categoryIconset = 'media/kunena/topic_icons';
-            }
-        }
-
-        return $this->getFile($filename, $url, $this->pathTypes['topicIcons'], $categoryIconset);
     }
 
     /**
@@ -1475,142 +1763,6 @@ HTML;
     }
 
     /**
-     * Return the icon attributes from the XML file given
-     *
-     * @param   mixed   $src    src
-     * @param   int     $id     Icon id
-     * @param   string  $style  Icon style, e.g. src
-     *
-     * @return  stdClass
-     *
-     * @since   Kunena 6.0
-     */
-    public function get_xml_icon($src, $id = 0, $style = 'src')
-    {
-        if (isset($src->icons)) {
-            $icon = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
-
-            if (!$icon) {
-                $icon = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
-            }
-
-            if ($icon) {
-                return $this->getIconsAttributes($icon);
-            }
-        }
-
-        // No icon file or no icon with this id: an empty icon.
-        return $this->getEmptyIcon();
-    }
-
-    /**
-     * An icon without any data, returned when the icon definition cannot be found
-     *
-     * @return stdClass
-     * @since Kunena 7.2
-     */
-    private function getEmptyIcon()
-    {
-        $icon       = new stdClass();
-        $icon->id   = 0;
-        $icon->name = '';
-        $icon->svg  = '';
-        $icon->fa   = '';
-        $icon->src  = '';
-        $icon->new  = '';
-
-        return $icon;
-    }
-
-    /**
-     * Retrieve icons attributes
-     *
-     * @return stdClass
-     * @since Kunena 5.2
-     */
-    private function getIconsAttributes($icon)
-    {
-        $attributes = $icon[0]->attributes();
-        $icon       = new stdClass();
-        $icon->id   = (int) $attributes->id;
-        $icon->name = (string) $attributes->name;
-        $icon->svg  = (string) $attributes->svg;
-        $icon->fa   = (string) $attributes->fa;
-        $icon->src  = (string) $attributes->src;
-        $icon->new  = (string) $attributes->new;
-
-        return $icon;
-    }
-
-    /**
-     * @param   mixed   $src    src
-     * @param   int     $id     id
-     * @param   string  $style  style
-     *
-     * @return StdClass
-     *
-     * @since      Kunena 5.0.0-Beta4
-     */
-    public function get_xml_systemicon($src, $id = 0, $style = 'src'): StdClass
-    {
-        if (isset($src->icons)) {
-            $icon = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
-
-            if (!$icon) {
-                $icon = $src->xpath('/kunena-systemicons/icons/icon[@id=0]');
-            }
-
-            if ($icon) {
-                return $this->getIconsAttributesSystem($icon);
-            }
-        }
-
-        // No icon file or no icon with this id: an empty icon.
-        return $this->getEmptyIcon();
-    }
-
-    /**
-     * Retrieve icons attributes
-     *
-     * @return stdClass
-     * @since Kunena 6.0
-     */
-    private function getIconsAttributesSystem($icon)
-    {
-        $attributes = $icon[0]->attributes();
-        $icon       = new stdClass();
-        $icon->id   = (int) $attributes->id;
-        $icon->name = (string) $attributes->name;
-        $icon->svg  = (string) $attributes->svg;
-        $icon->fa   = (string) $attributes->fa;
-        $icon->src  = (string) $attributes->src;
-        $icon->new  = (string) $attributes->new;
-
-        return $icon;
-    }
-
-    /**
-     * @param   KunenaCategory  $category  category
-     *
-     * @return  string
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function getCategoryIcon(KunenaCategory $category): string
-    {
-        if ($this->config->categoryIcons) {
-            $icon    = $category->icon_id;
-            $iconurl = $this->getCategoryIconIndexPath($icon, true);
-        } else {
-            $icon    = 'folder';
-            $iconurl = $this->getCategoryIconPath("system/{$icon}.png", true);
-        }
-
-        return '<img loading=lazy src="' . $iconurl . '" alt="emo" />';
-    }
-
-    /**
      * @param   mixed  $index  index
      * @param   bool   $url    url
      *
@@ -1619,19 +1771,46 @@ HTML;
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getCategoryIconIndexPath($index, $url = false): string
+    public function getTopicIconIndexPath($index, $url = false): string
     {
-        if (empty($this->categoryIcons)) {
-            $this->getCategoryIcons();
+        if (empty($this->topicIcons)) {
+            $this->getTopicIcons(false, 0);
         }
 
-        if (empty($this->categoryIcons[$index]->published)) {
+        if (empty($this->topicIcons[$index]->published)) {
             $index = 0;
         }
 
-        $icon = $this->categoryIcons[$index];
+        $icon = $this->topicIcons[$index];
 
-        return $this->getCategoryIconPath($icon->filename, $url);
+        return $this->getTopicIconPath($icon->filename, $url);
+    }
+
+    /**
+     * @param   string  $filename  filename
+     * @param   bool    $url       url
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getTopicIconPath($filename = '', $url = true): string
+    {
+        $categoryIconset       = 'images/topic_icons';
+        $defaultIconPathExists = $this->getPathStatCached($categoryIconset)['exists'];
+
+        if ($this->config->topicIcons) {
+            if (!$defaultIconPathExists) {
+                $categoryIconset = 'media/kunena/topic_icons' . $this->categoryIconset;
+            }
+        } else {
+            if (!$defaultIconPathExists) {
+                $categoryIconset = 'media/kunena/topic_icons';
+            }
+        }
+
+        return $this->getFile($filename, $url, $this->pathTypes['topicIcons'], $categoryIconset);
     }
 
     /**
@@ -1643,20 +1822,22 @@ HTML;
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getCategoryIcons($all = false, $checked = 0)
+    public function getTopicIcons($all = false, $checked = 0)
     {
-        if (empty($this->categoryIcons)) {
-            $xmlfile = $this->getCategoryIconPath('categoryIcons.xml', false);
+        $categoryIconset = $this->categoryIconset;
+
+        if (empty($this->topicIcons)) {
+            $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons' . $categoryIconset . '/topicicons.xml';
 
             if (is_file($xmlfile)) {
-                $cacheId = $this->getTemplateCacheId('categoryicons', $xmlfile);
+                $cacheId = $this->getTemplateCacheId('topicicons', $xmlfile);
                 $cached  = $this->getPersistentTemplateCache()->get($cacheId);
 
                 if (
                     \is_array($cached)
                     && isset($cached[0])
                 ) {
-                    $this->categoryIcons = $cached;
+                    $this->topicIcons = $cached;
                 } else {
                     $xml = $this->loadXmlFileCached($xmlfile);
 
@@ -1668,7 +1849,7 @@ HTML;
 
                             foreach ($icons->icon as $icon) {
                                 $attributes = $icon->attributes();
-                                $icon       = new stdClass();
+                                $icon       = new StdClass();
                                 $icon->id   = (int) $attributes->id;
                                 $icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
                                 $icon->name = (string) $attributes->name;
@@ -1677,12 +1858,15 @@ HTML;
                                     $icon->id = $icon->type . '_' . $icon->name;
                                 }
 
-                                $icon->published                = (int) $attributes->published;
-                                $icon->title                    = (string) $attributes->title;
-                                $icon->filename                 = (string) $attributes->src;
-                                $icon->width                    = (int) $attributes->width ? (int) $attributes->width : $width;
-                                $icon->height                   = (int) $attributes->height ? (int) $attributes->height : $height;
-                                $this->categoryIcons[$icon->id] = $icon;
+                                $icon->published             = (int) $attributes->published;
+                                $icon->title                 = (string) $attributes->title;
+                                $icon->svg                   = (string) $attributes->svg;
+                                $icon->fa                    = (string) $attributes->fa;
+                                $icon->filename              = (string) $attributes->src;
+                                $icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
+                                $icon->height                = (int) $attributes->height ? (int) $attributes->height : $height;
+                                $icon->relpath               = $this->getTopicIconPath("{$icon->filename}", false);
+                                $this->topicIcons[$icon->id] = $icon;
                             }
                         }
                     }
@@ -1690,31 +1874,31 @@ HTML;
             }
 
             // Make sure that default icon exists (use user/default.png in current template)
-            if (!isset($this->categoryIcons[0])) {
-                $icon                   = new StdClass();
-                $icon->id               = 0;
-                $icon->type             = 'user';
-                $icon->name             = 'default';
-                $icon->published        = 0;
-                $icon->title            = 'Default';
-                $icon->filename         = 'default.png';
-                $icon->width            = 48;
-                $icon->height           = 48;
-                $icon->relpath          = $this->getCategoryIconPath("user/{$icon->filename}", false);
-                $this->categoryIcons[0] = $icon;
+            if (!isset($this->topicIcons[0])) {
+                $icon                = new StdClass();
+                $icon->id            = 0;
+                $icon->type          = 'user';
+                $icon->name          = 'default';
+                $icon->published     = 0;
+                $icon->title         = 'Default';
+                $icon->filename      = 'default.png';
+                $icon->width         = 48;
+                $icon->height        = 48;
+                $icon->relpath       = $this->getTopicIconPath("user/{$icon->filename}", false);
+                $this->topicIcons[0] = $icon;
             }
 
-            if (isset($cacheId) && !empty($this->categoryIcons)) {
-                $this->getPersistentTemplateCache()->store($this->categoryIcons, $cacheId);
+            if (isset($cacheId) && !empty($this->topicIcons)) {
+                $this->getPersistentTemplateCache()->store($this->topicIcons, $cacheId);
             }
         }
 
         if ($all) {
-            $icons = $this->categoryIcons;
+            $icons = $this->topicIcons;
         } else {
             $icons = [];
 
-            foreach ($this->categoryIcons as $icon) {
+            foreach ($this->topicIcons as $icon) {
                 if ($icon->published && is_numeric($icon->id)) {
                     $icons[$icon->id]          = clone $icon;
                     $icons[$icon->id]->checked = ($checked == $icon->id);
@@ -1723,95 +1907,6 @@ HTML;
         }
 
         return $icons;
-    }
-
-    /**
-     * @param   string  $filename         filename
-     * @param   bool    $url              url
-     * @param   mixed   $categoryIconset  category
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getCategoryIconPath($filename = '', $url = true, $categoryIconset = 'default'): string
-    {
-        $set = '';
-
-        if (!$this->isHmvc()) {
-            $categoryIconset = 'default';
-        }
-
-        return $this->getFile($filename, $url, $this->pathTypes['categoryIcons'] . $set, 'media/kunena/category_icons/' . $categoryIconset);
-    }
-
-    /**
-     * @return  SimpleXMLElement
-     *
-     * @since   Kunena 6.0
-     */
-    public function getTemplateDetails(): SimpleXMLElement
-    {
-        return simplexml_load_file(KPATH_SITE . "/template/{$this->name}/config/template.xml");
-    }
-
-    /**
-     * @param   string  $inputFile   input
-     * @param   string  $outputFile  output
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     * @throws \ScssPhp\ScssPhp\Exception\SassException
-     * @throws Exception
-     */
-    public function compileScss(string $inputFile, string $outputFile): void
-    {
-        // Load the cache.
-        $cacheDir = JPATH_SITE . '/cache/kunena';
-
-        if (!is_dir($cacheDir)) {
-            Folder::create($cacheDir);
-        }
-
-        if (!is_file($inputFile)) {
-            $inputFile = KPATH_SITE . '/template/' . $this->name . '/' . $inputFile;
-        }
-
-        $outputDir = KPATH_MEDIA . "/cache/{$this->name}/css";
-
-        if (!is_dir($outputDir)) {
-            Folder::create($outputDir);
-        }
-
-        $outputPath = $outputDir . "/" . $outputFile;
-
-        if (!$this->shouldCompileScss($inputFile, $outputPath)) {
-            return;
-        }
-
-        $scss = new Compiler();
-        $scss->addImportPath(\dirname($inputFile));
-        $scss->setOutputStyle(OutputStyle::COMPRESSED);
-        $scssContent = file_get_contents($inputFile);
-        $style       = $scss->compileString($scssContent, $inputFile);
-
-        file_put_contents($outputPath, $style->getCss());
-    }
-
-    /**
-     * Set the category iconset value
-     *
-     * @param   string  $iconset  iconset
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function setCategoryIconset($iconset = '/default'): void
-    {
-        $this->categoryIconset = '/' . $iconset;
     }
 
     /**
@@ -1854,7 +1949,7 @@ HTML;
                 if ($xml && isset($xml->labels)) {
                     foreach ($xml->labels->label as $labelNode) {
                         $attributes         = $labelNode->attributes();
-                        $label              = new stdClass();
+                        $label              = new StdClass();
                         $label->id          = (int) $attributes->id;
                         $label->svg         = (string) $attributes->svg;
                         $label->fa          = (string) $attributes->fa;
@@ -1886,46 +1981,158 @@ HTML;
     }
 
     /**
-     * Build a cache key that is automatically invalidated when XML files change.
+     * @return  array
      *
-     * @param   string  $prefix   Cache domain prefix.
-     * @param   string  $xmlfile  XML source file.
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.1
+     * @since   Kunena 6.0
      */
-    protected function getTemplateCacheId(string $prefix, string $xmlfile): string
+    public function getUserClasses(): array
     {
-        $stat     = $this->getPathStatCached($xmlfile);
-        $cacheKey = $stat['cacheKey'];
-        $mtime    = $stat['mtime'];
-
-        return $prefix . '.' . md5($cacheKey . '|' . $mtime . '|v2');
+        return $this->userClasses;
     }
 
     /**
-     * Return a persistent cache controller for template metadata.
+     * The published topic icons (the statuses of a topic) of the icon set which is in use, also when no category has chosen
+     * the icon set yet (the default one).
      *
-     * @return  mixed
+     * @return  array  The icons, by id.
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function getUserTopicIcons(): array
+    {
+        if ($this->categoryIconset === '') {
+            $this->categoryIconset = '/default';
+            $this->topicIcons      = [];
+        }
+
+        return $this->getTopicIcons(false);
+    }
+
+    /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function initialize(): void
+    {
+        $this->loadLanguage();
+
+        if ($this->config->sef) {
+            $sef = '/forum';
+        } else {
+            $sef = '/index.php?option=com_kunena';
+        }
+
+        if (strpos($_SERVER['REQUEST_URI'], $sef) !== false) {
+            $isForumActive = true;
+        } else {
+            $isForumActive = false;
+        }
+
+        if ($isForumActive) {
+            $this->addScriptDeclaration(
+                '
+				document.addEventListener("DOMContentLoaded", () => {
+					let currentMenuItem = document.querySelector(".current");
+					let parentMenuItem = document.querySelector(".alias-parent-active");
+
+					if (currentMenuItem) {
+						currentMenuItem.classList.add("active");
+						currentMenuItem.classList.add("alias-parent-active");
+					}
+					if (parentMenuItem) {
+						parentMenuItem.classList.add("active");
+						parentMenuItem.classList.add("alias-parent-active");
+					}
+				});
+			'
+            );
+        }
+    }
+
+    /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function initializeBackend(): void
+    {
+        $this->loadLanguage();
+    }
+
+    /**
+     * Cached wrapper for is_file() to reduce repeated filesystem checks.
+     *
+     * @param   string  $path  Absolute file path.
+     *
+     * @return  bool
      *
      * @since   Kunena 7.1
      */
-    protected function getPersistentTemplateCache()
+    protected function isFileCached(string $path): bool
     {
-        if (self::$persistentTemplateCache) {
-            return self::$persistentTemplateCache;
+        if (!\array_key_exists($path, self::$fileExistsCache)) {
+            self::$fileExistsCache[$path] = is_file($path);
         }
 
-        $options = [
-            'defaultgroup' => 'com_kunena_template',
-            'caching'      => true,
-            'lifetime'     => 86400,
-        ];
+        return self::$fileExistsCache[$path];
+    }
 
-        self::$persistentTemplateCache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+    /**
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function isHmvc()
+    {
+        if (\is_null($this->hmvc)) {
+            if (is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages")) {
+                $this->hmvc = is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages");
+            } else {
+                $this->hmvc = is_dir(KPATH_SITE . "/template/{$this->name}/pages");
+            }
+        }
 
-        return self::$persistentTemplateCache;
+        return $this->hmvc;
+    }
+
+    /**
+     * Load fontawesome 6.x library which includes by itself for most icons the compatiblity with v5 and v4
+     *
+     * @return  void
+     *
+     * @since Kunena 5.2
+     */
+    public function loadFontawesome()
+    {
+        $fontawesome          = $this->params->get('fontawesome');
+
+        if ($fontawesome) {
+            $this->addScript('https://use.fontawesome.com/releases/v6.7.2/js/all.js', [], ['defer' => true]);
+        }
+    }
+
+    /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function loadLanguage(): void
+    {
+        // Loading language strings for the template
+        $lang = Factory::getApplication()->getLanguage();
+        KunenaFactory::loadLanguage('com_kunena.templates', 'site');
+
+        foreach (array_reverse($this->default) as $template) {
+            $lang->load('kunena_tmpl_' . $template, JPATH_SITE)
+                || $lang->load('kunena_tmpl_' . $template, KPATH_SITE)
+                || $lang->load('kunena_tmpl_' . $template, KPATH_SITE . '/template/' . $template);
+        }
     }
 
     /**
@@ -1971,6 +2178,35 @@ HTML;
     }
 
     /**
+     * Set the category iconset value
+     *
+     * @param   string  $iconset  iconset
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function setCategoryIconset($iconset = '/default'): void
+    {
+        $this->categoryIconset = '/' . $iconset;
+    }
+
+    /**
+     * @param   string   $name   name
+     * @param   integer  $value  value
+     *
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     */
+    public function setStyleVariable(string $name, int $value): int
+    {
+        $this->compiled_style_variables = null;
+
+        return $this->style_variables[$name] = $value;
+    }
+
+    /**
      * Rebuild SCSS only when source files are newer than generated CSS.
      *
      * @param   string  $inputFile   SCSS entry file.
@@ -2002,135 +2238,6 @@ HTML;
     }
 
     /**
-     * Return cached path metadata to avoid repeated realpath/filemtime calls.
-     *
-     * @param   string  $path  File path.
-     *
-     * @return  array{exists: bool, cacheKey: string, mtime: int}
-     *
-     * @since   Kunena 7.1
-     */
-    protected function getPathStatCached(string $path): array
-    {
-        if (isset(self::$pathStatCache[$path])) {
-            return self::$pathStatCache[$path];
-        }
-
-        $resolved = realpath($path);
-        $cacheKey = $resolved ?: $path;
-        $exists   = $resolved !== false || is_file($path);
-        $mtime    = 0;
-
-        if ($exists) {
-            $mtime = (int) filemtime($cacheKey);
-        }
-
-        self::$pathStatCache[$path] = [
-            'exists'   => $exists,
-            'cacheKey' => $cacheKey,
-            'mtime'    => $mtime,
-        ];
-
-        return self::$pathStatCache[$path];
-    }
-
-    /**
-     * Cached wrapper for is_file() to reduce repeated filesystem checks.
-     *
-     * @param   string  $path  Absolute file path.
-     *
-     * @return  bool
-     *
-     * @since   Kunena 7.1
-     */
-    protected function isFileCached(string $path): bool
-    {
-        if (!\array_key_exists($path, self::$fileExistsCache)) {
-            self::$fileExistsCache[$path] = is_file($path);
-        }
-
-        return self::$fileExistsCache[$path];
-    }
-
-    /**
-     * Compute and cache latest SCSS source mtime for a directory.
-     *
-     * @param   string  $inputDir  SCSS source directory.
-     *
-     * @return  int
-     *
-     * @since   Kunena 7.1
-     */
-    protected function getMaxScssMtimeCached(string $inputDir): int
-    {
-        if (isset(self::$scssDirectoryMtimeCache[$inputDir])) {
-            return self::$scssDirectoryMtimeCache[$inputDir];
-        }
-
-        $maxMtime = 0;
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($inputDir, FilesystemIterator::SKIP_DOTS));
-
-        foreach ($iterator as $fileInfo) {
-            if ($fileInfo->isFile() && strtolower($fileInfo->getExtension()) === 'scss') {
-                $maxMtime = max($maxMtime, $fileInfo->getMTime());
-            }
-        }
-
-        self::$scssDirectoryMtimeCache[$inputDir] = $maxMtime;
-
-        return $maxMtime;
-    }
-
-    /**
-     * @param   mixed   $src    src
-     * @param   int     $id     id
-     * @param   string  $style  style
-     *
-     * @return StdClass
-     *
-     * @since   Kunena 6.0
-     */
-    public function get_xml_label($src, $id = 0, $style = 'src'): StdClass
-    {
-        if (isset($src->labels)) {
-            $label = $src->xpath('/kunena-topiclabels/labels/label[@id=' . $id . ']');
-
-            if (!$label) {
-                $label = $src->xpath('/kunena-topiclabels/labels/label[@id=0]');
-            }
-
-            $attributes       = $label[0]->attributes();
-            $label            = new stdClass();
-            $label->id        = (int) $attributes->id;
-            $label->svg       = (string) $attributes->svg;
-            $label->fa        = (string) $attributes->fa;
-            $label->src       = (string) $attributes->src;
-            $label->name      = (string) $attributes->name;
-            $label->new       = (string) $attributes->new;
-            $label->labeltype = (string) $attributes->labeltype;
-
-            return $label;
-        }
-    }
-
-    /**
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function borderless(): string
-    {
-        $borderless = $this->params->get('borderless');
-
-        if ($borderless) {
-            return '';
-        }
-
-        return ' table-bordered';
-    }
-
-    /**
      * @param   bool  $class  class
      *
      * @return string
@@ -2150,101 +2257,5 @@ HTML;
         }
 
         return '';
-    }
-
-    /**
-     * Function to get the Global Configured Captcha
-     *
-     * @return string
-     *
-     * @throws Exception
-     * @since   Kunena 6.3
-     */
-    public function getCaptcha(): string
-    {
-        $app    = Factory::getApplication();
-        $plugin = $app->get('captcha', '0');
-        $result = '';
-
-        if ($plugin === 0 || $plugin === '0' || $plugin === '' || $plugin === null || !PluginHelper::isEnabled('captcha', $plugin)) {
-            return $result;
-        }
-
-        try {
-            // Get an instance of the captcha class that we are using
-            $result  = '';
-            $id      = 'kunena_captcha';
-            $captcha = Captcha::getInstance((string) $plugin, ['namespace' => $id]);
-
-            if ($captcha->initialise($id)) {
-                $result = $captcha->display('captcha', $id, 'required');
-            }
-        } catch (RuntimeException $e) {
-            $result = '';
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-        }
-
-        return $result;
-    }
-
-    /**
-     * Load fontawesome 6.x library which includes by itself for most icons the compatiblity with v5 and v4
-     *
-     * @since Kunena 5.2
-     */
-    public function loadFontawesome()
-    {
-        $fontawesome          = $this->params->get('fontawesome');
-
-        if ($fontawesome) {
-            $this->addScript('https://use.fontawesome.com/releases/v6.7.2/js/all.js', [], ['defer' => true]);
-        }
-    }
-
-    /**
-     * Wrapper to addScript
-     *
-     * @param   string  $filename  filename
-     * @param   array   $options   options
-     * @param   array   $attribs   attribs
-     *
-     * @return  Document|void
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function addScript(string $filename, $options = [], $attribs = [])
-    {
-        $format = $this->input->getCmd('format');
-
-        if (!empty($format) && $format != 'html') {
-            return false;
-        }
-
-        if (!preg_match('|https?://|', $filename)) {
-            if (preg_match('/assets/', $filename)) {
-                $filename = preg_replace('|^css/|u', '', $filename);
-                $filename = preg_replace('/^assets\//', '', $filename);
-                $filename = $this->getFile($filename, false, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name . '/assets');
-            } else {
-                $filename = $this->getFile($filename, false, $this->pathTypes['js'], $this->pathTypes['js']);
-            }
-
-            $filemin       = $filename;
-            $filemin_path  = preg_replace('/\.js$/u', '-min.js', $filename);
-            $minPathStat   = $this->getPathStatCached(JPATH_ROOT . "/$filemin_path");
-
-            if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && $minPathStat['exists']) {
-                $filemin = preg_replace('/\.js$/u', '-min.js', $filename);
-            }
-
-            if ($this->getPathStatCached(JPATH_ROOT . "/$filemin")['exists']) {
-                $filename = $filemin;
-            }
-
-            $filename = Uri::root(false) . $filename;
-        }
-
-        return HTMLHelper::_('script', $filename, $options, $attribs);
     }
 }

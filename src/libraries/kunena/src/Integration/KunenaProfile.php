@@ -51,6 +51,21 @@ class KunenaProfile
     public bool $enabled = \true;
 
     /**
+     * Function to get User Profile Edit URL
+     *
+     * @param   int   $userid  userid
+     * @param   bool  $xhtml   xhtml
+     *
+     * @return  string|false
+     * @since   Kunena 5.0
+     * @throws  Exception
+     */
+    public function getEditProfileURL(int $userid, bool $xhtml = true): string|false
+    {
+        return '';
+    }
+
+    /**
      * Function to get the active KunenaProfle instance from the integration
      *
      * @return  KunenaProfile
@@ -77,6 +92,60 @@ class KunenaProfile
         }
 
         return self::$instance;
+    }
+
+    /**
+     * Function to get the User Profile Name
+     *
+     * @param   KunenaUser  $user         KunenaUser object
+     * @param   string      $visitorname  Name of the visitor
+     * @param   bool        $escape       In case of the escapement is done in the method
+     *
+     * @return  string
+     * @since   Kunena 7.0
+     */
+    public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
+    {
+        return '';
+    }
+
+    /**
+     * Function to get User Profile URL
+     *
+     * @param   int     $userid     userid
+     * @param   string  $task       task
+     * @param   bool    $xhtml      xhtml
+     * @param   string  $avatarTab  avatarTab
+     *
+     * @return  string|false
+     * @since   Kunena 5.0
+     * @throws  Exception
+     */
+    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
+    {
+        return '';
+    }
+
+    /**
+     * Function to get Statistics URL
+     *
+     * @param   string  $action  action
+     * @param   bool    $xhtml   xhtml
+     *
+     * @return  string
+     * @since   Kunena 5.0
+     * @throws  Exception
+     */
+    public function getStatisticsURL(string $action = '', bool $xhtml = \true): string
+    {
+        $config = KunenaFactory::getConfig();
+        $my     = Factory::getApplication()->getIdentity();
+
+        if ($config->statsLinkAllowed == 0 && $my->id == 0) {
+            return false;
+        }
+
+        return KunenaRoute::_('index.php?option=com_kunena&view=statistics' . $action, $xhtml);
     }
 
     /**
@@ -111,28 +180,6 @@ class KunenaProfile
     }
 
     /**
-     * Function to get Statistics URL
-     *
-     * @param   string  $action  action
-     * @param   bool    $xhtml   xhtml
-     *
-     * @return  string
-     * @since   Kunena 5.0
-     * @throws  Exception
-     */
-    public function getStatisticsURL(string $action = '', bool $xhtml = \true): string
-    {
-        $config = KunenaFactory::getConfig();
-        $my     = Factory::getApplication()->getIdentity();
-
-        if ($config->statsLinkAllowed == 0 && $my->id == 0) {
-            return false;
-        }
-
-        return KunenaRoute::_('index.php?option=com_kunena&view=statistics' . $action, $xhtml);
-    }
-
-    /**
      * Function to get User List URL
      *
      * @param   string  $action  action
@@ -147,23 +194,6 @@ class KunenaProfile
     }
 
     /**
-     * Function to get User Profile URL
-     *
-     * @param   int     $userid     userid
-     * @param   string  $task       task
-     * @param   bool    $xhtml      xhtml
-     * @param   string  $avatarTab  avatarTab
-     *
-     * @return  string|false
-     * @since   Kunena 5.0
-     * @throws  Exception
-     */
-    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
-    {
-        return '';
-    }
-
-    /**
      * Function to get the User Profile
      *
      * @param   KunenaLayout  $view    view
@@ -173,36 +203,6 @@ class KunenaProfile
      * @since   Kunena 5.0
      */
     public function showProfile(KunenaLayout $view, Registry $params): string
-    {
-        return '';
-    }
-
-    /**
-     * Function to get the User Profile Name
-     *
-     * @param   KunenaUser  $user         KunenaUser object
-     * @param   string      $visitorname  Name of the visitor
-     * @param   bool        $escape       In case of the escapement is done in the method
-     *
-     * @return  string
-     * @since   Kunena 7.0
-     */
-    public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
-    {
-        return '';
-    }
-
-    /**
-     * Function to get User Profile Edit URL
-     *
-     * @param   int   $userid  userid
-     * @param   bool  $xhtml   xhtml
-     *
-     * @return  string|false
-     * @since   Kunena 5.0
-     * @throws  Exception
-     */
-    public function getEditProfileURL(int $userid, bool $xhtml = true): string|false
     {
         return '';
     }

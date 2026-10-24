@@ -12,8 +12,10 @@
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
+use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -34,7 +36,7 @@ class plgSampledataKunenaInstallerScript extends InstallerScript
     protected $extension = 'plg_sampleData_kunena';
 
     /**
-     * @var  Joomla\CMS\Application\CMSApplication  Holds the application object
+     * @var  CMSApplication  Holds the application object
      *
      * @since   Kunena 6.0
      */
@@ -80,7 +82,7 @@ class plgSampledataKunenaInstallerScript extends InstallerScript
      * Function called before extension installation/update/removal procedure commences
      *
      * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
-     * @param   \Joomla\CMS\Installer\InstallerAdapter  $parent  The class calling this method
+     * @param   InstallerAdapter  $parent  The class calling this method
      *
      * @return  boolean  True on success
      * @since   Kunena 7.0.0

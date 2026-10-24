@@ -45,28 +45,68 @@ abstract class KunenaMenuHelper
     }
 
     /**
-     * Check if Kunena menus exist
+     * Get active menu item.
      *
-     * @return  boolean
+     * @param   Registry  $params  The module options.
      *
-     * @since   Kunena 6.0
+     * @return  object
+     *
+     * @throws Exception
+     * @since    3.0.2
      */
-    public static function KunenaMenusExists()
+    public static function getActive(Registry $params): object
     {
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $table = new MenuType($db);
-        $data  = [
-            'menutype'    => 'kunenamenu',
-            'title'       => Text::_('COM_KUNENA_MENU_TITLE'),
-            'description' => Text::_('COM_KUNENA_MENU_TITLE_DESC'),
-        ];
+        $menu = Factory::getApplication()->getMenu();
 
-        if (!$table->bind($data) || !$table->check()) {
-            // Menu already exists, do nothing
-            return true;
+        return $menu->getActive() ?: self::getDefault();
+    }
+
+    /**
+     * Get base menu item.
+     *
+     * @param   Registry  $params  The module options.
+     *
+     * @return  object
+     *
+     * @throws Exception
+     * @since    3.0.2
+     */
+    public static function getBase(Registry $params)
+    {
+        // Get base menu item from parameters
+        if ($params->get('base')) {
+            $base = Factory::getApplication()->getMenu()->getItem($params->get('base'));
+        } else {
+            $base = false;
         }
 
-        return false;
+        // Use active menu item if no base found
+        if (!$base) {
+            $base = self::getActive($params);
+        }
+
+        return $base;
+    }
+
+    /**
+     * Get default menu item (home page) for current language.
+     *
+     * @return  object
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getDefault(): object
+    {
+        $menu = Factory::getApplication()->getMenu();
+        $lang = Factory::getApplication()->getLanguage();
+
+        // Look for the home menu
+        if (Multilanguage::isEnabled()) {
+            return $menu->getDefault($lang->getTag());
+        }
+
+        return $menu->getDefault();
     }
 
     /**
@@ -202,67 +242,27 @@ abstract class KunenaMenuHelper
     }
 
     /**
-     * Get base menu item.
+     * Check if Kunena menus exist
      *
-     * @param   Registry  $params  The module options.
+     * @return  boolean
      *
-     * @return  object
-     *
-     * @throws Exception
-     * @since    3.0.2
-     */
-    public static function getBase(Registry $params)
-    {
-        // Get base menu item from parameters
-        if ($params->get('base')) {
-            $base = Factory::getApplication()->getMenu()->getItem($params->get('base'));
-        } else {
-            $base = false;
-        }
-
-        // Use active menu item if no base found
-        if (!$base) {
-            $base = self::getActive($params);
-        }
-
-        return $base;
-    }
-
-    /**
-     * Get active menu item.
-     *
-     * @param   Registry  $params  The module options.
-     *
-     * @return  object
-     *
-     * @throws Exception
-     * @since    3.0.2
-     */
-    public static function getActive(Registry $params): object
-    {
-        $menu = Factory::getApplication()->getMenu();
-
-        return $menu->getActive() ?: self::getDefault();
-    }
-
-    /**
-     * Get default menu item (home page) for current language.
-     *
-     * @return  object
-     *
-     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public static function getDefault(): object
+    public static function KunenaMenusExists()
     {
-        $menu = Factory::getApplication()->getMenu();
-        $lang = Factory::getApplication()->getLanguage();
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $table = new MenuType($db);
+        $data  = [
+            'menutype'    => 'kunenamenu',
+            'title'       => Text::_('COM_KUNENA_MENU_TITLE'),
+            'description' => Text::_('COM_KUNENA_MENU_TITLE_DESC'),
+        ];
 
-        // Look for the home menu
-        if (Multilanguage::isEnabled()) {
-            return $menu->getDefault($lang->getTag());
+        if (!$table->bind($data) || !$table->check()) {
+            // Menu already exists, do nothing
+            return true;
         }
 
-        return $menu->getDefault();
+        return false;
     }
 }

@@ -14,6 +14,7 @@ namespace Kunena\Forum\Administrator\Model;
 
 use Exception;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Component\Plugins\Administrator\Model\PluginsModel as JoomlaPluginsModel;
 use Joomla\Database\QueryInterface;
 
@@ -33,7 +34,7 @@ class PluginsModel extends JoomlaPluginsModel
      * @throws Exception
      * @since   Kunena 1.6
      *
-     * @see     \Joomla\CMS\MVC\Model\BaseDatabaseModel
+     * @see     BaseDatabaseModel
      */
     public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {

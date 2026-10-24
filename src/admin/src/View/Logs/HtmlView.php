@@ -132,7 +132,7 @@ class HtmlView extends BaseHtmlView
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            ToolBarHelper::preferences('com_kunena');
+            ToolbarHelper::preferences('com_kunena');
         }
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/users';

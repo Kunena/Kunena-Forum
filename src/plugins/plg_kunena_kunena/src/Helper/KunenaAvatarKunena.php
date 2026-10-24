@@ -55,9 +55,8 @@ class KunenaAvatarKunena extends KunenaAvatar
      *
      * @return  string
      *
-     * @return  string
-     * @since   Kunena 6.0
      * @throws  Exception
+     * @since   Kunena 6.0
      */
     public function getEditURL(): string
     {

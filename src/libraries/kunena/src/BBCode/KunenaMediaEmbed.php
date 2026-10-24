@@ -24,28 +24,6 @@ namespace Kunena\Forum\Libraries\BBCode;
 abstract class KunenaMediaEmbed
 {
     /**
-     * The Spotify player of a link to a track, album, playlist, artist, episode or show.
-     *
-     * @param   string  $host  The host of the link.
-     * @param   string  $path  The path of the link.
-     *
-     * @return  string|null  The html of the player, null when the link has none.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function spotify(string $host, string $path): ?string
-    {
-        if ($host !== 'open.spotify.com' || !preg_match('#^/(?:intl-[\w-]+/)?(track|album|playlist|artist|episode|show)/([A-Za-z0-9]+)#', $path, $match)) {
-            return null;
-        }
-
-        $height = \in_array($match[1], ['track', 'episode'], true) ? 152 : 352;
-
-        return '<iframe style="border-radius: 12px; border: 0" width="100%" height="' . $height . '" src="https://open.spotify.com/embed/' . $match[1] . '/' . $match[2]
-            . '" allow="encrypted-media" loading="lazy"></iframe><br />';
-    }
-
-    /**
      * The Deezer player of a link to a track, album, playlist, episode or show.
      *
      * @param   string  $host  The host of the link.
@@ -65,5 +43,27 @@ abstract class KunenaMediaEmbed
 
         return '<iframe style="border: 0" width="100%" height="' . $height . '" src="https://widget.deezer.com/widget/auto/' . $match[1] . '/' . $match[2]
             . '" allow="encrypted-media; clipboard-write" loading="lazy"></iframe><br />';
+    }
+
+    /**
+     * The Spotify player of a link to a track, album, playlist, artist, episode or show.
+     *
+     * @param   string  $host  The host of the link.
+     * @param   string  $path  The path of the link.
+     *
+     * @return  string|null  The html of the player, null when the link has none.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function spotify(string $host, string $path): ?string
+    {
+        if ($host !== 'open.spotify.com' || !preg_match('#^/(?:intl-[\w-]+/)?(track|album|playlist|artist|episode|show)/([A-Za-z0-9]+)#', $path, $match)) {
+            return null;
+        }
+
+        $height = \in_array($match[1], ['track', 'episode'], true) ? 152 : 352;
+
+        return '<iframe style="border-radius: 12px; border: 0" width="100%" height="' . $height . '" src="https://open.spotify.com/embed/' . $match[1] . '/' . $match[2]
+            . '" allow="encrypted-media" loading="lazy"></iframe><br />';
     }
 }

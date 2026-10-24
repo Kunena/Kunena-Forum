@@ -49,6 +49,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
@@ -261,9 +262,13 @@ class TopicController extends KunenaController
     /**
      * Set inline to 0 or 1 on the attachment object.
      *
-     * @return void
-     * @throws Exception
-     * @since Kunena 5.1
+     * @param   KunenaAttachment|KunenaAttachment[]  $attachments  The attachment, or the attachments.
+     * @param   integer                              $inline       1 to show the attachment in the text, 0 not.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 5.1
      */
     protected function changeinline($attachments, $inline)
     {
@@ -463,7 +468,7 @@ class TopicController extends KunenaController
             $words = \array_slice($words, 0, 6);
 
             if ($words) {
-                $finder = new \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder();
+                $finder = new KunenaTopicFinder();
                 $finder->filterByUserAccess($this->me)
                     ->filterByHold([0])
                     ->filterByMoved(false)
@@ -2016,6 +2021,16 @@ class TopicController extends KunenaController
         return $own;
     }
 
+    /**
+     * Save the private part of an edited message: create it, change it, or delete it when it is empty.
+     *
+     * @param   KunenaMessage  $message  The edited message.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
     protected function editPrivate(KunenaMessage $message)
     {
         if (!$this->me->userid) {

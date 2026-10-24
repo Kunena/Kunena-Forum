@@ -113,6 +113,101 @@ class KunenaCategoryUser
     }
 
     /**
+     * @param   array  $data    data
+     * @param   array  $ignore  ignore
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function bind(array $data, $ignore = []): void
+    {
+        $data = array_diff_key($data, array_flip($ignore));
+
+        foreach ((array) $data as $property => $value) {
+            if (!\is_null($value)) {
+                $this->$property = $value;
+            }
+        }
+    }
+
+    /**
+     * Method to delete the \Kunena\Forum\Libraries\Forum\Category\CategoryUser object from the database.
+     *
+     * @return  boolean  True on success
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function delete(): bool
+    {
+        if (!$this->exists()) {
+            return true;
+        }
+
+        // Create the table object
+        $table = $this->getTable();
+
+        $result = false;
+
+        try {
+            $result = $table->delete(['category_id' => $this->category_id, 'user_id' => $this->user_id]);
+        } catch (Exception $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        if ($result) {
+            $this->_exists = false;
+        }
+
+        return (bool) $result;
+    }
+
+    /**
+     * @param   null|bool  $exists  True/false will change the state of the object.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function exists($exists = null): bool
+    {
+        $return = $this->_exists;
+
+        if ($exists !== null) {
+            $this->_exists = $exists;
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return  KunenaCategory
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getCategory(): KunenaCategory
+    {
+        return KunenaCategoryHelper::get($this->category_id);
+    }
+
+    /**
+     * @param   null|int  $id      id
+     * @param   mixed     $user    user
+     * @param   bool      $reload  reload
+     *
+     * @return  KunenaCategoryUser
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getInstance($id = null, $user = null, $reload = false): KunenaCategoryUser
+    {
+        return KunenaCategoryUserHelper::get($id, $user, $reload);
+    }
+
+    /**
      * Method to get the categories table object
      *
      * This function uses a static variable to store the table name of the user table to
@@ -144,48 +239,38 @@ class KunenaCategoryUser
     }
 
     /**
-     * @param   null|int  $id      id
-     * @param   mixed     $user    user
-     * @param   bool      $reload  reload
+     * Method to load a \Kunena\Forum\Libraries\Forum\Category\CategoryUser object by id.
      *
-     * @return  KunenaCategoryUser
+     * @param   null|int  $categoryId  The category id to be loaded.
+     * @param   mixed     $user        The user to be loaded.
      *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getInstance($id = null, $user = null, $reload = false): KunenaCategoryUser
-    {
-        return KunenaCategoryUserHelper::get($id, $user, $reload);
-    }
-
-    /**
-     * @return  KunenaCategory
+     * @return  boolean
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getCategory(): KunenaCategory
+    public function load($categoryId = null, $user = null): bool
     {
-        return KunenaCategoryHelper::get($this->category_id);
-    }
-
-    /**
-     * @param   array  $data    data
-     * @param   array  $ignore  ignore
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function bind(array $data, $ignore = []): void
-    {
-        $data = array_diff_key($data, array_flip($ignore));
-
-        foreach ((array) $data as $property => $value) {
-            if (!\is_null($value)) {
-                $this->$property = $value;
-            }
+        if ($categoryId === null) {
+            $categoryId = $this->category_id;
         }
+
+        if ($user === null && $this->user_id !== null) {
+            $user = $this->user_id;
+        }
+
+        $user = KunenaUserHelper::get($user);
+
+        // Create the table object
+        $table = $this->getTable();
+
+        // Load the KunenaTable object based on id
+        $this->_exists = $table->load(['user_id' => $user->userid, 'category_id' => $categoryId]);
+
+        // Assuming all is well at this point lets bind the data
+        $this->bind($table->getProperties());
+
+        return $this->_exists;
     }
 
     /**
@@ -243,90 +328,5 @@ class KunenaCategoryUser
         }
 
         return $result;
-    }
-
-    /**
-     * Method to load a \Kunena\Forum\Libraries\Forum\Category\CategoryUser object by id.
-     *
-     * @param   null|int  $categoryId  The category id to be loaded.
-     * @param   mixed     $user        The user to be loaded.
-     *
-     * @return  boolean
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function load($categoryId = null, $user = null): bool
-    {
-        if ($categoryId === null) {
-            $categoryId = $this->category_id;
-        }
-
-        if ($user === null && $this->user_id !== null) {
-            $user = $this->user_id;
-        }
-
-        $user = KunenaUserHelper::get($user);
-
-        // Create the table object
-        $table = $this->getTable();
-
-        // Load the KunenaTable object based on id
-        $this->_exists = $table->load(['user_id' => $user->userid, 'category_id' => $categoryId]);
-
-        // Assuming all is well at this point lets bind the data
-        $this->bind($table->getProperties());
-
-        return $this->_exists;
-    }
-
-    /**
-     * Method to delete the \Kunena\Forum\Libraries\Forum\Category\CategoryUser object from the database.
-     *
-     * @return  boolean  True on success
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function delete(): bool
-    {
-        if (!$this->exists()) {
-            return true;
-        }
-
-        // Create the table object
-        $table = $this->getTable();
-
-        $result = false;
-
-        try {
-            $result = $table->delete(['category_id' => $this->category_id, 'user_id' => $this->user_id]);
-        } catch (Exception $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        if ($result) {
-            $this->_exists = false;
-        }
-
-        return (bool) $result;
-    }
-
-    /**
-     * @param   null|bool  $exists  True/false will change the state of the object.
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function exists($exists = null): bool
-    {
-        $return = $this->_exists;
-
-        if ($exists !== null) {
-            $this->_exists = $exists;
-        }
-
-        return $return;
     }
 }

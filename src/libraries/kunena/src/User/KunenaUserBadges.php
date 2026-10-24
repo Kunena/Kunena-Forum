@@ -38,40 +38,6 @@ abstract class KunenaUserBadges
     protected static $cache = [];
 
     /**
-     * The defined badges.
-     *
-     * @return  array  Objects with title, color, usergroup and rank.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getDefinitions(): array
-    {
-        // The badges are kept in the parameters of the component by the view Badges of the backend (they are no field of the
-        // configuration, so they are not in KunenaConfig).
-        $badges = ComponentHelper::getParams('com_kunena')->get('badges', []);
-        $result = [];
-
-        // The subform of the configuration gives an object (or array) of rows.
-        foreach ((array) $badges as $row) {
-            $row   = (object) $row;
-            $title = trim((string) ($row->title ?? ''));
-
-            if ($title === '' || (empty($row->usergroup) && empty($row->rank))) {
-                continue;
-            }
-
-            $result[] = (object) [
-                'title'     => $title,
-                'color'     => preg_match('/^#[0-9a-f]{6}$/i', (string) ($row->color ?? '')) ? $row->color : '#6c757d',
-                'usergroup' => (int) ($row->usergroup ?? 0),
-                'rank'      => (int) ($row->rank ?? 0),
-            ];
-        }
-
-        return $result;
-    }
-
-    /**
      * The badges of a user: the ones of the Joomla user groups of the user and of the rank of the user.
      *
      * @param   KunenaUser  $user  The user.
@@ -123,6 +89,40 @@ abstract class KunenaUserBadges
         }
 
         return self::$cache[$userid];
+    }
+
+    /**
+     * The defined badges.
+     *
+     * @return  array  Objects with title, color, usergroup and rank.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getDefinitions(): array
+    {
+        // The badges are kept in the parameters of the component by the view Badges of the backend (they are no field of the
+        // configuration, so they are not in KunenaConfig).
+        $badges = ComponentHelper::getParams('com_kunena')->get('badges', []);
+        $result = [];
+
+        // The subform of the configuration gives an object (or array) of rows.
+        foreach ((array) $badges as $row) {
+            $row   = (object) $row;
+            $title = trim((string) ($row->title ?? ''));
+
+            if ($title === '' || (empty($row->usergroup) && empty($row->rank))) {
+                continue;
+            }
+
+            $result[] = (object) [
+                'title'     => $title,
+                'color'     => preg_match('/^#[0-9a-f]{6}$/i', (string) ($row->color ?? '')) ? $row->color : '#6c757d',
+                'usergroup' => (int) ($row->usergroup ?? 0),
+                'rank'      => (int) ($row->rank ?? 0),
+            ];
+        }
+
+        return $result;
     }
 
     /**

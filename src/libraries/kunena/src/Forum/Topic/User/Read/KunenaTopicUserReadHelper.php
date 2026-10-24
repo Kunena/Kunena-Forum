@@ -191,51 +191,6 @@ abstract class KunenaTopicUserReadHelper
      *
      * @throws Exception
      */
-    public static function move(KunenaTopic $old, KunenaTopic $new): bool
-    {
-        // Update database
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->update($db->quoteName('#__kunena_user_read'))
-            ->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
-            ->set($db->quoteName('category_id') . ' = ' . $db->quote($new->category_id))
-            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($old->id));
-        $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        // Update internal state
-        if (isset(self::$_topics [$old->id])) {
-            if ($new->id != $old->id) {
-                self::$_topics [$new->id] = self::$_topics [$old->id];
-                unset(self::$_topics [$old->id]);
-            }
-
-            foreach (self::$_topics [$new->id] as $instance) {
-                $instance->topic_id    = $new->id;
-                $instance->category_id = $new->category_id;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param   KunenaTopic  $old  old
-     * @param   KunenaTopic  $new  new
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws Exception
-     */
     public static function merge(KunenaTopic $old, KunenaTopic $new): bool
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
@@ -286,6 +241,108 @@ abstract class KunenaTopicUserReadHelper
     }
 
     /**
+     * @param   KunenaTopic  $old  old
+     * @param   KunenaTopic  $new  new
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public static function move(KunenaTopic $old, KunenaTopic $new): bool
+    {
+        // Update database
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_user_read'))
+            ->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
+            ->set($db->quoteName('category_id') . ' = ' . $db->quote($new->category_id))
+            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($old->id));
+        $db->setQuery($query);
+
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
+        // Update internal state
+        if (isset(self::$_topics [$old->id])) {
+            if ($new->id != $old->id) {
+                self::$_topics [$new->id] = self::$_topics [$old->id];
+                unset(self::$_topics [$old->id]);
+            }
+
+            foreach (self::$_topics [$new->id] as $instance) {
+                $instance->topic_id    = $new->id;
+                $instance->category_id = $new->category_id;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param   int  $days  days
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function purge($days = 365): bool
+    {
+        // Purge items that are older than x days (defaulting to a year)
+        $db        = Factory::getContainer()->get('DatabaseDriver');
+        $timestamp = Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
+        $query     = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_user_read'))
+            ->where($db->quoteName('time') . ' < ' . $db->quote($timestamp));
+        $db->setQuery($query);
+
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function recount(): bool
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_user_read', 'ur'))
+            ->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('ur.topic_id'))
+            ->set($db->quoteName('ur.category_id') . ' = ' . $db->quoteName('t.category_id'));
+        $db->setQuery($query);
+
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param   int  $id  id
      *
      * @return  void
@@ -328,62 +385,5 @@ abstract class KunenaTopicUserReadHelper
         }
 
         unset($results);
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function recount(): bool
-    {
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->update($db->quoteName('#__kunena_user_read', 'ur'))
-            ->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('ur.topic_id'))
-            ->set($db->quoteName('ur.category_id') . ' = ' . $db->quoteName('t.category_id'));
-        $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param   int  $days  days
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function purge($days = 365): bool
-    {
-        // Purge items that are older than x days (defaulting to a year)
-        $db        = Factory::getContainer()->get('DatabaseDriver');
-        $timestamp = Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
-        $query     = $db->createQuery();
-        $query->delete($db->quoteName('#__kunena_user_read'))
-            ->where($db->quoteName('time') . ' < ' . $db->quote($timestamp));
-        $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        return true;
     }
 }

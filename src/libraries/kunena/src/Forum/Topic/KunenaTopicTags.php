@@ -46,17 +46,66 @@ abstract class KunenaTopicTags
     protected static $topicTags = [];
 
     /**
-     * Is tagging of topics on and is the component Tags there.
+     * Remove all the tags of a topic which is deleted.
      *
-     * @return  bool
+     * @param   int  $topicId  The topic id.
+     *
+     * @return  void
      *
      * @since   Kunena 7.2
      */
-    public static function isEnabled(): bool
+    public static function delete(int $topicId): void
     {
-        $config = KunenaConfig::getInstance();
+        try {
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $db->setQuery(
+                $db->createQuery()
+                    ->delete($db->quoteName('#__contentitem_tag_map'))
+                    ->where($db->quoteName('type_alias') . ' = ' . $db->quote(self::TYPE_ALIAS))
+                    ->where($db->quoteName('content_item_id') . ' = ' . $topicId)
+            )->execute();
+            unset(self::$topicTags[$topicId]);
+        } catch (Exception $e) {
+            // Nothing to tell: the map can have a row of a topic which does not exist.
+        }
+    }
 
-        return isset($config->enableTags) && $config->enableTags && is_dir(JPATH_ADMINISTRATOR . '/components/com_tags');
+    /**
+     * The tags of a topic which the logged in user may see.
+     *
+     * @param   int  $topicId  The topic id.
+     *
+     * @return  array  Objects with id and title, by id.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function get(int $topicId): array
+    {
+        self::preload([$topicId]);
+
+        return self::$topicTags[$topicId] ?? [];
+    }
+
+    /**
+     * The ids of all the tags of a topic (also the ones the logged in user may not see).
+     *
+     * @param   int  $topicId  The topic id.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function getAllIds(int $topicId): array
+    {
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->select($db->quoteName('tag_id'))
+            ->from($db->quoteName('#__contentitem_tag_map'))
+            ->where($db->quoteName('type_alias') . ' = ' . $db->quote(self::TYPE_ALIAS))
+            ->where($db->quoteName('content_item_id') . ' = ' . $topicId);
+        $db->setQuery($query);
+
+        return array_map('intval', $db->loadColumn());
     }
 
     /**
@@ -95,6 +144,34 @@ abstract class KunenaTopicTags
         } catch (Exception $e) {
             return [];
         }
+    }
+
+    /**
+     * The address of the list of topics which have the tag.
+     *
+     * @param   int  $tagId  The tag id.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getUrl(int $tagId): string
+    {
+        return KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=default&ftag=' . $tagId, false);
+    }
+
+    /**
+     * Is tagging of topics on and is the component Tags there.
+     *
+     * @return  bool
+     *
+     * @since   Kunena 7.2
+     */
+    public static function isEnabled(): bool
+    {
+        $config = KunenaConfig::getInstance();
+
+        return isset($config->enableTags) && $config->enableTags && is_dir(JPATH_ADMINISTRATOR . '/components/com_tags');
     }
 
     /**
@@ -143,58 +220,6 @@ abstract class KunenaTopicTags
         } catch (Exception $e) {
             // No tags is better than a broken page.
         }
-    }
-
-    /**
-     * The tags of a topic which the logged in user may see.
-     *
-     * @param   int  $topicId  The topic id.
-     *
-     * @return  array  Objects with id and title, by id.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function get(int $topicId): array
-    {
-        self::preload([$topicId]);
-
-        return self::$topicTags[$topicId] ?? [];
-    }
-
-    /**
-     * The ids of all the tags of a topic (also the ones the logged in user may not see).
-     *
-     * @param   int  $topicId  The topic id.
-     *
-     * @return  int[]
-     *
-     * @since   Kunena 7.2
-     */
-    protected static function getAllIds(int $topicId): array
-    {
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery()
-            ->select($db->quoteName('tag_id'))
-            ->from($db->quoteName('#__contentitem_tag_map'))
-            ->where($db->quoteName('type_alias') . ' = ' . $db->quote(self::TYPE_ALIAS))
-            ->where($db->quoteName('content_item_id') . ' = ' . $topicId);
-        $db->setQuery($query);
-
-        return array_map('intval', $db->loadColumn());
-    }
-
-    /**
-     * The address of the list of topics which have the tag.
-     *
-     * @param   int  $tagId  The tag id.
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getUrl(int $tagId): string
-    {
-        return KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=default&ftag=' . $tagId, false);
     }
 
     /**
@@ -278,31 +303,6 @@ abstract class KunenaTopicTags
             unset(self::$topicTags[$topicId]);
         } catch (Exception $e) {
             // The tags are an extra: a failure must not lose the topic.
-        }
-    }
-
-    /**
-     * Remove all the tags of a topic which is deleted.
-     *
-     * @param   int  $topicId  The topic id.
-     *
-     * @return  void
-     *
-     * @since   Kunena 7.2
-     */
-    public static function delete(int $topicId): void
-    {
-        try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $db->setQuery(
-                $db->createQuery()
-                    ->delete($db->quoteName('#__contentitem_tag_map'))
-                    ->where($db->quoteName('type_alias') . ' = ' . $db->quote(self::TYPE_ALIAS))
-                    ->where($db->quoteName('content_item_id') . ' = ' . $topicId)
-            )->execute();
-            unset(self::$topicTags[$topicId]);
-        } catch (Exception $e) {
-            // Nothing to tell: the map can have a row of a topic which does not exist.
         }
     }
 }

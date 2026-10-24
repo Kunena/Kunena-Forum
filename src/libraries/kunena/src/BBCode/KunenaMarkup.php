@@ -46,43 +46,22 @@ final class KunenaMarkup
     private array $store = [];
 
     /**
-     * Convert a message to BBCode.
+     * Code with the text of the code as a verbatim BBCode block.
      *
-     * @param   string  $text      The message.
-     * @param   bool    $markdown  Understand Markdown.
-     * @param   bool    $html      Understand a safe subset of HTML.
+     * @param   string  $code      The code.
+     * @param   string  $language  The language of the code, only letters and digits are kept.
      *
-     * @return  string  The message as BBCode.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function toBBCode(string $text, bool $markdown, bool $html): string
-    {
-        if ((!$markdown && !$html) || $text === '') {
-            return $text;
-        }
-
-        return (new self())->convert($text, $markdown, $html);
-    }
-
-    /**
-     * Check an address: only web addresses, mail addresses and paths of the site are allowed.
-     *
-     * @param   string  $url  The address.
-     *
-     * @return  string|null  The address, null when it is not allowed.
+     * @return  string
      *
      * @since   Kunena 7.2
      */
-    public static function safeUrl(string $url): ?string
+    private function codeBlock(string $code, string $language = ''): string
     {
-        $url = trim(htmlspecialchars_decode($url, ENT_QUOTES));
+        // The code must not be able to end the block.
+        $code     = str_ireplace('[/code]', '[ /code]', trim($code, "\n"));
+        $language = preg_replace('/[^A-Za-z0-9+#_-]/', '', $language);
 
-        if (!preg_match('~^(?:https?://|mailto:|/(?!/))[^\s"\'<>\[\]\\\\\x00-\x1F]+$~i', $url)) {
-            return null;
-        }
-
-        return $url;
+        return $this->stash('[code' . ($language !== '' ? '=' . $language : '') . ']' . $code . '[/code]');
     }
 
     /**
@@ -119,58 +98,6 @@ final class KunenaMarkup
         }
 
         return $this->restore($text);
-    }
-
-    /**
-     * Keep a piece of text out of the conversion.
-     *
-     * @param   string  $value  The text.
-     *
-     * @return  string  A marker for the text.
-     *
-     * @since   Kunena 7.2
-     */
-    private function stash(string $value): string
-    {
-        $this->store[] = $value;
-
-        return "\x1A" . (\count($this->store) - 1) . "\x1B";
-    }
-
-    /**
-     * @param   string  $text  Text with markers.
-     *
-     * @return  string  The text with the protected pieces back in place.
-     *
-     * @since   Kunena 7.2
-     */
-    private function restore(string $text): string
-    {
-        // A protected piece can contain markers of another piece.
-        for ($i = 0; $i < 10 && strpos($text, "\x1A") !== false; $i++) {
-            $text = (string) preg_replace_callback('/\x1A(\d+)\x1B/', fn (array $m): string => $this->store[(int) $m[1]] ?? '', $text);
-        }
-
-        return $text;
-    }
-
-    /**
-     * Code with the text of the code as a verbatim BBCode block.
-     *
-     * @param   string  $code      The code.
-     * @param   string  $language  The language of the code, only letters and digits are kept.
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    private function codeBlock(string $code, string $language = ''): string
-    {
-        // The code must not be able to end the block.
-        $code     = str_ireplace('[/code]', '[ /code]', trim($code, "\n"));
-        $language = preg_replace('/[^A-Za-z0-9+#_-]/', '', $language);
-
-        return $this->stash('[code' . ($language !== '' ? '=' . $language : '') . ']' . $code . '[/code]');
     }
 
     /**
@@ -271,6 +198,62 @@ final class KunenaMarkup
     }
 
     /**
+     * Markdown in a line of text: code, links, images, bold, italic and strikethrough.
+     *
+     * @param   string  $text  The text.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    private function inline(string $text): string
+    {
+        // A backslash makes the next character plain text.
+        $text = (string) preg_replace_callback('/\\\\([\\\\`*_{}\[\]()#+\-.!>|~])/', fn (array $m): string => $this->stash($m[1]), $text);
+
+        // Code in a line.
+        $text = (string) preg_replace_callback('/`([^`\n]+)`/', fn (array $m): string => $this->stash('[font=monospace]' . $m[1] . '[/font]'), $text);
+
+        // Images and links: the address must be allowed.
+        $text = (string) preg_replace_callback(
+            '/!\[[^\]\n]*\]\(\s*<?([^\s)>]+)>?(?:\s+"[^"\n]*")?\s*\)/',
+            function (array $m): string {
+                $url = self::safeUrl($m[1]);
+
+                return $url === null ? $m[0] : $this->stash('[img]' . $url . '[/img]');
+            },
+            $text
+        );
+        $text = (string) preg_replace_callback(
+            '/\[([^\]\n]+)\]\(\s*<?([^\s)>]+)>?(?:\s+"[^"\n]*")?\s*\)/',
+            function (array $m): string {
+                $url = self::safeUrl($m[2]);
+
+                return $url === null ? $m[0] : $this->stash('[url=' . $url . ']' . $this->inline($m[1]) . '[/url]');
+            },
+            $text
+        );
+        $text = (string) preg_replace_callback(
+            '/<((?:https?:\/\/|mailto:)[^\s<>]+)>/i',
+            function (array $m): string {
+                $url = self::safeUrl($m[1]);
+
+                return $url === null ? $m[0] : $this->stash('[url]' . $url . '[/url]');
+            },
+            $text
+        );
+
+        // Bold, italic and strikethrough. An underscore inside a word is not a mark.
+        $text = (string) preg_replace('/\*\*(?=\S)(.+?)(?<=\S)\*\*/', '[b]$1[/b]', $text);
+        $text = (string) preg_replace('/(?<![\w])__(?=\S)(.+?)(?<=\S)__(?![\w])/', '[b]$1[/b]', $text);
+        $text = (string) preg_replace('/(?<![\w*])\*(?=[^\s*])(.+?)(?<=[^\s*])\*(?![\w*])/', '[i]$1[/i]', $text);
+        $text = (string) preg_replace('/(?<![\w])_(?=[^\s_])(.+?)(?<=[^\s_])_(?![\w])/', '[i]$1[/i]', $text);
+        $text = (string) preg_replace('/~~(?=\S)(.+?)(?<=\S)~~/', '[s]$1[/s]', $text);
+
+        return $text;
+    }
+
+    /**
      * Markdown, line by line: headings, quotes, lists and tables. The text of the lines is converted by inline().
      *
      * @param   string  $text   The message.
@@ -367,6 +350,59 @@ final class KunenaMarkup
     }
 
     /**
+     * @param   string  $text  Text with markers.
+     *
+     * @return  string  The text with the protected pieces back in place.
+     *
+     * @since   Kunena 7.2
+     */
+    private function restore(string $text): string
+    {
+        // A protected piece can contain markers of another piece.
+        for ($i = 0; $i < 10 && strpos($text, "\x1A") !== false; $i++) {
+            $text = (string) preg_replace_callback('/\x1A(\d+)\x1B/', fn (array $m): string => $this->store[(int) $m[1]] ?? '', $text);
+        }
+
+        return $text;
+    }
+
+    /**
+     * Check an address: only web addresses, mail addresses and paths of the site are allowed.
+     *
+     * @param   string  $url  The address.
+     *
+     * @return  string|null  The address, null when it is not allowed.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function safeUrl(string $url): ?string
+    {
+        $url = trim(htmlspecialchars_decode($url, ENT_QUOTES));
+
+        if (!preg_match('~^(?:https?://|mailto:|/(?!/))[^\s"\'<>\[\]\\\\\x00-\x1F]+$~i', $url)) {
+            return null;
+        }
+
+        return $url;
+    }
+
+    /**
+     * Keep a piece of text out of the conversion.
+     *
+     * @param   string  $value  The text.
+     *
+     * @return  string  A marker for the text.
+     *
+     * @since   Kunena 7.2
+     */
+    private function stash(string $value): string
+    {
+        $this->store[] = $value;
+
+        return "\x1A" . (\count($this->store) - 1) . "\x1B";
+    }
+
+    /**
      * @param   string  $row  A row of a Markdown table.
      * @param   string  $tag  th or td.
      *
@@ -387,58 +423,22 @@ final class KunenaMarkup
     }
 
     /**
-     * Markdown in a line of text: code, links, images, bold, italic and strikethrough.
+     * Convert a message to BBCode.
      *
-     * @param   string  $text  The text.
+     * @param   string  $text      The message.
+     * @param   bool    $markdown  Understand Markdown.
+     * @param   bool    $html      Understand a safe subset of HTML.
      *
-     * @return  string
+     * @return  string  The message as BBCode.
      *
      * @since   Kunena 7.2
      */
-    private function inline(string $text): string
+    public static function toBBCode(string $text, bool $markdown, bool $html): string
     {
-        // A backslash makes the next character plain text.
-        $text = (string) preg_replace_callback('/\\\\([\\\\`*_{}\[\]()#+\-.!>|~])/', fn (array $m): string => $this->stash($m[1]), $text);
+        if ((!$markdown && !$html) || $text === '') {
+            return $text;
+        }
 
-        // Code in a line.
-        $text = (string) preg_replace_callback('/`([^`\n]+)`/', fn (array $m): string => $this->stash('[font=monospace]' . $m[1] . '[/font]'), $text);
-
-        // Images and links: the address must be allowed.
-        $text = (string) preg_replace_callback(
-            '/!\[[^\]\n]*\]\(\s*<?([^\s)>]+)>?(?:\s+"[^"\n]*")?\s*\)/',
-            function (array $m): string {
-                $url = self::safeUrl($m[1]);
-
-                return $url === null ? $m[0] : $this->stash('[img]' . $url . '[/img]');
-            },
-            $text
-        );
-        $text = (string) preg_replace_callback(
-            '/\[([^\]\n]+)\]\(\s*<?([^\s)>]+)>?(?:\s+"[^"\n]*")?\s*\)/',
-            function (array $m): string {
-                $url = self::safeUrl($m[2]);
-
-                return $url === null ? $m[0] : $this->stash('[url=' . $url . ']' . $this->inline($m[1]) . '[/url]');
-            },
-            $text
-        );
-        $text = (string) preg_replace_callback(
-            '/<((?:https?:\/\/|mailto:)[^\s<>]+)>/i',
-            function (array $m): string {
-                $url = self::safeUrl($m[1]);
-
-                return $url === null ? $m[0] : $this->stash('[url]' . $url . '[/url]');
-            },
-            $text
-        );
-
-        // Bold, italic and strikethrough. An underscore inside a word is not a mark.
-        $text = (string) preg_replace('/\*\*(?=\S)(.+?)(?<=\S)\*\*/', '[b]$1[/b]', $text);
-        $text = (string) preg_replace('/(?<![\w])__(?=\S)(.+?)(?<=\S)__(?![\w])/', '[b]$1[/b]', $text);
-        $text = (string) preg_replace('/(?<![\w*])\*(?=[^\s*])(.+?)(?<=[^\s*])\*(?![\w*])/', '[i]$1[/i]', $text);
-        $text = (string) preg_replace('/(?<![\w])_(?=[^\s_])(.+?)(?<=[^\s_])_(?![\w])/', '[i]$1[/i]', $text);
-        $text = (string) preg_replace('/~~(?=\S)(.+?)(?<=\S)~~/', '[s]$1[/s]', $text);
-
-        return $text;
+        return (new self())->convert($text, $markdown, $html);
     }
 }

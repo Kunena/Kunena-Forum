@@ -61,6 +61,16 @@ class KunenaLogin
     }
 
     /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function enabled(): bool
+    {
+        return !empty($this->instances);
+    }
+
+    /**
      * @param   null  $integration  integration
      *
      * @return  boolean|KunenaLogin
@@ -76,73 +86,6 @@ class KunenaLogin
         }
 
         return self::$instance;
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function enabled(): bool
-    {
-        return !empty($this->instances);
-    }
-
-    /**
-     * Method to login user by leverage Kunena plugin enabled
-     *
-     * @param   string  $username    The username of user which need to be logged
-     * @param   string  $password    The password of user which need to be logged
-     * @param   boolean $rememberme  If the user want to be remembered the next time it want to log
-     * @param   null    $secretkey   The secret key for the TFA feature
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     */
-    public function loginUser(string $username, string $password, bool $rememberme = false, $secretkey = null)
-    {
-        foreach ($this->instances as $login) {
-            if (method_exists($login, 'loginUser')) {
-                return $login->loginUser($username, $password, $rememberme, $secretkey);
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param   null  $return  logout user
-     *
-     * @return  null|string
-     *
-     * @since   Kunena 6.0
-     */
-    public function logoutUser($return = null)
-    {
-        foreach ($this->instances as $login) {
-            if (method_exists($login, 'logoutUser')) {
-                return $login->logoutUser($return);
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function getRememberMe(): bool
-    {
-        foreach ($this->instances as $login) {
-            if (method_exists($login, 'getRememberMe')) {
-                return $login->getRememberMe();
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -178,6 +121,24 @@ class KunenaLogin
     }
 
     /**
+     * Return the parameters of the plugin
+     *
+     * @return  boolean|false
+     *
+     * @since   Kunena 5.1
+     */
+    public function getParams()
+    {
+        foreach ($this->instances as $login) {
+            if (method_exists($login, 'getParams')) {
+                return $login->getParams();
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return  null
      *
      * @since   Kunena 6.0
@@ -194,15 +155,15 @@ class KunenaLogin
     }
 
     /**
-     * @return  null
+     * @return  boolean
      *
      * @since   Kunena 6.0
      */
-    public function getResetURL()
+    public function getRememberMe(): bool
     {
         foreach ($this->instances as $login) {
-            if (method_exists($login, 'getResetURL')) {
-                return $login->getResetURL();
+            if (method_exists($login, 'getRememberMe')) {
+                return $login->getRememberMe();
             }
         }
 
@@ -226,17 +187,56 @@ class KunenaLogin
     }
 
     /**
-     * Return the parameters of the plugin
+     * @return  null
      *
-     * @return  boolean|false
-     *
-     * @since   Kunena 5.1
+     * @since   Kunena 6.0
      */
-    public function getParams()
+    public function getResetURL()
     {
         foreach ($this->instances as $login) {
-            if (method_exists($login, 'getParams')) {
-                return $login->getParams();
+            if (method_exists($login, 'getResetURL')) {
+                return $login->getResetURL();
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Method to login user by leverage Kunena plugin enabled
+     *
+     * @param   string  $username    The username of user which need to be logged
+     * @param   string  $password    The password of user which need to be logged
+     * @param   boolean $rememberme  If the user want to be remembered the next time it want to log
+     * @param   null    $secretkey   The secret key for the TFA feature
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     */
+    public function loginUser(string $username, string $password, bool $rememberme = false, $secretkey = null)
+    {
+        foreach ($this->instances as $login) {
+            if (method_exists($login, 'loginUser')) {
+                return $login->loginUser($username, $password, $rememberme, $secretkey);
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param   string|null  $return  The URL to go to after the logout.
+     *
+     * @return  null|string
+     *
+     * @since   Kunena 6.0
+     */
+    public function logoutUser($return = null)
+    {
+        foreach ($this->instances as $login) {
+            if (method_exists($login, 'logoutUser')) {
+                return $login->logoutUser($return);
             }
         }
 

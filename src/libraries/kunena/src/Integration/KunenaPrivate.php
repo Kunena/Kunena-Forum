@@ -45,6 +45,28 @@ class KunenaPrivate
     protected static ?KunenaPrivate $instance = \null;
 
     /**
+     * @param   string  $text  text
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getInboxLink(string $text)
+    {
+        return '';
+    }
+
+    /**
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getInboxURL()
+    {
+        return '';
+    }
+
+    /**
      * Function to get the active KunenaPrivate instance from the integration
      *
      * @return  KunenaPrivate
@@ -71,6 +93,62 @@ class KunenaPrivate
         }
 
         return self::$instance;
+    }
+
+    /**
+     * @param   integer  $userid  userid
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getOnClick(int $userid): string
+    {
+        return '';
+    }
+
+    /**
+     * Get the number of unread items
+     *
+     * @param   integer  $userid  userid
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     */
+    public function getUnreadCount(int $userid): int
+    {
+        return 0;
+    }
+
+    /**
+     * @param   integer  $userid  userid
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getURL(int $userid): string
+    {
+        return '';
+    }
+
+    /**
+     * A message of the forum gives users a notification (subscription, moderation, follow, mention). An inbox can store it for
+     * the users, and tell which of them do not want the e-mail as well.
+     *
+     * @param   KunenaMessage  $message  The message which causes the notification.
+     * @param   string         $type     subscription, moderation, follow, mention or thanks.
+     * @param   int[]          $userids  The users who get the notification.
+     * @param   int            $senderId The user who causes it (the author of the message by default, the user who says thanks for thanks).
+     *
+     * @return  int[]  The users who must not get the e-mail (all get it by default).
+     *
+     * @since   Kunena 7.2
+     */
+    public function notify(KunenaMessage $message, string $type, array $userids, int $senderId = 0): array
+    {
+        return [];
     }
 
     /**
@@ -114,30 +192,6 @@ class KunenaPrivate
 
         // We should offer the user a PM link
         return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '>' . KunenaIcons::pm() . '</a>';
-    }
-
-    /**
-     * @param   integer  $userid  userid
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getURL(int $userid): string
-    {
-        return '';
-    }
-
-    /**
-     * @param   integer  $userid  userid
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getOnClick(int $userid): string
-    {
-        return '';
     }
 
     /**
@@ -189,59 +243,5 @@ class KunenaPrivate
 
         // We should offer the user a PM link
         return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '>' . KunenaIcons::pm() . ' ' . Text::_('COM_KUNENA_PM_WRITE') . '</a>';
-    }
-
-    /**
-     * Get the number of unread items
-     *
-     * @param   integer  $userid  userid
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     */
-    public function getUnreadCount(int $userid): int
-    {
-        return 0;
-    }
-
-    /**
-     * A message of the forum gives users a notification (subscription, moderation, follow, mention). An inbox can store it for
-     * the users, and tell which of them do not want the e-mail as well.
-     *
-     * @param   KunenaMessage  $message  The message which causes the notification.
-     * @param   string         $type     subscription, moderation, follow, mention or thanks.
-     * @param   int[]          $userids  The users who get the notification.
-     * @param   int            $senderId The user who causes it (the author of the message by default, the user who says thanks for thanks).
-     *
-     * @return  int[]  The users who must not get the e-mail (all get it by default).
-     *
-     * @since   Kunena 7.2
-     */
-    public function notify(KunenaMessage $message, string $type, array $userids, int $senderId = 0): array
-    {
-        return [];
-    }
-
-    /**
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getInboxURL()
-    {
-        return '';
-    }
-
-    /**
-     * @param   string  $text  text
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getInboxLink(string $text)
-    {
-        return '';
     }
 }

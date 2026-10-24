@@ -34,19 +34,19 @@ use stdClass;
 /**
  * Class \Kunena\Forum\Libraries\User\Ban
  *
- * @property    int $id
- * @property    int $userid
- * @property    string  $ip
- * @property    int $blocked
- * @property    string $expiration
- * @property    int $created_by
- * @property    string $created_time
- * @property    string  $reason_private
- * @property    string  $reason_public
- * @property    int $modified_by
- * @property    string $modified_time
- * @property    array   $comments
- * @property    array  $params
+ * @property int    $id
+ * @property int    $userid
+ * @property string $ip
+ * @property int    $blocked
+ * @property string $expiration
+ * @property int    $created_by
+ * @property string $created_time
+ * @property string $reason_private
+ * @property string $reason_public
+ * @property int    $modified_by
+ * @property string $modified_time
+ * @property array  $comments
+ * @property array  $params
  * @since   Kunena 6.0
  */
 class KunenaBan
@@ -217,68 +217,50 @@ class KunenaBan
     }
 
     /**
-     * Method to load a \Kunena\Forum\Libraries\User\Ban object by ban id
+     * @param   string  $comment  comment
      *
-     * @access          public
+     * @return  void
      *
-     * @param   int  $id  The ban id of the item to load
-     *
-     * @return    boolean True on success
-     *
-     * @throws Exception
-     * @since           Kunena 1.6
+     * @since   Kunena 6.0
      */
-    public function load($id): bool
+    public function addComment(string $comment): void
     {
-        // Create the user table object
-        $table = $this->getTable();
-
-        // Load the KunenaTableUser object based on the user id
-        $exists = false;
-
-        try {
-            $exists = $table->load($id);
-        } catch (Exception $e) {
-            KunenaError::displayDatabaseError($e);
+        if (\is_string($comment) && !empty($comment)) {
+            $c                = new stdClass();
+            $c->userid        = self::$_my->id;
+            $c->time          = self::$_now->toSql();
+            $c->comment       = $comment;
+            $this->comments[] = $c;
         }
-
-        $this->bind($table->getProperties());
-        $this->_exists = $exists;
-
-        return (bool) $exists;
     }
 
     /**
-     * Method to get the ban table object
+     * Do the ban for the specified user from site or forum
      *
-     * This function uses a static variable to store the table name of the user table to
-     * it instantiates. You can call this function statically to set the table name if
-     * needed.
+     * @param   null    $userid          userid
+     * @param   null    $ip              The address IP of the user
+     * @param   bool    $banlevel        Set if the user from forum or from site, from forum is set to 0 and from site is set to 1
+     * @param   null    $expiration      The expiration date of the ban, if no date is specified the ban is set for lifetime
+     * @param   string  $reason_private  The private reason
+     * @param   string  $reason_public   The public reason
+     * @param   string  $comment         Set a comment for others moderators
      *
-     * @access    public
-     *
-     * @param   string  $type    The user table name to be used
-     * @param   string  $prefix  The user table prefix to be used
-     *
-     * @return    object  The user table object
-     *
-     * @since     Kunena 1.6
+     * @return void
+     * @since Kunena 1.6
      */
-    public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaUserBans'): object
+    public function ban($userid = null, $ip = null, $banlevel = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = ''): void
     {
-        static $tabletype = null;
+        $this->userid  = \intval($userid) > 0 ? (int) $userid : null;
+        // VARCHAR(128): an address is shorter, a longer text was an error of the database.
+        $this->ip      = $ip ? mb_substr(trim((string) $ip), 0, 128) : '';
+        $this->blocked = (int) $banlevel;
+        $this->setExpiration($expiration);
+        $this->reason_private = (string) $reason_private;
+        $this->reason_public  = (string) $reason_public;
 
-        // Set a custom table type is defined
-        if ($tabletype === null || $type != $tabletype['name'] || $prefix != $tabletype['prefix']) {
-            $tabletype['name']   = $type;
-            $tabletype['prefix'] = $prefix;
+        if (!empty($comment)) {
+            $this->addComment($comment);
         }
-
-        // Create the user table object
-        $db          = Factory::getContainer()->get(DatabaseInterface::class);
-        $tableObject = new KunenaUserBans($db);
-
-        return $tableObject;
     }
 
     /**
@@ -301,64 +283,6 @@ class KunenaBan
     }
 
     /**
-     * Returns the global \Kunena\Forum\Libraries\User\Ban object, only creating it if it doesn't already exist.
-     *
-     * @access  public
-     *
-     * @param   null  $identifier  The ban object to be loaded
-     *
-     * @return \Kunena\Forum\Libraries\User\KunenaBan|null The ban object.
-     *
-     * @since   Kunena 1.6
-     */
-    public static function getInstance($identifier = null): ?KunenaBan
-    {
-        $c = __CLASS__;
-
-        if (\intval($identifier) < 1) {
-            return new $c();
-        }
-
-        if (!isset(self::$_instances[$identifier])) {
-            $instance = new $c($identifier);
-            self::storeInstance($instance);
-        }
-
-        return isset(self::$_instances[$identifier]) ? self::$_instances[$identifier] : null;
-    }
-
-    /**
-     * @param   KunenaBan  $instance  instance
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    private static function storeInstance(KunenaBan $instance): void
-    {
-        // Fill userid cache
-        self::cacheUserid($instance->userid);
-        self::cacheUserid($instance->created_by);
-        self::cacheUserid($instance->modified_by);
-
-        foreach ($instance->comments as $comment) {
-            self::cacheUserid($comment->userid);
-        }
-
-        if ($instance->id) {
-            self::$_instances[$instance->id] = $instance;
-        }
-
-        if ($instance->userid && ($instance->isEnabled() || !$instance->id)) {
-            self::$_instancesByUserid[$instance->userid] = $instance;
-        }
-
-        if ($instance->ip && ($instance->isEnabled() || !$instance->id)) {
-            self::$_instancesByIP[$instance->ip] = $instance;
-        }
-    }
-
-    /**
      * @param   int  $userid  userid
      *
      * @return  void
@@ -375,25 +299,59 @@ class KunenaBan
     /**
      * @return  boolean
      *
+     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function isEnabled(): bool
+    public function canBan(): bool
     {
-        if ($this->isLifetime()) {
-            return true;
+        $userid = $this->userid;
+        $me     = KunenaUserHelper::getMyself();
+        $user   = KunenaUserHelper::get($userid);
+
+        if (!$me->isModerator()) {
+            throw new KunenaException(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
         }
 
-        if ($this->expiration === null) {
-            return false;
+        if (!$user->exists()) {
+            throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
         }
 
-        $expiration = new Date($this->expiration);
-
-        if ($expiration->toUnix() > self::$_now->toUnix()) {
-            return true;
+        if ($userid == $me->userid) {
+            throw new KunenaException(Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF'));
         }
 
-        return false;
+        if ($user->isAdmin()) {
+            throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName()));
+        }
+
+        if ($user->isModerator() && !$me->isAdmin()) {
+            throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
+        }
+
+        return true;
+    }
+
+    /**
+     * Method to delete the \Kunena\Forum\Libraries\User\Ban object from the database
+     *
+     * @access  public
+     *
+     * @return  boolean  True on success
+     *
+     * @since   Kunena 1.6
+     */
+    public function delete(): bool
+    {
+        // Create the user table object
+        $table = $this->getTable();
+
+        try {
+            $result = $table->delete($this->id);
+        } catch (Exception $e) {
+            throw new KunenaException($e->getMessage());
+        }
+
+        return $result;
     }
 
     /**
@@ -401,67 +359,9 @@ class KunenaBan
      *
      * @since   Kunena 6.0
      */
-    public function isLifetime(): bool
+    public function exists(): bool
     {
-        return $this->expiration == '9999-12-31 23:59:59';
-    }
-
-    /**
-     * Returns the global \Kunena\Forum\Libraries\User\Ban object, only creating it if it doesn't already exist.
-     *
-     * @access  public
-     *
-     * @param   null  $identifier  The ban object to be loaded
-     * @param   bool  $create      create
-     *
-     * @return \Kunena\Forum\Libraries\User\KunenaBan|null The ban object.
-     *
-     * @since   Kunena 1.6
-     */
-    public static function getInstanceByUserid($identifier = null, $create = false): ?KunenaBan
-    {
-        $c = __CLASS__;
-
-        if (\intval($identifier) < 1) {
-            return new $c();
-        }
-
-        if (!isset(self::$_instancesByUserid[$identifier])) {
-            $instance = new $c();
-            $instance->loadByUserid($identifier);
-            self::storeInstance($instance);
-        }
-
-        return $create || !empty(self::$_instancesByUserid[$identifier]->id) ? self::$_instancesByUserid[$identifier] : null;
-    }
-
-    /**
-     * Returns the global \Kunena\Forum\Libraries\User\Ban object, only creating it if it doesn't already exist.
-     *
-     * @access  public
-     *
-     * @param   null  $identifier  The ban object to be loaded
-     * @param   bool  $create      create
-     *
-     * @return \Kunena\Forum\Libraries\User\KunenaBan|null The ban object.
-     *
-     * @since   Kunena 1.6
-     */
-    public static function getInstanceByIP($identifier = null, $create = false): ?KunenaBan
-    {
-        $c = __CLASS__;
-
-        if (empty($identifier)) {
-            return new $c();
-        }
-
-        if (!isset(self::$_instancesByIP[$identifier])) {
-            $instance = new $c();
-            $instance->loadByIP($identifier);
-            self::storeInstance($instance);
-        }
-
-        return $create || !empty(self::$_instancesByIP[$identifier]->id) ? self::$_instancesByIP[$identifier] : null;
+        return $this->_exists;
     }
 
     /**
@@ -511,6 +411,193 @@ class KunenaBan
     }
 
     /**
+     * Return ban creation date.
+     *
+     * @return  KunenaDate
+     *
+     * @since   Kunena 6.0
+     */
+    public function getCreationDate(): KunenaDate
+    {
+        return KunenaDate::getInstance($this->created_time);
+    }
+
+    /**
+     * @return  KunenaUser
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getCreator(): KunenaUser
+    {
+        return KunenaUserHelper::get((int) $this->created_by);
+    }
+
+    /**
+     * Return ban expiration date.
+     *
+     * @return  KunenaDate
+     *
+     * @since   Kunena 6.0
+     */
+    public function getExpirationDate(): KunenaDate
+    {
+        return KunenaDate::getInstance($this->expiration);
+    }
+
+    /**
+     * Returns the global \Kunena\Forum\Libraries\User\Ban object, only creating it if it doesn't already exist.
+     *
+     * @access  public
+     *
+     * @param   null  $identifier  The ban object to be loaded
+     *
+     * @return KunenaBan|null The ban object.
+     *
+     * @since   Kunena 1.6
+     */
+    public static function getInstance($identifier = null): ?KunenaBan
+    {
+        $c = __CLASS__;
+
+        if (\intval($identifier) < 1) {
+            return new $c();
+        }
+
+        if (!isset(self::$_instances[$identifier])) {
+            $instance = new $c($identifier);
+            self::storeInstance($instance);
+        }
+
+        return isset(self::$_instances[$identifier]) ? self::$_instances[$identifier] : null;
+    }
+
+    /**
+     * Returns the global \Kunena\Forum\Libraries\User\Ban object, only creating it if it doesn't already exist.
+     *
+     * @access  public
+     *
+     * @param   null  $identifier  The ban object to be loaded
+     * @param   bool  $create      create
+     *
+     * @return KunenaBan|null The ban object.
+     *
+     * @since   Kunena 1.6
+     */
+    public static function getInstanceByIP($identifier = null, $create = false): ?KunenaBan
+    {
+        $c = __CLASS__;
+
+        if (empty($identifier)) {
+            return new $c();
+        }
+
+        if (!isset(self::$_instancesByIP[$identifier])) {
+            $instance = new $c();
+            $instance->loadByIP($identifier);
+            self::storeInstance($instance);
+        }
+
+        return $create || !empty(self::$_instancesByIP[$identifier]->id) ? self::$_instancesByIP[$identifier] : null;
+    }
+
+    /**
+     * Returns the global \Kunena\Forum\Libraries\User\Ban object, only creating it if it doesn't already exist.
+     *
+     * @access  public
+     *
+     * @param   null  $identifier  The ban object to be loaded
+     * @param   bool  $create      create
+     *
+     * @return KunenaBan|null The ban object.
+     *
+     * @since   Kunena 1.6
+     */
+    public static function getInstanceByUserid($identifier = null, $create = false): ?KunenaBan
+    {
+        $c = __CLASS__;
+
+        if (\intval($identifier) < 1) {
+            return new $c();
+        }
+
+        if (!isset(self::$_instancesByUserid[$identifier])) {
+            $instance = new $c();
+            $instance->loadByUserid($identifier);
+            self::storeInstance($instance);
+        }
+
+        return $create || !empty(self::$_instancesByUserid[$identifier]->id) ? self::$_instancesByUserid[$identifier] : null;
+    }
+
+    /**
+     * Return ban modification date.
+     *
+     * @return  KunenaDate
+     *
+     * @since   Kunena 6.0
+     */
+    public function getModificationDate(): KunenaDate
+    {
+        return KunenaDate::getInstance($this->modified_time);
+    }
+
+    /**
+     * @return  KunenaUser
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getModifier(): KunenaUser
+    {
+        return KunenaUserHelper::get((int) $this->modified_by);
+    }
+
+    /**
+     * Method to get the ban table object
+     *
+     * This function uses a static variable to store the table name of the user table to
+     * it instantiates. You can call this function statically to set the table name if
+     * needed.
+     *
+     * @access    public
+     *
+     * @param   string  $type    The user table name to be used
+     * @param   string  $prefix  The user table prefix to be used
+     *
+     * @return    object  The user table object
+     *
+     * @since     Kunena 1.6
+     */
+    public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaUserBans'): object
+    {
+        static $tabletype = null;
+
+        // Set a custom table type is defined
+        if ($tabletype === null || $type != $tabletype['name'] || $prefix != $tabletype['prefix']) {
+            $tabletype['name']   = $type;
+            $tabletype['prefix'] = $prefix;
+        }
+
+        // Create the user table object
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new KunenaUserBans($db);
+
+        return $tableObject;
+    }
+
+    /**
+     * @return  KunenaUser
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getUser(): KunenaUser
+    {
+        return KunenaUserHelper::get((int) $this->userid);
+    }
+
+    /**
      * @param   int  $userid  userid
      *
      * @return  array
@@ -556,72 +643,27 @@ class KunenaBan
     }
 
     /**
-     * @return  KunenaUser
+     * @return  boolean
      *
-     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getUser(): KunenaUser
+    public function isEnabled(): bool
     {
-        return KunenaUserHelper::get((int) $this->userid);
-    }
+        if ($this->isLifetime()) {
+            return true;
+        }
 
-    /**
-     * @return  KunenaUser
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getCreator(): KunenaUser
-    {
-        return KunenaUserHelper::get((int) $this->created_by);
-    }
+        if ($this->expiration === null) {
+            return false;
+        }
 
-    /**
-     * @return  KunenaUser
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getModifier(): KunenaUser
-    {
-        return KunenaUserHelper::get((int) $this->modified_by);
-    }
+        $expiration = new Date($this->expiration);
 
-    /**
-     * Return ban creation date.
-     *
-     * @return  KunenaDate
-     *
-     * @since   Kunena 6.0
-     */
-    public function getCreationDate(): KunenaDate
-    {
-        return KunenaDate::getInstance($this->created_time);
-    }
+        if ($expiration->toUnix() > self::$_now->toUnix()) {
+            return true;
+        }
 
-    /**
-     * Return ban expiration date.
-     *
-     * @return  KunenaDate
-     *
-     * @since   Kunena 6.0
-     */
-    public function getExpirationDate(): KunenaDate
-    {
-        return KunenaDate::getInstance($this->expiration);
-    }
-
-    /**
-     * Return ban modification date.
-     *
-     * @return  KunenaDate
-     *
-     * @since   Kunena 6.0
-     */
-    public function getModificationDate(): KunenaDate
-    {
-        return KunenaDate::getInstance($this->modified_time);
+        return false;
     }
 
     /**
@@ -629,34 +671,41 @@ class KunenaBan
      *
      * @since   Kunena 6.0
      */
-    public function exists(): bool
+    public function isLifetime(): bool
     {
-        return $this->_exists;
+        return $this->expiration == '9999-12-31 23:59:59';
     }
 
     /**
-     * Method to load a \Kunena\Forum\Libraries\User\Ban object by user id
+     * Method to load a \Kunena\Forum\Libraries\User\Ban object by ban id
      *
-     * @access  public
+     * @access          public
      *
-     * @param   int  $userid  The user id of the user to load
-     * @param   int  $mode    \Kunena\Forum\Libraries\User\Ban::ANY or \Kunena\Forum\Libraries\User\Ban::ACTIVE
+     * @param   int  $id  The ban id of the item to load
      *
-     * @return  boolean            True on success
+     * @return    boolean True on success
      *
-     * @since   Kunena 1.6
+     * @throws Exception
+     * @since           Kunena 1.6
      */
-    public function loadByUserid(int $userid, $mode = self::ACTIVE): bool
+    public function load($id): bool
     {
         // Create the user table object
         $table = $this->getTable();
 
         // Load the KunenaTableUser object based on the user id
-        $exists = $table->loadByUserid($userid, $mode);
+        $exists = false;
+
+        try {
+            $exists = $table->load($id);
+        } catch (Exception $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
         $this->bind($table->getProperties());
         $this->_exists = $exists;
 
-        return $exists;
+        return (bool) $exists;
     }
 
     /**
@@ -685,133 +734,28 @@ class KunenaBan
     }
 
     /**
-     * @param   null  $public   public
-     * @param   null  $private  private
+     * Method to load a \Kunena\Forum\Libraries\User\Ban object by user id
      *
-     * @return  void
+     * @access  public
      *
-     * @since   Kunena 6.0
+     * @param   int  $userid  The user id of the user to load
+     * @param   int  $mode    \Kunena\Forum\Libraries\User\Ban::ANY or \Kunena\Forum\Libraries\User\Ban::ACTIVE
+     *
+     * @return  boolean            True on success
+     *
+     * @since   Kunena 1.6
      */
-    public function setReason($public = null, $private = null): void
+    public function loadByUserid(int $userid, $mode = self::ACTIVE): bool
     {
-        $set = false;
+        // Create the user table object
+        $table = $this->getTable();
 
-        if ($public !== null && $public != $this->reason_public) {
-            $this->reason_public = (string) $public;
-            $set                 = true;
-        }
+        // Load the KunenaTableUser object based on the user id
+        $exists = $table->loadByUserid($userid, $mode);
+        $this->bind($table->getProperties());
+        $this->_exists = $exists;
 
-        if ($private !== null && $private != $this->reason_private) {
-            $this->reason_private = (string) $private;
-            $set                  = true;
-        }
-
-        if ($this->_exists && $set) {
-            $this->modified_time = self::$_now->toSql();
-            $this->modified_by   = self::$_my->id;
-        }
-    }
-
-    /**
-     * Do the ban for the specified user from site or forum
-     *
-     * @param   null    $userid          userid
-     * @param   null    $ip              The address IP of the user
-     * @param   bool    $banlevel        Set if the user from forum or from site, from forum is set to 0 and from site is set to 1
-     * @param   null    $expiration      The expiration date of the ban, if no date is specified the ban is set for lifetime
-     * @param   string  $reason_private  The private reason
-     * @param   string  $reason_public   The public reason
-     * @param   string  $comment         Set a comment for others moderators
-     *
-     * @return void
-     * @since Kunena 1.6
-     */
-    public function ban($userid = null, $ip = null, $banlevel = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = ''): void
-    {
-        $this->userid  = \intval($userid) > 0 ? (int) $userid : null;
-        // VARCHAR(128): an address is shorter, a longer text was an error of the database.
-        $this->ip      = $ip ? mb_substr(trim((string) $ip), 0, 128) : '';
-        $this->blocked = (int) $banlevel;
-        $this->setExpiration($expiration);
-        $this->reason_private = (string) $reason_private;
-        $this->reason_public  = (string) $reason_public;
-
-        if (!empty($comment)) {
-            $this->addComment($comment);
-        }
-    }
-
-    /**
-     * @param   mixed   $expiration  expiration
-     * @param   string  $comment     comment
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function setExpiration($expiration, $comment = ''): void
-    {
-        // Cannot change expiration if ban is not enabled
-        if (!$this->isEnabled() && $this->id) {
-            return;
-        }
-
-        if (!$expiration || $expiration == '0000-00-00 00:00:00') {
-            $this->expiration = '9999-12-31 23:59:59';
-        } else {
-            $date             = new Date($expiration);
-            $this->expiration = $date->toUnix() > self::$_now->toUnix() ? $date->toSql() : self::$_now->toSql();
-        }
-
-        if ($this->_exists) {
-            $this->modified_time = self::$_now->toSql();
-            $this->modified_by   = self::$_my->id;
-        }
-
-        if (!empty($comment)) {
-            $this->addComment($comment);
-        }
-    }
-
-    /**
-     * @param   string  $comment  comment
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function addComment(string $comment): void
-    {
-        if (\is_string($comment) && !empty($comment)) {
-            $c                = new stdClass();
-            $c->userid        = self::$_my->id;
-            $c->time          = self::$_now->toSql();
-            $c->comment       = $comment;
-            $this->comments[] = $c;
-        }
-    }
-
-    /**
-     * @param   string  $comment  comment
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function unBan($comment = ''): void
-    {
-        // Cannot change expiration if ban is not enabled
-        if (!$this->isEnabled()) {
-            return;
-        }
-
-        $this->expiration    = self::$_now->toSql();
-        $this->modified_time = self::$_now->toSql();
-        $this->modified_by   = self::$_my->id;
-
-        if (!empty($comment)) {
-            $this->addComment($comment);
-        }
+        return $exists;
     }
 
     /**
@@ -932,60 +876,116 @@ class KunenaBan
     }
 
     /**
-     * @return  boolean
+     * @param   mixed   $expiration  expiration
+     * @param   string  $comment     comment
      *
-     * @throws  Exception
+     * @return  void
+     *
      * @since   Kunena 6.0
      */
-    public function canBan(): bool
+    public function setExpiration($expiration, $comment = ''): void
     {
-        $userid = $this->userid;
-        $me     = KunenaUserHelper::getMyself();
-        $user   = KunenaUserHelper::get($userid);
-
-        if (!$me->isModerator()) {
-            throw new KunenaException(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
+        // Cannot change expiration if ban is not enabled
+        if (!$this->isEnabled() && $this->id) {
+            return;
         }
 
-        if (!$user->exists()) {
-            throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
+        if (!$expiration || $expiration == '0000-00-00 00:00:00') {
+            $this->expiration = '9999-12-31 23:59:59';
+        } else {
+            $date             = new Date($expiration);
+            $this->expiration = $date->toUnix() > self::$_now->toUnix() ? $date->toSql() : self::$_now->toSql();
         }
 
-        if ($userid == $me->userid) {
-            throw new KunenaException(Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF'));
+        if ($this->_exists) {
+            $this->modified_time = self::$_now->toSql();
+            $this->modified_by   = self::$_my->id;
         }
 
-        if ($user->isAdmin()) {
-            throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName()));
+        if (!empty($comment)) {
+            $this->addComment($comment);
         }
-
-        if ($user->isModerator() && !$me->isAdmin()) {
-            throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
-        }
-
-        return true;
     }
 
     /**
-     * Method to delete the \Kunena\Forum\Libraries\User\Ban object from the database
+     * @param   null  $public   public
+     * @param   null  $private  private
      *
-     * @access  public
+     * @return  void
      *
-     * @return  boolean  True on success
-     *
-     * @since   Kunena 1.6
+     * @since   Kunena 6.0
      */
-    public function delete(): bool
+    public function setReason($public = null, $private = null): void
     {
-        // Create the user table object
-        $table = $this->getTable();
+        $set = false;
 
-        try {
-            $result = $table->delete($this->id);
-        } catch (Exception $e) {
-            throw new KunenaException($e->getMessage());
+        if ($public !== null && $public != $this->reason_public) {
+            $this->reason_public = (string) $public;
+            $set                 = true;
         }
 
-        return $result;
+        if ($private !== null && $private != $this->reason_private) {
+            $this->reason_private = (string) $private;
+            $set                  = true;
+        }
+
+        if ($this->_exists && $set) {
+            $this->modified_time = self::$_now->toSql();
+            $this->modified_by   = self::$_my->id;
+        }
+    }
+
+    /**
+     * @param   KunenaBan  $instance  instance
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    private static function storeInstance(KunenaBan $instance): void
+    {
+        // Fill userid cache
+        self::cacheUserid($instance->userid);
+        self::cacheUserid($instance->created_by);
+        self::cacheUserid($instance->modified_by);
+
+        foreach ($instance->comments as $comment) {
+            self::cacheUserid($comment->userid);
+        }
+
+        if ($instance->id) {
+            self::$_instances[$instance->id] = $instance;
+        }
+
+        if ($instance->userid && ($instance->isEnabled() || !$instance->id)) {
+            self::$_instancesByUserid[$instance->userid] = $instance;
+        }
+
+        if ($instance->ip && ($instance->isEnabled() || !$instance->id)) {
+            self::$_instancesByIP[$instance->ip] = $instance;
+        }
+    }
+
+    /**
+     * @param   string  $comment  comment
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function unBan($comment = ''): void
+    {
+        // Cannot change expiration if ban is not enabled
+        if (!$this->isEnabled()) {
+            return;
+        }
+
+        $this->expiration    = self::$_now->toSql();
+        $this->modified_time = self::$_now->toSql();
+        $this->modified_by   = self::$_my->id;
+
+        if (!empty($comment)) {
+            $this->addComment($comment);
+        }
     }
 }

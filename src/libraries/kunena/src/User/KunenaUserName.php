@@ -67,6 +67,84 @@ abstract class KunenaUserName
     protected static $displayNames = [];
 
     /**
+     * The name which is shown of a user: the choice of the user, else the one of the configuration; a name which is empty
+     * is replaced by the next one (nickname, real name, username).
+     *
+     * @param   KunenaUser  $user  The user.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    public static function get(KunenaUser $user): string
+    {
+        $userid = (int) $user->userid;
+        $type   = self::getChoice($userid) ?? self::getGlobalType();
+
+        $candidates = [
+            self::DISPLAYNAME => [self::DISPLAYNAME, self::REALNAME, self::USERNAME],
+            self::REALNAME    => [self::REALNAME, self::USERNAME],
+            self::USERNAME    => [self::USERNAME, self::REALNAME],
+        ][$type];
+
+        foreach ($candidates as $candidate) {
+            $name = trim((string) match ($candidate) {
+                self::DISPLAYNAME => self::getDisplayName($userid),
+                self::REALNAME    => $user->name,
+                default           => $user->username,
+            });
+
+            if ($name !== '') {
+                return $name;
+            }
+        }
+
+        return (string) $user->username;
+    }
+
+    /**
+     * The choice of a user, or null when the user did not choose (or choosing is off).
+     *
+     * @param   int  $userid  The user id.
+     *
+     * @return  int|null
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getChoice(int $userid): ?int
+    {
+        if (!$userid || !self::userCanChoose()) {
+            return null;
+        }
+
+        $choice = KunenaUserHelper::getJoomlaParam($userid, self::PARAM);
+
+        return $choice !== null && $choice !== '' && \in_array((int) $choice, [self::REALNAME, self::USERNAME, self::DISPLAYNAME], true) ? (int) $choice : null;
+    }
+
+    /**
+     * The nickname of a user: the value of the Joomla custom field.
+     *
+     * @param   int  $userid  The user id.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getDisplayName(int $userid): string
+    {
+        if (!$userid || !self::getDisplayNameField()) {
+            return '';
+        }
+
+        if (!isset(self::$displayNames[$userid])) {
+            self::preload([$userid]);
+        }
+
+        return self::$displayNames[$userid] ?? '';
+    }
+
+    /**
      * The id of the Joomla custom field with the nickname (0 when there is none).
      *
      * @return  int
@@ -119,95 +197,31 @@ abstract class KunenaUserName
     }
 
     /**
-     * May the users choose the name which others see.
+     * The SQL condition to find the users by any of their names.
      *
-     * @return  bool
+     * @param   string  $search  The text to look for.
+     * @param   string  $alias   The alias of the table of the Joomla users in the query.
      *
-     * @since   Kunena 7.2
-     */
-    public static function userCanChoose(): bool
-    {
-        $config = KunenaConfig::getInstance();
-
-        return isset($config->nameUserChoice) && $config->nameUserChoice;
-    }
-
-    /**
-     * The choice of a user, or null when the user did not choose (or choosing is off).
-     *
-     * @param   int  $userid  The user id.
-     *
-     * @return  int|null
+     * @return  string  The condition (without AND).
      *
      * @since   Kunena 7.2
      */
-    public static function getChoice(int $userid): ?int
+    public static function getSearchCondition(string $search, string $alias = 'a'): string
     {
-        if (!$userid || !self::userCanChoose()) {
-            return null;
+        $db         = Factory::getContainer()->get(DatabaseInterface::class);
+        $like       = $db->quote('%' . $db->escape($search, true) . '%', false);
+        $conditions = [
+            $db->quoteName($alias . '.username') . ' LIKE ' . $like,
+            $db->quoteName($alias . '.name') . ' LIKE ' . $like,
+        ];
+
+        if ($field = self::getDisplayNameField()) {
+            $conditions[] = $db->quoteName($alias . '.id') . ' IN (SELECT ' . $db->quoteName('item_id') . ' FROM '
+                . $db->quoteName('#__fields_values') . ' WHERE ' . $db->quoteName('field_id') . ' = ' . $field
+                . ' AND ' . $db->quoteName('value') . ' LIKE ' . $like . ')';
         }
 
-        $choice = KunenaUserHelper::getJoomlaParam($userid, self::PARAM);
-
-        return $choice !== null && $choice !== '' && \in_array((int) $choice, [self::REALNAME, self::USERNAME, self::DISPLAYNAME], true) ? (int) $choice : null;
-    }
-
-    /**
-     * The name which is shown of a user: the choice of the user, else the one of the configuration; a name which is empty
-     * is replaced by the next one (nickname, real name, username).
-     *
-     * @param   KunenaUser  $user  The user.
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    public static function get(KunenaUser $user): string
-    {
-        $userid = (int) $user->userid;
-        $type   = self::getChoice($userid) ?? self::getGlobalType();
-
-        $candidates = [
-            self::DISPLAYNAME => [self::DISPLAYNAME, self::REALNAME, self::USERNAME],
-            self::REALNAME    => [self::REALNAME, self::USERNAME],
-            self::USERNAME    => [self::USERNAME, self::REALNAME],
-        ][$type];
-
-        foreach ($candidates as $candidate) {
-            $name = trim((string) match ($candidate) {
-                self::DISPLAYNAME => self::getDisplayName($userid),
-                self::REALNAME    => $user->name,
-                default           => $user->username,
-            });
-
-            if ($name !== '') {
-                return $name;
-            }
-        }
-
-        return (string) $user->username;
-    }
-
-    /**
-     * The nickname of a user: the value of the Joomla custom field.
-     *
-     * @param   int  $userid  The user id.
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getDisplayName(int $userid): string
-    {
-        if (!$userid || !self::getDisplayNameField()) {
-            return '';
-        }
-
-        if (!isset(self::$displayNames[$userid])) {
-            self::preload([$userid]);
-        }
-
-        return self::$displayNames[$userid] ?? '';
+        return '(' . implode(' OR ', $conditions) . ')';
     }
 
     /**
@@ -252,6 +266,21 @@ abstract class KunenaUserName
         } catch (Exception $e) {
             // The names fall back to the real name.
         }
+    }
+
+    /**
+     * Save the choice of a user (null for no choice).
+     *
+     * @param   int       $userid  The user id.
+     * @param   int|null  $choice  REALNAME, USERNAME, DISPLAYNAME or null.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public static function setChoice(int $userid, ?int $choice): void
+    {
+        KunenaUserHelper::setJoomlaParam($userid, self::PARAM, $choice);
     }
 
     /**
@@ -305,45 +334,16 @@ abstract class KunenaUserName
     }
 
     /**
-     * Save the choice of a user (null for no choice).
+     * May the users choose the name which others see.
      *
-     * @param   int       $userid  The user id.
-     * @param   int|null  $choice  REALNAME, USERNAME, DISPLAYNAME or null.
-     *
-     * @return  void
+     * @return  bool
      *
      * @since   Kunena 7.2
      */
-    public static function setChoice(int $userid, ?int $choice): void
+    public static function userCanChoose(): bool
     {
-        KunenaUserHelper::setJoomlaParam($userid, self::PARAM, $choice);
-    }
+        $config = KunenaConfig::getInstance();
 
-    /**
-     * The SQL condition to find the users by any of their names.
-     *
-     * @param   string  $search  The text to look for.
-     * @param   string  $alias   The alias of the table of the Joomla users in the query.
-     *
-     * @return  string  The condition (without AND).
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getSearchCondition(string $search, string $alias = 'a'): string
-    {
-        $db         = Factory::getContainer()->get(DatabaseInterface::class);
-        $like       = $db->quote('%' . $db->escape($search, true) . '%', false);
-        $conditions = [
-            $db->quoteName($alias . '.username') . ' LIKE ' . $like,
-            $db->quoteName($alias . '.name') . ' LIKE ' . $like,
-        ];
-
-        if ($field = self::getDisplayNameField()) {
-            $conditions[] = $db->quoteName($alias . '.id') . ' IN (SELECT ' . $db->quoteName('item_id') . ' FROM '
-                . $db->quoteName('#__fields_values') . ' WHERE ' . $db->quoteName('field_id') . ' = ' . $field
-                . ' AND ' . $db->quoteName('value') . ' LIKE ' . $like . ')';
-        }
-
-        return '(' . implode(' OR ', $conditions) . ')';
+        return isset($config->nameUserChoice) && $config->nameUserChoice;
     }
 }

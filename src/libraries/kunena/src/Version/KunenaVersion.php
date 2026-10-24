@@ -28,6 +28,79 @@ use stdClass;
 class KunenaVersion
 {
     /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function checkVersion(): bool
+    {
+        $version = $this->getDBVersion();
+
+        if (!isset($version->version)) {
+            return false;
+        }
+
+        if ($version->state) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Retrieve copyright information as string.
+     *
+     * @return  string "© 2008 - 2025 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+     *
+     * @since   Kunena 6.0
+     */
+    public static function getCopyrightHTML(): string
+    {
+        return '&copy; 2008 - 2025 ' . Text::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org/team" target = "_blank">'
+            . Text::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . Text::_('COM_KUNENA_VERSION_LICENSE')
+            . ': <a href = "https://www.gnu.org/copyleft/gpl.html" target = "_blank">'
+            . Text::_('COM_KUNENA_VERSION_GPL') . '</a>';
+    }
+
+    /**
+     * Get version information from database
+     *
+     * @param   string  $prefix  Kunena table prefix
+     *
+     * @return  object  Version table
+     *
+     * @since   Kunena 1.6
+     */
+    public function getDBVersion($prefix = 'kunena_')
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = "SHOW TABLES LIKE {$db->quote($db->getPrefix() . $prefix . 'version')}";
+        $db->setQuery($query);
+
+        if ($db->loadResult()) {
+            $query = $db->createQuery();
+            $query
+                ->select('*')
+                ->from($db->quoteName($db->getPrefix() . $prefix . 'version'))
+                ->order('id DESC');
+            $query->setLimit(1);
+            $db->setQuery($query);
+            $version = $db->loadObject();
+        }
+
+        if (!isset($version) || !\is_object($version) || !isset($version->state)) {
+            $version        = new stdClass();
+            $version->state = '';
+        } elseif (!empty($version->state)) {
+            if ($version->version != KunenaForum::version()) {
+                $version->state = '';
+            }
+        }
+
+        return $version;
+    }
+
+    /**
      * Retrieve installed Kunena version, copyright and license as string.
      *
      * @return  string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2025 Copyright: Kunena Team. All rights reserved. |
@@ -50,21 +123,6 @@ class KunenaVersion
     public static function getVersionHTML(): string
     {
         return 'Kunena ' . strtoupper(KunenaForum::version()) . ' | ' . KunenaForum::versionDate() . ' [ ' . KunenaForum::versionName() . ' ]';
-    }
-
-    /**
-     * Retrieve copyright information as string.
-     *
-     * @return  string "© 2008 - 2025 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
-     *
-     * @since   Kunena 6.0
-     */
-    public static function getCopyrightHTML(): string
-    {
-        return '&copy; 2008 - 2025 ' . Text::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org/team" target = "_blank">'
-            . Text::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . Text::_('COM_KUNENA_VERSION_LICENSE')
-            . ': <a href = "https://www.gnu.org/copyleft/gpl.html" target = "_blank">'
-            . Text::_('COM_KUNENA_VERSION_GPL') . '</a>';
     }
 
     /**
@@ -109,64 +167,6 @@ class KunenaVersion
         }
 
         return '';
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function checkVersion(): bool
-    {
-        $version = $this->getDBVersion();
-
-        if (!isset($version->version)) {
-            return false;
-        }
-
-        if ($version->state) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Get version information from database
-     *
-     * @param   string  $prefix  Kunena table prefix
-     *
-     * @return  object  Version table
-     *
-     * @since   Kunena 1.6
-     */
-    public function getDBVersion($prefix = 'kunena_')
-    {
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = "SHOW TABLES LIKE {$db->quote($db->getPrefix() . $prefix . 'version')}";
-        $db->setQuery($query);
-
-        if ($db->loadResult()) {
-            $query = $db->createQuery();
-            $query
-                ->select('*')
-                ->from($db->quoteName($db->getPrefix() . $prefix . 'version'))
-                ->order('id DESC');
-            $query->setLimit(1);
-            $db->setQuery($query);
-            $version = $db->loadObject();
-        }
-
-        if (!isset($version) || !\is_object($version) || !isset($version->state)) {
-            $version        = new stdClass();
-            $version->state = '';
-        } elseif (!empty($version->state)) {
-            if ($version->version != KunenaForum::version()) {
-                $version->state = '';
-            }
-        }
-
-        return $version;
     }
 }
 

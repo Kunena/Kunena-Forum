@@ -18,6 +18,7 @@ namespace Kunena\Forum\Administrator\Model;
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\User\KunenaUserBadges;
@@ -33,7 +34,7 @@ class BadgesModel extends AdminModel
      * @param   array    $data      data
      * @param   boolean  $loadData  load data
      *
-     * @return  \Joomla\CMS\Form\Form|false
+     * @return  Form|false
      *
      * @since   Kunena 7.2
      */

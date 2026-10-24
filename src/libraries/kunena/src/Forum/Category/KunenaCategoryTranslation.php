@@ -35,28 +35,26 @@ abstract class KunenaCategoryTranslation
     public const FIELDS = ['name', 'description', 'headerdesc'];
 
     /**
-     * The translations in a language, of all the categories.
+     * Remove the translations of a category.
      *
-     * @param   string  $language  The language code.
+     * @param   int  $categoryId  The category.
      *
-     * @return  array  Rows (name, description, headerdesc) by category id.
+     * @return  void
      *
      * @since   Kunena 7.2
      */
-    public static function loadLanguage(string $language): array
+    public static function delete(int $categoryId): void
     {
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->createQuery()
-            ->select($db->quoteName(['category_id', 'name', 'description', 'headerdesc']))
-            ->from($db->quoteName('#__kunena_categories_translations'))
-            ->where($db->quoteName('language') . ' = :language')
-            ->bind(':language', $language);
+            ->delete($db->quoteName('#__kunena_categories_translations'))
+            ->where($db->quoteName('category_id') . ' = :id')
+            ->bind(':id', $categoryId, ParameterType::INTEGER);
 
         try {
-            return (array) $db->setQuery($query)->loadObjectList('category_id');
+            $db->setQuery($query)->execute();
         } catch (Exception $e) {
-            // The table is not there yet (the extension was not updated).
-            return [];
+            // The table is not there yet.
         }
     }
 
@@ -81,6 +79,32 @@ abstract class KunenaCategoryTranslation
         try {
             return (array) $db->setQuery($query)->loadObjectList('language');
         } catch (Exception $e) {
+            return [];
+        }
+    }
+
+    /**
+     * The translations in a language, of all the categories.
+     *
+     * @param   string  $language  The language code.
+     *
+     * @return  array  Rows (name, description, headerdesc) by category id.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function loadLanguage(string $language): array
+    {
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->select($db->quoteName(['category_id', 'name', 'description', 'headerdesc']))
+            ->from($db->quoteName('#__kunena_categories_translations'))
+            ->where($db->quoteName('language') . ' = :language')
+            ->bind(':language', $language);
+
+        try {
+            return (array) $db->setQuery($query)->loadObjectList('category_id');
+        } catch (Exception $e) {
+            // The table is not there yet (the extension was not updated).
             return [];
         }
     }
@@ -131,30 +155,6 @@ abstract class KunenaCategoryTranslation
                 ->bind(':description', $values['description'])
                 ->bind(':headerdesc', $values['headerdesc']);
             $db->setQuery($insert)->execute();
-        }
-    }
-
-    /**
-     * Remove the translations of a category.
-     *
-     * @param   int  $categoryId  The category.
-     *
-     * @return  void
-     *
-     * @since   Kunena 7.2
-     */
-    public static function delete(int $categoryId): void
-    {
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery()
-            ->delete($db->quoteName('#__kunena_categories_translations'))
-            ->where($db->quoteName('category_id') . ' = :id')
-            ->bind(':id', $categoryId, ParameterType::INTEGER);
-
-        try {
-            $db->setQuery($query)->execute();
-        } catch (Exception $e) {
-            // The table is not there yet.
         }
     }
 }

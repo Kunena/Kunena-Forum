@@ -20,6 +20,7 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
@@ -228,7 +229,7 @@ class TopicListingRecentDisplay extends ListDisplay
 
         // There is no active menu item when the page is not reached through a menu item.
         $activeItem  = $this->app->getMenu()->getActive();
-        $params      = $activeItem ? $activeItem->getParams() : new \Joomla\Registry\Registry();
+        $params      = $activeItem ? $activeItem->getParams() : new Registry();
         $title       = $params->get('page_title');
         $pageheading = $params->get('show_page_heading');
 

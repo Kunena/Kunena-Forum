@@ -51,6 +51,18 @@ abstract class KunenaContentEvent extends AbstractImmutableEvent
     }
 
     /**
+     * Getter for the context argument.
+     *
+     * @return  string
+     *
+     * @since  7.1.0
+     */
+    public function getContext(): string
+    {
+        return $this->arguments['context'];
+    }
+
+    /**
      * Setter for the context argument.
      *
      * @param   string  $value  The value to set
@@ -62,17 +74,5 @@ abstract class KunenaContentEvent extends AbstractImmutableEvent
     protected function onSetContext(string $value): string
     {
         return $value;
-    }
-
-    /**
-     * Getter for the context argument.
-     *
-     * @return  string
-     *
-     * @since  7.1.0
-     */
-    public function getContext(): string
-    {
-        return $this->arguments['context'];
     }
 }

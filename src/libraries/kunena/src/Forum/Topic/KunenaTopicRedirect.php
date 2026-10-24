@@ -43,48 +43,6 @@ abstract class KunenaTopicRedirect
     public const COMMENT = 'Kunena: deleted topic';
 
     /**
-     * Is the option on.
-     *
-     * @return  bool
-     *
-     * @since   Kunena 7.2
-     */
-    public static function isEnabled(): bool
-    {
-        $config = KunenaConfig::getInstance();
-
-        return isset($config->redirectDeletedTopics) ? (bool) $config->redirectDeletedTopics : false;
-    }
-
-    /**
-     * The address of the topic as visitors and search engines know it.
-     *
-     * @param   KunenaTopic  $topic  The topic.
-     *
-     * @return  string  The address, or an empty string when there is none.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getOldUrl(KunenaTopic $topic): string
-    {
-        try {
-            $url = (string) $topic->getUrl(null, false);
-        } catch (Exception $e) {
-            return '';
-        }
-
-        // The address is saved without the fragment and as a full address, like the redirect plugin finds them.
-        $url = preg_replace('/#.*$/', '', $url);
-
-        if ($url !== '' && !preg_match('#^https?://#i', $url)) {
-            $uri = Uri::getInstance();
-            $url = $uri->toString(['scheme', 'host', 'port']) . '/' . ltrim($url, '/');
-        }
-
-        return $url;
-    }
-
-    /**
      * Make the redirect with the status 410 Gone for the topic.
      *
      * @param   string  $url  The address of the topic (see getOldUrl, get it before the topic is deleted).
@@ -145,6 +103,48 @@ abstract class KunenaTopicRedirect
         } catch (Exception $e) {
             // The redirect is a help for search engines: a failure must never stop the deletion of a topic.
         }
+    }
+
+    /**
+     * The address of the topic as visitors and search engines know it.
+     *
+     * @param   KunenaTopic  $topic  The topic.
+     *
+     * @return  string  The address, or an empty string when there is none.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getOldUrl(KunenaTopic $topic): string
+    {
+        try {
+            $url = (string) $topic->getUrl(null, false);
+        } catch (Exception $e) {
+            return '';
+        }
+
+        // The address is saved without the fragment and as a full address, like the redirect plugin finds them.
+        $url = preg_replace('/#.*$/', '', $url);
+
+        if ($url !== '' && !preg_match('#^https?://#i', $url)) {
+            $uri = Uri::getInstance();
+            $url = $uri->toString(['scheme', 'host', 'port']) . '/' . ltrim($url, '/');
+        }
+
+        return $url;
+    }
+
+    /**
+     * Is the option on.
+     *
+     * @return  bool
+     *
+     * @since   Kunena 7.2
+     */
+    public static function isEnabled(): bool
+    {
+        $config = KunenaConfig::getInstance();
+
+        return isset($config->redirectDeletedTopics) ? (bool) $config->redirectDeletedTopics : false;
     }
 
     /**

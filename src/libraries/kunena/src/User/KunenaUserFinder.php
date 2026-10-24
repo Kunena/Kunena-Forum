@@ -58,32 +58,6 @@ class KunenaUserFinder extends KunenaFinder
     }
 
     /**
-     * Filter by time, either on registration or last visit date.
-     *
-     * @param   Date|null  $starting  Starting date or null if older than ending date.
-     * @param   Date|null  $ending    Ending date or null if newer than starting date.
-     * @param   bool       $register  True = registration date, False = last visit date.
-     *
-     * @return  $this
-     *
-     * @since   Kunena 6.0
-     */
-    public function filterByTime(?Date $starting = null, ?Date $ending = null, $register = true): KunenaFinder
-    {
-        $name = $register ? 'registerDate' : 'lastvisitDate';
-
-        if ($starting && $ending) {
-            $this->query->where($this->db->quoteName('a.' . $name) . ' BETWEEN ' . $this->db->quote($starting->toSql()) . ' AND ' . $this->db->quote($ending->toSql()));
-        } elseif ($starting) {
-            $this->query->where($this->db->quoteName('a.' . $name) . ' > ' . $this->db->quote($starting->toSql()));
-        } elseif ($ending) {
-            $this->query->where($this->db->quoteName('a.' . $name) . ' <= ' . $this->db->quote($ending->toSql()));
-        }
-
-        return $this;
-    }
-
-    /**
      * @param   array  $ignore  ignore
      *
      * @return  $this
@@ -122,6 +96,32 @@ class KunenaUserFinder extends KunenaFinder
         if ($search) {
             // The user is found by the username, the real name or the display name.
             $this->query->where(KunenaUserName::getSearchCondition(trim($search, '%')));
+        }
+
+        return $this;
+    }
+
+    /**
+     * Filter by time, either on registration or last visit date.
+     *
+     * @param   Date|null  $starting  Starting date or null if older than ending date.
+     * @param   Date|null  $ending    Ending date or null if newer than starting date.
+     * @param   bool       $register  True = registration date, False = last visit date.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.0
+     */
+    public function filterByTime(?Date $starting = null, ?Date $ending = null, $register = true): KunenaFinder
+    {
+        $name = $register ? 'registerDate' : 'lastvisitDate';
+
+        if ($starting && $ending) {
+            $this->query->where($this->db->quoteName('a.' . $name) . ' BETWEEN ' . $this->db->quote($starting->toSql()) . ' AND ' . $this->db->quote($ending->toSql()));
+        } elseif ($starting) {
+            $this->query->where($this->db->quoteName('a.' . $name) . ' > ' . $this->db->quote($starting->toSql()));
+        } elseif ($ending) {
+            $this->query->where($this->db->quoteName('a.' . $name) . ' <= ' . $this->db->quote($ending->toSql()));
         }
 
         return $this;

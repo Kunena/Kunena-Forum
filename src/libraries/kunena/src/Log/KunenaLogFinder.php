@@ -37,6 +37,17 @@ class KunenaLogFinder extends KunenaFinder
     protected $table = '#__kunena_logs';
 
     /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  void
+     *
+     * @since   Kunena 5.0
+     */
+    protected function build(?QueryInterface $query = null): void
+    {
+    }
+
+    /**
      * Filter by time.
      *
      * @param   Date|null  $starting  Starting date or null if older than ending date.
@@ -55,48 +66,6 @@ class KunenaLogFinder extends KunenaFinder
         } elseif ($ending) {
             $this->query->where($this->db->quoteName('a.time') . ' <= ' . $this->db->quote($ending->toUnix()));
         }
-
-        return $this;
-    }
-
-    /**
-     * @param   mixed  $condition  condition
-     *
-     * @return  $this
-     *
-     * @since   Kunena 5.0
-     */
-    public function innerJoin($condition): KunenaFinder
-    {
-        $this->query->innerJoin($condition);
-
-        return $this;
-    }
-
-    /**
-     * @param   mixed  $columns  columns
-     *
-     * @return  $this
-     *
-     * @since   Kunena 5.0
-     */
-    public function select($columns): KunenaFinder
-    {
-        $this->query->select($columns);
-
-        return $this;
-    }
-
-    /**
-     * @param   mixed  $columns  columns
-     *
-     * @return  $this
-     *
-     * @since   Kunena 5.0
-     */
-    public function group($columns): KunenaFinder
-    {
-        $this->query->group($columns);
 
         return $this;
     }
@@ -134,13 +103,44 @@ class KunenaLogFinder extends KunenaFinder
     }
 
     /**
-     * @param   QueryInterface|null  $query  query
+     * @param   mixed  $columns  columns
      *
-     * @return  void
+     * @return  $this
      *
      * @since   Kunena 5.0
      */
-    protected function build(?QueryInterface $query = null): void
+    public function group($columns): KunenaFinder
     {
+        $this->query->group($columns);
+
+        return $this;
+    }
+
+    /**
+     * @param   mixed  $condition  condition
+     *
+     * @return  $this
+     *
+     * @since   Kunena 5.0
+     */
+    public function innerJoin($condition): KunenaFinder
+    {
+        $this->query->innerJoin($condition);
+
+        return $this;
+    }
+
+    /**
+     * @param   mixed  $columns  columns
+     *
+     * @return  $this
+     *
+     * @since   Kunena 5.0
+     */
+    public function select($columns): KunenaFinder
+    {
+        $this->query->select($columns);
+
+        return $this;
     }
 }

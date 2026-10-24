@@ -65,38 +65,78 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
-     * Filter by user access to the categories.
+     * @param   QueryInterface|null  $query  query
      *
-     * It is very important to use this or category filter. Otherwise topics from unauthorized categories will be
-     * included to the search results.
+     * @return  void
      *
-     * @param   KunenaUser  $user  user
+     * @since   Kunena 6.0
+     */
+    protected function build(?QueryInterface $query = null): void
+    {
+        if (!empty($this->hold)) {
+            $this->hold = ArrayHelper::toInteger($this->hold, 0);
+            $hold       = implode(',', $this->hold);
+            $query->where($this->db->quoteName('a.hold') . ' IN (' . $hold . ')');
+        }
+
+        // Categories where the users only see their own topics: for every list and count, whatever filter was used.
+        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere(null, $this->db->quoteName('a.category_id'), $this->db->quoteName('a.first_post_userid'));
+
+        if ($own) {
+            $query->where($own);
+        }
+    }
+
+    /**
+     * Filter topics which were started by a user whose username or name has the text (or by a guest with that name).
+     *
+     * @param   string  $text  Text to look for.
      *
      * @return  $this
      *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
+     * @since   Kunena 7.2
      */
-    public function filterByUserAccess(KunenaUser $user): KunenaTopicFinder
+    public function filterByAuthorName(string $text): KunenaTopicFinder
     {
-        $categories = array_map('intval', (array) $user->getAllowedCategories());
+        $text = trim($text);
 
-        // A user without any allowed category sees no topic: an empty list must not remove the filter.
-        if (empty($categories)) {
-            $this->query->where('0');
-
+        if ($text === '') {
             return $this;
         }
 
-        $this->query->where('a.category_id  IN (' . implode(',', $categories) . ')');
+        $like  = $this->db->quote('%' . $this->db->escape($text, true) . '%', false);
+        $query = $this->db->createQuery()
+            ->select($this->db->quoteName('id'))
+            ->from($this->db->quoteName('#__users'))
+            ->where('(' . $this->db->quoteName('username') . ' LIKE ' . $like . ' OR ' . $this->db->quoteName('name') . ' LIKE ' . $like . ')');
 
-        // Categories where the users only see their own topics.
-        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere($user, 'a.category_id', 'a.first_post_userid');
+        $query->setLimit(200);
+        $ids = ArrayHelper::toInteger((array) $this->db->setQuery($query)->loadColumn());
+        $or  = [$this->db->quoteName('a.first_post_guest_name') . ' LIKE ' . $like];
 
-        if ($own) {
-            $this->query->where($own);
+        if ($ids) {
+            $or[] = $this->db->quoteName('a.first_post_userid') . ' IN (' . implode(',', $ids) . ')';
         }
+
+        $this->query->where('(' . implode(' OR ', $or) . ')');
+
+        return $this;
+    }
+
+    /**
+     * Only the topics which were started by one of the users (the follow list of a user). No users: no topics.
+     *
+     * @param   int[]  $userids  Ids of the users.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterByAuthors(array $userids): KunenaTopicFinder
+    {
+        $userids = array_filter(ArrayHelper::toInteger($userids));
+
+        $this->query->where($this->db->quoteName('a.first_post_userid') . ' IN (' . ($userids ? implode(',', $userids) : '-1') . ')');
 
         return $this;
     }
@@ -135,6 +175,151 @@ class KunenaTopicFinder extends KunenaFinder
         }
 
         $this->query->where($this->db->quoteName('a.category_id') . ' IN (' . $list . ')');
+
+        return $this;
+    }
+
+    /**
+     * Filter by hold (0=published, 1=unapproved, 2=deleted, 3=topic deleted).
+     *
+     * @param   array  $hold  List of hold states to display.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.0
+     */
+    public function filterByHold(array $hold = [0]): KunenaTopicFinder
+    {
+        $this->hold = $hold;
+
+        return $this;
+    }
+
+    /**
+     * Only the topics which are for all languages or for the language.
+     *
+     * @param   string  $language  The language code, like en-GB.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterByLanguage(string $language): KunenaTopicFinder
+    {
+        $this->query->where($this->db->quoteName('a.language') . ' IN (' . $this->db->quote('*') . ', ' . $this->db->quote($language) . ')');
+
+        return $this;
+    }
+
+    /**
+     * Filter by moved topics.
+     *
+     * @param   bool  $value  True on moved, false on not moved.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.0
+     */
+    public function filterByMoved($value = true): KunenaTopicFinder
+    {
+        $this->moved = (bool) $value;
+
+        return $this;
+    }
+
+    /**
+     * Filter topics which have at least one of the words in the subject (to find similar topics).
+     *
+     * @param   string[]  $words  The words to look for.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterBySimilarSubject(array $words): KunenaTopicFinder
+    {
+        $conditions = [];
+
+        foreach ($words as $word) {
+            $conditions[] = $this->db->quoteName('a.subject') . ' LIKE ' . $this->db->quote('%' . $this->db->escape($word, true) . '%', false);
+        }
+
+        // Without words nothing is similar.
+        $this->query->where($conditions ? '(' . implode(' OR ', $conditions) . ')' : '0');
+
+        return $this;
+    }
+
+    /**
+     * Filter topics by status.
+     *
+     * @param   string  $status  noreplies, replied, sticky, locked or poll (anything else does not filter).
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterByStatus(string $status): KunenaTopicFinder
+    {
+        switch ($status) {
+            case 'noreplies':
+                $this->query->where($this->db->quoteName('a.posts') . ' = 1');
+                break;
+            case 'replied':
+                $this->query->where($this->db->quoteName('a.posts') . ' > 1');
+                break;
+            case 'sticky':
+                $this->query->where($this->db->quoteName('a.ordering') . ' > 0');
+                break;
+            case 'locked':
+                $this->query->where($this->db->quoteName('a.locked') . ' > 0');
+                break;
+            case 'poll':
+                $this->query->where($this->db->quoteName('a.poll_id') . ' > 0');
+                break;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Filter topics which have the text in the subject.
+     *
+     * @param   string  $text  Text to look for.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterBySubject(string $text): KunenaTopicFinder
+    {
+        $text = trim($text);
+
+        if ($text !== '') {
+            $this->query->where($this->db->quoteName('a.subject') . ' LIKE ' . $this->db->quote('%' . $this->db->escape($text, true) . '%', false));
+        }
+
+        return $this;
+    }
+
+    /**
+     * Filter topics which have the Joomla tag.
+     *
+     * @param   int  $tagId  The id of the tag (0 does not filter).
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterByTag(int $tagId): KunenaTopicFinder
+    {
+        if ($tagId > 0) {
+            $this->query->where(
+                $this->db->quoteName('a.id') . ' IN (SELECT ' . $this->db->quoteName('content_item_id') . ' FROM '
+                . $this->db->quoteName('#__contentitem_tag_map') . ' WHERE ' . $this->db->quoteName('type_alias') . ' = '
+                . $this->db->quote(KunenaTopicTags::TYPE_ALIAS) . ' AND ' . $this->db->quoteName('tag_id') . ' = ' . $tagId . ')'
+            );
+        }
 
         return $this;
     }
@@ -242,88 +427,55 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
-     * Filter topics with topics Id given.
+     * Filter by user access to the categories.
      *
-     * @param   string  $topicsId   The list of ID of topics to filter (the strong should be like that: 1,2,3)
+     * It is very important to use this or category filter. Otherwise topics from unauthorized categories will be
+     * included to the search results.
+     *
+     * @param   KunenaUser  $user  user
      *
      * @return  $this
      *
      * @since   Kunena 6.0
+     *
+     * @throws  Exception
      */
-    public function filterTopicNotIn(string $topicsId): KunenaTopicFinder
+    public function filterByUserAccess(KunenaUser $user): KunenaTopicFinder
     {
-        // Only integer ids are kept, and an empty list excludes nothing (NOT IN () is a syntax error).
-        $ids = array_filter(array_map('intval', explode(',', $topicsId)));
+        $categories = array_map('intval', (array) $user->getAllowedCategories());
 
-        if ($ids) {
-            $this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . implode(',', $ids) . ')');
+        // A user without any allowed category sees no topic: an empty list must not remove the filter.
+        if (empty($categories)) {
+            $this->query->where('0');
+
+            return $this;
+        }
+
+        $this->query->where('a.category_id  IN (' . implode(',', $categories) . ')');
+
+        // Categories where the users only see their own topics.
+        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere($user, 'a.category_id', 'a.first_post_userid');
+
+        if ($own) {
+            $this->query->where($own);
         }
 
         return $this;
     }
 
     /**
-     * Filter by hold (0=published, 1=unapproved, 2=deleted, 3=topic deleted).
+     * Get unread topics
      *
-     * @param   array  $hold  List of hold states to display.
-     *
-     * @return  $this
-     *
-     * @since   Kunena 6.0
-     */
-    public function filterByHold(array $hold = [0]): KunenaTopicFinder
-    {
-        $this->hold = $hold;
-
-        return $this;
-    }
-
-    /**
-     * Filter by moved topics.
-     *
-     * @param   bool  $value  True on moved, false on not moved.
+     * @param   KunenaUser  $user  user
      *
      * @return  $this
      *
      * @since   Kunena 6.0
      */
-    public function filterByMoved($value = true): KunenaTopicFinder
+    public function filterByUserUnread(KunenaUser $user): KunenaTopicFinder
     {
-        $this->moved = (bool) $value;
-
-        return $this;
-    }
-
-    /**
-     * Only the topics which are for all languages or for the language.
-     *
-     * @param   string  $language  The language code, like en-GB.
-     *
-     * @return  $this
-     *
-     * @since   Kunena 7.2
-     */
-    public function filterByLanguage(string $language): KunenaTopicFinder
-    {
-        $this->query->where($this->db->quoteName('a.language') . ' IN (' . $this->db->quote('*') . ', ' . $this->db->quote($language) . ')');
-
-        return $this;
-    }
-
-    /**
-     * Only the topics which were started by one of the users (the follow list of a user). No users: no topics.
-     *
-     * @param   int[]  $userids  Ids of the users.
-     *
-     * @return  $this
-     *
-     * @since   Kunena 7.2
-     */
-    public function filterByAuthors(array $userids): KunenaTopicFinder
-    {
-        $userids = array_filter(ArrayHelper::toInteger($userids));
-
-        $this->query->where($this->db->quoteName('a.first_post_userid') . ' IN (' . ($userids ? implode(',', $userids) : '-1') . ')');
+        $this->query->innerJoin($this->db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $this->db->quoteName('a.id') . ' = ' . $this->db->quoteName('ur.topic_id'));
+        $this->query->where($this->db->quoteName('ur.user_id') . ' != ' . (int) $user->userid);
 
         return $this;
     }
@@ -349,133 +501,21 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
-     * Filter topics which have the text in the subject.
+     * Filter topics with topics Id given.
      *
-     * @param   string  $text  Text to look for.
-     *
-     * @return  $this
-     *
-     * @since   Kunena 7.2
-     */
-    public function filterBySubject(string $text): KunenaTopicFinder
-    {
-        $text = trim($text);
-
-        if ($text !== '') {
-            $this->query->where($this->db->quoteName('a.subject') . ' LIKE ' . $this->db->quote('%' . $this->db->escape($text, true) . '%', false));
-        }
-
-        return $this;
-    }
-
-    /**
-     * Filter topics which have the Joomla tag.
-     *
-     * @param   int  $tagId  The id of the tag (0 does not filter).
+     * @param   string  $topicsId   The list of ID of topics to filter (the strong should be like that: 1,2,3)
      *
      * @return  $this
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 6.0
      */
-    public function filterByTag(int $tagId): KunenaTopicFinder
+    public function filterTopicNotIn(string $topicsId): KunenaTopicFinder
     {
-        if ($tagId > 0) {
-            $this->query->where(
-                $this->db->quoteName('a.id') . ' IN (SELECT ' . $this->db->quoteName('content_item_id') . ' FROM '
-                . $this->db->quoteName('#__contentitem_tag_map') . ' WHERE ' . $this->db->quoteName('type_alias') . ' = '
-                . $this->db->quote(KunenaTopicTags::TYPE_ALIAS) . ' AND ' . $this->db->quoteName('tag_id') . ' = ' . $tagId . ')'
-            );
-        }
-
-        return $this;
-    }
-
-    /**
-     * Filter topics which have at least one of the words in the subject (to find similar topics).
-     *
-     * @param   string[]  $words  The words to look for.
-     *
-     * @return  $this
-     *
-     * @since   Kunena 7.2
-     */
-    public function filterBySimilarSubject(array $words): KunenaTopicFinder
-    {
-        $conditions = [];
-
-        foreach ($words as $word) {
-            $conditions[] = $this->db->quoteName('a.subject') . ' LIKE ' . $this->db->quote('%' . $this->db->escape($word, true) . '%', false);
-        }
-
-        // Without words nothing is similar.
-        $this->query->where($conditions ? '(' . implode(' OR ', $conditions) . ')' : '0');
-
-        return $this;
-    }
-
-    /**
-     * Filter topics which were started by a user whose username or name has the text (or by a guest with that name).
-     *
-     * @param   string  $text  Text to look for.
-     *
-     * @return  $this
-     *
-     * @since   Kunena 7.2
-     */
-    public function filterByAuthorName(string $text): KunenaTopicFinder
-    {
-        $text = trim($text);
-
-        if ($text === '') {
-            return $this;
-        }
-
-        $like  = $this->db->quote('%' . $this->db->escape($text, true) . '%', false);
-        $query = $this->db->createQuery()
-            ->select($this->db->quoteName('id'))
-            ->from($this->db->quoteName('#__users'))
-            ->where('(' . $this->db->quoteName('username') . ' LIKE ' . $like . ' OR ' . $this->db->quoteName('name') . ' LIKE ' . $like . ')');
-
-        $query->setLimit(200);
-        $ids = ArrayHelper::toInteger((array) $this->db->setQuery($query)->loadColumn());
-        $or  = [$this->db->quoteName('a.first_post_guest_name') . ' LIKE ' . $like];
+        // Only integer ids are kept, and an empty list excludes nothing (NOT IN () is a syntax error).
+        $ids = array_filter(array_map('intval', explode(',', $topicsId)));
 
         if ($ids) {
-            $or[] = $this->db->quoteName('a.first_post_userid') . ' IN (' . implode(',', $ids) . ')';
-        }
-
-        $this->query->where('(' . implode(' OR ', $or) . ')');
-
-        return $this;
-    }
-
-    /**
-     * Filter topics by status.
-     *
-     * @param   string  $status  noreplies, replied, sticky, locked or poll (anything else does not filter).
-     *
-     * @return  $this
-     *
-     * @since   Kunena 7.2
-     */
-    public function filterByStatus(string $status): KunenaTopicFinder
-    {
-        switch ($status) {
-            case 'noreplies':
-                $this->query->where($this->db->quoteName('a.posts') . ' = 1');
-                break;
-            case 'replied':
-                $this->query->where($this->db->quoteName('a.posts') . ' > 1');
-                break;
-            case 'sticky':
-                $this->query->where($this->db->quoteName('a.ordering') . ' > 0');
-                break;
-            case 'locked':
-                $this->query->where($this->db->quoteName('a.locked') . ' > 0');
-                break;
-            case 'poll':
-                $this->query->where($this->db->quoteName('a.poll_id') . ' > 0');
-                break;
+            $this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . implode(',', $ids) . ')');
         }
 
         return $this;
@@ -513,45 +553,5 @@ class KunenaTopicFinder extends KunenaFinder
         $this->query->select($columns);
 
         return $this;
-    }
-
-    /**
-     * Get unread topics
-     *
-     * @param   KunenaUser  $user  user
-     *
-     * @return  $this
-     *
-     * @since   Kunena 6.0
-     */
-    public function filterByUserUnread(KunenaUser $user): KunenaTopicFinder
-    {
-        $this->query->innerJoin($this->db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $this->db->quoteName('a.id') . ' = ' . $this->db->quoteName('ur.topic_id'));
-        $this->query->where($this->db->quoteName('ur.user_id') . ' != ' . (int) $user->userid);
-
-        return $this;
-    }
-
-    /**
-     * @param   QueryInterface|null  $query  query
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function build(?QueryInterface $query = null): void
-    {
-        if (!empty($this->hold)) {
-            $this->hold = ArrayHelper::toInteger($this->hold, 0);
-            $hold       = implode(',', $this->hold);
-            $query->where($this->db->quoteName('a.hold') . ' IN (' . $hold . ')');
-        }
-
-        // Categories where the users only see their own topics: for every list and count, whatever filter was used.
-        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere(null, $this->db->quoteName('a.category_id'), $this->db->quoteName('a.first_post_userid'));
-
-        if ($own) {
-            $query->where($own);
-        }
     }
 }

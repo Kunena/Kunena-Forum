@@ -107,27 +107,48 @@ class KunenaKarma
     }
 
     /**
-     * Method to load a \Kunena\Forum\Libraries\Forum\Topic\TopicPoll object by id.
+     * Returns \Kunena\Forum\Libraries\Forum\Message\Message object
      *
-     * @param   int  $id  The karma id to be loaded.
+     * @access  public
      *
-     * @return  boolean
+     * @param   int   $identifier  The message to load - Can be only an integer.
+     * @param   bool  $reload      reload
      *
-     * @throws Exception
-     * @since   Kunena 6.2
+     * @return  KunenaKarma
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
      */
-    public function load(int $id): bool
+    public static function getInstance($identifier = null, $reload = false)
     {
-        // Create the table object
-        $table = $this->getTable();
+        return KunenaKarmaHelper::get($identifier, $reload);
+    }
 
-        // Load the KunenaTable object based on id
-        $this->_exists = $table->load($id);
+    /**
+     * Get the most recent karma in time gived to an user
+     *
+     * @return  string|integer|null  The time of the last karma (the column value), 0 when the query failed.
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getLastTimeKarma()
+    {
+        $query = $this->_db->createQuery();
+        $query->select('MAX(time)')
+            ->from($this->_db->quoteName('#__kunena_karma'))
+            ->where($this->_db->quoteName('userid') . ' = ' . (int) $this->userid)
+            ->where($this->_db->quoteName('target_userid') . ' = ' . (int) $this->target_userid);
+        $this->_db->setQuery($query);
+        $lastkarma = 0;
 
-        // Assuming all is well at this point lets bind the data
-        $this->bind($table->getProperties());
+        try {
+            $lastkarma = $this->_db->loadResult();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
 
-        return $this->_exists;
+        return $lastkarma;
     }
 
     /**
@@ -158,28 +179,36 @@ class KunenaKarma
     }
 
     /**
-     * Returns \Kunena\Forum\Libraries\Forum\Message\Message object
+     * Method to load a \Kunena\Forum\Libraries\Forum\Topic\TopicPoll object by id.
      *
-     * @access  public
+     * @param   int  $id  The karma id to be loaded.
      *
-     * @param   int   $identifier  The message to load - Can be only an integer.
-     * @param   bool  $reload      reload
+     * @return  boolean
      *
-     * @return  KunenaKarma
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
+     * @throws Exception
+     * @since   Kunena 6.2
      */
-    public static function getInstance($identifier = null, $reload = false)
+    public function load(int $id): bool
     {
-        return KunenaKarmaHelper::get($identifier, $reload);
+        // Create the table object
+        $table = $this->getTable();
+
+        // Load the KunenaTable object based on id
+        $this->_exists = $table->load($id);
+
+        // Assuming all is well at this point lets bind the data
+        $this->bind($table->getProperties());
+
+        return $this->_exists;
     }
 
     /**
      * Perform insert the karma into table
      *
-     * @throws Exception
-     * @since    Kunena 2.0
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0
      */
     public function save()
     {
@@ -207,32 +236,5 @@ class KunenaKarma
         } catch (Exception $e) {
             KunenaError::displayDatabaseError($e);
         }
-    }
-
-    /**
-     * Get the most recent karma in time gived to an user
-     *
-     * @return  string|integer|null  The time of the last karma (the column value), 0 when the query failed.
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getLastTimeKarma()
-    {
-        $query = $this->_db->createQuery();
-        $query->select('MAX(time)')
-            ->from($this->_db->quoteName('#__kunena_karma'))
-            ->where($this->_db->quoteName('userid') . ' = ' . (int) $this->userid)
-            ->where($this->_db->quoteName('target_userid') . ' = ' . (int) $this->target_userid);
-        $this->_db->setQuery($query);
-        $lastkarma = 0;
-
-        try {
-            $lastkarma = $this->_db->loadResult();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return $lastkarma;
     }
 }

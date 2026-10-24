@@ -54,99 +54,60 @@ abstract class KunenaAttachmentHelper
     protected static $_messagesLoaded = [];
 
     /**
-     * @param   bool|array|int  $ids        ids
-     * @param   string          $authorise  authorise
+     * @return bool
      *
-     * @return  KunenaAttachment[]
-     *
-     * @throws  Exception
      * @since   Kunena 6.0
+     * @throws Exception
      */
-    public static function getById($ids = false, $authorise = 'read'): array
+    public static function cleanup(): bool
     {
-        if ($ids === false) {
-            return self::$_instances;
-        }
-
-        if (\is_array($ids)) {
-            $ids = array_unique($ids);
-        } else {
-            $ids = [$ids];
-        }
-
-        if (empty($ids)) {
-            return [];
-        }
-
-        self::loadById($ids);
-
-        $list = [];
-
-        foreach ($ids as $id) {
-            if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise)) {
-                $list [$id] = self::$_instances [$id];
-            }
-        }
-
-        return $list;
-    }
-
-    /**
-     * @param   array  $ids  ids
-     *
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected static function loadById(array $ids): void
-    {
-        foreach ($ids as $i => $id) {
-            if (!\is_scalar($id) || isset(self::$_instances [$id])) {
-                unset($ids[$i]);
-            }
-        }
-
-        if (empty($ids)) {
-            return;
-        }
-
-        // The ids come from a request or from a list of messages: only whole numbers go into the query.
-        $idlist = implode(',', array_unique(array_map('intval', array_filter($ids, 'is_scalar'))));
-
-        if ($idlist === '') {
-            return;
-        }
-
-        $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->createQuery();
-        $query->select('*')
-            ->from($db->quoteName('#__kunena_attachments'))
-            ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
+        // Find up to 50 orphan attachments and delete them
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select('a.*')
+            ->from($db->quoteName('#__kunena_attachments', 'a'))
+            ->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON a.mesid = m.id')
+            ->where($db->quoteName('m.id') . ' IS NULL')
+            // A file of a message which is still being written has no message yet (mesid 0): it is no orphan, the task
+            // "clean.pendingattachments" removes the uploads which were never posted.
+            ->where($db->quoteName('a.mesid') . ' > 0');
+        $query->setLimit(50);
         $db->setQuery($query);
 
-        $results = [];
+        try {
+            $results = (array) $db->loadAssocList('id');
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
+        if (empty($results)) {
+            return true;
+        }
+
+        foreach ($results as $result) {
+            $instance = KunenaAttachment::getInstance($result['id']);
+            $instance->exists(false);
+            unset($instance);
+        }
+
+        $ids = implode(',', array_keys($results));
+        unset($results);
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_attachments'));
+        $query->where($db->quoteName('id') . ' IN (' . $ids . ')');
+        $db->setQuery($query);
 
         try {
-            $results = (array) $db->loadObjectList('id');
-        } catch (RuntimeException $e) {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
+
+            return false;
         }
 
-        foreach ($ids as $id) {
-            if (isset($results[$id])) {
-                // Use the row which was just loaded, get() would read the same attachment again.
-                $instance = new KunenaAttachment((array) $results[$id]);
-                $instance->exists(true);
-
-                self::$_instances[$id]                  = $instance;
-                self::$_messages[$instance->mesid][$id] = $instance;
-            } else {
-                self::$_instances[$id] = null;
-            }
-        }
-
-        unset($results);
+        return true;
     }
 
     /**
@@ -184,153 +145,6 @@ abstract class KunenaAttachmentHelper
         }
 
         return self::$_instances[$id];
-    }
-
-    /**
-     * Get the number of the attachments in the message
-     *
-     * @param   bool|string  $ids  ids
-     *
-     * @return  KunenaAttachment[]
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getNumberAttachments($ids = false): array
-    {
-        $ids = [$ids];
-
-        self::loadByMessage($ids);
-
-        $list = [];
-
-        foreach ($ids as $id) {
-            if (!empty(self::$_messages [$id])) {
-                $list = self::$_messages [$id];
-            }
-        }
-
-        return $list;
-    }
-
-    /**
-     * @param   array  $ids  ids
-     *
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected static function loadByMessage(array $ids): void
-    {
-        foreach ($ids as $i => $id) {
-            $id = \intval($id);
-
-            // A message without attachments has an empty list: remember that it was loaded, or its query runs again and again.
-            if (!empty(self::$_messages[$id]) || isset(self::$_messagesLoaded[$id])) {
-                unset($ids[$i]);
-            }
-
-            if (!$id) {
-                unset($ids[$i]);
-            }
-        }
-
-        if (empty($ids)) {
-            return;
-        }
-
-        // The ids come from a request or from a list of messages: only whole numbers go into the query.
-        $idlist = implode(',', array_unique(array_map('intval', array_filter($ids, 'is_scalar'))));
-
-        if ($idlist === '') {
-            return;
-        }
-
-        $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->createQuery();
-        $query->select('*')
-            ->from($db->quoteName('#__kunena_attachments'))
-            ->where($db->quoteName('mesid') . ' IN (' . $idlist . ')');
-        $db->setQuery($query);
-
-        $results = [];
-
-        try {
-            $results = (array) $db->loadObjectList('id');
-        } catch (RuntimeException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        foreach ($ids as $mesid) {
-            self::$_messagesLoaded[$mesid] = true;
-
-            if (!isset(self::$_messages [$mesid])) {
-                self::$_messages [$mesid] = [];
-            }
-        }
-
-        if (!empty($results)) {
-            foreach ($results as $id => $instance) {
-                $instance                                = self::get($id);
-                self::$_instances [$id]                  = $instance;
-                self::$_messages [$instance->mesid][$id] = $instance;
-            }
-        }
-
-        unset($results);
-    }
-
-    /**
-     * @param   bool|array|int  $ids        ids
-     * @param   string          $authorise  authorise
-     *
-     * @return  KunenaAttachment[]
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getByMessage($ids = false, $authorise = 'read'): array
-    {
-        if ($ids === false) {
-            return self::$_instances;
-        }
-
-        if (\is_array($ids)) {
-            $ids2 = [];
-
-            foreach ($ids as $id) {
-                if ($id instanceof KunenaMessage) {
-                    $id = $id->id;
-                }
-
-                $ids2[(int) $id] = (int) $id;
-            }
-
-            $ids = $ids2;
-        } else {
-            $ids = [$ids];
-        }
-
-        if (empty($ids)) {
-            return [];
-        }
-
-        self::loadByMessage($ids);
-
-        $list = [];
-
-        foreach ($ids as $id) {
-            if (!empty(self::$_messages [$id])) {
-                foreach (self::$_messages [$id] as $instance) {
-                    if ($instance->isAuthorised($authorise)) {
-                        $list [$instance->id] = $instance;
-                    }
-                }
-            }
-        }
-
-        return $list;
     }
 
     /**
@@ -391,221 +205,93 @@ abstract class KunenaAttachmentHelper
     }
 
     /**
-     * @param   mixed  $category  category
-     * @param   null   $user      user
+     * @param   bool|array|int  $ids        ids
+     * @param   string          $authorise  authorise
      *
-     * @return  array|boolean
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getExtensions($category, $user = null)
-    {
-        $imageTypes = self::getImageExtensions($category, $user);
-        $fileTypes  = self::getFileExtensions($category, $user);
-
-        if ($imageTypes === false && $fileTypes === false) {
-            return false;
-        }
-
-        return (array) array_merge((array) $imageTypes, (array) $fileTypes);
-    }
-
-    /**
-     * @param   mixed  $category  category
-     * @param   mixed  $user      user
-     *
-     * @return  array|boolean
+     * @return  KunenaAttachment[]
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public static function getImageExtensions($category = null, $user = null)
+    public static function getById($ids = false, $authorise = 'read'): array
     {
-        if ($category !== null) {
-            $category = KunenaCategoryHelper::get($category);
+        if ($ids === false) {
+            return self::$_instances;
         }
 
-        $user   = KunenaUserHelper::get($user);
-        $config = KunenaFactory::getConfig();
-        $types  = array_values(array_filter(array_map('trim', explode(',', $config->imageTypes)), 'strlen'));
-
-        // Check if attachments are allowed at all
-        if (!$config->imageUpload) {
-            return false;
-        }
-
-        if ($config->imageUpload == 'everybody') {
-            return $types;
-        }
-
-        // For now on we only allow registered users
-        if (!$user->exists()) {
-            return false;
-        }
-
-        if ($config->imageUpload == 'registered') {
-            return $types;
-        }
-
-        // For now on we only allow moderators
-        if (!$user->isModerator($category)) {
-            return false;
-        }
-
-        if ($config->imageUpload == 'moderator') {
-            return $types;
-        }
-
-        // For now on we only allow administrators
-        if (!$user->isAdmin($category)) {
-            return false;
-        }
-
-        if ($config->imageUpload == 'admin') {
-            return $types;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param   mixed  $category  category
-     * @param   mixed  $user      user
-     *
-     * @return  array|boolean
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getFileExtensions($category = null, $user = null)
-    {
-        $category = KunenaCategoryHelper::get($category);
-        $user     = KunenaUserHelper::get($user);
-        $config   = KunenaFactory::getConfig();
-        $types    = array_values(array_filter(array_map('trim', explode(',', $config->fileTypes)), 'strlen'));
-
-        // Check if attachments are allowed at all
-        if (!$config->fileUpload) {
-            return false;
-        }
-
-        if ($config->fileUpload == 'everybody') {
-            return $types;
-        }
-
-        // For now on we only allow registered users
-        if (!$user->exists()) {
-            return false;
-        }
-
-        if ($config->fileUpload == 'registered') {
-            return $types;
-        }
-
-        // For now on we only allow moderators
-        if (!$user->isModerator($category)) {
-            return false;
-        }
-
-        if ($config->fileUpload == 'moderator') {
-            return $types;
-        }
-
-        // For now on we only allow administrators
-        if (!$user->isAdmin($category)) {
-            return false;
-        }
-
-        if ($config->fileUpload == 'admin') {
-            return $types;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function cleanup(): bool
-    {
-        // Find up to 50 orphan attachments and delete them
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select('a.*')
-            ->from($db->quoteName('#__kunena_attachments', 'a'))
-            ->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON a.mesid = m.id')
-            ->where($db->quoteName('m.id') . ' IS NULL')
-            // A file of a message which is still being written has no message yet (mesid 0): it is no orphan, the task
-            // "clean.pendingattachments" removes the uploads which were never posted.
-            ->where($db->quoteName('a.mesid') . ' > 0');
-        $query->setLimit(50);
-        $db->setQuery($query);
-
-        try {
-            $results = (array) $db->loadAssocList('id');
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        if (empty($results)) {
-            return true;
-        }
-
-        foreach ($results as $result) {
-            $instance = KunenaAttachment::getInstance($result['id']);
-            $instance->exists(false);
-            unset($instance);
-        }
-
-        $ids = implode(',', array_keys($results));
-        unset($results);
-        $query = $db->createQuery();
-        $query->delete($db->quoteName('#__kunena_attachments'));
-        $query->where($db->quoteName('id') . ' IN (' . $ids . ')');
-        $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * This function shortens long file names for display purposes.
-     * The first 8 characters of the filename, followed by three dots
-     * and the last 5 character of the filename.
-     *
-     * @param   string  $filename  Filename to be shortened.
-     * @param   int     $front     front
-     * @param   int     $back      back
-     * @param   string  $filler    filler
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public static function shortenFilename(string $filename, $front = 10, $back = 8, $filler = '...')
-    {
-        $len = mb_strlen($filename);
-
-        if ($len > ($front + \strlen($filler) + $back)) {
-            $output = substr($filename, 0, $front) . $filler . substr($filename, $len - $back, $back);
+        if (\is_array($ids)) {
+            $ids = array_unique($ids);
         } else {
-            $output = $filename;
+            $ids = [$ids];
         }
 
-        return $output;
+        if (empty($ids)) {
+            return [];
+        }
+
+        self::loadById($ids);
+
+        $list = [];
+
+        foreach ($ids as $id) {
+            if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise)) {
+                $list [$id] = self::$_instances [$id];
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param   bool|array|int  $ids        ids
+     * @param   string          $authorise  authorise
+     *
+     * @return  KunenaAttachment[]
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getByMessage($ids = false, $authorise = 'read'): array
+    {
+        if ($ids === false) {
+            return self::$_instances;
+        }
+
+        if (\is_array($ids)) {
+            $ids2 = [];
+
+            foreach ($ids as $id) {
+                if ($id instanceof KunenaMessage) {
+                    $id = $id->id;
+                }
+
+                $ids2[(int) $id] = (int) $id;
+            }
+
+            $ids = $ids2;
+        } else {
+            $ids = [$ids];
+        }
+
+        if (empty($ids)) {
+            return [];
+        }
+
+        self::loadByMessage($ids);
+
+        $list = [];
+
+        foreach ($ids as $id) {
+            if (!empty(self::$_messages [$id])) {
+                foreach (self::$_messages [$id] as $instance) {
+                    if ($instance->isAuthorised($authorise)) {
+                        $list [$instance->id] = $instance;
+                    }
+                }
+            }
+        }
+
+        return $list;
     }
 
     /**
@@ -680,6 +366,167 @@ abstract class KunenaAttachmentHelper
     }
 
     /**
+     * @param   mixed  $category  category
+     * @param   null   $user      user
+     *
+     * @return  array|boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getExtensions($category, $user = null)
+    {
+        $imageTypes = self::getImageExtensions($category, $user);
+        $fileTypes  = self::getFileExtensions($category, $user);
+
+        if ($imageTypes === false && $fileTypes === false) {
+            return false;
+        }
+
+        return (array) array_merge((array) $imageTypes, (array) $fileTypes);
+    }
+
+    /**
+     * @param   mixed  $category  category
+     * @param   mixed  $user      user
+     *
+     * @return  array|boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getFileExtensions($category = null, $user = null)
+    {
+        $category = KunenaCategoryHelper::get($category);
+        $user     = KunenaUserHelper::get($user);
+        $config   = KunenaFactory::getConfig();
+        $types    = array_values(array_filter(array_map('trim', explode(',', $config->fileTypes)), 'strlen'));
+
+        // Check if attachments are allowed at all
+        if (!$config->fileUpload) {
+            return false;
+        }
+
+        if ($config->fileUpload == 'everybody') {
+            return $types;
+        }
+
+        // For now on we only allow registered users
+        if (!$user->exists()) {
+            return false;
+        }
+
+        if ($config->fileUpload == 'registered') {
+            return $types;
+        }
+
+        // For now on we only allow moderators
+        if (!$user->isModerator($category)) {
+            return false;
+        }
+
+        if ($config->fileUpload == 'moderator') {
+            return $types;
+        }
+
+        // For now on we only allow administrators
+        if (!$user->isAdmin($category)) {
+            return false;
+        }
+
+        if ($config->fileUpload == 'admin') {
+            return $types;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param   mixed  $category  category
+     * @param   mixed  $user      user
+     *
+     * @return  array|boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getImageExtensions($category = null, $user = null)
+    {
+        if ($category !== null) {
+            $category = KunenaCategoryHelper::get($category);
+        }
+
+        $user   = KunenaUserHelper::get($user);
+        $config = KunenaFactory::getConfig();
+        $types  = array_values(array_filter(array_map('trim', explode(',', $config->imageTypes)), 'strlen'));
+
+        // Check if attachments are allowed at all
+        if (!$config->imageUpload) {
+            return false;
+        }
+
+        if ($config->imageUpload == 'everybody') {
+            return $types;
+        }
+
+        // For now on we only allow registered users
+        if (!$user->exists()) {
+            return false;
+        }
+
+        if ($config->imageUpload == 'registered') {
+            return $types;
+        }
+
+        // For now on we only allow moderators
+        if (!$user->isModerator($category)) {
+            return false;
+        }
+
+        if ($config->imageUpload == 'moderator') {
+            return $types;
+        }
+
+        // For now on we only allow administrators
+        if (!$user->isAdmin($category)) {
+            return false;
+        }
+
+        if ($config->imageUpload == 'admin') {
+            return $types;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the number of the attachments in the message
+     *
+     * @param   bool|string  $ids  ids
+     *
+     * @return  KunenaAttachment[]
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getNumberAttachments($ids = false): array
+    {
+        $ids = [$ids];
+
+        self::loadByMessage($ids);
+
+        $list = [];
+
+        foreach ($ids as $id) {
+            if (!empty(self::$_messages [$id])) {
+                $list = self::$_messages [$id];
+            }
+        }
+
+        return $list;
+    }
+
+    /**
      * Load the total count of attachments
      *
      * @return bool|null
@@ -719,6 +566,159 @@ abstract class KunenaAttachmentHelper
     public function isImageMime(string $mime): bool
     {
         return stripos($mime, 'image/') !== false;
+    }
+
+    /**
+     * @param   array  $ids  ids
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected static function loadById(array $ids): void
+    {
+        foreach ($ids as $i => $id) {
+            if (!\is_scalar($id) || isset(self::$_instances [$id])) {
+                unset($ids[$i]);
+            }
+        }
+
+        if (empty($ids)) {
+            return;
+        }
+
+        // The ids come from a request or from a list of messages: only whole numbers go into the query.
+        $idlist = implode(',', array_unique(array_map('intval', array_filter($ids, 'is_scalar'))));
+
+        if ($idlist === '') {
+            return;
+        }
+
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        $query  = $db->createQuery();
+        $query->select('*')
+            ->from($db->quoteName('#__kunena_attachments'))
+            ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
+        $db->setQuery($query);
+
+        $results = [];
+
+        try {
+            $results = (array) $db->loadObjectList('id');
+        } catch (RuntimeException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        foreach ($ids as $id) {
+            if (isset($results[$id])) {
+                // Use the row which was just loaded, get() would read the same attachment again.
+                $instance = new KunenaAttachment((array) $results[$id]);
+                $instance->exists(true);
+
+                self::$_instances[$id]                  = $instance;
+                self::$_messages[$instance->mesid][$id] = $instance;
+            } else {
+                self::$_instances[$id] = null;
+            }
+        }
+
+        unset($results);
+    }
+
+    /**
+     * @param   array  $ids  ids
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected static function loadByMessage(array $ids): void
+    {
+        foreach ($ids as $i => $id) {
+            $id = \intval($id);
+
+            // A message without attachments has an empty list: remember that it was loaded, or its query runs again and again.
+            if (!empty(self::$_messages[$id]) || isset(self::$_messagesLoaded[$id])) {
+                unset($ids[$i]);
+            }
+
+            if (!$id) {
+                unset($ids[$i]);
+            }
+        }
+
+        if (empty($ids)) {
+            return;
+        }
+
+        // The ids come from a request or from a list of messages: only whole numbers go into the query.
+        $idlist = implode(',', array_unique(array_map('intval', array_filter($ids, 'is_scalar'))));
+
+        if ($idlist === '') {
+            return;
+        }
+
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        $query  = $db->createQuery();
+        $query->select('*')
+            ->from($db->quoteName('#__kunena_attachments'))
+            ->where($db->quoteName('mesid') . ' IN (' . $idlist . ')');
+        $db->setQuery($query);
+
+        $results = [];
+
+        try {
+            $results = (array) $db->loadObjectList('id');
+        } catch (RuntimeException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        foreach ($ids as $mesid) {
+            self::$_messagesLoaded[$mesid] = true;
+
+            if (!isset(self::$_messages [$mesid])) {
+                self::$_messages [$mesid] = [];
+            }
+        }
+
+        if (!empty($results)) {
+            foreach ($results as $id => $instance) {
+                $instance                                = self::get($id);
+                self::$_instances [$id]                  = $instance;
+                self::$_messages [$instance->mesid][$id] = $instance;
+            }
+        }
+
+        unset($results);
+    }
+
+    /**
+     * This function shortens long file names for display purposes.
+     * The first 8 characters of the filename, followed by three dots
+     * and the last 5 character of the filename.
+     *
+     * @param   string  $filename  Filename to be shortened.
+     * @param   int     $front     front
+     * @param   int     $back      back
+     * @param   string  $filler    filler
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public static function shortenFilename(string $filename, $front = 10, $back = 8, $filler = '...')
+    {
+        $len = mb_strlen($filename);
+
+        if ($len > ($front + \strlen($filler) + $back)) {
+            $output = substr($filename, 0, $front) . $filler . substr($filename, $len - $back, $back);
+        } else {
+            $output = $filename;
+        }
+
+        return $output;
     }
 
     /**

@@ -44,6 +44,8 @@ class CpanelModel extends AdminModel
     /**
      * Get number of mails queues not yet send to be displayed in cpanel
      *
+     * @return  integer
+     *
      * @since   Kunena 7.1
      */
     public function numberOfMailsqueues(): int
@@ -69,6 +71,10 @@ class CpanelModel extends AdminModel
 
     /**
      * Set value of sample data flag
+     *
+     * @param   integer  $value  The value of the flag.
+     *
+     * @return  boolean  True on success.
      *
      * @since   Kunena 7.1
      */

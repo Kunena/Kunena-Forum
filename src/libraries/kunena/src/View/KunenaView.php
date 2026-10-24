@@ -207,6 +207,52 @@ class KunenaView extends HtmlView
     }
 
     /**
+     * @param   array  $messages  messages
+     * @param   int    $code      code
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function displayError($messages = [], $code = 404): void
+    {
+        if ($this->inLayout) {
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+        }
+
+        $title = Text::_('COM_KUNENA_ACCESS_DENIED');
+        $app   = Factory::getApplication();
+
+        switch ((int) $code) {
+            case 401:
+            case 503:
+            case 500:
+            case 410:
+            case 404:
+            case 403:
+            case 400:
+                $app->sendHeaders();
+                break;
+            default:
+        }
+
+        $output = '';
+
+        foreach ($messages as $message) {
+            $output .= "<p>{$message}</p>";
+        }
+
+        $this->common->setLayout('default');
+        $this->common->header = $title;
+        $this->common->body   = $output;
+        $this->common->html   = true;
+        $this->common->display();
+
+        $this->setTitle($title);
+    }
+
+    /**
      * @param   null  $layout  layout
      * @param   null  $tpl     tmpl
      *
@@ -294,85 +340,16 @@ class KunenaView extends HtmlView
     }
 
     /**
-     * @param   array  $messages  messages
-     * @param   int    $code      code
+     * @param   mixed  $position  position
      *
      * @return  void
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function displayError($messages = [], $code = 404): void
+    public function displayModulePosition($position): void
     {
-        if ($this->inLayout) {
-            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
-        }
-
-        $title = Text::_('COM_KUNENA_ACCESS_DENIED');
-        $app   = Factory::getApplication();
-
-        switch ((int) $code) {
-            case 401:
-            case 503:
-            case 500:
-            case 410:
-            case 404:
-            case 403:
-            case 400:
-                $app->sendHeaders();
-                break;
-            default:
-        }
-
-        $output = '';
-
-        foreach ($messages as $message) {
-            $output .= "<p>{$message}</p>";
-        }
-
-        $this->common->setLayout('default');
-        $this->common->header = $title;
-        $this->common->body   = $output;
-        $this->common->html   = true;
-        $this->common->display();
-
-        $this->setTitle($title);
-    }
-
-    /**
-     * Method to display title in page
-     *
-     * @param   string  $title  Show the title on the browser
-     *
-     * @return  void
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function setTitle(string $title): void
-    {
-        if ($this->inLayout) {
-            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
-        }
-
-        if (!$this->state->get('embedded')) {
-            // Check for empty title and add site name if param is set
-            $title = strip_tags($title);
-
-            if ($this->app->get('sitename_pagetitles', 0) == 1) {
-                $title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->boardTitle);
-            } elseif ($this->app->get('sitename_pagetitles', 0) == 2) {
-                if ($this->config->boardTitle == $this->app->get('sitename')) {
-                    $title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle);
-                } else {
-                    $title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle, $this->app->get('sitename'));
-                }
-            } else {
-                $title = $title . ' - ' . KunenaFactory::getConfig()->boardTitle;
-            }
-
-            $this->document->setTitle($title);
-        }
+        echo $this->getModulePosition($position);
     }
 
     /**
@@ -394,16 +371,27 @@ class KunenaView extends HtmlView
     }
 
     /**
-     * @param   mixed  $position  position
+     * @param   KunenaCategory  $category  category
+     * @param   null            $content   content
+     * @param   null            $title     title
+     * @param   null            $class     class
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function displayModulePosition($position): void
+    public function getCategoryLink(KunenaCategory $category, $content = null, $title = null, $class = null)
     {
-        echo $this->getModulePosition($position);
+        if (!$content) {
+            $content = $this->escape($category->name);
+        }
+
+        if ($title === null) {
+            $title = Text::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+        }
+
+        return HTMLHelper::_('kunenaforum.link', $category->getUri(), $content, $title, $class, '');
     }
 
     /**
@@ -431,6 +419,62 @@ class KunenaView extends HtmlView
     }
 
     /**
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getTemplateMD5(): string
+    {
+        return md5(serialize($this->_path['template']) . '-' . $this->ktemplate->name);
+    }
+
+    /**
+     * @param   KunenaTopic          $topic     topic
+     * @param   null                 $action    action
+     * @param   null                 $content   content
+     * @param   null                 $title     title
+     * @param   null                 $class     class
+     * @param   KunenaCategory|null  $category  category
+     *
+     * @return  mixed
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getTopicLink(KunenaTopic $topic, $action = null, $content = null, $title = null, $class = null, ?KunenaCategory $category = null)
+    {
+        $uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);
+
+        if (!$content) {
+            $content = KunenaParser::parseText($topic->subject);
+        }
+
+        $rel = '';
+
+        if ($title === null) {
+            if ($action instanceof KunenaMessage) {
+                $title = Text::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
+            } else {
+                switch ($action) {
+                    case 'first':
+                        $title = Text::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
+                        break;
+                    case 'last':
+                        $title = Text::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
+                        break;
+                    case 'unread':
+                        $title = Text::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
+                        break;
+                    default:
+                        $title = Text::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
+                }
+            }
+        }
+
+        return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, $rel);
+    }
+
+    /**
      * @param   mixed  $position  position
      *
      * @return  integer
@@ -443,83 +487,6 @@ class KunenaView extends HtmlView
         $document = Factory::getApplication()->getDocument();
 
         return method_exists($document, 'countModules') ? $document->countModules($position) : 0;
-    }
-
-    /**
-     * @param   string  $text    text
-     * @param   int     $len     len
-     * @param   mixed   $parent  parent
-     *
-     * @return  false|string
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function parse(string $text, int $len, $parent)
-    {
-        if ($this instanceof SearchFormDisplay) {
-            $parentinternalObject = $parent;
-        } else {
-            $parentinternalObject = $this;
-        }
-
-        return KunenaParser::parseBBCode($text, $parentinternalObject, $len);
-    }
-
-    /**
-     * Render new layout if available, otherwise continue to the old logic.
-     *
-     * @param   string  $layout      layout
-     * @param   string  $tpl         tmpl
-     * @param   array   $hmvcParams  params
-     *
-     * @return  void
-     *
-     * @throws LogicException
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function render(string $layout, $tpl, array $hmvcParams = []): void
-    {
-        if ($this->inLayout) {
-            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
-        }
-
-        if (isset($tpl) && $tpl == 'default') {
-            $tpl = null;
-        }
-
-        if ($this->embedded) {
-            // Support legacy embedded views.
-            $file = isset($tpl) ? $this->getLayout() . '_' . $tpl : $this->getLayout();
-
-            foreach ($this->_path['template'] as $path) {
-                $found = !strstr($path, '/com_kunena/') && is_file($path . $file . '.php');
-
-                if ($found) {
-                    $this->display($tpl);
-
-                    return;
-                }
-            }
-        }
-
-        // Support new layouts.
-        $hmvc = KunenaLayout::factory($layout);
-
-        if ($hmvc->getPath()) {
-            $this->inLayout++;
-
-            if ($hmvcParams) {
-                $hmvc->setProperties($hmvcParams);
-            }
-
-            echo $hmvc->setLegacy($this)->setLayout($tpl ? $tpl : $this->getLayout());
-
-            $this->inLayout--;
-        } else {
-            $this->display($tpl);
-        }
     }
 
     /**
@@ -677,82 +644,115 @@ class KunenaView extends HtmlView
     }
 
     /**
-     * @return  string
+     * @param   string  $text    text
+     * @param   int     $len     len
+     * @param   mixed   $parent  parent
      *
+     * @return  false|string
+     *
+     * @throws Exception
      * @since   Kunena 6.0
      */
-    public function getTemplateMD5(): string
+    public function parse(string $text, int $len, $parent)
     {
-        return md5(serialize($this->_path['template']) . '-' . $this->ktemplate->name);
+        if ($this instanceof SearchFormDisplay) {
+            $parentinternalObject = $parent;
+        } else {
+            $parentinternalObject = $this;
+        }
+
+        return KunenaParser::parseBBCode($text, $parentinternalObject, $len);
     }
 
     /**
-     * @param   KunenaCategory  $category  category
-     * @param   null            $content   content
-     * @param   null            $title     title
-     * @param   null            $class     class
+     * Render new layout if available, otherwise continue to the old logic.
      *
-     * @return  mixed
+     * @param   string  $layout      layout
+     * @param   string  $tpl         tmpl
+     * @param   array   $hmvcParams  params
      *
-     * @throws  Exception
+     * @return  void
+     *
+     * @throws LogicException
+     * @throws Exception
      * @since   Kunena 6.0
      */
-    public function getCategoryLink(KunenaCategory $category, $content = null, $title = null, $class = null)
+    public function render(string $layout, $tpl, array $hmvcParams = []): void
     {
-        if (!$content) {
-            $content = $this->escape($category->name);
+        if ($this->inLayout) {
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
         }
 
-        if ($title === null) {
-            $title = Text::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+        if (isset($tpl) && $tpl == 'default') {
+            $tpl = null;
         }
 
-        return HTMLHelper::_('kunenaforum.link', $category->getUri(), $content, $title, $class, '');
-    }
+        if ($this->embedded) {
+            // Support legacy embedded views.
+            $file = isset($tpl) ? $this->getLayout() . '_' . $tpl : $this->getLayout();
 
-    /**
-     * @param   KunenaTopic          $topic     topic
-     * @param   null                 $action    action
-     * @param   null                 $content   content
-     * @param   null                 $title     title
-     * @param   null                 $class     class
-     * @param   KunenaCategory|null  $category  category
-     *
-     * @return  mixed
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getTopicLink(KunenaTopic $topic, $action = null, $content = null, $title = null, $class = null, ?KunenaCategory $category = null)
-    {
-        $uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);
+            foreach ($this->_path['template'] as $path) {
+                $found = !strstr($path, '/com_kunena/') && is_file($path . $file . '.php');
 
-        if (!$content) {
-            $content = KunenaParser::parseText($topic->subject);
-        }
+                if ($found) {
+                    $this->display($tpl);
 
-        $rel = '';
-
-        if ($title === null) {
-            if ($action instanceof KunenaMessage) {
-                $title = Text::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
-            } else {
-                switch ($action) {
-                    case 'first':
-                        $title = Text::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
-                        break;
-                    case 'last':
-                        $title = Text::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
-                        break;
-                    case 'unread':
-                        $title = Text::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
-                        break;
-                    default:
-                        $title = Text::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
+                    return;
                 }
             }
         }
 
-        return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, $rel);
+        // Support new layouts.
+        $hmvc = KunenaLayout::factory($layout);
+
+        if ($hmvc->getPath()) {
+            $this->inLayout++;
+
+            if ($hmvcParams) {
+                $hmvc->setProperties($hmvcParams);
+            }
+
+            echo $hmvc->setLegacy($this)->setLayout($tpl ? $tpl : $this->getLayout());
+
+            $this->inLayout--;
+        } else {
+            $this->display($tpl);
+        }
+    }
+
+    /**
+     * Method to display title in page
+     *
+     * @param   string  $title  Show the title on the browser
+     *
+     * @return  void
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function setTitle(string $title): void
+    {
+        if ($this->inLayout) {
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+        }
+
+        if (!$this->state->get('embedded')) {
+            // Check for empty title and add site name if param is set
+            $title = strip_tags($title);
+
+            if ($this->app->get('sitename_pagetitles', 0) == 1) {
+                $title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->boardTitle);
+            } elseif ($this->app->get('sitename_pagetitles', 0) == 2) {
+                if ($this->config->boardTitle == $this->app->get('sitename')) {
+                    $title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle);
+                } else {
+                    $title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle, $this->app->get('sitename'));
+                }
+            } else {
+                $title = $title . ' - ' . KunenaFactory::getConfig()->boardTitle;
+            }
+
+            $this->document->setTitle($title);
+        }
     }
 }

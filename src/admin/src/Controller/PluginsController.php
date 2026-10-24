@@ -321,7 +321,7 @@ class PluginsController extends AdminController
             return false;
         }
 
-        $editor = KunenaBbcodeEditor::getInstance();
+        $editor = KunenaBBCodeEditor::getInstance();
         $editor->initializeHMVC();
 
         // Checkin succeeded.
@@ -341,7 +341,7 @@ class PluginsController extends AdminController
      */
     public function resync(): void
     {
-        $editor = KunenaBbcodeEditor::getInstance();
+        $editor = KunenaBBCodeEditor::getInstance();
         $editor->initializeHMVC();
 
         $message = 'Sync done';

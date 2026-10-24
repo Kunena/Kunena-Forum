@@ -78,7 +78,7 @@ class UserController extends KunenaController
      * @param   bool  $cachable   catchable
      * @param   bool  $urlparams  urlparams
      *
-     * @return \Joomla\CMS\MVC\Controller\BaseController
+     * @return BaseController
      *
      * @since   Kunena 6.0
      * @throws Exception
@@ -1544,6 +1544,8 @@ class UserController extends KunenaController
     /**
      * Get the list of users to mentions in the topic by the given topicid
      *
+     * @return  void
+     *
      * @since   Kunena 6.3
      */
     public function getusersmentions()
@@ -1641,6 +1643,8 @@ class UserController extends KunenaController
 
     /**
      * Get the list of users by autocomplete in the search form
+     *
+     * @return  void
      *
      * @since   Kunena 6.3
      */

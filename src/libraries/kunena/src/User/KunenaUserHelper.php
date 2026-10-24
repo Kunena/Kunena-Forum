@@ -25,6 +25,7 @@ use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\ParameterType;
 use Joomla\Http\Http;
 use Joomla\Http\Response;
 use Joomla\Http\Transport\Stream as StreamTransport;
@@ -102,65 +103,13 @@ abstract class KunenaUserHelper
     }
 
     /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function initialize(): void
-    {
-        // Get the user ide for the current user, note that when run from the cli we need to set it to 0 as cli cannot handle user methods like getIdentity()
-        $id        = Factory::getApplication()->getIdentity()->id ?? 0;
-        self::$_me = self::$_instances[$id] = new KunenaUser($id);
-
-        // Initialize avatar if configured.
-        $avatars = KunenaFactory::getAvatarIntegration();
-        $avatars->load([$id]);
-    }
-
-    /**
-     * @param   mixed   $id         The user to load - Can be an integer or string - If string, it is converted to ID
-     *                              automatically.
-     * @param   string  $name       Optionnal name of user if it doesn't exist
-     *
-     * @return \Kunena\Forum\Libraries\User\KunenaUser|null
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws Exception
-     */
-    public static function getAuthor($id, $name): ?KunenaUser
-    {
-        $id = (int) $id;
-
-        if ($id && !empty(self::$_instances[$id])) {
-            return self::$_instances[$id];
-        }
-
-        if (!empty(self::$_instances_name[$name])) {
-            return self::$_instances_name[$name];
-        }
-
-        $user = self::get($id);
-
-        if (!$user->exists()) {
-            $user->username = $user->name = $name;
-        }
-
-        self::$_instances_name[$name] = $user;
-
-        return $user;
-    }
-
-    /**
      * Returns the global \Kunena\Forum\Libraries\User\KunenaUser object, only creating it if it doesn't already exist.
      *
      * @param   mixed  $identifier  The user to load - Can be an integer or string - If string, it is converted to ID
      *                              automatically.
      * @param   bool   $reload      Reload user from database.
      *
-     * @return \Kunena\Forum\Libraries\User\KunenaUser|null
+     * @return KunenaUser|null
      *
      * @throws Exception
      * @since   Kunena 6.0
@@ -219,198 +168,37 @@ abstract class KunenaUserHelper
     }
 
     /**
-     * @param   array  $userids  userids
+     * @param   mixed   $id         The user to load - Can be an integer or string - If string, it is converted to ID
+     *                              automatically.
+     * @param   string  $name       Optionnal name of user if it doesn't exist
      *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function loadUsers(array $userids = []): array
-    {
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        // Make sure that userids are unique and that indexes are correct
-        $e_userids = [];
-
-        foreach ($userids as $userid) {
-            // Ignore guests and imported users, which haven't been mapped to Joomla (id<0).
-            if ($userid > 0 && empty(self::$_instances[$userid])) {
-                $e_userids[(int) $userid] = (int) $userid;
-            }
-        }
-
-        if (!empty($e_userids)) {
-            $userlist = implode(',', $e_userids);
-
-            $db = Factory::getContainer()->get('DatabaseDriver');
-
-            $query = $db->createQuery();
-            $query->select('u.name, u.username, u.email, u.block AS blocked, u.registerDate, u.lastvisitDate, u.params AS joomlaParams, ku.*, u.id AS userid')
-                ->from($db->quoteName('#__users', 'u'))
-                ->leftJoin($db->quoteName('#__kunena_users') . ' AS ' . $db->quoteName('ku') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'))
-                ->where($db->quoteName('u.id') . ' IN (' . $userlist . ')');
-            $db->setQuery($query);
-
-            $results = [];
-
-            try {
-                $results = (array) $db->loadAssocList();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-            }
-
-            foreach ($results as $user) {
-                // The Joomla parameters (timezone) are kept apart, they are no part of the Kunena user.
-                self::$joomlaParams[(int) $user['userid']] = $user['joomlaParams'];
-                unset($user['joomlaParams']);
-
-                $instance = new KunenaUser(false);
-                $instance->bind($user);
-                $instance->exists(isset($user['posts']));
-                self::$_instances[$instance->userid] = $instance;
-            }
-
-            // Preload avatars if configured
-            $avatars = KunenaFactory::getAvatarIntegration();
-            $avatars->load($e_userids);
-
-            // The display names (a custom field of the Joomla users) come with one query.
-            KunenaUserName::preload($e_userids);
-        }
-
-        $list = [];
-
-        foreach ($userids as $userid) {
-            if (isset(self::$_instances[$userid])) {
-                $list[$userid] = self::$_instances[$userid];
-            }
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        return $list;
-    }
-
-    /**
-     * @return  integer
+     * @return KunenaUser|null
      *
      * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function getLastId(): int
-    {
-        if (self::$_lastid === null) {
-            self::getTotalCount();
-        }
-
-        return (int) self::$_lastid;
-    }
-
-    /**
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function getTotalCount(): int
-    {
-        if (self::$_total === null) {
-            $db     = Factory::getContainer()->get('DatabaseDriver');
-            $config = KunenaFactory::getConfig();
-
-            if ($config->userlistCountUsers == '1') {
-                $where = '(' . $db->quoteName('block') . ' = 0 OR activation="")';
-            } elseif ($config->userlistCountUsers == '2') {
-                $where = '(' . $db->quoteName('block') . ' = 0 AND activation="")';
-            } elseif ($config->userlistCountUsers == '3') {
-                $where = $db->quoteName('block') . ' = 0';
-            } else {
-                $where = '1';
-            }
-
-            $query = $db->createQuery();
-            $query->select('COUNT(*), MAX(id)')
-                ->from($db->quoteName('#__users'))
-                ->where($where);
-            $db->setQuery($query);
-
-            try {
-                list(self::$_total, self::$_lastid) = $db->loadRow();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-            }
-        }
-
-        return (int) self::$_total;
-    }
-
-    /**
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function getTotalRanks(): int
-    {
-        $total = 0;
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select('COUNT(*)')
-            ->from($db->quoteName('#__kunena_ranks'));
-        $db->setQuery($query);
-
-        try {
-            $total = $db->setQuery($query)->loadResult();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return (int) $total;
-    }
-
-    /**
-     * @param   int  $limit  limit
-     *
-     * @return array|null
      *
      * @throws Exception
-     * @since   Kunena 6.0
      */
-    public static function getTopPosters($limit = 0): ?array
+    public static function getAuthor($id, $name): ?KunenaUser
     {
-        $limit = $limit ? $limit : KunenaFactory::getConfig()->popUserCount;
+        $id = (int) $id;
 
-        if (self::$_topposters === null || \count(self::$_topposters) < $limit) {
-            $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->createQuery();
-            $query->select($db->quoteName(['u.id', 'ku.posts'], [null, 'count']));
-            $query->from($db->quoteName(['#__kunena_users'], ['ku']));
-            $query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
-            $query->where($db->quoteName('ku.posts') . ' > 0');
-            $query->order($db->quoteName('ku.posts') . ' DESC');
-
-            if (KunenaFactory::getConfig()->superAdminUserlist && ($filter = Access::getUsersByGroup(8))) {
-                $query->where($db->quoteName('u.id') . ' NOT IN (' . implode(',', array_map('intval', $filter)) . ')');
-            }
-
-            $query->setLimit($limit);
-            $db->setQuery($query);
-
-            self::$_topposters = [];
-
-            try {
-                self::$_topposters = (array) $db->loadObjectList();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-            }
+        if ($id && !empty(self::$_instances[$id])) {
+            return self::$_instances[$id];
         }
 
-        return self::$_topposters;
+        if (!empty(self::$_instances_name[$name])) {
+            return self::$_instances_name[$name];
+        }
+
+        $user = self::get($id);
+
+        if (!$user->exists()) {
+            $user->username = $user->name = $name;
+        }
+
+        self::$_instances_name[$name] = $user;
+
+        return $user;
     }
 
     /**
@@ -475,6 +263,22 @@ abstract class KunenaUserHelper
         }
 
         return $list;
+    }
+
+    /**
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getLastId(): int
+    {
+        if (self::$_lastid === null) {
+            self::getTotalCount();
+        }
+
+        return (int) self::$_lastid;
     }
 
     /**
@@ -618,12 +422,226 @@ abstract class KunenaUserHelper
     }
 
     /**
+     * @param   int  $limit  limit
+     *
+     * @return array|null
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public static function getTopPosters($limit = 0): ?array
+    {
+        $limit = $limit ? $limit : KunenaFactory::getConfig()->popUserCount;
+
+        if (self::$_topposters === null || \count(self::$_topposters) < $limit) {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery();
+            $query->select($db->quoteName(['u.id', 'ku.posts'], [null, 'count']));
+            $query->from($db->quoteName(['#__kunena_users'], ['ku']));
+            $query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
+            $query->where($db->quoteName('ku.posts') . ' > 0');
+            $query->order($db->quoteName('ku.posts') . ' DESC');
+
+            if (KunenaFactory::getConfig()->superAdminUserlist && ($filter = Access::getUsersByGroup(8))) {
+                $query->where($db->quoteName('u.id') . ' NOT IN (' . implode(',', array_map('intval', $filter)) . ')');
+            }
+
+            $query->setLimit($limit);
+            $db->setQuery($query);
+
+            self::$_topposters = [];
+
+            try {
+                self::$_topposters = (array) $db->loadObjectList();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+        }
+
+        return self::$_topposters;
+    }
+
+    /**
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getTotalCount(): int
+    {
+        if (self::$_total === null) {
+            $db     = Factory::getContainer()->get('DatabaseDriver');
+            $config = KunenaFactory::getConfig();
+
+            if ($config->userlistCountUsers == '1') {
+                $where = '(' . $db->quoteName('block') . ' = 0 OR activation="")';
+            } elseif ($config->userlistCountUsers == '2') {
+                $where = '(' . $db->quoteName('block') . ' = 0 AND activation="")';
+            } elseif ($config->userlistCountUsers == '3') {
+                $where = $db->quoteName('block') . ' = 0';
+            } else {
+                $where = '1';
+            }
+
+            $query = $db->createQuery();
+            $query->select('COUNT(*), MAX(id)')
+                ->from($db->quoteName('#__users'))
+                ->where($where);
+            $db->setQuery($query);
+
+            try {
+                list(self::$_total, self::$_lastid) = $db->loadRow();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+        }
+
+        return (int) self::$_total;
+    }
+
+    /**
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getTotalRanks(): int
+    {
+        $total = 0;
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select('COUNT(*)')
+            ->from($db->quoteName('#__kunena_ranks'));
+        $db->setQuery($query);
+
+        try {
+            $total = $db->setQuery($query)->loadResult();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return (int) $total;
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function initialize(): void
+    {
+        // Get the user ide for the current user, note that when run from the cli we need to set it to 0 as cli cannot handle user methods like getIdentity()
+        $id        = Factory::getApplication()->getIdentity()->id ?? 0;
+        self::$_me = self::$_instances[$id] = new KunenaUser($id);
+
+        // Initialize avatar if configured.
+        $avatars = KunenaFactory::getAvatarIntegration();
+        $avatars->load([$id]);
+    }
+
+    /**
+     * @param   array  $userids  userids
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function loadUsers(array $userids = []): array
+    {
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        // Make sure that userids are unique and that indexes are correct
+        $e_userids = [];
+
+        foreach ($userids as $userid) {
+            // Ignore guests and imported users, which haven't been mapped to Joomla (id<0).
+            if ($userid > 0 && empty(self::$_instances[$userid])) {
+                $e_userids[(int) $userid] = (int) $userid;
+            }
+        }
+
+        if (!empty($e_userids)) {
+            $userlist = implode(',', $e_userids);
+
+            $db = Factory::getContainer()->get('DatabaseDriver');
+
+            $query = $db->createQuery();
+            $query->select('u.name, u.username, u.email, u.block AS blocked, u.registerDate, u.lastvisitDate, u.params AS joomlaParams, ku.*, u.id AS userid')
+                ->from($db->quoteName('#__users', 'u'))
+                ->leftJoin($db->quoteName('#__kunena_users') . ' AS ' . $db->quoteName('ku') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'))
+                ->where($db->quoteName('u.id') . ' IN (' . $userlist . ')');
+            $db->setQuery($query);
+
+            $results = [];
+
+            try {
+                $results = (array) $db->loadAssocList();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+
+            foreach ($results as $user) {
+                // The Joomla parameters (timezone) are kept apart, they are no part of the Kunena user.
+                self::$joomlaParams[(int) $user['userid']] = $user['joomlaParams'];
+                unset($user['joomlaParams']);
+
+                $instance = new KunenaUser(false);
+                $instance->bind($user);
+                $instance->exists(isset($user['posts']));
+                self::$_instances[$instance->userid] = $instance;
+            }
+
+            // Preload avatars if configured
+            $avatars = KunenaFactory::getAvatarIntegration();
+            $avatars->load($e_userids);
+
+            // The display names (a custom field of the Joomla users) come with one query.
+            KunenaUserName::preload($e_userids);
+        }
+
+        $list = [];
+
+        foreach ($userids as $userid) {
+            if (isset(self::$_instances[$userid])) {
+                $list[$userid] = self::$_instances[$userid];
+            }
+        }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        return $list;
+    }
+
+    /**
      * The Joomla parameters (JSON) of the users, as far as they were loaded together with the users.
      *
      * @var     array
      * @since   Kunena 7.2
      */
     protected static $joomlaParams = [];
+
+    /**
+     * Keep the Joomla parameters of a user which are loaded with the user, so they are not read again.
+     *
+     * @param   int          $id      The user.
+     * @param   string|null  $params  The parameters (json).
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public static function cacheJoomlaParams(int $id, ?string $params): void
+    {
+        if ($id > 0 && !\array_key_exists($id, self::$joomlaParams)) {
+            self::$joomlaParams[$id] = $params;
+        }
+    }
 
     /**
      * A value of the Joomla parameters of a user (read like the timezone: with the users or with a small query).
@@ -650,7 +668,7 @@ abstract class KunenaUserHelper
                 ->select($db->quoteName('params'))
                 ->from($db->quoteName('#__users'))
                 ->where($db->quoteName('id') . ' = :id')
-                ->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
+                ->bind(':id', $id, ParameterType::INTEGER);
 
             self::$joomlaParams[$id] = $db->setQuery($query)->loadResult();
         }
@@ -661,60 +679,37 @@ abstract class KunenaUserHelper
     }
 
     /**
-     * Keep the Joomla parameters of a user which are loaded with the user, so they are not read again.
+     * Get the Joomla user, loaded only once per request. The logged in user is reused as it is.
      *
-     * @param   int          $id      The user.
-     * @param   string|null  $params  The parameters (json).
+     * Only for reading: a user which is going to be changed should be loaded with the UserFactory.
      *
-     * @return  void
+     * @param   int  $id  Joomla user id.
+     *
+     * @return  User
      *
      * @since   Kunena 7.2
      */
-    public static function cacheJoomlaParams(int $id, ?string $params): void
+    public static function getJoomlaUser(int $id): User
     {
-        if ($id > 0 && !\array_key_exists($id, self::$joomlaParams)) {
-            self::$joomlaParams[$id] = $params;
+        static $users = [];
+
+        $identity = Factory::getApplication()->getIdentity();
+
+        if ($identity && $id && $identity->id == $id) {
+            return $identity;
         }
+
+        return $users[$id] ??= Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($id);
     }
 
     /**
-     * Save a value in the Joomla parameters of a user (null removes it).
+     * @return KunenaUser|null
      *
-     * @param   int     $id     The user.
-     * @param   string  $key    The key of the parameter.
-     * @param   mixed   $value  The value.
-     *
-     * @return  void
-     *
-     * @since   Kunena 7.2
+     * @since   Kunena 6.0
      */
-    public static function setJoomlaParam(int $id, string $key, $value): void
+    public static function getMyself(): ?KunenaUser
     {
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery()
-            ->select($db->quoteName('params'))
-            ->from($db->quoteName('#__users'))
-            ->where($db->quoteName('id') . ' = :id')
-            ->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
-        $params = json_decode((string) $db->setQuery($query)->loadResult(), true);
-        $params = \is_array($params) ? $params : [];
-
-        if ($value === null) {
-            unset($params[$key]);
-        } else {
-            $params[$key] = $value;
-        }
-
-        $json   = json_encode($params);
-        $update = $db->createQuery()
-            ->update($db->quoteName('#__users'))
-            ->set($db->quoteName('params') . ' = :params')
-            ->where($db->quoteName('id') . ' = :id')
-            ->bind(':params', $json)
-            ->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
-        $db->setQuery($update)->execute();
-
-        self::$joomlaParams[$id] = $json;
+        return self::$_me;
     }
 
     /**
@@ -743,7 +738,7 @@ abstract class KunenaUserHelper
                 ->select($db->quoteName('params'))
                 ->from($db->quoteName('#__users'))
                 ->where($db->quoteName('id') . ' = :id')
-                ->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
+                ->bind(':id', $id, ParameterType::INTEGER);
 
             self::$joomlaParams[$id] = $db->setQuery($query)->loadResult();
         }
@@ -754,37 +749,29 @@ abstract class KunenaUserHelper
     }
 
     /**
-     * Get the Joomla user, loaded only once per request. The logged in user is reused as it is.
+     * Return the IP used by the user
      *
-     * Only for reading: a user which is going to be changed should be loaded with the UserFactory.
+     * @return  string
      *
-     * @param   int  $id  Joomla user id.
-     *
-     * @return  User
-     *
-     * @since   Kunena 7.2
+     * @since   Kunena 6
      */
-    public static function getJoomlaUser(int $id): User
+    public static function getUserIp(): string
     {
-        static $users = [];
-
-        $identity = Factory::getApplication()->getIdentity();
-
-        if ($identity && $id && $identity->id == $id) {
-            return $identity;
-        }
-
-        return $users[$id] ??= Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($id);
+        return IpHelper::getIp();
     }
 
     /**
-     * @return \Kunena\Forum\Libraries\User\KunenaUser|null
+     * Return is the user IP is ipv6 or not
      *
-     * @since   Kunena 6.0
+     * @param   string  $ip  ip
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6
      */
-    public static function getMyself(): ?KunenaUser
+    public static function isIPv6(string $ip): bool
     {
-        return self::$_me;
+        return IpHelper::isIPv6($ip);
     }
 
     /**
@@ -891,29 +878,43 @@ abstract class KunenaUserHelper
     }
 
     /**
-     * Return the IP used by the user
+     * Save a value in the Joomla parameters of a user (null removes it).
      *
-     * @return  string
+     * @param   int     $id     The user.
+     * @param   string  $key    The key of the parameter.
+     * @param   mixed   $value  The value.
      *
-     * @since   Kunena 6
+     * @return  void
+     *
+     * @since   Kunena 7.2
      */
-    public static function getUserIp(): string
+    public static function setJoomlaParam(int $id, string $key, $value): void
     {
-        return IpHelper::getIp();
-    }
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select($db->quoteName('params'))
+            ->from($db->quoteName('#__users'))
+            ->where($db->quoteName('id') . ' = :id')
+            ->bind(':id', $id, ParameterType::INTEGER);
+        $params = json_decode((string) $db->setQuery($query)->loadResult(), true);
+        $params = \is_array($params) ? $params : [];
 
-    /**
-     * Return is the user IP is ipv6 or not
-     *
-     * @param   string  $ip  ip
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6
-     */
-    public static function isIPv6(string $ip): bool
-    {
-        return IpHelper::isIPv6($ip);
+        if ($value === null) {
+            unset($params[$key]);
+        } else {
+            $params[$key] = $value;
+        }
+
+        $json   = json_encode($params);
+        $update = $db->createQuery()
+            ->update($db->quoteName('#__users'))
+            ->set($db->quoteName('params') . ' = :params')
+            ->where($db->quoteName('id') . ' = :id')
+            ->bind(':params', $json)
+            ->bind(':id', $id, ParameterType::INTEGER);
+        $db->setQuery($update)->execute();
+
+        self::$joomlaParams[$id] = $json;
     }
 
     /**

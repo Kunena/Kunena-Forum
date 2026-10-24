@@ -259,67 +259,6 @@ class TableKunenaCategories extends KunenaTable
     }
 
     /**
-     * @param   null  $id     id
-     * @param   bool  $reset  reset
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function load($id = null, $reset = true): bool
-    {
-        $this->_exists = false;
-        $k             = $this->_tbl_key;
-
-        // Get the id to load.
-        if ($id !== null) {
-            $this->$k = $id;
-        }
-
-        // Reset the table.
-        if ($reset) {
-            $this->reset();
-        }
-
-        // Check for a valid id to load.
-        if ($this->$k === null || \intval($this->$k) < 1) {
-            $this->$k = 0;
-
-            return false;
-        }
-
-        // Load the data.
-        $query = $this->_db->createQuery()
-            ->select('*')
-            ->from($this->_db->quoteName('#__kunena_categories'))
-            ->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($this->$k));
-        $this->_db->setQuery($query);
-
-        try {
-            $data = $this->_db->loadAssoc();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        if (!$data) {
-            $this->$k = 0;
-
-            return false;
-        }
-
-        $this->_exists = true;
-
-        // Bind the data to the table.
-        $this->bind($data);
-
-        return $this->_exists;
-    }
-
-    /**
      * @param   mixed   $array   array
      * @param   string  $ignore  ignore
      *
@@ -435,6 +374,67 @@ class TableKunenaCategories extends KunenaTable
         }
 
         return 0;
+    }
+
+    /**
+     * @param   null  $id     id
+     * @param   bool  $reset  reset
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function load($id = null, $reset = true): bool
+    {
+        $this->_exists = false;
+        $k             = $this->_tbl_key;
+
+        // Get the id to load.
+        if ($id !== null) {
+            $this->$k = $id;
+        }
+
+        // Reset the table.
+        if ($reset) {
+            $this->reset();
+        }
+
+        // Check for a valid id to load.
+        if ($this->$k === null || \intval($this->$k) < 1) {
+            $this->$k = 0;
+
+            return false;
+        }
+
+        // Load the data.
+        $query = $this->_db->createQuery()
+            ->select('*')
+            ->from($this->_db->quoteName('#__kunena_categories'))
+            ->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($this->$k));
+        $this->_db->setQuery($query);
+
+        try {
+            $data = $this->_db->loadAssoc();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
+        if (!$data) {
+            $this->$k = 0;
+
+            return false;
+        }
+
+        $this->_exists = true;
+
+        // Bind the data to the table.
+        $this->bind($data);
+
+        return $this->_exists;
     }
 
     /**

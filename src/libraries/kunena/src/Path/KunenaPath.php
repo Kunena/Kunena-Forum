@@ -48,51 +48,6 @@ class KunenaPath extends Path
     public static $owner = null;
 
     /**
-     * Returns server writable temporary directory, preferring to Joomla tmp if possible.
-     *
-     * @return  string  Path to temporary directory.
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function tmpdir(): string
-    {
-        if (!self::$tmpdir) {
-            // Find Apache writable temporary directory defaulting to Joomla.
-            $temp = @tempnam(Factory::getApplication()->get('tmp_path'), 'jj');
-
-            // If the previous call fails, let's try system default instead.
-            if ($temp === false) {
-                $temp = @tempnam(sys_get_temp_dir(), 'jj');
-            }
-
-            // Set the temporary directory and remove created file.
-            if ($temp !== false) {
-                self::$apache = fileowner($temp);
-                self::$tmpdir = \dirname($temp);
-                unlink($temp);
-            }
-        }
-
-        return realpath(self::$tmpdir);
-    }
-
-    /**
-     * Checks if path is writable either by the server or by FTP.
-     *
-     * @param   string  $path  paths
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function isWritable(string $path): bool
-    {
-        return is_writable($path) || self::isOwner($path);
-    }
-
-    /**
      * Method to determine if script owns the path.
      *
      * @param   string  $path  Path to check ownership.
@@ -126,5 +81,50 @@ class KunenaPath extends Path
 
         // Test ownership
         return self::$owner == fileowner($path);
+    }
+
+    /**
+     * Checks if path is writable either by the server or by FTP.
+     *
+     * @param   string  $path  paths
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     * @throws Exception
+     */
+    public static function isWritable(string $path): bool
+    {
+        return is_writable($path) || self::isOwner($path);
+    }
+
+    /**
+     * Returns server writable temporary directory, preferring to Joomla tmp if possible.
+     *
+     * @return  string  Path to temporary directory.
+     *
+     * @since   Kunena 6.0
+     * @throws Exception
+     */
+    public static function tmpdir(): string
+    {
+        if (!self::$tmpdir) {
+            // Find Apache writable temporary directory defaulting to Joomla.
+            $temp = @tempnam(Factory::getApplication()->get('tmp_path'), 'jj');
+
+            // If the previous call fails, let's try system default instead.
+            if ($temp === false) {
+                $temp = @tempnam(sys_get_temp_dir(), 'jj');
+            }
+
+            // Set the temporary directory and remove created file.
+            if ($temp !== false) {
+                self::$apache = fileowner($temp);
+                self::$tmpdir = \dirname($temp);
+                unlink($temp);
+            }
+        }
+
+        return realpath(self::$tmpdir);
     }
 }

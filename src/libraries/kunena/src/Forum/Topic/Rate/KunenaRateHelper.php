@@ -38,6 +38,20 @@ abstract class KunenaRateHelper
     protected static $_counts = [];
 
     /**
+     * Forget the loaded number of ratings of a topic (after a new rating).
+     *
+     * @param   int  $id  Topic id.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public static function flushCount(int $id): void
+    {
+        unset(self::$_counts[$id]);
+    }
+
+    /**
      * Returns \Kunena\Forum\Libraries\Forum\Topic\TopicRate object
      *
      * @access    public
@@ -82,6 +96,55 @@ abstract class KunenaRateHelper
      *
      * @since   Kunena 6.0
      */
+    public static function getCount(int $id): float
+    {
+        if (isset(self::$_counts[$id])) {
+            return self::$_counts[$id];
+        }
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select('(COUNT(' . $db->quoteName('rate') . ')) AS ' . $db->quoteName('selected'))
+            ->from($db->quoteName('#__kunena_rate'))
+            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
+        $db->setQuery($query);
+
+        return self::$_counts[$id] = (float) round((float) $db->loadResult());
+    }
+
+    /**
+     * Return rate by id and userid
+     *
+     * @param   integer  $id      id
+     * @param   integer  $userid  userid
+     *
+     * @return  int
+     *
+     * @since   Kunena 6.0
+     */
+    public static function getRate(int $id, int $userid): int
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select($db->quoteName('rate'))
+            ->from($db->quoteName('#__kunena_rate'))
+            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id))
+            ->andWhere($db->quoteName('userid') . ' = ' . $db->quote($userid));
+        $db->setQuery($query);
+
+        // One query: the result was loaded twice.
+        return (int) $db->loadResult();
+    }
+
+    /**
+     * Return sum of all rates given to a topics by all users
+     *
+     * @param   integer  $id  id
+     *
+     * @return  float
+     *
+     * @since   Kunena 6.0
+     */
     public static function getSelected(int $id): float
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
@@ -97,31 +160,6 @@ abstract class KunenaRateHelper
 
         return round($db->loadResult());
 
-    }
-
-    /**
-     * Return sum of all rates given to a topics by all users
-     *
-     * @param   integer  $id  id
-     *
-     * @return  float
-     *
-     * @since   Kunena 6.0
-     */
-    public static function getCount(int $id): float
-    {
-        if (isset(self::$_counts[$id])) {
-            return self::$_counts[$id];
-        }
-
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select('(COUNT(' . $db->quoteName('rate') . ')) AS ' . $db->quoteName('selected'))
-            ->from($db->quoteName('#__kunena_rate'))
-            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
-        $db->setQuery($query);
-
-        return self::$_counts[$id] = (float) round((float) $db->loadResult());
     }
 
     /**
@@ -156,43 +194,5 @@ abstract class KunenaRateHelper
         foreach ((array) $db->loadObjectList() as $row) {
             self::$_counts[(int) $row->topic_id] = (float) $row->selected;
         }
-    }
-
-    /**
-     * Forget the loaded number of ratings of a topic (after a new rating).
-     *
-     * @param   int  $id  Topic id.
-     *
-     * @return  void
-     *
-     * @since   Kunena 7.2
-     */
-    public static function flushCount(int $id): void
-    {
-        unset(self::$_counts[$id]);
-    }
-
-    /**
-     * Return rate by id and userid
-     *
-     * @param   integer  $id      id
-     * @param   integer  $userid  userid
-     *
-     * @return  int
-     *
-     * @since   Kunena 6.0
-     */
-    public static function getRate(int $id, int $userid): int
-    {
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select($db->quoteName('rate'))
-            ->from($db->quoteName('#__kunena_rate'))
-            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id))
-            ->andWhere($db->quoteName('userid') . ' = ' . $db->quote($userid));
-        $db->setQuery($query);
-
-        // One query: the result was loaded twice.
-        return (int) $db->loadResult();
     }
 }

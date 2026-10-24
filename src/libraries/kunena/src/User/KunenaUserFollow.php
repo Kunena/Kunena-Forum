@@ -36,20 +36,6 @@ abstract class KunenaUserFollow
     protected static $lists = [];
 
     /**
-     * Is the feature switched on in the configuration (it is by default).
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 7.2
-     */
-    public static function isEnabled(): bool
-    {
-        $config = KunenaConfig::getInstance();
-
-        return isset($config->enableFollow) ? (bool) $config->enableFollow : true;
-    }
-
-    /**
      * Can the user follow the other user. Guests can not follow anybody, nobody can follow himself and a user
      * who is on the ignore list of the user can not be followed.
      *
@@ -66,6 +52,93 @@ abstract class KunenaUserFollow
             && $user->exists() && $target->exists()
             && $user->userid != $target->userid
             && !KunenaUserIgnore::isIgnoring((int) $user->userid, (int) $target->userid);
+    }
+
+    /**
+     * The number of users which follow the user.
+     *
+     * @param   int  $followedid  The followed user.
+     *
+     * @return  int
+     *
+     * @since   Kunena 7.2
+     */
+    public static function countFollowers(int $followedid): int
+    {
+        if ($followedid < 1 || !self::isEnabled()) {
+            return 0;
+        }
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__kunena_user_follow'))
+            ->where($db->quoteName('followed_id') . ' = :followedid')
+            ->bind(':followedid', $followedid, ParameterType::INTEGER);
+
+        return (int) $db->setQuery($query)->loadResult();
+    }
+
+    /**
+     * Follow a user.
+     *
+     * @param   KunenaUser  $user    The user who follows.
+     * @param   KunenaUser  $target  The user who is followed.
+     *
+     * @return  boolean  False if it is not allowed.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function follow(KunenaUser $user, KunenaUser $target): bool
+    {
+        if (!self::canFollow($user, $target)) {
+            return false;
+        }
+
+        if (!self::isFollowing($user->userid, $target->userid)) {
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $now   = time();
+            $uid   = (int) $user->userid;
+            $tid   = (int) $target->userid;
+            $query = $db->createQuery()
+                ->insert($db->quoteName('#__kunena_user_follow'))
+                ->columns($db->quoteName(['user_id', 'followed_id', 'created_time']))
+                ->values(':userid, :followedid, :created')
+                ->bind(':userid', $uid, ParameterType::INTEGER)
+                ->bind(':followedid', $tid, ParameterType::INTEGER)
+                ->bind(':created', $now, ParameterType::INTEGER);
+            $db->setQuery($query)->execute();
+        }
+
+        unset(self::$lists[(int) $user->userid]);
+
+        return true;
+    }
+
+    /**
+     * The users which follow the user with the time on which they started, the newest first.
+     *
+     * @param   int  $followedid  The followed user.
+     *
+     * @return  object[]  Rows with user_id and created_time.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getFollowersList(int $followedid): array
+    {
+        if ($followedid < 1 || !self::isEnabled()) {
+            return [];
+        }
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->select($db->quoteName(['user_id', 'created_time']))
+            ->from($db->quoteName('#__kunena_user_follow'))
+            ->where($db->quoteName('followed_id') . ' = :followedid')
+            ->order($db->quoteName('created_time') . ' DESC')
+            ->bind(':followedid', $followedid, ParameterType::INTEGER);
+
+        return (array) $db->setQuery($query)->loadObjectList();
     }
 
     /**
@@ -125,72 +198,6 @@ abstract class KunenaUserFollow
     }
 
     /**
-     * The users which follow the user with the time on which they started, the newest first.
-     *
-     * @param   int  $followedid  The followed user.
-     *
-     * @return  object[]  Rows with user_id and created_time.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getFollowersList(int $followedid): array
-    {
-        if ($followedid < 1 || !self::isEnabled()) {
-            return [];
-        }
-
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery()
-            ->select($db->quoteName(['user_id', 'created_time']))
-            ->from($db->quoteName('#__kunena_user_follow'))
-            ->where($db->quoteName('followed_id') . ' = :followedid')
-            ->order($db->quoteName('created_time') . ' DESC')
-            ->bind(':followedid', $followedid, ParameterType::INTEGER);
-
-        return (array) $db->setQuery($query)->loadObjectList();
-    }
-
-    /**
-     * The number of users which follow the user.
-     *
-     * @param   int  $followedid  The followed user.
-     *
-     * @return  int
-     *
-     * @since   Kunena 7.2
-     */
-    public static function countFollowers(int $followedid): int
-    {
-        if ($followedid < 1 || !self::isEnabled()) {
-            return 0;
-        }
-
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery()
-            ->select('COUNT(*)')
-            ->from($db->quoteName('#__kunena_user_follow'))
-            ->where($db->quoteName('followed_id') . ' = :followedid')
-            ->bind(':followedid', $followedid, ParameterType::INTEGER);
-
-        return (int) $db->setQuery($query)->loadResult();
-    }
-
-    /**
-     * Does the user follow the other user.
-     *
-     * @param   int  $userid      The user.
-     * @param   int  $followedid  The possibly followed user.
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 7.2
-     */
-    public static function isFollowing(int $userid, int $followedid): bool
-    {
-        return $followedid > 0 && \in_array($followedid, self::getFollowing($userid), true);
-    }
-
-    /**
      * Who gets an e-mail when the user starts a new topic: the followers whose Joomla account is enabled (and who
      * accept system e-mails when the forum is set to respect that).
      *
@@ -223,39 +230,32 @@ abstract class KunenaUserFollow
     }
 
     /**
-     * Follow a user.
+     * Is the feature switched on in the configuration (it is by default).
      *
-     * @param   KunenaUser  $user    The user who follows.
-     * @param   KunenaUser  $target  The user who is followed.
-     *
-     * @return  boolean  False if it is not allowed.
+     * @return  boolean
      *
      * @since   Kunena 7.2
      */
-    public static function follow(KunenaUser $user, KunenaUser $target): bool
+    public static function isEnabled(): bool
     {
-        if (!self::canFollow($user, $target)) {
-            return false;
-        }
+        $config = KunenaConfig::getInstance();
 
-        if (!self::isFollowing($user->userid, $target->userid)) {
-            $db    = Factory::getContainer()->get(DatabaseInterface::class);
-            $now   = time();
-            $uid   = (int) $user->userid;
-            $tid   = (int) $target->userid;
-            $query = $db->createQuery()
-                ->insert($db->quoteName('#__kunena_user_follow'))
-                ->columns($db->quoteName(['user_id', 'followed_id', 'created_time']))
-                ->values(':userid, :followedid, :created')
-                ->bind(':userid', $uid, ParameterType::INTEGER)
-                ->bind(':followedid', $tid, ParameterType::INTEGER)
-                ->bind(':created', $now, ParameterType::INTEGER);
-            $db->setQuery($query)->execute();
-        }
+        return isset($config->enableFollow) ? (bool) $config->enableFollow : true;
+    }
 
-        unset(self::$lists[(int) $user->userid]);
-
-        return true;
+    /**
+     * Does the user follow the other user.
+     *
+     * @param   int  $userid      The user.
+     * @param   int  $followedid  The possibly followed user.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    public static function isFollowing(int $userid, int $followedid): bool
+    {
+        return $followedid > 0 && \in_array($followedid, self::getFollowing($userid), true);
     }
 
     /**

@@ -42,6 +42,245 @@ abstract class KunenaTopicHelper
     protected static $_instances = [];
 
     /**
+     * Free up memory by cleaning up all cached items.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public static function cleanup(): void
+    {
+        self::$_instances = [];
+    }
+
+    /**
+     * Method to delete selected topics.
+     *
+     * @param   array|int  $ids  ids
+     *
+     * @return  integer Count of deleted topics.
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function delete($ids)
+    {
+        if (empty($ids)) {
+            return 0;
+        }
+
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        if (\is_array($ids)) {
+            // For array of IDs, we need to create a proper IN clause
+            $placeholders = [];
+            foreach ($ids as $id) {
+                $placeholders[] = (int) $id;
+            }
+            $idlist = implode(',', $placeholders);
+        } else {
+            $idlist = (int) $ids;
+        }
+
+        $queries = [];
+
+        // Delete user topics
+        $query = $db->createQuery();
+        $query->delete('#__kunena_user_topics')
+              ->where('topic_id IN (' . $idlist . ')');
+        $queries [] = $query;
+
+        // Delete user read
+        $query = $db->createQuery();
+        $query->delete('#__kunena_user_read')
+              ->where('topic_id IN (' . $idlist . ')');
+        $queries [] = $query;
+
+        // Delete thank yous
+        $messageIds = $db->createQuery();
+        $messageIds->select($db->quoteName('mm.id'))
+            ->from($db->quoteName('#__kunena_messages', 'mm'))
+            ->where($db->quoteName('mm.thread') . ' IN (' . $idlist . ')');
+
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_thankyou'))
+              ->where($db->quoteName('postid') . ' IN (' . $messageIds . ')');
+        $queries [] = $query;
+
+        // Delete poll users, poll options and polls (if not shadow)
+        foreach ([['#__kunena_polls_users', 'pollid'], ['#__kunena_polls_options', 'pollid'], ['#__kunena_polls', 'id']] as [$table, $column]) {
+            $pollIds = $db->createQuery();
+            $pollIds->select($db->quoteName('tt.poll_id'))
+                    ->from($db->quoteName('#__kunena_topics', 'tt'))
+                    ->where($db->quoteName('tt.id') . ' IN (' . $idlist . ')')
+                    ->where($db->quoteName('tt.moved_id') . ' = 0');
+
+            $query = $db->createQuery();
+            $query->delete($db->quoteName($table))
+                  ->where($db->quoteName($column) . ' IN (' . $pollIds . ')');
+            $queries [] = $query;
+        }
+
+        // Delete message texts
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_messages_text'))
+              ->where($db->quoteName('mesid') . ' IN (' . $messageIds . ')');
+        $queries [] = $query;
+
+        // Delete messages
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_messages'))
+              ->where($db->quoteName('thread') . ' IN (' . $idlist . ')');
+        $queries [] = $query;
+
+        // The ratings of the topics and their Joomla tags (as KunenaTopic::delete() does): the rows stayed for topics which are gone.
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_rate'))
+              ->where($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
+        $queries [] = $query;
+
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__contentitem_tag_map'))
+              ->where($db->quoteName('type_alias') . ' = ' . $db->quote(KunenaTopicTags::TYPE_ALIAS))
+              ->where($db->quoteName('content_item_id') . ' IN (' . $idlist . ')');
+        $queries [] = $query;
+
+        // TODO: delete attachments
+        // Delete topics last, because the previous queries look up data in the topics table
+        $query = $db->createQuery();
+        $query->delete('#__kunena_topics')
+              ->where('id IN (' . $idlist . ')');
+        $queries [] = $query;
+
+        foreach ($queries as $query) {
+            $db->setQuery($query);
+
+            try {
+                $db->execute();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+
+                return false;
+            }
+        }
+
+        return $db->getAffectedRows();
+    }
+
+    /**
+     * @param   mixed  $ids    ids
+     * @param   bool   $value  value
+     * @param   mixed  $user   user
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function favorite($ids, $value = true, $user = null): int
+    {
+        // Pre-load all items
+        KunenaTopicUserHelper::getTopics($ids, $user);
+        $count = 0;
+
+        foreach ($ids as $id) {
+            $usertopic = KunenaTopicUserHelper::get($id, $user);
+
+            if ($usertopic->favorite != (int) $value) {
+                $count++;
+            }
+
+            $usertopic->favorite = (int) $value;
+            $usertopic->save();
+        }
+
+        return $count;
+    }
+
+    /**
+     * @param   array  $topics  Topics
+     * @param   mixed  $user    User
+     *
+     * @return  array|boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function fetchNewStatus(array $topics, $user = null)
+    {
+        $user = KunenaUserHelper::get($user);
+
+        if (!KunenaFactory::getConfig()->showNew || empty($topics) || !$user->exists()) {
+            return [];
+        }
+
+        $session = KunenaFactory::getSession();
+
+        // The categories of the topics are needed one by one below: load the data of the user for all of them with one query.
+        KunenaCategoryUserHelper::getCategories(array_unique(array_map(static fn ($topic) => (int) $topic->category_id, $topics)), $user);
+
+        $ids = [];
+
+        foreach ($topics as $topic) {
+            if ($topic->last_post_time < $session->getAllReadTime()) {
+                continue;
+            }
+
+            $allreadtime = $topic->getCategory()->getUserInfo()->allreadtime;
+
+            if ($allreadtime && $topic->last_post_time < $allreadtime) {
+                continue;
+            }
+
+            $ids[] = $topic->id;
+        }
+
+        if ($ids) {
+            $idstr = implode(",", $ids);
+
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery();
+            $query->select($db->quoteName('m.thread') . ' AS ' . $db->quoteName('id') . ', MIN(' . $db->quoteName('m.id') . ') AS ' . $db->quoteName('lastread') . ', SUM(1) AS ' . $db->quoteName('unread'))
+                ->from($db->quoteName('#__kunena_messages', 'm'))
+                ->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('m.thread') . ' AND ' . $db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
+                ->where($db->quoteName('m.hold') . ' = 0')
+                ->andWhere($db->quoteName('m.moved') . ' = 0')
+                ->andWhere($db->quoteName('m.thread') . ' IN (' . $idstr . ')')
+                ->andWhere($db->quoteName('m.time') . ' > ' . $db->quote($session->getAllReadTime()))
+                ->andWhere('(' . $db->quoteName('ur.time') . ' IS NULL OR ' . $db->quoteName('m.time') . ' > ' . $db->quoteName('ur.time') . ')')
+                ->group($db->quoteName('thread'));
+            $db->setQuery($query);
+
+            try {
+                $topiclist = (array) $db->loadObjectList('id');
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+
+                return false;
+            }
+        }
+
+        $list = [];
+
+        foreach ($topics as $topic) {
+            if (isset($topiclist[$topic->id])) {
+                $topic->lastread = $topiclist[$topic->id]->lastread;
+                $topic->unread   = $topiclist[$topic->id]->unread;
+            } else {
+                $topic->lastread = $topic->last_post_id;
+                $topic->unread   = 0;
+            }
+
+            $list[$topic->id] = $topic->lastread;
+        }
+
+        return $list;
+    }
+
+    /**
      * Returns \Kunena\Forum\Libraries\Forum\Topic\Topic object.
      *
      * @param   int   $identifier  The topic to load - Can be only an integer.
@@ -77,183 +316,6 @@ abstract class KunenaTopicHelper
         }
 
         return self::$_instances[$id];
-    }
-
-    /**
-     * @param   mixed  $ids    ids
-     * @param   bool   $value  value
-     * @param   mixed  $user   user
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function subscribe($ids, $value = true, $user = null): int
-    {
-        // Pre-load all items
-        // Codestyle fixes: use real url
-        KunenaTopicUserHelper::getTopics($ids, $user);
-        $count = 0;
-
-        foreach ($ids as $id) {
-            $usertopic = KunenaTopicUserHelper::get($id, $user);
-
-            if ($usertopic->subscribed != (int) $value) {
-                $count++;
-            }
-
-            $usertopic->subscribed = (int) $value;
-            $usertopic->save();
-        }
-
-        return $count;
-    }
-
-    /**
-     * @param   mixed  $ids    ids
-     * @param   bool   $value  value
-     * @param   mixed  $user   user
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function favorite($ids, $value = true, $user = null): int
-    {
-        // Pre-load all items
-        KunenaTopicUserHelper::getTopics($ids, $user);
-        $count = 0;
-
-        foreach ($ids as $id) {
-            $usertopic = KunenaTopicUserHelper::get($id, $user);
-
-            if ($usertopic->favorite != (int) $value) {
-                $count++;
-            }
-
-            $usertopic->favorite = (int) $value;
-            $usertopic->save();
-        }
-
-        return $count;
-    }
-
-    /**
-     * @param   mixed   $ids        ids
-     * @param   string  $authorise  authorise
-     *
-     * @return  KunenaTopic[]
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function getTopics($ids = false, $authorise = 'read'): array
-    {
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        if ($ids === false) {
-            return self::$_instances;
-        }
-
-        if (\is_array($ids)) {
-            $ids = array_unique($ids);
-        } else {
-            $ids = [$ids];
-        }
-
-        self::loadTopics($ids);
-
-        $list = [];
-
-        foreach ($ids as $id) {
-            if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise, null)) {
-                $list [$id] = self::$_instances [$id];
-            }
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        return $list;
-    }
-
-    /**
-     * @param   array  $ids  ids
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    protected static function loadTopics(array $ids): void
-    {
-        foreach ($ids as $i => $id) {
-            $id = \intval($id);
-
-            if (!$id || isset(self::$_instances [$id])) {
-                unset($ids[$i]);
-            }
-        }
-
-        if (empty($ids)) {
-            return;
-        }
-
-        $idlist = implode(',', $ids);
-        $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->createQuery();
-        $query->select('*')
-            ->from($db->quoteName('#__kunena_topics'))
-            ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
-        $db->setQuery($query);
-
-        $results = [];
-
-        try {
-            $results = (array) $db->loadAssocList('id');
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        foreach ($ids as $id) {
-            if (isset($results[$id])) {
-                $instance = new KunenaTopic($results[$id]);
-                $instance->exists(true);
-                self::$_instances [$id] = $instance;
-            } else {
-                self::$_instances [$id] = null;
-            }
-        }
-
-        unset($results);
-
-        if (KunenaFactory::getConfig()->ratingEnabled) {
-            KunenaRateHelper::loadCounts($ids);
-        }
-    }
-
-    /**
-     * @param   mixed  $ids   ids
-     * @param   mixed  $user  user
-     *
-     * @return User\KunenaTopicUser|User\KunenaTopicUser[]
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function getUserTopics($ids = false, $user = null)
-    {
-        if ($ids === false) {
-            $ids = array_keys(self::$_instances);
-        }
-
-        return KunenaTopicUserHelper::getTopics($ids, $user);
     }
 
     /**
@@ -459,184 +521,117 @@ abstract class KunenaTopicHelper
     }
 
     /**
-     * Method to delete selected topics.
+     * @param   mixed   $ids        ids
+     * @param   string  $authorise  authorise
      *
-     * @param   array|int  $ids  ids
-     *
-     * @return  integer Count of deleted topics.
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function delete($ids)
-    {
-        if (empty($ids)) {
-            return 0;
-        }
-
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
-        if (\is_array($ids)) {
-            // For array of IDs, we need to create a proper IN clause
-            $placeholders = [];
-            foreach ($ids as $id) {
-                $placeholders[] = (int) $id;
-            }
-            $idlist = implode(',', $placeholders);
-        } else {
-            $idlist = (int) $ids;
-        }
-
-        $queries = [];
-
-        // Delete user topics
-        $query = $db->createQuery();
-        $query->delete('#__kunena_user_topics')
-              ->where('topic_id IN (' . $idlist . ')');
-        $queries [] = $query;
-
-        // Delete user read
-        $query = $db->createQuery();
-        $query->delete('#__kunena_user_read')
-              ->where('topic_id IN (' . $idlist . ')');
-        $queries [] = $query;
-
-        // Delete thank yous
-        $messageIds = $db->createQuery();
-        $messageIds->select($db->quoteName('mm.id'))
-            ->from($db->quoteName('#__kunena_messages', 'mm'))
-            ->where($db->quoteName('mm.thread') . ' IN (' . $idlist . ')');
-
-        $query = $db->createQuery();
-        $query->delete($db->quoteName('#__kunena_thankyou'))
-              ->where($db->quoteName('postid') . ' IN (' . $messageIds . ')');
-        $queries [] = $query;
-
-        // Delete poll users, poll options and polls (if not shadow)
-        foreach ([['#__kunena_polls_users', 'pollid'], ['#__kunena_polls_options', 'pollid'], ['#__kunena_polls', 'id']] as [$table, $column]) {
-            $pollIds = $db->createQuery();
-            $pollIds->select($db->quoteName('tt.poll_id'))
-                    ->from($db->quoteName('#__kunena_topics', 'tt'))
-                    ->where($db->quoteName('tt.id') . ' IN (' . $idlist . ')')
-                    ->where($db->quoteName('tt.moved_id') . ' = 0');
-
-            $query = $db->createQuery();
-            $query->delete($db->quoteName($table))
-                  ->where($db->quoteName($column) . ' IN (' . $pollIds . ')');
-            $queries [] = $query;
-        }
-
-        // Delete message texts
-        $query = $db->createQuery();
-        $query->delete($db->quoteName('#__kunena_messages_text'))
-              ->where($db->quoteName('mesid') . ' IN (' . $messageIds . ')');
-        $queries [] = $query;
-
-        // Delete messages
-        $query = $db->createQuery();
-        $query->delete($db->quoteName('#__kunena_messages'))
-              ->where($db->quoteName('thread') . ' IN (' . $idlist . ')');
-        $queries [] = $query;
-
-        // The ratings of the topics and their Joomla tags (as KunenaTopic::delete() does): the rows stayed for topics which are gone.
-        $query = $db->createQuery();
-        $query->delete($db->quoteName('#__kunena_rate'))
-              ->where($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
-        $queries [] = $query;
-
-        $query = $db->createQuery();
-        $query->delete($db->quoteName('#__contentitem_tag_map'))
-              ->where($db->quoteName('type_alias') . ' = ' . $db->quote(KunenaTopicTags::TYPE_ALIAS))
-              ->where($db->quoteName('content_item_id') . ' IN (' . $idlist . ')');
-        $queries [] = $query;
-
-        // TODO: delete attachments
-        // Delete topics last, because the previous queries look up data in the topics table
-        $query = $db->createQuery();
-        $query->delete('#__kunena_topics')
-              ->where('id IN (' . $idlist . ')');
-        $queries [] = $query;
-
-        foreach ($queries as $query) {
-            $db->setQuery($query);
-
-            try {
-                $db->execute();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-
-                return false;
-            }
-        }
-
-        return $db->getAffectedRows();
-    }
-
-    /**
-     * Method to trash topics. They will be marked as deleted, but still exist in database.
-     *
-     * @param   array|int  $ids  ids
-     *
-     * @return  integer  Count of trashed topics.
+     * @return  KunenaTopic[]
      *
      * @since   Kunena 6.0
      *
      * @throws  Exception
      */
-    public static function trash($ids)
+    public static function getTopics($ids = false, $authorise = 'read'): array
     {
-        if (empty($ids)) {
-            return 0;
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        if ($ids === false) {
+            return self::$_instances;
         }
 
         if (\is_array($ids)) {
-            $idlist = implode(',', $ids);
+            $ids = array_unique($ids);
         } else {
-            $idlist = (int) $ids;
+            $ids = [$ids];
         }
 
-        $db        = Factory::getContainer()->get('DatabaseDriver');
+        self::loadTopics($ids);
 
-        // Create prepared query for messages
-        $query1 = $db->createQuery();
-        $query1->update($db->quoteName('#__kunena_messages'))
-               ->set($db->quoteName('hold') . ' = ' . $db->quote('2'))
-               ->where($db->quoteName('thread') . ' IN (' . $idlist . ')');
-        $queries[] = $query1;
+        $list = [];
 
-        // Create prepared query for topics
-        $query2 = $db->createQuery();
-        $query2->update($db->quoteName('#__kunena_topics'))
-               ->set($db->quoteName('hold') . ' = ' . $db->quote('2'))
-               ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
-        $queries[] = $query2;
-
-        foreach ($queries as $query) {
-            $db->setQuery($query);
-
-            try {
-                $db->execute();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-
-                return false;
+        foreach ($ids as $id) {
+            if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise, null)) {
+                $list [$id] = self::$_instances [$id];
             }
         }
 
-        return $db->getAffectedRows();
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        return $list;
     }
 
     /**
-     * Free up memory by cleaning up all cached items.
+     * @param   mixed  $ids   ids
+     * @param   mixed  $user  user
+     *
+     * @return User\KunenaTopicUser|User\KunenaTopicUser[]
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getUserTopics($ids = false, $user = null)
+    {
+        if ($ids === false) {
+            $ids = array_keys(self::$_instances);
+        }
+
+        return KunenaTopicUserHelper::getTopics($ids, $user);
+    }
+
+    /**
+     * @param   array  $ids  ids
      *
      * @return  void
      *
      * @since   Kunena 6.0
+     *
+     * @throws  Exception
      */
-    public static function cleanup(): void
+    protected static function loadTopics(array $ids): void
     {
-        self::$_instances = [];
+        foreach ($ids as $i => $id) {
+            $id = \intval($id);
+
+            if (!$id || isset(self::$_instances [$id])) {
+                unset($ids[$i]);
+            }
+        }
+
+        if (empty($ids)) {
+            return;
+        }
+
+        $idlist = implode(',', $ids);
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        $query  = $db->createQuery();
+        $query->select('*')
+            ->from($db->quoteName('#__kunena_topics'))
+            ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
+        $db->setQuery($query);
+
+        $results = [];
+
+        try {
+            $results = (array) $db->loadAssocList('id');
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        foreach ($ids as $id) {
+            if (isset($results[$id])) {
+                $instance = new KunenaTopic($results[$id]);
+                $instance->exists(true);
+                self::$_instances [$id] = $instance;
+            } else {
+                self::$_instances [$id] = null;
+            }
+        }
+
+        unset($results);
+
+        if (KunenaFactory::getConfig()->ratingEnabled) {
+            KunenaRateHelper::loadCounts($ids);
+        }
     }
 
     /**
@@ -791,62 +786,81 @@ abstract class KunenaTopicHelper
     }
 
     /**
-     * @param   array  $topics  Topics
-     * @param   mixed  $user    User
+     * @param   mixed  $ids    ids
+     * @param   bool   $value  value
+     * @param   mixed  $user   user
      *
-     * @return  array|boolean
+     * @return  integer
      *
      * @since   Kunena 6.0
      *
      * @throws  Exception
      */
-    public static function fetchNewStatus(array $topics, $user = null)
+    public static function subscribe($ids, $value = true, $user = null): int
     {
-        $user = KunenaUserHelper::get($user);
+        // Pre-load all items
+        // Codestyle fixes: use real url
+        KunenaTopicUserHelper::getTopics($ids, $user);
+        $count = 0;
 
-        if (!KunenaFactory::getConfig()->showNew || empty($topics) || !$user->exists()) {
-            return [];
-        }
+        foreach ($ids as $id) {
+            $usertopic = KunenaTopicUserHelper::get($id, $user);
 
-        $session = KunenaFactory::getSession();
-
-        // The categories of the topics are needed one by one below: load the data of the user for all of them with one query.
-        KunenaCategoryUserHelper::getCategories(array_unique(array_map(static fn ($topic) => (int) $topic->category_id, $topics)), $user);
-
-        $ids = [];
-
-        foreach ($topics as $topic) {
-            if ($topic->last_post_time < $session->getAllReadTime()) {
-                continue;
+            if ($usertopic->subscribed != (int) $value) {
+                $count++;
             }
 
-            $allreadtime = $topic->getCategory()->getUserInfo()->allreadtime;
-
-            if ($allreadtime && $topic->last_post_time < $allreadtime) {
-                continue;
-            }
-
-            $ids[] = $topic->id;
+            $usertopic->subscribed = (int) $value;
+            $usertopic->save();
         }
 
-        if ($ids) {
-            $idstr = implode(",", $ids);
+        return $count;
+    }
 
-            $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->createQuery();
-            $query->select($db->quoteName('m.thread') . ' AS ' . $db->quoteName('id') . ', MIN(' . $db->quoteName('m.id') . ') AS ' . $db->quoteName('lastread') . ', SUM(1) AS ' . $db->quoteName('unread'))
-                ->from($db->quoteName('#__kunena_messages', 'm'))
-                ->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('m.thread') . ' AND ' . $db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
-                ->where($db->quoteName('m.hold') . ' = 0')
-                ->andWhere($db->quoteName('m.moved') . ' = 0')
-                ->andWhere($db->quoteName('m.thread') . ' IN (' . $idstr . ')')
-                ->andWhere($db->quoteName('m.time') . ' > ' . $db->quote($session->getAllReadTime()))
-                ->andWhere('(' . $db->quoteName('ur.time') . ' IS NULL OR ' . $db->quoteName('m.time') . ' > ' . $db->quoteName('ur.time') . ')')
-                ->group($db->quoteName('thread'));
+    /**
+     * Method to trash topics. They will be marked as deleted, but still exist in database.
+     *
+     * @param   array|int  $ids  ids
+     *
+     * @return  integer  Count of trashed topics.
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function trash($ids)
+    {
+        if (empty($ids)) {
+            return 0;
+        }
+
+        if (\is_array($ids)) {
+            $idlist = implode(',', $ids);
+        } else {
+            $idlist = (int) $ids;
+        }
+
+        $db        = Factory::getContainer()->get('DatabaseDriver');
+
+        // Create prepared query for messages
+        $query1 = $db->createQuery();
+        $query1->update($db->quoteName('#__kunena_messages'))
+               ->set($db->quoteName('hold') . ' = ' . $db->quote('2'))
+               ->where($db->quoteName('thread') . ' IN (' . $idlist . ')');
+        $queries[] = $query1;
+
+        // Create prepared query for topics
+        $query2 = $db->createQuery();
+        $query2->update($db->quoteName('#__kunena_topics'))
+               ->set($db->quoteName('hold') . ' = ' . $db->quote('2'))
+               ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
+        $queries[] = $query2;
+
+        foreach ($queries as $query) {
             $db->setQuery($query);
 
             try {
-                $topiclist = (array) $db->loadObjectList('id');
+                $db->execute();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
 
@@ -854,20 +868,6 @@ abstract class KunenaTopicHelper
             }
         }
 
-        $list = [];
-
-        foreach ($topics as $topic) {
-            if (isset($topiclist[$topic->id])) {
-                $topic->lastread = $topiclist[$topic->id]->lastread;
-                $topic->unread   = $topiclist[$topic->id]->unread;
-            } else {
-                $topic->lastread = $topic->last_post_id;
-                $topic->unread   = 0;
-            }
-
-            $list[$topic->id] = $topic->lastread;
-        }
-
-        return $list;
+        return $db->getAffectedRows();
     }
 }

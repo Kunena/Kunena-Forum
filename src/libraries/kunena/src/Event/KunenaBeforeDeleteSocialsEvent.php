@@ -35,6 +35,18 @@ class KunenaBeforeDeleteSocialsEvent extends GenericEvent implements ResultAware
     use ResultTypeStringAware;
 
     /**
+     * Getter for the socials argument.
+     *
+     * @return  array
+     *
+     * @since  7.1.0
+     */
+    public function getSocials(): array
+    {
+        return $this->arguments['socials'];
+    }
+
+    /**
      * Setter for the socials argument.
      *
      * @param   array  $value  The value to set
@@ -46,17 +58,5 @@ class KunenaBeforeDeleteSocialsEvent extends GenericEvent implements ResultAware
     protected function onSetSocials(array $value): array
     {
         return $value;
-    }
-
-    /**
-     * Getter for the socials argument.
-     *
-     * @return  array
-     *
-     * @since  7.1.0
-     */
-    public function getSocials(): array
-    {
-        return $this->arguments['socials'];
     }
 }

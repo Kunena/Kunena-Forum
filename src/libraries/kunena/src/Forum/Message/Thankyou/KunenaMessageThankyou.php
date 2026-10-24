@@ -32,7 +32,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
  * @property string $time
  * @property int    $postid
  *
- * @property int    $userid
+ * @property int $userid
  * @since   Kunena 6.0
  */
 class KunenaMessageThankyou
@@ -62,6 +62,82 @@ class KunenaMessageThankyou
     }
 
     /**
+     * @param   int     $userid  userid
+     * @param   string  $time    time
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function _add(int $userid, string $time): void
+    {
+        $this->users[$userid] = $time;
+    }
+
+    /**
+     * Delete thank you from the database.
+     *
+     * @param   mixed  $user  user
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function delete($user): bool
+    {
+        $user    = KunenaFactory::getUser($user);
+        $message = KunenaMessageHelper::get($this->id);
+
+        if (!$user->exists()) {
+            throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_LOGIN'));
+        }
+
+        if (!$this->exists($user->userid)) {
+            throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
+        }
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_thankyou'))
+            ->where($db->quoteName('postid') . ' = ' . $db->quote($this->id))
+            ->andWhere($db->quoteName('userid') . ' = ' . $db->quote($user->userid));
+        $db->setQuery($query);
+        $db->execute();
+
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_users'))
+            ->set($db->quoteName('thankyou') . ' = thankyou-1')
+            ->where($db->quoteName('userid') . ' = ' . $db->quote($message->userid));
+        $db->setQuery($query);
+
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if the user has already said thank you.
+     *
+     * @param   int  $userid  userid
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function exists(int $userid): bool
+    {
+        return isset($this->users[(int) $userid]);
+    }
+
+    /**
      * @param   null  $identifier  identifier
      * @param   bool  $reload      reload
      *
@@ -77,16 +153,44 @@ class KunenaMessageThankyou
     }
 
     /**
-     * @param   int     $userid  userid
-     * @param   string  $time    time
+     * Get all users who have given thank you to this message.
      *
-     * @return  void
+     * @return  array List of userid=>time.
      *
      * @since   Kunena 6.0
      */
-    public function _add(int $userid, string $time): void
+    public function getList(): array
     {
-        $this->users[$userid] = $time;
+        return $this->users;
+    }
+
+    /**
+     * @param   KunenaMessage  $message  message
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    protected function internalSavethankyou(KunenaMessage $message): bool
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_users'))
+            ->set($db->quoteName('thankyou') . ' = thankyou+1')
+            ->where($db->quoteName('userid') . ' = ' . $db->quote($message->userid));
+        $db->setQuery($query);
+
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -137,110 +241,6 @@ class KunenaMessageThankyou
         }
 
         $this->internalSavethankyou($message);
-
-        return true;
-    }
-
-    /**
-     * Check if the user has already said thank you.
-     *
-     * @param   int  $userid  userid
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function exists(int $userid): bool
-    {
-        return isset($this->users[(int) $userid]);
-    }
-
-    /**
-     * @param   KunenaMessage  $message  message
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    protected function internalSavethankyou(KunenaMessage $message): bool
-    {
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->update($db->quoteName('#__kunena_users'))
-            ->set($db->quoteName('thankyou') . ' = thankyou+1')
-            ->where($db->quoteName('userid') . ' = ' . $db->quote($message->userid));
-        $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Get all users who have given thank you to this message.
-     *
-     * @return  array List of userid=>time.
-     *
-     * @since   Kunena 6.0
-     */
-    public function getList(): array
-    {
-        return $this->users;
-    }
-
-    /**
-     * Delete thank you from the database.
-     *
-     * @param   mixed  $user  user
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function delete($user): bool
-    {
-        $user    = KunenaFactory::getUser($user);
-        $message = KunenaMessageHelper::get($this->id);
-
-        if (!$user->exists()) {
-            throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_LOGIN'));
-        }
-
-        if (!$this->exists($user->userid)) {
-            throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
-        }
-
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->delete($db->quoteName('#__kunena_thankyou'))
-            ->where($db->quoteName('postid') . ' = ' . $db->quote($this->id))
-            ->andWhere($db->quoteName('userid') . ' = ' . $db->quote($user->userid));
-        $db->setQuery($query);
-        $db->execute();
-
-        $query = $db->createQuery();
-        $query->update($db->quoteName('#__kunena_users'))
-            ->set($db->quoteName('thankyou') . ' = thankyou-1')
-            ->where($db->quoteName('userid') . ' = ' . $db->quote($message->userid));
-        $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
 
         return true;
     }

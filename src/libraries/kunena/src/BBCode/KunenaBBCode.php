@@ -186,26 +186,123 @@ class KunenaBBCode extends BBCode
     }
 
     /**
-     * Parse a message. When Markdown or HTML is enabled in the configuration, the message is converted to BBCode first.
+     * @param   string  $string  string
      *
-     * @param   string  $string  The message.
+     * @return  array
      *
-     * @return  string  The message as HTML.
-     *
-     * @since   Kunena 7.2
+     * @since   Kunena 6.0
      */
-    public function parse($string)
+    protected function autoDetectURLs($string): array
     {
-        $this->linkCards = 0;
+        $search = preg_split('/(?xi)
+		\b
+		(
+			(?:
+				(?:https?|ftp):\/\/
+				|
+				www\d{0,3}\.
+				|
+				mailto:
+				|
+				(?:[a-zA-Z0-9._-]{2,}@)
+			)
+			(?:
+				[^\s()<>]+
+				|
+				\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)
+			)+
+			(?:
+				\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)
+				|
+				[^\s`!()\[\]{};:\'"\.,<>?«»“”‘’™]
+			)
+		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-        $markdown = isset($this->config->enableMarkdown) && $this->config->enableMarkdown;
-        $html     = isset($this->config->enableHtml) && $this->config->enableHtml;
+        $output = [];
 
-        if ($markdown || $html) {
-            $string = KunenaMarkup::toBBCode((string) $string, (bool) $markdown, (bool) $html);
+        if ($search !== false) {
+            foreach ($search as $index => $token) {
+                // The tokens alternate: text, address, text, address. Text is escaped later, so it must stay a text token.
+                if ($index & 1) {
+                    if (preg_match("/^(https?|ftp|mailto):/ui", $token)) {
+                        // Protocol has been provided, so just use it as-is.
+                        $url = $token;
+                    } else {
+                        // Add scheme to emails and raw domain URLs.
+                        $url = (strpos($token, '@') ? 'mailto:' : 'http://') . $token;
+                    }
+
+                    // Never start URL from the middle of text (except for punctuation).
+                    $invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index - 1]);
+                    $invalid |= !$this->IsValidURL($url, true);
+
+                    // We have a full, complete, and properly-formatted URL, with protocol.
+                    // Now we need to apply the $this->getURLPattern() template to turn it into HTML.
+                    $params = UriHelper::parse_url($url);
+
+                    if (!$invalid && substr($url, 0, 7) == 'mailto:') {
+                        $email = StringHelper::substr($url, 7);
+
+                        if ($this->canCloakEmail($params)) {
+                            $output[$index] = HTMLHelper::_('email.cloak', $email, $this->IsValidEmail($email));
+                        } else {
+                            $output[$index] = $email;
+                        }
+                    } elseif ($invalid || empty($params['host']) || !empty($params['pass'])) {
+                        $output[$index - 1] .= $token;
+                        $output[$index]     = '';
+                    } else {
+                        $params['url']  = $url;
+                        $params['link'] = $url;
+                        $params['text'] = $token;
+                        $output[$index] = $this->FillTemplate($this->getURLPattern(), $params);
+                    }
+                } else {
+                    $output[$index] = $token;
+                }
+            }
         }
 
-        return parent::parse($string);
+        return $output;
+    }
+
+    /**
+     * @param   mixed  $params  params
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function canCloakEmail(&$params): bool
+    {
+        if (PluginHelper::isEnabled('content', 'emailcloak')) {
+            $plugin = PluginHelper::getPlugin('content', 'emailcloak');
+            $params = new Registry($plugin->params);
+
+            if ($params->get('mode', 1)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Used for Smart Auto Linking, it loads the content of the url given to search the title from it
+     *
+     * @param   string  $url  url
+     *
+     * @return string
+     *
+     * @since   Kunena 6.0
+     */
+    public function get_title(string $url): string
+    {
+        // The title comes from the cache of the link cards: the other site is asked once for a week, not at every view of the topic
+        // (and at most a few times for a page). It is plain text, so it is only encoded for our html.
+        $card = KunenaLinkPreview::get($url);
+
+        return $card ? htmlspecialchars((string) $card['title'], ENT_QUOTES, 'UTF-8') : '';
     }
 
     /**
@@ -230,6 +327,78 @@ class KunenaBBCode extends BBCode
         $instance[\intval($relative)]->autoLink_disable = 0;
 
         return $instance[\intval($relative)];
+    }
+
+    /**
+     * @see     BBCode::SetEnableSmileys()
+     *
+     * @param   string  $email  email
+     *
+     * @return  void
+     * @since   Kunena 6.0
+     */
+    public function IsValidEmail($email)
+    {
+    }
+
+    /**
+     * @see     BBCode::IsValidURL()
+     * Regular expression taken from https://gist.github.com/729294
+     *
+     * @param   string  $string     string
+     *
+     * @param   bool    $email_too  email
+     *
+     * @param   bool    $local_too  local
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function IsValidURL($string, $email_too = true, $local_too = false)
+    {
+        static $re = '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS';
+
+        if (empty($string)) {
+            return false;
+        }
+
+        if ($local_too && $string[0] == '/') {
+            $string = 'http://www.domain.com' . $string;
+        }
+
+        if ($email_too && substr($string, 0, 7) == "mailto:") {
+            return $this->IsValidEmail(substr($string, 7));
+        }
+
+        if (preg_match($re, $string)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Parse a message. When Markdown or HTML is enabled in the configuration, the message is converted to BBCode first.
+     *
+     * @param   string  $string  The message.
+     *
+     * @return  string  The message as HTML.
+     *
+     * @since   Kunena 7.2
+     */
+    public function parse($string)
+    {
+        $this->linkCards = 0;
+
+        $markdown = isset($this->config->enableMarkdown) && $this->config->enableMarkdown;
+        $html     = isset($this->config->enableHtml) && $this->config->enableHtml;
+
+        if ($markdown || $html) {
+            $string = KunenaMarkup::toBBCode((string) $string, (bool) $markdown, (bool) $html);
+        }
+
+        return parent::parse($string);
     }
 
     /**
@@ -431,175 +600,6 @@ class KunenaBBCode extends BBCode
 
         // Auto-linking has been disabled.
         return $text;
-    }
-
-    /**
-     * @see     BBCode::SetEnableSmileys()
-     *
-     * @param   string  $email  email
-     *
-     * @return  void
-     * @since   Kunena 6.0
-     */
-    public function IsValidEmail($email)
-    {
-    }
-
-    /**
-     * @param   mixed  $params  params
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function canCloakEmail(&$params): bool
-    {
-        if (PluginHelper::isEnabled('content', 'emailcloak')) {
-            $plugin = PluginHelper::getPlugin('content', 'emailcloak');
-            $params = new Registry($plugin->params);
-
-            if ($params->get('mode', 1)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Used for Smart Auto Linking, it loads the content of the url given to search the title from it
-     *
-     * @param   string  $url  url
-     *
-     * @return string
-     *
-     * @since   Kunena 6.0
-     */
-    public function get_title(string $url): string
-    {
-        // The title comes from the cache of the link cards: the other site is asked once for a week, not at every view of the topic
-        // (and at most a few times for a page). It is plain text, so it is only encoded for our html.
-        $card = KunenaLinkPreview::get($url);
-
-        return $card ? htmlspecialchars((string) $card['title'], ENT_QUOTES, 'UTF-8') : '';
-    }
-
-    /**
-     * @param   string  $string  string
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    protected function autoDetectURLs($string): array
-    {
-        $search = preg_split('/(?xi)
-		\b
-		(
-			(?:
-				(?:https?|ftp):\/\/
-				|
-				www\d{0,3}\.
-				|
-				mailto:
-				|
-				(?:[a-zA-Z0-9._-]{2,}@)
-			)
-			(?:
-				[^\s()<>]+
-				|
-				\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)
-			)+
-			(?:
-				\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)
-				|
-				[^\s`!()\[\]{};:\'"\.,<>?«»“”‘’™]
-			)
-		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
-
-        $output = [];
-
-        if ($search !== false) {
-            foreach ($search as $index => $token) {
-                // The tokens alternate: text, address, text, address. Text is escaped later, so it must stay a text token.
-                if ($index & 1) {
-                    if (preg_match("/^(https?|ftp|mailto):/ui", $token)) {
-                        // Protocol has been provided, so just use it as-is.
-                        $url = $token;
-                    } else {
-                        // Add scheme to emails and raw domain URLs.
-                        $url = (strpos($token, '@') ? 'mailto:' : 'http://') . $token;
-                    }
-
-                    // Never start URL from the middle of text (except for punctuation).
-                    $invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index - 1]);
-                    $invalid |= !$this->IsValidURL($url, true);
-
-                    // We have a full, complete, and properly-formatted URL, with protocol.
-                    // Now we need to apply the $this->getURLPattern() template to turn it into HTML.
-                    $params = UriHelper::parse_url($url);
-
-                    if (!$invalid && substr($url, 0, 7) == 'mailto:') {
-                        $email = StringHelper::substr($url, 7);
-
-                        if ($this->canCloakEmail($params)) {
-                            $output[$index] = HTMLHelper::_('email.cloak', $email, $this->IsValidEmail($email));
-                        } else {
-                            $output[$index] = $email;
-                        }
-                    } elseif ($invalid || empty($params['host']) || !empty($params['pass'])) {
-                        $output[$index - 1] .= $token;
-                        $output[$index]     = '';
-                    } else {
-                        $params['url']  = $url;
-                        $params['link'] = $url;
-                        $params['text'] = $token;
-                        $output[$index] = $this->FillTemplate($this->getURLPattern(), $params);
-                    }
-                } else {
-                    $output[$index] = $token;
-                }
-            }
-        }
-
-        return $output;
-    }
-
-    /**
-     * @see     BBCode::IsValidURL()
-     * Regular expression taken from https://gist.github.com/729294
-     *
-     * @param   string  $string     string
-     *
-     * @param   bool    $email_too  email
-     *
-     * @param   bool    $local_too  local
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function IsValidURL($string, $email_too = true, $local_too = false)
-    {
-        static $re = '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS';
-
-        if (empty($string)) {
-            return false;
-        }
-
-        if ($local_too && $string[0] == '/') {
-            $string = 'http://www.domain.com' . $string;
-        }
-
-        if ($email_too && substr($string, 0, 7) == "mailto:") {
-            return $this->IsValidEmail(substr($string, 7));
-        }
-
-        if (preg_match($re, $string)) {
-            return true;
-        }
-
-        return false;
     }
 }
 
@@ -1054,7 +1054,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "\n",
         ],
         'ul' => [
-            'mode'          => BBcode::BBCODE_MODE_LIBRARY,
+            'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoList',
             'default'       => ['_default' => 'disc'],
             'class'         => 'list',
@@ -1067,7 +1067,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "\n",
         ],
         'ol' => [
-            'mode'          => BBcode::BBCODE_MODE_LIBRARY,
+            'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoList',
             'allow'         => ['_default' => '/^[\d\w]*$/'],
             'default'       => ['_default' => '1'],
@@ -1196,770 +1196,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Translate plain text "Quote:"
         $this->default_tag_rules['quote']['plain_start'] = Text::_('COM_KUNENA_LIB_BBCODE_QUOTE_TITLE');
-    }
-
-    /**
-     * Query from eBay API the JSON stream of item id given to render
-     *
-     * @param   int          $ItemID  The eBay ID of object to query
-     * @param   KunenaConfig $config  Kunena configuration object
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function getEbayItem(int $ItemID, KunenaConfig $config): stdClass
-    {
-        $options = new Registry();
-
-        $transport = new StreamTransport($options);
-
-        // Create a 'stream' transport.
-        $http = new Http($options, $transport);
-
-        $data = ['grant_type' => 'client_credentials', 'scope' => 'https://api.ebay.com/oauth/api_scope'];
-
-        $headersOauth = [
-            'Content-Type'  => 'application/x-www-form-urlencoded',
-            'Authorization' => 'Basic ' . base64_encode($config->ebayApiKey . ':' . $config->ebayCertId),
-        ];
-
-        $responseOauth = $http->post('https://api.ebay.com/identity/v1/oauth2/token', $data, $headersOauth);
-
-        if ($responseOauth->code == '200') {
-            $resp  = json_decode($responseOauth->body);
-            $token = $resp->access_token;
-
-            $headers = ['X-EBAY-API-IAF-TOKEN' => $token, 'X-EBAY-API-CALL-NAME' => 'GetSingleItem', 'X-EBAY-API-VERSION' => 1157];
-
-            $response = $http->get('https://open.api.ebay.com/shopping?callname=GetSingleItem&siteid=0&responseencoding=JSON&ItemID='
-                . $ItemID . '&trackingid=' . $config->ebayAffiliateId . '&trackingpartnercode=9', $headers, '10');
-
-            if ($response->code == '200') {
-                $responseItem = json_decode($response->body);
-
-                if ($responseItem->Ack == 'Success') {
-                    return $responseItem->Item;
-                }
-                $errors = $responseItem->Errors;
-
-                throw new Exception('Render ebay item ' . $errors[0]->LongMessage);
-
-            }
-
-            throw new Exception('Render ebay item: the eBay API answered with HTTP status ' . $response->code);
-        } else {
-            $respOauthError = json_decode($responseOauth->body);
-
-            throw new Exception($respOauthError->error_description);
-        }
-    }
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     */
-    public static function DoInstagram($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        if (!empty($content)) {
-            return self::renderInstagram($bbcode, $content);
-        }
-
-        return false;
-    }
-
-    /**
-     * Method to render the instagram content
-     *
-     * @param   object  $bbcode   The bbcode tag being rendered
-     * @param   string  $content
-     *
-     * @return string
-     * @since Kunena 5.2
-     */
-    public static function renderInstagram($bbcode, $content)
-    {
-        $before  = $content;
-        $content = strip_tags($content);
-
-        $content = trim($content);
-
-        $url_parsed = parse_url($content);
-
-        if (isset($url_parsed['scheme'])) {
-            if ($url_parsed['scheme'] == 'https' || $url_parsed['scheme'] == 'http') {
-                $content = $url_parsed['host'] . $url_parsed['path'];
-            } else {
-                $content = $url_parsed['path'];
-            }
-        }
-
-        // The address must start with an Instagram host: a text that only contains "instagram.com/..." somewhere
-        // (for example evil.example/instagram.com/x) must not become the source of the frame.
-        if (preg_match('#^(?:www\.)?(?:instagram\.com|instagr\.am)/[A-Za-z0-9_\-]+(?:/[A-Za-z0-9_\-]+)*/?$#i', $content)) {
-            $url = 'https://' . rtrim($content, '/');
-
-            return '<div class="embed-container"><iframe src="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '/embed/" style="border: 0"></iframe></div>';
-        }
-
-        // Display tag in activity streams etc..
-        if (!empty($bbcode->parent->forceMinimal)) {
-            return "<a href=\"" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . '</a>';
-        }
-
-        // A bare post code
-        if ($content !== '' && preg_match('#^[A-Za-z0-9_\-]+$#', $content)) {
-            return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" style="border: 0"></iframe></div>';
-        }
-
-        return $before;
-    }
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|mixed|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoEmail($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        $email     = \is_string($default) ? $default : $bbcode->UnHTMLEncode($content);
-        $result    = filter_var($email, FILTER_VALIDATE_EMAIL);
-
-        if (!$result) {
-            return;
-        }
-
-        $text      = \is_string($default) ? $bbcode->UnHTMLEncode($content) : $default;
-        $text      = trim($text && $email != $text ? $text : '');
-        $mailto    = $bbcode->IsValidEmail($email);
-        $result    = filter_var($email, FILTER_VALIDATE_EMAIL);
-
-        if (\is_string($result)) {
-            $isLink = true;
-        } else {
-            $isLink = false;
-            $mailto = $result;
-        }
-
-        $layout = KunenaLayout::factory('BBCode/Email');
-
-        if ($layout->getPath()) {
-            return (string) $layout
-                ->set('email', $email)
-                ->set('isLink', $isLink)
-                ->set('mailto', $mailto)
-                ->set('text', $text);
-        }
-
-        if ($bbcode->canCloakEmail($params)) {
-            return HTMLHelper::_('email.cloak', htmlspecialchars($email), $bbcode->IsValidEmail($email), htmlspecialchars($text), $bbcode->IsValidEmail($text));
-        }
-
-        return '<a href="mailto:' . htmlspecialchars($email) . '">' . htmlspecialchars($text) . '</a>';
-
-    }
-
-    // Format a [size] tag by producing a <span> with a style with a different font-size.
-
-    /**
-     * Format a [url] tag by producing an <a>...</a> element.
-     * The URL only allows http, https, mailto, and ftp protocols for safety.
-     *
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoURL($bbcode, $action, $name, $default, $params, $content)
-    {
-        // We can't check this with BBCODE_CHECK because we may have no URL before the content
-        // Has been processed.
-        if ($action == BBCode::BBCODE_CHECK) {
-            $bbcode->autoLink_disable++;
-
-            return true;
-        }
-
-        $bbcode->autoLink_disable--;
-        $url      = $default ? $default : strip_tags($bbcode->UnHTMLEncode($content));
-        $url      = preg_replace('# #u', '%20', $url);
-        $internal = false;
-
-        if (preg_match('#^(index.php?)#uim', $url)) {
-            $url = Route::_($url, false);
-        }
-
-        if (preg_match('#^(/index.php?)#uim', $url)) {
-            $str = substr($url, 1);
-            $url = Route::_($str, false);
-        }
-
-        if (!preg_match('#^(/|https?:|ftp:)#uim', $url)) {
-            $url = "http://{$url}";
-        }
-
-        if (!$bbcode->IsValidURL($url, false, true)) {
-            if (KunenaFactory::getConfig()->autoEmbedYoutube) {
-                return $content;
-            }
-
-            return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
-
-        }
-
-        if (isset($params['target'])) {
-            $target = $bbcode->url_target;
-            $class  = $params['class'];
-        } else {
-            $target = '';
-            $class  = null;
-        }
-
-        $uri  = Uri::getInstance($url);
-        $host = $uri->getHost();
-
-        // The cms will catch most of these well
-        if (empty($host) || Uri::isInternal($url)) {
-            $internal = true;
-        }
-
-        $smart = $this->config->smartLinking;
-
-        if ($smart) {
-            $title = $bbcode->get_title($url);
-
-            // Keep the given text when the page title can not be read.
-            if ($title !== '') {
-                $content = $title;
-            }
-        }
-
-        $layout = KunenaLayout::factory('BBCode/URL');
-
-        if ($layout->getPath()) {
-            return (string) $layout
-                ->set('class', $class)
-                ->set('content', $content)
-                ->set('url', $url)
-                ->set('target', $target)
-                ->set('internal', $internal);
-        }
-
-        return false;
-    }
-
-    // Format a [list] tag, which is complicated by the number of different
-    // ways a list can be started.  The following parameters are allowed:
-    //
-    //   [list]           Unordered list, using default marker
-    //   [list=circle]    Unordered list, using circle marker
-    //   [list=disc]      Unordered list, using disc marker
-    //   [list=square]    Unordered list, using square marker
-    //
-    //   [list=1]         Ordered list, numeric, starting at 1
-    //   [list=A]         Ordered list, capital letters, starting at A
-    //   [list=a]         Ordered list, lowercase letters, starting at a
-    //   [list=I]         Ordered list, capital Roman numerals, starting at I
-    //   [list=i]         Ordered list, lowercase Roman numerals, starting at i
-    //   [list=greek]     Ordered list, lowercase Greek letters, starting at alpha
-    //   [list=01]        Ordered list, two-digit numeric with 0-padding, starting at 01
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoSize($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        if ($default == 200) {
-            $default = 6;
-        } elseif ($default == 150) {
-            $default = 4;
-        } elseif ($default == 100) {
-            $default = 3;
-        } elseif ($default == 85) {
-            $default = 2;
-        } elseif ($default == 50) {
-            $default = 1;
-        }
-
-        $layout = KunenaLayout::factory('BBCode/Size');
-
-        if ($layout->getPath()) {
-            return (string) $layout
-                ->set('content', $content)
-                ->set('size', $default);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     */
-    public function DoList($bbcode, $action, $name, $default, $params, $content)
-    {
-        // Allowed list styles, striaght from the CSS 2.1 spec.  The only prohibited
-        // list style is that with image-based markers, which often slows down web sites.
-        $list_styles    = ['1' => 'decimal', '01' => 'decimal-leading-zero', 'i' => 'lower-roman', 'I' => 'upper-roman', 'a' => 'lower-alpha', 'A' => 'upper-alpha'];
-        $ci_list_styles = ['circle' => 'circle', 'disc' => 'disc', 'square' => 'square', 'greek' => 'lower-greek', 'armenian' => 'armenian', 'georgian' => 'georgian'];
-        $ul_types       = ['circle' => 'circle', 'disc' => 'disc', 'square' => 'square'];
-        $default        = trim($default);
-
-        if (!$default) {
-            $tag_rule = $bbcode->getRule($name);
-
-            if (isset($tag_rule['default'])) {
-                $default = $tag_rule['default']['_default'];
-            } else {
-                $default = $tag_rule['default'] = [];
-            }
-        }
-
-        if ($action == BBCode::BBCODE_CHECK) {
-            if (!\is_string($default) || \strlen($default) === 0) {
-                return true;
-            } elseif (isset($list_styles[$default])) {
-                return true;
-            } elseif (isset($ci_list_styles[strtolower($default)])) {
-                return true;
-            }
-
-            return false;
-
-        }
-
-        // Choose a list element (<ul> or <ol>) and a style.
-        $type = '';
-        $elem = 'ul';
-
-        if (!\is_string($default) || \strlen($default) === 0) {
-            $elem = 'ul';
-        } elseif ($default == '1') {
-            $elem = 'ol';
-        } elseif (isset($list_styles[$default])) {
-            $elem = 'ol';
-            $type = $list_styles[$default];
-        } else {
-            $default = strtolower($default);
-
-            if (isset($ul_types[$default])) {
-                $elem = 'ul';
-                $type = $ul_types[$default];
-            } elseif (isset($ci_list_styles[$default])) {
-                $elem = 'ol';
-                $type = $ci_list_styles[$default];
-            }
-        }
-
-        // Generate the HTML for it.
-        if (\strlen($type)) {
-            return "\n<$elem class=\"bbcode_list\" style=\"list-style-type:$type\">\n$content</$elem>\n";
-        }
-
-        return "\n<$elem class=\"bbcode_list\">\n$content</$elem>\n";
-
-    }
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoSpoiler($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
-            return "[{$name}]{$content}";
-        }
-
-        // Display only spoiler text in activity streams etc..
-        if (!empty($bbcode->parent->forceMinimal)) {
-            return '[' . ($default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
-        }
-
-        $document = Factory::getApplication()->getDocument();
-        $title    = $default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER');
-        $hidden   = ($document instanceof HtmlDocument);
-
-        $layout = KunenaLayout::factory('BBCode/Spoiler');
-
-        if ($layout->getPath()) {
-            $content = preg_replace('#<script(.*?)>(.*?)</script(.*?)>#is', '', $content);
-
-            return (string) $layout
-                ->set('title', htmlspecialchars($title, ENT_COMPAT, 'UTF-8'))
-                ->set('hidden', $hidden)
-                ->set('content', $content)
-                ->set('params', $params);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoHide($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
-            return "[{$name}]{$content}";
-        }
-
-        // Display nothing in activity streams etc..
-        if (!empty($bbcode->parent->forceSecure)) {
-            return '';
-        }
-
-        // Display nothing in subscription mails
-        if (!empty($bbcode->context)) {
-            return '';
-        }
-
-        if (!Factory::getApplication()->getIdentity()->guest) {
-            $layout = KunenaLayout::factory('BBCode/Hide');
-
-            if ($layout->getPath()) {
-                return (string) $layout
-                    ->set('me', $this->me)
-                    ->set('content', $content)
-                    ->set('params', $params);
-            }
-        } else {
-            return '<br />' . Text::_('COM_KUNENA_BBCODE_HIDDENTEXT') . '<br />';
-        }
-
-        return false;
-    }
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoConfidential($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
-            return "[{$name}]{$content}";
-        }
-
-        // Display nothing in activity streams etc..
-        if (!empty($bbcode->parent->forceSecure)) {
-            return '';
-        }
-
-        // Display nothing in subscription mails
-        if (!empty($bbcode->context)) {
-            return '';
-        }
-
-        $me        = KunenaUserHelper::getMyself();
-
-        if (($bbcode->parent->message ?? null) instanceof KunenaMessage) {
-            $message_userid     = $bbcode->parent->message->userid;
-            $KunenaForumMessage = $bbcode->parent->message;
-        } elseif ($bbcode->parent instanceof KunenaMessage) {
-            $message_userid     = $bbcode->parent->userid;
-            $KunenaForumMessage = $bbcode->parent;
-        } else {
-            $message_userid = 0;
-            // Just create here empty KunenaForumMessage object just in case to avoid issue when calling it just after
-            $KunenaForumMessage = KunenaMessageHelper::get();
-        }
-
-        $moderator = $me->userid && $me->isModerator($KunenaForumMessage->getCategory());
-
-        if (($me->userid && $message_userid == $me->userid) || $moderator) {
-            $layout = KunenaLayout::factory('BBCode/Confidential');
-
-            if ($layout->getPath()) {
-                return (string) $layout
-                    ->set('me', $this->me)
-                    ->set('content', $content)
-                    ->set('params', $params);
-            }
-        } else {
-            return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '</div>';
-        }
-
-        return false;
-    }
-
-    /**
-     * @return  mixed
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getMessage()
-    {
-        if (empty($this->parent)) {
-            return false;
-        }
-
-        if ($this->parent instanceof KunenaMessage) {
-            return $this->parent;
-        }
-
-        return $this->parent->message ?? false;
-    }
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  bool|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoMap($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        $content = trim($content);
-
-        if (empty($content)) {
-            echo '<div class="alert alert-error">' . Text::_('COM_KUNENA_LIB_BBCODE_MAP_ERROR_CITY_MISSING') . '</div>';
-
-            return false;
-        }
-
-        $document = Factory::getApplication()->getDocument();
-
-        // Display only link in activity streams etc..
-        if (!empty($bbcode->parent->forceMinimal) || !($document instanceof HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Map')) {
-            $url = KunenaMap::linkUrl($bbcode->UnHTMLEncode($content));
-
-            return '<a href="' . $url . '" rel="nofollow noopener noreferrer" target="_blank">' . $content . '</a>';
-        }
-
-        $this->mapid++;
-
-        $layout = KunenaLayout::factory('BBCode/Map');
-
-        if ($layout->getPath()) {
-            return (string) $layout
-                ->set('content', $content)
-                ->set('mapid', $this->mapid)
-                ->set('params', $params)
-                ->set('config', $this->config);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoEbay($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        if (KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Ebay')) {
-            return false;
-        }
-
-        $config = KunenaFactory::getConfig();
-
-        if (!is_numeric($content)) {
-            echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
-
-            return false;
-        }
-
-        // Display tag in activity streams etc..
-        if (!empty($bbcode->parent->forceMinimal)) {
-            if (!is_numeric($config->ebayAffiliateId)) {
-                return false;
-            }
-
-            return '<a target="_blank" rel="noopener noreferrer" href="https://www.ebay.com/itm/' . $content . '?lang=' . $this->config->ebayLanguage . '&campid=' . $this->config->ebayAffiliateId . '">www.ebay.com/itm/' . $content . '</a>';
-        }
-
-        return self::renderEbayLayout($content);
-    }
-
-    /**
-     * Render eBay layout from template
-     *
-     * @param   int  $ItemID  id
-     *
-     * @return  false|string
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function renderEbayLayout(int $ItemID)
-    {
-        // Because the method renderEbayLayout is called in static way need to keep the call of config class here
-        $config = KunenaFactory::getConfig();
-
-        if (empty($config->ebayApiKey) || empty($config->ebayCertId)) {
-            echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
-
-            return false;
-        }
-
-        $layout = KunenaLayout::factory('BBCode/eBay');
-
-        if ($layout->getPath()) {
-            $ebay = self::getEbayItemFromCache($ItemID, $config);
-
-            if (\is_object($ebay)) {
-                return (string) $layout
-                    ->set('content', $ItemID)
-                    // ->set('params', $params)
-                    ->set('naturalurl', $ebay->ViewItemURLForNaturalSearch)
-                    ->set('pictureurl', $ebay->PictureURL[0])
-                    ->set('status', $ebay->ListingStatus)
-                    ->set('title', $ebay->Title)
-                    ->setLayout(is_numeric($ItemID) ? 'default' : 'search');
-            }
-            echo '<b>' . $ebay . '</b>';
-
-            return false;
-
-        }
-
-        return false;
-    }
-
-    /**
-     * Load eBay object item from cache
-     *
-     * @param   int  $ItemID  The eBay ID of object to query.
-     * @param   KunenaConfig $config  Kunena configuration object
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function getEbayItemFromCache(int $ItemID, KunenaConfig $config): stdClass
-    {
-        $options = ['defaultgroup' => 'Kunena_ebay_request'];
-        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
-        $cache->setCaching(true);
-
-        if ($config->cacheTime == 0) {
-            $config->cacheTime = 60;
-        }
-
-        $cache->setLifeTime($config->cacheTime);
-
-        /**
-         * TOOD : fix method call() give an error
-         */
-        //return $cache->call(['KunenaBbcodeLibrary', 'getEbayItem'], $ItemID);
-        return KunenaBbcodeLibrary::getEbayItem($ItemID, $config);
     }
 
     /**
@@ -2105,6 +1341,752 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      * @return  boolean|string
      *
      * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoAttachment($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        // Display nothing in subscription mails
+        if (!empty($bbcode->context)) {
+            return '';
+        }
+
+        $attachments = null;
+
+        if ($bbcode->parent instanceof KunenaMessage) {
+            $attachments = $bbcode->parent->getAttachments();
+        } elseif (\is_object($bbcode->parent) && isset($bbcode->parent->attachments)) {
+            $attachments = &$bbcode->parent->attachments;
+        }
+
+        $attachment = null;
+
+        if (!empty($default)) {
+            $attachment = KunenaAttachmentHelper::get($default);
+
+            // Only an attachment of this message (or one which the user has just uploaded for it) is shown: a number in the text
+            // must not show the file of another message, which the reader may not see.
+            $mine = !$attachment->mesid && $attachment->userid && (int) $attachment->userid === (int) KunenaUserHelper::getMyself()->userid;
+
+            if (!$attachment->exists() || (!isset($attachments[$attachment->id]) && !$mine)) {
+                return $bbcode->HTMLEncode($content);
+            }
+
+            unset($attachments[$attachment->id]);
+        } elseif (empty($content) && !empty($attachments)) {
+            $attachment = array_shift($attachments);
+        } elseif (!empty($attachments)) {
+            foreach ($attachments as $att) {
+                if ($att->getFilename() == $content) {
+                    $attachment = $att;
+                    unset($attachments[$att->id]);
+                    break;
+                }
+            }
+        } else {
+            return '';
+        }
+
+        // Display tag in activity streams etc..
+        if (!isset($attachments) || !empty($bbcode->parent->forceMinimal)) {
+            if ($attachment->isImage()) {
+                $hide = $this->config->showImgForGuest == 0 && Factory::getApplication()->getIdentity()->id == 0;
+
+                if (!$hide) {
+                    return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
+                }
+            } elseif ($attachment->isVideo()) {
+                $hide = $this->config->showFileForGuest == 0 && Factory::getApplication()->getIdentity()->id == 0;
+
+                if (!$hide) {
+                    return "<div class=\"kmsgvideo\">{$attachment->getUrl()}</div>";
+                }
+            } else {
+                $hide = $this->config->showFileForGuest == 0 && Factory::getApplication()->getIdentity()->id == 0;
+
+                if (!$hide) {
+                    return "<div class=\"kmsgattach\"><h4>" . Text::_('COM_KUNENA_FILEATTACH') . "</h4>" . Text::_('COM_KUNENA_FILENAME') . " <a href=\"" . $attachment->getUrl() . "\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">" . $attachment->filename . "</a><br />" . Text::_('COM_KUNENA_FILESIZE') . ' ' . number_format(\intval($attachment->size) / 1024, 0, '', ',') . ' KB' . "</div>";
+                }
+            }
+        }
+
+        if (!$attachment && !empty($bbcode->parent->inline_attachments)) {
+            foreach ($bbcode->parent->inline_attachments as $att) {
+                if ($att->getFilename() == trim(strip_tags($content))) {
+                    $attachment = $att;
+                    break;
+                }
+            }
+        }
+
+        if (!$attachment) {
+            return $bbcode->HTMLEncode($content);
+        }
+
+        return $this->renderAttachment($attachment, $bbcode);
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoCode($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        $type = isset($params["type"]) ? $params["type"] : (isset($default) ? $default : "php");
+
+        if ($type == 'js') {
+            $type = 'javascript';
+        } elseif ($type == 'html') {
+            $type = 'html4strict';
+        }
+
+        if ($type == 'less' || $type == 'scss' || $type == 'sass') {
+            $type = 'css';
+        }
+
+        $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
+        if ($type) {
+            $code = '<pre xml:' . $type . '>' . $content . '</pre>';
+        } else {
+            $code = '<pre>' . $content . '</pre>';
+        }
+
+        return '<div class="highlight">' . $code . '</div>';
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoConfidential($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
+            return "[{$name}]{$content}";
+        }
+
+        // Display nothing in activity streams etc..
+        if (!empty($bbcode->parent->forceSecure)) {
+            return '';
+        }
+
+        // Display nothing in subscription mails
+        if (!empty($bbcode->context)) {
+            return '';
+        }
+
+        $me        = KunenaUserHelper::getMyself();
+
+        if (($bbcode->parent->message ?? null) instanceof KunenaMessage) {
+            $message_userid     = $bbcode->parent->message->userid;
+            $KunenaForumMessage = $bbcode->parent->message;
+        } elseif ($bbcode->parent instanceof KunenaMessage) {
+            $message_userid     = $bbcode->parent->userid;
+            $KunenaForumMessage = $bbcode->parent;
+        } else {
+            $message_userid = 0;
+            // Just create here empty KunenaForumMessage object just in case to avoid issue when calling it just after
+            $KunenaForumMessage = KunenaMessageHelper::get();
+        }
+
+        $moderator = $me->userid && $me->isModerator($KunenaForumMessage->getCategory());
+
+        if (($me->userid && $message_userid == $me->userid) || $moderator) {
+            $layout = KunenaLayout::factory('BBCode/Confidential');
+
+            if ($layout->getPath()) {
+                return (string) $layout
+                    ->set('me', $this->me)
+                    ->set('content', $content)
+                    ->set('params', $params);
+            }
+        } else {
+            return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '</div>';
+        }
+
+        return false;
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoEbay($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        if (KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Ebay')) {
+            return false;
+        }
+
+        $config = KunenaFactory::getConfig();
+
+        if (!is_numeric($content)) {
+            echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
+
+            return false;
+        }
+
+        // Display tag in activity streams etc..
+        if (!empty($bbcode->parent->forceMinimal)) {
+            if (!is_numeric($config->ebayAffiliateId)) {
+                return false;
+            }
+
+            return '<a target="_blank" rel="noopener noreferrer" href="https://www.ebay.com/itm/' . $content . '?lang=' . $this->config->ebayLanguage . '&campid=' . $this->config->ebayAffiliateId . '">www.ebay.com/itm/' . $content . '</a>';
+        }
+
+        return self::renderEbayLayout($content);
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|mixed|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoEmail($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        $email     = \is_string($default) ? $default : $bbcode->UnHTMLEncode($content);
+        $result    = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+        if (!$result) {
+            return;
+        }
+
+        $text      = \is_string($default) ? $bbcode->UnHTMLEncode($content) : $default;
+        $text      = trim($text && $email != $text ? $text : '');
+        $mailto    = $bbcode->IsValidEmail($email);
+        $result    = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+        if (\is_string($result)) {
+            $isLink = true;
+        } else {
+            $isLink = false;
+            $mailto = $result;
+        }
+
+        $layout = KunenaLayout::factory('BBCode/Email');
+
+        if ($layout->getPath()) {
+            return (string) $layout
+                ->set('email', $email)
+                ->set('isLink', $isLink)
+                ->set('mailto', $mailto)
+                ->set('text', $text);
+        }
+
+        if ($bbcode->canCloakEmail($params)) {
+            return HTMLHelper::_('email.cloak', htmlspecialchars($email), $bbcode->IsValidEmail($email), htmlspecialchars($text), $bbcode->IsValidEmail($text));
+        }
+
+        return '<a href="mailto:' . htmlspecialchars($email) . '">' . htmlspecialchars($text) . '</a>';
+
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoFile($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        // Display nothing in subscription mails
+        if (!empty($bbcode->context)) {
+            return '';
+        }
+
+        // Display tag in activity streams etc..
+        if (!empty($bbcode->parent->forceMinimal)) {
+            return '[ ' . basename(!empty($params["name"]) ? $params["name"] : trim(strip_tags($content))) . ' ]';
+        }
+
+        // Make sure that filename does not contain path or URL.
+        $filename = basename(!empty($params['name']) ? $params['name'] : $bbcode->UnHTMLEncode(trim(strip_tags($content))));
+        $path     = "attachments/legacy/files/{$filename}";
+        $filepath = KPATH_MEDIA . '/' . $path;
+        $fileurl  = KURL_MEDIA . '/' . $path;
+
+        // Legacy attachments support.
+        if (isset($bbcode->parent->attachments)) {
+            $attachments = &$bbcode->parent->attachments;
+
+            foreach ($attachments as $id => $attachment) {
+                if ($attachment->getFilename() == $filename && $attachment->folder == 'media/kunena/attachments/legacy/files') {
+                    unset($attachments[$id]);
+
+                    return $this->renderAttachment($attachment, $bbcode, false);
+                }
+            }
+        }
+
+        $layout = KunenaLayout::factory('BBCode/File')
+            ->set('url', null)
+            ->set('filename', null)
+            ->set('size', 0)
+            ->set('canLink', $bbcode->autoLink_disable == 0);
+
+        if (Factory::getApplication()->getIdentity()->id == 0 && $this->config->showFileForGuest == 0) {
+            // Hide between content from non registered users
+            return (string) $layout
+                ->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'))
+                ->setLayout('unauthorised');
+        }
+
+        $layout->set('filename', $filename);
+        $layout->set('size', isset($params['size']) ? $params['size'] : 0);
+
+        if (!is_file($filepath)) {
+            // File does not exist (or URL was pointing somewhere else).
+            $layout
+                ->set('title', Text::sprintf('COM_KUNENA_ATTACHMENT_DELETED', $bbcode->HTMLEncode($filename)))
+                ->setLayout('deleted');
+        } else {
+            $layout
+                ->set('title', Text::_('COM_KUNENA_FILEATTACH'))
+                ->set('url', $fileurl)
+                ->set('size', fileSize($filepath));
+        }
+
+        return (string) $layout;
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoHide($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
+            return "[{$name}]{$content}";
+        }
+
+        // Display nothing in activity streams etc..
+        if (!empty($bbcode->parent->forceSecure)) {
+            return '';
+        }
+
+        // Display nothing in subscription mails
+        if (!empty($bbcode->context)) {
+            return '';
+        }
+
+        if (!Factory::getApplication()->getIdentity()->guest) {
+            $layout = KunenaLayout::factory('BBCode/Hide');
+
+            if ($layout->getPath()) {
+                return (string) $layout
+                    ->set('me', $this->me)
+                    ->set('content', $content)
+                    ->set('params', $params);
+            }
+        } else {
+            return '<br />' . Text::_('COM_KUNENA_BBCODE_HIDDENTEXT') . '<br />';
+        }
+
+        return false;
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoImage($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        $fileurl = $bbcode->UnHTMLEncode(trim(strip_tags($content)));
+
+        if (!$bbcode->IsValidURL($fileurl, false, true)) {
+            return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
+        }
+
+        $filename = basename($fileurl);
+
+        // Display tag in activity streams etc..
+        if (!empty($bbcode->parent->forceMinimal)) {
+            return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $bbcode->HTMLEncode($filename) . '</a>';
+        }
+
+        // Legacy attachments support.
+        if (isset($bbcode->parent->attachments) && strpos($fileurl, '/media/kunena/attachments/legacy/images/') !== false) {
+            // Remove attachment from the attachments list and show it if it exists.
+            $attachments = &$bbcode->parent->attachments;
+
+            foreach ($attachments as $id => $attachment) {
+                if ($attachment->getFilename() == $filename && $attachment->folder == 'media/kunena/attachments/legacy/images') {
+                    unset($attachments[$id]);
+
+                    return $this->renderAttachment($attachment, $bbcode);
+                }
+            }
+        }
+
+        // Get the words set on alt params when alt is used like that : alt=my words; see issue #6751
+        $matches = [];
+        $altText = null;
+        preg_match('/\balt=([^\]=]*?)(?=\s+\w+=|\s*\]|$)/', $params['_tag'], $matches);
+        if (\count($matches) > 0) {
+            $altText = trim($matches[1]);
+        }
+
+        $layout = KunenaLayout::factory('BBCode/Image')
+            ->set('title', Text::_('COM_KUNENA_FILEATTACH'))
+            ->set('url', null)
+            ->set('filename', null)
+            ->set('size', isset($params['size']) ? $params['size'] : 0)
+            ->set('float', isset($params['float']) ? $params['float'] : 0)
+            ->set('alt', \count($matches) > 0 ? $altText : 0)
+            ->set('canLink', $bbcode->autoLink_disable == 0);
+
+        // When image is set to don't show to guest, it should display the smilies
+        if (Factory::getApplication()->getIdentity()->id == 0 && $this->config->showImgForGuest == 0 && !preg_match('@media\/kunena\/emoticons@', $fileurl)) {
+            // Hide between content from non registered users.
+            return (string) $layout->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
+        }
+
+        // Obey image security settings.
+        if ($this->config->bbcodeImgSecure != 'image') {
+            if ($bbcode->autoLink_disable == 0 && !preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl)) {
+                // If the image has not legal extension, return it as link or text.
+                if ($this->config->bbcodeImgSecure == 'link') {
+                    if (!preg_match('`^(/|https?://)`', $fileurl)) {
+                        $fileurl = 'http://' . $fileurl;
+                    }
+
+                    // TODO: call URL layout instead..
+                    return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $bbcode->HTMLEncode($fileurl) . '</a>';
+                }
+
+                return $bbcode->HTMLEncode($fileurl);
+
+            }
+        }
+
+        return (string) $layout->set('url', $fileurl);
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     */
+    public static function DoInstagram($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        if (!empty($content)) {
+            return self::renderInstagram($bbcode, $content);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     */
+    public function DoList($bbcode, $action, $name, $default, $params, $content)
+    {
+        // Allowed list styles, striaght from the CSS 2.1 spec.  The only prohibited
+        // list style is that with image-based markers, which often slows down web sites.
+        $list_styles    = ['1' => 'decimal', '01' => 'decimal-leading-zero', 'i' => 'lower-roman', 'I' => 'upper-roman', 'a' => 'lower-alpha', 'A' => 'upper-alpha'];
+        $ci_list_styles = ['circle' => 'circle', 'disc' => 'disc', 'square' => 'square', 'greek' => 'lower-greek', 'armenian' => 'armenian', 'georgian' => 'georgian'];
+        $ul_types       = ['circle' => 'circle', 'disc' => 'disc', 'square' => 'square'];
+        $default        = trim($default);
+
+        if (!$default) {
+            $tag_rule = $bbcode->getRule($name);
+
+            if (isset($tag_rule['default'])) {
+                $default = $tag_rule['default']['_default'];
+            } else {
+                $default = $tag_rule['default'] = [];
+            }
+        }
+
+        if ($action == BBCode::BBCODE_CHECK) {
+            if (!\is_string($default) || \strlen($default) === 0) {
+                return true;
+            } elseif (isset($list_styles[$default])) {
+                return true;
+            } elseif (isset($ci_list_styles[strtolower($default)])) {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        // Choose a list element (<ul> or <ol>) and a style.
+        $type = '';
+        $elem = 'ul';
+
+        if (!\is_string($default) || \strlen($default) === 0) {
+            $elem = 'ul';
+        } elseif ($default == '1') {
+            $elem = 'ol';
+        } elseif (isset($list_styles[$default])) {
+            $elem = 'ol';
+            $type = $list_styles[$default];
+        } else {
+            $default = strtolower($default);
+
+            if (isset($ul_types[$default])) {
+                $elem = 'ul';
+                $type = $ul_types[$default];
+            } elseif (isset($ci_list_styles[$default])) {
+                $elem = 'ol';
+                $type = $ci_list_styles[$default];
+            }
+        }
+
+        // Generate the HTML for it.
+        if (\strlen($type)) {
+            return "\n<$elem class=\"bbcode_list\" style=\"list-style-type:$type\">\n$content</$elem>\n";
+        }
+
+        return "\n<$elem class=\"bbcode_list\">\n$content</$elem>\n";
+
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  bool|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoMap($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        $content = trim($content);
+
+        if (empty($content)) {
+            echo '<div class="alert alert-error">' . Text::_('COM_KUNENA_LIB_BBCODE_MAP_ERROR_CITY_MISSING') . '</div>';
+
+            return false;
+        }
+
+        $document = Factory::getApplication()->getDocument();
+
+        // Display only link in activity streams etc..
+        if (!empty($bbcode->parent->forceMinimal) || !($document instanceof HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Map')) {
+            $url = KunenaMap::linkUrl($bbcode->UnHTMLEncode($content));
+
+            return '<a href="' . $url . '" rel="nofollow noopener noreferrer" target="_blank">' . $content . '</a>';
+        }
+
+        $this->mapid++;
+
+        $layout = KunenaLayout::factory('BBCode/Map');
+
+        if ($layout->getPath()) {
+            return (string) $layout
+                ->set('content', $content)
+                ->set('mapid', $this->mapid)
+                ->set('params', $params)
+                ->set('config', $this->config);
+        }
+
+        return false;
+    }
+
+    /**
+     * Handle mention bbcode tag in the message
+     *
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.3
+     * @throws  Exception
+     */
+    public function DoMention($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        // A mention which has no user (no id, or an id which is not a user) is the text of the mention.
+        $userid = (int) ($params['userid'] ?? 0);
+        $user   = $userid > 0 ? KunenaUserHelper::get($userid) : null;
+
+        if (!$user || !$user->exists()) {
+            return '@' . $content;
+        }
+
+        $urlUserProfile = $user->getURL();
+
+        return '<a href="' . $urlUserProfile . '" data-bs-toggle="tooltip" title="' . $content . '">@' . $content . '</a>';
+    }
+
+    /**
+     * Handle private bbcode tag in the message
+     *
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoPrivate($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
+            return "[{$name}]{$content}";
+        }
+
+        // Display nothing in activity streams etc..
+        if (!empty($bbcode->parent->forceSecure)) {
+            return '';
+        }
+
+        // Display nothing in subscription mails
+        if (!empty($bbcode->context)) {
+            return '';
+        }
+
+        return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_SECURE_TEXT_GUESTS') . '</div>';
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
      * @throws Exception
      */
     public function DoQuote($bbcode, $action, $name, $default, $params, $content)
@@ -2170,6 +2152,22 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         return '';
     }
 
+    // Format a [list] tag, which is complicated by the number of different
+    // ways a list can be started.  The following parameters are allowed:
+    //
+    //   [list]           Unordered list, using default marker
+    //   [list=circle]    Unordered list, using circle marker
+    //   [list=disc]      Unordered list, using disc marker
+    //   [list=square]    Unordered list, using square marker
+    //
+    //   [list=1]         Ordered list, numeric, starting at 1
+    //   [list=A]         Ordered list, capital letters, starting at A
+    //   [list=a]         Ordered list, lowercase letters, starting at a
+    //   [list=I]         Ordered list, capital Roman numerals, starting at I
+    //   [list=i]         Ordered list, lowercase Roman numerals, starting at i
+    //   [list=greek]     Ordered list, lowercase Greek letters, starting at alpha
+    //   [list=01]        Ordered list, two-digit numeric with 0-padding, starting at 01
+
     /**
      * @param   mixed  $bbcode   bbcode
      * @param   mixed  $action   action
@@ -2183,32 +2181,123 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      * @since   Kunena 6.0
      * @throws  Exception
      */
-    public function DoCode($bbcode, $action, $name, $default, $params, $content)
+    public function DoSize($bbcode, $action, $name, $default, $params, $content)
     {
         if ($action == BBCode::BBCODE_CHECK) {
             return true;
         }
 
-        $type = isset($params["type"]) ? $params["type"] : (isset($default) ? $default : "php");
-
-        if ($type == 'js') {
-            $type = 'javascript';
-        } elseif ($type == 'html') {
-            $type = 'html4strict';
+        if ($default == 200) {
+            $default = 6;
+        } elseif ($default == 150) {
+            $default = 4;
+        } elseif ($default == 100) {
+            $default = 3;
+        } elseif ($default == 85) {
+            $default = 2;
+        } elseif ($default == 50) {
+            $default = 1;
         }
 
-        if ($type == 'less' || $type == 'scss' || $type == 'sass') {
-            $type = 'css';
+        $layout = KunenaLayout::factory('BBCode/Size');
+
+        if ($layout->getPath()) {
+            return (string) $layout
+                ->set('content', $content)
+                ->set('size', $default);
         }
 
-        $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-        if ($type) {
-            $code = '<pre xml:' . $type . '>' . $content . '</pre>';
-        } else {
-            $code = '<pre>' . $content . '</pre>';
+        return false;
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     */
+    public function DoSoundcloud($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
         }
 
-        return '<div class="highlight">' . $code . '</div>';
+        if (!empty($content)) {
+            // Display tag in activity streams etc..
+            if (!empty($bbcode->parent->forceMinimal)) {
+                return "<a href=\"" . $content . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $content . '</a>';
+            }
+
+            $content = strip_tags($content);
+
+            $url = trim($content);
+
+            if (!preg_match('#^(/|https?:|ftp:)#ui', $url)) {
+                // Add scheme to raw domain URLs.
+                $url = "https://{$content}";
+            }
+
+            $url_parsed = parse_url($url);
+
+            if (\is_array($url_parsed) && ($url_parsed['host'] ?? '') == 'soundcloud.com') {
+                return '<iframe allowtransparency="true" width="100%" height="350" style="border: 0" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoSpoiler($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
+            return "[{$name}]{$content}";
+        }
+
+        // Display only spoiler text in activity streams etc..
+        if (!empty($bbcode->parent->forceMinimal)) {
+            return '[' . ($default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
+        }
+
+        $document = Factory::getApplication()->getDocument();
+        $title    = $default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER');
+        $hidden   = ($document instanceof HtmlDocument);
+
+        $layout = KunenaLayout::factory('BBCode/Spoiler');
+
+        if ($layout->getPath()) {
+            $content = preg_replace('#<script(.*?)>(.*?)</script(.*?)>#is', '', $content);
+
+            return (string) $layout
+                ->set('title', htmlspecialchars($title, ENT_COMPAT, 'UTF-8'))
+                ->set('hidden', $hidden)
+                ->set('content', $content)
+                ->set('params', $params);
+        }
+
+        return false;
     }
 
     /**
@@ -2269,6 +2358,185 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         }
 
         return '';
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoTerminal($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        $layout = KunenaLayout::factory('BBCode/Terminal');
+
+        // The colour of the text is a hexadecimal colour, with or without #, like [terminal colortext="#00ff00"]. Without it, or with a
+        // colour which is no colour, the start colour is used: the text of the user is never dropped.
+        $color = ltrim(trim((string) ($params['colortext'] ?? '')), '#');
+
+        if (!preg_match('/^(?:[0-9a-f]{3}|[0-9a-f]{6})$/i', $color)) {
+            $color = 'ffffff';
+        }
+
+        $params['colortext'] = '#' . $color;
+
+        if ($layout->getPath()) {
+            return (string) $layout
+                ->set('content', $content)
+                ->set('params', $params);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoTweet($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        // Display nothing in subscription mails
+        if (!empty($bbcode->context)) {
+            return '';
+        }
+
+        if (KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('X_Social')) {
+            return false;
+        }
+
+        $tweetid = trim($content);
+
+        // A tweet id only contains digits; is_numeric() would also accept "1e5", "1.5" or " 12".
+        if (!ctype_digit($tweetid) || \strlen($tweetid) > 18) {
+            return false;
+        }
+
+        // Display tag in activity streams etc..
+        if (!empty($bbcode->parent->forceMinimal)) {
+            return "<a href=\"https://x.com/kunena/status/" . $tweetid . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . Text::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
+        }
+
+        return $this->renderTweet($tweetid);
+    }
+
+    // Format a [size] tag by producing a <span> with a style with a different font-size.
+
+    /**
+     * Format a [url] tag by producing an <a>...</a> element.
+     * The URL only allows http, https, mailto, and ftp protocols for safety.
+     *
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoURL($bbcode, $action, $name, $default, $params, $content)
+    {
+        // We can't check this with BBCODE_CHECK because we may have no URL before the content
+        // Has been processed.
+        if ($action == BBCode::BBCODE_CHECK) {
+            $bbcode->autoLink_disable++;
+
+            return true;
+        }
+
+        $bbcode->autoLink_disable--;
+        $url      = $default ? $default : strip_tags($bbcode->UnHTMLEncode($content));
+        $url      = preg_replace('# #u', '%20', $url);
+        $internal = false;
+
+        if (preg_match('#^(index.php?)#uim', $url)) {
+            $url = Route::_($url, false);
+        }
+
+        if (preg_match('#^(/index.php?)#uim', $url)) {
+            $str = substr($url, 1);
+            $url = Route::_($str, false);
+        }
+
+        if (!preg_match('#^(/|https?:|ftp:)#uim', $url)) {
+            $url = "http://{$url}";
+        }
+
+        if (!$bbcode->IsValidURL($url, false, true)) {
+            if (KunenaFactory::getConfig()->autoEmbedYoutube) {
+                return $content;
+            }
+
+            return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
+
+        }
+
+        if (isset($params['target'])) {
+            $target = $bbcode->url_target;
+            $class  = $params['class'];
+        } else {
+            $target = '';
+            $class  = null;
+        }
+
+        $uri  = Uri::getInstance($url);
+        $host = $uri->getHost();
+
+        // The cms will catch most of these well
+        if (empty($host) || Uri::isInternal($url)) {
+            $internal = true;
+        }
+
+        $smart = $this->config->smartLinking;
+
+        if ($smart) {
+            $title = $bbcode->get_title($url);
+
+            // Keep the given text when the page title can not be read.
+            if ($title !== '') {
+                $content = $title;
+            }
+        }
+
+        $layout = KunenaLayout::factory('BBCode/URL');
+
+        if ($layout->getPath()) {
+            return (string) $layout
+                ->set('class', $class)
+                ->set('content', $content)
+                ->set('url', $url)
+                ->set('target', $target)
+                ->set('internal', $internal);
+        }
+
+        return false;
     }
 
     /**
@@ -2513,433 +2781,109 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     }
 
     /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
+     * Query from eBay API the JSON stream of item id given to render
      *
-     * @return  boolean|string
+     * @param   int          $ItemID  The eBay ID of object to query
+     * @param   KunenaConfig $config  Kunena configuration object
      *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoAttachment($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        // Display nothing in subscription mails
-        if (!empty($bbcode->context)) {
-            return '';
-        }
-
-        $attachments = null;
-
-        if ($bbcode->parent instanceof KunenaMessage) {
-            $attachments = $bbcode->parent->getAttachments();
-        } elseif (\is_object($bbcode->parent) && isset($bbcode->parent->attachments)) {
-            $attachments = &$bbcode->parent->attachments;
-        }
-
-        $attachment = null;
-
-        if (!empty($default)) {
-            $attachment = KunenaAttachmentHelper::get($default);
-
-            // Only an attachment of this message (or one which the user has just uploaded for it) is shown: a number in the text
-            // must not show the file of another message, which the reader may not see.
-            $mine = !$attachment->mesid && $attachment->userid && (int) $attachment->userid === (int) KunenaUserHelper::getMyself()->userid;
-
-            if (!$attachment->exists() || (!isset($attachments[$attachment->id]) && !$mine)) {
-                return $bbcode->HTMLEncode($content);
-            }
-
-            unset($attachments[$attachment->id]);
-        } elseif (empty($content) && !empty($attachments)) {
-            $attachment = array_shift($attachments);
-        } elseif (!empty($attachments)) {
-            foreach ($attachments as $att) {
-                if ($att->getFilename() == $content) {
-                    $attachment = $att;
-                    unset($attachments[$att->id]);
-                    break;
-                }
-            }
-        } else {
-            return '';
-        }
-
-        // Display tag in activity streams etc..
-        if (!isset($attachments) || !empty($bbcode->parent->forceMinimal)) {
-            if ($attachment->isImage()) {
-                $hide = $this->config->showImgForGuest == 0 && Factory::getApplication()->getIdentity()->id == 0;
-
-                if (!$hide) {
-                    return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
-                }
-            } elseif ($attachment->isVideo()) {
-                $hide = $this->config->showFileForGuest == 0 && Factory::getApplication()->getIdentity()->id == 0;
-
-                if (!$hide) {
-                    return "<div class=\"kmsgvideo\">{$attachment->getUrl()}</div>";
-                }
-            } else {
-                $hide = $this->config->showFileForGuest == 0 && Factory::getApplication()->getIdentity()->id == 0;
-
-                if (!$hide) {
-                    return "<div class=\"kmsgattach\"><h4>" . Text::_('COM_KUNENA_FILEATTACH') . "</h4>" . Text::_('COM_KUNENA_FILENAME') . " <a href=\"" . $attachment->getUrl() . "\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">" . $attachment->filename . "</a><br />" . Text::_('COM_KUNENA_FILESIZE') . ' ' . number_format(\intval($attachment->size) / 1024, 0, '', ',') . ' KB' . "</div>";
-                }
-            }
-        }
-
-        if (!$attachment && !empty($bbcode->parent->inline_attachments)) {
-            foreach ($bbcode->parent->inline_attachments as $att) {
-                if ($att->getFilename() == trim(strip_tags($content))) {
-                    $attachment = $att;
-                    break;
-                }
-            }
-        }
-
-        if (!$attachment) {
-            return $bbcode->HTMLEncode($content);
-        }
-
-        return $this->renderAttachment($attachment, $bbcode);
-    }
-
-    /**
-     * @param   KunenaAttachment  $attachment    attachment
-     * @param   object            $bbcode        bbcode
-     * @param   bool              $displayImage  display image
-     *
-     * @return  string|void
+     * @return  string
      *
      * @since   Kunena 6.0
      * @throws Exception
      */
-    protected function renderAttachment(KunenaAttachment $attachment, object $bbcode, $displayImage = true)
+    public static function getEbayItem(int $ItemID, KunenaConfig $config): stdClass
     {
-        // Display nothing in subscription mails
-        if (!empty($bbcode->context)) {
-            return '';
-        }
+        $options = new Registry();
 
-        $layout = KunenaLayout::factory('BBCode/Attachment')
-            ->set('attachment', $attachment)
-            ->set('canLink', $bbcode->autoLink_disable == 0);
-        $bbcode->parent->inline_attachments[$attachment->id] = $attachment;
+        $transport = new StreamTransport($options);
 
-        if (!$attachment->exists() || !$attachment->getPath()) {
-            return (string) $layout->setLayout('deleted');
-        }
+        // Create a 'stream' transport.
+        $http = new Http($options, $transport);
 
-        if (!$attachment->isAuthorised() && !$this->config->showImgForGuest && $attachment->id != '0') {
-            return (string) $layout->setLayout('unauthorised');
-        }
+        $data = ['grant_type' => 'client_credentials', 'scope' => 'https://api.ebay.com/oauth/api_scope'];
 
-        if (!$attachment->isAuthorised()) {
-            return (string) $layout->setLayout('unauthorised');
-        }
+        $headersOauth = [
+            'Content-Type'  => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Basic ' . base64_encode($config->ebayApiKey . ':' . $config->ebayCertId),
+        ];
 
-        if ($displayImage && $attachment->isImage()) {
-            $layout->setLayout('image');
-        }
+        $responseOauth = $http->post('https://api.ebay.com/identity/v1/oauth2/token', $data, $headersOauth);
 
-        return (string) $layout;
-    }
+        if ($responseOauth->code == '200') {
+            $resp  = json_decode($responseOauth->body);
+            $token = $resp->access_token;
 
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoFile($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
+            $headers = ['X-EBAY-API-IAF-TOKEN' => $token, 'X-EBAY-API-CALL-NAME' => 'GetSingleItem', 'X-EBAY-API-VERSION' => 1157];
 
-        // Display nothing in subscription mails
-        if (!empty($bbcode->context)) {
-            return '';
-        }
+            $response = $http->get('https://open.api.ebay.com/shopping?callname=GetSingleItem&siteid=0&responseencoding=JSON&ItemID='
+                . $ItemID . '&trackingid=' . $config->ebayAffiliateId . '&trackingpartnercode=9', $headers, '10');
 
-        // Display tag in activity streams etc..
-        if (!empty($bbcode->parent->forceMinimal)) {
-            return '[ ' . basename(!empty($params["name"]) ? $params["name"] : trim(strip_tags($content))) . ' ]';
-        }
+            if ($response->code == '200') {
+                $responseItem = json_decode($response->body);
 
-        // Make sure that filename does not contain path or URL.
-        $filename = basename(!empty($params['name']) ? $params['name'] : $bbcode->UnHTMLEncode(trim(strip_tags($content))));
-        $path     = "attachments/legacy/files/{$filename}";
-        $filepath = KPATH_MEDIA . '/' . $path;
-        $fileurl  = KURL_MEDIA . '/' . $path;
-
-        // Legacy attachments support.
-        if (isset($bbcode->parent->attachments)) {
-            $attachments = &$bbcode->parent->attachments;
-
-            foreach ($attachments as $id => $attachment) {
-                if ($attachment->getFilename() == $filename && $attachment->folder == 'media/kunena/attachments/legacy/files') {
-                    unset($attachments[$id]);
-
-                    return $this->renderAttachment($attachment, $bbcode, false);
+                if ($responseItem->Ack == 'Success') {
+                    return $responseItem->Item;
                 }
+                $errors = $responseItem->Errors;
+
+                throw new Exception('Render ebay item ' . $errors[0]->LongMessage);
+
             }
-        }
 
-        $layout = KunenaLayout::factory('BBCode/File')
-            ->set('url', null)
-            ->set('filename', null)
-            ->set('size', 0)
-            ->set('canLink', $bbcode->autoLink_disable == 0);
-
-        if (Factory::getApplication()->getIdentity()->id == 0 && $this->config->showFileForGuest == 0) {
-            // Hide between content from non registered users
-            return (string) $layout
-                ->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'))
-                ->setLayout('unauthorised');
-        }
-
-        $layout->set('filename', $filename);
-        $layout->set('size', isset($params['size']) ? $params['size'] : 0);
-
-        if (!is_file($filepath)) {
-            // File does not exist (or URL was pointing somewhere else).
-            $layout
-                ->set('title', Text::sprintf('COM_KUNENA_ATTACHMENT_DELETED', $bbcode->HTMLEncode($filename)))
-                ->setLayout('deleted');
+            throw new Exception('Render ebay item: the eBay API answered with HTTP status ' . $response->code);
         } else {
-            $layout
-                ->set('title', Text::_('COM_KUNENA_FILEATTACH'))
-                ->set('url', $fileurl)
-                ->set('size', fileSize($filepath));
-        }
+            $respOauthError = json_decode($responseOauth->body);
 
-        return (string) $layout;
+            throw new Exception($respOauthError->error_description);
+        }
     }
 
     /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
+     * Load eBay object item from cache
      *
-     * @return  boolean|string
+     * @param   int  $ItemID  The eBay ID of object to query.
+     * @param   KunenaConfig $config  Kunena configuration object
      *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoImage($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        $fileurl = $bbcode->UnHTMLEncode(trim(strip_tags($content)));
-
-        if (!$bbcode->IsValidURL($fileurl, false, true)) {
-            return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
-        }
-
-        $filename = basename($fileurl);
-
-        // Display tag in activity streams etc..
-        if (!empty($bbcode->parent->forceMinimal)) {
-            return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $bbcode->HTMLEncode($filename) . '</a>';
-        }
-
-        // Legacy attachments support.
-        if (isset($bbcode->parent->attachments) && strpos($fileurl, '/media/kunena/attachments/legacy/images/') !== false) {
-            // Remove attachment from the attachments list and show it if it exists.
-            $attachments = &$bbcode->parent->attachments;
-
-            foreach ($attachments as $id => $attachment) {
-                if ($attachment->getFilename() == $filename && $attachment->folder == 'media/kunena/attachments/legacy/images') {
-                    unset($attachments[$id]);
-
-                    return $this->renderAttachment($attachment, $bbcode);
-                }
-            }
-        }
-
-        // Get the words set on alt params when alt is used like that : alt=my words; see issue #6751
-        $matches = [];
-        $altText = null;
-        preg_match('/\balt=([^\]=]*?)(?=\s+\w+=|\s*\]|$)/', $params['_tag'], $matches);
-        if (\count($matches) > 0) {
-            $altText = trim($matches[1]);
-        }
-
-        $layout = KunenaLayout::factory('BBCode/Image')
-            ->set('title', Text::_('COM_KUNENA_FILEATTACH'))
-            ->set('url', null)
-            ->set('filename', null)
-            ->set('size', isset($params['size']) ? $params['size'] : 0)
-            ->set('float', isset($params['float']) ? $params['float'] : 0)
-            ->set('alt', \count($matches) > 0 ? $altText : 0)
-            ->set('canLink', $bbcode->autoLink_disable == 0);
-
-        // When image is set to don't show to guest, it should display the smilies
-        if (Factory::getApplication()->getIdentity()->id == 0 && $this->config->showImgForGuest == 0 && !preg_match('@media\/kunena\/emoticons@', $fileurl)) {
-            // Hide between content from non registered users.
-            return (string) $layout->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
-        }
-
-        // Obey image security settings.
-        if ($this->config->bbcodeImgSecure != 'image') {
-            if ($bbcode->autoLink_disable == 0 && !preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl)) {
-                // If the image has not legal extension, return it as link or text.
-                if ($this->config->bbcodeImgSecure == 'link') {
-                    if (!preg_match('`^(/|https?://)`', $fileurl)) {
-                        $fileurl = 'http://' . $fileurl;
-                    }
-
-                    // TODO: call URL layout instead..
-                    return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $bbcode->HTMLEncode($fileurl) . '</a>';
-                }
-
-                return $bbcode->HTMLEncode($fileurl);
-
-            }
-        }
-
-        return (string) $layout->set('url', $fileurl);
-    }
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoTerminal($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        $layout = KunenaLayout::factory('BBCode/Terminal');
-
-        // The colour of the text is a hexadecimal colour, with or without #, like [terminal colortext="#00ff00"]. Without it, or with a
-        // colour which is no colour, the start colour is used: the text of the user is never dropped.
-        $color = ltrim(trim((string) ($params['colortext'] ?? '')), '#');
-
-        if (!preg_match('/^(?:[0-9a-f]{3}|[0-9a-f]{6})$/i', $color)) {
-            $color = 'ffffff';
-        }
-
-        $params['colortext'] = '#' . $color;
-
-        if ($layout->getPath()) {
-            return (string) $layout
-                ->set('content', $content)
-                ->set('params', $params);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoTweet($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        // Display nothing in subscription mails
-        if (!empty($bbcode->context)) {
-            return '';
-        }
-
-        if (KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('X_Social')) {
-            return false;
-        }
-
-        $tweetid = trim($content);
-
-        // A tweet id only contains digits; is_numeric() would also accept "1e5", "1.5" or " 12".
-        if (!ctype_digit($tweetid) || \strlen($tweetid) > 18) {
-            return false;
-        }
-
-        // Display tag in activity streams etc..
-        if (!empty($bbcode->parent->forceMinimal)) {
-            return "<a href=\"https://x.com/kunena/status/" . $tweetid . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . Text::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
-        }
-
-        return $this->renderTweet($tweetid);
-    }
-
-    /**
-     * Render the tweet by loading the right layout
-     *
-     * @param   int  $tweetid  The tweet id to render in layout
-     *
-     * @return string
+     * @return  string
      *
      * @since   Kunena 6.0
      * @throws Exception
      */
-    public function renderTweet(int $tweetid): string
+    public static function getEbayItemFromCache(int $ItemID, KunenaConfig $config): stdClass
     {
-        $tweet = $this->getTweet($tweetid);
+        $options = ['defaultgroup' => 'Kunena_ebay_request'];
+        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $cache->setCaching(true);
 
-        $layout = KunenaLayout::factory('BBCode/x');
-
-        if ($tweet->error === false) {
-            if ($layout->getPath()) {
-                return (string) $layout
-                    ->set('tweetid', $tweet->id_str)
-                    ->set('user_profile_url_normal', $tweet->user->profile_image_url)
-                    ->set('user_profile_url_big', $tweet->user->profile_image_url_big)
-                    ->set('user_name', htmlspecialchars((string) $tweet->user->name, ENT_QUOTES, 'UTF-8'))
-                    ->set('user_screen_name', htmlspecialchars((string) $tweet->user->screen_name, ENT_QUOTES, 'UTF-8'))
-                    ->set('tweet_created_at', $tweet->created_at)
-                    ->set('tweet_text', $tweet->text)
-                    ->set('retweet_count', $tweet->retweet_count)
-                    ->set('favorite_count', $tweet->favorite_count)
-                    ->set('verified', $tweet->user->verified)
-                    ->setLayout('default');
-            }
-        } else {
-            return '<b>' . $tweet->error . '</b>';
+        if ($config->cacheTime == 0) {
+            $config->cacheTime = 60;
         }
 
-        return false;
+        $cache->setLifeTime($config->cacheTime);
+
+        /**
+         * TOOD : fix method call() give an error
+         */
+        //return $cache->call(['KunenaBbcodeLibrary', 'getEbayItem'], $ItemID);
+        return KunenaBbcodeLibrary::getEbayItem($ItemID, $config);
+    }
+
+    /**
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getMessage()
+    {
+        if (empty($this->parent)) {
+            return false;
+        }
+
+        if ($this->parent instanceof KunenaMessage) {
+            return $this->parent;
+        }
+
+        return $this->parent->message ?? false;
     }
 
     /**
@@ -3106,117 +3050,173 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     }
 
     /**
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
+     * @param   KunenaAttachment  $attachment    attachment
+     * @param   object            $bbcode        bbcode
+     * @param   bool              $displayImage  display image
      *
-     * @return  boolean|string
+     * @return  string|void
      *
      * @since   Kunena 6.0
+     * @throws Exception
      */
-    public function DoSoundcloud($bbcode, $action, $name, $default, $params, $content)
+    protected function renderAttachment(KunenaAttachment $attachment, object $bbcode, $displayImage = true)
     {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
+        // Display nothing in subscription mails
+        if (!empty($bbcode->context)) {
+            return '';
         }
 
-        if (!empty($content)) {
-            // Display tag in activity streams etc..
-            if (!empty($bbcode->parent->forceMinimal)) {
-                return "<a href=\"" . $content . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $content . '</a>';
+        $layout = KunenaLayout::factory('BBCode/Attachment')
+            ->set('attachment', $attachment)
+            ->set('canLink', $bbcode->autoLink_disable == 0);
+        $bbcode->parent->inline_attachments[$attachment->id] = $attachment;
+
+        if (!$attachment->exists() || !$attachment->getPath()) {
+            return (string) $layout->setLayout('deleted');
+        }
+
+        if (!$attachment->isAuthorised() && !$this->config->showImgForGuest && $attachment->id != '0') {
+            return (string) $layout->setLayout('unauthorised');
+        }
+
+        if (!$attachment->isAuthorised()) {
+            return (string) $layout->setLayout('unauthorised');
+        }
+
+        if ($displayImage && $attachment->isImage()) {
+            $layout->setLayout('image');
+        }
+
+        return (string) $layout;
+    }
+
+    /**
+     * Render eBay layout from template
+     *
+     * @param   int  $ItemID  id
+     *
+     * @return  false|string
+     *
+     * @since   Kunena 6.0
+     * @throws Exception
+     */
+    public static function renderEbayLayout(int $ItemID)
+    {
+        // Because the method renderEbayLayout is called in static way need to keep the call of config class here
+        $config = KunenaFactory::getConfig();
+
+        if (empty($config->ebayApiKey) || empty($config->ebayCertId)) {
+            echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
+
+            return false;
+        }
+
+        $layout = KunenaLayout::factory('BBCode/eBay');
+
+        if ($layout->getPath()) {
+            $ebay = self::getEbayItemFromCache($ItemID, $config);
+
+            if (\is_object($ebay)) {
+                return (string) $layout
+                    ->set('content', $ItemID)
+                    // ->set('params', $params)
+                    ->set('naturalurl', $ebay->ViewItemURLForNaturalSearch)
+                    ->set('pictureurl', $ebay->PictureURL[0])
+                    ->set('status', $ebay->ListingStatus)
+                    ->set('title', $ebay->Title)
+                    ->setLayout(is_numeric($ItemID) ? 'default' : 'search');
             }
+            echo '<b>' . $ebay . '</b>';
 
-            $content = strip_tags($content);
+            return false;
 
-            $url = trim($content);
-
-            if (!preg_match('#^(/|https?:|ftp:)#ui', $url)) {
-                // Add scheme to raw domain URLs.
-                $url = "https://{$content}";
-            }
-
-            $url_parsed = parse_url($url);
-
-            if (\is_array($url_parsed) && ($url_parsed['host'] ?? '') == 'soundcloud.com') {
-                return '<iframe allowtransparency="true" width="100%" height="350" style="border: 0" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
-            }
         }
 
         return false;
     }
 
     /**
-     * Handle private bbcode tag in the message
+     * Method to render the instagram content
      *
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
+     * @param   object  $bbcode   The bbcode tag being rendered
+     * @param   string  $content
      *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
+     * @return string
+     * @since Kunena 5.2
      */
-    public function DoPrivate($bbcode, $action, $name, $default, $params, $content)
+    public static function renderInstagram($bbcode, $content)
     {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
+        $before  = $content;
+        $content = strip_tags($content);
+
+        $content = trim($content);
+
+        $url_parsed = parse_url($content);
+
+        if (isset($url_parsed['scheme'])) {
+            if ($url_parsed['scheme'] == 'https' || $url_parsed['scheme'] == 'http') {
+                $content = $url_parsed['host'] . $url_parsed['path'];
+            } else {
+                $content = $url_parsed['path'];
+            }
         }
 
-        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
-            return "[{$name}]{$content}";
+        // The address must start with an Instagram host: a text that only contains "instagram.com/..." somewhere
+        // (for example evil.example/instagram.com/x) must not become the source of the frame.
+        if (preg_match('#^(?:www\.)?(?:instagram\.com|instagr\.am)/[A-Za-z0-9_\-]+(?:/[A-Za-z0-9_\-]+)*/?$#i', $content)) {
+            $url = 'https://' . rtrim($content, '/');
+
+            return '<div class="embed-container"><iframe src="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '/embed/" style="border: 0"></iframe></div>';
         }
 
-        // Display nothing in activity streams etc..
-        if (!empty($bbcode->parent->forceSecure)) {
-            return '';
+        // Display tag in activity streams etc..
+        if (!empty($bbcode->parent->forceMinimal)) {
+            return "<a href=\"" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . '</a>';
         }
 
-        // Display nothing in subscription mails
-        if (!empty($bbcode->context)) {
-            return '';
+        // A bare post code
+        if ($content !== '' && preg_match('#^[A-Za-z0-9_\-]+$#', $content)) {
+            return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" style="border: 0"></iframe></div>';
         }
 
-        return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_SECURE_TEXT_GUESTS') . '</div>';
+        return $before;
     }
 
     /**
-     * Handle mention bbcode tag in the message
+     * Render the tweet by loading the right layout
      *
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
+     * @param   int  $tweetid  The tweet id to render in layout
      *
-     * @return  boolean|string
+     * @return string
      *
-     * @since   Kunena 6.3
-     * @throws  Exception
+     * @since   Kunena 6.0
+     * @throws Exception
      */
-    public function DoMention($bbcode, $action, $name, $default, $params, $content)
+    public function renderTweet(int $tweetid): string
     {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
+        $tweet = $this->getTweet($tweetid);
+
+        $layout = KunenaLayout::factory('BBCode/x');
+
+        if ($tweet->error === false) {
+            if ($layout->getPath()) {
+                return (string) $layout
+                    ->set('tweetid', $tweet->id_str)
+                    ->set('user_profile_url_normal', $tweet->user->profile_image_url)
+                    ->set('user_profile_url_big', $tweet->user->profile_image_url_big)
+                    ->set('user_name', htmlspecialchars((string) $tweet->user->name, ENT_QUOTES, 'UTF-8'))
+                    ->set('user_screen_name', htmlspecialchars((string) $tweet->user->screen_name, ENT_QUOTES, 'UTF-8'))
+                    ->set('tweet_created_at', $tweet->created_at)
+                    ->set('tweet_text', $tweet->text)
+                    ->set('retweet_count', $tweet->retweet_count)
+                    ->set('favorite_count', $tweet->favorite_count)
+                    ->set('verified', $tweet->user->verified)
+                    ->setLayout('default');
+            }
+        } else {
+            return '<b>' . $tweet->error . '</b>';
         }
 
-        // A mention which has no user (no id, or an id which is not a user) is the text of the mention.
-        $userid = (int) ($params['userid'] ?? 0);
-        $user   = $userid > 0 ? KunenaUserHelper::get($userid) : null;
-
-        if (!$user || !$user->exists()) {
-            return '@' . $content;
-        }
-
-        $urlUserProfile = $user->getURL();
-
-        return '<a href="' . $urlUserProfile . '" data-bs-toggle="tooltip" title="' . $content . '">@' . $content . '</a>';
+        return false;
     }
 }

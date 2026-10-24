@@ -192,131 +192,6 @@ class KunenaPagination
     }
 
     /**
-     * Set number of displayed pages.
-     *
-     * @param   int  $displayed  Number of displayed pages.
-     * @param   int  $start      How many items to display from the beginning (1 2 ...)
-     * @param   int  $end        How many items to display from the end (... 49 50)
-     *
-     * @return  KunenaPagination  Method supports chaining.
-     *
-     * @since   Kunena 6.0
-     */
-    public function setDisplayedPages($displayed = 10, $start = 0, $end = 0): KunenaPagination
-    {
-        $this->stickyStart = $start;
-        $this->stickyStop  = $end;
-
-        // Set the pagination iteration loop values.
-        $this->pagesStart = $this->pagesCurrent - (int) ($displayed / 2);
-
-        if ($this->pagesStart < 1 + $start) {
-            $this->pagesStart = 1 + $start;
-        }
-
-        if ($this->pagesStart + $displayed - $start > $this->pagesTotal) {
-            $this->pagesStop = $this->pagesTotal;
-
-            if ($this->pagesTotal < $displayed) {
-                $this->pagesStart = 1 + $start;
-            } else {
-                $this->pagesStart = $this->pagesTotal - $displayed + 1 + $start;
-            }
-        } else {
-            $this->pagesStop = $this->pagesStart + $displayed - 1 - $end;
-        }
-
-        $this->pagesStop  = max(1, $this->pagesStop);
-        $this->pagesTotal = max(1, $this->pagesTotal);
-
-        return $this;
-    }
-
-    /**
-     * Set URI for pagination.
-     *
-     * @param   Uri  $uri  Joomla\CMS\Uri\Uri object.
-     *
-     * @return  KunenaPagination  Method supports chaining.
-     *
-     * @since   Kunena 6.0
-     */
-    public function setUri(Uri $uri): KunenaPagination
-    {
-        $this->uri = clone $uri;
-
-        return $this;
-    }
-
-    /**
-     * Method to set an additional URL parameter to be added to all pagination class generated
-     * links.
-     *
-     * @param   string  $key    The name of the URL parameter for which to set a value.
-     * @param   mixed   $value  The value to set for the URL parameter.
-     *
-     * @return  mixed  The old value for the parameter.
-     *
-     * @since   1.6
-     */
-    public function setAdditionalUrlParam(string $key, $value)
-    {
-        // Get the old value to return and set the new one for the URL parameter.
-        $result = isset($this->additionalUrlParams[$key]) ? $this->additionalUrlParams[$key] : null;
-
-        // If the passed parameter value is null unset the parameter, otherwise set it to the given value.
-        if ($value === null) {
-            unset($this->additionalUrlParams[$key]);
-        } else {
-            $this->additionalUrlParams[$key] = $value;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Method to get an additional URL parameter (if it exists) to be added to
-     * all pagination class generated links.
-     *
-     * @param   string  $key  The name of the URL parameter for which to get the value.
-     *
-     * @return  mixed  The value if it exists or null if it does not.
-     *
-     * @since   1.6
-     */
-    public function getAdditionalUrlParam(string $key)
-    {
-        return isset($this->additionalUrlParams[$key]) ? $this->additionalUrlParams[$key] : null;
-    }
-
-    /**
-     * Return the rationalised offset for a row with a given index.
-     *
-     * @param   integer  $index  The row index
-     *
-     * @return int|null Rationalised offset for a row with a given index.
-     *
-     * @since   1.5
-     */
-    public function getRowOffset(int $index): ?int
-    {
-        return $index + 1 + $this->limitstart;
-    }
-
-    /**
-     * Return the pagination data object, only creating it if it doesn't already exist.
-     *
-     * @return  object   Pagination data object.
-     *
-     * @since   1.5
-     */
-    public function getData()
-    {
-        // Do not have static cache here (if needed, keep it in object context).
-        return $this->_buildDataObject();
-    }
-
-    /**
      * Create and return the pagination data object.
      *
      * @return  object  Pagination data object.
@@ -404,58 +279,109 @@ class KunenaPagination
     }
 
     /**
-     * Create and return the pagination result set counter string, e.g. Results 1-10 of 42
+     * Method to create an active pagination link to the item
      *
-     * @return  string   Pagination result set counter string.
+     * @param   PaginationObject  $item  The object with which to make an active link.
+     *
+     * @return  string  HTML link
      *
      * @since   1.5
      */
-    public function getResultsCounter(): string
+    protected function _item_active(PaginationObject $item)
     {
-        $html       = null;
-        $fromResult = $this->limitstart + 1;
+        return LayoutHelper::render('joomla.pagination.link', ['data' => $item, 'active' => true]);
+    }
 
-        // If the limit is reached before the end of the list.
-        if ($this->limitstart + $this->limit < $this->total) {
-            $toResult = $this->limitstart + $this->limit;
-        } else {
-            $toResult = $this->total;
-        }
+    /**
+     * Method to create an inactive pagination string
+     *
+     * @param   PaginationObject  $item  The item to be processed
+     *
+     * @return  string
+     *
+     * @since   1.5
+     */
+    protected function _item_inactive(PaginationObject $item)
+    {
+        return LayoutHelper::render('joomla.pagination.link', ['data' => $item, 'active' => false]);
+    }
 
-        // If there are results found.
-        if ($this->total > 0) {
-            $msg  = Text::sprintf('JLIB_HTML_RESULTS_OF', $fromResult, $toResult, $this->total);
-            $html .= "\n" . $msg;
-        } else {
-            $html .= "\n" . Text::_('JLIB_HTML_NO_RECORDS_FOUND');
-        }
+    /**
+     * Create the HTML for a list footer
+     *
+     * @param   array  $list  Pagination list data structure.
+     *
+     * @return  string  HTML for a list footer
+     *
+     * @since   1.5
+     */
+    protected function _list_footer(array $list): string
+    {
+        $html = "<div class=\"list-footer\">\n";
+
+        $html .= "\n<div class=\"limit\">" . Text::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield'] . "</div>";
+        $html .= $list['pageslinks'];
+        $html .= "\n<div class=\"counter\">" . $list['pagescounter'] . "</div>";
+
+        $html .= "\n<input type=\"hidden\" name=\"" . $list['prefix'] . "limitstart\" value=\"" . $list['limitstart'] . "\" />";
+        $html .= "\n</div>";
 
         return $html;
     }
 
     /**
-     * Return the pagination footer.
+     * Create the html for a list footer
      *
-     * @return  string  Pagination footer.
+     * @param   array  $list  Pagination list data structure.
+     *
+     * @return  string  HTML for a list start, previous, next,end
      *
      * @since   1.5
-     *
-     * @throws  Exception
      */
-    public function getListFooter(): string
+    protected function _list_render(array $list): string
     {
-        $list                 = [];
-        $list['prefix']       = $this->prefix;
-        $list['limit']        = $this->limit;
-        $list['limitstart']   = $this->limitstart;
-        $list['total']        = $this->total;
-        $list['limitfield']   = $this->getLimitBox();
-        $list['pagescounter'] = $this->getPagesCounter();
-        $list['pageslinks']   = $this->getPagesLinks();
+        // Reverse output rendering for right-to-left display.
+        $html = '<ul>';
+        $html .= '<li class="pagination-start">' . $list['start']['data'] . '</li>';
+        $html .= '<li class="pagination-prev">' . $list['previous']['data'] . '</li>';
 
-        $this->setChrome();
+        foreach ($list['pages'] as $page) {
+            $html .= '<li>' . $page['data'] . '</li>';
+        }
 
-        return \call_user_func($this->footerChrome, $list);
+        $html .= '<li class="pagination-next">' . $list['next']['data'] . '</li>';
+        $html .= '<li class="pagination-end">' . $list['end']['data'] . '</li>';
+        $html .= '</ul>';
+
+        return $html;
+    }
+
+    /**
+     * Method to get an additional URL parameter (if it exists) to be added to
+     * all pagination class generated links.
+     *
+     * @param   string  $key  The name of the URL parameter for which to get the value.
+     *
+     * @return  mixed  The value if it exists or null if it does not.
+     *
+     * @since   1.6
+     */
+    public function getAdditionalUrlParam(string $key)
+    {
+        return isset($this->additionalUrlParams[$key]) ? $this->additionalUrlParams[$key] : null;
+    }
+
+    /**
+     * Return the pagination data object, only creating it if it doesn't already exist.
+     *
+     * @return  object   Pagination data object.
+     *
+     * @since   1.5
+     */
+    public function getData()
+    {
+        // Do not have static cache here (if needed, keep it in object context).
+        return $this->_buildDataObject();
     }
 
     /**
@@ -512,6 +438,31 @@ class KunenaPagination
         }
 
         return $html;
+    }
+
+    /**
+     * Return the pagination footer.
+     *
+     * @return  string  Pagination footer.
+     *
+     * @since   1.5
+     *
+     * @throws  Exception
+     */
+    public function getListFooter(): string
+    {
+        $list                 = [];
+        $list['prefix']       = $this->prefix;
+        $list['limit']        = $this->limit;
+        $list['limitstart']   = $this->limitstart;
+        $list['total']        = $this->total;
+        $list['limitfield']   = $this->getLimitBox();
+        $list['pagescounter'] = $this->getPagesCounter();
+        $list['pageslinks']   = $this->getPagesLinks();
+
+        $this->setChrome();
+
+        return \call_user_func($this->footerChrome, $list);
     }
 
     /**
@@ -613,42 +564,47 @@ class KunenaPagination
     }
 
     /**
-     * @return  void
+     * Create and return the pagination result set counter string, e.g. Results 1-10 of 42
      *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    protected function setChrome(): void
-    {
-        $template                 = KunenaFactory::getTemplate();
-        $this->itemActiveChrome   = [$template, 'getPaginationItemActive'];
-        $this->itemInactiveChrome = [$template, 'getPaginationItemInactive'];
-        $this->listChrome         = [$template, 'getPaginationListRender'];
-        $this->footerChrome       = [$template, 'getPaginationListFooter'];
-    }
-
-    /**
-     * Return the icon to move an item UP.
-     *
-     * @param   integer  $i          The row index.
-     * @param   boolean  $condition  True to show the icon.
-     * @param   string   $task       The task to fire.
-     * @param   string   $alt        The image alternative text string.
-     * @param   boolean  $enabled    An optional setting for access control on the action.
-     * @param   string   $checkbox   An optional prefix for checkboxes.
-     *
-     * @return  string   Either the icon to move an item up or a space.
+     * @return  string   Pagination result set counter string.
      *
      * @since   1.5
      */
-    public function orderUpIcon(int $i, $condition = true, $task = 'orderup', $alt = 'JLIB_HTML_MOVE_UP', $enabled = true, $checkbox = 'cb'): string
+    public function getResultsCounter(): string
     {
-        if (($i > 0 || ($i + $this->limitstart > 0)) && $condition) {
-            return HTMLHelper::_('jgrid.orderUp', $i, $task, '', $alt, $enabled, $checkbox);
+        $html       = null;
+        $fromResult = $this->limitstart + 1;
+
+        // If the limit is reached before the end of the list.
+        if ($this->limitstart + $this->limit < $this->total) {
+            $toResult = $this->limitstart + $this->limit;
+        } else {
+            $toResult = $this->total;
         }
 
-        return '&#160;';
+        // If there are results found.
+        if ($this->total > 0) {
+            $msg  = Text::sprintf('JLIB_HTML_RESULTS_OF', $fromResult, $toResult, $this->total);
+            $html .= "\n" . $msg;
+        } else {
+            $html .= "\n" . Text::_('JLIB_HTML_NO_RECORDS_FOUND');
+        }
+
+        return $html;
+    }
+
+    /**
+     * Return the rationalised offset for a row with a given index.
+     *
+     * @param   integer  $index  The row index
+     *
+     * @return int|null Rationalised offset for a row with a given index.
+     *
+     * @since   1.5
+     */
+    public function getRowOffset(int $index): ?int
+    {
+        return $index + 1 + $this->limitstart;
     }
 
     /**
@@ -676,80 +632,124 @@ class KunenaPagination
     }
 
     /**
-     * Create the HTML for a list footer
+     * Return the icon to move an item UP.
      *
-     * @param   array  $list  Pagination list data structure.
+     * @param   integer  $i          The row index.
+     * @param   boolean  $condition  True to show the icon.
+     * @param   string   $task       The task to fire.
+     * @param   string   $alt        The image alternative text string.
+     * @param   boolean  $enabled    An optional setting for access control on the action.
+     * @param   string   $checkbox   An optional prefix for checkboxes.
      *
-     * @return  string  HTML for a list footer
-     *
-     * @since   1.5
-     */
-    protected function _list_footer(array $list): string
-    {
-        $html = "<div class=\"list-footer\">\n";
-
-        $html .= "\n<div class=\"limit\">" . Text::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield'] . "</div>";
-        $html .= $list['pageslinks'];
-        $html .= "\n<div class=\"counter\">" . $list['pagescounter'] . "</div>";
-
-        $html .= "\n<input type=\"hidden\" name=\"" . $list['prefix'] . "limitstart\" value=\"" . $list['limitstart'] . "\" />";
-        $html .= "\n</div>";
-
-        return $html;
-    }
-
-    /**
-     * Create the html for a list footer
-     *
-     * @param   array  $list  Pagination list data structure.
-     *
-     * @return  string  HTML for a list start, previous, next,end
+     * @return  string   Either the icon to move an item up or a space.
      *
      * @since   1.5
      */
-    protected function _list_render(array $list): string
+    public function orderUpIcon(int $i, $condition = true, $task = 'orderup', $alt = 'JLIB_HTML_MOVE_UP', $enabled = true, $checkbox = 'cb'): string
     {
-        // Reverse output rendering for right-to-left display.
-        $html = '<ul>';
-        $html .= '<li class="pagination-start">' . $list['start']['data'] . '</li>';
-        $html .= '<li class="pagination-prev">' . $list['previous']['data'] . '</li>';
-
-        foreach ($list['pages'] as $page) {
-            $html .= '<li>' . $page['data'] . '</li>';
+        if (($i > 0 || ($i + $this->limitstart > 0)) && $condition) {
+            return HTMLHelper::_('jgrid.orderUp', $i, $task, '', $alt, $enabled, $checkbox);
         }
 
-        $html .= '<li class="pagination-next">' . $list['next']['data'] . '</li>';
-        $html .= '<li class="pagination-end">' . $list['end']['data'] . '</li>';
-        $html .= '</ul>';
-
-        return $html;
+        return '&#160;';
     }
 
     /**
-     * Method to create an active pagination link to the item
+     * Method to set an additional URL parameter to be added to all pagination class generated
+     * links.
      *
-     * @param   PaginationObject  $item  The object with which to make an active link.
+     * @param   string  $key    The name of the URL parameter for which to set a value.
+     * @param   mixed   $value  The value to set for the URL parameter.
      *
-     * @return  string  HTML link
+     * @return  mixed  The old value for the parameter.
      *
-     * @since   1.5
+     * @since   1.6
      */
-    protected function _item_active(PaginationObject $item)
+    public function setAdditionalUrlParam(string $key, $value)
     {
-        return LayoutHelper::render('joomla.pagination.link', ['data' => $item, 'active' => true]);
+        // Get the old value to return and set the new one for the URL parameter.
+        $result = isset($this->additionalUrlParams[$key]) ? $this->additionalUrlParams[$key] : null;
+
+        // If the passed parameter value is null unset the parameter, otherwise set it to the given value.
+        if ($value === null) {
+            unset($this->additionalUrlParams[$key]);
+        } else {
+            $this->additionalUrlParams[$key] = $value;
+        }
+
+        return $result;
     }
 
     /**
-     * Method to create an inactive pagination string
+     * @return  void
      *
-     * @param   PaginationObject  $item  The item to be processed
+     * @since   Kunena 6.0
      *
-     * @return  string
-     *
-     * @since   1.5
+     * @throws  Exception
      */
-    protected function _item_inactive(PaginationObject $item)
+    protected function setChrome(): void
     {
-        return LayoutHelper::render('joomla.pagination.link', ['data' => $item, 'active' => false]);
+        $template                 = KunenaFactory::getTemplate();
+        $this->itemActiveChrome   = [$template, 'getPaginationItemActive'];
+        $this->itemInactiveChrome = [$template, 'getPaginationItemInactive'];
+        $this->listChrome         = [$template, 'getPaginationListRender'];
+        $this->footerChrome       = [$template, 'getPaginationListFooter'];
+    }
+
+    /**
+     * Set number of displayed pages.
+     *
+     * @param   int  $displayed  Number of displayed pages.
+     * @param   int  $start      How many items to display from the beginning (1 2 ...)
+     * @param   int  $end        How many items to display from the end (... 49 50)
+     *
+     * @return  KunenaPagination  Method supports chaining.
+     *
+     * @since   Kunena 6.0
+     */
+    public function setDisplayedPages($displayed = 10, $start = 0, $end = 0): KunenaPagination
+    {
+        $this->stickyStart = $start;
+        $this->stickyStop  = $end;
+
+        // Set the pagination iteration loop values.
+        $this->pagesStart = $this->pagesCurrent - (int) ($displayed / 2);
+
+        if ($this->pagesStart < 1 + $start) {
+            $this->pagesStart = 1 + $start;
+        }
+
+        if ($this->pagesStart + $displayed - $start > $this->pagesTotal) {
+            $this->pagesStop = $this->pagesTotal;
+
+            if ($this->pagesTotal < $displayed) {
+                $this->pagesStart = 1 + $start;
+            } else {
+                $this->pagesStart = $this->pagesTotal - $displayed + 1 + $start;
+            }
+        } else {
+            $this->pagesStop = $this->pagesStart + $displayed - 1 - $end;
+        }
+
+        $this->pagesStop  = max(1, $this->pagesStop);
+        $this->pagesTotal = max(1, $this->pagesTotal);
+
+        return $this;
+    }
+
+    /**
+     * Set URI for pagination.
+     *
+     * @param   Uri  $uri  Joomla\CMS\Uri\Uri object.
+     *
+     * @return  KunenaPagination  Method supports chaining.
+     *
+     * @since   Kunena 6.0
+     */
+    public function setUri(Uri $uri): KunenaPagination
+    {
+        $this->uri = clone $uri;
+
+        return $this;
     }
 }

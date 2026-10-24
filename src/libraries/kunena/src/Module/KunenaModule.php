@@ -73,6 +73,15 @@ abstract class KunenaModule
     }
 
     /**
+     * Internal module function to display module contents.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    abstract protected function _display(): void;
+
+    /**
      * Display module contents.
      *
      * @return  void
@@ -120,13 +129,4 @@ abstract class KunenaModule
             $cache->end();
         }*/
     }
-
-    /**
-     * Internal module function to display module contents.
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    abstract protected function _display(): void;
 }

@@ -99,14 +99,6 @@ class CategoryController extends KunenaController
     }
 
     /**
-     * Internal method to save category
-     *
-     * @return false|KunenaCategory
-     *
-     * @since   Kunena 2.0.0-BETA2
-     *@throws  Exception
-     */
-    /**
      * Save the category of the form and give it back (false when nothing was saved), for the form on the site.
      *
      * @return  KunenaCategory|false
@@ -119,6 +111,14 @@ class CategoryController extends KunenaController
         return $this->internalSave();
     }
 
+    /**
+     * Internal method to save category
+     *
+     * @return  KunenaCategory|false
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0.0-BETA2
+     */
     protected function internalSave()
     {
         KunenaFactory::loadLanguage('com_kunena', 'admin');

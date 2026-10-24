@@ -39,16 +39,6 @@ class KunenaExceptionAuthorise extends RuntimeException
     ];
 
     /**
-     * @return  mixed
-     *
-     * @since   Kunena 6.0
-     */
-    public function getResponseStatus(): string
-    {
-        return $this->responseCodes[$this->getResponseCode()];
-    }
-
-    /**
      * @return  integer
      *
      * @since   Kunena 6.0
@@ -56,5 +46,15 @@ class KunenaExceptionAuthorise extends RuntimeException
     public function getResponseCode(): int
     {
         return isset($this->responseCodes[$this->code]) ? (int) $this->code : 500;
+    }
+
+    /**
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     */
+    public function getResponseStatus(): string
+    {
+        return $this->responseCodes[$this->getResponseCode()];
     }
 }

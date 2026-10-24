@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Html;
 
 use DOMDocument;
 use Exception;
+use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
@@ -46,6 +47,151 @@ abstract class KunenaLinkPreview
      * @since   Kunena 7.2
      */
     protected static $fetches = 0;
+
+    /**
+     * The address of the picture of the page as an absolute http(s) address, or an empty text.
+     *
+     * @param   string  $image  The address in the page.
+     * @param   string  $page   The address of the page.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function absolute(string $image, string $page): string
+    {
+        $image = trim($image);
+
+        if ($image === '' || \strlen($image) > 2000) {
+            return '';
+        }
+
+        $parts = parse_url($page);
+        $root  = ($parts['scheme'] ?? 'https') . '://' . ($parts['host'] ?? '') . (isset($parts['port']) ? ':' . $parts['port'] : '');
+
+        if (str_starts_with($image, '//')) {
+            $image = ($parts['scheme'] ?? 'https') . ':' . $image;
+        } elseif (str_starts_with($image, '/')) {
+            $image = $root . $image;
+        }
+
+        return preg_match('#^https?://[^\s"<>]+$#i', $image) ? $image : '';
+    }
+
+    /**
+     * The Joomla cache with the cards: it is kept (also when the cache of the site is switched off), and it is emptied with
+     * the cache of the site.
+     *
+     * @return  Cache|null
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function cache()
+    {
+        try {
+            $controller = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController(
+                'output',
+                ['defaultgroup' => 'com_kunena_linkpreview', 'caching' => true, 'lifetime' => 60 * 24 * 30]
+            );
+
+            return $controller->cache;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Plain text of the other site: no markup, one line, not too long (it is escaped when it is shown).
+     *
+     * @param   string   $text    The text.
+     * @param   integer  $length  The most characters.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function clean(string $text, int $length): string
+    {
+        $text = trim(preg_replace('/\s+/u', ' ', strip_tags($text)) ?? '');
+
+        return mb_strimwidth($text, 0, $length, '…', 'UTF-8');
+    }
+
+    /**
+     * The page as UTF-8 text. Only web pages are read, never an address of the own network, there are no redirects (they
+     * could lead to an internal address), and only the start of the page is taken.
+     *
+     * @param   string   $url      The address.
+     * @param   integer  $timeout  Seconds to wait for the other site.
+     *
+     * @return  string|null  Null when the page can not be read.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function fetchPage(string $url, int $timeout = 3): ?string
+    {
+        $parts = parse_url($url);
+
+        // Only fetch web pages. Other schemes (file:, php:, ftp: ...) are never read.
+        if (!$parts || empty($parts['host']) || !\in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true)) {
+            return null;
+        }
+
+        // Do not let the server read addresses of its own network (private and reserved ranges).
+        $ips = gethostbynamel($parts['host']);
+
+        if (!$ips) {
+            return null;
+        }
+
+        foreach ($ips as $ip) {
+            if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                return null;
+            }
+        }
+
+        // Many sites refuse a request which does not say who asks.
+        $agent   = 'Mozilla/5.0 (compatible; KunenaLinkPreview/7.2; +' . Uri::root() . ')';
+        $context = stream_context_create(['http' => ['timeout' => $timeout, 'follow_location' => 0, 'ignore_errors' => true, 'header' => "User-Agent: $agent
+Accept: text/html,application/xhtml+xml
+"]]);
+        $body    = @file_get_contents($url, false, $context, 0, 262144);
+
+        if ($body === false || $body === '') {
+            return null;
+        }
+
+        $charset = '';
+
+        foreach ($http_response_header ?? [] as $header) {
+            if (stripos($header, 'content-type:') === 0) {
+                $type = strtolower(trim(substr($header, 13)));
+
+                // A picture, a download... is no page.
+                if ($type !== '' && !str_contains($type, 'html')) {
+                    return null;
+                }
+
+                if (preg_match('/charset=["\']?([\w\-]+)/', $type, $m)) {
+                    $charset = $m[1];
+                }
+            }
+        }
+
+        if ($charset === '' && preg_match('/<meta[^>]+charset=["\']?([\w\-]+)/i', substr($body, 0, 4096), $m)) {
+            $charset = $m[1];
+        }
+
+        if ($charset !== '' && strcasecmp($charset, 'utf-8') !== 0 && strcasecmp($charset, 'utf8') !== 0) {
+            try {
+                $body = mb_convert_encoding($body, 'UTF-8', $charset);
+            } catch (Throwable $e) {
+                // Unknown character set: the text is read as it is.
+            }
+        }
+
+        return $body;
+    }
 
     /**
      * The card of a link: from the cache, or from the page (at most a few per request).
@@ -132,82 +278,6 @@ abstract class KunenaLinkPreview
     }
 
     /**
-     * The page as UTF-8 text. Only web pages are read, never an address of the own network, there are no redirects (they
-     * could lead to an internal address), and only the start of the page is taken.
-     *
-     * @param   string   $url      The address.
-     * @param   integer  $timeout  Seconds to wait for the other site.
-     *
-     * @return  string|null  Null when the page can not be read.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function fetchPage(string $url, int $timeout = 3): ?string
-    {
-        $parts = parse_url($url);
-
-        // Only fetch web pages. Other schemes (file:, php:, ftp: ...) are never read.
-        if (!$parts || empty($parts['host']) || !\in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true)) {
-            return null;
-        }
-
-        // Do not let the server read addresses of its own network (private and reserved ranges).
-        $ips = gethostbynamel($parts['host']);
-
-        if (!$ips) {
-            return null;
-        }
-
-        foreach ($ips as $ip) {
-            if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-                return null;
-            }
-        }
-
-        // Many sites refuse a request which does not say who asks.
-        $agent   = 'Mozilla/5.0 (compatible; KunenaLinkPreview/7.2; +' . Uri::root() . ')';
-        $context = stream_context_create(['http' => ['timeout' => $timeout, 'follow_location' => 0, 'ignore_errors' => true, 'header' => "User-Agent: $agent
-Accept: text/html,application/xhtml+xml
-"]]);
-        $body    = @file_get_contents($url, false, $context, 0, 262144);
-
-        if ($body === false || $body === '') {
-            return null;
-        }
-
-        $charset = '';
-
-        foreach ($http_response_header ?? [] as $header) {
-            if (stripos($header, 'content-type:') === 0) {
-                $type = strtolower(trim(substr($header, 13)));
-
-                // A picture, a download... is no page.
-                if ($type !== '' && !str_contains($type, 'html')) {
-                    return null;
-                }
-
-                if (preg_match('/charset=["\']?([\w\-]+)/', $type, $m)) {
-                    $charset = $m[1];
-                }
-            }
-        }
-
-        if ($charset === '' && preg_match('/<meta[^>]+charset=["\']?([\w\-]+)/i', substr($body, 0, 4096), $m)) {
-            $charset = $m[1];
-        }
-
-        if ($charset !== '' && strcasecmp($charset, 'utf-8') !== 0 && strcasecmp($charset, 'utf8') !== 0) {
-            try {
-                $body = mb_convert_encoding($body, 'UTF-8', $charset);
-            } catch (Throwable $e) {
-                // Unknown character set: the text is read as it is.
-            }
-        }
-
-        return $body;
-    }
-
-    /**
      * The card of a page.
      *
      * @param   string  $html  The page as UTF-8 text.
@@ -257,74 +327,5 @@ Accept: text/html,application/xhtml+xml
             'image'       => self::absolute($meta['og:image'] ?? $meta['twitter:image'] ?? '', $url),
             'site'        => self::clean($meta['og:site_name'] ?? $host, 60),
         ];
-    }
-
-    /**
-     * Plain text of the other site: no markup, one line, not too long (it is escaped when it is shown).
-     *
-     * @param   string   $text    The text.
-     * @param   integer  $length  The most characters.
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    protected static function clean(string $text, int $length): string
-    {
-        $text = trim(preg_replace('/\s+/u', ' ', strip_tags($text)) ?? '');
-
-        return mb_strimwidth($text, 0, $length, '…', 'UTF-8');
-    }
-
-    /**
-     * The address of the picture of the page as an absolute http(s) address, or an empty text.
-     *
-     * @param   string  $image  The address in the page.
-     * @param   string  $page   The address of the page.
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    protected static function absolute(string $image, string $page): string
-    {
-        $image = trim($image);
-
-        if ($image === '' || \strlen($image) > 2000) {
-            return '';
-        }
-
-        $parts = parse_url($page);
-        $root  = ($parts['scheme'] ?? 'https') . '://' . ($parts['host'] ?? '') . (isset($parts['port']) ? ':' . $parts['port'] : '');
-
-        if (str_starts_with($image, '//')) {
-            $image = ($parts['scheme'] ?? 'https') . ':' . $image;
-        } elseif (str_starts_with($image, '/')) {
-            $image = $root . $image;
-        }
-
-        return preg_match('#^https?://[^\s"<>]+$#i', $image) ? $image : '';
-    }
-
-    /**
-     * The Joomla cache with the cards: it is kept (also when the cache of the site is switched off), and it is emptied with
-     * the cache of the site.
-     *
-     * @return  \Joomla\CMS\Cache\Cache|null
-     *
-     * @since   Kunena 7.2
-     */
-    protected static function cache()
-    {
-        try {
-            $controller = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController(
-                'output',
-                ['defaultgroup' => 'com_kunena_linkpreview', 'caching' => true, 'lifetime' => 60 * 24 * 30]
-            );
-
-            return $controller->cache;
-        } catch (Exception $e) {
-            return null;
-        }
     }
 }

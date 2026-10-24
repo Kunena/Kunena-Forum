@@ -13,6 +13,8 @@
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Adapter\FileAdapter;
+use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Table\Extension;
 use Joomla\Database\DatabaseInterface;
@@ -28,14 +30,16 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 class pkg_kunena_languagesInstallerScript
 {
     /**
-     * @param   Joomla\CMS\Installer\Adapter\FileAdapter  $parent  parent
+     * @param   FileAdapter  $parent  parent
+     *
+     * @return  void
      *
      * @since   Kunena 6.0
      */
     public function uninstall($parent)
     {
         // Remove languages.
-        $languages = Joomla\CMS\Language\LanguageHelper::getKnownLanguages();
+        $languages = LanguageHelper::getKnownLanguages();
 
         foreach ($languages as $language) {
             $this->uninstallLanguage($language['tag'], $language['name']);
@@ -44,7 +48,7 @@ class pkg_kunena_languagesInstallerScript
 
     /**
      * @param   string                                    $type    type
-     * @param   Joomla\CMS\Installer\Adapter\FileAdapter  $parent  parent
+     * @param   FileAdapter  $parent  parent
      *
      * @return  boolean
      *
@@ -108,7 +112,7 @@ class pkg_kunena_languagesInstallerScript
         $id    = $table->find(['type' => 'file', 'element' => "kunena_language_pack"]);
 
         if ($id) {
-            $installer = new Joomla\CMS\Installer\Installer();
+            $installer = new Installer();
             $installer->uninstall('file', $id);
         }
 
@@ -118,7 +122,10 @@ class pkg_kunena_languagesInstallerScript
     /**
      * Method to run after an install/update/uninstall method
      *
-     * @return void
+     * @param   string                                    $type    type
+     * @param   FileAdapter  $parent  parent
+     *
+     * @return  void
      *
      * @since   Kunena 6.2
      */
@@ -134,8 +141,10 @@ class pkg_kunena_languagesInstallerScript
     }
 
     /**
-     * @param $tag
-     * @param $name
+     * @param   string  $tag   The tag of the language, like en-GB.
+     * @param   string  $name  The name of the language.
+     *
+     * @return  void
      *
      * @since   Kunena 6.0
      */
@@ -149,7 +158,7 @@ class pkg_kunena_languagesInstallerScript
             return;
         }
 
-        $installer = new Joomla\CMS\Installer\Installer();
+        $installer = new Installer();
         $installer->uninstall('file', $id);
     }
 }

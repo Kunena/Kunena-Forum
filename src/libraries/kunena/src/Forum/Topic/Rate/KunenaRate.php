@@ -104,6 +104,19 @@ class KunenaRate
     }
 
     /**
+     * @param   integer  $userid  userid
+     * @param   string   $time    time
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function _add(int $userid, string $time): void
+    {
+        $this->users[$userid] = $time;
+    }
+
+    /**
      * Bind the data
      * @param array $properties
      * @return bool
@@ -118,27 +131,35 @@ class KunenaRate
     }
 
     /**
-     * Method to load a \Kunena\Forum\Libraries\Forum\Topic\TopicPoll object by id.
+     * @param   int  $userid  userid
      *
-     * @param   int  $id  The poll id to be loaded.
+     * @return  boolean userid if hes in table else empty
      *
-     * @return  boolean
+     * @internal param int $pid
      *
-     * @throws Exception
+     * @since    Kunena 2.0
+     */
+    public function exists(int $userid): bool
+    {
+        return isset($this->users[$userid]);
+    }
+
+    /**
+     * Returns \Kunena\Forum\Libraries\Forum\Message\Message object
+     *
+     * @access  public
+     *
+     * @param   int   $identifier  The message to load - Can be only an integer.
+     * @param   bool  $reload      reload
+     *
+     * @return  KunenaRate
+     *
+     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function load(int $id): bool
+    public static function getInstance($identifier = null, $reload = false)
     {
-        // Create the table object
-        $table = $this->getTable();
-
-        // Load the KunenaTable object based on id
-        $this->_exists = $table->load($id);
-
-        // Assuming all is well at this point lets bind the data
-        $this->bind($table->getProperties());
-
-        return $this->_exists;
+        return KunenaRateHelper::get($identifier, $reload);
     }
 
     /**
@@ -169,21 +190,79 @@ class KunenaRate
     }
 
     /**
-     * Returns \Kunena\Forum\Libraries\Forum\Message\Message object
+     * Get rate for the specified topic and user
      *
-     * @access  public
-     *
-     * @param   int   $identifier  The message to load - Can be only an integer.
-     * @param   bool  $reload      reload
-     *
-     * @return  KunenaRate
+     * @return  mixed
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public static function getInstance($identifier = null, $reload = false)
+    public function getTopicUserRate(): int
     {
-        return KunenaRateHelper::get($identifier, $reload);
+        $me = KunenaFactory::getUser();
+
+        if ($this->userid == $me->userid) {
+            return $this->rate;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Get the users to check which one are already rated the topic
+     *
+     * @param   int  $start  start
+     * @param   int  $limit  limit
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getUsers($start = 0, $limit = 0): void
+    {
+        $query = $this->_db->createQuery();
+        $query->select('*')
+            ->from($this->_db->quoteName('#__kunena_rate'))
+            ->where($this->_db->quoteName('topic_id') . ' = ' . $this->_db->quote($this->topic_id));
+        $query->setLimit($limit, $start);
+        $this->_db->setQuery($query);
+
+        $users = [];
+
+        try {
+            $users = (array) $this->_db->loadObjectList();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        foreach ($users as $user) {
+            $this->_add($user->userid, $user->time);
+        }
+    }
+
+    /**
+     * Method to load a \Kunena\Forum\Libraries\Forum\Topic\TopicPoll object by id.
+     *
+     * @param   int  $id  The poll id to be loaded.
+     *
+     * @return  boolean
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function load(int $id): bool
+    {
+        // Create the table object
+        $table = $this->getTable();
+
+        // Load the KunenaTable object based on id
+        $this->_exists = $table->load($id);
+
+        // Assuming all is well at this point lets bind the data
+        $this->bind($table->getProperties());
+
+        return $this->_exists;
     }
 
     /**
@@ -270,84 +349,5 @@ class KunenaRate
         }
 
         return $response;
-    }
-
-    /**
-     * Get the users to check which one are already rated the topic
-     *
-     * @param   int  $start  start
-     * @param   int  $limit  limit
-     *
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getUsers($start = 0, $limit = 0): void
-    {
-        $query = $this->_db->createQuery();
-        $query->select('*')
-            ->from($this->_db->quoteName('#__kunena_rate'))
-            ->where($this->_db->quoteName('topic_id') . ' = ' . $this->_db->quote($this->topic_id));
-        $query->setLimit($limit, $start);
-        $this->_db->setQuery($query);
-
-        $users = [];
-
-        try {
-            $users = (array) $this->_db->loadObjectList();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        foreach ($users as $user) {
-            $this->_add($user->userid, $user->time);
-        }
-    }
-
-    /**
-     * @param   integer  $userid  userid
-     * @param   string   $time    time
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function _add(int $userid, string $time): void
-    {
-        $this->users[$userid] = $time;
-    }
-
-    /**
-     * @param   int  $userid  userid
-     *
-     * @return  boolean userid if hes in table else empty
-     *
-     * @internal param int $pid
-     *
-     * @since    Kunena 2.0
-     */
-    public function exists(int $userid): bool
-    {
-        return isset($this->users[$userid]);
-    }
-
-    /**
-     * Get rate for the specified topic and user
-     *
-     * @return  mixed
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getTopicUserRate(): int
-    {
-        $me = KunenaFactory::getUser();
-
-        if ($this->userid == $me->userid) {
-            return $this->rate;
-        }
-
-        return 0;
     }
 }

@@ -78,20 +78,6 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
     protected $document;
 
     /**
-     * @internal
-     *
-     * @return  \Kunena\Forum\Libraries\Controller\KunenaControllerDisplay
-     *
-     * @since   Kunena 6.0
-     */
-    public function setPrimary()
-    {
-        $this->primary = true;
-
-        return $this;
-    }
-
-    /**
      * Return view as a string.
      *
      * @return  string
@@ -132,6 +118,81 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
         }
 
         return (string) $output;
+    }
+
+    /**
+     * Executed after display.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    protected function after()
+    {
+        if ($this->primary) {
+            $this->prepareDocument();
+        }
+    }
+
+    /**
+     * Executed before display.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    protected function before()
+    {
+        $this->layout = $this->input->getCmd('layout', 'default');
+        $this->config = KunenaConfig::getInstance();
+
+        if ($this->primary) {
+            $this->document = Factory::getApplication()->getDocument();
+        }
+    }
+
+    /**
+     * The pages which come out of the forum as a whole (the feeds) have to follow the options which close the forum: the forum is
+     * offline, or it is only for registered users. The pages of the forum have this check in the layout of the page.
+     *
+     * @return  void
+     *
+     * @throws  KunenaExceptionAuthorise
+     * @since   Kunena 7.2
+     */
+    protected function checkForumIsOpen(): void
+    {
+        $config = KunenaConfig::getInstance();
+        $me     = KunenaUserHelper::getMyself();
+
+        if ($config->boardOffline && !$me->isAdmin()) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+        }
+
+        if ($config->regOnly && !$me->exists()) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+        }
+    }
+
+    /**
+     * Initialize and display the layout.
+     *
+     * @return  KunenaBase|KunenaLayout
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    protected function display()
+    {
+        // Display layout with given parameters.
+        return KunenaLayout::factory($this->name)
+            ->setProperties($this->getProperties())
+            ->setOptions($this->getOptions());
     }
 
     /**
@@ -177,22 +238,163 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
     }
 
     /**
-     * Executed before display.
+     * Method to get the view layout.
      *
-     * @return  void
+     * @return  string  The layout name.
+     *
+     * @since   Kunena 6.0
+     */
+    public function getLayout(): string
+    {
+        $layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
+
+        return $layout ? $layout : 'default';
+    }
+
+    /**
+     * Returns an associative array of public object properties.
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     */
+    public function getProperties(): array
+    {
+        $properties = (array) $this;
+        $list       = [];
+
+        foreach ($properties as $property => $value) {
+            if ($property[0] != "\0") {
+                $list[$property] = $value;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Prepare title, description, breadcrumb etc.
+     *
+     * @return  boolean|void
      *
      * @since   Kunena 6.0
      *
      * @throws  Exception
      */
-    protected function before()
+    protected function prepareDocument()
     {
-        $this->layout = $this->input->getCmd('layout', 'default');
-        $this->config = KunenaConfig::getInstance();
+        $app    = Factory::getApplication();
+        $format = $app->getInput()->getCmd('format');
 
-        if ($this->primary) {
-            $this->document = Factory::getApplication()->getDocument();
+        if (!empty($format) && $format != 'html') {
+            return false;
         }
+    }
+
+    /**
+     * Shortcut for $this->input->set()
+     *
+     * @param   mixed  $key    key
+     * @param   mixed  $value  value
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.0
+     */
+    public function set($key, $value): KunenaControllerDisplay
+    {
+        $this->input->set($key, $value);
+
+        return $this;
+    }
+
+    /**
+     * @param   string  $description  description
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function setDescription(string $description): void
+    {
+        $this->document->setMetadata('description', $description);
+    }
+
+    /**
+     * Method to set the view layout.
+     *
+     * @param   string  $layout  The layout name.
+     *
+     * @return  KunenaControllerDisplay
+     *
+     * @since   Kunena 6.0
+     */
+    public function setLayout(string $layout)
+    {
+        if (!$layout) {
+            $layout = 'default';
+        }
+
+        $this->layout = $layout;
+
+        return $this;
+    }
+
+    /**
+     * @param   string  $name       name
+     * @param   string  $content    content
+     * @param   string  $attribute  attribute
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function setMetaData(string $name, $content, $attribute = 'name'): void
+    {
+        $this->document->setMetaData($name, $content, $attribute);
+    }
+
+    /**
+     * @internal
+     *
+     * @return  KunenaControllerDisplay
+     *
+     * @since   Kunena 6.0
+     */
+    public function setPrimary()
+    {
+        $this->primary = true;
+
+        return $this;
+    }
+
+    /**
+     * Set the object properties based on a named array/hash.
+     *
+     * @see     set()
+     *
+     * @param   mixed  $properties  Either an associative array or another object.
+     *
+     * @return  KunenaControllerDisplay  Method supports chaining.
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  InvalidArgumentException
+     */
+    public function setProperties($properties): KunenaControllerDisplay
+    {
+        if (!\is_array($properties) && !\is_object($properties)) {
+            throw new InvalidArgumentException('Parameter should be either array or an object.');
+        }
+
+        foreach ((array) $properties as $k => $v) {
+            // Use the set function which might be overridden.
+            if ($k[0] != "\0") {
+                $this->$k = $v;
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -238,159 +440,6 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
     }
 
     /**
-     * Initialize and display the layout.
-     *
-     * @return  KunenaBase|KunenaLayout
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    protected function display()
-    {
-        // Display layout with given parameters.
-        return KunenaLayout::factory($this->name)
-            ->setProperties($this->getProperties())
-            ->setOptions($this->getOptions());
-    }
-
-    /**
-     * Returns an associative array of public object properties.
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    public function getProperties(): array
-    {
-        $properties = (array) $this;
-        $list       = [];
-
-        foreach ($properties as $property => $value) {
-            if ($property[0] != "\0") {
-                $list[$property] = $value;
-            }
-        }
-
-        return $list;
-    }
-
-    /**
-     * Executed after display.
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    protected function after()
-    {
-        if ($this->primary) {
-            $this->prepareDocument();
-        }
-    }
-
-    /**
-     * Prepare title, description, breadcrumb etc.
-     *
-     * @return  boolean|void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    protected function prepareDocument()
-    {
-        $app    = Factory::getApplication();
-        $format = $app->getInput()->getCmd('format');
-
-        if (!empty($format) && $format != 'html') {
-            return false;
-        }
-    }
-
-    /**
-     * Method to get the view layout.
-     *
-     * @return  string  The layout name.
-     *
-     * @since   Kunena 6.0
-     */
-    public function getLayout(): string
-    {
-        $layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
-
-        return $layout ? $layout : 'default';
-    }
-
-    /**
-     * Method to set the view layout.
-     *
-     * @param   string  $layout  The layout name.
-     *
-     * @return  KunenaControllerDisplay
-     *
-     * @since   Kunena 6.0
-     */
-    public function setLayout(string $layout)
-    {
-        if (!$layout) {
-            $layout = 'default';
-        }
-
-        $this->layout = $layout;
-
-        return $this;
-    }
-
-    /**
-     * Set the object properties based on a named array/hash.
-     *
-     * @see     set()
-     *
-     * @param   mixed  $properties  Either an associative array or another object.
-     *
-     * @return  KunenaControllerDisplay  Method supports chaining.
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  InvalidArgumentException
-     */
-    public function setProperties($properties): KunenaControllerDisplay
-    {
-        if (!\is_array($properties) && !\is_object($properties)) {
-            throw new InvalidArgumentException('Parameter should be either array or an object.');
-        }
-
-        foreach ((array) $properties as $k => $v) {
-            // Use the set function which might be overridden.
-            if ($k[0] != "\0") {
-                $this->$k = $v;
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Shortcut for $this->input->set()
-     *
-     * @param   mixed  $key    key
-     * @param   mixed  $value  value
-     *
-     * @return  $this
-     *
-     * @since   Kunena 6.0
-     */
-    public function set($key, $value): KunenaControllerDisplay
-    {
-        $this->input->set($key, $value);
-
-        return $this;
-    }
-
-    /**
      * @param   mixed  $title    title
      * @param   bool   $replace  replace
      *
@@ -419,54 +468,5 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
         $title = strip_tags($title);
         $this->document->setTitle($title);
-    }
-
-    /**
-     * @param   string  $description  description
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function setDescription(string $description): void
-    {
-        $this->document->setMetadata('description', $description);
-    }
-
-    /**
-     * @param   string  $name       name
-     * @param   string  $content    content
-     * @param   string  $attribute  attribute
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function setMetaData(string $name, $content, $attribute = 'name'): void
-    {
-        $this->document->setMetaData($name, $content, $attribute);
-    }
-
-    /**
-     * The pages which come out of the forum as a whole (the feeds) have to follow the options which close the forum: the forum is
-     * offline, or it is only for registered users. The pages of the forum have this check in the layout of the page.
-     *
-     * @return  void
-     *
-     * @throws  KunenaExceptionAuthorise
-     * @since   Kunena 7.2
-     */
-    protected function checkForumIsOpen(): void
-    {
-        $config = KunenaConfig::getInstance();
-        $me     = KunenaUserHelper::getMyself();
-
-        if ($config->boardOffline && !$me->isAdmin()) {
-            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
-        }
-
-        if ($config->regOnly && !$me->exists()) {
-            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
-        }
     }
 }

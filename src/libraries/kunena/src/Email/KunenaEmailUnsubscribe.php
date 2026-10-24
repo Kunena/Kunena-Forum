@@ -40,7 +40,7 @@ abstract class KunenaEmailUnsubscribe
     public const FOLLOW = 'follow';
 
     /**
-     * Signature of an unsubscribe link.
+     * Absolute URL which unsubscribes at once when it is posted to (one-click unsubscribe of mail programs).
      *
      * @param   string  $type    Topic or category.
      * @param   int     $id      Id of the topic or category.
@@ -50,32 +50,9 @@ abstract class KunenaEmailUnsubscribe
      *
      * @since   Kunena 7.2
      */
-    public static function sign(string $type, int $id, int $userid): string
+    public static function getPostUrl(string $type, int $id, int $userid): string
     {
-        $secret = (string) Factory::getApplication()->get('secret');
-
-        return hash_hmac('sha256', "kunena-unsubscribe|{$type}|{$id}|{$userid}", $secret);
-    }
-
-    /**
-     * Check the signature of an unsubscribe link.
-     *
-     * @param   string  $type       Topic or category.
-     * @param   int     $id         Id of the topic or category.
-     * @param   int     $userid     Subscriber.
-     * @param   string  $signature  Signature from the link.
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 7.2
-     */
-    public static function verify(string $type, int $id, int $userid, string $signature): bool
-    {
-        if (!\in_array($type, [self::TOPIC, self::CATEGORY, self::FOLLOW], true) || $id < 1 || $userid < 1 || $signature === '') {
-            return false;
-        }
-
-        return hash_equals(self::sign($type, $id, $userid), $signature);
+        return Uri::root() . 'index.php?option=com_kunena&view=topic&task=unsubscribemail&' . self::query($type, $id, $userid);
     }
 
     /**
@@ -95,7 +72,26 @@ abstract class KunenaEmailUnsubscribe
     }
 
     /**
-     * Absolute URL which unsubscribes at once when it is posted to (one-click unsubscribe of mail programs).
+     * @param   string  $type    Topic or category.
+     * @param   int     $id      Id of the topic or category.
+     * @param   int     $userid  Subscriber.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function query(string $type, int $id, int $userid): string
+    {
+        return http_build_query([
+            'type' => $type,
+            'id'   => $id,
+            'uid'  => $userid,
+            'sig'  => self::sign($type, $id, $userid),
+        ]);
+    }
+
+    /**
+     * Signature of an unsubscribe link.
      *
      * @param   string  $type    Topic or category.
      * @param   int     $id      Id of the topic or category.
@@ -105,9 +101,11 @@ abstract class KunenaEmailUnsubscribe
      *
      * @since   Kunena 7.2
      */
-    public static function getPostUrl(string $type, int $id, int $userid): string
+    public static function sign(string $type, int $id, int $userid): string
     {
-        return Uri::root() . 'index.php?option=com_kunena&view=topic&task=unsubscribemail&' . self::query($type, $id, $userid);
+        $secret = (string) Factory::getApplication()->get('secret');
+
+        return hash_hmac('sha256', "kunena-unsubscribe|{$type}|{$id}|{$userid}", $secret);
     }
 
     /**
@@ -147,21 +145,23 @@ abstract class KunenaEmailUnsubscribe
     }
 
     /**
-     * @param   string  $type    Topic or category.
-     * @param   int     $id      Id of the topic or category.
-     * @param   int     $userid  Subscriber.
+     * Check the signature of an unsubscribe link.
      *
-     * @return  string
+     * @param   string  $type       Topic or category.
+     * @param   int     $id         Id of the topic or category.
+     * @param   int     $userid     Subscriber.
+     * @param   string  $signature  Signature from the link.
+     *
+     * @return  boolean
      *
      * @since   Kunena 7.2
      */
-    protected static function query(string $type, int $id, int $userid): string
+    public static function verify(string $type, int $id, int $userid, string $signature): bool
     {
-        return http_build_query([
-            'type' => $type,
-            'id'   => $id,
-            'uid'  => $userid,
-            'sig'  => self::sign($type, $id, $userid),
-        ]);
+        if (!\in_array($type, [self::TOPIC, self::CATEGORY, self::FOLLOW], true) || $id < 1 || $userid < 1 || $signature === '') {
+            return false;
+        }
+
+        return hash_equals(self::sign($type, $id, $userid), $signature);
     }
 }

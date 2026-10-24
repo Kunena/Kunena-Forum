@@ -62,41 +62,15 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * Get the first item from the collection.
+     * Count the number of items in the collection.
      *
-     * @return  mixed|null
-     *
-     * @since   Kunena 6.0
-     */
-    public function first()
-    {
-        return !empty($this->items) ? reset($this->items) : null;
-    }
-
-    /**
-     * Get the last item from the collection.
-     *
-     * @return  mixed|null
+     * @return  integer
      *
      * @since   Kunena 6.0
      */
-    public function last()
+    public function count(): int
     {
-        return !empty($this->items) ? end($this->items) : null;
-    }
-
-    /**
-     * Run a filter over each of the items.
-     *
-     * @param   Closure  $callback  callback
-     *
-     * @return  KunenaCollection
-     *
-     * @since   Kunena 6.0
-     */
-    public function filter(Closure $callback): KunenaCollection
-    {
-        return new static(array_filter($this->items, $callback));
+        return \count($this->items);
     }
 
     /**
@@ -116,6 +90,56 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
+     * Run a filter over each of the items.
+     *
+     * @param   Closure  $callback  callback
+     *
+     * @return  KunenaCollection
+     *
+     * @since   Kunena 6.0
+     */
+    public function filter(Closure $callback): KunenaCollection
+    {
+        return new static(array_filter($this->items, $callback));
+    }
+
+    /**
+     * Get the first item from the collection.
+     *
+     * @return  mixed|null
+     *
+     * @since   Kunena 6.0
+     */
+    public function first()
+    {
+        return !empty($this->items) ? reset($this->items) : null;
+    }
+
+    /**
+     * Get an iterator for the items.
+     *
+     * @return  ArrayIterator
+     *
+     * @since   Kunena 6.0
+     */
+    public function getIterator(): ArrayIterator
+    {
+        return new ArrayIterator($this->items);
+    }
+
+    /**
+     * Get the last item from the collection.
+     *
+     * @return  mixed|null
+     *
+     * @since   Kunena 6.0
+     */
+    public function last()
+    {
+        return !empty($this->items) ? end($this->items) : null;
+    }
+
+    /**
      * Run a map over each of the items.
      *
      * @param   Closure  $callback  callback
@@ -129,30 +153,6 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
         $keys = array_keys($this->items);
 
         return new static(array_combine($keys, array_map($callback, $this->items, $keys)));
-    }
-
-    /**
-     * Get an iterator for the items.
-     *
-     * @return  arrayIterator
-     *
-     * @since   Kunena 6.0
-     */
-    public function getIterator(): ArrayIterator
-    {
-        return new ArrayIterator($this->items);
-    }
-
-    /**
-     * Count the number of items in the collection.
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     */
-    public function count(): int
-    {
-        return \count($this->items);
     }
 
     /**

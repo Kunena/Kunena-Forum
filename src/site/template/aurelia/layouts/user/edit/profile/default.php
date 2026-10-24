@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
@@ -58,7 +59,7 @@ $template = KunenaTemplate::getInstance();
                 <div id="birthdate">
                     <div class="input-group date">
                         <input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="<?php echo $this->config->datePickerFormat; ?>"
-                            value="<?php echo $this->escape(\Kunena\Forum\Libraries\Date\KunenaDate::toPicker((string) $this->profile->birthdate)); ?>"
+                            value="<?php echo $this->escape(KunenaDate::toPicker((string) $this->profile->birthdate)); ?>"
                             data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
                         <button class="btn btn-outline-secondary" type="button" aria-label="<?php echo Text::_('COM_KUNENA_SEARCH_LABEL_SELECT_DATE'); ?>">
                             <?php echo KunenaIcons::calendar(); ?>

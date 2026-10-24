@@ -64,39 +64,19 @@ class KunenaMessageFinder extends KunenaFinder
     }
 
     /**
-     * Filter by user access to the categories.
+     * @param   QueryInterface|null  $query  query
      *
-     * It is very important to use this or category filter. Otherwise messages from unauthorized categories will be
-     * included to the search results.
+     * @return  void
      *
-     * @param   KunenaUser  $user  user
-     *
-     * @return  $this
-     *
-     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function filterByUserAccess(KunenaUser $user): KunenaMessageFinder
+    protected function build(?QueryInterface $query = null): void
     {
-        $categories = array_map('intval', (array) $user->getAllowedCategories());
-
-        // A user without any allowed category sees no message: an empty list must not become "IN ()".
-        if (empty($categories)) {
-            $this->query->where('0');
-
-            return $this;
+        if (!empty($this->hold)) {
+            $this->hold = ArrayHelper::toInteger($this->hold, 0);
+            $hold       = implode(',', $this->hold);
+            $query->where($this->db->quoteName('a.hold') . ' IN (' . $hold . ')');
         }
-
-        $this->query->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $categories) . ')');
-
-        // Categories where the users only see their own topics.
-        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere($user, $this->db->quoteName('a.catid'), $this->db->quoteName('a.thread'), true);
-
-        if ($own) {
-            $this->query->where($own);
-        }
-
-        return $this;
     }
 
     /**
@@ -131,6 +111,22 @@ class KunenaMessageFinder extends KunenaFinder
         }
 
         $this->query->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $list) . ')');
+
+        return $this;
+    }
+
+    /**
+     * Filter by hold (0=published, 1=unapproved, 2=deleted, 3=topic deleted).
+     *
+     * @param   array  $hold  List of hold states to display.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.0
+     */
+    public function filterByHold(array $hold = [0]): KunenaMessageFinder
+    {
+        $this->hold = $hold;
 
         return $this;
     }
@@ -207,17 +203,37 @@ class KunenaMessageFinder extends KunenaFinder
     }
 
     /**
-     * Filter by hold (0=published, 1=unapproved, 2=deleted, 3=topic deleted).
+     * Filter by user access to the categories.
      *
-     * @param   array  $hold  List of hold states to display.
+     * It is very important to use this or category filter. Otherwise messages from unauthorized categories will be
+     * included to the search results.
+     *
+     * @param   KunenaUser  $user  user
      *
      * @return  $this
      *
+     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function filterByHold(array $hold = [0]): KunenaMessageFinder
+    public function filterByUserAccess(KunenaUser $user): KunenaMessageFinder
     {
-        $this->hold = $hold;
+        $categories = array_map('intval', (array) $user->getAllowedCategories());
+
+        // A user without any allowed category sees no message: an empty list must not become "IN ()".
+        if (empty($categories)) {
+            $this->query->where('0');
+
+            return $this;
+        }
+
+        $this->query->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $categories) . ')');
+
+        // Categories where the users only see their own topics.
+        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere($user, $this->db->quoteName('a.catid'), $this->db->quoteName('a.thread'), true);
+
+        if ($own) {
+            $this->query->where($own);
+        }
 
         return $this;
     }
@@ -237,21 +253,5 @@ class KunenaMessageFinder extends KunenaFinder
         $results = parent::find();
 
         return KunenaMessageHelper::getMessages($results, $access);
-    }
-
-    /**
-     * @param   QueryInterface|null  $query  query
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function build(?QueryInterface $query = null): void
-    {
-        if (!empty($this->hold)) {
-            $this->hold = ArrayHelper::toInteger($this->hold, 0);
-            $hold       = implode(',', $this->hold);
-            $query->where($this->db->quoteName('a.hold') . ' IN (' . $hold . ')');
-        }
     }
 }

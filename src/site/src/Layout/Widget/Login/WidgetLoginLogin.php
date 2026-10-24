@@ -65,10 +65,12 @@ class WidgetLoginLogin extends KunenaLayout
     public $plglogin;
 
     /**
-    * Load Joomla! module into Kunena login form to have the authentification by Webauthn
-    *
-    * @since  Kunena 6.2
-    */
+     * Load Joomla! module into Kunena login form to have the authentification by Webauthn
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.2
+     */
     public function loadModuleWebauthn()
     {
         $moduleId = KunenaFactory::getTemplate()->params->get('moduleIdWebauthn');

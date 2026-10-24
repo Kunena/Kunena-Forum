@@ -199,6 +199,38 @@ class TableKunenaTopics extends KunenaTable
     }
 
     /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function check(): bool
+    {
+        $category = KunenaCategoryHelper::get($this->category_id);
+
+        if (!$category->exists()) {
+            throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id));
+        }
+
+        $this->category_id = $category->id;
+        $this->subject     = trim((string) $this->subject);
+
+        // TINYTEXT columns: 255 bytes (see the check of the messages).
+        foreach (['subject', 'first_post_guest_name', 'last_post_guest_name'] as $field) {
+            if (\is_string($this->$field) && \strlen($this->$field) > 255) {
+                $this->$field = mb_strcut($this->$field, 0, 255, 'UTF-8');
+            }
+        }
+
+        if (!$this->subject) {
+            throw new UnexpectedValueException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT'));
+        }
+
+        return true;
+    }
+
+    /**
      * @param   null  $id     id
      * @param   bool  $reset  reset
      *
@@ -257,37 +289,5 @@ class TableKunenaTopics extends KunenaTable
         $this->bind($data);
 
         return $this->_exists;
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function check(): bool
-    {
-        $category = KunenaCategoryHelper::get($this->category_id);
-
-        if (!$category->exists()) {
-            throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id));
-        }
-
-        $this->category_id = $category->id;
-        $this->subject     = trim((string) $this->subject);
-
-        // TINYTEXT columns: 255 bytes (see the check of the messages).
-        foreach (['subject', 'first_post_guest_name', 'last_post_guest_name'] as $field) {
-            if (\is_string($this->$field) && \strlen($this->$field) > 255) {
-                $this->$field = mb_strcut($this->$field, 0, 255, 'UTF-8');
-            }
-        }
-
-        if (!$this->subject) {
-            throw new UnexpectedValueException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT'));
-        }
-
-        return true;
     }
 }

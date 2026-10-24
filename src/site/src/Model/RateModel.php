@@ -42,7 +42,7 @@ class RateModel extends ListModel
     }
 
     /**
-     * @return  \Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRate
+     * @return  KunenaRate
      *
      * @since   Kunena 6.0
      *

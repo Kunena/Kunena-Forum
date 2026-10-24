@@ -319,6 +319,53 @@ class KunenaUsers extends KunenaTable
     }
 
     /**
+     * @param   mixed  $data    data
+     * @param   array  $ignore  ignore
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function bind($data, $ignore = [])
+    {
+        parent::bind($data, $ignore);
+        $fields = ['name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate'];
+
+        foreach ($fields as $field) {
+            if (isset($data[$field]) && !\in_array($field, $ignore)) {
+                $this->$field = $data[$field];
+            }
+        }
+    }
+
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function check(): bool
+    {
+        $user = KunenaUserHelper::getJoomlaUser((int) $this->userid);
+
+        if (!$this->userid || !$user) {
+            // FIXME: find a way to throw exception because it prevent guest to post
+            $this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));
+        }
+
+        if ($this->status < 0 || $this->status > 3) {
+            throw new UnexpectedValueException(Text::_('COM_KUNENA_UNKNOWN_STATUS'));
+        }
+
+        if (isset($this->status)) {
+            if (\strlen($this->status) < 0 || \strlen($this->status) > 255) {
+                throw new UnexpectedValueException(Text::_('COM_KUNENA_STATUS_TOOLONG'));
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param   null  $userid  userid
      * @param   bool  $reset   reset
      *
@@ -401,52 +448,5 @@ class KunenaUsers extends KunenaTable
         foreach ($fields as $field) {
             $this->$field = null;
         }
-    }
-
-    /**
-     * @param   mixed  $data    data
-     * @param   array  $ignore  ignore
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function bind($data, $ignore = [])
-    {
-        parent::bind($data, $ignore);
-        $fields = ['name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate'];
-
-        foreach ($fields as $field) {
-            if (isset($data[$field]) && !\in_array($field, $ignore)) {
-                $this->$field = $data[$field];
-            }
-        }
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function check(): bool
-    {
-        $user = KunenaUserHelper::getJoomlaUser((int) $this->userid);
-
-        if (!$this->userid || !$user) {
-            // FIXME: find a way to throw exception because it prevent guest to post
-            $this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));
-        }
-
-        if ($this->status < 0 || $this->status > 3) {
-            throw new UnexpectedValueException(Text::_('COM_KUNENA_UNKNOWN_STATUS'));
-        }
-
-        if (isset($this->status)) {
-            if (\strlen($this->status) < 0 || \strlen($this->status) > 255) {
-                throw new UnexpectedValueException(Text::_('COM_KUNENA_STATUS_TOOLONG'));
-            }
-        }
-
-        return true;
     }
 }

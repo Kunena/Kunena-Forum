@@ -36,20 +36,6 @@ abstract class KunenaUserIgnore
     protected static $lists = [];
 
     /**
-     * Is the feature switched on in the configuration (it is by default).
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 7.2
-     */
-    public static function isEnabled(): bool
-    {
-        $config = KunenaConfig::getInstance();
-
-        return isset($config->enableIgnore) ? (bool) $config->enableIgnore : true;
-    }
-
-    /**
      * Can the user put the other user on his ignore list. Guests can not ignore anybody, nobody can ignore himself
      * and moderators and administrators can not be ignored, as users need to be able to hear from them.
      *
@@ -99,6 +85,31 @@ abstract class KunenaUserIgnore
     }
 
     /**
+     * The ids of the users which ignore the user (those get no e-mails about his posts).
+     *
+     * @param   int  $targetid  The user who is possibly ignored.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getIgnoredBy(int $targetid): array
+    {
+        if ($targetid < 1 || !self::isEnabled()) {
+            return [];
+        }
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->select($db->quoteName('user_id'))
+            ->from($db->quoteName('#__kunena_user_ignore'))
+            ->where($db->quoteName('ignored_id') . ' = :targetid')
+            ->bind(':targetid', $targetid, ParameterType::INTEGER);
+
+        return array_map('intval', (array) $db->setQuery($query)->loadColumn());
+    }
+
+    /**
      * The ignore list of the user with the time on which each user was put on it, the newest first.
      *
      * @param   int  $userid  The user.
@@ -122,46 +133,6 @@ abstract class KunenaUserIgnore
             ->bind(':userid', $userid, ParameterType::INTEGER);
 
         return (array) $db->setQuery($query)->loadObjectList();
-    }
-
-    /**
-     * Does the user ignore the other user.
-     *
-     * @param   int  $userid    The user.
-     * @param   int  $targetid  The possibly ignored user.
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 7.2
-     */
-    public static function isIgnoring(int $userid, int $targetid): bool
-    {
-        return $targetid > 0 && \in_array($targetid, self::getIgnored($userid), true);
-    }
-
-    /**
-     * The ids of the users which ignore the user (those get no e-mails about his posts).
-     *
-     * @param   int  $targetid  The user who is possibly ignored.
-     *
-     * @return  int[]
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getIgnoredBy(int $targetid): array
-    {
-        if ($targetid < 1 || !self::isEnabled()) {
-            return [];
-        }
-
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery()
-            ->select($db->quoteName('user_id'))
-            ->from($db->quoteName('#__kunena_user_ignore'))
-            ->where($db->quoteName('ignored_id') . ' = :targetid')
-            ->bind(':targetid', $targetid, ParameterType::INTEGER);
-
-        return array_map('intval', (array) $db->setQuery($query)->loadColumn());
     }
 
     /**
@@ -201,6 +172,35 @@ abstract class KunenaUserIgnore
         unset(self::$lists[(int) $user->userid]);
 
         return true;
+    }
+
+    /**
+     * Is the feature switched on in the configuration (it is by default).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    public static function isEnabled(): bool
+    {
+        $config = KunenaConfig::getInstance();
+
+        return isset($config->enableIgnore) ? (bool) $config->enableIgnore : true;
+    }
+
+    /**
+     * Does the user ignore the other user.
+     *
+     * @param   int  $userid    The user.
+     * @param   int  $targetid  The possibly ignored user.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    public static function isIgnoring(int $userid, int $targetid): bool
+    {
+        return $targetid > 0 && \in_array($targetid, self::getIgnored($userid), true);
     }
 
     /**

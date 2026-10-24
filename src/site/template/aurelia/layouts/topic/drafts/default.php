@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -69,7 +70,7 @@ $topics   = $topicIds ? KunenaTopicHelper::getTopics(array_values(array_unique($
                     <?php endif; ?>
                 </td>
                 <td><?php echo $category->exists() ? $category->displayField('name') : ''; ?></td>
-                <td><?php echo \Joomla\CMS\HTML\HTMLHelper::_('date', $draft->modified_time, 'DATE_FORMAT_LC5'); ?></td>
+                <td><?php echo HTMLHelper::_('date', $draft->modified_time, 'DATE_FORMAT_LC5'); ?></td>
                 <td class="text-end">
                     <a class="btn btn-outline-primary btn-sm"
                        href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loaddraft&draftid=' . (int) $draft->id . '&' . $token); ?>">

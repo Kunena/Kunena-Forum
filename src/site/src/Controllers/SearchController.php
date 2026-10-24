@@ -16,6 +16,8 @@ namespace Kunena\Forum\Site\Controllers;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
@@ -59,7 +61,13 @@ class SearchController extends KunenaController
     /**
      * Custom getModel() else it want to load from LegacyModelLoaderTrait
      *
-     * @see     \Joomla\CMS\MVC\Controller\BaseController::getModel()
+     * @param   string  $name    The name of the model.
+     * @param   string  $prefix  The prefix of the class of the model.
+     * @param   array   $config  The configuration of the model.
+     *
+     * @return  BaseDatabaseModel
+     *
+     * @see     BaseController::getModel()
      *
      * @since   Kunena 6.0
      */

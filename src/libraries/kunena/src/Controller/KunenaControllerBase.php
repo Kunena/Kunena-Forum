@@ -80,83 +80,28 @@ abstract class KunenaControllerBase implements Serializable
     }
 
     /**
-     * Load the application object.
-     *
-     * @return  CMSApplicationInterface
+     * Data which PHP serializes (PHP 7.4+: __serialize() must return an array).
      *
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @return array
      */
-    protected function loadApplication(): CMSApplicationInterface
+    public function __serialize(): array
     {
-        return Factory::getApplication();
+        return ['input' => $this->input, 'options' => $this->options];
     }
 
     /**
-     * Load the input object.
+     * Restore the data given by __serialize() (PHP 7.4+: __unserialize() receives that array).
      *
-     * @return  Input  The input object.
-     *
-     * @since   Kunena 6.0
+     * @since  Kunena 6.0
+     * @param   array  $data  The data returned by __serialize()
+     * @return  void
      */
-    protected function loadInput(): Input
+    public function __unserialize(array $data): void
     {
-        return $this->app->getInput();
-    }
-
-    /**
-     * Get the options.
-     *
-     * @return \Joomla\Registry\Registry|null Object with the options.
-     *
-     * @since   Kunena 4.0
-     */
-    public function getOptions(): ?Registry
-    {
-        // Always return a Joomla\Registry\Registry instance
-        if (!($this->options instanceof Registry)) {
-            $this->resetOptions();
-        }
-
-        return $this->options;
-    }
-
-    /**
-     * Set the options.
-     *
-     * @param   mixed  $options  Array / Joomla\Registry\Registry object with the options to load.
-     *
-     * @return  KunenaControllerBase  Instance of $this to allow chaining.
-     *
-     * @since   Kunena 4.0
-     */
-    public function setOptions($options = null): KunenaControllerBase
-    {
-        // Received \Joomla\Registry\Registry
-        if ($options instanceof Registry) {
-            $this->options = $options;
-        }
-        // Received array
-        elseif (\is_array($options)) {
-            $this->options = new Registry($options);
-        } else {
-            $this->options = new Registry();
-        }
-
-        return $this;
-    }
-
-    /**
-     * Function to empty all the options.
-     *
-     * @return  KunenaControllerBase  Instance of $this to allow chaining.
-     *
-     * @since   Kunena 4.0
-     */
-    public function resetOptions(): KunenaControllerBase
-    {
-        return $this->setOptions(null);
+        $this->input   = $data['input'] ?? null;
+        $this->options = $data['options'] ?? null;
     }
 
     /**
@@ -196,15 +141,58 @@ abstract class KunenaControllerBase implements Serializable
     }
 
     /**
-     * Data which PHP serializes (PHP 7.4+: __serialize() must return an array).
+     * Get the options.
+     *
+     * @return Registry|null Object with the options.
+     *
+     * @since   Kunena 4.0
+     */
+    public function getOptions(): ?Registry
+    {
+        // Always return a Joomla\Registry\Registry instance
+        if (!($this->options instanceof Registry)) {
+            $this->resetOptions();
+        }
+
+        return $this->options;
+    }
+
+    /**
+     * Load the application object.
+     *
+     * @return  CMSApplicationInterface
      *
      * @since   Kunena 6.0
      *
-     * @return array
+     * @throws  Exception
      */
-    public function __serialize(): array
+    protected function loadApplication(): CMSApplicationInterface
     {
-        return ['input' => $this->input, 'options' => $this->options];
+        return Factory::getApplication();
+    }
+
+    /**
+     * Load the input object.
+     *
+     * @return  Input  The input object.
+     *
+     * @since   Kunena 6.0
+     */
+    protected function loadInput(): Input
+    {
+        return $this->app->getInput();
+    }
+
+    /**
+     * Function to empty all the options.
+     *
+     * @return  KunenaControllerBase  Instance of $this to allow chaining.
+     *
+     * @since   Kunena 4.0
+     */
+    public function resetOptions(): KunenaControllerBase
+    {
+        return $this->setOptions(null);
     }
 
     /**
@@ -220,16 +208,28 @@ abstract class KunenaControllerBase implements Serializable
     }
 
     /**
-     * Restore the data given by __serialize() (PHP 7.4+: __unserialize() receives that array).
+     * Set the options.
      *
-     * @since  Kunena 6.0
-     * @param   array  $data  The data returned by __serialize()
-     * @return  void
+     * @param   mixed  $options  Array / Joomla\Registry\Registry object with the options to load.
+     *
+     * @return  KunenaControllerBase  Instance of $this to allow chaining.
+     *
+     * @since   Kunena 4.0
      */
-    public function __unserialize(array $data): void
+    public function setOptions($options = null): KunenaControllerBase
     {
-        $this->input   = $data['input'] ?? null;
-        $this->options = $data['options'] ?? null;
+        // Received \Joomla\Registry\Registry
+        if ($options instanceof Registry) {
+            $this->options = $options;
+        }
+        // Received array
+        elseif (\is_array($options)) {
+            $this->options = new Registry($options);
+        } else {
+            $this->options = new Registry();
+        }
+
+        return $this;
     }
 
     /**

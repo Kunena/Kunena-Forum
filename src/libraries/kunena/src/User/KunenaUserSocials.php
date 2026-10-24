@@ -29,32 +29,32 @@ use stdClass;
 /**
  * Class KunenaUserSocials
  *
- * @property string  $x_social
- * @property string  $facebook
- * @property string  $myspace
- * @property string  $linkedin
- * @property string  $linkedin_company
- * @property string  $digg
- * @property string  $github
- * @property string  $microsoft
- * @property string  $blogspot
- * @property string  $flickr
- * @property string  $instagram
- * @property string  $qqsocial
- * @property string  $qzone
- * @property string  $weibo
- * @property string  $wechat
- * @property string  $vk
- * @property string  $telegram
- * @property string  $apple
- * @property string  $vimeo
- * @property string  $whatsapp
- * @property string  $youtube
- * @property string  $ok
- * @property string  $pinterest
- * @property string  $reddit
- * @property string  $bluesky_app
- * @property string  $threads
+ * @property string $x_social
+ * @property string $facebook
+ * @property string $myspace
+ * @property string $linkedin
+ * @property string $linkedin_company
+ * @property string $digg
+ * @property string $github
+ * @property string $microsoft
+ * @property string $blogspot
+ * @property string $flickr
+ * @property string $instagram
+ * @property string $qqsocial
+ * @property string $qzone
+ * @property string $weibo
+ * @property string $wechat
+ * @property string $vk
+ * @property string $telegram
+ * @property string $apple
+ * @property string $vimeo
+ * @property string $whatsapp
+ * @property string $youtube
+ * @property string $ok
+ * @property string $pinterest
+ * @property string $reddit
+ * @property string $bluesky_app
+ * @property string $threads
  *
  * @since   Kunena 6.4
  */
@@ -227,139 +227,35 @@ class KunenaUserSocials
     protected $userid = 0;
 
     /**
-     * @param   mixed        $userid    The user.
-     * @param   boolean      $useCache  Use the cache.
-     * @param   string|null  $json      The socials of the user as the Kunena user already has them (loaded in its own
-     *                                  query): no query is needed then. Null reads them from the database.
-     *
-     * @return  KunenaUserSocials|mixed
-     *
-     * @throws  Exception
-     * @since   Kunena 6.4
-     */
-    public static function getInstance($userid = 0, $useCache = true, ?string $json = null): ?KunenaUserSocials
-    {
-        static $instances = [];
-
-        $userid = (int) $userid;
-
-        if ($useCache && isset($instances[$userid])) {
-            return $instances[$userid];
-        }
-
-        $instance = null;
-
-        if ($useCache) {
-            // Cache per user: a single shared entry would hand one user's socials to another
-            $options = ['defaultgroup' => 'com_kunena'];
-            $cache   = Factory::getContainer()
-                ->get(CacheControllerFactoryInterface::class)
-                ->createCacheController('output', $options);
-            $cacheId = 'usersocials_' . $userid;
-            $cached  = $cache->get($cacheId, 'com_kunena');
-
-            if ($cached instanceof KunenaUserSocials && $cached->userid === $userid) {
-                $instance = $cached;
-                $instance->normalize();
-            }
-        }
-
-        if (!$instance) {
-            $instance         = new KunenaUserSocials();
-            $instance->userid = $userid;
-            $instance->load($json);
-
-            if ($useCache) {
-                $cache->store($instance, $cacheId, 'com_kunena');
-            }
-        }
-
-        if ($useCache) {
-            $instances[$userid] = $instance;
-        }
-
-        return $instance;
-    }
-
-    /**
-     * Load the socials values from database table.
-     *
-     * @param   string|null  $json  The socials as JSON when they are known already, null to read them from the database.
+     * Add the JSON content in colum params for the current user if it's empty
      *
      * @return  void
      *
-     * @throws  Exception
      * @since   Kunena 6.4
      */
-    public function load(?string $json = null): void
+    public static function addSocialsParams()
     {
-        if ($json !== null) {
-            // The Kunena user has the socials already.
-            $socials = ['socials' => $json];
-        } else {
+        $user = KunenaUserHelper::getMyself();
+
+        if ($user->userid > 0 && empty($user->socials)) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery();
-            $query->select('socials')
-                ->from($db->quoteName('#__kunena_users'))
-                ->where($db->quoteName('userid') . '=' . $this->userid);
+
+            $fields = [
+                $db->quoteName('socials') . ' = ' . $db->quote(json_encode(self::getProviders())),
+            ];
+
+            $conditions = [
+                $db->quoteName('userid') . ' = ' . $user->userid,
+            ];
+
+            $query->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
             $db->setQuery($query);
 
-            $socials = null;
-
             try {
-                $socials = $db->loadAssoc();
+                $result = $db->execute();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
-            }
-        }
-
-        if (!empty($socials['socials'])) {
-            $userid = $this->userid;
-            $params = json_decode($socials['socials']);
-            $this->bind($params);
-
-            // The stored JSON contains a userid too, never let it override the requested one
-            $this->userid = $userid;
-        }
-
-        $this->normalize();
-
-        // Perform custom validation of config data before we let anybody access it.
-        $this->check();
-    }
-
-    /**
-     * Make sure every social entry is an object, even if the stored JSON is empty, lacks newer
-     * networks, holds legacy plain string values or contains leftover keys.
-     *
-     * @return  void
-     *
-     * @since   Kunena 7.1
-     */
-    protected function normalize(): void
-    {
-        $defaults = self::getProviders();
-
-        // When the admin made the list of providers, only these providers are shown: the other values are left out. The
-        // providers which are shut down (Skype, Yahoo Messenger, Google+) are never shown, also not with the values of the users.
-        $custom = self::hasCustomProviders();
-
-        foreach (get_object_vars($this) as $key => $value) {
-            if ($key !== 'userid' && !isset($defaults->$key) && ($custom || !\is_object($value) || \in_array($key, self::RETIRED, true))) {
-                unset($this->$key);
-            }
-        }
-
-        foreach ($defaults as $key => $default) {
-            if (!\is_object($this->$key ?? null)) {
-                $default->value = \is_string($this->$key ?? null) ? $this->$key : '';
-                $this->$key     = $default;
-            } else {
-                // The address, the title and the icon come from the list of the providers, the value is the one of the user.
-                $this->$key->url   = $default->url;
-                $this->$key->title = $default->title;
-                $this->$key->nourl = $default->nourl;
-                $this->$key->fa    = $default->fa;
             }
         }
     }
@@ -389,126 +285,6 @@ class KunenaUserSocials
     }
 
     /**
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.4
-     */
-    public function save(): void
-    {
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
-        // Perform custom validation of config data before we write it.
-        $this->check();
-
-        // Get current configuration
-        $params = get_object_vars($this);
-        unset($params['id']);
-
-        $fields = [
-            $db->quoteName('socials') . ' = ' . $db->quote(json_encode($params)),
-        ];
-
-        $conditions = [
-            $db->quoteName('userid') . ' = ' . $this->userid,
-        ];
-
-        $query = $db->createQuery()
-            ->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
-
-        $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        // Clear cache.
-        KunenaCacheHelper::clear();
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.4
-     */
-    public function reset(): void
-    {
-        $instance = new KunenaUserSocials();
-        $this->bind(get_object_vars($instance));
-    }
-
-    /**
-     * @param   string  $name  Name of the plugin
-     *
-     * @return  Registry
-     *
-     * @internal
-     *
-     * @since   Kunena 6.4
-     */
-    public function getPlugin(string $name): Registry
-    {
-        return isset($this->plugins[$name]) ? $this->plugins[$name] : new Registry();
-    }
-
-    /**
-     * Email set for the configuration
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.4
-     */
-    public function getEmail(): string
-    {
-        $email = $this->email ?? '';
-
-        return !empty($email) ? $email : Factory::getApplication()->get('mailfrom', '');
-    }
-
-    /**
-     * Modifies existing property of the class object
-     *
-     * @param   string  $property  The name of the property.
-     * @param   mixed   $value     The value of the property to set.
-     *
-     * @return  bool  true on success
-     *
-     * @since   Kunena 6.4
-     */
-    public function set($property, $value): bool
-    {
-        $this->$property = $value;
-
-        return true;
-    }
-
-    /**
-     * Set the object properties based on a named array/hash.
-     *
-     * @param   mixed  $properties  Either an associative array or another object.
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.4
-     */
-    public function setProperties($properties)
-    {
-        if (\is_array($properties) || \is_object($properties)) {
-            foreach ((array) $properties as $k => $v) {
-                // Use the set function which might be overridden.
-                $this->set($k, $v);
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * The rows of the providers which the admin made (view Socials of the backend), empty when the admin made none.
      *
      * @return  array
@@ -520,62 +296,6 @@ class KunenaUserSocials
         $rows = ComponentHelper::getParams('com_kunena')->get('socials', []);
 
         return \is_object($rows) || \is_array($rows) ? array_values(array_map(static fn ($row) => (array) $row, (array) $rows)) : [];
-    }
-
-    /**
-     * Did the admin make the list of the providers.
-     *
-     * @return  bool
-     *
-     * @since   Kunena 7.2
-     */
-    public static function hasCustomProviders(): bool
-    {
-        return (bool) self::getCustomProviderRows();
-    }
-
-    /**
-     * The providers (social websites): the ones of the admin when there are, else the default ones. Each provider has an empty
-     * value, the address (##VALUE## is the value of the user), the title (a language key or a text), nourl and the icon.
-     *
-     * @return  object  The providers by key.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getProviders(): object
-    {
-        static $providers = null;
-
-        if ($providers !== null) {
-            return unserialize(serialize($providers));
-        }
-
-        $rows = self::getCustomProviderRows();
-
-        if (!$rows) {
-            $providers = json_decode(self::getDefaultSocialsJson());
-        } else {
-            $providers = new stdClass();
-
-            foreach ($rows as $row) {
-                $key = (string) ($row['key'] ?? '');
-
-                if (!preg_match('/^[a-z0-9_]{1,30}$/', $key) || $key === 'userid') {
-                    continue;
-                }
-
-                $providers->$key = (object) [
-                    'value' => '',
-                    'url'   => (string) ($row['url'] ?? '##VALUE##'),
-                    'title' => (string) ($row['title'] ?? $key),
-                    'nourl' => (int) !empty($row['nourl']),
-                    'fa'    => (string) ($row['fa'] ?? ''),
-                ];
-            }
-        }
-
-        // A copy: the callers put the value of the user in the objects.
-        return unserialize(serialize($providers));
     }
 
     /**
@@ -776,34 +496,316 @@ JSON;
     }
 
     /**
-     * Add the JSON content in colum params for the current user if it's empty
+     * Email set for the configuration
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.4
+     */
+    public function getEmail(): string
+    {
+        $email = $this->email ?? '';
+
+        return !empty($email) ? $email : Factory::getApplication()->get('mailfrom', '');
+    }
+
+    /**
+     * @param   mixed        $userid    The user.
+     * @param   boolean      $useCache  Use the cache.
+     * @param   string|null  $json      The socials of the user as the Kunena user already has them (loaded in its own
+     *                                  query): no query is needed then. Null reads them from the database.
+     *
+     * @return  KunenaUserSocials|mixed
+     *
+     * @throws  Exception
+     * @since   Kunena 6.4
+     */
+    public static function getInstance($userid = 0, $useCache = true, ?string $json = null): ?KunenaUserSocials
+    {
+        static $instances = [];
+
+        $userid = (int) $userid;
+
+        if ($useCache && isset($instances[$userid])) {
+            return $instances[$userid];
+        }
+
+        $instance = null;
+
+        if ($useCache) {
+            // Cache per user: a single shared entry would hand one user's socials to another
+            $options = ['defaultgroup' => 'com_kunena'];
+            $cache   = Factory::getContainer()
+                ->get(CacheControllerFactoryInterface::class)
+                ->createCacheController('output', $options);
+            $cacheId = 'usersocials_' . $userid;
+            $cached  = $cache->get($cacheId, 'com_kunena');
+
+            if ($cached instanceof KunenaUserSocials && $cached->userid === $userid) {
+                $instance = $cached;
+                $instance->normalize();
+            }
+        }
+
+        if (!$instance) {
+            $instance         = new KunenaUserSocials();
+            $instance->userid = $userid;
+            $instance->load($json);
+
+            if ($useCache) {
+                $cache->store($instance, $cacheId, 'com_kunena');
+            }
+        }
+
+        if ($useCache) {
+            $instances[$userid] = $instance;
+        }
+
+        return $instance;
+    }
+
+    /**
+     * @param   string  $name  Name of the plugin
+     *
+     * @return  Registry
+     *
+     * @internal
      *
      * @since   Kunena 6.4
      */
-    public static function addSocialsParams()
+    public function getPlugin(string $name): Registry
     {
-        $user = KunenaUserHelper::getMyself();
+        return isset($this->plugins[$name]) ? $this->plugins[$name] : new Registry();
+    }
 
-        if ($user->userid > 0 && empty($user->socials)) {
+    /**
+     * The providers (social websites): the ones of the admin when there are, else the default ones. Each provider has an empty
+     * value, the address (##VALUE## is the value of the user), the title (a language key or a text), nourl and the icon.
+     *
+     * @return  object  The providers by key.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getProviders(): object
+    {
+        static $providers = null;
+
+        if ($providers !== null) {
+            return unserialize(serialize($providers));
+        }
+
+        $rows = self::getCustomProviderRows();
+
+        if (!$rows) {
+            $providers = json_decode(self::getDefaultSocialsJson());
+        } else {
+            $providers = new stdClass();
+
+            foreach ($rows as $row) {
+                $key = (string) ($row['key'] ?? '');
+
+                if (!preg_match('/^[a-z0-9_]{1,30}$/', $key) || $key === 'userid') {
+                    continue;
+                }
+
+                $providers->$key = (object) [
+                    'value' => '',
+                    'url'   => (string) ($row['url'] ?? '##VALUE##'),
+                    'title' => (string) ($row['title'] ?? $key),
+                    'nourl' => (int) !empty($row['nourl']),
+                    'fa'    => (string) ($row['fa'] ?? ''),
+                ];
+            }
+        }
+
+        // A copy: the callers put the value of the user in the objects.
+        return unserialize(serialize($providers));
+    }
+
+    /**
+     * Did the admin make the list of the providers.
+     *
+     * @return  bool
+     *
+     * @since   Kunena 7.2
+     */
+    public static function hasCustomProviders(): bool
+    {
+        return (bool) self::getCustomProviderRows();
+    }
+
+    /**
+     * Load the socials values from database table.
+     *
+     * @param   string|null  $json  The socials as JSON when they are known already, null to read them from the database.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.4
+     */
+    public function load(?string $json = null): void
+    {
+        if ($json !== null) {
+            // The Kunena user has the socials already.
+            $socials = ['socials' => $json];
+        } else {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery();
-
-            $fields = [
-                $db->quoteName('socials') . ' = ' . $db->quote(json_encode(self::getProviders())),
-            ];
-
-            $conditions = [
-                $db->quoteName('userid') . ' = ' . $user->userid,
-            ];
-
-            $query->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
+            $query->select('socials')
+                ->from($db->quoteName('#__kunena_users'))
+                ->where($db->quoteName('userid') . '=' . $this->userid);
             $db->setQuery($query);
 
+            $socials = null;
+
             try {
-                $result = $db->execute();
+                $socials = $db->loadAssoc();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
             }
         }
+
+        if (!empty($socials['socials'])) {
+            $userid = $this->userid;
+            $params = json_decode($socials['socials']);
+            $this->bind($params);
+
+            // The stored JSON contains a userid too, never let it override the requested one
+            $this->userid = $userid;
+        }
+
+        $this->normalize();
+
+        // Perform custom validation of config data before we let anybody access it.
+        $this->check();
+    }
+
+    /**
+     * Make sure every social entry is an object, even if the stored JSON is empty, lacks newer
+     * networks, holds legacy plain string values or contains leftover keys.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.1
+     */
+    protected function normalize(): void
+    {
+        $defaults = self::getProviders();
+
+        // When the admin made the list of providers, only these providers are shown: the other values are left out. The
+        // providers which are shut down (Skype, Yahoo Messenger, Google+) are never shown, also not with the values of the users.
+        $custom = self::hasCustomProviders();
+
+        foreach (get_object_vars($this) as $key => $value) {
+            if ($key !== 'userid' && !isset($defaults->$key) && ($custom || !\is_object($value) || \in_array($key, self::RETIRED, true))) {
+                unset($this->$key);
+            }
+        }
+
+        foreach ($defaults as $key => $default) {
+            if (!\is_object($this->$key ?? null)) {
+                $default->value = \is_string($this->$key ?? null) ? $this->$key : '';
+                $this->$key     = $default;
+            } else {
+                // The address, the title and the icon come from the list of the providers, the value is the one of the user.
+                $this->$key->url   = $default->url;
+                $this->$key->title = $default->title;
+                $this->$key->nourl = $default->nourl;
+                $this->$key->fa    = $default->fa;
+            }
+        }
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.4
+     */
+    public function reset(): void
+    {
+        $instance = new KunenaUserSocials();
+        $this->bind(get_object_vars($instance));
+    }
+
+    /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.4
+     */
+    public function save(): void
+    {
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        // Perform custom validation of config data before we write it.
+        $this->check();
+
+        // Get current configuration
+        $params = get_object_vars($this);
+        unset($params['id']);
+
+        $fields = [
+            $db->quoteName('socials') . ' = ' . $db->quote(json_encode($params)),
+        ];
+
+        $conditions = [
+            $db->quoteName('userid') . ' = ' . $this->userid,
+        ];
+
+        $query = $db->createQuery()
+            ->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
+
+        $db->setQuery($query);
+
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        // Clear cache.
+        KunenaCacheHelper::clear();
+    }
+
+    /**
+     * Modifies existing property of the class object
+     *
+     * @param   string  $property  The name of the property.
+     * @param   mixed   $value     The value of the property to set.
+     *
+     * @return  bool  true on success
+     *
+     * @since   Kunena 6.4
+     */
+    public function set($property, $value): bool
+    {
+        $this->$property = $value;
+
+        return true;
+    }
+
+    /**
+     * Set the object properties based on a named array/hash.
+     *
+     * @param   mixed  $properties  Either an associative array or another object.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.4
+     */
+    public function setProperties($properties)
+    {
+        if (\is_array($properties) || \is_object($properties)) {
+            foreach ((array) $properties as $k => $v) {
+                // Use the set function which might be overridden.
+                $this->set($k, $v);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

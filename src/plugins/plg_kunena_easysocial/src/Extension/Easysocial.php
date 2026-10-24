@@ -108,6 +108,16 @@ class Easysocial extends CMSPlugin implements SubscriberInterface, DatabaseAware
         return true;
     }
 
+    /**
+     * Construct the plugin only when EasySocial is installed.
+     *
+     * @param   object  $subject  The object to observe.
+     * @param   array   $config   The configuration of the plugin.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
     public function initEasySocial(&$subject, $config)
     {
         // Do not load if Easyblog is not installed

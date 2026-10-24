@@ -22,8 +22,10 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Input\Input;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -315,14 +317,14 @@ Text::script('COM_KUNENA_POLL_TITLE');
 
         <?php
         // The tags (Joomla Tags) of a new topic, or of an existing topic when its first message is edited by its author or a moderator.
-        $topicTagsAllowed = \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::isEnabled()
+        $topicTagsAllowed = KunenaTopicTags::isEnabled()
             && (!$this->topic->exists()
                 || ($this->topic->first_post_id == $this->message->id
                     && (KunenaUserHelper::getMyself()->userid == $this->topic->first_post_userid || KunenaUserHelper::getMyself()->isModerator($this->message->getCategory()))));
-        $topicTagsList    = $topicTagsAllowed ? \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::getAvailable() : [];
+        $topicTagsList    = $topicTagsAllowed ? KunenaTopicTags::getAvailable() : [];
         ?>
         <?php if ($topicTagsList) : ?>
-            <?php $topicTagsChosen = $this->topic->exists() ? array_keys(\Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::get((int) $this->topic->id)) : []; ?>
+            <?php $topicTagsChosen = $this->topic->exists() ? array_keys(KunenaTopicTags::get((int) $this->topic->id)) : []; ?>
             <div class="form-group row">
                 <label for="topic-tags" class="col-sm-2 col-form-label"><?php echo Text::_('COM_KUNENA_TAGS'); ?></label>
                 <div class="col-md-10">
@@ -357,15 +359,15 @@ Text::script('COM_KUNENA_POLL_TITLE');
             ?>
         <?php endif; ?>
 
-        <?php if (!$this->topic->exists() && $this->ktemplate->params->get('topicLanguage', 'pick') === 'pick' && \Kunena\Forum\Libraries\Language\KunenaMultilanguage::hasLanguages() && \Kunena\Forum\Libraries\Language\KunenaMultilanguage::isEnabled()) : ?>
+        <?php if (!$this->topic->exists() && $this->ktemplate->params->get('topicLanguage', 'pick') === 'pick' && KunenaMultilanguage::hasLanguages() && KunenaMultilanguage::isEnabled()) : ?>
             <?php // On a multilingual site the language of a new topic is chosen: the language of the page is the default. ?>
             <div class="form-group row">
                 <label for="topic-language" class="col-sm-2 col-form-label"><?php echo Text::_('COM_KUNENA_TOPIC_LANGUAGE'); ?></label>
                 <div class="col-md-4">
                     <select class="form-select" name="topic_language" id="topic-language">
                         <option value="*"><?php echo Text::_('COM_KUNENA_TOPIC_LANGUAGE_ALL'); ?></option>
-                        <?php foreach (\Kunena\Forum\Libraries\Language\KunenaMultilanguage::getLanguages() as $languageCode => $languageTitle) : ?>
-                            <option value="<?php echo $this->escape($languageCode); ?>"<?php echo $languageCode === \Kunena\Forum\Libraries\Language\KunenaMultilanguage::getCurrent() ? ' selected' : ''; ?>><?php echo $this->escape($languageTitle); ?></option>
+                        <?php foreach (KunenaMultilanguage::getLanguages() as $languageCode => $languageTitle) : ?>
+                            <option value="<?php echo $this->escape($languageCode); ?>"<?php echo $languageCode === KunenaMultilanguage::getCurrent() ? ' selected' : ''; ?>><?php echo $this->escape($languageTitle); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>

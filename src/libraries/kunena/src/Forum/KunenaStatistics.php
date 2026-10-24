@@ -208,7 +208,7 @@ class KunenaStatistics
     }
 
     /**
-     * @return \Kunena\Forum\Libraries\Forum\KunenaStatistics|null
+     * @return KunenaStatistics|null
      *
      * @since   Kunena 6.0
      */
@@ -268,55 +268,6 @@ class KunenaStatistics
     }
 
     /**
-     * @param   bool  $force  force
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function loadGeneral($force = false): void
-    {
-        if (!$this->showStats && !$force) {
-            return;
-        }
-
-        $this->loadMemberCount();
-        $this->loadLastUserId();
-        $this->loadCategoryCount();
-        $this->loadLastDays();
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function loadMemberCount(): void
-    {
-        if ($this->memberCount === null) {
-            $this->memberCount = KunenaUserHelper::getTotalCount();
-        }
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function loadLastUserId(): void
-    {
-        if ($this->lastUserId === null) {
-            $this->lastUserId = KunenaUserHelper::getLastId();
-        }
-    }
-
-    /**
      * @return  array
      *
      * @since   Kunena 6.0
@@ -350,6 +301,27 @@ class KunenaStatistics
             'topics'     => $this->topicCount,
             'messages'   => $this->messageCount,
         ];
+    }
+
+    /**
+     * @param   bool  $force  force
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function loadGeneral($force = false): void
+    {
+        if (!$this->showStats && !$force) {
+            return;
+        }
+
+        $this->loadMemberCount();
+        $this->loadLastUserId();
+        $this->loadCategoryCount();
+        $this->loadLastDays();
     }
 
     /**
@@ -406,6 +378,34 @@ class KunenaStatistics
     }
 
     /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function loadLastUserId(): void
+    {
+        if ($this->lastUserId === null) {
+            $this->lastUserId = KunenaUserHelper::getLastId();
+        }
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function loadMemberCount(): void
+    {
+        if ($this->memberCount === null) {
+            $this->memberCount = KunenaUserHelper::getTotalCount();
+        }
+    }
+
+    /**
      * @param   bool  $override  override
      *
      * @return  void
@@ -431,43 +431,6 @@ class KunenaStatistics
                 array_pop($this->top);
             }
         }
-    }
-
-    /**
-     * @param   int  $limit  limit
-     *
-     * @return array
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function loadTopTopics($limit = 0): array
-    {
-        $limit           = $limit ? $limit : $this->_config->popSubjectCount;
-
-        if ($this->topTopics === null || \count($this->topTopics) < $limit) {
-            $params                        = ['orderby' => 'posts DESC'];
-            list($total, $this->topTopics) = KunenaTopicHelper::getLatestTopics(false, 0, $limit, $params);
-
-            $top = reset($this->topTopics);
-
-            if (!$top) {
-                return [];
-            }
-
-            $top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_TOPICS');
-            $top->titleName  = Text::_('COM_KUNENA_GEN_SUBJECT');
-            $top->titleCount = Text::_('COM_KUNENA_USRL_POSTS');
-
-            foreach ($this->topTopics as &$item) {
-                $item          = clone $item;
-                $item->count   = $item->posts;
-                $item->link    = HTMLHelper::_('link', $item->getUri(), KunenaParser::parseText($item->subject), null, null, '');
-                $item->percent = round(100 * $item->count / $top->posts);
-            }
-        }
-
-        return \array_slice($this->topTopics, 0, $limit);
     }
 
     /**
@@ -533,40 +496,6 @@ class KunenaStatistics
         }
 
         return \array_slice($this->topPolls, 0, $limit);
-    }
-
-    /**
-     * @param   bool  $override  override
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function loadUserStats($override = false): void
-    {
-        if ($this->showPopUserStats || $override) {
-            $this->top[] = $this->loadTopPosters();
-
-            if (!end($this->top)) {
-                array_pop($this->top);
-            }
-
-            $this->top[] = $this->loadTopProfiles();
-
-            if (!end($this->top)) {
-                array_pop($this->top);
-            }
-        }
-
-        if ($this->showPopThankYouStats || $override) {
-            $this->top[] = $this->loadTopThankyous();
-
-            if (!end($this->top)) {
-                array_pop($this->top);
-            }
-        }
     }
 
     /**
@@ -717,5 +646,76 @@ class KunenaStatistics
         }
 
         return \array_slice($this->topThanks, 0, $limit);
+    }
+
+    /**
+     * @param   int  $limit  limit
+     *
+     * @return array
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function loadTopTopics($limit = 0): array
+    {
+        $limit           = $limit ? $limit : $this->_config->popSubjectCount;
+
+        if ($this->topTopics === null || \count($this->topTopics) < $limit) {
+            $params                        = ['orderby' => 'posts DESC'];
+            list($total, $this->topTopics) = KunenaTopicHelper::getLatestTopics(false, 0, $limit, $params);
+
+            $top = reset($this->topTopics);
+
+            if (!$top) {
+                return [];
+            }
+
+            $top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_TOPICS');
+            $top->titleName  = Text::_('COM_KUNENA_GEN_SUBJECT');
+            $top->titleCount = Text::_('COM_KUNENA_USRL_POSTS');
+
+            foreach ($this->topTopics as &$item) {
+                $item          = clone $item;
+                $item->count   = $item->posts;
+                $item->link    = HTMLHelper::_('link', $item->getUri(), KunenaParser::parseText($item->subject), null, null, '');
+                $item->percent = round(100 * $item->count / $top->posts);
+            }
+        }
+
+        return \array_slice($this->topTopics, 0, $limit);
+    }
+
+    /**
+     * @param   bool  $override  override
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function loadUserStats($override = false): void
+    {
+        if ($this->showPopUserStats || $override) {
+            $this->top[] = $this->loadTopPosters();
+
+            if (!end($this->top)) {
+                array_pop($this->top);
+            }
+
+            $this->top[] = $this->loadTopProfiles();
+
+            if (!end($this->top)) {
+                array_pop($this->top);
+            }
+        }
+
+        if ($this->showPopThankYouStats || $override) {
+            $this->top[] = $this->loadTopThankyous();
+
+            if (!end($this->top)) {
+                array_pop($this->top);
+            }
+        }
     }
 }

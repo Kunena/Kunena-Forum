@@ -358,6 +358,32 @@ class KunenaLog
     protected static $entries = [];
 
     /**
+     * Add a KunenaLogEntry entry to the Kunena log.
+     *
+     * @param   KunenaEntry  $entry  An instance of an entry to be logged.
+     *
+     * @return  void
+     *
+     * @since   Kunena 5.0
+     */
+    public static function addEntry(KunenaEntry $entry): void
+    {
+        static::$entries[] = $entry;
+    }
+
+    /**
+     * Clear out the log entries.
+     *
+     * @return  void
+     *
+     * @since   Kunena 5.0
+     */
+    public static function clear(): void
+    {
+        static::$entries = [];
+    }
+
+    /**
      * Flush the log entries to the database for storage.
      *
      * Should only be called as a shutdown function in order to make sure all items are logged.
@@ -393,18 +419,6 @@ class KunenaLog
     }
 
     /**
-     * Clear out the log entries.
-     *
-     * @return  void
-     *
-     * @since   Kunena 5.0
-     */
-    public static function clear(): void
-    {
-        static::$entries = [];
-    }
-
-    /**
      * Log new entry.
      *
      * @param   int                  $type       Log entry type.
@@ -429,19 +443,5 @@ class KunenaLog
         ?KunenaUser $user = null
     ): void {
         static::$entries[] = new KunenaEntry($type, $operation, $data, $category, $topic, $user);
-    }
-
-    /**
-     * Add a KunenaLogEntry entry to the Kunena log.
-     *
-     * @param   KunenaEntry  $entry  An instance of an entry to be logged.
-     *
-     * @return  void
-     *
-     * @since   Kunena 5.0
-     */
-    public static function addEntry(KunenaEntry $entry): void
-    {
-        static::$entries[] = $entry;
     }
 }

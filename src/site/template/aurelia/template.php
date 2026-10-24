@@ -17,11 +17,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Notification\KunenaPopupNotification;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use ScssPhp\ScssPhp\Exception\SassException;
 
 /**
  * Aurelia template.
@@ -104,7 +106,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
      * @return  void
      *
      * @since   Kunena 6.0
-     * @throws \ScssPhp\ScssPhp\Exception\SassException
+     * @throws SassException
      */
     public function initialize(): void
     {
@@ -122,7 +124,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
         $doc = Factory::getApplication()->getDocument();
 
-        /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+        /** @var WebAssetManager $wa */
         $wa = $doc->getWebAssetManager();
         $wa->useScript('jquery');
 

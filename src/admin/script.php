@@ -15,8 +15,10 @@
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
+use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseDriver;
 use Joomla\Database\ParameterType;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -49,7 +51,7 @@ class Com_KunenaInstallerScript extends InstallerScript
      * Function called before extension installation/update/removal procedure commences
      *
      * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
-     * @param   \Joomla\CMS\Installer\InstallerAdapter  $parent  The class calling this method
+     * @param   InstallerAdapter  $parent  The class calling this method
      *
      * @return  boolean  True on success
      * @since   Kunena 7.0.0
@@ -98,7 +100,7 @@ class Com_KunenaInstallerScript extends InstallerScript
 
                 try {
                     // Get the configuration settings
-                    /** @var \Joomla\Database\DatabaseDriver  $db */
+                    /** @var DatabaseDriver  $db */
                     $db    = Factory::getContainer()->get('DatabaseDriver');
 
                     $query = $db->createQuery()
@@ -161,7 +163,7 @@ class Com_KunenaInstallerScript extends InstallerScript
                         // We have not been able to convert the configuration to component parameters
                         Factory::getApplication()->enqueueMessage('We are sorry to inform you that we were not able to convert you Kunena configuration settings to the new version. You need to do this manually after installation completes.', 'error');
                     }
-                } catch (\Throwable $e) {
+                } catch (Throwable $e) {
                     // Do nothing
                 }
             }
@@ -173,7 +175,7 @@ class Com_KunenaInstallerScript extends InstallerScript
 
             try {
                 $this->upgradeDatabase();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
             }
         }
@@ -187,7 +189,7 @@ class Com_KunenaInstallerScript extends InstallerScript
      */
     private function getComponentId(): int
     {
-        /** @var \Joomla\Database\DatabaseDriver  $db */
+        /** @var DatabaseDriver  $db */
         $db         = Factory::getContainer()->get('DatabaseDriver');
         $bindValues = ['component', $this->extension];
         $query      = $db->createQuery();

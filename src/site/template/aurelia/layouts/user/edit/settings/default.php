@@ -18,6 +18,9 @@ namespace Kunena\Forum\Site;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 
 Text::script('COM_KUNENA_CLEARED');
 ?>
@@ -47,9 +50,9 @@ Text::script('COM_KUNENA_CLEARED');
         </tr>
         <?php
         // The users whom the user ignores, with a link to stop ignoring them.
-        if ($this->profile->isMyself() && \Kunena\Forum\Libraries\User\KunenaUserIgnore::isEnabled()) :
-            $ignoredUsers = \Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers(
-                \Kunena\Forum\Libraries\User\KunenaUserIgnore::getIgnored($this->profile->userid)
+        if ($this->profile->isMyself() && KunenaUserIgnore::isEnabled()) :
+            $ignoredUsers = KunenaUserHelper::loadUsers(
+                KunenaUserIgnore::getIgnored($this->profile->userid)
             );
             ?>
             <tr>
@@ -66,7 +69,7 @@ Text::script('COM_KUNENA_CLEARED');
                                 <li class="mb-1">
                                     <?php echo $ignoredUser->getLink(); ?>
                                     <a class="btn btn-outline-secondary btn-sm ms-2" rel="nofollow"
-                                       href="<?php echo Route::_('index.php?option=com_kunena&view=user&task=unignore&userid=' . (int) $ignoredUser->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>">
+                                       href="<?php echo Route::_('index.php?option=com_kunena&view=user&task=unignore&userid=' . (int) $ignoredUser->userid . '&' . Session::getFormToken() . '=1'); ?>">
                                         <?php echo Text::_('COM_KUNENA_UNIGNORE'); ?>
                                     </a>
                                 </li>

@@ -47,16 +47,14 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
     }
 
     /**
-     * Setter for the type argument.
+     * Getter for the params argument.
      *
-     * @param   string  $value  The value to set
-     *
-     * @return  string
+     * @return  Registry
      * @since   7.0.0
      */
-    protected function onSetType(string $value): string
+    public function getParams(): Registry
     {
-        return $value;
+        return $this->arguments['params'];
     }
 
     /**
@@ -71,30 +69,6 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
     }
 
     /**
-     * Setter for the type argument.
-     *
-     * @return  $this
-     * @since   7.0.0
-     */
-    public function setType(string $type)
-    {
-        return $this->setArgument('type', $type);
-    }
-
-    /**
-     * Setter for the view argument.
-     *
-     * @param   Object  $value  The value to set
-     *
-     * @return  Object
-     * @since   7.0.0
-     */
-    protected function onSetView(Object $value): Object
-    {
-        return $value;
-    }
-
-    /**
      * Getter for the view argument.
      *
      * @return  Object
@@ -103,17 +77,6 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
     public function getView(): Object
     {
         return $this->arguments['view'];
-    }
-
-    /**
-     * Setter for the view argument.
-     *
-     * @return  $this
-     * @since   7.0.0
-     */
-    public function setView(Object $view)
-    {
-        return $this->setArgument('view', $view);
     }
 
     /**
@@ -130,24 +93,70 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
     }
 
     /**
-     * Getter for the params argument.
+     * Setter for the type argument.
      *
-     * @return  Registry
+     * @param   string  $value  The value to set
+     *
+     * @return  string
      * @since   7.0.0
      */
-    public function getParams(): Registry
+    protected function onSetType(string $value): string
     {
-        return $this->arguments['params'];
+        return $value;
+    }
+
+    /**
+     * Setter for the view argument.
+     *
+     * @param   Object  $value  The value to set
+     *
+     * @return  Object
+     * @since   7.0.0
+     */
+    protected function onSetView(Object $value): Object
+    {
+        return $value;
     }
 
     /**
      * Setter for the params argument.
      *
+     * @param   string  $params  The params.
+     *
      * @return  $this
+     *
      * @since   7.0.0
      */
     public function setParams(string $params)
     {
         return $this->setArgument('params', $params);
+    }
+
+    /**
+     * Setter for the type argument.
+     *
+     * @param   string  $type  The type.
+     *
+     * @return  $this
+     *
+     * @since   7.0.0
+     */
+    public function setType(string $type)
+    {
+        return $this->setArgument('type', $type);
+    }
+
+    /**
+     * Setter for the view argument.
+     *
+     * @param   object  $view  The view.
+     *
+     * @return  $this
+     *
+     * @since   7.0.0
+     */
+    public function setView(Object $view)
+    {
+        return $this->setArgument('view', $view);
     }
 }

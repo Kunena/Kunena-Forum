@@ -136,30 +136,61 @@ class KunenaSession
     }
 
     /**
-     * Method to load a KunenaSession object by userid
+     * Method to delete the KunenaSession object from the database
      *
      * @access    public
      *
-     * @param   int  $userid  The user id of the user to load
-     *
      * @return    boolean            True on success
+     *
      * @since     1.5
      */
-    public function load(int $userid): bool
+    public function delete(): bool
     {
         // Create the user table object
         $table = $this->getTable();
 
-        // Load the KunenaTableUser object based on the user id
-        if ($table->load($userid)) {
-            $this->_exists = true;
+        try {
+            $result = $table->delete($this->userid);
+        } catch (Exception $e) {
+            throw new RuntimeException($e->getMessage());
         }
 
-        // Assuming all is well at this point lets bind the data
-        $this->bind($table->getProperties());
-        $this->userid = $userid;
+        return $result;
+    }
 
-        return true;
+    /**
+     * @return  integer|string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getAllReadTime()
+    {
+        // For existing users new indication expires after 3 months
+        $monthsAgo = Factory::getDate()->toUnix() - 91 * 24 * 60 * 60;
+
+        return $this->allreadtime > $monthsAgo ? $this->allreadtime : $monthsAgo;
+    }
+
+    /**
+     * @param   bool  $update  update
+     * @param   int|null  $userid  userid
+     *
+     * @return  KunenaSession
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getInstance($update = false, $userid = null): KunenaSession
+    {
+        if (!self::$_instance) {
+            $my              = Factory::getApplication()->getIdentity();
+            self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
+
+            if ($update) {
+                self::$_instance->updateSessionInfo();
+            }
+        }
+
+        return self::$_instance;
     }
 
     /**
@@ -195,46 +226,6 @@ class KunenaSession
     }
 
     /**
-     * @param   bool  $update  update
-     * @param   int|null  $userid  userid
-     *
-     * @return  KunenaSession
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getInstance($update = false, $userid = null): KunenaSession
-    {
-        if (!self::$_instance) {
-            $my              = Factory::getApplication()->getIdentity();
-            self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
-
-            if ($update) {
-                self::$_instance->updateSessionInfo();
-            }
-        }
-
-        return self::$_instance;
-    }
-
-    /**
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function updateSessionInfo(): void
-    {
-        // If this is a new session, reset the lasttime column with the timestamp
-        // of the last saved currvisit - only after that can we reset currvisit to now before the store
-        if ($this->isNewSession()) {
-            $this->lasttime   = $this->currvisit;
-            $this->readtopics = 0;
-        }
-
-        $this->currvisit = Factory::getDate()->toUnix();
-    }
-
-    /**
      * @return  boolean
      *
      * @throws  Exception
@@ -250,6 +241,54 @@ class KunenaSession
         $this->_sessionTimeOut = ($this->currvisit + $lifetime < Factory::getDate()->toUnix());
 
         return $this->_sessionTimeOut;
+    }
+
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function isNewUser(): bool
+    {
+        return !$this->_exists;
+    }
+
+    /**
+     * Method to load a KunenaSession object by userid
+     *
+     * @access    public
+     *
+     * @param   int  $userid  The user id of the user to load
+     *
+     * @return    boolean            True on success
+     * @since     1.5
+     */
+    public function load(int $userid): bool
+    {
+        // Create the user table object
+        $table = $this->getTable();
+
+        // Load the KunenaTableUser object based on the user id
+        if ($table->load($userid)) {
+            $this->_exists = true;
+        }
+
+        // Assuming all is well at this point lets bind the data
+        $this->bind($table->getProperties());
+        $this->userid = $userid;
+
+        return true;
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function markAllCategoriesRead(): void
+    {
+        $this->allreadtime = Factory::getDate()->toUnix();
+        $this->readtopics  = 0;
     }
 
     /**
@@ -327,59 +366,20 @@ class KunenaSession
     }
 
     /**
-     * Method to delete the KunenaSession object from the database
-     *
-     * @access    public
-     *
-     * @return    boolean            True on success
-     *
-     * @since     1.5
-     */
-    public function delete(): bool
-    {
-        // Create the user table object
-        $table = $this->getTable();
-
-        try {
-            $result = $table->delete($this->userid);
-        } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage());
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function isNewUser(): bool
-    {
-        return !$this->_exists;
-    }
-
-    /**
-     * @return  integer|string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getAllReadTime()
-    {
-        // For existing users new indication expires after 3 months
-        $monthsAgo = Factory::getDate()->toUnix() - 91 * 24 * 60 * 60;
-
-        return $this->allreadtime > $monthsAgo ? $this->allreadtime : $monthsAgo;
-    }
-
-    /**
      * @return  void
      *
+     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function markAllCategoriesRead(): void
+    public function updateSessionInfo(): void
     {
-        $this->allreadtime = Factory::getDate()->toUnix();
-        $this->readtopics  = 0;
+        // If this is a new session, reset the lasttime column with the timestamp
+        // of the last saved currvisit - only after that can we reset currvisit to now before the store
+        if ($this->isNewSession()) {
+            $this->lasttime   = $this->currvisit;
+            $this->readtopics = 0;
+        }
+
+        $this->currvisit = Factory::getDate()->toUnix();
     }
 }

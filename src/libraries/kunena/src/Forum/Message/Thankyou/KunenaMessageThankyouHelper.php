@@ -52,7 +52,7 @@ abstract class KunenaMessageThankyouHelper
      * @param   int   $identifier  The message to load - Can be only an integer.
      * @param   bool  $reload      reload
      *
-     * @return \Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyou
+     * @return KunenaMessageThankyou
      *
      * @since   Kunena 6.0
      *
@@ -76,6 +76,222 @@ abstract class KunenaMessageThankyouHelper
         }
 
         return self::$_instances [$id];
+    }
+
+    /**
+     * Return thank yous for the given messages.
+     *
+     * @param   bool|array|int  $ids  ids
+     *
+     * @return  KunenaMessageThankyou[]
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getByMessage($ids = false): array
+    {
+        if ($ids === false) {
+            return self::$_instances;
+        }
+
+        if (\is_array($ids)) {
+            $ids2 = [];
+
+            foreach ($ids as $id) {
+                if ($id instanceof KunenaMessage) {
+                    $id = $id->id;
+                }
+
+                $ids2[(int) $id] = (int) $id;
+            }
+
+            $ids = $ids2;
+        } else {
+            $ids = [$ids];
+        }
+
+        self::loadMessages($ids);
+
+        $list = [];
+
+        foreach ($ids as $id) {
+            if (!empty(self::$_instances [$id])) {
+                $list[$id] = self::$_instances [$id];
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get messages with most thank yous given.
+     *
+     * @param   int  $limitstart  limitstart
+     * @param   int  $limit       limit
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getTopMessages($limitstart = 0, $limit = 10): array
+    {
+        $db         = Factory::getContainer()->get('DatabaseDriver');
+        $categories = KunenaCategoryHelper::getCategories();
+        $catlist    = implode(',', array_keys($categories));
+        $query      = $db->createQuery();
+        $query->select([$db->quoteName('s.postid'), 'COUNT(*) AS countid', $db->quoteName('m.catid'), $db->quoteName('m.thread'), $db->quoteName('m.id'), $db->quoteName('m.subject')])
+            ->from($db->quoteName('#__kunena_thankyou', 's'))
+            ->innerJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('s.postid') . ' = ' . $db->quoteName('m.id'))
+            ->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id'))
+            ->where($db->quoteName('m.catid') . ' IN (' . $catlist . ')')
+            ->andWhere($db->quoteName('m.hold') . ' = 0')
+            ->andWhere($db->quoteName('tt.hold') . ' = 0')
+            ->group('s.postid')
+            ->order($db->quoteName('countid') . ' DESC');
+        $query->setLimit($limit, $limitstart);
+        $db->setQuery($query);
+
+        $results = [];
+
+        try {
+            $results = (array) $db->loadObjectList();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return $results;
+    }
+
+    /**
+     * Get users with most thank yous received / given.
+     *
+     * @param   bool  $target      target
+     * @param   int   $limitstart  limitstart
+     * @param   int   $limit       limit
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getTopUsers($target = true, $limitstart = 0, $limit = 10): array
+    {
+        $field = 'targetuserid';
+
+        if (!$target) {
+            $field = 'userid';
+        }
+
+        $db      = Factory::getContainer()->get('DatabaseDriver');
+        $results = [];
+        $query   = $db->createQuery();
+        $query->select([$db->quoteName('s.' . $field, 'userid'), 'COUNT(' . $db->quoteName('s.' . $field) . ') AS countid', $db->quoteName('u.username')])
+            ->from($db->quoteName('#__kunena_thankyou', 's'))
+            ->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('s.' . $field) . ' = ' . $db->quoteName('u.id'))
+            ->group($db->quoteName(['s.' . $field, 'u.username']))
+            ->order($db->quoteName('countid') . ' DESC');
+        $query->setLimit($limit, $limitstart);
+        $db->setQuery($query);
+
+        try {
+            $results = (array) $db->loadObjectList();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return $results;
+    }
+
+    /**
+     * Get total number of Thank yous.
+     *
+     * @param   int  $starttime  Starting time as unix timestamp.
+     * @param   int  $endtime    Ending time as unix timestamp.
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getTotal($starttime = null, $endtime = null): int
+    {
+        $db      = Factory::getContainer()->get('DatabaseDriver');
+        $results = 0;
+
+        $query = $db->createQuery();
+        $query->select('COUNT(*)')
+            ->from($db->quoteName('#__kunena_thankyou'));
+
+        if (!empty($starttime)) {
+            $query->where($db->quoteName('time') . ' >= UNIX_TIMESTAMP(' . $db->quote(\intval($starttime)) . ')');
+        }
+
+        if (!empty($endtime)) {
+            $query->where($db->quoteName('time') . ' <= UNIX_TIMESTAMP(' . $db->quote(\intval($endtime)) . ')');
+        }
+
+        $db->setQuery($query);
+
+        try {
+            $results = (int) $db->loadResult();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return $results;
+    }
+
+    /**
+     * Get messages where a user received / gave thank you.
+     *
+     * @param   int   $userid      userid
+     * @param   bool  $target      target
+     * @param   int   $limitstart  limitstart
+     * @param   int   $limit       limit
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public static function getUserMessages(int $userid, $target = true, $limitstart = 0, $limit = 10): array
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $field = 'targetuserid';
+
+        if (!$target) {
+            $field = 'userid';
+        }
+
+        $categories = KunenaCategoryHelper::getCategories();
+        $catlist    = implode(',', array_keys($categories));
+        $query      = $db->createQuery();
+        $query->select($db->quoteName(['m.catid', 'm.thread', 'm.id']))
+            ->from($db->quoteName('#__kunena_thankyou', 't'))
+            ->innerJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.postid'))
+            ->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id'))
+            ->where($db->quoteName('m.catid') . ' IN (' . $catlist . ')')
+            ->where($db->quoteName('m.hold') . ' = 0')
+            ->where($db->quoteName('tt.hold') . ' = 0')
+            ->where($db->quoteName('t.' . $field) . ' = ' . $db->quote(\intval($userid)));
+        $query->setLimit($limit, $limitstart);
+        $db->setQuery($query);
+
+        $results = [];
+
+        try {
+            $results = (array) $db->loadObjectList();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return $results;
     }
 
     /**
@@ -141,208 +357,6 @@ abstract class KunenaMessageThankyouHelper
     }
 
     /**
-     * Get total number of Thank yous.
-     *
-     * @param   int  $starttime  Starting time as unix timestamp.
-     * @param   int  $endtime    Ending time as unix timestamp.
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function getTotal($starttime = null, $endtime = null): int
-    {
-        $db      = Factory::getContainer()->get('DatabaseDriver');
-        $results = 0;
-
-        $query = $db->createQuery();
-        $query->select('COUNT(*)')
-            ->from($db->quoteName('#__kunena_thankyou'));
-
-        if (!empty($starttime)) {
-            $query->where($db->quoteName('time') . ' >= UNIX_TIMESTAMP(' . $db->quote(\intval($starttime)) . ')');
-        }
-
-        if (!empty($endtime)) {
-            $query->where($db->quoteName('time') . ' <= UNIX_TIMESTAMP(' . $db->quote(\intval($endtime)) . ')');
-        }
-
-        $db->setQuery($query);
-
-        try {
-            $results = (int) $db->loadResult();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return $results;
-    }
-
-    /**
-     * Get users with most thank yous received / given.
-     *
-     * @param   bool  $target      target
-     * @param   int   $limitstart  limitstart
-     * @param   int   $limit       limit
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function getTopUsers($target = true, $limitstart = 0, $limit = 10): array
-    {
-        $field = 'targetuserid';
-
-        if (!$target) {
-            $field = 'userid';
-        }
-
-        $db      = Factory::getContainer()->get('DatabaseDriver');
-        $results = [];
-        $query   = $db->createQuery();
-        $query->select([$db->quoteName('s.' . $field, 'userid'), 'COUNT(' . $db->quoteName('s.' . $field) . ') AS countid', $db->quoteName('u.username')])
-            ->from($db->quoteName('#__kunena_thankyou', 's'))
-            ->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('s.' . $field) . ' = ' . $db->quoteName('u.id'))
-            ->group($db->quoteName(['s.' . $field, 'u.username']))
-            ->order($db->quoteName('countid') . ' DESC');
-        $query->setLimit($limit, $limitstart);
-        $db->setQuery($query);
-
-        try {
-            $results = (array) $db->loadObjectList();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return $results;
-    }
-
-    /**
-     * Get messages with most thank yous given.
-     *
-     * @param   int  $limitstart  limitstart
-     * @param   int  $limit       limit
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function getTopMessages($limitstart = 0, $limit = 10): array
-    {
-        $db         = Factory::getContainer()->get('DatabaseDriver');
-        $categories = KunenaCategoryHelper::getCategories();
-        $catlist    = implode(',', array_keys($categories));
-        $query      = $db->createQuery();
-        $query->select([$db->quoteName('s.postid'), 'COUNT(*) AS countid', $db->quoteName('m.catid'), $db->quoteName('m.thread'), $db->quoteName('m.id'), $db->quoteName('m.subject')])
-            ->from($db->quoteName('#__kunena_thankyou', 's'))
-            ->innerJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('s.postid') . ' = ' . $db->quoteName('m.id'))
-            ->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id'))
-            ->where($db->quoteName('m.catid') . ' IN (' . $catlist . ')')
-            ->andWhere($db->quoteName('m.hold') . ' = 0')
-            ->andWhere($db->quoteName('tt.hold') . ' = 0')
-            ->group('s.postid')
-            ->order($db->quoteName('countid') . ' DESC');
-        $query->setLimit($limit, $limitstart);
-        $db->setQuery($query);
-
-        $results = [];
-
-        try {
-            $results = (array) $db->loadObjectList();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return $results;
-    }
-
-    /**
-     * Get messages where a user received / gave thank you.
-     *
-     * @param   int   $userid      userid
-     * @param   bool  $target      target
-     * @param   int   $limitstart  limitstart
-     * @param   int   $limit       limit
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws Exception
-     */
-    public static function getUserMessages(int $userid, $target = true, $limitstart = 0, $limit = 10): array
-    {
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $field = 'targetuserid';
-
-        if (!$target) {
-            $field = 'userid';
-        }
-
-        $categories = KunenaCategoryHelper::getCategories();
-        $catlist    = implode(',', array_keys($categories));
-        $query      = $db->createQuery();
-        $query->select($db->quoteName(['m.catid', 'm.thread', 'm.id']))
-            ->from($db->quoteName('#__kunena_thankyou', 't'))
-            ->innerJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.postid'))
-            ->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id'))
-            ->where($db->quoteName('m.catid') . ' IN (' . $catlist . ')')
-            ->where($db->quoteName('m.hold') . ' = 0')
-            ->where($db->quoteName('tt.hold') . ' = 0')
-            ->where($db->quoteName('t.' . $field) . ' = ' . $db->quote(\intval($userid)));
-        $query->setLimit($limit, $limitstart);
-        $db->setQuery($query);
-
-        $results = [];
-
-        try {
-            $results = (array) $db->loadObjectList();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        return $results;
-    }
-
-    /**
-     * Recount thank yous is null.
-     *
-     * @return  boolean|integer  Number of rows is successful, false on error.
-     *
-     * @since   Kunena 2.0
-     *
-     * @throws  Exception
-     */
-    public static function recountThankyou()
-    {
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
-        // Users who have no thank yous, set thankyou count to 0
-        $query = $db->createQuery();
-        $query->update($db->quoteName('#__kunena_users', 'u'))
-            ->leftJoin($db->quoteName('#__kunena_thankyou', 't') . ' ON ' . $db->quoteName('t.targetuserid') . ' = ' . $db->quoteName('u.userid'))
-            ->set($db->quoteName('u.thankyou') . ' = 0')
-            ->where($db->quoteName('t.targetuserid') . ' IS NULL');
-        $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        return $db->getAffectedRows();
-    }
-
-    /**
      * Recount thank you's.
      *
      * @return  boolean|integer  Number of rows is successful, false on error.
@@ -393,48 +407,34 @@ abstract class KunenaMessageThankyouHelper
     }
 
     /**
-     * Return thank yous for the given messages.
+     * Recount thank yous is null.
      *
-     * @param   bool|array|int  $ids  ids
+     * @return  boolean|integer  Number of rows is successful, false on error.
      *
-     * @return  KunenaMessageThankyou[]
-     *
-     * @since   Kunena 6.0
+     * @since   Kunena 2.0
      *
      * @throws  Exception
      */
-    public static function getByMessage($ids = false): array
+    public static function recountThankyou()
     {
-        if ($ids === false) {
-            return self::$_instances;
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        // Users who have no thank yous, set thankyou count to 0
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_users', 'u'))
+            ->leftJoin($db->quoteName('#__kunena_thankyou', 't') . ' ON ' . $db->quoteName('t.targetuserid') . ' = ' . $db->quoteName('u.userid'))
+            ->set($db->quoteName('u.thankyou') . ' = 0')
+            ->where($db->quoteName('t.targetuserid') . ' IS NULL');
+        $db->setQuery($query);
+
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
         }
 
-        if (\is_array($ids)) {
-            $ids2 = [];
-
-            foreach ($ids as $id) {
-                if ($id instanceof KunenaMessage) {
-                    $id = $id->id;
-                }
-
-                $ids2[(int) $id] = (int) $id;
-            }
-
-            $ids = $ids2;
-        } else {
-            $ids = [$ids];
-        }
-
-        self::loadMessages($ids);
-
-        $list = [];
-
-        foreach ($ids as $id) {
-            if (!empty(self::$_instances [$id])) {
-                $list[$id] = self::$_instances [$id];
-            }
-        }
-
-        return $list;
+        return $db->getAffectedRows();
     }
 }

@@ -18,9 +18,11 @@ namespace Kunena\Forum\Administrator\Model;
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\Database\DatabaseInterface;
+use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
 
@@ -35,7 +37,7 @@ class SocialsModel extends AdminModel
      * @param   array    $data      data
      * @param   boolean  $loadData  load data
      *
-     * @return  \Joomla\CMS\Form\Form|false
+     * @return  Form|false
      *
      * @since   Kunena 7.2
      */
@@ -163,7 +165,7 @@ class SocialsModel extends AdminModel
         }
 
         // The users have the values of the old list in their profile cache.
-        \Kunena\Forum\Libraries\Cache\KunenaCacheHelper::clear();
+        KunenaCacheHelper::clear();
 
         return true;
     }

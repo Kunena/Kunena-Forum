@@ -15,7 +15,10 @@
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
+use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
+use Joomla\Component\Scheduler\Administrator\Extension\SchedulerComponent;
+use Joomla\Component\Scheduler\Administrator\Model\TaskModel;
 use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
@@ -37,7 +40,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
      * Function called before extension installation/update/removal procedure commences
      *
      * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
-     * @param   \Joomla\CMS\Installer\InstallerAdapter  $parent  The class calling this method
+     * @param   InstallerAdapter  $parent  The class calling this method
      *
      * @return  boolean  True on success
      * @since   Kunena 7.0.0
@@ -126,10 +129,10 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             return;
         }
 
-        /** @var \Joomla\Component\Scheduler\Administrator\Extension\SchedulerComponent $component */
+        /** @var SchedulerComponent $component */
         $component = Factory::getApplication()->bootComponent('com_scheduler');
 
-        /** @var \Joomla\Component\Scheduler\Administrator\Model\TaskModel $model */
+        /** @var TaskModel $model */
         $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
         $task  = [
             'title'           => 'Kunena - Trash purge',
@@ -167,10 +170,10 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             return;
         }
 
-        /** @var \Joomla\Component\Scheduler\Administrator\Extension\SchedulerComponent $component */
+        /** @var SchedulerComponent $component */
         $component = Factory::getApplication()->bootComponent('com_scheduler');
 
-        /** @var \Joomla\Component\Scheduler\Administrator\Model\TaskModel $model */
+        /** @var TaskModel $model */
         $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
         $task  = [
             'title'           => 'Kunena - Remove Expired Bans',
@@ -208,10 +211,10 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             return;
         }
 
-        /** @var \Joomla\Component\Scheduler\Administrator\Extension\SchedulerComponent $component */
+        /** @var SchedulerComponent $component */
         $component = Factory::getApplication()->bootComponent('com_scheduler');
 
-        /** @var \Joomla\Component\Scheduler\Administrator\Model\TaskModel $model */
+        /** @var TaskModel $model */
         $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
         $task  = [
             'title'           => 'Kunena - Send the mail nofitications queued',
@@ -249,10 +252,10 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             return;
         }
 
-        /** @var \Joomla\Component\Scheduler\Administrator\Extension\SchedulerComponent $component */
+        /** @var SchedulerComponent $component */
         $component = Factory::getApplication()->bootComponent('com_scheduler');
 
-        /** @var \Joomla\Component\Scheduler\Administrator\Model\TaskModel $model */
+        /** @var TaskModel $model */
         $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
         $task  = [
             'title'           => 'Kunena - Clean pending attachments',

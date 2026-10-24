@@ -131,66 +131,6 @@ class KunenaUserBans extends KunenaTable
     }
 
     /**
-     * @param   integer  $userid  userid
-     * @param   int      $mode    mode
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws Exception
-     */
-    public function loadByUserid(int $userid, $mode = self::ACTIVE): bool
-    {
-        // Reset the table.
-        $k        = $this->_tbl_key;
-        $this->$k = 0;
-        $this->reset();
-
-        // Check for a valid id to load.
-        if ($userid === null || \intval($userid) < 1) {
-            return false;
-        }
-
-        $now      = new Date();
-        $nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
-
-        // Load the user data.
-        if ($mode == self::ACTIVE) {
-            $where = ' AND (expiration = ' . $nullDate . ' OR expiration > ' . $this->_db->quote($now->toSql()) . ')';
-        } else {
-            $where = '';
-        }
-
-        $query = $this->_db->createQuery();
-        $query->select('*')
-            ->from($this->_db->quoteName($this->_tbl))
-            ->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($userid) . ' ' . $where)
-            ->order($this->_db->quoteName('id') . ' DESC');
-        $query->setLimit(1);
-        $this->_db->setQuery($query);
-
-        try {
-            $data = $this->_db->loadAssoc();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        if (empty($data)) {
-            $this->userid = $userid;
-
-            return false;
-        }
-
-        // Bind the data to the table.
-        $this->bind($data);
-
-        return true;
-    }
-
-    /**
      * @param   mixed  $data    data
      * @param   array  $ignore  ignore
      *
@@ -209,6 +149,26 @@ class KunenaUserBans extends KunenaTable
         }
 
         parent::bind($data, $ignore);
+    }
+
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function check(): bool
+    {
+        if (!$this->ip) {
+            $user = KunenaUserHelper::get($this->userid);
+
+            if (!$user->exists()) {
+                throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid));
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -273,21 +233,61 @@ class KunenaUserBans extends KunenaTable
     }
 
     /**
+     * @param   integer  $userid  userid
+     * @param   int      $mode    mode
+     *
      * @return  boolean
      *
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @throws Exception
      */
-    public function check(): bool
+    public function loadByUserid(int $userid, $mode = self::ACTIVE): bool
     {
-        if (!$this->ip) {
-            $user = KunenaUserHelper::get($this->userid);
+        // Reset the table.
+        $k        = $this->_tbl_key;
+        $this->$k = 0;
+        $this->reset();
 
-            if (!$user->exists()) {
-                throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid));
-            }
+        // Check for a valid id to load.
+        if ($userid === null || \intval($userid) < 1) {
+            return false;
         }
+
+        $now      = new Date();
+        $nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
+
+        // Load the user data.
+        if ($mode == self::ACTIVE) {
+            $where = ' AND (expiration = ' . $nullDate . ' OR expiration > ' . $this->_db->quote($now->toSql()) . ')';
+        } else {
+            $where = '';
+        }
+
+        $query = $this->_db->createQuery();
+        $query->select('*')
+            ->from($this->_db->quoteName($this->_tbl))
+            ->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($userid) . ' ' . $where)
+            ->order($this->_db->quoteName('id') . ' DESC');
+        $query->setLimit(1);
+        $this->_db->setQuery($query);
+
+        try {
+            $data = $this->_db->loadAssoc();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
+        if (empty($data)) {
+            $this->userid = $userid;
+
+            return false;
+        }
+
+        // Bind the data to the table.
+        $this->bind($data);
 
         return true;
     }

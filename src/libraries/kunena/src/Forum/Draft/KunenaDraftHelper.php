@@ -62,6 +62,123 @@ abstract class KunenaDraftHelper
     ];
 
     /**
+     * Count the drafts of the user.
+     *
+     * @param   int  $userid  Owner of the drafts.
+     *
+     * @return  int
+     *
+     * @since   Kunena 7.2
+     */
+    public static function count(int $userid): int
+    {
+        if ($userid < 1) {
+            return 0;
+        }
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__kunena_drafts'))
+            ->where($db->quoteName('user_id') . ' = :userid')
+            ->bind(':userid', $userid, ParameterType::INTEGER);
+
+        return (int) $db->setQuery($query)->loadResult();
+    }
+
+    /**
+     * Delete a draft of the user.
+     *
+     * @param   int  $id      Draft id.
+     * @param   int  $userid  Owner of the draft.
+     *
+     * @return  boolean  True if a draft was deleted.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function delete(int $id, int $userid): bool
+    {
+        if ($id < 1 || $userid < 1) {
+            return false;
+        }
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->delete($db->quoteName('#__kunena_drafts'))
+            ->where($db->quoteName('id') . ' = :id')
+            ->where($db->quoteName('user_id') . ' = :userid')
+            ->bind(':id', $id, ParameterType::INTEGER)
+            ->bind(':userid', $userid, ParameterType::INTEGER);
+        $db->setQuery($query)->execute();
+
+        return $db->getAffectedRows() > 0;
+    }
+
+    /**
+     * Get a draft of the user.
+     *
+     * @param   int  $id      Draft id.
+     * @param   int  $userid  Owner of the draft.
+     *
+     * @return  object|null  The draft row with the form fields decoded into $draft->fields, or null.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function get(int $id, int $userid): ?object
+    {
+        if ($id < 1 || $userid < 1) {
+            return null;
+        }
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->select('*')
+            ->from($db->quoteName('#__kunena_drafts'))
+            ->where($db->quoteName('id') . ' = :id')
+            ->where($db->quoteName('user_id') . ' = :userid')
+            ->bind(':id', $id, ParameterType::INTEGER)
+            ->bind(':userid', $userid, ParameterType::INTEGER);
+        $draft = $db->setQuery($query)->loadObject();
+
+        if (!$draft) {
+            return null;
+        }
+
+        $fields        = json_decode((string) $draft->fields, true);
+        $draft->fields = array_intersect_key(\is_array($fields) ? $fields : [], static::$defaults) + static::$defaults;
+
+        return $draft;
+    }
+
+    /**
+     * Get the drafts of the user, the most recently changed first.
+     *
+     * @param   int  $userid  Owner of the drafts.
+     *
+     * @return  array
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getAll(int $userid): array
+    {
+        if ($userid < 1) {
+            return [];
+        }
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->select($db->quoteName(['id', 'catid', 'parent_id', 'topic_id', 'message_id', 'subject', 'message', 'created_time', 'modified_time']))
+            ->from($db->quoteName('#__kunena_drafts'))
+            ->where($db->quoteName('user_id') . ' = :userid')
+            ->order($db->quoteName('modified_time') . ' DESC')
+            ->bind(':userid', $userid, ParameterType::INTEGER);
+
+        $query->setLimit(static::MAX_DRAFTS, 0);
+
+        return (array) $db->setQuery($query)->loadObjectList();
+    }
+
+    /**
      * Save a draft, a new one or an update of an existing draft of the user.
      *
      * @param   int    $userid    Owner of the draft.
@@ -138,122 +255,5 @@ abstract class KunenaDraftHelper
         $db->setQuery($query)->execute();
 
         return (int) $db->insertid();
-    }
-
-    /**
-     * Get a draft of the user.
-     *
-     * @param   int  $id      Draft id.
-     * @param   int  $userid  Owner of the draft.
-     *
-     * @return  object|null  The draft row with the form fields decoded into $draft->fields, or null.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function get(int $id, int $userid): ?object
-    {
-        if ($id < 1 || $userid < 1) {
-            return null;
-        }
-
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery()
-            ->select('*')
-            ->from($db->quoteName('#__kunena_drafts'))
-            ->where($db->quoteName('id') . ' = :id')
-            ->where($db->quoteName('user_id') . ' = :userid')
-            ->bind(':id', $id, ParameterType::INTEGER)
-            ->bind(':userid', $userid, ParameterType::INTEGER);
-        $draft = $db->setQuery($query)->loadObject();
-
-        if (!$draft) {
-            return null;
-        }
-
-        $fields        = json_decode((string) $draft->fields, true);
-        $draft->fields = array_intersect_key(\is_array($fields) ? $fields : [], static::$defaults) + static::$defaults;
-
-        return $draft;
-    }
-
-    /**
-     * Get the drafts of the user, the most recently changed first.
-     *
-     * @param   int  $userid  Owner of the drafts.
-     *
-     * @return  array
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getAll(int $userid): array
-    {
-        if ($userid < 1) {
-            return [];
-        }
-
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery()
-            ->select($db->quoteName(['id', 'catid', 'parent_id', 'topic_id', 'message_id', 'subject', 'message', 'created_time', 'modified_time']))
-            ->from($db->quoteName('#__kunena_drafts'))
-            ->where($db->quoteName('user_id') . ' = :userid')
-            ->order($db->quoteName('modified_time') . ' DESC')
-            ->bind(':userid', $userid, ParameterType::INTEGER);
-
-        $query->setLimit(static::MAX_DRAFTS, 0);
-
-        return (array) $db->setQuery($query)->loadObjectList();
-    }
-
-    /**
-     * Count the drafts of the user.
-     *
-     * @param   int  $userid  Owner of the drafts.
-     *
-     * @return  int
-     *
-     * @since   Kunena 7.2
-     */
-    public static function count(int $userid): int
-    {
-        if ($userid < 1) {
-            return 0;
-        }
-
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery()
-            ->select('COUNT(*)')
-            ->from($db->quoteName('#__kunena_drafts'))
-            ->where($db->quoteName('user_id') . ' = :userid')
-            ->bind(':userid', $userid, ParameterType::INTEGER);
-
-        return (int) $db->setQuery($query)->loadResult();
-    }
-
-    /**
-     * Delete a draft of the user.
-     *
-     * @param   int  $id      Draft id.
-     * @param   int  $userid  Owner of the draft.
-     *
-     * @return  boolean  True if a draft was deleted.
-     *
-     * @since   Kunena 7.2
-     */
-    public static function delete(int $id, int $userid): bool
-    {
-        if ($id < 1 || $userid < 1) {
-            return false;
-        }
-
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery()
-            ->delete($db->quoteName('#__kunena_drafts'))
-            ->where($db->quoteName('id') . ' = :id')
-            ->where($db->quoteName('user_id') . ' = :userid')
-            ->bind(':id', $id, ParameterType::INTEGER)
-            ->bind(':userid', $userid, ParameterType::INTEGER);
-        $db->setQuery($query)->execute();
-
-        return $db->getAffectedRows() > 0;
     }
 }

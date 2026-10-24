@@ -38,6 +38,20 @@ abstract class KunenaRankGroups
     protected static $userRanks = [];
 
     /**
+     * The id of the group which is linked to a rank (0 when there is none).
+     *
+     * @param   int  $rankId  The rank id.
+     *
+     * @return  int
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getGroup(int $rankId): int
+    {
+        return self::getLinks()[$rankId] ?? 0;
+    }
+
+    /**
      * The links: the id of the group by the id of the rank.
      *
      * @return  array
@@ -56,61 +70,6 @@ abstract class KunenaRankGroups
         }
 
         return $map;
-    }
-
-    /**
-     * The id of the group which is linked to a rank (0 when there is none).
-     *
-     * @param   int  $rankId  The rank id.
-     *
-     * @return  int
-     *
-     * @since   Kunena 7.2
-     */
-    public static function getGroup(int $rankId): int
-    {
-        return self::getLinks()[$rankId] ?? 0;
-    }
-
-    /**
-     * Link a rank to a group, or remove the link (group 0).
-     *
-     * @param   int  $rankId   The rank id.
-     * @param   int  $groupId  The id of the Joomla user group.
-     *
-     * @return  void
-     *
-     * @since   Kunena 7.2
-     */
-    public static function setGroup(int $rankId, int $groupId): void
-    {
-        if ($rankId < 1) {
-            return;
-        }
-
-        $links = self::getLinks();
-
-        if ($groupId > 0) {
-            $links[$rankId] = $groupId;
-        } else {
-            unset($links[$rankId]);
-        }
-
-        // The keys are the ids of the ranks (they have to stay text in the JSON of the parameters).
-        $params = ComponentHelper::getParams('com_kunena');
-        $params->set('rankgroups', array_combine(array_map('strval', array_keys($links)), array_values($links)) ?: []);
-        $json = $params->toString();
-
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery()
-            ->update($db->quoteName('#__extensions'))
-            ->set($db->quoteName('params') . ' = :params')
-            ->where($db->quoteName('element') . ' = ' . $db->quote('com_kunena'))
-            ->where($db->quoteName('type') . ' = ' . $db->quote('component'))
-            ->bind(':params', $json);
-        $db->setQuery($query)->execute();
-
-        self::$userRanks = [];
     }
 
     /**
@@ -160,5 +119,46 @@ abstract class KunenaRankGroups
         }
 
         return 0;
+    }
+
+    /**
+     * Link a rank to a group, or remove the link (group 0).
+     *
+     * @param   int  $rankId   The rank id.
+     * @param   int  $groupId  The id of the Joomla user group.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public static function setGroup(int $rankId, int $groupId): void
+    {
+        if ($rankId < 1) {
+            return;
+        }
+
+        $links = self::getLinks();
+
+        if ($groupId > 0) {
+            $links[$rankId] = $groupId;
+        } else {
+            unset($links[$rankId]);
+        }
+
+        // The keys are the ids of the ranks (they have to stay text in the JSON of the parameters).
+        $params = ComponentHelper::getParams('com_kunena');
+        $params->set('rankgroups', array_combine(array_map('strval', array_keys($links)), array_values($links)) ?: []);
+        $json = $params->toString();
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->update($db->quoteName('#__extensions'))
+            ->set($db->quoteName('params') . ' = :params')
+            ->where($db->quoteName('element') . ' = ' . $db->quote('com_kunena'))
+            ->where($db->quoteName('type') . ' = ' . $db->quote('component'))
+            ->bind(':params', $json);
+        $db->setQuery($query)->execute();
+
+        self::$userRanks = [];
     }
 }

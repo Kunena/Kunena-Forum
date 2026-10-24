@@ -55,84 +55,6 @@ abstract class KunenaTemplateHelper
     }
 
     /**
-     * parseXmlFiles
-     *
-     * @param   null  $templateBaseDir  template
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    public static function parseXmlFiles($templateBaseDir = null): array
-    {
-        // Read the template folder to find templates
-        if (!$templateBaseDir) {
-            $templateBaseDir = KPATH_SITE . '/template';
-        }
-
-        $data = self::parseXmlFile('', $templateBaseDir);
-
-        if ($data) {
-            // Guess template folder.
-            $data->directory = preg_replace('/[^a-z0-9_]/', '', preg_replace('/\s+/', '_', strtolower($data->name)));
-
-            if (!$data->directory) {
-                return [];
-            }
-
-            // Template found from the root (folder cannot contain more than one template)
-            return ['' => $data];
-        }
-
-        $templateDirs = Folder::folders($templateBaseDir);
-        $rows         = [];
-
-        // Check that the directory contains an xml file
-        foreach ($templateDirs as $templateDir) {
-            $data = self::parseXmlFile($templateDir, $templateBaseDir);
-
-            if ($data) {
-                $rows[$templateDir] = $data;
-            }
-        }
-
-        ksort($rows);
-
-        return $rows;
-    }
-
-    /**
-     * @param   string  $templateDir      template dir
-     * @param   string  $templateBaseDir  template basedir
-     *
-     * @return  boolean|stdClass
-     *
-     * @since   Kunena 6.0
-     */
-    public static function parseXmlFile(string $templateDir, $templateBaseDir = null)
-    {
-        // Check if the xml file exists
-        if (!$templateBaseDir) {
-            $templateBaseDir = KPATH_SITE . '/template';
-        }
-
-        if (!is_file($templateBaseDir . '/' . $templateDir . '/config/template.xml')) {
-            return false;
-        }
-
-        $data = self::parseKunenaInstallFile($templateBaseDir . '/' . $templateDir . '/config/template.xml');
-
-        if (!$data || $data->type != 'kunena-template') {
-            return false;
-        }
-
-        $data->sourcedir = basename($templateDir);
-        $data->directory = basename($templateDir);
-
-        return $data;
-    }
-
-    /**
      * parseKunenaInstallFile
      *
      * @param   string  $path  path
@@ -188,6 +110,84 @@ abstract class KunenaTemplateHelper
         }
 
         return $data;
+    }
+
+    /**
+     * @param   string  $templateDir      template dir
+     * @param   string  $templateBaseDir  template basedir
+     *
+     * @return  boolean|stdClass
+     *
+     * @since   Kunena 6.0
+     */
+    public static function parseXmlFile(string $templateDir, $templateBaseDir = null)
+    {
+        // Check if the xml file exists
+        if (!$templateBaseDir) {
+            $templateBaseDir = KPATH_SITE . '/template';
+        }
+
+        if (!is_file($templateBaseDir . '/' . $templateDir . '/config/template.xml')) {
+            return false;
+        }
+
+        $data = self::parseKunenaInstallFile($templateBaseDir . '/' . $templateDir . '/config/template.xml');
+
+        if (!$data || $data->type != 'kunena-template') {
+            return false;
+        }
+
+        $data->sourcedir = basename($templateDir);
+        $data->directory = basename($templateDir);
+
+        return $data;
+    }
+
+    /**
+     * parseXmlFiles
+     *
+     * @param   null  $templateBaseDir  template
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     */
+    public static function parseXmlFiles($templateBaseDir = null): array
+    {
+        // Read the template folder to find templates
+        if (!$templateBaseDir) {
+            $templateBaseDir = KPATH_SITE . '/template';
+        }
+
+        $data = self::parseXmlFile('', $templateBaseDir);
+
+        if ($data) {
+            // Guess template folder.
+            $data->directory = preg_replace('/[^a-z0-9_]/', '', preg_replace('/\s+/', '_', strtolower($data->name)));
+
+            if (!$data->directory) {
+                return [];
+            }
+
+            // Template found from the root (folder cannot contain more than one template)
+            return ['' => $data];
+        }
+
+        $templateDirs = Folder::folders($templateBaseDir);
+        $rows         = [];
+
+        // Check that the directory contains an xml file
+        foreach ($templateDirs as $templateDir) {
+            $data = self::parseXmlFile($templateDir, $templateBaseDir);
+
+            if ($data) {
+                $rows[$templateDir] = $data;
+            }
+        }
+
+        ksort($rows);
+
+        return $rows;
     }
 
     /**

@@ -31,6 +31,15 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 // phpcs:enable PSR1.Files.SideEffects
 
 return new class () implements ServiceProviderInterface {
+    /**
+     * Registers the installer script of the package in the container.
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.0.0
+     */
     public function register(Container $container)
     {
         $container->set(
@@ -129,7 +138,10 @@ return new class () implements ServiceProviderInterface {
                 protected string $installedVersion;
 
                 /**
-                 * @since Kunena 7.0.0
+                 * @param   AdministratorApplication  $app  The application.
+                 * @param   DatabaseInterface         $db   The database.
+                 *
+                 * @since   Kunena 7.0.0
                  */
                 public function __construct(AdministratorApplication $app, DatabaseInterface $db)
                 {
@@ -139,7 +151,11 @@ return new class () implements ServiceProviderInterface {
                 }
 
                 /**
-                 * @since Kunena 7.0.0
+                 * @param   InstallerAdapter  $parent  The adapter calling this method.
+                 *
+                 * @return  boolean  True on success.
+                 *
+                 * @since   Kunena 7.0.0
                  */
                 public function install(InstallerAdapter $parent): bool
                 {
@@ -149,7 +165,11 @@ return new class () implements ServiceProviderInterface {
                 }
 
                 /**
-                 * @since Kunena 7.0.0
+                 * @param   InstallerAdapter  $parent  The adapter calling this method.
+                 *
+                 * @return  boolean  True on success.
+                 *
+                 * @since   Kunena 7.0.0
                  */
                 public function update(InstallerAdapter $parent): bool
                 {
@@ -159,7 +179,11 @@ return new class () implements ServiceProviderInterface {
                 }
 
                 /**
-                 * @since Kunena 7.0.0
+                 * @param   InstallerAdapter  $parent  The adapter calling this method.
+                 *
+                 * @return  boolean  True on success.
+                 *
+                 * @since   Kunena 7.0.0
                  */
                 public function uninstall(InstallerAdapter $parent): bool
                 {
@@ -169,7 +193,12 @@ return new class () implements ServiceProviderInterface {
                 }
 
                 /**
-                 * @since Kunena 7.0.0
+                 * @param   string            $type    The type of change (install, update, discover_install or uninstall).
+                 * @param   InstallerAdapter  $parent  The adapter calling this method.
+                 *
+                 * @return  boolean  False when the requirements are not met.
+                 *
+                 * @since   Kunena 7.0.0
                  */
                 public function preflight(string $type, InstallerAdapter $parent): bool
                 {
@@ -203,7 +232,12 @@ return new class () implements ServiceProviderInterface {
                 }
 
                 /**
-                 * @since Kunena 7.0.0
+                 * @param   string            $type    The type of change (install, update, discover_install or uninstall).
+                 * @param   InstallerAdapter  $parent  The adapter calling this method.
+                 *
+                 * @return  boolean  True on success.
+                 *
+                 * @since   Kunena 7.0.0
                  */
                 public function postflight(string $type, InstallerAdapter $parent): bool
                 {
@@ -393,6 +427,8 @@ return new class () implements ServiceProviderInterface {
                  *
                  * @param   string  $installedVersion  version
                  *
+                 * @return  void
+                 *
                  * @since   7.0.0
                  */
                 protected function deleteRemovedFolder(string $installedVersion)
@@ -557,6 +593,10 @@ return new class () implements ServiceProviderInterface {
 
                 /**
                  * Check MariaDB and MySQL versions
+                 *
+                 * @param   string  $version  The version string of the database server.
+                 *
+                 * @return  boolean  True when the version is supported.
                  *
                  * @since Kunena 6.2
                  */

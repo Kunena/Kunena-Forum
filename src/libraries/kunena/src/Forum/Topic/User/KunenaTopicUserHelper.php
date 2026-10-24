@@ -49,6 +49,19 @@ abstract class KunenaTopicUserHelper
     public $subscribed;
 
     /**
+     * Free up memory by cleaning up all cached items.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public static function cleanup(): void
+    {
+        self::$_instances = [];
+        self::$_topics    = [];
+    }
+
+    /**
      * Returns \Kunena\Forum\Libraries\Forum\Topic\TopicUser object.
      *
      * @param   KunenaTopic|int|null  $topic   topic
@@ -127,64 +140,6 @@ abstract class KunenaTopicUserHelper
     }
 
     /**
-     * @param   array       $ids   ids
-     * @param   KunenaUser  $user  user
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    protected static function loadTopics(array $ids, KunenaUser $user): void
-    {
-        foreach ($ids as $i => $id) {
-            $id = \intval($id);
-
-            if (!$id || isset(self::$_instances [$user->userid][$id])) {
-                unset($ids[$i]);
-            }
-        }
-
-        if (empty($ids)) {
-            return;
-        }
-
-        $idlist = implode(',', $ids);
-        $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->createQuery();
-        $query->select('*')
-            ->from($db->quoteName('#__kunena_user_topics'))
-            ->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
-            ->andWhere($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
-        $db->setQuery($query);
-
-        $results = [];
-
-        try {
-            $results = (array) $db->loadAssocList('topic_id');
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
-
-        foreach ($ids as $id) {
-            if (isset($results[$id])) {
-                $instance = new KunenaTopicUser();
-
-                if (!empty($results)) {
-                    $instance->bind($results[$id]);
-                }
-
-                $instance->exists(true);
-                self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = $instance;
-            } else {
-                self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new KunenaTopicUser($id, $user->userid);
-            }
-        }
-
-        unset($results);
-    }
-
-    /**
      * Get all user ids who have participated to the given topics.
      *
      * @param   array|KunenaTopic[]  $topics  topics
@@ -241,47 +196,61 @@ abstract class KunenaTopicUserHelper
     }
 
     /**
-     * @param   KunenaTopic  $old  old
-     * @param   KunenaTopic  $new  new
+     * @param   array       $ids   ids
+     * @param   KunenaUser  $user  user
      *
-     * @return  boolean
+     * @return  void
      *
      * @since   Kunena 6.0
-     * @throws Exception
+     * @throws  Exception
      */
-    public static function move(KunenaTopic $old, KunenaTopic $new): bool
+    protected static function loadTopics(array $ids, KunenaUser $user): void
     {
-        // Update database
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->update($db->quoteName('#__kunena_user_topics'))
-            ->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
-            ->set($db->quoteName('category_id') . ' = ' . $db->quote($new->category_id))
-            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($old->id));
+        foreach ($ids as $i => $id) {
+            $id = \intval($id);
+
+            if (!$id || isset(self::$_instances [$user->userid][$id])) {
+                unset($ids[$i]);
+            }
+        }
+
+        if (empty($ids)) {
+            return;
+        }
+
+        $idlist = implode(',', $ids);
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        $query  = $db->createQuery();
+        $query->select('*')
+            ->from($db->quoteName('#__kunena_user_topics'))
+            ->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
+            ->andWhere($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
         $db->setQuery($query);
 
+        $results = [];
+
         try {
-            $db->execute();
+            $results = (array) $db->loadAssocList('topic_id');
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
-
-            return false;
         }
 
-        // Update internal state
-        if (isset(self::$_topics [$old->id])) {
-            if ($new->id != $old->id) {
-                self::$_topics [$new->id] = self::$_topics [$old->id];
-                unset(self::$_topics [$old->id]);
-            }
+        foreach ($ids as $id) {
+            if (isset($results[$id])) {
+                $instance = new KunenaTopicUser();
 
-            foreach (self::$_topics [$new->id] as $instance) {
-                $instance->topic_id    = $new->id;
-                $instance->category_id = $new->category_id;
+                if (!empty($results)) {
+                    $instance->bind($results[$id]);
+                }
+
+                $instance->exists(true);
+                self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = $instance;
+            } else {
+                self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new KunenaTopicUser($id, $user->userid);
             }
         }
 
-        return true;
+        unset($results);
     }
 
     /**
@@ -355,60 +324,47 @@ abstract class KunenaTopicUserHelper
     }
 
     /**
-     * @param   int  $id  id
+     * @param   KunenaTopic  $old  old
+     * @param   KunenaTopic  $new  new
      *
-     * @return  void
+     * @return  boolean
      *
      * @since   Kunena 6.0
      * @throws Exception
      */
-    protected static function reloadTopic(int $id): void
+    public static function move(KunenaTopic $old, KunenaTopic $new): bool
     {
-        if (empty(self::$_topics [$id])) {
-            return;
-        }
-
-        $idlist = implode(',', array_keys(self::$_topics [$id]));
-        $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->createQuery();
-        $query->select('*')
-            ->from($db->quoteName('#__kunena_user_topics'))
-            ->where($db->quoteName('user_id') . ' IN (' . $idlist . ')')
-            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
+        // Update database
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_user_topics'))
+            ->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
+            ->set($db->quoteName('category_id') . ' = ' . $db->quote($new->category_id))
+            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($old->id));
         $db->setQuery($query);
 
-        $results = [];
-
         try {
-            $results = (array) $db->loadAssocList('user_id');
+            $db->execute();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
+
+            return false;
         }
 
-        // TODO: Is there a bug?
-        foreach (self::$_topics[$id] as $instance) {
-            if (isset($results[$instance->user_id])) {
-                $instance->bind($results[$instance->user_id]);
-                $instance->exists(true);
-            } else {
-                $instance->reset();
+        // Update internal state
+        if (isset(self::$_topics [$old->id])) {
+            if ($new->id != $old->id) {
+                self::$_topics [$new->id] = self::$_topics [$old->id];
+                unset(self::$_topics [$old->id]);
+            }
+
+            foreach (self::$_topics [$new->id] as $instance) {
+                $instance->topic_id    = $new->id;
+                $instance->category_id = $new->category_id;
             }
         }
 
-        unset($results);
-    }
-
-    /**
-     * Free up memory by cleaning up all cached items.
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public static function cleanup(): void
-    {
-        self::$_instances = [];
-        self::$_topics    = [];
+        return true;
     }
 
     /**
@@ -528,5 +484,49 @@ abstract class KunenaTopicUserHelper
         $rows += $db->getAffectedRows();
 
         return $rows;
+    }
+
+    /**
+     * @param   int  $id  id
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     * @throws Exception
+     */
+    protected static function reloadTopic(int $id): void
+    {
+        if (empty(self::$_topics [$id])) {
+            return;
+        }
+
+        $idlist = implode(',', array_keys(self::$_topics [$id]));
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        $query  = $db->createQuery();
+        $query->select('*')
+            ->from($db->quoteName('#__kunena_user_topics'))
+            ->where($db->quoteName('user_id') . ' IN (' . $idlist . ')')
+            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
+        $db->setQuery($query);
+
+        $results = [];
+
+        try {
+            $results = (array) $db->loadAssocList('user_id');
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        // TODO: Is there a bug?
+        foreach (self::$_topics[$id] as $instance) {
+            if (isset($results[$instance->user_id])) {
+                $instance->bind($results[$instance->user_id]);
+                $instance->exists(true);
+            } else {
+                $instance->reset();
+            }
+        }
+
+        unset($results);
     }
 }

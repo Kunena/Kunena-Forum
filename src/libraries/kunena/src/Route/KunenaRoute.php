@@ -179,6 +179,263 @@ abstract class KunenaRoute
     protected static $filtered = [];
 
     /**
+     * @param   string|Uri|null  $uri    uri
+     * @param   bool  $xhtml  xhtml
+     * @param   int   $ssl    ssl
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public static function _($uri = null, $xhtml = true, $ssl = 0)
+    {
+        if (self::$adminApp) {
+            if ($uri instanceof Uri) {
+                $uri = $uri->toString();
+            }
+
+            if (substr($uri, 0, 14) == 'administrator/') {
+                // Use default routing in administration
+                return Route::_(substr($uri, 14), $xhtml, $ssl);
+            }
+
+            return Uri::root(true) . "/{$uri}";
+        }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        $key = (self::$home ? self::$home->id : 0) . '-' . (int) $xhtml . (int) $ssl . ($uri instanceof Uri ? $uri->toString() : (string) $uri);
+
+        if (!$uri || (\is_string($uri) && $uri[0] == '&')) {
+            $key = 'a' . (self::$active ? self::$active->id : '') . '-' . $key;
+        }
+
+        if (isset(self::$uris[$key])) {
+            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+            return self::$uris[$key];
+        }
+
+        $uri = self::prepare($uri);
+
+        if (!$uri) {
+            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+            return false;
+        }
+
+        if (!$uri->getVar('Itemid')) {
+            self::setItemID($uri);
+        }
+
+        $fragment = $uri->getFragment();
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '(t)') : null;
+        self::$uris[$key] = Route::_('index.php?' . $uri->getQuery(), $xhtml, $ssl) . ($fragment ? '#' . $fragment : '');
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '(t)') : null;
+        self::$urisSave = true;
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        return self::$uris[$key];
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    protected static function build(): void
+    {
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        if (self::$search === false) {
+            $user         = KunenaUserHelper::getMyself();
+            $language     = strtolower(Factory::getApplication()->getDocument()->getLanguage());
+            self::$search = false;
+
+            if (self::$search === false) {
+                self::$search         = [];
+                self::$search['home'] = [];
+
+                foreach (self::$menu as $item) {
+                    // Skip menu items that aren't pointing to Kunena or are using wrong language.
+                    if (
+                        ($item->component != 'com_kunena' && $item->type != 'alias')
+                        || ($item->language != '*' && strtolower($item->language) != $language)
+                    ) {
+                        continue;
+                    }
+
+                    // Follow links.
+                    if ($item->type == 'alias') {
+                        if (empty($item->query['Itemid']) || empty(self::$menu[$item->query['Itemid']])) {
+                            continue;
+                        }
+
+                        $item = self::$menu[$item->query['Itemid']];
+
+                        if ($item->component != 'com_kunena' || ($item->language != '*' && strtolower($item->language) != $language)) {
+                            continue;
+                        }
+                    }
+
+                    // Ignore legacy menu items without view in it.
+                    if (!isset($item->query['view'])) {
+                        continue;
+                    }
+
+                    // Save Kunena menu items so that we can make fast searches
+                    $home                                                                 = self::getHome($item);
+                    self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
+                }
+
+                if (isset($cache)) {
+                    $cache->store(serialize(self::$search), 'search', "com_kunena.route.v1.{$language}.{$user->userid}");
+                }
+            }
+        }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+    }
+
+    /**
+     * @param   mixed  $item  item
+     * @param   Uri    $uri   uri
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     */
+    protected static function check($item, Uri $uri): int
+    {
+        $hits = 0;
+
+        foreach ($item->query as $var => $value) {
+            if ($value != $uri->getVar($var)) {
+                return 0;
+            }
+
+            $hits++;
+        }
+
+        return $hits;
+    }
+
+    /**
+     * @param   mixed  $item  item
+     * @param   Uri    $uri   url
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     */
+    protected static function checkCategory($item, Uri $uri)
+    {
+        static $cache = [];
+        $catid        = (int) $uri->getVar('catid');
+        $check        = self::check($item, $uri);
+
+        if (!$check || !$catid) {
+            return $check;
+        }
+
+        if (!isset($cache[$item->id])) {
+            $cache[$item->id] = [];
+
+            if (!empty($item->query['catid'])) {
+                $cache[$item->id]                        = KunenaCategoryHelper::getChildren($item->query['catid']);
+                $cache[$item->id][$item->query['catid']] = KunenaCategoryHelper::get($item->query['catid']);
+            }
+        }
+
+        return \intval(isset($cache[$item->id][$catid])) * 8;
+    }
+
+    /**
+     * @param   mixed    $item   item
+     * @param   integer  $catid  catid
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     */
+    protected static function checkHome($item, int $catid): int
+    {
+        static $cache = [];
+
+        if (!$catid) {
+            return 1;
+        }
+
+        if (!isset($cache[$item->id])) {
+            $params = $item->getParams();
+            $catids = $params->get('catids', []);
+
+            if (!\is_array($catids)) {
+                $catids = explode(',', $catids);
+            }
+
+            if (!empty($catids)) {
+                $catids = array_combine($catids, $catids);
+            }
+
+            unset($catids[0], $catids['']);
+            $cache[$item->id] = (array) $catids;
+        }
+
+        return \intval(empty($cache[$item->id]) || isset($cache[$item->id][$catid]));
+    }
+
+    /**
+     * @param   mixed  $item  item
+     * @param   Uri    $uri   uri
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     */
+    protected static function checkItem($item, Uri $uri)
+    {
+        $authorise = self::$menus->authorise($item->id);
+
+        if (!$authorise) {
+            return 0;
+        }
+
+        $catid = (int) $uri->getVar('catid');
+
+        if (!empty($item->query['view'])) {
+            switch ($item->query['view']) {
+                case 'home':
+                    $matchcount = self::checkHome($item, $catid);
+                    break;
+                case 'category':
+                case 'topic':
+                    $matchcount = self::checkCategory($item, $uri);
+                    break;
+                default:
+                    $matchcount = self::check($item, $uri);
+            }
+
+            return $matchcount;
+        }
+
+        return 1;
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public static function cleanup(): void
+    {
+        self::$filtered = [];
+        self::$uris     = [];
+    }
+
+    /**
      * @param   bool  $object  object
      *
      * @return  boolean|Uri|null|string
@@ -200,6 +457,397 @@ abstract class KunenaRoute
         }
 
         $result = $uri->getQuery();
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        return $result;
+    }
+
+    /**
+     * Fix itemid when there is no item id.
+     *
+     * @return  integer
+     *
+     * @since   Kunena 5.1
+     * @throws  Exception
+     */
+    public static function fixMissingItemID(): int
+    {
+        $component = ComponentHelper::getComponent('com_kunena');
+        $app       = KunenaFactory::getApplication();
+        $items     = $app->getMenu('site')->getItems('component_id', $component->id);
+
+        if ($items) {
+            return $items[0]->id;
+        }
+
+        return 0;
+    }
+
+    /**
+     * @return  CacheController
+     *
+     * @since   Kunena 6.0
+     */
+    protected static function getCache(): CacheController
+    {
+        $options = ['defaultgroup' => 'mod_menu'];
+        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+
+        return $cache;
+    }
+
+    /**
+     * @param   KunenaCategory  $category  category
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public static function getCategoryItemid(KunenaCategory $category)
+    {
+        return self::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}");
+    }
+
+    /**
+     * @param   KunenaCategory  $category  category
+     * @param   bool            $xhtml     xhtml
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     * @throws Exception
+     */
+    public static function getCategoryUrl(KunenaCategory $category, bool $xhtml = true)
+    {
+        return self::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
+    }
+
+    /**
+     * @param   mixed  $item  item
+     *
+     * @return  null
+     *
+     * @since   Kunena 6.0
+     */
+    public static function getHome($item)
+    {
+        if (!$item) {
+            return false;
+        }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+        $id = $item->id;
+
+        if (!isset(self::$parent[$id])) {
+            if ($item->component == 'com_kunena' && isset($item->query['view']) && $item->query['view'] == 'home') {
+                self::$parent[$id] = $item;
+            } else {
+                $parentid          = $item->parent_id;
+                $parent            = isset(self::$menu[$parentid]) ? self::$menu[$parentid] : null;
+                self::$parent[$id] = self::getHome($parent);
+            }
+        }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        return self::$parent[$id];
+    }
+
+    /**
+     * @param   null  $uri  uri
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public static function getItemID($uri = null)
+    {
+        if (self::$adminApp) {
+            // There are no itemids in administration
+            return 0;
+        }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+        $uri = self::prepare($uri);
+
+        if (!$uri) {
+            return false;
+        }
+
+        if (!$uri->getVar('Itemid')) {
+            self::setItemID($uri);
+        }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        return $uri->getVar('Itemid');
+    }
+
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public static function getMenu()
+    {
+        return self::$home;
+    }
+
+    /**
+     * @param   KunenaMessage        $message   message
+     * @param   bool                 $xhtml     xhtml
+     * @param   ?KunenaTopic         $topic     topic
+     * @param   ?KunenaCategory      $category  category
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     * @throws Exception
+     */
+    public static function getMessageUrl(KunenaMessage $message, $xhtml = true, ?KunenaTopic $topic = null, ?KunenaCategory $category = null)
+    {
+        // FIXME: not yet fully implemented...
+        if (!$category) {
+            $category = $message->getCategory();
+        }
+
+        if (!$topic) {
+            $topic = $message->getTopic();
+        }
+
+        return self::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$topic->id}", $xhtml);
+    }
+
+    /**
+     * Get the referrer page.
+     *
+     * If there's no referrer or it's external, Kunena will return default page.
+     * Also referrers back to tasks are removed.
+     *
+     * @param   string  $default  Default page to return into.
+     * @param   string  $anchor   Anchor (location in the page).
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public static function getReferrer($default = null, $anchor = null): string
+    {
+        $app = Factory::getApplication();
+
+        $referrer = $app->getInput()->server->getString('HTTP_REFERER');
+
+        if ($referrer) {
+            $uri = new Uri($referrer);
+
+            // Make sure we do not return into a task -- or if task is SEF encoded, make sure it fails.
+            $uri->delVar('task');
+            $uri->delVar(Session::getFormToken());
+
+            // Check that referrer was from the same domain and came from the Joomla frontend or backend.
+            $base = $uri->toString(['scheme', 'host', 'port', 'path']);
+            $host = $uri->toString(['scheme', 'host', 'port']);
+
+            // Referrer should always have host set and it should come from the same base address.
+            if (empty($host) || stripos($base, Uri::base()) !== 0) {
+                $uri = null;
+            }
+        }
+
+        if (!isset($uri)) {
+            if ($default == null) {
+                $default = $app->isClient('site') ? 'index.php?option=com_kunena' : 'administrator/index.php?option=com_kunena';
+            }
+
+            $default = self::_($default);
+            $uri     = new Uri($default);
+        }
+
+        if ($anchor) {
+            $uri->setFragment($anchor);
+        }
+
+        return $uri->toString(['path', 'query', 'fragment']);
+    }
+
+    /**
+     * @param   KunenaTopic           $topic     topic
+     * @param   bool                  $xhtml     xhtml
+     * @param   ?KunenaMessage|string $action    actions
+     * @param   ?KunenaCategory       $category  category
+     * @param   int                   $Itemid    itemid
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     * @throws Exception
+     */
+    public static function getTopicUrl(KunenaTopic $topic, bool $xhtml = true, $action = null, ?KunenaCategory $category = null, $Itemid = 0)
+    {
+        if (!$category) {
+            $category = $topic->getCategory();
+        }
+
+        return self::_($topic->getUri($category, $action, $Itemid), $xhtml);
+    }
+
+    /**
+     * @param   KunenaUser  $user   user
+     * @param   bool        $xhtml  xhtml
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public static function getUserUrl(KunenaUser $user, $xhtml = true)
+    {
+        return self::_("index.php?option=com_kunena&view=user&userid={$user->userid}", $xhtml);
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public static function initialize(): void
+    {
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+        self::$config = KunenaFactory::getConfig();
+
+        if (Factory::getApplication()->isClient('administrator') || Factory::getApplication()->isClient('cli')) {
+            self::$adminApp = true;
+            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+            return;
+        }
+
+        $app   = KunenaFactory::getApplication();
+        $input = $app->getInput();
+
+        self::$menus   = $app->getMenu();
+        self::$menu    = self::$menus->getMenu();
+        self::$default = self::$menus->getDefault();
+        $active        = self::$menus->getActive();
+
+        // Get current route.
+        self::$current = new Uri('index.php');
+
+        if ($active) {
+            foreach ($active->query as $key => $value) {
+                self::$current->setVar($key, $value);
+            }
+
+            self::$current->setVar('Itemid', (int) $active->id);
+
+            if ($active->type == 'component' && $active->component == 'com_kunena' && isset($active->query['view'])) {
+                self::$active = $active;
+            }
+        }
+
+        // If values are both in GET and POST, they are only stored in POST
+        $post = $input->post->getArray([]);
+
+        foreach ($post as $key => $value) {
+            if (\in_array($key, ['view', 'layout', 'task']) && \is_string($value) && !preg_match('/[^a-zA-Z0-9_.]/i', $value)) {
+                self::$current->setVar($key, $value);
+            }
+        }
+
+        // Make sure that request URI is not broken
+        $get = $input->get->getArray([]);
+
+        foreach ($get as $key => $value) {
+            if (preg_match('/[^a-zA-Z]/', $key)) {
+                continue;
+            }
+
+            if (\in_array($key, ['query', 'searchuser'])) {
+                // Allow all values
+            }
+            // TODO: we need to find a way to here deal with arrays: &foo[]=bar
+            elseif (\gettype($value) == 'string') {
+                if (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
+                    // Illegal value
+                    continue;
+                }
+            }
+
+            self::$current->setVar($key, $value);
+        }
+
+        if (self::$current->getVar('start')) {
+            self::$current->setVar('limitstart', self::$current->getVar('start'));
+            self::$current->delVar('start');
+        }
+
+        self::$home = self::getHome(self::$active);
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+    }
+
+    /**
+     * Adds the parameters of the request which choose the part of the page (the page of a list, a message, a search, a filter) to the
+     * parameters of a redirect to the address with an Itemid: the redirect is made from a few parameters, and a link to page 2 or to a
+     * message must still open that page after it.
+     *
+     * @param   array  $params  The parameters of the new address.
+     *
+     * @return  array
+     *
+     * @since   Kunena 7.2
+     * @throws  Exception
+     */
+    public static function keepQuery(array $params): array
+    {
+        static $names = ['limitstart', 'start', 'limit', 'mesid', 'mode', 'sel', 'search', 'userid', 'layout', 'filter_order', 'filter_order_Dir',
+            'usertype', 'query', 'topic_id', 'titleonly', 'searchuser', 'searchdate', 'order', 'sortby', 'fq', 'fauthor', 'fstatus', 'ftag', 'flang'];
+
+        // The input has the parameters of the query and those which the router read from the path (a message number, for example).
+        $get = Factory::getApplication()->getInput()->getArray();
+
+        foreach ($names as $name) {
+            if (!isset($params[$name]) && isset($get[$name]) && \is_scalar($get[$name]) && $get[$name] !== '') {
+                $params[$name] = $get[$name];
+            }
+        }
+
+        return $params;
+    }
+
+    /**
+     * @param   Uri   $uri     uri
+     * @param   bool  $object  object
+     *
+     * @return  Uri|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public static function normalize($uri = null, $object = false)
+    {
+        if (self::$adminApp) {
+            // Use default routing in administration
+            return $object ? $uri : 'index.php?' . $uri->getQuery();
+        }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        $uri = self::prepare($uri);
+
+        if (!$uri) {
+            return false;
+        }
+
+        if (!$uri->getVar('Itemid')) {
+            self::setItemID($uri);
+        }
+
+        $result = $object ? $uri : 'index.php?' . $uri->getQuery();
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return $result;
@@ -273,6 +921,55 @@ abstract class KunenaRoute
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return $uri;
+    }
+
+    /**
+     * @param   string  $alias  alias
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     * @throws Exception
+     */
+    public static function resolveAlias(string $alias): array
+    {
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        $app   = Factory::getApplication();
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select('*')
+            ->from($db->quoteName('#__kunena_aliases'))
+            ->where($db->quoteName('alias') . ' LIKE ' . $db->quote($alias . '%'));
+
+        $db->setQuery($query);
+
+        $aliases = [];
+
+        try {
+            $aliases = (array) $db->loadObjectList();
+        } catch (RuntimeException $e) {
+            $app->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        $vars = [];
+
+        foreach ($aliases as $object) {
+            if (StringHelper::strtolower($alias) == StringHelper::strtolower($object->alias)) {
+                $var         = $object->type != 'legacy' ? $object->type : 'view';
+                $vars[$var]  = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
+
+                if ($var == 'catid') {
+                    $vars['view'] = 'category';
+                }
+
+                break;
+            }
+        }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        return $vars;
     }
 
     /**
@@ -361,422 +1058,6 @@ abstract class KunenaRoute
     }
 
     /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    protected static function build(): void
-    {
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        if (self::$search === false) {
-            $user         = KunenaUserHelper::getMyself();
-            $language     = strtolower(Factory::getApplication()->getDocument()->getLanguage());
-            self::$search = false;
-
-            if (self::$search === false) {
-                self::$search         = [];
-                self::$search['home'] = [];
-
-                foreach (self::$menu as $item) {
-                    // Skip menu items that aren't pointing to Kunena or are using wrong language.
-                    if (
-                        ($item->component != 'com_kunena' && $item->type != 'alias')
-                        || ($item->language != '*' && strtolower($item->language) != $language)
-                    ) {
-                        continue;
-                    }
-
-                    // Follow links.
-                    if ($item->type == 'alias') {
-                        if (empty($item->query['Itemid']) || empty(self::$menu[$item->query['Itemid']])) {
-                            continue;
-                        }
-
-                        $item = self::$menu[$item->query['Itemid']];
-
-                        if ($item->component != 'com_kunena' || ($item->language != '*' && strtolower($item->language) != $language)) {
-                            continue;
-                        }
-                    }
-
-                    // Ignore legacy menu items without view in it.
-                    if (!isset($item->query['view'])) {
-                        continue;
-                    }
-
-                    // Save Kunena menu items so that we can make fast searches
-                    $home                                                                 = self::getHome($item);
-                    self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
-                }
-
-                if (isset($cache)) {
-                    $cache->store(serialize(self::$search), 'search', "com_kunena.route.v1.{$language}.{$user->userid}");
-                }
-            }
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-    }
-
-    /**
-     * @return  CacheController
-     *
-     * @since   Kunena 6.0
-     */
-    protected static function getCache(): CacheController
-    {
-        $options = ['defaultgroup' => 'mod_menu'];
-        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
-
-        return $cache;
-    }
-
-    /**
-     * @param   mixed  $item  item
-     *
-     * @return  null
-     *
-     * @since   Kunena 6.0
-     */
-    public static function getHome($item)
-    {
-        if (!$item) {
-            return false;
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-        $id = $item->id;
-
-        if (!isset(self::$parent[$id])) {
-            if ($item->component == 'com_kunena' && isset($item->query['view']) && $item->query['view'] == 'home') {
-                self::$parent[$id] = $item;
-            } else {
-                $parentid          = $item->parent_id;
-                $parent            = isset(self::$menu[$parentid]) ? self::$menu[$parentid] : null;
-                self::$parent[$id] = self::getHome($parent);
-            }
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        return self::$parent[$id];
-    }
-
-    /**
-     * @param   mixed    $item   item
-     * @param   integer  $catid  catid
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     */
-    protected static function checkHome($item, int $catid): int
-    {
-        static $cache = [];
-
-        if (!$catid) {
-            return 1;
-        }
-
-        if (!isset($cache[$item->id])) {
-            $params = $item->getParams();
-            $catids = $params->get('catids', []);
-
-            if (!\is_array($catids)) {
-                $catids = explode(',', $catids);
-            }
-
-            if (!empty($catids)) {
-                $catids = array_combine($catids, $catids);
-            }
-
-            unset($catids[0], $catids['']);
-            $cache[$item->id] = (array) $catids;
-        }
-
-        return \intval(empty($cache[$item->id]) || isset($cache[$item->id][$catid]));
-    }
-
-    /**
-     * @param   mixed  $item  item
-     * @param   Uri    $uri   uri
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     */
-    protected static function checkItem($item, Uri $uri)
-    {
-        $authorise = self::$menus->authorise($item->id);
-
-        if (!$authorise) {
-            return 0;
-        }
-
-        $catid = (int) $uri->getVar('catid');
-
-        if (!empty($item->query['view'])) {
-            switch ($item->query['view']) {
-                case 'home':
-                    $matchcount = self::checkHome($item, $catid);
-                    break;
-                case 'category':
-                case 'topic':
-                    $matchcount = self::checkCategory($item, $uri);
-                    break;
-                default:
-                    $matchcount = self::check($item, $uri);
-            }
-
-            return $matchcount;
-        }
-
-        return 1;
-    }
-
-    /**
-     * @param   mixed  $item  item
-     * @param   Uri    $uri   url
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     */
-    protected static function checkCategory($item, Uri $uri)
-    {
-        static $cache = [];
-        $catid        = (int) $uri->getVar('catid');
-        $check        = self::check($item, $uri);
-
-        if (!$check || !$catid) {
-            return $check;
-        }
-
-        if (!isset($cache[$item->id])) {
-            $cache[$item->id] = [];
-
-            if (!empty($item->query['catid'])) {
-                $cache[$item->id]                        = KunenaCategoryHelper::getChildren($item->query['catid']);
-                $cache[$item->id][$item->query['catid']] = KunenaCategoryHelper::get($item->query['catid']);
-            }
-        }
-
-        return \intval(isset($cache[$item->id][$catid])) * 8;
-    }
-
-    /**
-     * @param   mixed  $item  item
-     * @param   Uri    $uri   uri
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     */
-    protected static function check($item, Uri $uri): int
-    {
-        $hits = 0;
-
-        foreach ($item->query as $var => $value) {
-            if ($value != $uri->getVar($var)) {
-                return 0;
-            }
-
-            $hits++;
-        }
-
-        return $hits;
-    }
-
-    /**
-     * Adds the parameters of the request which choose the part of the page (the page of a list, a message, a search, a filter) to the
-     * parameters of a redirect to the address with an Itemid: the redirect is made from a few parameters, and a link to page 2 or to a
-     * message must still open that page after it.
-     *
-     * @param   array  $params  The parameters of the new address.
-     *
-     * @return  array
-     *
-     * @since   Kunena 7.2
-     * @throws  Exception
-     */
-    public static function keepQuery(array $params): array
-    {
-        static $names = ['limitstart', 'start', 'limit', 'mesid', 'mode', 'sel', 'search', 'userid', 'layout', 'filter_order', 'filter_order_Dir',
-            'usertype', 'query', 'topic_id', 'titleonly', 'searchuser', 'searchdate', 'order', 'sortby', 'fq', 'fauthor', 'fstatus', 'ftag', 'flang'];
-
-        // The input has the parameters of the query and those which the router read from the path (a message number, for example).
-        $get = Factory::getApplication()->getInput()->getArray();
-
-        foreach ($names as $name) {
-            if (!isset($params[$name]) && isset($get[$name]) && \is_scalar($get[$name]) && $get[$name] !== '') {
-                $params[$name] = $get[$name];
-            }
-        }
-
-        return $params;
-    }
-
-    /**
-     * Get the referrer page.
-     *
-     * If there's no referrer or it's external, Kunena will return default page.
-     * Also referrers back to tasks are removed.
-     *
-     * @param   string  $default  Default page to return into.
-     * @param   string  $anchor   Anchor (location in the page).
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public static function getReferrer($default = null, $anchor = null): string
-    {
-        $app = Factory::getApplication();
-
-        $referrer = $app->getInput()->server->getString('HTTP_REFERER');
-
-        if ($referrer) {
-            $uri = new Uri($referrer);
-
-            // Make sure we do not return into a task -- or if task is SEF encoded, make sure it fails.
-            $uri->delVar('task');
-            $uri->delVar(Session::getFormToken());
-
-            // Check that referrer was from the same domain and came from the Joomla frontend or backend.
-            $base = $uri->toString(['scheme', 'host', 'port', 'path']);
-            $host = $uri->toString(['scheme', 'host', 'port']);
-
-            // Referrer should always have host set and it should come from the same base address.
-            if (empty($host) || stripos($base, Uri::base()) !== 0) {
-                $uri = null;
-            }
-        }
-
-        if (!isset($uri)) {
-            if ($default == null) {
-                $default = $app->isClient('site') ? 'index.php?option=com_kunena' : 'administrator/index.php?option=com_kunena';
-            }
-
-            $default = self::_($default);
-            $uri     = new Uri($default);
-        }
-
-        if ($anchor) {
-            $uri->setFragment($anchor);
-        }
-
-        return $uri->toString(['path', 'query', 'fragment']);
-    }
-
-    /**
-     * @param   string|\Joomla\CMS\Uri\Uri|null  $uri    uri
-     * @param   bool  $xhtml  xhtml
-     * @param   int   $ssl    ssl
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public static function _($uri = null, $xhtml = true, $ssl = 0)
-    {
-        if (self::$adminApp) {
-            if ($uri instanceof Uri) {
-                $uri = $uri->toString();
-            }
-
-            if (substr($uri, 0, 14) == 'administrator/') {
-                // Use default routing in administration
-                return Route::_(substr($uri, 14), $xhtml, $ssl);
-            }
-
-            return Uri::root(true) . "/{$uri}";
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        $key = (self::$home ? self::$home->id : 0) . '-' . (int) $xhtml . (int) $ssl . ($uri instanceof Uri ? $uri->toString() : (string) $uri);
-
-        if (!$uri || (\is_string($uri) && $uri[0] == '&')) {
-            $key = 'a' . (self::$active ? self::$active->id : '') . '-' . $key;
-        }
-
-        if (isset(self::$uris[$key])) {
-            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-            return self::$uris[$key];
-        }
-
-        $uri = self::prepare($uri);
-
-        if (!$uri) {
-            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-            return false;
-        }
-
-        if (!$uri->getVar('Itemid')) {
-            self::setItemID($uri);
-        }
-
-        $fragment = $uri->getFragment();
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '(t)') : null;
-        self::$uris[$key] = Route::_('index.php?' . $uri->getQuery(), $xhtml, $ssl) . ($fragment ? '#' . $fragment : '');
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '(t)') : null;
-        self::$urisSave = true;
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        return self::$uris[$key];
-    }
-
-    /**
-     * @param   Uri   $uri     uri
-     * @param   bool  $object  object
-     *
-     * @return  Uri|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public static function normalize($uri = null, $object = false)
-    {
-        if (self::$adminApp) {
-            // Use default routing in administration
-            return $object ? $uri : 'index.php?' . $uri->getQuery();
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        $uri = self::prepare($uri);
-
-        if (!$uri) {
-            return false;
-        }
-
-        if (!$uri->getVar('Itemid')) {
-            self::setItemID($uri);
-        }
-
-        $result = $object ? $uri : 'index.php?' . $uri->getQuery();
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        return $result;
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public static function getMenu()
-    {
-        return self::$home;
-    }
-
-    /**
      * @param   string  $string   string
      * @param   null    $default  default
      *
@@ -802,287 +1083,6 @@ abstract class KunenaRoute
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return self::$filtered[$string];
-    }
-
-    /**
-     * @param   string  $alias  alias
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function resolveAlias(string $alias): array
-    {
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        $app   = Factory::getApplication();
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select('*')
-            ->from($db->quoteName('#__kunena_aliases'))
-            ->where($db->quoteName('alias') . ' LIKE ' . $db->quote($alias . '%'));
-
-        $db->setQuery($query);
-
-        $aliases = [];
-
-        try {
-            $aliases = (array) $db->loadObjectList();
-        } catch (RuntimeException $e) {
-            $app->enqueueMessage($e->getMessage(), 'error');
-        }
-
-        $vars = [];
-
-        foreach ($aliases as $object) {
-            if (StringHelper::strtolower($alias) == StringHelper::strtolower($object->alias)) {
-                $var         = $object->type != 'legacy' ? $object->type : 'view';
-                $vars[$var]  = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
-
-                if ($var == 'catid') {
-                    $vars['view'] = 'category';
-                }
-
-                break;
-            }
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        return $vars;
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public static function initialize(): void
-    {
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-        self::$config = KunenaFactory::getConfig();
-
-        if (Factory::getApplication()->isClient('administrator') || Factory::getApplication()->isClient('cli')) {
-            self::$adminApp = true;
-            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-            return;
-        }
-
-        $app   = KunenaFactory::getApplication();
-        $input = $app->getInput();
-
-        self::$menus   = $app->getMenu();
-        self::$menu    = self::$menus->getMenu();
-        self::$default = self::$menus->getDefault();
-        $active        = self::$menus->getActive();
-
-        // Get current route.
-        self::$current = new Uri('index.php');
-
-        if ($active) {
-            foreach ($active->query as $key => $value) {
-                self::$current->setVar($key, $value);
-            }
-
-            self::$current->setVar('Itemid', (int) $active->id);
-
-            if ($active->type == 'component' && $active->component == 'com_kunena' && isset($active->query['view'])) {
-                self::$active = $active;
-            }
-        }
-
-        // If values are both in GET and POST, they are only stored in POST
-        $post = $input->post->getArray([]);
-
-        foreach ($post as $key => $value) {
-            if (\in_array($key, ['view', 'layout', 'task']) && \is_string($value) && !preg_match('/[^a-zA-Z0-9_.]/i', $value)) {
-                self::$current->setVar($key, $value);
-            }
-        }
-
-        // Make sure that request URI is not broken
-        $get = $input->get->getArray([]);
-
-        foreach ($get as $key => $value) {
-            if (preg_match('/[^a-zA-Z]/', $key)) {
-                continue;
-            }
-
-            if (\in_array($key, ['query', 'searchuser'])) {
-                // Allow all values
-            }
-            // TODO: we need to find a way to here deal with arrays: &foo[]=bar
-            elseif (\gettype($value) == 'string') {
-                if (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
-                    // Illegal value
-                    continue;
-                }
-            }
-
-            self::$current->setVar($key, $value);
-        }
-
-        if (self::$current->getVar('start')) {
-            self::$current->setVar('limitstart', self::$current->getVar('start'));
-            self::$current->delVar('start');
-        }
-
-        self::$home = self::getHome(self::$active);
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public static function cleanup(): void
-    {
-        self::$filtered = [];
-        self::$uris     = [];
-    }
-
-    /**
-     * @param   KunenaCategory  $category  category
-     * @param   bool            $xhtml     xhtml
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function getCategoryUrl(KunenaCategory $category, bool $xhtml = true)
-    {
-        return self::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
-    }
-
-    /**
-     * @param   KunenaCategory  $category  category
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public static function getCategoryItemid(KunenaCategory $category)
-    {
-        return self::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}");
-    }
-
-    /**
-     * @param   null  $uri  uri
-     *
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public static function getItemID($uri = null)
-    {
-        if (self::$adminApp) {
-            // There are no itemids in administration
-            return 0;
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-        $uri = self::prepare($uri);
-
-        if (!$uri) {
-            return false;
-        }
-
-        if (!$uri->getVar('Itemid')) {
-            self::setItemID($uri);
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        return $uri->getVar('Itemid');
-    }
-
-    /**
-     * Fix itemid when there is no item id.
-     *
-     * @return  integer
-     *
-     * @since   Kunena 5.1
-     * @throws  Exception
-     */
-    public static function fixMissingItemID(): int
-    {
-        $component = ComponentHelper::getComponent('com_kunena');
-        $app       = KunenaFactory::getApplication();
-        $items     = $app->getMenu('site')->getItems('component_id', $component->id);
-
-        if ($items) {
-            return $items[0]->id;
-        }
-
-        return 0;
-    }
-
-    /**
-     * @param   KunenaTopic           $topic     topic
-     * @param   bool                  $xhtml     xhtml
-     * @param   ?KunenaMessage|string $action    actions
-     * @param   ?KunenaCategory       $category  category
-     * @param   int                   $Itemid    itemid
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function getTopicUrl(KunenaTopic $topic, bool $xhtml = true, $action = null, ?KunenaCategory $category = null, $Itemid = 0)
-    {
-        if (!$category) {
-            $category = $topic->getCategory();
-        }
-
-        return self::_($topic->getUri($category, $action, $Itemid), $xhtml);
-    }
-
-    /**
-     * @param   KunenaMessage        $message   message
-     * @param   bool                 $xhtml     xhtml
-     * @param   ?KunenaTopic         $topic     topic
-     * @param   ?KunenaCategory      $category  category
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function getMessageUrl(KunenaMessage $message, $xhtml = true, ?KunenaTopic $topic = null, ?KunenaCategory $category = null)
-    {
-        // FIXME: not yet fully implemented...
-        if (!$category) {
-            $category = $message->getCategory();
-        }
-
-        if (!$topic) {
-            $topic = $message->getTopic();
-        }
-
-        return self::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$topic->id}", $xhtml);
-    }
-
-    /**
-     * @param   KunenaUser  $user   user
-     * @param   bool        $xhtml  xhtml
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public static function getUserUrl(KunenaUser $user, $xhtml = true)
-    {
-        return self::_("index.php?option=com_kunena&view=user&userid={$user->userid}", $xhtml);
     }
 
     /**

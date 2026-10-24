@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\View\Badges;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -28,7 +29,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class HtmlView extends BaseHtmlView
 {
     /**
-     * @var     \Joomla\CMS\Form\Form
+     * @var     Form
      * @since   Kunena 7.2
      */
     protected $form;

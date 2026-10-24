@@ -20,6 +20,7 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Html\KunenaMap;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\User\KunenaUserBadges;
 
 if ($this->config->showUserStats) {
     $rankImage = $this->profile->getRank(0, 'image');
@@ -54,7 +55,7 @@ if ($this->config->showUserStats) {
                 </li>
             <?php endif ?>
 
-            <?php $userBadges = \Kunena\Forum\Libraries\User\KunenaUserBadges::render($this->profile); ?>
+            <?php $userBadges = KunenaUserBadges::render($this->profile); ?>
             <?php if ($userBadges !== '') : ?>
                 <li class="list-group-item">
                     <?php echo $userBadges; ?>

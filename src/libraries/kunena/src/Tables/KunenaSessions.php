@@ -84,6 +84,24 @@ class KunenaSessions extends KunenaTable
     }
 
     /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function check(): bool
+    {
+        $user = KunenaUserHelper::get($this->userid);
+
+        if (!$user->exists()) {
+            throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid));
+        }
+
+        return true;
+    }
+
+    /**
      * @param   null  $oid    oid
      * @param   bool  $reset  reset
      *
@@ -100,23 +118,5 @@ class KunenaSessions extends KunenaTable
         }
 
         return parent::load($oid, $reset);
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function check(): bool
-    {
-        $user = KunenaUserHelper::get($this->userid);
-
-        if (!$user->exists()) {
-            throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid));
-        }
-
-        return true;
     }
 }

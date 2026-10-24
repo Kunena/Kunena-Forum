@@ -35,20 +35,6 @@ class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwar
     use ResultTypeObjectAware;
 
     /**
-     * Setter for the object argument.
-     *
-     * @param   KunenaProfile  $profile  The value to set
-     *
-     * @return  KunenaProfile
-     * @since   7.0.0
-     * @throws  BadMethodCallException
-     */
-    protected function onSetProfile(KunenaProfile $profile): KunenaProfile
-    {
-        return $profile;
-    }
-
-    /**
      * Getter for the data argument.
      *
      * @return  KunenaProfile|array
@@ -64,9 +50,26 @@ class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwar
     }
 
     /**
-     * Setter for the data argument.
+     * Setter for the object argument.
+     *
+     * @param   KunenaProfile  $profile  The value to set
+     *
+     * @return  KunenaProfile
+     * @since   7.0.0
+     * @throws  BadMethodCallException
+     */
+    protected function onSetProfile(KunenaProfile $profile): KunenaProfile
+    {
+        return $profile;
+    }
+
+    /**
+     * Setter for the profile argument.
+     *
+     * @param   KunenaProfile  $profile  The profile.
      *
      * @return  $this
+     *
      * @since   7.0.0
      */
     public function setProfile(KunenaProfile $profile)

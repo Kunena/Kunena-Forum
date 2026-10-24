@@ -36,30 +36,15 @@ abstract class KunenaMultilanguage
     public const ALL = '*';
 
     /**
-     * Does the site filter on the language: the site is multilingual (the plugin System - Language Filter is on and
-     * there are several content languages) and the page is on the site. Nothing is hidden in the backend.
+     * The language code of the page.
      *
-     * @return  boolean
-     *
-     * @since   Kunena 7.2
-     */
-    public static function isEnabled(): bool
-    {
-        static $enabled = null;
-
-        return $enabled ??= Factory::getApplication()->isClient('site') && Multilanguage::isEnabled();
-    }
-
-    /**
-     * Are there several content languages to choose from (so the language fields are useful in the forms).
-     *
-     * @return  boolean
+     * @return  string
      *
      * @since   Kunena 7.2
      */
-    public static function hasLanguages(): bool
+    public static function getCurrent(): string
     {
-        return \count(self::getLanguages()) > 1;
+        return Factory::getApplication()->getLanguage()->getTag();
     }
 
     /**
@@ -87,15 +72,30 @@ abstract class KunenaMultilanguage
     }
 
     /**
-     * The language code of the page.
+     * Are there several content languages to choose from (so the language fields are useful in the forms).
      *
-     * @return  string
+     * @return  boolean
      *
      * @since   Kunena 7.2
      */
-    public static function getCurrent(): string
+    public static function hasLanguages(): bool
     {
-        return Factory::getApplication()->getLanguage()->getTag();
+        return \count(self::getLanguages()) > 1;
+    }
+
+    /**
+     * Does the site filter on the language: the site is multilingual (the plugin System - Language Filter is on and
+     * there are several content languages) and the page is on the site. Nothing is hidden in the backend.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    public static function isEnabled(): bool
+    {
+        static $enabled = null;
+
+        return $enabled ??= Factory::getApplication()->isClient('site') && Multilanguage::isEnabled();
     }
 
     /**

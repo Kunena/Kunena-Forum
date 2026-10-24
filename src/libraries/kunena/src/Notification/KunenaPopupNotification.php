@@ -55,41 +55,6 @@ abstract class KunenaPopupNotification
     ];
 
     /**
-     * Are the popups on for the user (the forum setting, and the choice of the user)?
-     *
-     * @param   integer  $userid  The user.
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 7.2
-     */
-    public static function isEnabledFor(int $userid): bool
-    {
-        return $userid > 0
-            && !empty(KunenaConfig::getInstance()->popupNotifications)
-            && KunenaUserHelper::getJoomlaParam($userid, 'kunena_popup_notifications', 1) != 0;
-    }
-
-    /**
-     * The id of the last message: the cursor of a browser which has seen all.
-     *
-     * @param   DatabaseInterface  $db  The database.
-     *
-     * @return  integer
-     *
-     * @since   Kunena 7.2
-     */
-    public static function cursor(DatabaseInterface $db): int
-    {
-        $query = $db->createQuery()
-            ->select('MAX(' . $db->quoteName('id') . ')')
-            ->from($db->quoteName('#__kunena_messages'));
-        $db->setQuery($query);
-
-        return (int) $db->loadResult();
-    }
-
-    /**
      * The messages after the cursor of the browser which are of interest for the user: he is mentioned in them, they are in a
      * topic of his or a topic he follows, or they start a topic in a category he follows. His own messages, the messages which
      * wait for approval and the messages of more than a day ago are not in it.
@@ -147,26 +112,22 @@ abstract class KunenaPopupNotification
     }
 
     /**
-     * The reason of the popup of a message: one popup for a message, with the strongest reason.
+     * The id of the last message: the cursor of a browser which has seen all.
      *
-     * @param   object  $row  A row of candidates().
+     * @param   DatabaseInterface  $db  The database.
      *
-     * @return  string  mention, reply (in a topic of the user), subscribed (in a topic he follows) or topic (a new topic in a
-     *                  category he follows).
+     * @return  integer
      *
      * @since   Kunena 7.2
      */
-    public static function reason(object $row): string
+    public static function cursor(DatabaseInterface $db): int
     {
-        if ($row->mentioned) {
-            return 'mention';
-        }
+        $query = $db->createQuery()
+            ->select('MAX(' . $db->quoteName('id') . ')')
+            ->from($db->quoteName('#__kunena_messages'));
+        $db->setQuery($query);
 
-        if ($row->own) {
-            return 'reply';
-        }
-
-        return $row->topicsub > 0 ? 'subscribed' : 'topic';
+        return (int) $db->loadResult();
     }
 
     /**
@@ -243,5 +204,44 @@ abstract class KunenaPopupNotification
         $result['items'] = $items;
 
         return $result;
+    }
+
+    /**
+     * Are the popups on for the user (the forum setting, and the choice of the user)?
+     *
+     * @param   integer  $userid  The user.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    public static function isEnabledFor(int $userid): bool
+    {
+        return $userid > 0
+            && !empty(KunenaConfig::getInstance()->popupNotifications)
+            && KunenaUserHelper::getJoomlaParam($userid, 'kunena_popup_notifications', 1) != 0;
+    }
+
+    /**
+     * The reason of the popup of a message: one popup for a message, with the strongest reason.
+     *
+     * @param   object  $row  A row of candidates().
+     *
+     * @return  string  mention, reply (in a topic of the user), subscribed (in a topic he follows) or topic (a new topic in a
+     *                  category he follows).
+     *
+     * @since   Kunena 7.2
+     */
+    public static function reason(object $row): string
+    {
+        if ($row->mentioned) {
+            return 'mention';
+        }
+
+        if ($row->own) {
+            return 'reply';
+        }
+
+        return $row->topicsub > 0 ? 'subscribed' : 'topic';
     }
 }

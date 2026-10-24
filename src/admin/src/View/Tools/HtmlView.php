@@ -202,7 +202,7 @@ class HtmlView extends BaseHtmlView
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            ToolBarHelper::preferences('com_kunena');
+            ToolbarHelper::preferences('com_kunena');
         }
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/tools';
@@ -396,7 +396,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 7.1.0
      */
-    protected function setToolBarModifysocials(): Void
+    protected function setToolBarModifysocials(): void
     {
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();
@@ -413,7 +413,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 7.1.0
      */
-    protected function setToolBarDeletesocials(): Void
+    protected function setToolBarDeletesocials(): void
     {
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();

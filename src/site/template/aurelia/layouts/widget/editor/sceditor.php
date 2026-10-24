@@ -55,7 +55,7 @@ $this->wa->registerAndUseScript('sceditor/autoyoubutbe', 'media/kunena/core/js/s
     ->registerAndUseScript('sceditor/undo', 'media/kunena/core/js/sceditor/undo.js')
     ->registerAndUseScript('kunena_sceditor', 'components/com_kunena/template/aurelia/assets/js/sceditor.js')
     ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
-$this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
+$this->doc->addScriptOptions('com_kunena.sceditor_style_path', Uri::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
 
 Text::script('COM_KUNENA_EDITOR_PASTE_IMAGE_BLOCKED');
 Text::script('COM_KUNENA_SCEDITOR_COMMAND_INSERT_SOUNDCLOUD');

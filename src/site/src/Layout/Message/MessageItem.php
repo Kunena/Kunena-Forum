@@ -71,7 +71,9 @@ class MessageItem extends KunenaLayout
     /**
      * Check if the guest, moderator or registred can see attachments
      *
-     * @param   Array   $attachments  Array containing KunenaAttachment object
+     * @param   array  $attachments  Array containing KunenaAttachment object
+     *
+     * @return  boolean
      *
      * @since   Kunena 6.4.3
      */
@@ -99,7 +101,9 @@ class MessageItem extends KunenaLayout
     /**
      * Get the link number of the specific message
      *
-     * @param   int            $location The identifier of the message to build the link
+     * @param   int  $location  The identifier of the message to build the link
+     *
+     * @return  integer
      *
      * @since   Kunena 6.4.3
      */

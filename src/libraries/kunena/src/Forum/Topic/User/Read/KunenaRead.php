@@ -119,6 +119,83 @@ class KunenaRead
     }
 
     /**
+     * @param   array  $data    data
+     * @param   array  $ignore  ignore
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function bind(array $data, array $ignore = []): void
+    {
+        $data = array_diff_key($data, array_flip($ignore));
+        foreach ((array) $data as $property => $value) {
+            $this->$property = $value;
+        }
+    }
+
+    /**
+     * Method to delete the \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read object from the database.
+     *
+     * @return  boolean  True on success.
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function delete(): bool
+    {
+        if (!$this->exists()) {
+            return true;
+        }
+
+        // Create the table object
+        $table = $this->getTable();
+
+        try {
+            $result = $table->delete(['topic_id' => $this->topic_id, 'user_id' => $this->user_id]);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        $this->_exists = false;
+
+        return $result;
+    }
+
+    /**
+     * @param   null|bool  $exists  exists
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function exists($exists = null): bool
+    {
+        $return = $this->_exists;
+
+        if ($exists !== null) {
+            $this->_exists = $exists;
+        }
+
+        return $return;
+    }
+
+    /**
+     * @param   mixed  $id      id
+     * @param   mixed  $user    user
+     * @param   bool   $reload  reload
+     *
+     * @return  KunenaRead
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getInstance($id = null, $user = null, $reload = false): KunenaRead
+    {
+        return KunenaTopicUserReadHelper::get($id, $user, $reload);
+    }
+
+    /**
      * Method to get the topics table object.
      *
      * @param   string  $type    Topics table name to be used.
@@ -146,21 +223,6 @@ class KunenaRead
     }
 
     /**
-     * @param   mixed  $id      id
-     * @param   mixed  $user    user
-     * @param   bool   $reload  reload
-     *
-     * @return  KunenaRead
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getInstance($id = null, $user = null, $reload = false): KunenaRead
-    {
-        return KunenaTopicUserReadHelper::get($id, $user, $reload);
-    }
-
-    /**
      * @return  KunenaRead
      *
      * @throws  Exception
@@ -169,34 +231,6 @@ class KunenaRead
     public function getTopic(): KunenaRead
     {
         return KunenaTopicUserReadHelper::get($this->topic_id);
-    }
-
-    /**
-     * @param   array  $data    data
-     * @param   array  $ignore  ignore
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function bind(array $data, array $ignore = []): void
-    {
-        $data = array_diff_key($data, array_flip($ignore));
-        foreach ((array) $data as $property => $value) {
-            $this->$property = $value;
-        }
-    }
-
-    /**
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function reset(): void
-    {
-        $this->topic_id = 0;
-        $this->load();
     }
 
     /**
@@ -236,6 +270,18 @@ class KunenaRead
         $this->bind($table->getProperties());
 
         return $this->_exists;
+    }
+
+    /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function reset(): void
+    {
+        $this->topic_id = 0;
+        $this->load();
     }
 
     /**
@@ -290,51 +336,5 @@ class KunenaRead
         }
 
         return $result;
-    }
-
-    /**
-     * Method to delete the \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read object from the database.
-     *
-     * @return  boolean  True on success.
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function delete(): bool
-    {
-        if (!$this->exists()) {
-            return true;
-        }
-
-        // Create the table object
-        $table = $this->getTable();
-
-        try {
-            $result = $table->delete(['topic_id' => $this->topic_id, 'user_id' => $this->user_id]);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-
-        $this->_exists = false;
-
-        return $result;
-    }
-
-    /**
-     * @param   null|bool  $exists  exists
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function exists($exists = null): bool
-    {
-        $return = $this->_exists;
-
-        if ($exists !== null) {
-            $this->_exists = $exists;
-        }
-
-        return $return;
     }
 }

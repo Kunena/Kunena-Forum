@@ -45,6 +45,21 @@ abstract class KunenaFactory
     public static $session = null;
 
     /**
+     * Get Kunena activity integration object
+     *
+     * Returns the global {@link Activity} object, only creating it if it doesn't already exist.
+     *
+     * @return  KunenaActivity
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getActivityIntegration(): KunenaActivity
+    {
+        return KunenaActivity::getInstance();
+    }
+
+    /**
      * Get a Kunena template object
      *
      * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
@@ -58,6 +73,135 @@ abstract class KunenaFactory
         require_once KPATH_ADMIN . '/tmpl/template.php';
 
         return new KunenaAdminTemplate();
+    }
+
+    /**
+     * Get the Joomla Factory application instance
+     *
+     * In CLI context, returns the application for the given client name (e.g. 'site', 'administrator', or any valid custom client),
+     * falling back to 'site' if not specified.
+     * In non-CLI contexts, returns the current application instance.
+     *
+     * @param   string  $client  The fallback Application Instance to return when run from 'cli' (Console)
+     *
+     * @return  SiteApplication|AdministratorApplication
+     *
+     * @throws  RuntimeException
+     * @since   Kunena 6.4.3
+     */
+    public static function getApplication(string $client = ''): SiteApplication|AdministratorApplication
+    {
+        if (Factory::getApplication()->isClient('cli')) {
+            if (empty($client)) {
+                $client = 'site';
+            }
+
+            switch ($client) {
+                case 'administrator':
+                    $applicationClass = AdministratorApplication::class;
+                    break;
+
+                case 'site':
+                    $applicationClass = SiteApplication::class;
+                    break;
+
+                default:
+                    $applicationClass = '\\Joomla\\CMS\\Application\\' . ucfirst($client) . 'Application';
+
+                    if (!class_exists($applicationClass)) {
+                        throw new RuntimeException('Joomla Application class not found: ' . $applicationClass);
+                    }
+                    break;
+            }
+
+            $app = Factory::getContainer()->get($applicationClass);
+        } else {
+            $app = Factory::getApplication();
+        }
+
+        return $app;
+    }
+
+    /**
+     * Get Kunena avatar integration object
+     *
+     * Returns the global {@link KunenaAvatar} object, only creating it if it doesn't
+     * already exist.
+     *
+     * @return  KunenaAvatar
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getAvatarIntegration(): KunenaAvatar
+    {
+        return KunenaAvatar::getInstance();
+    }
+
+    /**
+     * Get a Kunena configuration object
+     *
+     * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
+     *
+     * @return  KunenaConfig
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getConfig(): KunenaConfig
+    {
+        return KunenaConfig::getInstance();
+    }
+
+    /**
+     * Get Kunena private message system integration object
+     *
+     * Returns the global {@link KunenaPrivate} object, only creating it if it doesn't already exist.
+     *
+     * @return   KunenaPrivate
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getPrivateMessaging(): KunenaPrivate
+    {
+        return KunenaPrivate::getInstance();
+    }
+
+    /**
+     * Get Kunena profile integration object
+     *
+     * Returns the global {@link KunenaProfile} object, only creating it if it doesn't already exist.
+     *
+     * @return  KunenaProfile
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getProfile(): KunenaProfile
+    {
+        return KunenaProfile::getInstance();
+    }
+
+    /**
+     * Get Kunena session object
+     *
+     * Returns the global {@link Session} object, only creating it if it doesn't already exist.
+     *
+     * @param   array|bool  $update  An array containing session options
+     *
+     * @return KunenaSession|null
+     *
+     * @since   Kunena 6.0
+     * @throws Exception
+     */
+    public static function getSession($update = false): ?KunenaSession
+    {
+        if (!\is_object(self::$session)) {
+            self::$session = KunenaSession::getInstance($update);
+        }
+
+        return self::$session;
     }
 
     /**
@@ -95,100 +239,6 @@ abstract class KunenaFactory
     public static function getUser($id = null, $reload = false): KunenaUser
     {
         return KunenaUserHelper::get($id, $reload);
-    }
-
-    /**
-     * Get Kunena session object
-     *
-     * Returns the global {@link Session} object, only creating it if it doesn't already exist.
-     *
-     * @param   array|bool  $update  An array containing session options
-     *
-     * @return \Kunena\Forum\Libraries\Session\KunenaSession|null
-     *
-     * @since   Kunena 6.0
-     * @throws Exception
-     */
-    public static function getSession($update = false): ?KunenaSession
-    {
-        if (!\is_object(self::$session)) {
-            self::$session = KunenaSession::getInstance($update);
-        }
-
-        return self::$session;
-    }
-
-    /**
-     * @param   boolean  $session  null
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public static function setSession(bool $session): void
-    {
-        self::$session = $session;
-    }
-
-    /**
-     * Get Kunena avatar integration object
-     *
-     * Returns the global {@link KunenaAvatar} object, only creating it if it doesn't
-     * already exist.
-     *
-     * @return  KunenaAvatar
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getAvatarIntegration(): KunenaAvatar
-    {
-        return KunenaAvatar::getInstance();
-    }
-
-    /**
-     * Get Kunena private message system integration object
-     *
-     * Returns the global {@link KunenaPrivate} object, only creating it if it doesn't already exist.
-     *
-     * @return   KunenaPrivate
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getPrivateMessaging(): KunenaPrivate
-    {
-        return KunenaPrivate::getInstance();
-    }
-
-    /**
-     * Get Kunena activity integration object
-     *
-     * Returns the global {@link Activity} object, only creating it if it doesn't already exist.
-     *
-     * @return  KunenaActivity
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getActivityIntegration(): KunenaActivity
-    {
-        return KunenaActivity::getInstance();
-    }
-
-    /**
-     * Get Kunena profile integration object
-     *
-     * Returns the global {@link KunenaProfile} object, only creating it if it doesn't already exist.
-     *
-     * @return  KunenaProfile
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getProfile(): KunenaProfile
-    {
-        return KunenaProfile::getInstance();
     }
 
     /**
@@ -275,21 +325,6 @@ abstract class KunenaFactory
     }
 
     /**
-     * Get a Kunena configuration object
-     *
-     * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
-     *
-     * @return  KunenaConfig
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getConfig(): KunenaConfig
-    {
-        return KunenaConfig::getInstance();
-    }
-
-    /**
      * @param   object  $lang      language
      * @param   string  $filename  filename
      *
@@ -317,49 +352,14 @@ abstract class KunenaFactory
     }
 
     /**
-     * Get the Joomla Factory application instance
+     * @param   boolean  $session  null
      *
-     * In CLI context, returns the application for the given client name (e.g. 'site', 'administrator', or any valid custom client),
-     * falling back to 'site' if not specified.
-     * In non-CLI contexts, returns the current application instance.
+     * @return  void
      *
-     * @param   string  $client  The fallback Application Instance to return when run from 'cli' (Console)
-     *
-     * @return  SiteApplication|AdministratorApplication
-     *
-     * @throws  RuntimeException
-     * @since   Kunena 6.4.3
+     * @since   Kunena 6.0
      */
-    public static function getApplication(string $client = ''): SiteApplication|AdministratorApplication
+    public static function setSession(bool $session): void
     {
-        if (Factory::getApplication()->isClient('cli')) {
-            if (empty($client)) {
-                $client = 'site';
-            }
-
-            switch ($client) {
-                case 'administrator':
-                    $applicationClass = AdministratorApplication::class;
-                    break;
-
-                case 'site':
-                    $applicationClass = SiteApplication::class;
-                    break;
-
-                default:
-                    $applicationClass = '\\Joomla\\CMS\\Application\\' . ucfirst($client) . 'Application';
-
-                    if (!class_exists($applicationClass)) {
-                        throw new RuntimeException('Joomla Application class not found: ' . $applicationClass);
-                    }
-                    break;
-            }
-
-            $app = Factory::getContainer()->get($applicationClass);
-        } else {
-            $app = Factory::getApplication();
-        }
-
-        return $app;
+        self::$session = $session;
     }
 }

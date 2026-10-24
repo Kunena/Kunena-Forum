@@ -152,96 +152,19 @@ class KunenaTopicUser
     }
 
     /**
-     * Method to get the topics table object.
+     * @param   array  $data    data
+     * @param   array  $ignore  ignore
      *
-     * @param   string  $type    Topics table name to be used.
-     * @param   string  $prefix  Topics table prefix to be used.
-     *
-     * @return  boolean|Table
-     *
-     * @since   Kunena 6.0
-     */
-    public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaUserTopics')
-    {
-        static $tabletype = null;
-
-        // Set a custom table type is defined
-        if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix']) {
-            $tabletype ['name']   = $type;
-            $tabletype ['prefix'] = $prefix;
-        }
-
-        // Create the KunenaUserTopics table object
-        $db          = Factory::getContainer()->get(DatabaseInterface::class);
-        $tableObject = new KunenaUserTopics($db);
-
-        return $tableObject;
-    }
-
-    /**
-     * @param   mixed  $id      id
-     * @param   mixed  $user    user
-     * @param   bool   $reload  reload
-     *
-     * @return  KunenaTopicUser
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getInstance($id = null, $user = null, $reload = false): KunenaTopicUser
-    {
-        return KunenaTopicUserHelper::get($id, $user, $reload);
-    }
-
-    /**
      * @return  void
      *
-     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function reset(): void
+    public function bind(array $data, array $ignore = []): void
     {
-        $this->topic_id = 0;
-        $this->load();
-    }
-
-    /**
-     * Method to load a \Kunena\Forum\Libraries\Forum\Topic\TopicUser object by id.
-     *
-     * @param   int    $topic_id  Topic id to be loaded.
-     * @param   mixed  $user      user
-     *
-     * @return  boolean  True on success
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function load($topic_id = null, $user = null): bool
-    {
-        if ($topic_id === null) {
-            $topic_id = $this->topic_id;
+        $data = array_diff_key($data, array_flip($ignore));
+        foreach ((array) $data as $property => $value) {
+            $this->$property = $value;
         }
-
-        if ($user === null && $this->user_id !== null) {
-            $user = $this->user_id;
-        }
-
-        $user = KunenaUserHelper::get($user);
-
-        // Create the table object
-        $table = $this->getTable();
-
-        // Load the KunenaTable object based on id
-        if ($topic_id) {
-            $this->_exists = $table->load(['user_id' => $user->userid, 'topic_id' => $topic_id]);
-        } else {
-            $this->_exists = false;
-        }
-
-        // Assuming all is well at this point lets bind the data
-        $this->bind($table->getProperties());
-
-        return $this->_exists;
     }
 
     /**
@@ -288,6 +211,168 @@ class KunenaTopicUser
         }
 
         return $return;
+    }
+
+    /**
+     * @param   mixed  $id      id
+     * @param   mixed  $user    user
+     * @param   bool   $reload  reload
+     *
+     * @return  KunenaTopicUser
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getInstance($id = null, $user = null, $reload = false): KunenaTopicUser
+    {
+        return KunenaTopicUserHelper::get($id, $user, $reload);
+    }
+
+    /**
+     * Method to get the topics table object.
+     *
+     * @param   string  $type    Topics table name to be used.
+     * @param   string  $prefix  Topics table prefix to be used.
+     *
+     * @return  boolean|Table
+     *
+     * @since   Kunena 6.0
+     */
+    public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaUserTopics')
+    {
+        static $tabletype = null;
+
+        // Set a custom table type is defined
+        if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix']) {
+            $tabletype ['name']   = $type;
+            $tabletype ['prefix'] = $prefix;
+        }
+
+        // Create the KunenaUserTopics table object
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new KunenaUserTopics($db);
+
+        return $tableObject;
+    }
+
+    /**
+     * @return  KunenaTopic
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getTopic(): KunenaTopic
+    {
+        return KunenaTopicHelper::get($this->topic_id);
+    }
+
+    /**
+     * Method to load a \Kunena\Forum\Libraries\Forum\Topic\TopicUser object by id.
+     *
+     * @param   int    $topic_id  Topic id to be loaded.
+     * @param   mixed  $user      user
+     *
+     * @return  boolean  True on success
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function load($topic_id = null, $user = null): bool
+    {
+        if ($topic_id === null) {
+            $topic_id = $this->topic_id;
+        }
+
+        if ($user === null && $this->user_id !== null) {
+            $user = $this->user_id;
+        }
+
+        $user = KunenaUserHelper::get($user);
+
+        // Create the table object
+        $table = $this->getTable();
+
+        // Load the KunenaTable object based on id
+        if ($topic_id) {
+            $this->_exists = $table->load(['user_id' => $user->userid, 'topic_id' => $topic_id]);
+        } else {
+            $this->_exists = false;
+        }
+
+        // Assuming all is well at this point lets bind the data
+        $this->bind($table->getProperties());
+
+        return $this->_exists;
+    }
+
+    /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function reset(): void
+    {
+        $this->topic_id = 0;
+        $this->load();
+    }
+
+    /**
+     * Method to save the \Kunena\Forum\Libraries\Forum\Topic\TopicUser object to the database.
+     *
+     * @param   bool  $updateOnly  Save the object only if not a new topic.
+     *
+     * @return  boolean  True on success.
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function save($updateOnly = false): bool
+    {
+        // Create the topics table object
+        $table = $this->getTable();
+
+        $properties = [
+            'user_id'      => $this->user_id,
+            'topic_id'     => $this->topic_id,
+            'category_id'  => $this->category_id,
+            'posts'        => $this->posts,
+            'last_post_id' => $this->last_post_id,
+            'owner'        => $this->owner,
+            'favorite'     => $this->favorite,
+            'subscribed'   => $this->subscribed,
+            'params'       => $this->params,
+        ];
+
+        $table->bind($properties);
+        $table->exists($this->_exists);
+
+        // Check and store the object.
+        if (!$table->check()) {
+            return false;
+        }
+
+        // Are we creating a new topic
+        $isnew = !$this->_exists;
+
+        // If we aren't allowed to create new topic return
+        if ($isnew && $updateOnly) {
+            return true;
+        }
+
+        // Store the topic data in the database
+        try {
+            $result = $table->store();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        // Fill up \Kunena\Forum\Libraries\Forum\Topic\TopicUser object in case we created a new topic.
+        if ($result && $isnew) {
+            $this->load();
+        }
+
+        return $result;
     }
 
     /**
@@ -348,90 +433,5 @@ class KunenaTopicUser
         }
 
         return $this->save();
-    }
-
-    /**
-     * @return  KunenaTopic
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getTopic(): KunenaTopic
-    {
-        return KunenaTopicHelper::get($this->topic_id);
-    }
-
-    /**
-     * @param   array  $data    data
-     * @param   array  $ignore  ignore
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function bind(array $data, array $ignore = []): void
-    {
-        $data = array_diff_key($data, array_flip($ignore));
-        foreach ((array) $data as $property => $value) {
-            $this->$property = $value;
-        }
-    }
-
-    /**
-     * Method to save the \Kunena\Forum\Libraries\Forum\Topic\TopicUser object to the database.
-     *
-     * @param   bool  $updateOnly  Save the object only if not a new topic.
-     *
-     * @return  boolean  True on success.
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function save($updateOnly = false): bool
-    {
-        // Create the topics table object
-        $table = $this->getTable();
-
-        $properties = [
-            'user_id'      => $this->user_id,
-            'topic_id'     => $this->topic_id,
-            'category_id'  => $this->category_id,
-            'posts'        => $this->posts,
-            'last_post_id' => $this->last_post_id,
-            'owner'        => $this->owner,
-            'favorite'     => $this->favorite,
-            'subscribed'   => $this->subscribed,
-            'params'       => $this->params,
-        ];
-
-        $table->bind($properties);
-        $table->exists($this->_exists);
-
-        // Check and store the object.
-        if (!$table->check()) {
-            return false;
-        }
-
-        // Are we creating a new topic
-        $isnew = !$this->_exists;
-
-        // If we aren't allowed to create new topic return
-        if ($isnew && $updateOnly) {
-            return true;
-        }
-
-        // Store the topic data in the database
-        try {
-            $result = $table->store();
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-
-        // Fill up \Kunena\Forum\Libraries\Forum\Topic\TopicUser object in case we created a new topic.
-        if ($result && $isnew) {
-            $this->load();
-        }
-
-        return $result;
     }
 }

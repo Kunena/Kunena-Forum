@@ -35,6 +35,20 @@ class KunenaAttachmentFinder extends KunenaFinder
     protected $table = '#__kunena_attachments';
 
     /**
+     * Filter by attachment private.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.4
+     */
+    public function filterByPrivate()
+    {
+        $this->query->where($this->db->quoteName('protected') . ' = 32');
+
+        return $this;
+    }
+
+    /**
      * Get log entries.
      *
      * @return  array|KunenaCollection
@@ -74,19 +88,5 @@ class KunenaAttachmentFinder extends KunenaFinder
         unset($results);
 
         return $instances;
-    }
-
-    /**
-     * Filter by attachment private.
-     *
-     * @return  $this
-     *
-     * @since   Kunena 6.4
-     */
-    public function filterByPrivate()
-    {
-        $this->query->where($this->db->quoteName('protected') . ' = 32');
-
-        return $this;
     }
 }

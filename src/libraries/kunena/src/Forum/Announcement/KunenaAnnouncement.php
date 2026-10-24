@@ -134,107 +134,98 @@ class KunenaAnnouncement extends KunenaDatabaseObject
     }
 
     /**
-     * Returns the global KunenaForumAnnouncement object.
+     * @param   KunenaUser  $user  user
      *
-     * @param   null  $identifier  Announcement id to load.
-     * @param   bool  $reload      reload
+     * @return  KunenaExceptionAuthorise
+     * @since   Kunena 6.0
+     */
+    protected function authoriseNew(KunenaUser $user): ?KunenaExceptionAuthorise
+    {
+        if ($this->exists()) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param   KunenaUser  $user  user
      *
-     * @return  KunenaAnnouncement
+     * @return  KunenaExceptionAuthorise
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public static function getInstance($identifier = null, $reload = false): KunenaAnnouncement
+    protected function authoriseNotBanned(KunenaUser $user)
     {
-        return KunenaAnnouncementHelper::get($identifier, $reload);
+        $banned = $user->isBanned();
+
+        if ($banned) {
+            $banned = KunenaBan::getInstanceByUserid($user->userid, true);
+
+            if (!$banned->isLifetime()) {
+                return new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
+            }
+
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
+
+        }
+
+        return;
     }
 
     /**
-     * Return URL pointing to the Announcement layout.
+     * @param   KunenaUser  $user  user
      *
-     * @param   string  $layout  layout
-     * @param   bool    $xhtml   xhtml
+     * @return  KunenaExceptionAuthorise
      *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function authoriseRead(KunenaUser $user)
+    {
+        if (!$this->exists()) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
+
+        // An announcement which is not published, which starts later or which has ended is for the moderators only.
+        if (!$user->isModerator() && ($this->published != 1 || !$this->isPublishedNow())) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+        }
+
+        return;
+    }
+
+    /**
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function authoriseWrite(KunenaUser $user): ?KunenaExceptionAuthorise
+    {
+        // Check that user is global moderator
+        if (!$user->exists()) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
+        }
+
+        if (!$user->isModerator()) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
+        }
+
+        return null;
+    }
+
+    /**
      * @return  boolean
      *
-     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getUrl($layout = 'default', $xhtml = true)
+    public function check(): bool
     {
-        $uri = $this->getUri($layout);
-
-        return KunenaRoute::_($uri, $xhtml);
-    }
-
-    /**
-     * return Joomla\CMS\Uri\Uri object pointing to the Announcement layout.
-     *
-     * @param   string  $layout  layout
-     *
-     * @return  Uri
-     *
-     * @since   Kunena 6.0
-     */
-    public function getUri($layout = 'default'): Uri
-    {
-        $uri = new Uri('index.php?option=com_kunena&view=announcement');
-
-        if ($layout) {
-            $uri->setVar('layout', $layout);
-        }
-
-        if ($this->id) {
-            $uri->setVar('id', $this->id);
-        }
-
-        return $uri;
-    }
-
-    /**
-     * Return URL pointing to the Announcement task.
-     *
-     * @param   string  $task   task
-     * @param   bool    $xhtml  xhtml
-     *
-     * @return  boolean|string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getTaskUrl($task = null, $xhtml = true): bool|string
-    {
-        $uri = $this->getTaskUri($task);
-
-        return KunenaRoute::_($uri, $xhtml);
-    }
-
-    /**
-     * return Joomla\CMS\Uri\Uri object pointing to the Announcement task.
-     *
-     * @param   string  $task  task
-     *
-     * @return  Uri
-     *
-     * @since   Kunena 6.0
-     */
-    public function getTaskUri($task = null): Uri
-    {
-        $uri = new Uri('index.php?option=com_kunena&view=announcement');
-
-        if ($task) {
-            $uri->setVar('task', $task);
-        }
-
-        if ($this->id) {
-            $uri->setVar('id', $this->id);
-        }
-
-        if ($task) {
-            $uri->setVar(Session::getFormToken(), 1);
-        }
-
-        return $uri;
+        return true;
     }
 
     /**
@@ -273,7 +264,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
     }
 
     /**
-     * @return \Kunena\Forum\Libraries\User\KunenaUser|null
+     * @return KunenaUser|null
      *
      * @since   Kunena 6.0
      * @throws Exception
@@ -288,7 +279,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
     }
 
     /**
-     * @return \Kunena\Forum\Libraries\Date\KunenaDate|null
+     * @return KunenaDate|null
      *
      * @since   Kunena 6.0
      */
@@ -299,6 +290,137 @@ class KunenaAnnouncement extends KunenaDatabaseObject
         }
 
         return $this->_date;
+    }
+
+    /**
+     * Returns the global KunenaForumAnnouncement object.
+     *
+     * @param   null  $identifier  Announcement id to load.
+     * @param   bool  $reload      reload
+     *
+     * @return  KunenaAnnouncement
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getInstance($identifier = null, $reload = false): KunenaAnnouncement
+    {
+        return KunenaAnnouncementHelper::get($identifier, $reload);
+    }
+
+    /**
+     * Get the table relevant properties. Override for your specific Object
+     *
+     * @return array    Assocative array with the propertie values of table
+     *
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties(): array
+    {
+        $properties = [
+            'id' => $this->id,
+            // TINYTEXT: 255 bytes (a longer title was an error of a strict database, the announcement was not saved).
+            'title'        => mb_strcut((string) $this->title, 0, 255, 'UTF-8'),
+            'created_by'   => $this->created_by,
+            'sdescription' => $this->sdescription,
+            'description'  => $this->description,
+            'created'      => $this->created,
+            'published'    => $this->published,
+            'publish_up'   => $this->publish_up,
+            'publish_down' => $this->publish_down,
+            'ordering'     => $this->ordering,
+            'showdate'     => $this->showdate,
+        ];
+
+        return $properties;
+    }
+
+    /**
+     * return Joomla\CMS\Uri\Uri object pointing to the Announcement task.
+     *
+     * @param   string  $task  task
+     *
+     * @return  Uri
+     *
+     * @since   Kunena 6.0
+     */
+    public function getTaskUri($task = null): Uri
+    {
+        $uri = new Uri('index.php?option=com_kunena&view=announcement');
+
+        if ($task) {
+            $uri->setVar('task', $task);
+        }
+
+        if ($this->id) {
+            $uri->setVar('id', $this->id);
+        }
+
+        if ($task) {
+            $uri->setVar(Session::getFormToken(), 1);
+        }
+
+        return $uri;
+    }
+
+    /**
+     * Return URL pointing to the Announcement task.
+     *
+     * @param   string  $task   task
+     * @param   bool    $xhtml  xhtml
+     *
+     * @return  boolean|string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getTaskUrl($task = null, $xhtml = true): bool|string
+    {
+        $uri = $this->getTaskUri($task);
+
+        return KunenaRoute::_($uri, $xhtml);
+    }
+
+    /**
+     * return Joomla\CMS\Uri\Uri object pointing to the Announcement layout.
+     *
+     * @param   string  $layout  layout
+     *
+     * @return  Uri
+     *
+     * @since   Kunena 6.0
+     */
+    public function getUri($layout = 'default'): Uri
+    {
+        $uri = new Uri('index.php?option=com_kunena&view=announcement');
+
+        if ($layout) {
+            $uri->setVar('layout', $layout);
+        }
+
+        if ($this->id) {
+            $uri->setVar('id', $this->id);
+        }
+
+        return $uri;
+    }
+
+    /**
+     * Return URL pointing to the Announcement layout.
+     *
+     * @param   string  $layout  layout
+     * @param   bool    $xhtml   xhtml
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getUrl($layout = 'default', $xhtml = true)
+    {
+        $uri = $this->getUri($layout);
+
+        return KunenaRoute::_($uri, $xhtml);
     }
 
     /**
@@ -314,6 +436,43 @@ class KunenaAnnouncement extends KunenaDatabaseObject
     public function isAuthorised($action = 'read', ?KunenaUser $user = null): bool
     {
         return !$this->tryAuthorise($action, $user, false);
+    }
+
+    /**
+     * Is the announcement inside its dates (the date to start and the date to end, which can be empty)?
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    public function isPublishedNow(): bool
+    {
+        $nullDate = '1000-01-01 00:00:00';
+        $now      = Factory::getDate()->toSql();
+
+        if (!empty($this->publish_up) && $this->publish_up !== $nullDate && $this->publish_up > $now) {
+            return false;
+        }
+
+        if (!empty($this->publish_down) && $this->publish_down !== $nullDate && $this->publish_down < $now) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    protected function saveInternal()
+    {
+        $options = ['defaultgroup' => 'com_kunena'];
+        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $cache->remove('announcement', 'global');
+
+        return true;
     }
 
     /**
@@ -372,164 +531,5 @@ class KunenaAnnouncement extends KunenaDatabaseObject
         }
 
         return $exception;
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function check(): bool
-    {
-        return true;
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    protected function saveInternal()
-    {
-        $options = ['defaultgroup' => 'com_kunena'];
-        $cache   = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
-        $cache->remove('announcement', 'global');
-
-        return true;
-    }
-
-    /**
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise
-     * @since   Kunena 6.0
-     */
-    protected function authoriseNew(KunenaUser $user): ?KunenaExceptionAuthorise
-    {
-        if ($this->exists()) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
-        }
-
-        return null;
-    }
-
-    /**
-     * Is the announcement inside its dates (the date to start and the date to end, which can be empty)?
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 7.2
-     */
-    public function isPublishedNow(): bool
-    {
-        $nullDate = '1000-01-01 00:00:00';
-        $now      = Factory::getDate()->toSql();
-
-        if (!empty($this->publish_up) && $this->publish_up !== $nullDate && $this->publish_up > $now) {
-            return false;
-        }
-
-        if (!empty($this->publish_down) && $this->publish_down !== $nullDate && $this->publish_down < $now) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authoriseRead(KunenaUser $user)
-    {
-        if (!$this->exists()) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
-        }
-
-        // An announcement which is not published, which starts later or which has ended is for the moderators only.
-        if (!$user->isModerator() && ($this->published != 1 || !$this->isPublishedNow())) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
-        }
-
-        return;
-    }
-
-    /**
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authoriseNotBanned(KunenaUser $user)
-    {
-        $banned = $user->isBanned();
-
-        if ($banned) {
-            $banned = KunenaBan::getInstanceByUserid($user->userid, true);
-
-            if (!$banned->isLifetime()) {
-                return new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
-            }
-
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
-
-        }
-
-        return;
-    }
-
-    /**
-     * @param   KunenaUser  $user  user
-     *
-     * @return  KunenaExceptionAuthorise
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function authoriseWrite(KunenaUser $user): ?KunenaExceptionAuthorise
-    {
-        // Check that user is global moderator
-        if (!$user->exists()) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
-        }
-
-        if (!$user->isModerator()) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the table relevant properties. Override for your specific Object
-     *
-     * @return array    Assocative array with the propertie values of table
-     *
-     * @since   Kunena 6.4
-     */
-    protected function getTableProperties(): array
-    {
-        $properties = [
-            'id' => $this->id,
-            // TINYTEXT: 255 bytes (a longer title was an error of a strict database, the announcement was not saved).
-            'title'        => mb_strcut((string) $this->title, 0, 255, 'UTF-8'),
-            'created_by'   => $this->created_by,
-            'sdescription' => $this->sdescription,
-            'description'  => $this->description,
-            'created'      => $this->created,
-            'published'    => $this->published,
-            'publish_up'   => $this->publish_up,
-            'publish_down' => $this->publish_down,
-            'ordering'     => $this->ordering,
-            'showdate'     => $this->showdate,
-        ];
-
-        return $properties;
     }
 }

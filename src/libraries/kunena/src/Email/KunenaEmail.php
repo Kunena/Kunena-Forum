@@ -20,6 +20,7 @@ use Exception;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Mail\Mail;
 use Kunena\Forum\Libraries\Log\KunenaLog;
+use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Class KunenaEmail
@@ -33,71 +34,6 @@ abstract class KunenaEmail
      * @since   Kunena 6.0
      */
     public static $mailer_error_status = null;
-
-    /**
-     * @param   Mail $mail      mail
-     * @param   array                 $receivers receivers
-     *
-     * @return boolean
-     * @throws Exception
-     * @since Kunena 6.0
-     */
-    public static function send($mail, array $receivers)
-    {
-        if (isset(static::$mailer_error_status)) {
-            // Mailer is broken, so prevent any sending
-            Log::add(static::$mailer_error_status->getMessage(), Log::ERROR, 'kunena');
-
-            return false;
-        }
-
-        $chunks = array_chunk($receivers, 1);
-
-        $success     = true;
-        $totalEmails = \count($receivers);
-        $emailsSent  = 0;
-
-        if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
-            $mail->SMTPKeepAlive = true;
-        }
-
-        foreach ($chunks as $emails) {
-            $mail->ClearAddresses();
-            $mail->addRecipient($emails);
-
-            try {
-                if ($mail->Send()) {
-                    $emailsSent += \count($emails);
-                } else {
-                    $success = false;
-                }
-            } catch (Exception $e) {
-                $success = false;
-                Log::add($e->getMessage(), Log::ERROR, 'kunena');
-            }
-        }
-
-        if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
-            $mail->smtpClose();
-        }
-
-        // Log email sending result
-        if ($success && $emailsSent > 0) {
-            KunenaLog::log(
-                KunenaLog::TYPE_ACTION,
-                KunenaLog::LOG_EMAIL_NOTIFICATION_SENT,
-                ['mail_subject' => $mail->Subject, 'emailsent' => $emailsSent]
-            );
-        } elseif (!$success) {
-            KunenaLog::log(
-                KunenaLog::TYPE_ACTION,
-                KunenaLog::LOG_EMAIL_NOTIFICATION_NOTSENT,
-                ['mail_subject' => $mail->Subject, 'totalEmailsAttempted' => $totalEmails]
-            );
-        }
-
-        return $success;
-    }
 
     /**
      * @param   integer  $errno    error number
@@ -124,6 +60,71 @@ abstract class KunenaEmail
         }
 
         return false;
+    }
+
+    /**
+     * @param   Mail $mail      mail
+     * @param   array                 $receivers receivers
+     *
+     * @return boolean
+     * @throws Exception
+     * @since Kunena 6.0
+     */
+    public static function send($mail, array $receivers)
+    {
+        if (isset(static::$mailer_error_status)) {
+            // Mailer is broken, so prevent any sending
+            Log::add(static::$mailer_error_status->getMessage(), Log::ERROR, 'kunena');
+
+            return false;
+        }
+
+        $chunks = array_chunk($receivers, 1);
+
+        $success     = true;
+        $totalEmails = \count($receivers);
+        $emailsSent  = 0;
+
+        if ($mail instanceof PHPMailer) {
+            $mail->SMTPKeepAlive = true;
+        }
+
+        foreach ($chunks as $emails) {
+            $mail->ClearAddresses();
+            $mail->addRecipient($emails);
+
+            try {
+                if ($mail->Send()) {
+                    $emailsSent += \count($emails);
+                } else {
+                    $success = false;
+                }
+            } catch (Exception $e) {
+                $success = false;
+                Log::add($e->getMessage(), Log::ERROR, 'kunena');
+            }
+        }
+
+        if ($mail instanceof PHPMailer) {
+            $mail->smtpClose();
+        }
+
+        // Log email sending result
+        if ($success && $emailsSent > 0) {
+            KunenaLog::log(
+                KunenaLog::TYPE_ACTION,
+                KunenaLog::LOG_EMAIL_NOTIFICATION_SENT,
+                ['mail_subject' => $mail->Subject, 'emailsent' => $emailsSent]
+            );
+        } elseif (!$success) {
+            KunenaLog::log(
+                KunenaLog::TYPE_ACTION,
+                KunenaLog::LOG_EMAIL_NOTIFICATION_NOTSENT,
+                ['mail_subject' => $mail->Subject, 'totalEmailsAttempted' => $totalEmails]
+            );
+        }
+
+        return $success;
     }
 }
 

@@ -88,6 +88,122 @@ class Display extends KunenaControllerDisplay
     public $document;
 
     /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function after()
+    {
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
+
+        // Use our own browser side cache settings.
+        Factory::getApplication()->allowCache(false);
+        Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
+        Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
+        Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
+        Factory::getApplication()->sendHeaders();
+
+        $this->output->appendAfter($this->poweredBy());
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
+    }
+
+    /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
+
+        if (!$this->exists()) {
+            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
+            throw new RuntimeException("Layout '{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}' does not exist!", 404);
+        }
+
+        // Load language files.
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        KunenaFactory::loadLanguage('com_kunena.templates');
+        KunenaFactory::loadLanguage('com_kunena.models');
+        KunenaFactory::loadLanguage('com_kunena.views');
+
+        $this->me       = KunenaUserHelper::getMyself();
+        $this->config   = KunenaConfig::getInstance();
+        $this->document = Factory::getApplication()->getDocument();
+        $this->template = KunenaFactory::getTemplate();
+        $this->template->initialize();
+
+        if ($this->me->isAdmin()) {
+            // Display warnings to the administrator if forum is either offline or debug has been turned on.
+            if ($this->config->boardOffline) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
+            }
+
+            if ($this->config->debug) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
+            }
+        }
+
+        if ($this->config->readOnly) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_WARNING_READONLY'), 'notice');
+        }
+
+        if ($this->me->isBanned()) {
+            // Display warnings to the banned users.
+            $banned = KunenaBan::getInstanceByUserid($this->me->userid, true);
+
+            if (!$banned->isLifetime()) {
+                $this->app->enqueueMessage(
+                    Text::sprintf(
+                        'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
+                        KunenaDate::getInstance($banned->expiration)->toKunena('date_today')
+                    ),
+                    'error'
+                );
+            } else {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 'error');
+            }
+        }
+
+        // Remove base and add canonical link.
+        $this->document->setBase('');
+        $kinput     = $this->app->getInput();
+        $limitstart = $kinput->getInt('limitstart', 0);
+
+        if (!$limitstart) {
+            $uri = trim(strtok(KunenaRoute::_(), '?'));
+
+            if ($uri !== '') {
+                $this->document->addHeadLink($uri, 'canonical', 'rel');
+            }
+        }
+
+        // Initialize breadcrumb.
+        $this->breadcrumb = $this->app->getPathway();
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
+    }
+
+    /**
+     * @return  KunenaLayout
+     *
+     * @since   Kunena 6.0
+     */
+    protected function display()
+    {
+        // Display KunenaLayout with given parameters.
+        $this->page
+            ->set('input', $this->input)
+            ->setLayout($this->input->getWord('layout', 'default'))
+            ->setOptions($this->getOptions());
+
+        return $this->page;
+    }
+
+    /**
      * @return  BaseLayout
      *
      * @throws  Exception
@@ -215,84 +331,6 @@ class Display extends KunenaControllerDisplay
     }
 
     /**
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function before()
-    {
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
-
-        if (!$this->exists()) {
-            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
-            throw new RuntimeException("Layout '{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}' does not exist!", 404);
-        }
-
-        // Load language files.
-        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
-        KunenaFactory::loadLanguage('com_kunena.templates');
-        KunenaFactory::loadLanguage('com_kunena.models');
-        KunenaFactory::loadLanguage('com_kunena.views');
-
-        $this->me       = KunenaUserHelper::getMyself();
-        $this->config   = KunenaConfig::getInstance();
-        $this->document = Factory::getApplication()->getDocument();
-        $this->template = KunenaFactory::getTemplate();
-        $this->template->initialize();
-
-        if ($this->me->isAdmin()) {
-            // Display warnings to the administrator if forum is either offline or debug has been turned on.
-            if ($this->config->boardOffline) {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
-            }
-
-            if ($this->config->debug) {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
-            }
-        }
-
-        if ($this->config->readOnly) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_WARNING_READONLY'), 'notice');
-        }
-
-        if ($this->me->isBanned()) {
-            // Display warnings to the banned users.
-            $banned = KunenaBan::getInstanceByUserid($this->me->userid, true);
-
-            if (!$banned->isLifetime()) {
-                $this->app->enqueueMessage(
-                    Text::sprintf(
-                        'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
-                        KunenaDate::getInstance($banned->expiration)->toKunena('date_today')
-                    ),
-                    'error'
-                );
-            } else {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 'error');
-            }
-        }
-
-        // Remove base and add canonical link.
-        $this->document->setBase('');
-        $kinput     = $this->app->getInput();
-        $limitstart = $kinput->getInt('limitstart', 0);
-
-        if (!$limitstart) {
-            $uri = trim(strtok(KunenaRoute::_(), '?'));
-
-            if ($uri !== '') {
-                $this->document->addHeadLink($uri, 'canonical', 'rel');
-            }
-        }
-
-        // Initialize breadcrumb.
-        $this->breadcrumb = $this->app->getPathway();
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
-    }
-
-    /**
      * @return  boolean
      *
      * @throws  Exception
@@ -308,44 +346,6 @@ class Display extends KunenaControllerDisplay
         $this->page = KunenaPage::factory($name);
 
         return (bool) $this->page->getPath();
-    }
-
-    /**
-     * @return  KunenaLayout
-     *
-     * @since   Kunena 6.0
-     */
-    protected function display()
-    {
-        // Display KunenaLayout with given parameters.
-        $this->page
-            ->set('input', $this->input)
-            ->setLayout($this->input->getWord('layout', 'default'))
-            ->setOptions($this->getOptions());
-
-        return $this->page;
-    }
-
-    /**
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function after()
-    {
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
-
-        // Use our own browser side cache settings.
-        Factory::getApplication()->allowCache(false);
-        Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
-        Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
-        Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
-        Factory::getApplication()->sendHeaders();
-
-        $this->output->appendAfter($this->poweredBy());
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
     }
 
     /**

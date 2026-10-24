@@ -35,20 +35,6 @@ class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwar
     use ResultTypeObjectAware;
 
     /**
-     * Setter for the object argument.
-     *
-     * @param   KunenaPrivate  $private  The value to set
-     *
-     * @return  KunenaPrivate
-     * @since   7.0.0
-     * @throws  BadMethodCallException
-     */
-    protected function onSetPrivate(KunenaPrivate $private): KunenaPrivate
-    {
-        return $private;
-    }
-
-    /**
      * Getter for the data argument.
      *
      * @return  KunenaPrivate|array
@@ -64,9 +50,26 @@ class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwar
     }
 
     /**
-     * Setter for the data argument.
+     * Setter for the object argument.
+     *
+     * @param   KunenaPrivate  $private  The value to set
+     *
+     * @return  KunenaPrivate
+     * @since   7.0.0
+     * @throws  BadMethodCallException
+     */
+    protected function onSetPrivate(KunenaPrivate $private): KunenaPrivate
+    {
+        return $private;
+    }
+
+    /**
+     * Setter for the private argument.
+     *
+     * @param   KunenaPrivate  $private  The private.
      *
      * @return  $this
+     *
      * @since   7.0.0
      */
     public function setPrivate(KunenaPrivate $private)

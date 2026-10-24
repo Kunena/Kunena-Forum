@@ -115,58 +115,119 @@ class KunenaController extends BaseController
     }
 
     /**
-     * Method to get the appropriate controller.
+     * Method to display a view.
      *
-     * @param   string  $prefix  prefix
-     * @param   mixed   $config  config
+     * @param   boolean     $cachable   If true, the view output will be cached
+     * @param   array|bool  $urlparams  An array of safe url parameters and their variable types, for valid values see
+     *                                  {@link \Joomla\CMS\Filter\InputFilter::clean()}.
      *
-     * @return  mixed
+     * @return  BaseController  A Joomla\CMS\MVC\Controller\BaseController object to
+     *                                                     support chaining.
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public static function getInstance($prefix = 'Kunena', $config = [])
+    public function display($cachable = false, $urlparams = false)
     {
-        static $instance = null;
+        KunenaProfiler::getInstance() ? $this->profiler->mark('beforeDisplay') : null;
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-        if (!$prefix) {
-            $prefix = 'Kunena';
+        // Get the document object.
+        $document = Factory::getApplication()->getDocument();
+
+        // Set the default view name and format from the Request.
+        $vName   = Factory::getApplication()->getInput()->getWord('view', $this->app->isClient('administrator') ? 'cpanel' : 'home');
+        $lName   = Factory::getApplication()->getInput()->getWord('layout', 'default');
+        $vFormat = $document->getType();
+
+        if ($this->app->isClient('site')) {
+            $menu   = $this->app->getMenu();
+            $active = $menu->getActive();
+
+            // Check if menu item was correctly routed
+            $routed = $menu->getItem(KunenaRoute::getItemID());
+
+            if ($vFormat == 'html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id)) {
+                // Routing has been changed, redirect
+                // FIXME: check possible redirect loops!
+                $route    = KunenaRoute::_(null, false);
+                $activeId = !empty($active->id) ? $active->id : 0;
+                Log::add("Redirect from " . Uri::getInstance()->toString(['path', 'query']) . " ({$activeId}) to {$route} ($routed->id)", Log::DEBUG, 'kunena');
+                $this->app->redirect($route);
+            }
+
+            // Joomla 2.5+ multi-language support
+            /*
+            FIXME:
+            if (isset($active->language) && $active->language != '*') {
+                $language = Factory::getApplication()->getDocument()->getLanguage();
+                if (strtolower($active->language) != strtolower($language)) {
+                    $route = \Kunena\Forum\Libraries\Route\KunenaRoute::_(null, false);
+                    Log::add("Language redirect from ".Uri::getInstance()->toString(array('path', 'query'))." to {$route}", Log::DEBUG, 'kunena');
+                    $this->redirect ($route);
+                }
+            }
+            */
         }
 
-        if (!empty($instance) && !isset($instance->home)) {
-            return $instance;
+        $config              = [];
+        $config['base_path'] = $this->basePath;
+        $config['layout']    = $lName;
+
+        $view = $this->getView($vName, $vFormat, 'site', $config);
+
+        if ($view) {
+            if ($this->app->isClient('site') && $vFormat == 'html') {
+                $common = $this->getView('common', $vFormat, 'site', $config);
+                $model  = $this->getModel('common');
+                $common->setModel($model, true);
+                $view->ktemplate = $common->ktemplate = KunenaFactory::getTemplate();
+                $view->common    = $common;
+            }
+
+            // Set the view layout.
+            $view->setLayout($lName);
+
+            // Get the appropriate model for the view.
+            $model = $this->getModel($vName);
+
+            // Push the model into the view (as default).
+            $view->setModel($model, true);
+
+            // Push document object into the view.
+            $view->document = $document;
+
+            // Render the view.
+            if ($vFormat == 'html') {
+                PluginHelper::importPlugin('kunena');
+                $displayEvent = new KunenaDisplayEvent('onKunenaDisplay', ['type' => 'start', 'view' => $view]);
+                Factory::getApplication()->getDispatcher()->dispatch('onKunenaDisplay', $displayEvent);
+
+                $test = new KunenaView($config);
+                $test->displayAll();
+                $displayEvent->setType('end');
+                Factory::getApplication()->getDispatcher()->dispatch('onKunenaDisplay', $displayEvent);
+            } else {
+                $view->displayLayout();
+            }
         }
 
-        $input = Factory::getApplication()->getInput();
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-        $app     = Factory::getApplication();
-        $command = $input->get('task', 'display');
+        return $this;
+    }
 
-        // Check for a controller.task command.
-        if (strpos($command, '.') !== false) {
-            // Explode the controller.task command.
-            list($view, $task) = explode('.', $command);
-
-            // Reset the task without the controller context.
-            $input->set('task', $task);
-        } else {
-            // Base controller.
-            $view = strtolower($input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
-        }
-
-        // Set the name for the controller and instantiate it.
-        if ($app->isClient('administrator')) {
-            $class = 'Kunena\Forum\Administrator\Controller\\' . ucfirst($view) . 'Controller';
-        } else {
-            $class = 'Kunena\Forum\Site\Controllers\\' . ucfirst($view) . 'Controller';
-        }
-
-        if (class_exists($class)) {
-            $instance = new $class();
-        } else {
-            throw new KunenaException(Text::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class), 404);
-        }
-
-        return $instance;
+    /**
+     * Escapes a value for output in a view script.
+     *
+     * @param   string  $var  The output to escape.
+     *
+     * @return  string The escaped value.
+     *
+     * @since   Kunena 6.0
+     */
+    public function escape(string $var): string
+    {
+        return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
     }
 
     /**
@@ -324,129 +385,58 @@ class KunenaController extends BaseController
     }
 
     /**
-     * Method to display a view.
+     * Method to get the appropriate controller.
      *
-     * @param   boolean     $cachable   If true, the view output will be cached
-     * @param   array|bool  $urlparams  An array of safe url parameters and their variable types, for valid values see
-     *                                  {@link \Joomla\CMS\Filter\InputFilter::clean()}.
+     * @param   string  $prefix  prefix
+     * @param   mixed   $config  config
      *
-     * @return  BaseController  A Joomla\CMS\MVC\Controller\BaseController object to
-     *                                                     support chaining.
+     * @return  mixed
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function display($cachable = false, $urlparams = false)
+    public static function getInstance($prefix = 'Kunena', $config = [])
     {
-        KunenaProfiler::getInstance() ? $this->profiler->mark('beforeDisplay') : null;
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+        static $instance = null;
 
-        // Get the document object.
-        $document = Factory::getApplication()->getDocument();
-
-        // Set the default view name and format from the Request.
-        $vName   = Factory::getApplication()->getInput()->getWord('view', $this->app->isClient('administrator') ? 'cpanel' : 'home');
-        $lName   = Factory::getApplication()->getInput()->getWord('layout', 'default');
-        $vFormat = $document->getType();
-
-        if ($this->app->isClient('site')) {
-            $menu   = $this->app->getMenu();
-            $active = $menu->getActive();
-
-            // Check if menu item was correctly routed
-            $routed = $menu->getItem(KunenaRoute::getItemID());
-
-            if ($vFormat == 'html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id)) {
-                // Routing has been changed, redirect
-                // FIXME: check possible redirect loops!
-                $route    = KunenaRoute::_(null, false);
-                $activeId = !empty($active->id) ? $active->id : 0;
-                Log::add("Redirect from " . Uri::getInstance()->toString(['path', 'query']) . " ({$activeId}) to {$route} ($routed->id)", Log::DEBUG, 'kunena');
-                $this->app->redirect($route);
-            }
-
-            // Joomla 2.5+ multi-language support
-            /*
-            FIXME:
-            if (isset($active->language) && $active->language != '*') {
-                $language = Factory::getApplication()->getDocument()->getLanguage();
-                if (strtolower($active->language) != strtolower($language)) {
-                    $route = \Kunena\Forum\Libraries\Route\KunenaRoute::_(null, false);
-                    Log::add("Language redirect from ".Uri::getInstance()->toString(array('path', 'query'))." to {$route}", Log::DEBUG, 'kunena');
-                    $this->redirect ($route);
-                }
-            }
-            */
+        if (!$prefix) {
+            $prefix = 'Kunena';
         }
 
-        $config              = [];
-        $config['base_path'] = $this->basePath;
-        $config['layout']    = $lName;
-
-        $view = $this->getView($vName, $vFormat, 'site', $config);
-
-        if ($view) {
-            if ($this->app->isClient('site') && $vFormat == 'html') {
-                $common = $this->getView('common', $vFormat, 'site', $config);
-                $model  = $this->getModel('common');
-                $common->setModel($model, true);
-                $view->ktemplate = $common->ktemplate = KunenaFactory::getTemplate();
-                $view->common    = $common;
-            }
-
-            // Set the view layout.
-            $view->setLayout($lName);
-
-            // Get the appropriate model for the view.
-            $model = $this->getModel($vName);
-
-            // Push the model into the view (as default).
-            $view->setModel($model, true);
-
-            // Push document object into the view.
-            $view->document = $document;
-
-            // Render the view.
-            if ($vFormat == 'html') {
-                PluginHelper::importPlugin('kunena');
-                $displayEvent = new KunenaDisplayEvent('onKunenaDisplay', ['type' => 'start', 'view' => $view]);
-                Factory::getApplication()->getDispatcher()->dispatch('onKunenaDisplay', $displayEvent);
-
-                $test = new KunenaView($config);
-                $test->displayAll();
-                $displayEvent->setType('end');
-                Factory::getApplication()->getDispatcher()->dispatch('onKunenaDisplay', $displayEvent);
-            } else {
-                $view->displayLayout();
-            }
+        if (!empty($instance) && !isset($instance->home)) {
+            return $instance;
         }
 
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+        $input = Factory::getApplication()->getInput();
 
-        return $this;
-    }
+        $app     = Factory::getApplication();
+        $command = $input->get('task', 'display');
 
-    /**
-     * Escapes a value for output in a view script.
-     *
-     * @param   string  $var  The output to escape.
-     *
-     * @return  string The escaped value.
-     *
-     * @since   Kunena 6.0
-     */
-    public function escape(string $var): string
-    {
-        return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
-    }
+        // Check for a controller.task command.
+        if (strpos($command, '.') !== false) {
+            // Explode the controller.task command.
+            list($view, $task) = explode('.', $command);
 
-    /**
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function getRedirect(): string
-    {
-        return $this->redirect;
+            // Reset the task without the controller context.
+            $input->set('task', $task);
+        } else {
+            // Base controller.
+            $view = strtolower($input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
+        }
+
+        // Set the name for the controller and instantiate it.
+        if ($app->isClient('administrator')) {
+            $class = 'Kunena\Forum\Administrator\Controller\\' . ucfirst($view) . 'Controller';
+        } else {
+            $class = 'Kunena\Forum\Site\Controllers\\' . ucfirst($view) . 'Controller';
+        }
+
+        if (class_exists($class)) {
+            $instance = new $class();
+        } else {
+            throw new KunenaException(Text::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class), 404);
+        }
+
+        return $instance;
     }
 
     /**
@@ -467,6 +457,16 @@ class KunenaController extends BaseController
     public function getMessageType(): string
     {
         return $this->messageType;
+    }
+
+    /**
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getRedirect(): string
+    {
+        return $this->redirect;
     }
 
     /**

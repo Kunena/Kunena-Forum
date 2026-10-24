@@ -97,8 +97,10 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
      *
      * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
      *
-     * @since  7.0.0
-     * @throws Exception
+     * @return  integer  The status of the task.
+     *
+     * @throws  Exception
+     * @since   7.0.0
      */
     private function removeExpiredBans(ExecuteTaskEvent $event): int
     {
@@ -162,8 +164,10 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
      *
      * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
      *
-     * @since  7.0.0
-     * @throws Exception
+     * @return  integer  The status of the task.
+     *
+     * @throws  Exception
+     * @since   7.0.0
      */
     private function purgeTrash(ExecuteTaskEvent $event): int
     {

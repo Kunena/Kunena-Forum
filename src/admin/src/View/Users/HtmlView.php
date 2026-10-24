@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Button\DropdownButton;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
@@ -84,7 +85,7 @@ class HtmlView extends BaseHtmlView
         )
             ->listCheck(true);
 
-        /** @var  \Joomla\CMS\Toolbar\Button\DropdownButton $dropdown */
+        /** @var  DropdownButton $dropdown */
         $dropdown = $toolbar->dropdownButton('status-group')
             ->text('JTOOLBAR_CHANGE_STATUS')
             ->toggleSplit(false)
@@ -129,7 +130,7 @@ class HtmlView extends BaseHtmlView
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            ToolBarHelper::preferences('com_kunena');
+            ToolbarHelper::preferences('com_kunena');
         }
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/users';

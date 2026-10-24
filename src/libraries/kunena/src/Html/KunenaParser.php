@@ -51,6 +51,18 @@ abstract class KunenaParser
     public static $relative = true;
 
     /**
+     * @param   string  $string  string
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public static function escape(string $string): string
+    {
+        return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+    }
+
+    /**
      * @param   bool  $grayscale    grayscale deprecated parameter since K6.4
      * @param   bool  $emoticonbar  emoticonbar
      * @param   bool  $addPath      addPath
@@ -130,6 +142,39 @@ abstract class KunenaParser
     }
 
     /**
+     * @param   string  $txt      text
+     * @param   null    $parent   parent
+     * @param   int     $len      len
+     * @param   string  $context  context
+     * @param   string  $target   target
+     *
+     * @return  false|string
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public static function parseBBCode($txt, $parent = null, $len = 0, $context = '', $target = 'message')
+    {
+        if (!$txt) {
+            return false;
+        }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        $bbcode         = KunenaBBCode::getInstance(self::$relative);
+        $bbcode->parent = $parent;
+        $bbcode->SetLimit($len);
+        $bbcode->context = $context;
+        $bbcode->SetPlainMode(false);
+        $txt = $bbcode->Parse($txt);
+        $txt = self::prepareContent($txt, $target);
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        return $txt;
+    }
+
+    /**
      * @param   string  $txt     text
      * @param   int     $len     len
      * @param   string  $target  target
@@ -157,15 +202,28 @@ abstract class KunenaParser
     }
 
     /**
-     * @param   string  $string  string
+     * @param   string  $txt     text
+     * @param   int     $len     len
+     * @param   string  $target  target
      *
-     * @return  string
+     * @return  false|string
      *
+     * @throws Exception
      * @since   Kunena 6.0
      */
-    public static function escape(string $string): string
+    public static function plainBBCode(string $txt, $len = 0, $target = 'message')
     {
-        return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+        if (!$txt) {
+            return false;
+        }
+
+        $bbcode = KunenaBBCode::getInstance(self::$relative);
+        $bbcode->SetLimit($len);
+        $bbcode->SetPlainMode(true);
+        $txt = $bbcode->Parse($txt);
+        $txt = self::prepareContent($txt, $target);
+
+        return $txt;
     }
 
     /**
@@ -237,64 +295,6 @@ abstract class KunenaParser
         ]));
 
         return (string) $article->text;
-    }
-
-    /**
-     * @param   string  $txt      text
-     * @param   null    $parent   parent
-     * @param   int     $len      len
-     * @param   string  $context  context
-     * @param   string  $target   target
-     *
-     * @return  false|string
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public static function parseBBCode($txt, $parent = null, $len = 0, $context = '', $target = 'message')
-    {
-        if (!$txt) {
-            return false;
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        $bbcode         = KunenaBbcode::getInstance(self::$relative);
-        $bbcode->parent = $parent;
-        $bbcode->SetLimit($len);
-        $bbcode->context = $context;
-        $bbcode->SetPlainMode(false);
-        $txt = $bbcode->Parse($txt);
-        $txt = self::prepareContent($txt, $target);
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-        return $txt;
-    }
-
-    /**
-     * @param   string  $txt     text
-     * @param   int     $len     len
-     * @param   string  $target  target
-     *
-     * @return  false|string
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public static function plainBBCode(string $txt, $len = 0, $target = 'message')
-    {
-        if (!$txt) {
-            return false;
-        }
-
-        $bbcode = KunenaBbcode::getInstance(self::$relative);
-        $bbcode->SetLimit($len);
-        $bbcode->SetPlainMode(true);
-        $txt = $bbcode->Parse($txt);
-        $txt = self::prepareContent($txt, $target);
-
-        return $txt;
     }
 
     /**

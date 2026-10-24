@@ -68,22 +68,6 @@ class KunenaActivity
     }
 
     /**
-     * @return  static
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public static function getInstance()
-    {
-        if (self::$instance === false) {
-            self::$instance = new KunenaActivity();
-        }
-
-        return self::$instance;
-    }
-
-    /**
      * Method magical to call the right method in plugin integration
      *
      * @param   string  $method     Name of method to call
@@ -108,5 +92,21 @@ class KunenaActivity
         }
 
         return $ret;
+    }
+
+    /**
+     * @return  static
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getInstance()
+    {
+        if (self::$instance === false) {
+            self::$instance = new KunenaActivity();
+        }
+
+        return self::$instance;
     }
 }

@@ -81,7 +81,7 @@ class Router extends RouterView
     }
 
     /**
-     * @return  \Kunena\Forum\Site\Service\Router|null
+     * @return  Router|null
      *
      * @since   Kunena 6.0
      *

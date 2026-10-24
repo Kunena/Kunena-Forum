@@ -49,26 +49,6 @@ class KunenaIcons
     }
 
     /**
-     * Return the arrow up icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function arrowup(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-arrow-up hasTooltip" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('arrow-up');
-    }
-
-    /**
      * Return the arrow down icon
      *
      * @return  string
@@ -100,6 +80,26 @@ class KunenaIcons
      * @throws  Exception
      * @since   Kunena 5.0
      */
+    public static function arrowup(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-arrow-up hasTooltip" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('arrow-up');
+    }
+
+    /**
+     * Return the arrow up icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
     public static function arrowupanchor(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
@@ -114,590 +114,6 @@ class KunenaIcons
         }
 
         return KunenaSvgIcons::loadsvg('arrow-up');
-    }
-
-    /**
-     * Return the chevron right icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function birthdate(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa-solid fa-cake-candles" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('birthday-cake');
-    }
-
-    /**
-     * Return the chevron right icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function chevronright(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-chevron-right" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('arrow-right');
-    }
-
-    /**
-     * Return the members icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function members(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-users fa-3x" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('people');
-    }
-
-    /**
-     * Return the user icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function user(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fas fa-user-circle" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('person');
-    }
-
-    /**
-     * Return the lock icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function lock(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-lock" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('lock');
-    }
-
-    /**
-     * Return the star icon (secret key)
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function star(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa-solid fa-star" aria-hidden="true"></i>';
-        }
-
-        if ($topicicontype == 'image') {
-            return '<span class="kicon kfavoritestar ksmall" aria-hidden="true"></span>';
-        }
-
-        return KunenaSvgIcons::loadsvg('star-fill');
-    }
-
-    /**
-     * Return the star icon (secret key)
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function starOpen(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-star" aria-hidden="true"></i>';
-        }
-
-        if ($topicicontype == 'image') {
-            return '<span class="kicon kfavoritestar ksmall" aria-hidden="true"></span>';
-        }
-
-        return KunenaSvgIcons::loadsvg('star');
-    }
-
-    /**
-     * Return the shield icon (reviewed)
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function shield(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-shield-alt" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('shield');
-    }
-
-    /**
-     * Return the flag icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function flag(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-flag" aria-hidden="true"></i>';
-        }
-
-        if ($topicicontype == 'image') {
-            return '<span class="kicon ktopicmy ksmall"></span>';
-        }
-
-        return KunenaSvgIcons::loadsvg('flag');
-    }
-
-    /**
-     * Return the poll icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function poll(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-chart-bar" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('kanban');
-    }
-
-    /**
-     * Return the stats icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function stats(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-chart-bar fa-3x" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('bar-chart');
-    }
-
-    /**
-     * Return the search icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function search(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fas fa-search" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('search');
-    }
-
-    /**
-     * Return the collapse icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function collapse(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fas fa-compress" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('arrows-collapse');
-    }
-
-    /**
-     * Return the clock icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function clock(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="far fa-clock" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('clock');
-    }
-
-    /**
-     * Return the thumbs-up icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function thumbsup(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="far fa-thumbs-up" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('heart-fill');
-    }
-
-    /**
-     * Return the thumbs-down icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function thumbsdown(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa-regular fa-thumbs-down" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('heart-fill');
-    }
-
-    /**
-     * Return the secure icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function secure(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-shield-alt" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('shield');
-    }
-
-    /**
-     * Return the cancel icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function cancel(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-times" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('x-circle');
-    }
-
-    /**
-     * Return the ip icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function ip()
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if (!KunenaUserHelper::getMyself()->isModerator()) {
-            return false;
-        }
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-compass" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('compass');
-    }
-
-    /**
-     * Return the email icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function email(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-envelope" aria-hidden="true"></i>';
-        }
-
-        if ($topicicontype == 'image') {
-            return '<span class="kicon-profile kicon-profile-email" aria-hidden="true"></span>';
-        }
-
-        return KunenaSvgIcons::loadsvg('envelope');
-    }
-
-    /**
-     * Return the email icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function emailOpen(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-envelope-open" aria-hidden="true"></i>';
-        }
-
-        if ($topicicontype == 'image') {
-            return '<span class="kicon-profile kicon-profile-email" aria-hidden="true"></span>';
-        }
-
-        return KunenaSvgIcons::loadsvg('envelope-open');
-    }
-
-    /**
-     * Return the bookmark icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function bookmark(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-bookmark" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('bookmark');
-    }
-
-    /**
-     * Return the back icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function back(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-angle-left" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('arrow-left');
-    }
-
-    /**
-     * Return the save icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function save(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-save" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('check-circle');
-    }
-
-    /**
-     * Return the edit icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function edit(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-edit" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('pencil');
-    }
-
-    /**
-     * Return the pencil icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function pencil(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa-solid fa-pencil"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('pencil');
-    }
-
-    /**
-     * Return the female icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.1
-     */
-    public static function female(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa-solid fa-venus"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('female');
-    }
-
-    /**
-     * Return the male icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.1
-     */
-    public static function male(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa-solid fa-mars"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('male');
     }
 
     /**
@@ -725,294 +141,143 @@ class KunenaIcons
     }
 
     /**
-     * Return the minus icon
+     * Return the away icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function minus($text = null): string
+    public static function away(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            if ($text != null) {
-                return '<i class="fa fa-minus" aria-hidden="true" title="' . $text . '"></i>';
-            }
-
-            return '<i class="fa fa-minus" aria-hidden="true"></i>';
-
-        }
-
-        return KunenaSvgIcons::loadsvg('minus');
-    }
-
-    /**
-     * Return the plus icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function plus($text = null): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            if ($text != null) {
-                return '<i class="fa fa-plus" aria-hidden="true" title="' . $text . '"></i>';
-            }
-
-            return '<i class="fa fa-plus" aria-hidden="true"></i>';
-
+            return '<i class="fa fa-plus yellow" aria-hidden="true"></i>';
         }
 
         return KunenaSvgIcons::loadsvg('plus');
     }
 
     /**
-     * Return the rss icon
-     *
-     * @param   null  $text  text
+     * Return the back icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function rss($text = null): string
+    public static function back(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
-        $class         = ' ' . KunenaTemplate::getInstance()->tooltips();
 
         if ($topicicontype == 'fa') {
-            return '<i class="fa fa-rss ' . $class . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
+            return '<i class="fa fa-angle-left" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('rss');
+        return KunenaSvgIcons::loadsvg('arrow-left');
     }
 
     /**
-     * Return the upload icon
+     * Return the chevron right icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function upload(): string
+    public static function birthdate(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fas fa-upload" aria-hidden="true"></i>';
+            return '<i class="fa-solid fa-cake-candles" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('upload');
+        return KunenaSvgIcons::loadsvg('birthday-cake');
     }
 
     /**
-     * Return the picture icon
-     *
-     * @param   bool  $big  big
+     * Return the bookmark icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function picture($big = false): string
+    public static function bookmark(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
-        if ($big) {
-            $big = ' icon-big';
-        }
-
         if ($topicicontype == 'fa') {
-            return '<i class="far fa-image fa-3x' . $big . '" aria-hidden="true"></i>';
+            return '<i class="fa fa-bookmark" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('image');
+        return KunenaSvgIcons::loadsvg('bookmark');
     }
 
     /**
-     * Return the file icon
-     *
-     * @param   bool  $big  big
+     * Return the busy icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function file($big = false): string
+    public static function busy(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
-        if ($big) {
-            $big = ' icon-big';
-        }
-
         if ($topicicontype == 'fa') {
-            return '<i class="fa fa-file fa-2x' . $big . '" aria-hidden="true"></i>';
+            return '<i class="fa fa-minus red" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('document-richtext');
+        return KunenaSvgIcons::loadsvg('dash');
     }
 
     /**
-     * Return the delete icon
+     * Return the calendar icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function delete(): string
+    public static function calendar(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fas fa-trash-alt" aria-hidden="true"></i>';
+            return '<i class="far fa-calendar-alt" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('trash');
+        return KunenaSvgIcons::loadsvg('calendar');
     }
 
     /**
-     * Return the check icon
+     * Return the cancel icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function check(): string
+    public static function cancel(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fas fa-check" aria-hidden="true"></i>';
+            return '<i class="fa fa-times" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('check');
-    }
-
-    /**
-     * Return the quote icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function quote(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fas fa-quote-left" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('document-text');
-    }
-
-    /**
-     * Return the poll add icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function poll_add(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<span id="kbutton-poll-add"><i class="fa fa-plus btn btn-xs btn-small btn-default"
-						data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i></span>';
-        }
-
-        return KunenaSvgIcons::loadsvg('pie-chart-fill');
-    }
-
-    /**
-     * Return the poll rem icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function poll_rem(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<span id="kbutton-poll-rem"><i class="fa fa-minus btn btn-xs btn-small btn-default"
-						data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i></span>';
-        }
-
-        return KunenaSvgIcons::loadsvg('bar-chart');
-    }
-
-    /**
-     * Return the undo icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function undo(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-reply" aria-hidden="true"></i>';
-        }
-
-        if ($topicicontype == 'image') {
-            return '<span class="kicon-reply" aria-hidden="true"></span>';
-        }
-
-        return KunenaSvgIcons::loadsvg('arrow-clockwise');
-    }
-
-    /**
-     * Return the shuffle icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function shuffle(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-random" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('arrow-repeat');
+        return KunenaSvgIcons::loadsvg('x-circle');
     }
 
     /**
@@ -1116,163 +381,63 @@ class KunenaIcons
     }
 
     /**
-     * Return the home icon
+     * Return the check icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function home(): string
+    public static function check(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fa fa-home hasTooltip" aria-hidden="true"></i>';
+            return '<i class="fas fa-check" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('house');
+        return KunenaSvgIcons::loadsvg('check');
     }
 
     /**
-     * Return the calendar icon
+     * Return the chevron right icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function calendar(): string
+    public static function chevronright(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="far fa-calendar-alt" aria-hidden="true"></i>';
+            return '<i class="fa fa-chevron-right" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('calendar');
+        return KunenaSvgIcons::loadsvg('arrow-right');
     }
 
     /**
-     * Return the hamburger icon
+     * Return the clock icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function hamburger(): string
+    public static function clock(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fas fa-bars" aria-hidden="true"></i> <b class="caret"></b>';
+            return '<i class="far fa-clock" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('three-dots-vertical');
-    }
-
-    /**
-     * Return the info icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function info(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-info-circle" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('alert-circle');
-    }
-
-    /**
-     * Return the online icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function online(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-plus green" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('plus');
-    }
-
-    /**
-     * Return the away icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function away(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-plus yellow" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('plus');
-    }
-
-    /**
-     * Return the busy icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function busy(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-minus red" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('dash');
-    }
-
-    /**
-     * Return the invisible icon
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0
-     */
-    public static function invisible(): string
-    {
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
-        if ($topicicontype == 'fa') {
-            return '<i class="fa fa-minus grey" aria-hidden="true"></i>';
-        }
-
-        return KunenaSvgIcons::loadsvg('dash');
+        return KunenaSvgIcons::loadsvg('clock');
     }
 
     /**
@@ -1296,6 +461,46 @@ class KunenaIcons
     }
 
     /**
+     * Return the collapse icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function collapse(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fas fa-compress" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('arrows-collapse');
+    }
+
+    /**
+     * Return the delete icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function delete(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fas fa-trash-alt" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('trash');
+    }
+
+    /**
      * Return the drawer icon
      *
      * @return  string
@@ -1316,43 +521,141 @@ class KunenaIcons
     }
 
     /**
-     * Return the out icon
+     * Return the edit icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function out(): string
+    public static function edit(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fa fa-sign-out-alt" aria-hidden="true"></i>';
+            return '<i class="fa fa-edit" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('power');
+        return KunenaSvgIcons::loadsvg('pencil');
     }
 
     /**
-     * Return the grid icon
+     * Return the email icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function grid(): string
+    public static function email(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fa fa-th" aria-hidden="true"></i>';
+            return '<i class="fa fa-envelope" aria-hidden="true"></i>';
         }
 
-        return KunenaSvgIcons::loadsvg('grid');
+        if ($topicicontype == 'image') {
+            return '<span class="kicon-profile kicon-profile-email" aria-hidden="true"></span>';
+        }
+
+        return KunenaSvgIcons::loadsvg('envelope');
+    }
+
+    /**
+     * Return the email icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function emailOpen(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-envelope-open" aria-hidden="true"></i>';
+        }
+
+        if ($topicicontype == 'image') {
+            return '<span class="kicon-profile kicon-profile-email" aria-hidden="true"></span>';
+        }
+
+        return KunenaSvgIcons::loadsvg('envelope-open');
+    }
+
+    /**
+     * Return the female icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.1
+     */
+    public static function female(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa-solid fa-venus"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('female');
+    }
+
+    /**
+     * Return the file icon
+     *
+     * @param   bool  $big  big
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function file($big = false): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($big) {
+            $big = ' icon-big';
+        }
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-file fa-2x' . $big . '" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('document-richtext');
+    }
+
+    /**
+     * Return the flag icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function flag(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-flag" aria-hidden="true"></i>';
+        }
+
+        if ($topicicontype == 'image') {
+            return '<span class="kicon ktopicmy ksmall"></span>';
+        }
+
+        return KunenaSvgIcons::loadsvg('flag');
     }
 
     /**
@@ -1380,6 +683,130 @@ class KunenaIcons
     }
 
     /**
+     * Return the grid icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function grid(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-th" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('grid');
+    }
+
+    /**
+     * Return the hamburger icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function hamburger(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fas fa-bars" aria-hidden="true"></i> <b class="caret"></b>';
+        }
+
+        return KunenaSvgIcons::loadsvg('three-dots-vertical');
+    }
+
+    /**
+     * Return the home icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function home(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-home hasTooltip" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('house');
+    }
+
+    /**
+     * Return the info icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function info(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-info-circle" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('alert-circle');
+    }
+
+    /**
+     * Return the invisible icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function invisible(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-minus grey" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('dash');
+    }
+
+    /**
+     * Return the ip icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function ip()
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if (!KunenaUserHelper::getMyself()->isModerator()) {
+            return false;
+        }
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-compass" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('compass');
+    }
+
+    /**
      * Return the location icon
      *
      * @return  string
@@ -1401,6 +828,206 @@ class KunenaIcons
         }
 
         return KunenaSvgIcons::loadsvg('geo');
+    }
+
+    /**
+     * Return the lock icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function lock(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-lock" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('lock');
+    }
+
+    /**
+     * Return the male icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.1
+     */
+    public static function male(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa-solid fa-mars"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('male');
+    }
+
+    /**
+     * Return the members icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function members(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-users fa-3x" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('people');
+    }
+
+    /**
+     * Return the minus icon
+     *
+     * @param   string|null  $text  The title of the icon (Font Awesome only).
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function minus($text = null): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            if ($text != null) {
+                return '<i class="fa fa-minus" aria-hidden="true" title="' . $text . '"></i>';
+            }
+
+            return '<i class="fa fa-minus" aria-hidden="true"></i>';
+
+        }
+
+        return KunenaSvgIcons::loadsvg('minus');
+    }
+
+    /**
+     * Return the online icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function online(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-plus green" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('plus');
+    }
+
+    /**
+     * Return the out icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function out(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-sign-out-alt" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('power');
+    }
+
+    /**
+     * Return the pencil icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function pencil(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa-solid fa-pencil"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('pencil');
+    }
+
+    /**
+     * Return the picture icon
+     *
+     * @param   bool  $big  big
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function picture($big = false): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($big) {
+            $big = ' icon-big';
+        }
+
+        if ($topicicontype == 'fa') {
+            return '<i class="far fa-image fa-3x' . $big . '" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('image');
+    }
+
+    /**
+     * Return the plus icon
+     *
+     * @param   string|null  $text  The title of the icon (Font Awesome only).
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function plus($text = null): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            if ($text != null) {
+                return '<i class="fa fa-plus" aria-hidden="true" title="' . $text . '"></i>';
+            }
+
+            return '<i class="fa fa-plus" aria-hidden="true"></i>';
+
+        }
+
+        return KunenaSvgIcons::loadsvg('plus');
     }
 
     /**
@@ -1428,6 +1055,88 @@ class KunenaIcons
     }
 
     /**
+     * Return the poll icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function poll(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-chart-bar" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('kanban');
+    }
+
+    /**
+     * Return the poll add icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function poll_add(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<span id="kbutton-poll-add"><i class="fa fa-plus btn btn-xs btn-small btn-default"
+						data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i></span>';
+        }
+
+        return KunenaSvgIcons::loadsvg('pie-chart-fill');
+    }
+
+    /**
+     * Return the poll rem icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function poll_rem(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<span id="kbutton-poll-rem"><i class="fa fa-minus btn btn-xs btn-small btn-default"
+						data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i></span>';
+        }
+
+        return KunenaSvgIcons::loadsvg('bar-chart');
+    }
+
+    /**
+     * Return the quote icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function quote(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fas fa-quote-left" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('document-text');
+    }
+
+    /**
      * Return the report icon
      *
      * @return  string
@@ -1449,6 +1158,221 @@ class KunenaIcons
         }
 
         return KunenaSvgIcons::loadsvg('alert-octagon');
+    }
+
+    /**
+     * Return the report icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function reportname(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa-solid fa-exclamation" aria-hidden="true"></i>';
+        }
+
+        if ($topicicontype == 'image') {
+            return '';
+        }
+
+        return KunenaSvgIcons::loadsvg('alert-octagon');
+    }
+
+    /**
+     * Return the rss icon
+     *
+     * @param   null  $text  text
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function rss($text = null): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+        $class         = ' ' . KunenaTemplate::getInstance()->tooltips();
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-rss ' . $class . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('rss');
+    }
+
+    /**
+     * Return the save icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function save(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-save" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('check-circle');
+    }
+
+    /**
+     * Return the search icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function search(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fas fa-search" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('search');
+    }
+
+    /**
+     * Return the secure icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function secure(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-shield-alt" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('shield');
+    }
+
+    /**
+     * Return the shield icon (reviewed)
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function shield(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-shield-alt" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('shield');
+    }
+
+    /**
+     * Return the shuffle icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function shuffle(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-random" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('arrow-repeat');
+    }
+
+    /**
+     * Return the star icon (secret key)
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function star(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa-solid fa-star" aria-hidden="true"></i>';
+        }
+
+        if ($topicicontype == 'image') {
+            return '<span class="kicon kfavoritestar ksmall" aria-hidden="true"></span>';
+        }
+
+        return KunenaSvgIcons::loadsvg('star-fill');
+    }
+
+    /**
+     * Return the star icon (secret key)
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function starOpen(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-star" aria-hidden="true"></i>';
+        }
+
+        if ($topicicontype == 'image') {
+            return '<span class="kicon kfavoritestar ksmall" aria-hidden="true"></span>';
+        }
+
+        return KunenaSvgIcons::loadsvg('star');
+    }
+
+    /**
+     * Return the stats icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function stats(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-chart-bar fa-3x" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('bar-chart');
     }
 
     /**
@@ -1476,26 +1400,106 @@ class KunenaIcons
     }
 
     /**
-     * Return the report icon
+     * Return the thumbs-down icon
      *
      * @return  string
      *
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function reportname(): string
+    public static function thumbsdown(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fa-solid fa-exclamation" aria-hidden="true"></i>';
+            return '<i class="fa-regular fa-thumbs-down" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('heart-fill');
+    }
+
+    /**
+     * Return the thumbs-up icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function thumbsup(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="far fa-thumbs-up" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('heart-fill');
+    }
+
+    /**
+     * Return the undo icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function undo(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa fa-reply" aria-hidden="true"></i>';
         }
 
         if ($topicicontype == 'image') {
-            return '';
+            return '<span class="kicon-reply" aria-hidden="true"></span>';
         }
 
-        return KunenaSvgIcons::loadsvg('alert-octagon');
+        return KunenaSvgIcons::loadsvg('arrow-clockwise');
+    }
+
+    /**
+     * Return the upload icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function upload(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fas fa-upload" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('upload');
+    }
+
+    /**
+     * Return the user icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function user(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fas fa-user-circle" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('person');
     }
 }

@@ -35,20 +35,6 @@ class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAware
     use ResultTypeObjectAware;
 
     /**
-     * Setter for the object argument.
-     *
-     * @param   KunenaAvatar  $avatar  The value to set
-     *
-     * @return  KunenaAvatar
-     * @since   7.0.0
-     * @throws  BadMethodCallException
-     */
-    protected function onSetAvatar(KunenaAvatar $avatar): KunenaAvatar
-    {
-        return $avatar;
-    }
-
-    /**
      * Getter for the data argument.
      *
      * @return  KunenaAvatar|array
@@ -64,9 +50,26 @@ class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAware
     }
 
     /**
-     * Setter for the data argument.
+     * Setter for the object argument.
+     *
+     * @param   KunenaAvatar  $avatar  The value to set
+     *
+     * @return  KunenaAvatar
+     * @since   7.0.0
+     * @throws  BadMethodCallException
+     */
+    protected function onSetAvatar(KunenaAvatar $avatar): KunenaAvatar
+    {
+        return $avatar;
+    }
+
+    /**
+     * Setter for the avatar argument.
+     *
+     * @param   KunenaAvatar  $avatar  The avatar.
      *
      * @return  $this
+     *
      * @since   7.0.0
      */
     public function setAvatar(KunenaAvatar $avatar)

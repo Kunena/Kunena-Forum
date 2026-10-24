@@ -153,46 +153,6 @@ class KunenaTree implements Iterator
     }
 
     /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    #[ReturnTypeWillChange]
-    public function rewind()
-    {
-        $this->heap = [0];
-
-        if (!isset($this->_instances[0])) {
-            $this->next();
-        }
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    #[ReturnTypeWillChange]
-    public function next()
-    {
-        $id = array_shift($this->heap);
-
-        if ($id === null || $id === false) {
-            return;
-        }
-
-        // Add children into the beginning of the array
-        $this->heap = array_merge(array_keys($this->_tree[$id]), $this->heap);
-
-        // Skip missing items
-        $id = reset($this->heap);
-
-        if ($id !== false && !isset($this->_instances[$id])) {
-            $this->next();
-        }
-    }
-
-    /**
      * @return  mixed
      *
      * @since   Kunena 6.0
@@ -203,55 +163,6 @@ class KunenaTree implements Iterator
         $id = reset($this->heap);
 
         return $this->_instances[$id];
-    }
-
-    /**
-     * @return  mixed
-     *
-     * @since   Kunena 6.0
-     */
-    #[ReturnTypeWillChange]
-    public function key()
-    {
-        return reset($this->heap);
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function valid(): bool
-    {
-        return !empty($this->heap);
-    }
-
-    /**
-     * @param   mixed  $id  id
-     *
-     * @return  integer|boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function getLevel($id): int|false
-    {
-        return isset($this->_levels [$id]) ? $this->_levels [$id] : false;
-    }
-
-    /**
-     * @param   int  $parent  parent
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    public function getTree($parent = 0): array
-    {
-        if ($parent === false) {
-            return $this->_tree;
-        }
-
-        return isset($this->_tree[$parent]) ? $this->_tree[$parent] : [];
     }
 
     /**
@@ -313,5 +224,94 @@ class KunenaTree implements Iterator
         }
 
         return $list;
+    }
+
+    /**
+     * @param   mixed  $id  id
+     *
+     * @return  integer|boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function getLevel($id): int|false
+    {
+        return isset($this->_levels [$id]) ? $this->_levels [$id] : false;
+    }
+
+    /**
+     * @param   int  $parent  parent
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     */
+    public function getTree($parent = 0): array
+    {
+        if ($parent === false) {
+            return $this->_tree;
+        }
+
+        return isset($this->_tree[$parent]) ? $this->_tree[$parent] : [];
+    }
+
+    /**
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     */
+    #[ReturnTypeWillChange]
+    public function key()
+    {
+        return reset($this->heap);
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    #[ReturnTypeWillChange]
+    public function next()
+    {
+        $id = array_shift($this->heap);
+
+        if ($id === null || $id === false) {
+            return;
+        }
+
+        // Add children into the beginning of the array
+        $this->heap = array_merge(array_keys($this->_tree[$id]), $this->heap);
+
+        // Skip missing items
+        $id = reset($this->heap);
+
+        if ($id !== false && !isset($this->_instances[$id])) {
+            $this->next();
+        }
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    #[ReturnTypeWillChange]
+    public function rewind()
+    {
+        $this->heap = [0];
+
+        if (!isset($this->_instances[0])) {
+            $this->next();
+        }
+    }
+
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function valid(): bool
+    {
+        return !empty($this->heap);
     }
 }

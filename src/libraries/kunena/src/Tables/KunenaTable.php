@@ -37,6 +37,168 @@ abstract class KunenaTable extends Table
     protected $_exists = false;
 
     /**
+     * @param   null  $pk  pk
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function delete($pk = null): bool
+    {
+        // Workaround Joomla 3.2 change.
+        // TODO: remove check when we're only supporting J!3.5+.
+        $tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+
+        if (\is_null($pk)) {
+            $pk = [];
+
+            foreach ($tbl_keys as $key) {
+                $pk[$key] = $this->$key;
+            }
+        } elseif (!\is_array($pk)) {
+            $key = reset($tbl_keys);
+            $pk  = [$key => $pk];
+        }
+
+        foreach ($tbl_keys as $key) {
+            $pk[$key] = \is_null($pk[$key]) ? $this->$key : $pk[$key];
+
+            if ($pk[$key] === null) {
+                throw new UnexpectedValueException('Null primary key not allowed.');
+            }
+
+            $this->$key = $pk[$key];
+        }
+
+        // Implement JObservableInterface: Pre-processing by observers
+        // TODO: remove if when we're only supporting J!3.5+.
+        if (isset($this->_observers)) {
+            $this->_observers->update('onBeforeDelete', [$pk]);
+        }
+
+        // Check for a database error.
+        try {
+            $this->_db->transactionStart();
+
+            // Delete the row by primary key.
+            $query = $this->_db->createQuery()
+                ->delete($this->_db->quoteName($this->_tbl));
+
+            foreach ($pk as $key => $value) {
+                $query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
+            }
+
+            $this->_db->setQuery($query);
+
+            $this->_db->execute();
+
+            $this->_db->transactionCommit();
+        } catch (Exception $e) {
+            // Catch any database errors.
+            $this->_db->transactionRollback();
+
+            throw new KunenaException($e->getMessage());
+        }
+
+        // Implement JObservableInterface: Post-processing by observers
+        // TODO: remove if when we're only supporting J!3.5+.
+        if (isset($this->_observers)) {
+            $this->_observers->update('onAfterDelete', [$pk]);
+        }
+
+        return true;
+    }
+
+    /**
+     * @param   null  $exists  exists
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function exists($exists = null): bool
+    {
+        $return = $this->_exists;
+
+        if ($exists !== null) {
+            $this->_exists = $exists;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Inserts a row into a table based on an object's properties.
+     *
+     * @return  boolean  True on success.
+     *
+     * @throws  RuntimeException
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function insertObject(): bool
+    {
+        $fields = [];
+        $values = [];
+
+        // Workaround Joomla 3.2 change.
+        // TODO: remove check when we're only supporting J!3.5+.
+        $tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+
+        // Iterate over the object variables to build the query fields and values.
+        foreach (get_object_vars($this) as $k => $v) {
+            // Only process non-null scalars.
+            if (\is_array($v) || \is_object($v) || $v === null) {
+                continue;
+            }
+
+            // Ignore any internal fields.
+            if ($k[0] == '_') {
+                continue;
+            }
+
+            // Prepare and sanitize the fields and values for the database query.
+            $fields[] = $this->_db->quoteName($k);
+            $values[] = $this->_db->quote($v);
+        }
+
+        try {
+            $this->_db->transactionStart();
+
+            // Create the base insert statement.
+            $query = $this->_db->createQuery()
+                ->insert($this->_db->quoteName($this->_tbl))
+                ->columns($fields)
+                ->values(implode(',', $values));
+
+            // Set the query and execute the insert.
+            $this->_db->setQuery($query);
+
+            if (!$this->_db->execute()) {
+                return false;
+            }
+
+            // Update the primary key if it exists.
+            $id = $this->_db->insertid();
+
+            $this->_db->transactionCommit();
+        } catch (Exception $e) {
+            // Catch any database errors.
+            $this->_db->transactionRollback();
+
+            throw new KunenaException($e->getMessage());
+        }
+
+        if (\count($tbl_keys) == 1 && $id) {
+            $key        = reset($tbl_keys);
+            $this->$key = $id;
+        }
+
+        return true;
+    }
+
+    /**
      * @param   null  $keys   keys
      * @param   bool  $reset  reset
      *
@@ -183,24 +345,6 @@ abstract class KunenaTable extends Table
     }
 
     /**
-     * @param   null  $exists  exists
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     */
-    public function exists($exists = null): bool
-    {
-        $return = $this->_exists;
-
-        if ($exists !== null) {
-            $this->_exists = $exists;
-        }
-
-        return $return;
-    }
-
-    /**
      * Updates a row in a table based on an object's properties.
      *
      * @param   boolean  $nulls  True to update null fields or false to ignore them.
@@ -275,150 +419,6 @@ abstract class KunenaTable extends Table
             $this->_db->transactionRollback();
 
             throw new KunenaException($e->getMessage());
-        }
-
-        return true;
-    }
-
-    /**
-     * Inserts a row into a table based on an object's properties.
-     *
-     * @return  boolean  True on success.
-     *
-     * @throws  RuntimeException
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    protected function insertObject(): bool
-    {
-        $fields = [];
-        $values = [];
-
-        // Workaround Joomla 3.2 change.
-        // TODO: remove check when we're only supporting J!3.5+.
-        $tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
-
-        // Iterate over the object variables to build the query fields and values.
-        foreach (get_object_vars($this) as $k => $v) {
-            // Only process non-null scalars.
-            if (\is_array($v) || \is_object($v) || $v === null) {
-                continue;
-            }
-
-            // Ignore any internal fields.
-            if ($k[0] == '_') {
-                continue;
-            }
-
-            // Prepare and sanitize the fields and values for the database query.
-            $fields[] = $this->_db->quoteName($k);
-            $values[] = $this->_db->quote($v);
-        }
-
-        try {
-            $this->_db->transactionStart();
-
-            // Create the base insert statement.
-            $query = $this->_db->createQuery()
-                ->insert($this->_db->quoteName($this->_tbl))
-                ->columns($fields)
-                ->values(implode(',', $values));
-
-            // Set the query and execute the insert.
-            $this->_db->setQuery($query);
-
-            if (!$this->_db->execute()) {
-                return false;
-            }
-
-            // Update the primary key if it exists.
-            $id = $this->_db->insertid();
-
-            $this->_db->transactionCommit();
-        } catch (Exception $e) {
-            // Catch any database errors.
-            $this->_db->transactionRollback();
-
-            throw new KunenaException($e->getMessage());
-        }
-
-        if (\count($tbl_keys) == 1 && $id) {
-            $key        = reset($tbl_keys);
-            $this->$key = $id;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param   null  $pk  pk
-     *
-     * @return  boolean
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function delete($pk = null): bool
-    {
-        // Workaround Joomla 3.2 change.
-        // TODO: remove check when we're only supporting J!3.5+.
-        $tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
-
-        if (\is_null($pk)) {
-            $pk = [];
-
-            foreach ($tbl_keys as $key) {
-                $pk[$key] = $this->$key;
-            }
-        } elseif (!\is_array($pk)) {
-            $key = reset($tbl_keys);
-            $pk  = [$key => $pk];
-        }
-
-        foreach ($tbl_keys as $key) {
-            $pk[$key] = \is_null($pk[$key]) ? $this->$key : $pk[$key];
-
-            if ($pk[$key] === null) {
-                throw new UnexpectedValueException('Null primary key not allowed.');
-            }
-
-            $this->$key = $pk[$key];
-        }
-
-        // Implement JObservableInterface: Pre-processing by observers
-        // TODO: remove if when we're only supporting J!3.5+.
-        if (isset($this->_observers)) {
-            $this->_observers->update('onBeforeDelete', [$pk]);
-        }
-
-        // Check for a database error.
-        try {
-            $this->_db->transactionStart();
-
-            // Delete the row by primary key.
-            $query = $this->_db->createQuery()
-                ->delete($this->_db->quoteName($this->_tbl));
-
-            foreach ($pk as $key => $value) {
-                $query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
-            }
-
-            $this->_db->setQuery($query);
-
-            $this->_db->execute();
-
-            $this->_db->transactionCommit();
-        } catch (Exception $e) {
-            // Catch any database errors.
-            $this->_db->transactionRollback();
-
-            throw new KunenaException($e->getMessage());
-        }
-
-        // Implement JObservableInterface: Post-processing by observers
-        // TODO: remove if when we're only supporting J!3.5+.
-        if (isset($this->_observers)) {
-            $this->_observers->update('onAfterDelete', [$pk]);
         }
 
         return true;

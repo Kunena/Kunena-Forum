@@ -31,67 +31,6 @@ use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 class KunenaDate extends Date
 {
     /**
-     * The format of the date picker (bootstrap-datepicker: dd/mm/yyyy) as a format of PHP (d/m/Y).
-     *
-     * @param   string  $format  The format of the date picker.
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    protected static function pickerToPhp(string $format): string
-    {
-        // The longest token first.
-        $php    = '';
-        $tokens = ['yyyy' => 'Y', 'yy' => 'y', 'MM' => 'F', 'M' => 'M', 'mm' => 'm', 'm' => 'n', 'DD' => 'l', 'D' => 'D', 'dd' => 'd', 'd' => 'j'];
-
-        for ($pos = 0, $length = \strlen($format); $pos < $length;) {
-            foreach ($tokens as $token => $replacement) {
-                if (substr($format, $pos, \strlen($token)) === $token) {
-                    $php .= $replacement;
-                    $pos += \strlen($token);
-                    continue 2;
-                }
-            }
-
-            $php .= '\\' . $format[$pos];
-            $pos++;
-        }
-
-        return $php;
-    }
-
-    /**
-     * Writes a date (Y-m-d) for a date field in the format of the date picker, so that the field gives back the same date when the
-     * form is saved without a change (the value of the field is read with fromPicker()).
-     *
-     * @param   string  $date    The date as Y-m-d (the value which means "no date" gives an empty text).
-     * @param   string  $format  The format of the date picker (empty: the option of the forum).
-     *
-     * @return  string
-     *
-     * @since   Kunena 7.2
-     */
-    public static function toPicker(string $date, string $format = ''): string
-    {
-        if ($date === '' || str_starts_with($date, '1000-01-01') || str_starts_with($date, '0000-00-00')) {
-            return '';
-        }
-
-        if ($format === '') {
-            $format = (string) KunenaFactory::getConfig()->datePickerFormat;
-        }
-
-        $value = DateTime::createFromFormat('!Y-m-d', substr($date, 0, 10));
-
-        if (!$value) {
-            return '';
-        }
-
-        return $format === '' ? $value->format('Y-m-d') : $value->format(self::pickerToPhp($format));
-    }
-
-    /**
      * Reads a date which a user typed or chose in a date field of the forum (the search at a date, the birthdate). The field
      * writes the date in the format of the option "Date format for datepicker" (for example dd/mm/yyyy), which the parser of
      * PHP does not know: "23/10/2026" was an error. The format of the option is tried first, then the formats which PHP knows.
@@ -148,31 +87,34 @@ class KunenaDate extends Date
     }
 
     /**
-     * @return  string
+     * The format of the date picker (bootstrap-datepicker: dd/mm/yyyy) as a format of PHP (d/m/Y).
      *
-     * @since   Kunena 6.0
-     */
-    public function toTimezone(): string
-    {
-        $minutes = (int) round($this->getOffsetFromGMT(true) * 60);
-
-        return \sprintf('%s%d:%02d', $minutes < 0 ? '-' : '+', intdiv(abs($minutes), 60), abs($minutes) % 60);
-    }
-
-    /**
-     * @param   string  $mode    mode
-     * @param   string  $title   title
-     * @param   bool    $offset  offset
-     * @param   string  $class   class
+     * @param   string  $format  The format of the date picker.
      *
      * @return  string
      *
-     * @since   Kunena 6.0
-     * @throws  Exception
+     * @since   Kunena 7.2
      */
-    public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class = ''): string
+    protected static function pickerToPhp(string $format): string
     {
-        return '<span class="kdate ' . $class . '" data-bs-toggle="tooltip" title="' . $this->toKunena($title, $offset) . '">' . $this->toKunena($mode, $offset) . '</span>';
+        // The longest token first.
+        $php    = '';
+        $tokens = ['yyyy' => 'Y', 'yy' => 'y', 'MM' => 'F', 'M' => 'M', 'mm' => 'm', 'm' => 'n', 'DD' => 'l', 'D' => 'D', 'dd' => 'd', 'd' => 'j'];
+
+        for ($pos = 0, $length = \strlen($format); $pos < $length;) {
+            foreach ($tokens as $token => $replacement) {
+                if (substr($format, $pos, \strlen($token)) === $token) {
+                    $php .= $replacement;
+                    $pos += \strlen($token);
+                    continue 2;
+                }
+            }
+
+            $php .= '\\' . $format[$pos];
+            $pos++;
+        }
+
+        return $php;
     }
 
     /**
@@ -269,6 +211,52 @@ class KunenaDate extends Date
     }
 
     /**
+     * Writes a date (Y-m-d) for a date field in the format of the date picker, so that the field gives back the same date when the
+     * form is saved without a change (the value of the field is read with fromPicker()).
+     *
+     * @param   string  $date    The date as Y-m-d (the value which means "no date" gives an empty text).
+     * @param   string  $format  The format of the date picker (empty: the option of the forum).
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    public static function toPicker(string $date, string $format = ''): string
+    {
+        if ($date === '' || str_starts_with($date, '1000-01-01') || str_starts_with($date, '0000-00-00')) {
+            return '';
+        }
+
+        if ($format === '') {
+            $format = (string) KunenaFactory::getConfig()->datePickerFormat;
+        }
+
+        $value = DateTime::createFromFormat('!Y-m-d', substr($date, 0, 10));
+
+        if (!$value) {
+            return '';
+        }
+
+        return $format === '' ? $value->format('Y-m-d') : $value->format(self::pickerToPhp($format));
+    }
+
+    /**
+     * @param   string  $mode    mode
+     * @param   string  $title   title
+     * @param   bool    $offset  offset
+     * @param   string  $class   class
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class = ''): string
+    {
+        return '<span class="kdate ' . $class . '" data-bs-toggle="tooltip" title="' . $this->toKunena($title, $offset) . '">' . $this->toKunena($mode, $offset) . '</span>';
+    }
+
+    /**
      * @return  string
      *
      * @since   Kunena 6.0
@@ -324,5 +312,17 @@ class KunenaDate extends Date
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return $output;
+    }
+
+    /**
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function toTimezone(): string
+    {
+        $minutes = (int) round($this->getOffsetFromGMT(true) * 60);
+
+        return \sprintf('%s%d:%02d', $minutes < 0 ? '-' : '+', intdiv(abs($minutes), 60), abs($minutes) % 60);
     }
 }

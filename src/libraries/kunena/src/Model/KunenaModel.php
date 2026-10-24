@@ -83,7 +83,7 @@ class KunenaModel extends BaseDatabaseModel
 
     /**
      * @param   array                                             $config   config
-     * @param   \Joomla\CMS\MVC\Factory\MVCFactoryInterface|null  $factory  factory
+     * @param   MVCFactoryInterface|null  $factory  factory
      *
      * @throws Exception
      * @since   Kunena 6.0
@@ -100,46 +100,6 @@ class KunenaModel extends BaseDatabaseModel
     }
 
     /**
-     * @param   array  $params    params
-     * @param   bool   $embedded  embedded
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function initialize($params = [], $embedded = true): void
-    {
-        if ($embedded) {
-            $this->embedded = true;
-            $this->setState('embedded', true);
-            $this->filter = InputFilter::getInstance();
-        }
-
-        if ($params instanceof Registry) {
-            $this->params = $params;
-        } else {
-            $this->params = new Registry($params);
-        }
-    }
-
-    /**
-     * @return  integer
-     *
-     * @since   Kunena 6.0
-     */
-    public function getItemid(): int
-    {
-        $Itemid = 0;
-
-        if (!$this->embedded) {
-            $active = $this->app->getMenu()->getActive();
-            $Itemid = $active ? (int) $active->id : 0;
-        }
-
-        return $Itemid;
-    }
-
-    /**
      * Escapes a value for output in a view script.
      *
      * @param   mixed  $var  The output to escape.
@@ -151,65 +111,6 @@ class KunenaModel extends BaseDatabaseModel
     public function escape($var)
     {
         return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
-    }
-
-    /**
-     * @return  Registry
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getParameters()
-    {
-        if (!$this->params) {
-            $this->params = ComponentHelper::getParams('com_kunena');
-        }
-
-        return $this->params;
-    }
-
-    /**
-     * @param   string  $key      key
-     * @param   string  $request  request
-     * @param   null    $default  default
-     * @param   string  $type     type
-     *
-     * @return  mixed|object
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none')
-    {
-        // If we are not in embedded mode, get variable from application
-        if (!$this->embedded) {
-            return $this->app->getUserStateFromRequest($key, $request, $default, $type);
-        }
-
-        // Embedded models/views do not have user state -- all variables come from parameters
-        return $this->getVar($request, $default, 'request', $type);
-    }
-
-    /**
-     * @param   string  $name     name
-     * @param   null    $default  default
-     * @param   string  $hash     hash
-     * @param   string  $type     type
-     *
-     * @return  mixed
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getVar(string $name, $default = null, $hash = 'request', $type = 'none')
-    {
-        // If we are not in embedded mode, get variable from request
-        if (!$this->embedded) {
-            if ($hash == 'request') {
-                return $this->input->get($name, $default, $type);
-            }
-
-            return $this->input->{$hash}->get($name, $default, $type);
-        }
-
-        return $this->filter->clean($this->params->get($name, $default), $type);
     }
 
     /**
@@ -275,6 +176,37 @@ class KunenaModel extends BaseDatabaseModel
     }
 
     /**
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     */
+    public function getItemid(): int
+    {
+        $Itemid = 0;
+
+        if (!$this->embedded) {
+            $active = $this->app->getMenu()->getActive();
+            $Itemid = $active ? (int) $active->id : 0;
+        }
+
+        return $Itemid;
+    }
+
+    /**
+     * @return  Registry
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getParameters()
+    {
+        if (!$this->params) {
+            $this->params = ComponentHelper::getParams('com_kunena');
+        }
+
+        return $this->params;
+    }
+
+    /**
      * @param   string  $name     name
      * @param   string  $default  default
      * @param   string  $hash     hash
@@ -292,6 +224,51 @@ class KunenaModel extends BaseDatabaseModel
     }
 
     /**
+     * @param   string  $key      key
+     * @param   string  $request  request
+     * @param   null    $default  default
+     * @param   string  $type     type
+     *
+     * @return  mixed|object
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none')
+    {
+        // If we are not in embedded mode, get variable from application
+        if (!$this->embedded) {
+            return $this->app->getUserStateFromRequest($key, $request, $default, $type);
+        }
+
+        // Embedded models/views do not have user state -- all variables come from parameters
+        return $this->getVar($request, $default, 'request', $type);
+    }
+
+    /**
+     * @param   string  $name     name
+     * @param   null    $default  default
+     * @param   string  $hash     hash
+     * @param   string  $type     type
+     *
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getVar(string $name, $default = null, $hash = 'request', $type = 'none')
+    {
+        // If we are not in embedded mode, get variable from request
+        if (!$this->embedded) {
+            if ($hash == 'request') {
+                return $this->input->get($name, $default, $type);
+            }
+
+            return $this->input->{$hash}->get($name, $default, $type);
+        }
+
+        return $this->filter->clean($this->params->get($name, $default), $type);
+    }
+
+    /**
      * @param   string  $name     name
      * @param   string  $default  default
      * @param   string  $hash     hash
@@ -306,5 +283,28 @@ class KunenaModel extends BaseDatabaseModel
 
         // A list in the request (id[]=1) is no value: the default is used.
         return \is_array($value) ? $default : $value;
+    }
+
+    /**
+     * @param   array  $params    params
+     * @param   bool   $embedded  embedded
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function initialize($params = [], $embedded = true): void
+    {
+        if ($embedded) {
+            $this->embedded = true;
+            $this->setState('embedded', true);
+            $this->filter = InputFilter::getInstance();
+        }
+
+        if ($params instanceof Registry) {
+            $this->params = $params;
+        } else {
+            $this->params = new Registry($params);
+        }
     }
 }

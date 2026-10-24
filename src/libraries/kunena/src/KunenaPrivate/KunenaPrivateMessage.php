@@ -34,7 +34,7 @@ use Kunena\Forum\Libraries\Table\KunenaTableMap;
  * @property string   $body
  * @property Registry $params
  *
- * @property int      $id
+ * @property int $id
  * @since   Kunena 6.0
  */
 class KunenaPrivateMessage extends KunenaDatabaseObject
@@ -136,26 +136,18 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
     }
 
     /**
-     * @param   string  $field  field
-     *
-     * @return integer|string
+     * @return KunenaTableMap|null
      *
      * @since   Kunena 6.0
-     *
-     * @throws Exception
      */
-    public function displayField(string $field)
+    public function attachments(): ?KunenaTableMap
     {
-        switch ($field) {
-            case 'id':
-                return \intval($this->id);
-            case 'subject':
-                return KunenaParser::parseText($this->subject);
-            case 'body':
-                return KunenaParser::parseBBCode($this->body, $this);
+        if (\is_null($this->_attachments)) {
+            $this->_attachments = new KunenaTableMap('#__kunena_private_attachment_map', 'private_id', 'attachment_id');
+            $this->_attachments->load($this->id);
         }
 
-        return '';
+        return $this->_attachments;
     }
 
     /**
@@ -201,22 +193,53 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
     }
 
     /**
-     * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
+     * @param   string  $field  field
+     *
+     * @return integer|string
      *
      * @since   Kunena 6.0
+     *
+     * @throws Exception
      */
-    public function attachments(): ?KunenaTableMap
+    public function displayField(string $field)
     {
-        if (\is_null($this->_attachments)) {
-            $this->_attachments = new KunenaTableMap('#__kunena_private_attachment_map', 'private_id', 'attachment_id');
-            $this->_attachments->load($this->id);
+        switch ($field) {
+            case 'id':
+                return \intval($this->id);
+            case 'subject':
+                return KunenaParser::parseText($this->subject);
+            case 'body':
+                return KunenaParser::parseBBCode($this->body, $this);
         }
 
-        return $this->_attachments;
+        return '';
     }
 
     /**
-     * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
+     * Get the table relevant properties. Override for your specific Object
+     *
+     * @return array    Assocative array with the propertie values of table
+     *
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties(): array
+    {
+        $properties = [
+            'id'          => $this->id,
+            'parent_id'   => $this->parent_id,
+            'author_id'   => $this->author_id,
+            'created_at'  => $this->created_at,
+            'attachments' => $this->attachments,
+            'subject'     => $this->subject,
+            'body'        => $this->body,
+            'params'      => $this->params,
+        ];
+
+        return $properties;
+    }
+
+    /**
+     * @return KunenaTableMap|null
      *
      * @since   Kunena 6.0
      */
@@ -228,21 +251,6 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
         }
 
         return $this->_posts;
-    }
-
-    /**
-     * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
-     *
-     * @since   Kunena 6.0
-     */
-    public function users(): ?KunenaTableMap
-    {
-        if (\is_null($this->_users)) {
-            $this->_users = new KunenaTableMap('#__kunena_private_user_map', 'private_id', 'user_id');
-            $this->_users->load($this->id);
-        }
-
-        return $this->_users;
     }
 
     /**
@@ -277,25 +285,17 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
     }
 
     /**
-     * Get the table relevant properties. Override for your specific Object
+     * @return KunenaTableMap|null
      *
-     * @return array    Assocative array with the propertie values of table
-     *
-     * @since   Kunena 6.4
+     * @since   Kunena 6.0
      */
-    protected function getTableProperties(): array
+    public function users(): ?KunenaTableMap
     {
-        $properties = [
-            'id'          => $this->id,
-            'parent_id'   => $this->parent_id,
-            'author_id'   => $this->author_id,
-            'created_at'  => $this->created_at,
-            'attachments' => $this->attachments,
-            'subject'     => $this->subject,
-            'body'        => $this->body,
-            'params'      => $this->params,
-        ];
+        if (\is_null($this->_users)) {
+            $this->_users = new KunenaTableMap('#__kunena_private_user_map', 'private_id', 'user_id');
+            $this->_users->load($this->id);
+        }
 
-        return $properties;
+        return $this->_users;
     }
 }

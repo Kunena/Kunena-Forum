@@ -83,6 +83,58 @@ class KunenaBBCodeEditor
     }
 
     /**
+     * Initialize editor by calling HMVC version
+     *
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function initialize(): void
+    {
+    }
+
+    /**
+     * Initialize HMVC editor
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function initializeHMVC(): void
+    {
+        $xml_file = simplexml_load_file(\dirname(__FILE__) . '/aurelia_editor.xml');
+
+        $this->editor_elements = self::parseXML($xml_file, 'parseHMVCXML');
+
+        // Hook to manipulate the Editor XML like adding buttons
+
+        PluginHelper::importPlugin('kunena');
+        Factory::getApplication()->triggerEvent('onKunenaBBCodeEditorInit', [$this]);
+
+        $js = "bbcodeSettings = {
+		previewParserPath:	'',
+		markupSet: [";
+
+        $itemjs = [];
+
+        foreach ($this->editor_elements as $item) {
+            $itemjs[] = $item->generateHMVCJs();
+        }
+
+        $itemjs = implode(',', $itemjs);
+
+        $js .= $itemjs;
+
+        $js .= ']};';
+
+        // Write the js elements into editor.markitup.js file
+        file_put_contents(KPATH_SITE . '/template/' . $this->template->name . '/assets/js/markitup.editor.js', $js);
+    }
+
+    /**
      * Inserts a button or another element at the specified location. See insertElements for details.
      *
      * @param   mixed  $element  element
@@ -156,58 +208,6 @@ class KunenaBBCodeEditor
         $this->editor_elements = array_combine($editor_keys, $editor_values);
 
         return true;
-    }
-
-    /**
-     * Initialize editor by calling HMVC version
-     *
-     *
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function initialize(): void
-    {
-    }
-
-    /**
-     * Initialize HMVC editor
-     *
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function initializeHMVC(): void
-    {
-        $xml_file = simplexml_load_file(\dirname(__FILE__) . '/aurelia_editor.xml');
-
-        $this->editor_elements = self::parseXML($xml_file, 'parseHMVCXML');
-
-        // Hook to manipulate the Editor XML like adding buttons
-
-        PluginHelper::importPlugin('kunena');
-        Factory::getApplication()->triggerEvent('onKunenaBBCodeEditorInit', [$this]);
-
-        $js = "bbcodeSettings = {
-		previewParserPath:	'',
-		markupSet: [";
-
-        $itemjs = [];
-
-        foreach ($this->editor_elements as $item) {
-            $itemjs[] = $item->generateHMVCJs();
-        }
-
-        $itemjs = implode(',', $itemjs);
-
-        $js .= $itemjs;
-
-        $js .= ']};';
-
-        // Write the js elements into editor.markitup.js file
-        file_put_contents(KPATH_SITE . '/template/' . $this->template->name . '/assets/js/markitup.editor.js', $js);
     }
 
     /**
@@ -357,87 +357,79 @@ class KunenaBBCodeEditorButton extends KunenaBBCodeEditorElement
     }
 
     /**
-     * @param   SimpleXMLElement  $xml  xml
+     * Add a new display action. This can be used to show a button specific action area.
      *
-     * @return  KunenaBBCodeEditorButton
+     * @param   mixed   $selection  selection
+     * @param   string  $class      class
+     * @param   null    $tag        tag
      *
-     * @throws  Exception
+     * @return  void
+     *
      * @since   Kunena 6.0
      */
-    public static function parseHMVCXML(SimpleXMLElement $xml): KunenaBBCodeEditorButton
+    public function addDisplayAction($selection, string $class, $tag = null): void
     {
-        $obj = new KunenaBBCodeEditorButton((string) $xml['name'], (string) $xml['class'], (string) $xml['tag'], (string) $xml['title'], (string) $xml['alt']);
+        $item['type']      = 'display';
+        $item['selection'] = $selection;
+        $item['class']     = $class;
+        $item['tag']       = $tag;
 
-        foreach ($xml as $xml_item) {
-            $item         = [];
-            $item['type'] = $xml_item->getName();
-            $item['tag']  = (string) $xml_item['tag'];
-
-            if ($xml_item['disabled'] == 'disabled') {
-                continue;
-            }
-
-            if ($xml_item['config']) {
-                $cfgVariable = (string) $xml_item['config'];
-                $cfgValue    = \intval($cfgVariable[0] != '!');
-
-                if (!$cfgValue) {
-                    $cfgVariable = substr($cfgVariable, 1);
-                }
-
-                if (KunenaFactory::getConfig()->$cfgVariable != $cfgValue) {
-                    continue;
-                }
-            }
-
-            switch ($item['type']) {
-                case 'wrap-selection':
-                    $item['empty_before'] = (string) $xml_item['empty_before'];
-                    $item['empty_after']  = (string) $xml_item['empty_after'];
-                    $item['repeat']       = (string) $xml_item['repeat'];
-                    $item['start']        = (string) $xml_item['start'];
-                    $item['end']          = (string) $xml_item['end'];
-                    $item['before']       = (string) $xml_item['before'];
-                    $item['after']        = (string) $xml_item['after'];
-                    $item['class']        = (string) $xml_item['class'];
-                    $item['key']          = (string) $xml_item['key'];
-                    $item['name']         = (string) $xml_item['name'];
-
-                    break;
-                case 'dropdown':
-                    $item['start']     = (string) $xml_item['start'];
-                    $item['end']       = (string) $xml_item['end'];
-                    $item['selection'] = (string) $xml_item['selection'];
-                    $item['class']     = (string) $xml_item['class'];
-                    $item['key']       = (string) $xml_item['key'];
-                    $item['name']      = (string) $xml_item['name'];
-                    break;
-                case 'modal':
-                    $item['key']   = (string) $xml_item['key'];
-                    $item['start'] = (string) $xml_item['start'];
-                    $item['end']   = (string) $xml_item['end'];
-                    $item['class'] = (string) $xml_item['class'];
-                    $item['name']  = (string) $xml_item['name'];
-                    break;
-                case 'link':
-                    $item['url'] = (string) $xml_item['url'];
-                    break;
-            }
-
-            $obj->actions[] = $item;
-        }
-
-        return $obj;
+        $this->actions[] = $item;
     }
 
     /**
-     * @return  string
+     * Open the specified URL when the button is pressed.
+     *
+     * @param   string  $url  url
+     *
+     * @return  void
      *
      * @since   Kunena 6.0
      */
-    public function generateHMVCJs(): string
+    public function addUrlAction(string $url): void
     {
-        return $this->editorActionHMVCJs();
+        $item['type']    = 'url';
+        $item['url']     = $url;
+        $this->actions[] = $item;
+    }
+
+    /**
+     * Specify what code should be inserted when the user presses the button.
+     *
+     * @param   null  $repeat        repeat
+     * @param   null  $empty_before  empty
+     * @param   null  $empty_after   empty
+     * @param   null  $start         start
+     * @param   null  $end           end
+     * @param   null  $before        before
+     * @param   null  $after         after
+     * @param   null  $tag           tag
+     *
+     *
+     * @return  void
+     * @since   Kunena 6.0
+     */
+    public function addWrapSelectionAction($repeat = null, $empty_before = null, $empty_after = null, $start = null, $end = null, $before = null, $after = null, $tag = null)
+    {
+        $item['type']   = 'wrap-selection';
+        $item['repeat'] = $repeat;
+
+        if ($repeat) {
+            $item['empty_before'] = $empty_before;
+            $item['empty_after']  = $empty_after;
+            $item['start']        = $start;
+            $item['end']          = $end;
+            $item['before']       = $before;
+            $item['after']        = $after;
+        }
+
+        $item['start'] = $start;
+        $item['end']   = $end;
+        $item['name']  = $this->class;
+        $item['class'] = $this->class;
+        $item['tag']   = $tag;
+
+        $this->actions[] = $item;
     }
 
     /**
@@ -702,79 +694,87 @@ class KunenaBBCodeEditorButton extends KunenaBBCodeEditorElement
     }
 
     /**
-     * Add a new display action. This can be used to show a button specific action area.
-     *
-     * @param   mixed   $selection  selection
-     * @param   string  $class      class
-     * @param   null    $tag        tag
-     *
-     * @return  void
+     * @return  string
      *
      * @since   Kunena 6.0
      */
-    public function addDisplayAction($selection, string $class, $tag = null): void
+    public function generateHMVCJs(): string
     {
-        $item['type']      = 'display';
-        $item['selection'] = $selection;
-        $item['class']     = $class;
-        $item['tag']       = $tag;
-
-        $this->actions[] = $item;
+        return $this->editorActionHMVCJs();
     }
 
     /**
-     * Specify what code should be inserted when the user presses the button.
+     * @param   SimpleXMLElement  $xml  xml
      *
-     * @param   null  $repeat        repeat
-     * @param   null  $empty_before  empty
-     * @param   null  $empty_after   empty
-     * @param   null  $start         start
-     * @param   null  $end           end
-     * @param   null  $before        before
-     * @param   null  $after         after
-     * @param   null  $tag           tag
+     * @return  KunenaBBCodeEditorButton
      *
-     *
-     * @return  void
+     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function addWrapSelectionAction($repeat = null, $empty_before = null, $empty_after = null, $start = null, $end = null, $before = null, $after = null, $tag = null)
+    public static function parseHMVCXML(SimpleXMLElement $xml): KunenaBBCodeEditorButton
     {
-        $item['type']   = 'wrap-selection';
-        $item['repeat'] = $repeat;
+        $obj = new KunenaBBCodeEditorButton((string) $xml['name'], (string) $xml['class'], (string) $xml['tag'], (string) $xml['title'], (string) $xml['alt']);
 
-        if ($repeat) {
-            $item['empty_before'] = $empty_before;
-            $item['empty_after']  = $empty_after;
-            $item['start']        = $start;
-            $item['end']          = $end;
-            $item['before']       = $before;
-            $item['after']        = $after;
+        foreach ($xml as $xml_item) {
+            $item         = [];
+            $item['type'] = $xml_item->getName();
+            $item['tag']  = (string) $xml_item['tag'];
+
+            if ($xml_item['disabled'] == 'disabled') {
+                continue;
+            }
+
+            if ($xml_item['config']) {
+                $cfgVariable = (string) $xml_item['config'];
+                $cfgValue    = \intval($cfgVariable[0] != '!');
+
+                if (!$cfgValue) {
+                    $cfgVariable = substr($cfgVariable, 1);
+                }
+
+                if (KunenaFactory::getConfig()->$cfgVariable != $cfgValue) {
+                    continue;
+                }
+            }
+
+            switch ($item['type']) {
+                case 'wrap-selection':
+                    $item['empty_before'] = (string) $xml_item['empty_before'];
+                    $item['empty_after']  = (string) $xml_item['empty_after'];
+                    $item['repeat']       = (string) $xml_item['repeat'];
+                    $item['start']        = (string) $xml_item['start'];
+                    $item['end']          = (string) $xml_item['end'];
+                    $item['before']       = (string) $xml_item['before'];
+                    $item['after']        = (string) $xml_item['after'];
+                    $item['class']        = (string) $xml_item['class'];
+                    $item['key']          = (string) $xml_item['key'];
+                    $item['name']         = (string) $xml_item['name'];
+
+                    break;
+                case 'dropdown':
+                    $item['start']     = (string) $xml_item['start'];
+                    $item['end']       = (string) $xml_item['end'];
+                    $item['selection'] = (string) $xml_item['selection'];
+                    $item['class']     = (string) $xml_item['class'];
+                    $item['key']       = (string) $xml_item['key'];
+                    $item['name']      = (string) $xml_item['name'];
+                    break;
+                case 'modal':
+                    $item['key']   = (string) $xml_item['key'];
+                    $item['start'] = (string) $xml_item['start'];
+                    $item['end']   = (string) $xml_item['end'];
+                    $item['class'] = (string) $xml_item['class'];
+                    $item['name']  = (string) $xml_item['name'];
+                    break;
+                case 'link':
+                    $item['url'] = (string) $xml_item['url'];
+                    break;
+            }
+
+            $obj->actions[] = $item;
         }
 
-        $item['start'] = $start;
-        $item['end']   = $end;
-        $item['name']  = $this->class;
-        $item['class'] = $this->class;
-        $item['tag']   = $tag;
-
-        $this->actions[] = $item;
-    }
-
-    /**
-     * Open the specified URL when the button is pressed.
-     *
-     * @param   string  $url  url
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function addUrlAction(string $url): void
-    {
-        $item['type']    = 'url';
-        $item['url']     = $url;
-        $this->actions[] = $item;
+        return $obj;
     }
 }
 
@@ -785,6 +785,18 @@ class KunenaBBCodeEditorButton extends KunenaBBCodeEditorElement
  */
 class KunenaBBCodeEditorSeparator extends KunenaBBCodeEditorElement
 {
+    /**
+     * Generate JS part for element
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function generateHMVCJs(): string
+    {
+        return "{separator:'|' }";
+    }
+
     /**
      * Parse XML for separator editor part
      *
@@ -797,17 +809,5 @@ class KunenaBBCodeEditorSeparator extends KunenaBBCodeEditorElement
     public static function parseHMVCXML(SimpleXMLElement $xml): KunenaBBCodeEditorSeparator
     {
         return new self((string) $xml['name']);
-    }
-
-    /**
-     * Generate JS part for element
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function generateHMVCJs(): string
-    {
-        return "{separator:'|' }";
     }
 }

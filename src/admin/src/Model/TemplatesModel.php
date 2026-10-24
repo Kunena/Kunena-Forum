@@ -20,7 +20,9 @@ use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\MVC\Model\FormModel;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Http\Http;
 use Joomla\Http\Transport\Stream as StreamTransport;
@@ -84,19 +86,19 @@ class TemplatesModel extends AdminModel
     }
 
     /**
-     * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+     * @see     FormModel::getForm()
      *
      * @param   array  $data      data
      *
      * @param   bool   $loadData  loadData
      *
-     * @return \Joomla\CMS\Form\Form|false
+     * @return Form|false
      *
      * @since   Kunena 6.0
      *
      * @throws Exception
      */
-    public function getForm($data = [], $loadData = true): \Joomla\CMS\Form\Form|false
+    public function getForm($data = [], $loadData = true): Form|false
     {
         // Load the configuration definition file.
         $template = $this->getState('template');
@@ -409,7 +411,7 @@ class TemplatesModel extends AdminModel
     }
 
     /**
-     * @see     \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+     * @see     FormModel::loadFormData()
      * @return array
      *
      * @since   Kunena 6.0

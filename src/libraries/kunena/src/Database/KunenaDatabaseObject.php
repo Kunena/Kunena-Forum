@@ -133,164 +133,6 @@ abstract class KunenaDatabaseObject
         return true;
     }
 
-    public function setProperties($properties)
-    {
-        if (\is_array($properties) || \is_object($properties)) {
-            foreach ((array) $properties as $k => $v) {
-                // Use the set function which might be overridden.
-                $this->$k = $v;
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Method to load object from the database.
-     *
-     * @param   mixed  $id  Id to be loaded.
-     *
-     * @return  boolean  True on success.
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function load($id = null): bool
-    {
-        if ($id !== null) {
-            $this->id = \intval($id);
-        }
-
-        // Create the table object
-        $table = $this->getTable();
-
-        if ($table) {
-            // Load the object based on id
-            if ($this->id) {
-                $this->_exists = $table->load($this->id);
-            }
-
-            // Always set id
-            $table->id = $this->id;
-
-            // Assuming all is well at this point lets bind the data
-            $this->setProperties($table->getProperties());
-
-            return $this->_exists;
-        }
-
-        return false;
-    }
-
-    /**
-     * Method to get the table object.
-     *
-     * @return  boolean|Table  The table object.
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getTable()
-    {
-        $className = 'Kunena\Forum\Libraries\Tables\\' . $this->_table;
-        $db        = Factory::getContainer()->get(DatabaseInterface::class);
-
-        if (class_exists($className)) {
-            $table = new $className($db);
-        } else {
-            $className = 'Kunena\Forum\Libraries\Tables\Table' . $this->_table;
-            $table     = new $className($db);
-        }
-
-        return $table;
-    }
-
-    /**
-     * Returns the global object.
-     *
-     * @param   int      $identifier  Object identifier to load.
-     * @param   boolean  $reload      Force object reload from the database.
-     *
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public static function getInstance($identifier = null, $reload = false)
-    {
-        throw new KunenaException(__CLASS__ . '::' . __FUNCTION__ . '(): Not defined.');
-    }
-
-    /**
-     * Method to save the object to the database.
-     *
-     * Before saving the object, this method checks if object can be safely saved.
-     * It will also trigger onKunenaBeforeSave and onKunenaAfterSave events.
-     *
-     * @return  boolean  True on success, Exception when fail.
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function save()
-    {
-        $this->_saving = true;
-
-        // Check the object.
-        if (!$this->check()) {
-            return $this->_saving = false;
-        }
-
-        // Initialize table object.
-        $table = $this->getTable();
-        $table->bind($this->getTableProperties());
-        $table->exists($this->_exists);
-        $isNew = !$this->_exists;
-
-        // Check the table object.
-        try {
-            if (!$table->check()) {
-                return $this->_saving = false;
-            }
-        } catch (KunenaException $e) {
-            throw new KunenaException($e->getMessage());
-        }
-
-        // Include the Kunena plugins for the on save events.
-        PluginHelper::importPlugin('kunena');
-
-        try {
-            // Trigger the onKunenaBeforeSave event.
-            $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-            $dispatcher->dispatch('onKunenaBeforeSave', new KunenaBeforeSaveEvent('onKunenaBeforeSave', ['com_kunena.' . $this->_name, &$table, $isNew]));
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-
-        // Store the data, the store() method from Joomla\CMS\Table\Table return only boolean and not exception.
-        try {
-            $table->store();
-        } catch (Exception $e) {
-            throw new KunenaException($e->getMessage());
-        }
-
-        // If item was created, load the object.
-        if ($isNew) {
-            $this->load($table->id);
-        }
-
-        $this->saveInternal();
-
-        // Trigger the onKunenaAfterSave event.
-        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-        $dispatcher->dispatch('onKunenaAfterSave', new KunenaAfterSaveEvent('onKunenaAfterSave', ['com_kunena.' . $this->_name, &$table, $isNew]));
-
-        $this->_saving = false;
-
-        return true;
-    }
-
     /**
      * Method to perform sanity checks on the instance properties to ensure
      * they are safe to store in the database.
@@ -303,20 +145,6 @@ abstract class KunenaDatabaseObject
      * @since   Kunena 6.0
      */
     public function check(): bool
-    {
-        return true;
-    }
-
-    // Internal functions
-
-    /**
-     * Internal save method.
-     *
-     * @return  boolean  True on success.
-     *
-     * @since   Kunena 6.0
-     */
-    protected function saveInternal()
     {
         return true;
     }
@@ -390,6 +218,44 @@ abstract class KunenaDatabaseObject
     }
 
     /**
+     * Returns the global object.
+     *
+     * @param   int      $identifier  Object identifier to load.
+     * @param   boolean  $reload      Force object reload from the database.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getInstance($identifier = null, $reload = false)
+    {
+        throw new KunenaException(__CLASS__ . '::' . __FUNCTION__ . '(): Not defined.');
+    }
+
+    /**
+     * Method to get the table object.
+     *
+     * @return  boolean|Table  The table object.
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getTable()
+    {
+        $className = 'Kunena\Forum\Libraries\Tables\\' . $this->_table;
+        $db        = Factory::getContainer()->get(DatabaseInterface::class);
+
+        if (class_exists($className)) {
+            $table = new $className($db);
+        } else {
+            $className = 'Kunena\Forum\Libraries\Tables\Table' . $this->_table;
+            $table     = new $className($db);
+        }
+
+        return $table;
+    }
+
+    /**
      * Get the table relevant properties. Override for your specific Object
      *
      * @return array    Assocative array with the propertie values of table
@@ -403,5 +269,148 @@ abstract class KunenaDatabaseObject
         ];
 
         return $properties;
+    }
+
+    /**
+     * Method to load object from the database.
+     *
+     * @param   mixed  $id  Id to be loaded.
+     *
+     * @return  boolean  True on success.
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function load($id = null): bool
+    {
+        if ($id !== null) {
+            $this->id = \intval($id);
+        }
+
+        // Create the table object
+        $table = $this->getTable();
+
+        if ($table) {
+            // Load the object based on id
+            if ($this->id) {
+                $this->_exists = $table->load($this->id);
+            }
+
+            // Always set id
+            $table->id = $this->id;
+
+            // Assuming all is well at this point lets bind the data
+            $this->setProperties($table->getProperties());
+
+            return $this->_exists;
+        }
+
+        return false;
+    }
+
+    /**
+     * Method to save the object to the database.
+     *
+     * Before saving the object, this method checks if object can be safely saved.
+     * It will also trigger onKunenaBeforeSave and onKunenaAfterSave events.
+     *
+     * @return  boolean  True on success, Exception when fail.
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function save()
+    {
+        $this->_saving = true;
+
+        // Check the object.
+        if (!$this->check()) {
+            return $this->_saving = false;
+        }
+
+        // Initialize table object.
+        $table = $this->getTable();
+        $table->bind($this->getTableProperties());
+        $table->exists($this->_exists);
+        $isNew = !$this->_exists;
+
+        // Check the table object.
+        try {
+            if (!$table->check()) {
+                return $this->_saving = false;
+            }
+        } catch (KunenaException $e) {
+            throw new KunenaException($e->getMessage());
+        }
+
+        // Include the Kunena plugins for the on save events.
+        PluginHelper::importPlugin('kunena');
+
+        try {
+            // Trigger the onKunenaBeforeSave event.
+            $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+            $dispatcher->dispatch('onKunenaBeforeSave', new KunenaBeforeSaveEvent('onKunenaBeforeSave', ['com_kunena.' . $this->_name, &$table, $isNew]));
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        // Store the data, the store() method from Joomla\CMS\Table\Table return only boolean and not exception.
+        try {
+            $table->store();
+        } catch (Exception $e) {
+            throw new KunenaException($e->getMessage());
+        }
+
+        // If item was created, load the object.
+        if ($isNew) {
+            $this->load($table->id);
+        }
+
+        $this->saveInternal();
+
+        // Trigger the onKunenaAfterSave event.
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        $dispatcher->dispatch('onKunenaAfterSave', new KunenaAfterSaveEvent('onKunenaAfterSave', ['com_kunena.' . $this->_name, &$table, $isNew]));
+
+        $this->_saving = false;
+
+        return true;
+    }
+
+    // Internal functions
+
+    /**
+     * Internal save method.
+     *
+     * @return  boolean  True on success.
+     *
+     * @since   Kunena 6.0
+     */
+    protected function saveInternal()
+    {
+        return true;
+    }
+
+    /**
+     * Set the properties of the object from an array or an object.
+     *
+     * @param   array|object  $properties  The properties, name => value.
+     *
+     * @return  boolean  False when the properties are neither an array nor an object.
+     *
+     * @since   Kunena 6.0
+     */
+    public function setProperties($properties)
+    {
+        if (\is_array($properties) || \is_object($properties)) {
+            foreach ((array) $properties as $k => $v) {
+                // Use the set function which might be overridden.
+                $this->$k = $v;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -63,11 +63,12 @@ class KunenaLoginJoomla extends KunenaLoginAbstract
     }
 
     /**
+     * @param   string|null  $return  The URL to go to after the logout (not used).
+     *
      * @return  boolean|string
      *
-     * @since   Kunena 6.0
-     *
      * @throws  Exception
+     * @since   Kunena 6.0
      */
     public function logoutUser($return = null)
     {

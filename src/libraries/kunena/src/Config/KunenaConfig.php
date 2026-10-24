@@ -31,255 +31,255 @@ use SimpleXMLElement;
  *
  * Propertylist generated via KunenaConfig::getIdeProperties()
  *
- * @property string $XConsumerKey                          The X consumer key
- * @property string $XConsumerSecret                       The X consumer secret
- * @property string $accessComponent                       Direct Component Access
- * @property string $activeMenuItem                        Active menu class name
- * @property string $allowAvatarGallery                    Use Avatars Gallery
- * @property string $allowAvatarUpload                     Allow Avatar Upload
- * @property string $allowChangeSubject                    Let users edit the subject
- * @property string $allowFavorites                        Allow Favorites
- * @property string $allowSubscriptions                    Allow Subscriptions
- * @property string $allowUserEditPoll                     Set if you want allow the user to edit the poll when someone has voted
- * @property string $articleDisplay                        Choose how to display article by default
- * @property string $askEmail                              Require E-mail
- * @property string $attachEnd                             Number of characters from end for shorten filename
- * @property string $attachStart                           Number of characters from start for shorten filename
- * @property string $attachmentLimit                       Limit Attachments
- * @property string $attachmentProtection                  Protect Attachments
- * @property string $attachmentUtf8                        Enable utf8 characters on attachments
- * @property string $autoEmbedEbay                         Auto Embed eBay Items
- * @property string $autoEmbedInstagram                    Auto Embed Instagram Items
- * @property string $autoEmbedSoundcloud                   Auto Embed Soundcloud items
- * @property int    $autoEmbedSpotify                   Auto Embed Spotify items
- * @property int    $autoEmbedDeezer                    Auto Embed Deezer items
- * @property int    $displayNameField                   Field with the nickname (the name which others see)
- * @property int    $linkPreview                        Show a card (title, description, picture) for the links in messages
- * @property int    $linkPreviewMax                     Most cards in one message
- * @property string $linkPreviewBlock                   Sites (domains) which get no card
- * @property string $autoEmbedYoutube                      Auto Embed YouTube Videos
- * @property string $autoLink                              Auto-Link URLs
- * @property string $avatarCrop                            Avatar Cropping
- * @property string $avatarEdit                            Edit avatar by clicking on avatar
- * @property string $avatarOnCategory                      Show Avatar on Category Index and Recent Topics
- * @property string $avatarQuality                         Avatar Quality (%)
- * @property string $avatarSize                            Max. Avatar File Size (KB)
- * @property string $avatarType                            Default avatar type
- * @property string $avatarTypes                           Allowed avatar types
- * @property string $bbcodeImgSecure                       Display Images With Non-standard File Extensions
- * @property string $blueskyappHandleOfApp                 BlueSky App ID
- * @property string $blueskyappPasswordOfApp               The BlueSky consumer secret
- * @property string $boardOffline                          Forum Offline
- * @property string $boardTitle                            Forum Title
- * @property string $boxGhostMessage                       Check Shadow Topic Box
- * @property string $cache                                 Caching
- * @property string $cacheTime                             Cache Time
- * @property string $captcha                               Display Captcha for :
- * @property string $captchaPostLimit                      CAPTCHA Challenge for Users
- * @property string $categorySubscriptions                 Category Subscriptions
- * @property string $checkMimeTypes                        Check MIME Types
- * @property string $datePickerFormat                      Date format for datepicker
- * @property string $debug                                 Enable Debug Mode
- * @property string $defaultAvatar                         Default avatar
- * @property string $defaultAvatarSmall                    Default small avatar
- * @property string $defaultPage                           The Default Page
- * @property string $defaultSort                           Message Ordering
- * @property string $disableRe                             Disable Re: on subject
- * @property string $displayFilenameAttachment             Display attachment filename
- * @property string $ebayAffiliateId                       eBay Affiliate ID
- * @property string $ebayApiKey                            eBay AppID key
- * @property string $ebayCertId                            eBay Cert ID (Client Secret)
- * @property string $ebayLanguage                          eBay Widget Language Code
- * @property string $editMarkup                            Show Edited Mark Up
- * @property string $email                                 Forum E-mail Address
- * @property string $emailHeader                           Email Header Image
- * @property string $emailHeaderSizeX                      Header Width
- * @property string $emailHeaderSizeY                      Header Height
- * @property int    $emailBatchSize                        Max mails sent per scheduled task run
- * @property string $emailSenderName                       Sender name for mail
- * @property string $emailVisibleAddress                   Visible E-mail Recipient
- * @property string $enableForumJump                       Enable Category Jump
- * @property string $enableRss                             Enable RSS Feeds
- * @property string $fallbackEnglish                       Use English On Missing Strings
- * @property string $fileSize                              Maximum File Size (KB)
- * @property string $fileTypes                             Allowed File Types
- * @property string $fileUpload                            Allow File Uploads
- * @property string $floodProtection                       Flood Protection
- * @property string $googleMapApiKey                       Google maps API key to get better stats usage of google API
- * @property string $mapProvider                           The maps of the [map] bbcode: auto, google or osm (OpenStreetMap)
- * @property string $geocoderUrl                           The address of the search service (Nominatim) which turns an address into coordinates
- * @property string $hideIp                                Hide IP Addresses From Moderators
- * @property string $highlightCode                         Enable Code Highlighting
- * @property string $historyLimit                          History Limit
- * @property string $holdGuestPosts                        Moderate Guests
- * @property string $holdNewUsersPosts                     Moderate New Users
- * @property string $homeId                                Home ID
- * @property string $imageHeight                           Maximum Image Height (px)
- * @property string $imageMimeTypes                        Legal MIME Types
- * @property string $imageQuality                          Image Quality for JPG Resizing (%)
- * @property string $imageSize                             Maximum Image File Size (KB)
- * @property string $imageTypes                            Allowed Image Types
- * @property string $imageUpload                           Allow Image Uploads
- * @property string $imageWidth                            Maximum Image Width (px)
- * @property string $indexId                               Index ID
- * @property string $ipTracking                            IP Address Tracking
- * @property array  $latestCategory                        Category List in Recent Topics
- * @property string $latestCategoryIn                      Category Filter in Recent Topics
- * @property string $lightbox                              Enable Lightbox for Images
- * @property string $listCatShowModerators                 Show Moderators in Category Index
- * @property string $logModeration                         Define if you want to log action or moderation
- * @property string $mailAdministrators                    E-mail Administrators
- * @property string $mailBodyUserBanned                    Set the body of the mail when the user is banned
- * @property string $mailBodyUserUnBanned                  Set the body of the mail when the user is unbanned
- * @property string $mailFull                              Include Post Contents
- * @property string $mailModerators                        E-mail Moderators
- * @property string $mainMenuId                            Mainmenu
- * @property string $maxLinks                              Max Links in message
- * @property string $maxSig                                Max. Signature Length
- * @property string $messagesPerPage                       Messages Per Page
- * @property string $messagesPerPageSearch                 Search Results
- * @property string $minimalUserPostsAddUrlImage           Set the number minimum of user posts to able to add url and image
- * @property string $miscId                                MISC ID
- * @property string $modSeeDeleted                         Show Deleted Messages
- * @property string $moderatorPermDelete                   Allow moderators to permdelete
- * @property string $moderatorsId                          Moderators ID
- * @property int    $nameUserChoice                     Users choose the name which others see
- * @property string $newUsersPreventPostUrlImages          Prevent that new users are able to add url and image in his messages or profile
- * @property string $offlineMessage                        Forum Offline Message
- * @property string $orderingSystem                        Reply Numbering Inside Topic
- * @property string $personal                              Personal
- * @property string $pickupCategory                        Force users to pickup a category
- * @property string $plainEmail                            Plain Text Emails
- * @property string $pollAllowVoteOne                      Single Vote Only
- * @property string $pollEnabled                           Enable Polls
- * @property string $pollNbOptions                         Maximum Number Poll Options
- * @property string $pollNbVotesByUser                     Maximum Number of Votes Per User
- * @property string $pollResultsUserslist                  Show Voters
- * @property string $pollTimeBtVotes                       Time Between Consecutive Votes
- * @property string $popPollsCount                         Number of Popular Polls
- * @property string $popSubjectCount                       Number of Popular Subjects
- * @property string $popThanksCount                        Number of Popular Thank Yous
- * @property string $popUserCount                          Number of Popular Users
- * @property string $postDateFormat                        Message Time Format
- * @property string $postDateFormatHover                   Hover Message Time Format
- * @property string $privateMessage                        Enable private message
- * @property string $profileId                             Profile ID
- * @property string $profiler                              Enable profiler
- * @property string $pubProfile                            Allow Guests to see User Profiles
- * @property string $pubWrite                              Allow Guests to Post/Write
- * @property string $quickReply                            Show Quick Reply
- * @property string $rankImages                            Show Rank
- * @property string $ratingEnabled                         Allow rating
- * @property string $readOnly                              Read Only Mode
- * @property string $regOnly                               Registered Users Only
- * @property string $reportMsg                             Message Reporting
- * @property string $rssAllowHtml                          Render HTML &amp; BBCode in RSS feeds
- * @property string $rssAuthorFormat                       Author Format
- * @property string $rssAuthorInTitle                      Render Author in Title
- * @property string $rssCache                              Caching Interval
- * @property array  $rssExcludedCategories                 Exclude Categories
- * @property string $rssFeedBurnerUrl                      The URL of the basic RSS feed into FeedBurner.
- * @property array  $rssIncludedCategories                 Include Categories
- * @property string $rssLimit                              RSS Limit
- * @property string $rssOldTitles                          Use Oldstyle Titles
- * @property string $rssSpecification                      RSS Specification
- * @property string $rssTimeLimit                          RSS History (timelimit)
- * @property string $rssType                               RSS Feed type
- * @property string $rssWordCount                          Limit Number of Characters Per Item
- * @property string $rules                                 Permissions
- * @property string $searchId                              Search ID
- * @property string $searchTime                            Search Time
- * @property string $sef                                   Search Engine Friendly URLs
- * @property string $sefRedirect                           SEF Redirect
- * @property int    $categoryAliasId                    Start the automatic alias of a category with its id (id-name)
- * @property string $sendEmails                            Send E-mails to Users
- * @property string $sendMailUserBanned                    Send a mail to the user when he is banned and unbanned
- * @property string $sessionTimeOut                        Session Lifetime
- * @property string $showAnnouncement                      Show Announcement
- * @property int    $bannerAnnouncement                 Id of the announcement in the banner (0 is the newest), chosen in the list of the announcements
- * @property string $showBannedReason                      Show Banned Reason
- * @property string $showChildCatIcon                      Show Sub-Category Image
- * @property string $showEmail                             Show E-mail
- * @property string $showFileForGuest                      Show Attachments for Guests
- * @property string $showGenStats                          Show General Statistics
- * @property string $showHistory                           Show History
- * @property string $showImgFilesManageProfile             Display profile tab to manage attachments
- * @property string $showImgForGuest                       Show Images for Guests
- * @property string $showKarma                             Show Karma Indicator
- * @property string $showListTime                          Recent Topics Time Period
- * @property string $showNew                               Show New posts
- * @property string $showPopPollStats                      Show Popular Poll Statistics
- * @property string $showPopSubjectStats                   Show Popular Subject Statistics
- * @property string $showPopThankYouStats                  Show Popular Thank You Statistics
- * @property string $showPopUserStats                      Show Popular User Statistics
- * @property string $showRanking                           Ranking
- * @property string $showSessionStartTime                  Online Users Time Limit
- * @property string $showSessionType                       Online Users Contains
- * @property string $showStats                             Show Statistics
- * @property string $showThankYou                          Enable Thank You Feature
- * @property string $showUserStats                         Show User Statistics
- * @property string $showWhoIsOnline                       Show Who is Online
- * @property string $signature                             Signatures
- * @property string $smartLinking                          Smart Auto Linking
- * @property string $statsLinkAllowed                      Allow Guests to see Stats link
- * @property string $stopForumSpamKey                      API key
- * @property string $stopForumSpamNewUserCheck             Check New User
- * @property string $subscriptionsChecked                  Check Subscription Box
- * @property string $superAdminUserlist                    Hide Super Users in user list
- * @property string $teaser                                Hide Replies For Guests
- * @property string $template                              Template
- * @property string $thankYouMax                           Visible Thank You Limit
- * @property string $threadsPerPage                        Topics Per Page
- * @property string $thumbHeight                           Thumbnail Height (px)
- * @property string $thumbWidth                            Thumbnail Width (px)
- * @property string $timeToCreatePage                      Display Page Creation Time
- * @property string $topicIcons                            Selectable Topic Icons
- * @property string $topicLayout                           Default topic layout
- * @property string $topicListId                           Topiclist ID
- * @property string $topicSubscriptions                    Topic Subscriptions
- * @property string $enableMarkdown                       Enable Markdown in messages
- * @property string $enableDrafts                       Enable saving messages as draft
- * @property string $enableIgnore                       Enable the ignore list of users
- * @property string $enableFollow                       Enable following users
- * @property int    $quickBan                           Ban button on the messages for moderators (a box with the reason)
- * @property int    $quickBanLevel                      Default ban level of the quick ban: 0 forum, 1 site
- * @property int    $quickBanDays                       Default duration of the quick ban in days (0 permanent)
- * @property int    $quickBanDeletePosts                Delete the posts of the user by default with the quick ban
- * @property int    $reportMail                         Send an e-mail to the moderators when a user reports a post
- * @property int    $popupNotifications                 Show a popup when the user is mentioned, or gets a reply or a new topic he follows
- * @property int    $popupNotificationsInterval         Seconds between two questions of the browser for new popups
- * @property int    $useMailTemplates                   Make the e-mails of the forum from the mail templates of Joomla (Users, Mail Templates)
- * @property int    $mentionEmail                       Send an e-mail to the users who are mentioned in a post
- * @property int    $emailForumHeaders                  Add the headers X-Forum-* and the threading headers to the e-mails
- * @property int    $enableTags                         Tag topics with the tags of the Joomla component Tags
- * @property int    $redirectDeletedTopics              Make a redirect with the status 410 Gone for a deleted topic
- * @property int    $inactiveLockDays                   Days without a new message after which a topic gets closed for replies (0 is never)
- * @property string $enableHtml                           Enable safe HTML in messages
- * @property string $trimLongUrls                          Trim Long URLs
- * @property string $trimLongUrlsBack                      Back Portion of Trimmed URLs
- * @property string $trimLongUrlsFront                     Front Portion of Trimmed URLs
- * @property string $urlSubjectTopic                       Prevent posting topic or reply with URL in title
- * @property string $useSystemEmails                       Treat as System Email
- * @property string $userDeleteMessage                     User Can Delete Own Post
- * @property string $userEdit                              User Edits
- * @property string $userEditTime                          User Edit Time
- * @property string $userEditTimeGrace                     User Edit Grace Time
- * @property string $userListUserType                      Show User Types
- * @property string $userReport                            User can report himself
- * @property string $userStatus                            Show User Status
- * @property string $userlistAllowed                       Allow Guests to see Userlist
- * @property string $userlistAvatar                        Display Avatar
- * @property string $userlistCountUsers                    User Count Contains
- * @property string $userlistEmail                         Show E-mail
- * @property string $userlistJoinDate                      Show Join Date
- * @property string $userlistKarma                         Show Karma
- * @property string $userlistLastVisitDate                 Show Last Visit Date
- * @property string $userlistOnline                        Online Status
- * @property string $userlistPosts                         Show Number of Posts
- * @property string $userlistRows                          Users Per Page
- * @property string $userlistUserHits                      Show Profile Hits
- * @property string $username                              Display User Name
- * @property string $utmSource                             UTM Source
+ * @property string $XConsumerKey                 The X consumer key
+ * @property string $XConsumerSecret              The X consumer secret
+ * @property string $accessComponent              Direct Component Access
+ * @property string $activeMenuItem               Active menu class name
+ * @property string $allowAvatarGallery           Use Avatars Gallery
+ * @property string $allowAvatarUpload            Allow Avatar Upload
+ * @property string $allowChangeSubject           Let users edit the subject
+ * @property string $allowFavorites               Allow Favorites
+ * @property string $allowSubscriptions           Allow Subscriptions
+ * @property string $allowUserEditPoll            Set if you want allow the user to edit the poll when someone has voted
+ * @property string $articleDisplay               Choose how to display article by default
+ * @property string $askEmail                     Require E-mail
+ * @property string $attachEnd                    Number of characters from end for shorten filename
+ * @property string $attachStart                  Number of characters from start for shorten filename
+ * @property string $attachmentLimit              Limit Attachments
+ * @property string $attachmentProtection         Protect Attachments
+ * @property string $attachmentUtf8               Enable utf8 characters on attachments
+ * @property string $autoEmbedEbay                Auto Embed eBay Items
+ * @property string $autoEmbedInstagram           Auto Embed Instagram Items
+ * @property string $autoEmbedSoundcloud          Auto Embed Soundcloud items
+ * @property int    $autoEmbedSpotify             Auto Embed Spotify items
+ * @property int    $autoEmbedDeezer              Auto Embed Deezer items
+ * @property int    $displayNameField             Field with the nickname (the name which others see)
+ * @property int    $linkPreview                  Show a card (title, description, picture) for the links in messages
+ * @property int    $linkPreviewMax               Most cards in one message
+ * @property string $linkPreviewBlock             Sites (domains) which get no card
+ * @property string $autoEmbedYoutube             Auto Embed YouTube Videos
+ * @property string $autoLink                     Auto-Link URLs
+ * @property string $avatarCrop                   Avatar Cropping
+ * @property string $avatarEdit                   Edit avatar by clicking on avatar
+ * @property string $avatarOnCategory             Show Avatar on Category Index and Recent Topics
+ * @property string $avatarQuality                Avatar Quality (%)
+ * @property string $avatarSize                   Max. Avatar File Size (KB)
+ * @property string $avatarType                   Default avatar type
+ * @property string $avatarTypes                  Allowed avatar types
+ * @property string $bbcodeImgSecure              Display Images With Non-standard File Extensions
+ * @property string $blueskyappHandleOfApp        BlueSky App ID
+ * @property string $blueskyappPasswordOfApp      The BlueSky consumer secret
+ * @property string $boardOffline                 Forum Offline
+ * @property string $boardTitle                   Forum Title
+ * @property string $boxGhostMessage              Check Shadow Topic Box
+ * @property string $cache                        Caching
+ * @property string $cacheTime                    Cache Time
+ * @property string $captcha                      Display Captcha for :
+ * @property string $captchaPostLimit             CAPTCHA Challenge for Users
+ * @property string $categorySubscriptions        Category Subscriptions
+ * @property string $checkMimeTypes               Check MIME Types
+ * @property string $datePickerFormat             Date format for datepicker
+ * @property string $debug                        Enable Debug Mode
+ * @property string $defaultAvatar                Default avatar
+ * @property string $defaultAvatarSmall           Default small avatar
+ * @property string $defaultPage                  The Default Page
+ * @property string $defaultSort                  Message Ordering
+ * @property string $disableRe                    Disable Re: on subject
+ * @property string $displayFilenameAttachment    Display attachment filename
+ * @property string $ebayAffiliateId              eBay Affiliate ID
+ * @property string $ebayApiKey                   eBay AppID key
+ * @property string $ebayCertId                   eBay Cert ID (Client Secret)
+ * @property string $ebayLanguage                 eBay Widget Language Code
+ * @property string $editMarkup                   Show Edited Mark Up
+ * @property string $email                        Forum E-mail Address
+ * @property string $emailHeader                  Email Header Image
+ * @property string $emailHeaderSizeX             Header Width
+ * @property string $emailHeaderSizeY             Header Height
+ * @property int    $emailBatchSize               Max mails sent per scheduled task run
+ * @property string $emailSenderName              Sender name for mail
+ * @property string $emailVisibleAddress          Visible E-mail Recipient
+ * @property string $enableForumJump              Enable Category Jump
+ * @property string $enableRss                    Enable RSS Feeds
+ * @property string $fallbackEnglish              Use English On Missing Strings
+ * @property string $fileSize                     Maximum File Size (KB)
+ * @property string $fileTypes                    Allowed File Types
+ * @property string $fileUpload                   Allow File Uploads
+ * @property string $floodProtection              Flood Protection
+ * @property string $googleMapApiKey              Google maps API key to get better stats usage of google API
+ * @property string $mapProvider                  The maps of the [map] bbcode: auto, google or osm (OpenStreetMap)
+ * @property string $geocoderUrl                  The address of the search service (Nominatim) which turns an address into coordinates
+ * @property string $hideIp                       Hide IP Addresses From Moderators
+ * @property string $highlightCode                Enable Code Highlighting
+ * @property string $historyLimit                 History Limit
+ * @property string $holdGuestPosts               Moderate Guests
+ * @property string $holdNewUsersPosts            Moderate New Users
+ * @property string $homeId                       Home ID
+ * @property string $imageHeight                  Maximum Image Height (px)
+ * @property string $imageMimeTypes               Legal MIME Types
+ * @property string $imageQuality                 Image Quality for JPG Resizing (%)
+ * @property string $imageSize                    Maximum Image File Size (KB)
+ * @property string $imageTypes                   Allowed Image Types
+ * @property string $imageUpload                  Allow Image Uploads
+ * @property string $imageWidth                   Maximum Image Width (px)
+ * @property string $indexId                      Index ID
+ * @property string $ipTracking                   IP Address Tracking
+ * @property array  $latestCategory               Category List in Recent Topics
+ * @property string $latestCategoryIn             Category Filter in Recent Topics
+ * @property string $lightbox                     Enable Lightbox for Images
+ * @property string $listCatShowModerators        Show Moderators in Category Index
+ * @property string $logModeration                Define if you want to log action or moderation
+ * @property string $mailAdministrators           E-mail Administrators
+ * @property string $mailBodyUserBanned           Set the body of the mail when the user is banned
+ * @property string $mailBodyUserUnBanned         Set the body of the mail when the user is unbanned
+ * @property string $mailFull                     Include Post Contents
+ * @property string $mailModerators               E-mail Moderators
+ * @property string $mainMenuId                   Mainmenu
+ * @property string $maxLinks                     Max Links in message
+ * @property string $maxSig                       Max. Signature Length
+ * @property string $messagesPerPage              Messages Per Page
+ * @property string $messagesPerPageSearch        Search Results
+ * @property string $minimalUserPostsAddUrlImage  Set the number minimum of user posts to able to add url and image
+ * @property string $miscId                       MISC ID
+ * @property string $modSeeDeleted                Show Deleted Messages
+ * @property string $moderatorPermDelete          Allow moderators to permdelete
+ * @property string $moderatorsId                 Moderators ID
+ * @property int    $nameUserChoice               Users choose the name which others see
+ * @property string $newUsersPreventPostUrlImages Prevent that new users are able to add url and image in his messages or profile
+ * @property string $offlineMessage               Forum Offline Message
+ * @property string $orderingSystem               Reply Numbering Inside Topic
+ * @property string $personal                     Personal
+ * @property string $pickupCategory               Force users to pickup a category
+ * @property string $plainEmail                   Plain Text Emails
+ * @property string $pollAllowVoteOne             Single Vote Only
+ * @property string $pollEnabled                  Enable Polls
+ * @property string $pollNbOptions                Maximum Number Poll Options
+ * @property string $pollNbVotesByUser            Maximum Number of Votes Per User
+ * @property string $pollResultsUserslist         Show Voters
+ * @property string $pollTimeBtVotes              Time Between Consecutive Votes
+ * @property string $popPollsCount                Number of Popular Polls
+ * @property string $popSubjectCount              Number of Popular Subjects
+ * @property string $popThanksCount               Number of Popular Thank Yous
+ * @property string $popUserCount                 Number of Popular Users
+ * @property string $postDateFormat               Message Time Format
+ * @property string $postDateFormatHover          Hover Message Time Format
+ * @property string $privateMessage               Enable private message
+ * @property string $profileId                    Profile ID
+ * @property string $profiler                     Enable profiler
+ * @property string $pubProfile                   Allow Guests to see User Profiles
+ * @property string $pubWrite                     Allow Guests to Post/Write
+ * @property string $quickReply                   Show Quick Reply
+ * @property string $rankImages                   Show Rank
+ * @property string $ratingEnabled                Allow rating
+ * @property string $readOnly                     Read Only Mode
+ * @property string $regOnly                      Registered Users Only
+ * @property string $reportMsg                    Message Reporting
+ * @property string $rssAllowHtml                 Render HTML &amp; BBCode in RSS feeds
+ * @property string $rssAuthorFormat              Author Format
+ * @property string $rssAuthorInTitle             Render Author in Title
+ * @property string $rssCache                     Caching Interval
+ * @property array  $rssExcludedCategories        Exclude Categories
+ * @property string $rssFeedBurnerUrl             The URL of the basic RSS feed into FeedBurner.
+ * @property array  $rssIncludedCategories        Include Categories
+ * @property string $rssLimit                     RSS Limit
+ * @property string $rssOldTitles                 Use Oldstyle Titles
+ * @property string $rssSpecification             RSS Specification
+ * @property string $rssTimeLimit                 RSS History (timelimit)
+ * @property string $rssType                      RSS Feed type
+ * @property string $rssWordCount                 Limit Number of Characters Per Item
+ * @property string $rules                        Permissions
+ * @property string $searchId                     Search ID
+ * @property string $searchTime                   Search Time
+ * @property string $sef                          Search Engine Friendly URLs
+ * @property string $sefRedirect                  SEF Redirect
+ * @property int    $categoryAliasId              Start the automatic alias of a category with its id (id-name)
+ * @property string $sendEmails                   Send E-mails to Users
+ * @property string $sendMailUserBanned           Send a mail to the user when he is banned and unbanned
+ * @property string $sessionTimeOut               Session Lifetime
+ * @property string $showAnnouncement             Show Announcement
+ * @property int    $bannerAnnouncement           Id of the announcement in the banner (0 is the newest), chosen in the list of the announcements
+ * @property string $showBannedReason             Show Banned Reason
+ * @property string $showChildCatIcon             Show Sub-Category Image
+ * @property string $showEmail                    Show E-mail
+ * @property string $showFileForGuest             Show Attachments for Guests
+ * @property string $showGenStats                 Show General Statistics
+ * @property string $showHistory                  Show History
+ * @property string $showImgFilesManageProfile    Display profile tab to manage attachments
+ * @property string $showImgForGuest              Show Images for Guests
+ * @property string $showKarma                    Show Karma Indicator
+ * @property string $showListTime                 Recent Topics Time Period
+ * @property string $showNew                      Show New posts
+ * @property string $showPopPollStats             Show Popular Poll Statistics
+ * @property string $showPopSubjectStats          Show Popular Subject Statistics
+ * @property string $showPopThankYouStats         Show Popular Thank You Statistics
+ * @property string $showPopUserStats             Show Popular User Statistics
+ * @property string $showRanking                  Ranking
+ * @property string $showSessionStartTime         Online Users Time Limit
+ * @property string $showSessionType              Online Users Contains
+ * @property string $showStats                    Show Statistics
+ * @property string $showThankYou                 Enable Thank You Feature
+ * @property string $showUserStats                Show User Statistics
+ * @property string $showWhoIsOnline              Show Who is Online
+ * @property string $signature                    Signatures
+ * @property string $smartLinking                 Smart Auto Linking
+ * @property string $statsLinkAllowed             Allow Guests to see Stats link
+ * @property string $stopForumSpamKey             API key
+ * @property string $stopForumSpamNewUserCheck    Check New User
+ * @property string $subscriptionsChecked         Check Subscription Box
+ * @property string $superAdminUserlist           Hide Super Users in user list
+ * @property string $teaser                       Hide Replies For Guests
+ * @property string $template                     Template
+ * @property string $thankYouMax                  Visible Thank You Limit
+ * @property string $threadsPerPage               Topics Per Page
+ * @property string $thumbHeight                  Thumbnail Height (px)
+ * @property string $thumbWidth                   Thumbnail Width (px)
+ * @property string $timeToCreatePage             Display Page Creation Time
+ * @property string $topicIcons                   Selectable Topic Icons
+ * @property string $topicLayout                  Default topic layout
+ * @property string $topicListId                  Topiclist ID
+ * @property string $topicSubscriptions           Topic Subscriptions
+ * @property string $enableMarkdown               Enable Markdown in messages
+ * @property string $enableDrafts                 Enable saving messages as draft
+ * @property string $enableIgnore                 Enable the ignore list of users
+ * @property string $enableFollow                 Enable following users
+ * @property int    $quickBan                     Ban button on the messages for moderators (a box with the reason)
+ * @property int    $quickBanLevel                Default ban level of the quick ban: 0 forum, 1 site
+ * @property int    $quickBanDays                 Default duration of the quick ban in days (0 permanent)
+ * @property int    $quickBanDeletePosts          Delete the posts of the user by default with the quick ban
+ * @property int    $reportMail                   Send an e-mail to the moderators when a user reports a post
+ * @property int    $popupNotifications           Show a popup when the user is mentioned, or gets a reply or a new topic he follows
+ * @property int    $popupNotificationsInterval   Seconds between two questions of the browser for new popups
+ * @property int    $useMailTemplates             Make the e-mails of the forum from the mail templates of Joomla (Users, Mail Templates)
+ * @property int    $mentionEmail                 Send an e-mail to the users who are mentioned in a post
+ * @property int    $emailForumHeaders            Add the headers X-Forum-* and the threading headers to the e-mails
+ * @property int    $enableTags                   Tag topics with the tags of the Joomla component Tags
+ * @property int    $redirectDeletedTopics        Make a redirect with the status 410 Gone for a deleted topic
+ * @property int    $inactiveLockDays             Days without a new message after which a topic gets closed for replies (0 is never)
+ * @property string $enableHtml                   Enable safe HTML in messages
+ * @property string $trimLongUrls                 Trim Long URLs
+ * @property string $trimLongUrlsBack             Back Portion of Trimmed URLs
+ * @property string $trimLongUrlsFront            Front Portion of Trimmed URLs
+ * @property string $urlSubjectTopic              Prevent posting topic or reply with URL in title
+ * @property string $useSystemEmails              Treat as System Email
+ * @property string $userDeleteMessage            User Can Delete Own Post
+ * @property string $userEdit                     User Edits
+ * @property string $userEditTime                 User Edit Time
+ * @property string $userEditTimeGrace            User Edit Grace Time
+ * @property string $userListUserType             Show User Types
+ * @property string $userReport                   User can report himself
+ * @property string $userStatus                   Show User Status
+ * @property string $userlistAllowed              Allow Guests to see Userlist
+ * @property string $userlistAvatar               Display Avatar
+ * @property string $userlistCountUsers           User Count Contains
+ * @property string $userlistEmail                Show E-mail
+ * @property string $userlistJoinDate             Show Join Date
+ * @property string $userlistKarma                Show Karma
+ * @property string $userlistLastVisitDate        Show Last Visit Date
+ * @property string $userlistOnline               Online Status
+ * @property string $userlistPosts                Show Number of Posts
+ * @property string $userlistRows                 Users Per Page
+ * @property string $userlistUserHits             Show Profile Hits
+ * @property string $username                     Display User Name
+ * @property string $utmSource                    UTM Source
  *
  * @since 7.0.0
  */
@@ -315,35 +315,13 @@ class KunenaConfig
      * Public clone method to prevent cloning of this utility class.
      * Throw an exception to make it explicit that cloning is not allowed.
      *
+     * @return  void
+     *
      * @since  7.0.0
      */
     public function __clone()
     {
         throw new BadMethodCallException('Cloning of ' . __CLASS__ . ' is not allowed.');
-    }
-
-    /**
-     * Public wakeup method to prevent unserialization of this utility class.
-     * Throw an exception to make it explicit that unserialization is not allowed.
-     *
-     * @since  7.0.0
-     */
-    public function __wakeup()
-    {
-        throw new BadMethodCallException('Unserialization of ' . __CLASS__ . ' is not allowed.');
-    }
-
-    /**
-     * Magic method to check if the key exists in the protected array.
-     * This allows empty() and isset() to work correctly.
-     *
-     * @param   string $key The key requested (e.g., 'name' for $class->name)
-     * @return  bool true if the key exists
-     * @since   7.0.2
-     */
-    public function __isset(string $key): bool
-    {
-        return isset($this->config[$key]);
     }
 
     /**
@@ -383,6 +361,19 @@ class KunenaConfig
     }
 
     /**
+     * Magic method to check if the key exists in the protected array.
+     * This allows empty() and isset() to work correctly.
+     *
+     * @param   string $key The key requested (e.g., 'name' for $class->name)
+     * @return  bool true if the key exists
+     * @since   7.0.2
+     */
+    public function __isset(string $key): bool
+    {
+        return isset($this->config[$key]);
+    }
+
+    /**
      * Magic method to set inaccessible properties.
      * This is called when writing data to inaccessible properties.
      * It allows setting a configuration value only if the key already exists
@@ -406,20 +397,16 @@ class KunenaConfig
     }
 
     /**
-     * Get an instance of KunenaConfig
+     * Public wakeup method to prevent unserialization of this utility class.
+     * Throw an exception to make it explicit that unserialization is not allowed.
      *
-     * @return  ?KunenaConfig
-     * @since   7.0.0
+     * @return  void
+     *
+     * @since  7.0.0
      */
-    public static function getInstance(): ?KunenaConfig
+    public function __wakeup()
     {
-        if (\null === self::$instance) {
-            $instance         = new KunenaConfig();
-            $instance->config = self::getCachedConfig();
-            self::$instance   = $instance;
-        }
-
-        return self::$instance;
+        throw new BadMethodCallException('Unserialization of ' . __CLASS__ . ' is not allowed.');
     }
 
     /**
@@ -442,17 +429,6 @@ class KunenaConfig
     }
 
     /**
-     * Function to build the configuration values with default values from config.xml and fill it with values
-     *
-     * @return  array
-     * @since   7.0.2
-     */
-    public function getConfigReport(): array
-    {
-        return $this->buildConfig();
-    }
-
-    /**
      * Function to get the cached (or create when not existing) configuration settings
      *
      * @return  array
@@ -469,21 +445,6 @@ class KunenaConfig
         );
 
         return $config;
-    }
-
-    /**
-     * Function to store the configuration settings in to Joomla configured cache
-     *
-     * @param   array  $config  The config object to store.
-     *
-     * @return  void
-     * @since   7.0.0
-     */
-    private static function storeCachedConfig(array $config): void
-    {
-        /** @var CallbackController $cache */
-        $cache = self::getConfigCacheController();
-        $cache->store($config, 'config');
     }
 
     /**
@@ -507,61 +468,14 @@ class KunenaConfig
     }
 
     /**
-     * get the XML file
+     * Function to build the configuration values with default values from config.xml and fill it with values
      *
-     * @param   string  $path  Path to the XML file
-     *
-     * @return  SimpleXMLElement|false
-     * @since   7.0.0
+     * @return  array
+     * @since   7.0.2
      */
-    private static function getXml(string $path): SimpleXMLElement|false
+    public function getConfigReport(): array
     {
-        if (!is_file($path)) {
-            return \false;
-        }
-
-        $xml = new SimpleXMLElement(file_get_contents($path));
-
-        return $xml;
-    }
-
-    /**
-     * Extract default values from config.xml using Joomla Form API
-     *
-     * @param   string  $path  Path to the XML file
-     *
-     * @return  array<string, mixed>
-     * @since   7.0.0
-     */
-    private static function getXmlDefaults(string $path): array
-    {
-        $xml = self::getXml($path);
-
-        if (!$xml) {
-            return [];
-        }
-
-        $defaults = [];
-
-        // Assuming typical Joomla form XML structure: <config><fields name="params"><fieldset><field ...>
-        // Adjust XPath if your config.xml structure is different.
-        foreach ($xml->xpath('//field') as $field) {
-            $attributes = $field->attributes();
-            $name       = (string) ($attributes['name'] ?? '');
-            $type       = (string) ($attributes['type'] ?? '');
-            $config     = (string) ($attributes['config'] ?? '');
-
-            if (
-                !empty($name)
-                && !str_starts_with($name, '@')
-                && $type !== 'spacer'
-                && $config !== 'false'
-            ) {
-                $defaults[$name] = (string) ($attributes['default'] ?? '');
-            }
-        }
-
-        return $defaults;
+        return $this->buildConfig();
     }
 
     /**
@@ -626,6 +540,98 @@ class KunenaConfig
     }
 
     /**
+     * Get an instance of KunenaConfig
+     *
+     * @return  ?KunenaConfig
+     * @since   7.0.0
+     */
+    public static function getInstance(): ?KunenaConfig
+    {
+        if (\null === self::$instance) {
+            $instance         = new KunenaConfig();
+            $instance->config = self::getCachedConfig();
+            self::$instance   = $instance;
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * get the XML file
+     *
+     * @param   string  $path  Path to the XML file
+     *
+     * @return  SimpleXMLElement|false
+     * @since   7.0.0
+     */
+    private static function getXml(string $path): SimpleXMLElement|false
+    {
+        if (!is_file($path)) {
+            return \false;
+        }
+
+        $xml = new SimpleXMLElement(file_get_contents($path));
+
+        return $xml;
+    }
+
+    /**
+     * Extract default values from config.xml using Joomla Form API
+     *
+     * @param   string  $path  Path to the XML file
+     *
+     * @return  array<string, mixed>
+     * @since   7.0.0
+     */
+    private static function getXmlDefaults(string $path): array
+    {
+        $xml = self::getXml($path);
+
+        if (!$xml) {
+            return [];
+        }
+
+        $defaults = [];
+
+        // Assuming typical Joomla form XML structure: <config><fields name="params"><fieldset><field ...>
+        // Adjust XPath if your config.xml structure is different.
+        foreach ($xml->xpath('//field') as $field) {
+            $attributes = $field->attributes();
+            $name       = (string) ($attributes['name'] ?? '');
+            $type       = (string) ($attributes['type'] ?? '');
+            $config     = (string) ($attributes['config'] ?? '');
+
+            if (
+                !empty($name)
+                && !str_starts_with($name, '@')
+                && $type !== 'spacer'
+                && $config !== 'false'
+            ) {
+                $defaults[$name] = (string) ($attributes['default'] ?? '');
+            }
+        }
+
+        return $defaults;
+    }
+
+    /**
+     * Function to clear the local cached $config variable
+     *
+     * @return  void
+     * @since   7.0.0
+     */
+    public function reset(): void
+    {
+        $cache = self::getConfigCacheController();
+
+        // Clean the Kunena configuration cache and the _system cache as that is where Joomla itself caches the component cache
+        $cache->clean(self::COMPONENT . '_configuration');
+        $cache->clean('_system');
+
+        self::$instance = \null;
+    }
+
+    /**
      * Function to save a key value in the component configuration
      *
      * @return  boolean
@@ -670,19 +676,17 @@ class KunenaConfig
     }
 
     /**
-     * Function to clear the local cached $config variable
+     * Function to store the configuration settings in to Joomla configured cache
+     *
+     * @param   array  $config  The config object to store.
      *
      * @return  void
      * @since   7.0.0
      */
-    public function reset(): void
+    private static function storeCachedConfig(array $config): void
     {
+        /** @var CallbackController $cache */
         $cache = self::getConfigCacheController();
-
-        // Clean the Kunena configuration cache and the _system cache as that is where Joomla itself caches the component cache
-        $cache->clean(self::COMPONENT . '_configuration');
-        $cache->clean('_system');
-
-        self::$instance = \null;
+        $cache->store($config, 'config');
     }
 }

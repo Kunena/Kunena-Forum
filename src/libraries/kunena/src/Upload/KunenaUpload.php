@@ -49,26 +49,6 @@ class KunenaUpload
     protected $filename;
 
     /**
-     * Get new instance of upload class.
-     *
-     * @param   array  $extensions  List of allowed file extensions.
-     *
-     * @return  KunenaUpload
-     *
-     * @since   Kunena 6.0
-     */
-    public static function getInstance(array $extensions = []): KunenaUpload
-    {
-        $instance = new self();
-
-        if ($extensions) {
-            $instance->addExtensions($extensions);
-        }
-
-        return $instance;
-    }
-
-    /**
      * Add file extensions to allowed list.
      *
      * @param   array  $extensions  List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
@@ -269,6 +249,198 @@ class KunenaUpload
     }
 
     /**
+     * Convert into human readable format bytes to kB, MB, GB
+     *
+     * @param   integer  $bytes       size in bytes
+     * @param   null     $force_unit  a definitive unit
+     * @param   null     $format      the return string format
+     * @param   boolean  $si          whether to use SI prefixes or IEC
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function bytes(int $bytes, $force_unit = null, $format = null, $si = true): string
+    {
+        // Format string
+        $format = ($format === null) ? '%01.2f %s' : (string) $format;
+
+        $units = [Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'),
+            Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_KB'),
+            Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'),
+            Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_GB'),
+        ];
+        $mod   = 1024;
+
+        // Determine unit to use
+        if (($power = array_search((string) $force_unit, $units)) === false) {
+            $power = ($bytes > 0) ? min((int) floor(log($bytes, $mod)), \count($units) - 1) : 0;
+        }
+
+        return \sprintf($format, $bytes / pow($mod, $power), $units[$power]);
+    }
+
+    /**
+     * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration
+     * and Php configuration
+     *
+     * @param   int  $fileSize  filesize
+     *
+     * @return boolean
+     * @throws Exception
+     * @since Kunena 6.0
+     */
+    protected function checkFileSizeAvatar(int $fileSize)
+    {
+        if ($fileSize > \intval(KunenaConfig::getInstance()->avatarSize * 1024)) {
+            return false;
+        }
+
+        return $this->getPhpUploadLimit();
+    }
+
+    /**
+     * Check if fileSize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration
+     * and PHP configuration
+     *
+     * @param   int  $fileSize  The size of file in bytes
+     *
+     * @return  integer
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    protected function checkFileSizeFileAttachment(int $fileSize)
+    {
+        $file = $fileSize > KunenaConfig::getInstance()->fileSize * 1024;
+
+        if ($file) {
+            return false;
+        }
+
+        return $this->getPhpUploadLimit();
+    }
+
+    /**
+     * Check if fileSize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
+     * configuration and PHP configuration
+     *
+     * @param   int     $fileSize    The size of file in bytes
+     * @param   string  $image_type  The type of image : avatar or attachment image
+     *
+     * @return  boolean
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    protected function checkFileSizeImage(int $fileSize, string $image_type)
+    {
+        if ($image_type == 'avatar') {
+            $config_size = KunenaConfig::getInstance()->avatarSize;
+        } else {
+            $config_size = KunenaConfig::getInstance()->imageSize;
+        }
+
+        $image = $fileSize > \intval($config_size * 1024);
+
+        if ($image) {
+            return false;
+        }
+
+        return $this->getPhpUploadLimit();
+    }
+
+    /**
+     * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
+     * configuration and PHP configuration
+     *
+     * @param   int  $filesize  The size of file in bytes
+     *
+     * @return boolean
+     * @throws Exception
+     * @since Kunena 6.0
+     */
+    protected function checkFileSizeImageAttachment($filesize)
+    {
+        $image = $filesize > \intval(KunenaConfig::getInstance()->imageSize * 1024);
+
+        if ($image) {
+            return false;
+        }
+
+        return $this->getPhpUploadLimit();
+    }
+
+    /**
+     * Check for upload errors.
+     *
+     * @param   array  $file  Entry from $_FILES array.
+     *
+     * @return RuntimeException|null
+     *
+     * @since   Kunena 6.0
+     */
+    protected function checkUpload(array $file): ?RuntimeException
+    {
+        $exception = null;
+
+        switch ($file['error']) {
+            case UPLOAD_ERR_OK:
+                break;
+
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_SIZE'), 400);
+                break;
+
+            case UPLOAD_ERR_PARTIAL:
+                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_PARTIAL'), 400);
+                break;
+
+            case UPLOAD_ERR_NO_FILE:
+                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
+                break;
+
+            case UPLOAD_ERR_NO_TMP_DIR:
+                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR'), 500);
+                break;
+
+            case UPLOAD_ERR_CANT_WRITE:
+                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_CANT_WRITE'), 500);
+                break;
+
+            case UPLOAD_ERR_EXTENSION:
+                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION'), 500);
+                break;
+
+            default:
+                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_UNKNOWN'), 500);
+        }
+
+        if (!$exception && (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name']))) {
+            $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 400);
+        }
+
+        return $exception;
+    }
+
+    /**
+     * Clean up temporary file if it exists.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function cleanup(): void
+    {
+        if (!$this->filename || !is_file($this->filename)) {
+            return;
+        }
+
+        @unlink($this->filename);
+    }
+
+    /**
      * Get upload folder.
      *
      * @return  string  Absolute path.
@@ -281,6 +453,49 @@ class KunenaUpload
         $dir = KunenaPath::tmpdir();
 
         return "{$dir}/uploads";
+    }
+
+    /**
+     * Get new instance of upload class.
+     *
+     * @param   array  $extensions  List of allowed file extensions.
+     *
+     * @return  KunenaUpload
+     *
+     * @since   Kunena 6.0
+     */
+    public static function getInstance(array $extensions = []): KunenaUpload
+    {
+        $instance = new self();
+
+        if ($extensions) {
+            $instance->addExtensions($extensions);
+        }
+
+        return $instance;
+    }
+
+    /**
+     * Get the largest file which PHP accepts: the smallest of the upload, post and memory limits.
+     * PHP treats 0 (post_max_size) and -1 (memory_limit) as "no limit".
+     *
+     * @return  integer  Size in bytes, at least 1.
+     *
+     * @since   Kunena 7.2
+     */
+    protected function getPhpUploadLimit(): int
+    {
+        $limits = [];
+
+        foreach (['upload_max_filesize', 'post_max_size', 'memory_limit'] as $name) {
+            $bytes = self::toBytes((string) \ini_get($name));
+
+            if ($bytes > 0) {
+                $limits[] = $bytes;
+            }
+        }
+
+        return $limits ? (int) min($limits) : PHP_INT_MAX;
     }
 
     /**
@@ -363,101 +578,6 @@ class KunenaUpload
     }
 
     /**
-     * Check for upload errors.
-     *
-     * @param   array  $file  Entry from $_FILES array.
-     *
-     * @return RuntimeException|null
-     *
-     * @since   Kunena 6.0
-     */
-    protected function checkUpload(array $file): ?RuntimeException
-    {
-        $exception = null;
-
-        switch ($file['error']) {
-            case UPLOAD_ERR_OK:
-                break;
-
-            case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FORM_SIZE:
-                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_SIZE'), 400);
-                break;
-
-            case UPLOAD_ERR_PARTIAL:
-                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_PARTIAL'), 400);
-                break;
-
-            case UPLOAD_ERR_NO_FILE:
-                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
-                break;
-
-            case UPLOAD_ERR_NO_TMP_DIR:
-                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR'), 500);
-                break;
-
-            case UPLOAD_ERR_CANT_WRITE:
-                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_CANT_WRITE'), 500);
-                break;
-
-            case UPLOAD_ERR_EXTENSION:
-                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION'), 500);
-                break;
-
-            default:
-                $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_UNKNOWN'), 500);
-        }
-
-        if (!$exception && (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name']))) {
-            $exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 400);
-        }
-
-        return $exception;
-    }
-
-    /**
-     * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration
-     * and Php configuration
-     *
-     * @param   int  $fileSize  filesize
-     *
-     * @return boolean
-     * @throws Exception
-     * @since Kunena 6.0
-     */
-    protected function checkFileSizeAvatar(int $fileSize)
-    {
-        if ($fileSize > \intval(KunenaConfig::getInstance()->avatarSize * 1024)) {
-            return false;
-        }
-
-        return $this->getPhpUploadLimit();
-    }
-
-    /**
-     * Get the largest file which PHP accepts: the smallest of the upload, post and memory limits.
-     * PHP treats 0 (post_max_size) and -1 (memory_limit) as "no limit".
-     *
-     * @return  integer  Size in bytes, at least 1.
-     *
-     * @since   Kunena 7.2
-     */
-    protected function getPhpUploadLimit(): int
-    {
-        $limits = [];
-
-        foreach (['upload_max_filesize', 'post_max_size', 'memory_limit'] as $name) {
-            $bytes = self::toBytes((string) \ini_get($name));
-
-            if ($bytes > 0) {
-                $limits[] = $bytes;
-            }
-        }
-
-        return $limits ? (int) min($limits) : PHP_INT_MAX;
-    }
-
-    /**
      * Convert value into bytes.
      *
      * @param   string  $value  Value, for example: 1G, 10M, 120k...
@@ -492,65 +612,6 @@ class KunenaUpload
     }
 
     /**
-     * Check if fileSize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration
-     * and PHP configuration
-     *
-     * @param   int  $fileSize  The size of file in bytes
-     *
-     * @return  integer
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    protected function checkFileSizeFileAttachment(int $fileSize)
-    {
-        $file = $fileSize > KunenaConfig::getInstance()->fileSize * 1024;
-
-        if ($file) {
-            return false;
-        }
-
-        return $this->getPhpUploadLimit();
-    }
-
-    /**
-     * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
-     * configuration and PHP configuration
-     *
-     * @param   int  $filesize  The size of file in bytes
-     *
-     * @return boolean
-     * @throws Exception
-     * @since Kunena 6.0
-     */
-    protected function checkFileSizeImageAttachment($filesize)
-    {
-        $image = $filesize > \intval(KunenaConfig::getInstance()->imageSize * 1024);
-
-        if ($image) {
-            return false;
-        }
-
-        return $this->getPhpUploadLimit();
-    }
-
-    /**
-     * Clean up temporary file if it exists.
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function cleanup(): void
-    {
-        if (!$this->filename || !is_file($this->filename)) {
-            return;
-        }
-
-        @unlink($this->filename);
-    }
-
-    /**
      * Upload file by passing it by HTML input
      *
      * @param   array   $fileInput    The file object returned by Joomla\Input\Input
@@ -564,7 +625,7 @@ class KunenaUpload
      */
     public function upload(array $fileInput, string $destination, $type = 'attachment')
     {
-        $file       = new stdClass();
+        $file       = new StdClass();
         $file->ext  = File::getExt($fileInput['name']);
         $file->ext  = strtolower($file->ext);
         $file->size = $fileInput['size'];
@@ -656,66 +717,5 @@ class KunenaUpload
         $file->success = true;
 
         return $file;
-    }
-
-    /**
-     * Check if fileSize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
-     * configuration and PHP configuration
-     *
-     * @param   int     $fileSize    The size of file in bytes
-     * @param   string  $image_type  The type of image : avatar or attachment image
-     *
-     * @return  boolean
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    protected function checkFileSizeImage(int $fileSize, string $image_type)
-    {
-        if ($image_type == 'avatar') {
-            $config_size = KunenaConfig::getInstance()->avatarSize;
-        } else {
-            $config_size = KunenaConfig::getInstance()->imageSize;
-        }
-
-        $image = $fileSize > \intval($config_size * 1024);
-
-        if ($image) {
-            return false;
-        }
-
-        return $this->getPhpUploadLimit();
-    }
-
-    /**
-     * Convert into human readable format bytes to kB, MB, GB
-     *
-     * @param   integer  $bytes       size in bytes
-     * @param   null     $force_unit  a definitive unit
-     * @param   null     $format      the return string format
-     * @param   boolean  $si          whether to use SI prefixes or IEC
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public function bytes(int $bytes, $force_unit = null, $format = null, $si = true): string
-    {
-        // Format string
-        $format = ($format === null) ? '%01.2f %s' : (string) $format;
-
-        $units = [Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'),
-            Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_KB'),
-            Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'),
-            Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_GB'),
-        ];
-        $mod   = 1024;
-
-        // Determine unit to use
-        if (($power = array_search((string) $force_unit, $units)) === false) {
-            $power = ($bytes > 0) ? min((int) floor(log($bytes, $mod)), \count($units) - 1) : 0;
-        }
-
-        return \sprintf($format, $bytes / pow($mod, $power), $units[$power]);
     }
 }

@@ -176,6 +176,54 @@ class TableKunenaMessages extends KunenaTable
     }
 
     /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function check(): bool
+    {
+        $category = KunenaCategoryHelper::get($this->catid);
+
+        if (!$category->exists()) {
+            // TODO: maybe we should have own error message? or not?
+            throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid));
+        }
+
+        $this->catid   = $category->id;
+        $this->subject = trim((string) $this->subject);
+
+        if (!$this->subject) {
+            throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT'));
+        }
+
+        $this->message = trim((string) $this->message);
+
+        if (!$this->message) {
+            throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
+        }
+
+        if (!$this->time) {
+            $this->time = Factory::getDate()->toUnix();
+        }
+
+        if (isset($this->modified_reason)) {
+            $this->modified_reason = trim((string) $this->modified_reason);
+        }
+
+        // TINYTEXT columns: 255 bytes. A longer text (also a short one in letters of more bytes) was an error of a strict
+        // database, and the post was lost: it is cut at a character.
+        foreach (['subject', 'name', 'email', 'modified_reason'] as $field) {
+            if (\is_string($this->$field) && \strlen($this->$field) > 255) {
+                $this->$field = mb_strcut($this->$field, 0, 255, 'UTF-8');
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param   null  $id     id
      * @param   bool  $reset  reset
      *
@@ -249,54 +297,6 @@ class TableKunenaMessages extends KunenaTable
     {
         parent::reset();
         $this->message = null;
-    }
-
-    /**
-     * @return  boolean
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function check(): bool
-    {
-        $category = KunenaCategoryHelper::get($this->catid);
-
-        if (!$category->exists()) {
-            // TODO: maybe we should have own error message? or not?
-            throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid));
-        }
-
-        $this->catid   = $category->id;
-        $this->subject = trim((string) $this->subject);
-
-        if (!$this->subject) {
-            throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT'));
-        }
-
-        $this->message = trim((string) $this->message);
-
-        if (!$this->message) {
-            throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
-        }
-
-        if (!$this->time) {
-            $this->time = Factory::getDate()->toUnix();
-        }
-
-        if (isset($this->modified_reason)) {
-            $this->modified_reason = trim((string) $this->modified_reason);
-        }
-
-        // TINYTEXT columns: 255 bytes. A longer text (also a short one in letters of more bytes) was an error of a strict
-        // database, and the post was lost: it is cut at a character.
-        foreach (['subject', 'name', 'email', 'modified_reason'] as $field) {
-            if (\is_string($this->$field) && \strlen($this->$field) > 255) {
-                $this->$field = mb_strcut($this->$field, 0, 255, 'UTF-8');
-            }
-        }
-
-        return true;
     }
 
     /**

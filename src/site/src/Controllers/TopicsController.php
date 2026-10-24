@@ -86,7 +86,7 @@ class TopicsController extends KunenaController
                     $activity = KunenaFactory::getActivityIntegration();
                     $activity->onAfterDeleteTopic($topic);
                     $message = Text::_('COM_KUNENA_BULKMSG_DELETED');
-                    KunenaCategoryHelper::recount($topic->getCategory()->id);
+                    KunenaCategoryHelper::recountBatch($topic->getCategory()->id);
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
                 }

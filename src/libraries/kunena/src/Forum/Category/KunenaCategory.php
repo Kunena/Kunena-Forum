@@ -1805,8 +1805,27 @@ class KunenaCategory extends KunenaDatabaseObject
             ['#__kunena_user_topics', 'category_id', null],
             ['#__kunena_user_categories', 'category_id', null],
             ['#__kunena_user_read', 'category_id', null],
+            // The translations of the name and the descriptions (7.2)
+            ['#__kunena_categories_translations', 'category_id', null],
         ];
         $queries = [];
+
+        // The ratings of the topics and their Joomla tags (7.2): the rows would stay for topics which are gone.
+        $topicIds = $db->createQuery();
+        $topicIds->select($db->quoteName('tr.id'))
+            ->from($db->quoteName('#__kunena_topics', 'tr'))
+            ->where($db->quoteName('tr.category_id') . ' = ' . $catid);
+
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_rate'))
+            ->where($db->quoteName('topic_id') . ' IN (' . $topicIds . ')');
+        $queries[] = $query;
+
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__contentitem_tag_map'))
+            ->where($db->quoteName('type_alias') . ' = ' . $db->quote('com_kunena.topic'))
+            ->where($db->quoteName('content_item_id') . ' IN (' . $topicIds . ')');
+        $queries[] = $query;
 
         $messageIds = $db->createQuery();
         $messageIds->select($db->quoteName('mm.id'))
@@ -1876,6 +1895,9 @@ class KunenaCategory extends KunenaDatabaseObject
 
         KunenaUserHelper::recount();
         KunenaMessageThankyouHelper::recount();
+
+        // The own icon image of the category (7.2).
+        KunenaCategoryIcon::delete((int) $this->id);
 
         $this->id = null;
         KunenaCategoryHelper::register($this);

@@ -1,0 +1,57 @@
+name: Crowdin translations sync
+
+# Required repository secret: CROWDIN_TOKEN (Crowdin personal access token
+# with access to the project https://crowdin.com/project/kunena-forum-7-1).
+
+on:
+  schedule:
+  - cron: '0 14 * * 2'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: crowdin-sync-K7.1
+  cancel-in-progress: false
+
+jobs:
+  crowdin-sync:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout K7.1
+      uses: actions/checkout@v4
+      with:
+        ref: K7.1
+
+    - name: Download translations from Crowdin
+      uses: crowdin/github-action@v2
+      with:
+        config: crowdin.yml
+        upload_sources: false
+        upload_translations: false
+        download_translations: true
+        push_translations: false
+        create_pull_request: false
+      env:
+        CROWDIN_PROJECT_ID: ${{ vars.CROWDIN_PROJECT_ID }}
+        CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_TOKEN }}
+        CROWDIN_TOKEN: ${{ secrets.CROWDIN_TOKEN }}
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7
+      with:
+        base: K7.1
+        branch: i18n/crowdin-translations
+        commit-message: 'chore(i18n): update Crowdin translations'
+        title: 'chore(i18n): update Crowdin translations'
+        body: |
+          This pull request was generated automatically by the weekly Crowdin synchronization.
+        add-paths: |
+          src/admin/language
+          src/site/language
+          src/plugins/**/language
+        delete-branch: true

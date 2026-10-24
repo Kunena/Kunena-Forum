@@ -46,6 +46,10 @@
         <file
             type="plugin"
             group="kunena"
+            id="easyblog">plg_kunena_easyblog_v@kunenaversion@.zip</file>
+        <file
+            type="plugin"
+            group="kunena"
             id="easysocial">plg_kunena_easysocial_v@kunenaversion@.zip</file>
         <file
             type="plugin"

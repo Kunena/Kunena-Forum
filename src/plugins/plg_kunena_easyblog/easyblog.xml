@@ -5,8 +5,8 @@
     group="kunena"
     method="upgrade">
     <name>PLG_KUNENA_EASYBLOG</name>
-    <version>0.0.2</version>
-    <creationDate>2020-01-10</creationDate>
+    <version>@kunenaversion@</version>
+    <creationDate>@kunenaversiondate@</creationDate>
     <author>Onlinecommunityhub</author>
     <authorEmail>info@onlinecommunityhub.nl</authorEmail>
     <authorUrl>https://onlinecommunityhub.nl</authorUrl>

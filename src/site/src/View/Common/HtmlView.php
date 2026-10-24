@@ -48,35 +48,35 @@ class HtmlView extends KunenaView
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $catid = 0;
+    public mixed $catid = 0;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $offline = false;
+    public mixed $offline = false;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $app;
+    public mixed $app = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $memberCount;
+    public mixed $memberCount = null;
 
-    public $lastUserId;
+    public mixed $lastUserId = null;
 
     /**
      * @var array
      * @since Kunena 6.0
      */
-    public $pathway;
+    public mixed $pathway = null;
 
-    public $header;
+    public mixed $header = null;
 
     /**
      * @param   null  $layout  layout

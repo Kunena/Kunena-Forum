@@ -24,13 +24,13 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class EmailSubscription extends KunenaLayout
 {
-    public $mail;
+    public mixed $mail = null;
 
     public $message;
 
-    public $messageUrl;
+    public mixed $messageUrl = null;
 
-    public $once;
+    public mixed $once = null;
 
-    public $messageLink;
+    public mixed $messageLink = null;
 }

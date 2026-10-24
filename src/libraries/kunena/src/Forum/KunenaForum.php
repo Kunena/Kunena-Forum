@@ -43,79 +43,79 @@ abstract class KunenaForum
      *
      * @since   Kunena 6.0
      */
-    public const PUBLISHED = 0;
+    public const int PUBLISHED = 0;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const UNAPPROVED = 1;
+    public const int UNAPPROVED = 1;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const DELETED = 2;
+    public const int DELETED = 2;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const TOPIC_DELETED = 3;
+    public const int TOPIC_DELETED = 3;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const TOPIC_CREATION = 4;
+    public const int TOPIC_CREATION = 4;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const MODERATOR = 1;
+    public const int MODERATOR = 1;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const ADMINISTRATOR = 2;
+    public const int ADMINISTRATOR = 2;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected static $version = false;
+    protected static mixed $version = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected static $version_major = false;
+    protected static mixed $version_major = false;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected static $version_date = null;
+    protected static mixed $version_date = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected static $version_name = false;
+    protected static mixed $version_name = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected static $version_sampleData = false;
+    protected static mixed $version_sampleData = false;
 
     /**
      * @return  void

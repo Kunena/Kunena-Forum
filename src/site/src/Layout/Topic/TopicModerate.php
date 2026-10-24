@@ -42,41 +42,41 @@ class TopicModerate extends KunenaLayout
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topic;
+    public mixed $topic = null;
 
     /**
      * @var     KunenaCategory
      * @since   Kunena 6.0
      */
-    public $category;
+    public mixed $category = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $uri;
+    public mixed $uri = null;
 
-    public $title;
+    public mixed $title = null;
 
-    public $topicIcons;
+    public mixed $topicIcons = null;
 
-    public $userLink;
+    public mixed $userLink = null;
 
-    public $catid;
+    public mixed $catid = null;
 
-    public $banHistory;
+    public mixed $banHistory = null;
 
-    public $replies;
+    public mixed $replies = null;
 
-    public $banInfo;
+    public mixed $banInfo = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
     /**
      * Method to get the options of the topic

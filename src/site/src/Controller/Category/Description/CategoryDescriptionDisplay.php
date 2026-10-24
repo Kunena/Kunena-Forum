@@ -29,7 +29,7 @@ class CategoryDescriptionDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Category/Description';
+    protected mixed $name = 'Category/Description';
 
     /**
      * Prepare category display.

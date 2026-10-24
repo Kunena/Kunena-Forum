@@ -43,27 +43,27 @@ class MessageListingRecentDisplay extends ListDisplay
      * @var     array|KunenaMessage[]
      * @since   Kunena 6.0
      */
-    public $messages;
+    public mixed $messages = null;
 
-    public $model;
+    public mixed $model = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $moreUri;
+    public mixed $moreUri = null;
 
-    public $embedded;
+    public mixed $embedded = null;
 
-    public $view;
+    public mixed $view = null;
 
-    public $messagemore;
+    public mixed $messagemore = null;
 
-    public $actions;
+    public mixed $actions = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Message/List';
+    protected mixed $name = 'Message/List';
 
     /**
      * Prepare category list display.

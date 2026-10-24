@@ -34,37 +34,37 @@ class KunenaUserCategories extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $user_id = null;
+    public mixed $user_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $category_id = null;
+    public mixed $category_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $role = null;
+    public mixed $role = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $allreadtime = null;
+    public mixed $allreadtime = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $subscribed = null;
+    public mixed $subscribed = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $params = null;
+    public mixed $params = null;
 
     /**
      * @param   DatabaseDriver  $db  Database driver

@@ -84,19 +84,19 @@ class KunenaApplication extends WebApplication
      * @var     string
      * @since   Kunena 2.0
      */
-    protected $_name = 'site';
+    protected mixed $_name = 'site';
 
     /**
      * @var     integer
      * @since   Kunena 2.0
      */
-    protected $_clientId = 0;
+    protected mixed $_clientId = 0;
 
     /**
      * @var     array
      * @since   Kunena 2.0
      */
-    protected $userstate = [];
+    protected array $userstate = [];
 
     /**
      * @param   Input|null      $input   input

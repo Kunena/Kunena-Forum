@@ -39,7 +39,7 @@ abstract class KunenaTopicHelper
      * @var     KunenaTopic[]
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * Free up memory by cleaning up all cached items.

@@ -35,7 +35,7 @@ class MailsqueuesController extends FormController
      * @var     null|string
      * @since   Kunena 7.1
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * Constructor

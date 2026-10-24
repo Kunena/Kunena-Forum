@@ -32,7 +32,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  */
 class KunenaPage extends KunenaLayout
 {
-    public $breadcrumb;
+    public mixed $breadcrumb = null;
 
     /**
      * Add path to breadcrumbs.

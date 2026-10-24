@@ -30,13 +30,13 @@ class AnnouncementListingRow extends KunenaLayout
      * @var     KunenaAnnouncement
      * @since   Kunena 6.0
      */
-    public $announcement;
+    public mixed $announcement = null;
 
-    public $row;
+    public mixed $row = null;
 
-    public $checkbox;
+    public mixed $checkbox = null;
 
-    public $config;
+    public mixed $config = null;
 
     /**
      * Method to check if the user can publish an announcement

@@ -35,21 +35,21 @@ class SearchFormDisplay extends KunenaControllerDisplay
      * @var     SearchModel
      * @since   Kunena 6.0
      */
-    public $model;
+    public mixed $model = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Search/Form';
+    protected mixed $name = 'Search/Form';
 
-    public $state;
+    public mixed $state = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $isModerator;
+    public mixed $isModerator = null;
 
-    public $error;
+    public mixed $error = null;
 
     /**
      * Prepare search form display.

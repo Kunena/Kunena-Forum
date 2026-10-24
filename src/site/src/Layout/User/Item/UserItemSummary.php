@@ -24,23 +24,23 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserItemSummary extends KunenaLayout
 {
-    public $profile;
+    public mixed $profile = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $candisplaymail;
+    public mixed $candisplaymail = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $private;
+    public mixed $private = null;
 
-    public $points;
+    public mixed $points = null;
 
-    public $medals;
+    public mixed $medals = null;
 
-    public $socials;
+    public mixed $socials = null;
 
-    public $avatar;
+    public mixed $avatar = null;
 
-    public $banInfo;
+    public mixed $banInfo = null;
 }

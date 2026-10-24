@@ -36,85 +36,85 @@ class WidgetLoginDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Widget/Login';
+    protected mixed $name = 'Widget/Login';
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $my;
+    public mixed $my = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $registrationUrl;
+    public mixed $registrationUrl = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $resetPasswordUrl;
+    public mixed $resetPasswordUrl = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $remindUsernameUrl;
+    public mixed $remindUsernameUrl = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $rememberMe;
+    public mixed $rememberMe = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $lastvisitDate;
+    public mixed $lastvisitDate = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $announcementsUrl;
+    public mixed $announcementsUrl = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $pm_link;
+    public mixed $pm_link = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $inboxCount;
+    public mixed $inboxCount = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $inboxCountValue;
+    public mixed $inboxCountValue = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $profile_edit_url;
+    public mixed $profile_edit_url = null;
 
     /**
      * @var     object
      * @since   Kunena 5.1
      */
-    public $plglogin;
+    public mixed $plglogin = null;
 
     /**
      * Prepare login display.

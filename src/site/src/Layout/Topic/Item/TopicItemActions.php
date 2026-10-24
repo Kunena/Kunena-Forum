@@ -24,19 +24,19 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class TopicItemActions extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $topicButtons;
+    public mixed $topicButtons = null;
 }

@@ -43,151 +43,151 @@ class KunenaStatistics
      * @var     null
      * @since   Kunena 6.0
      */
-    protected static $_instance = null;
+    protected static mixed $_instance = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $lastUserId = null;
+    public mixed $lastUserId = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $memberCount = null;
+    public mixed $memberCount = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $sectionCount = null;
+    public mixed $sectionCount = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $categoryCount = null;
+    public mixed $categoryCount = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topicCount = null;
+    public mixed $topicCount = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $messageCount = null;
+    public mixed $messageCount = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $todayTopicCount = null;
+    public mixed $todayTopicCount = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $yesterdayTopicCount = null;
+    public mixed $yesterdayTopicCount = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $todayReplyCount = null;
+    public mixed $todayReplyCount = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $yesterdayReplyCount = null;
+    public mixed $yesterdayReplyCount = null;
 
     /**
      * @var     array|KunenaTopic[]
      * @since   Kunena 6.0
      */
-    public $topTopics = null;
+    public mixed $topTopics = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topPosters = null;
+    public mixed $topPosters = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topProfiles = null;
+    public mixed $topProfiles = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topPolls = null;
+    public mixed $topPolls = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topThanks = null;
+    public mixed $topThanks = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $top = [];
+    public array $top = [];
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $showGenStats = true;
+    public mixed $showGenStats = true;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $showPopUserStats = false;
+    public mixed $showPopUserStats = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $showPopSubjectStats = false;
+    public mixed $showPopSubjectStats = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $showPopPollStats = false;
+    public mixed $showPopPollStats = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $showPopThankYouStats = false;
+    public mixed $showPopThankYouStats = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $showStats = true;
+    public mixed $showStats = true;
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @var     KunenaConfig|null
      * @since   Kunena 6.0
      */
-    protected $_config = null;
+    protected mixed $_config = null;
 
     /**
      * @since   Kunena 6.0

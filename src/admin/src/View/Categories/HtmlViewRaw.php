@@ -15,6 +15,7 @@ namespace Kunena\Forum\Administrator\View\CategoriesRaw;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -31,7 +32,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 6.0
      */
-    private $app;
+    private ?CMSApplicationInterface $app = null;
 
     /**
      * @return  void

@@ -50,7 +50,7 @@ class ToolsController extends FormController
      * @var     null|string
      * @since   Kunena 2.0
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * Construct

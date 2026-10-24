@@ -44,49 +44,49 @@ abstract class KunenaMenuFix
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $filtered = [];
+    public static array $filtered = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $aliases = [];
+    public static array $aliases = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $invalid = [];
+    public static mixed $invalid = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $legacy = [];
+    public static mixed $legacy = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $same = [];
+    public static array $same = [];
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public static $structure = null;
+    public static mixed $structure = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public static $parent = null;
+    public static mixed $parent = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $parentid;
+    public mixed $parentid = null;
 
     /**
      * @return  void

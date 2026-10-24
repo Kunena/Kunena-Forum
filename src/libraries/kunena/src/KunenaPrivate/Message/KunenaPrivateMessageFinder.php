@@ -32,7 +32,7 @@ class KunenaPrivateMessageFinder extends KunenaFinder
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $table = '#__kunena_private';
+    protected mixed $table = '#__kunena_private';
 
     /**
      * @param   KunenaMessage  $message  message object

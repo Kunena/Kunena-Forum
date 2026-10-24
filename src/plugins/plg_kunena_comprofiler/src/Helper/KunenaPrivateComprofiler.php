@@ -34,7 +34,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $loaded = false;
+    protected mixed $loaded = false;
 
     /**
      * @param   Registry  $params  params

@@ -21,6 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -34,9 +35,9 @@ class AnnouncementModel extends ListModel
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $total = false;
+    protected mixed $total = false;
 
-    private $me;
+    private ?KunenaUser $me = null;
 
     /**
      * @return  KunenaAnnouncement

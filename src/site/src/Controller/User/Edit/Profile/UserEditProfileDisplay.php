@@ -32,13 +32,13 @@ class UserEditProfileDisplay extends UserEditDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/Edit/Profile';
+    protected mixed $name = 'User/Edit/Profile';
 
-    public $genders;
+    public mixed $genders = null;
 
-    public $birthdate;
+    public mixed $birthdate = null;
 
-    public $socials;
+    public mixed $socials = null;
 
     /**
      * Prepare profile form items.

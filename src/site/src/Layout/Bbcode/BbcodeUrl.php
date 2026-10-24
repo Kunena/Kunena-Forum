@@ -24,9 +24,9 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class BbcodeUrl extends KunenaLayout
 {
-    public $url;
+    public mixed $url = null;
 
-    public $target;
+    public mixed $target = null;
 
-    public $internal;
+    public mixed $internal = null;
 }

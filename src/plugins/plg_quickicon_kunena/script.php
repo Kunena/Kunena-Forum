@@ -40,7 +40,7 @@ class plgQuickiconKunenaInstallerScript extends InstallerScript
      *
      * @since   Kunena 6.0
      */
-    protected $app;
+    protected mixed $app = null;
 
     /**
      * Database object
@@ -49,14 +49,14 @@ class plgQuickiconKunenaInstallerScript extends InstallerScript
      *
      * @since   4.0.0
      */
-    protected $db;
+    protected mixed $db = null;
 
     /**
      * @var  string  During an update, it will be populated with the old release version
      *
      * @since   Kunena 6.0
      */
-    private $oldRelease;
+    private ?string $oldRelease = null;
 
     /**
      * method to run after an install/update/uninstall method

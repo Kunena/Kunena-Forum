@@ -34,7 +34,7 @@ abstract class KunenaTable extends Table
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * @param   null  $pk  pk

@@ -33,11 +33,11 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 abstract class KunenaEmailUnsubscribe
 {
-    public const TOPIC = 'topic';
+    public const string TOPIC = 'topic';
 
-    public const CATEGORY = 'category';
+    public const string CATEGORY = 'category';
 
-    public const FOLLOW = 'follow';
+    public const string FOLLOW = 'follow';
 
     /**
      * Absolute URL which unsubscribes at once when it is posted to (one-click unsubscribe of mail programs).

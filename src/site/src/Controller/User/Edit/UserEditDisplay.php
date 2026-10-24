@@ -35,21 +35,21 @@ class UserEditDisplay extends KunenaControllerDisplay
      * @var     User
      * @since   Kunena 6.0
      */
-    public $user;
+    public mixed $user = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $profile;
+    public mixed $profile = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/Edit';
+    protected mixed $name = 'User/Edit';
 
     /**
      * Prepare user for editing.

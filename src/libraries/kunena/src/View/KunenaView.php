@@ -54,97 +54,97 @@ class KunenaView extends HtmlView
      * @var     CMSApplication|null
      * @since   Kunena 6.0
      */
-    public $app = null;
+    public mixed $app = null;
 
     /**
      * @var     KunenaUser|null
      * @since   Kunena 6.0
      */
-    public $me = null;
+    public mixed $me = null;
 
     /**
      * @var     KunenaConfig|null
      * @since   Kunena 6.0
      */
-    public $config = null;
+    public mixed $config = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $embedded = false;
+    public mixed $embedded = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $templateFiles = [];
+    public array $templateFiles = [];
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $teaser = null;
+    public mixed $teaser = null;
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    public $common;
+    public mixed $common = null;
 
     /**
      * @var KunenaTemplate
      * @since Kunena 6.0
      */
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    public $logo;
+    public mixed $logo = null;
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    public $intro;
+    public mixed $intro = null;
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    public $memberList;
+    public mixed $memberList = null;
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    public $thanks;
+    public mixed $thanks = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $inLayout = 0;
+    protected mixed $inLayout = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $_row = 0;
+    protected mixed $_row = 0;
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    protected $state;
+    protected mixed $state = null;
 
     /**
      * @var KunenaProfiler
      * @since Kunena 6.0
      */
-    private $profiler;
+    private ?KunenaProfiler $profiler = null;
 
     /**
      * @param   array  $config  config

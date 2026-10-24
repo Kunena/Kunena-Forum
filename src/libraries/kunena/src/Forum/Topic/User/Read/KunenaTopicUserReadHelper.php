@@ -34,13 +34,13 @@ abstract class KunenaTopicUserReadHelper
      * @var     array| KunenaRead[]
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @var     array|KunenaRead[]
      * @since   Kunena 6.0
      */
-    protected static $_topics = [];
+    protected static mixed $_topics = [];
 
     /**
      * Returns \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read object.

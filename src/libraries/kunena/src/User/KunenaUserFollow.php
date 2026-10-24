@@ -33,7 +33,7 @@ abstract class KunenaUserFollow
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $lists = [];
+    protected static mixed $lists = [];
 
     /**
      * Can the user follow the other user. Guests can not follow anybody, nobody can follow himself and a user

@@ -71,7 +71,7 @@ class KunenaBase extends KunenaLayoutBase
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_name = '';
+    protected mixed $_name = '';
 
     /**
      * The view layout.
@@ -79,7 +79,7 @@ class KunenaBase extends KunenaLayoutBase
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $layout = 'default';
+    protected mixed $layout = 'default';
 
     /**
      * The paths queue.
@@ -87,7 +87,7 @@ class KunenaBase extends KunenaLayoutBase
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $includePaths;
+    protected mixed $includePaths = null;
 
     /**
      * Support for closure variables.
@@ -95,32 +95,32 @@ class KunenaBase extends KunenaLayoutBase
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $closures = [];
+    protected array $closures = [];
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $debug;
+    protected mixed $debug = null;
 
     public $id;
-    public $output;
-    public $user;
-    public $headerText;
-    public $pagination;
-    public $config;
-    public $category;
-    public $topic;
-    public $poll;
-    public $uri;
-    public $usercount;
-    public $userhasvoted;
-    public $show;
-    public $show_title;
-    public $captchaDisplay;
-    public $body;
-    public $topicsModel;
-    public $topics;
+    public mixed $output         = null;
+    public mixed $user           = null;
+    public mixed $headerText     = null;
+    public mixed $pagination     = null;
+    public mixed $config         = null;
+    public mixed $category       = null;
+    public mixed $topic          = null;
+    public mixed $poll           = null;
+    public mixed $uri            = null;
+    public mixed $usercount      = null;
+    public mixed $userhasvoted   = null;
+    public mixed $show           = null;
+    public mixed $show_title     = null;
+    public mixed $captchaDisplay = null;
+    public mixed $body           = null;
+    public mixed $topicsModel    = null;
+    public mixed $topics         = null;
 
     /**
      * Method to instantiate the layout.

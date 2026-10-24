@@ -39,38 +39,38 @@ class TopicPollDisplay extends KunenaControllerDisplay
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     KunenaCategory
      * @since   Kunena 6.0
      */
-    public $category;
+    public mixed $category = null;
 
     /**
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topic;
+    public mixed $topic = null;
 
     /**
      * @var     KunenaPoll
      * @since   Kunena 6.0
      */
-    public $poll;
+    public mixed $poll = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $uri;
+    public mixed $uri = null;
 
-    public $usercount;
-    public $userhasvoted;
-    public $show_title;
-    public $intervalTimeToLive;
-    public $users_voted_list;
-    public $users_voted_morelist;
+    public mixed $usercount            = null;
+    public mixed $userhasvoted         = null;
+    public mixed $show_title           = null;
+    public mixed $intervalTimeToLive   = null;
+    public mixed $users_voted_list     = null;
+    public mixed $users_voted_morelist = null;
 
     /**
      * Prepare poll display.

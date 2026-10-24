@@ -42,21 +42,21 @@ class TemplateController extends FormController
      * @var     null|string
      * @since   Kunena 6.0
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * @var     KunenaConfig
      * @since   Kunena 6.0
      */
-    public $config = null;
+    public mixed $config = null;
 
-    public $baseurlTemplate;
+    public mixed $baseurlTemplate = null;
 
     /**
      * @var     array
      * @since   Kunena 2.0
      */
-    protected $locked = ['aurelia'];
+    protected mixed $locked = ['aurelia'];
 
     /**
      * Constructor.

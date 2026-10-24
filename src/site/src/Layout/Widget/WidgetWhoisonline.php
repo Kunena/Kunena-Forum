@@ -23,23 +23,23 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetWhoisonline extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $usersUrl;
+    public mixed $usersUrl = null;
 
-    public $membersOnline;
+    public mixed $membersOnline = null;
 
-    public $hiddenList;
+    public mixed $hiddenList = null;
 
-    public $onlineList;
+    public mixed $onlineList = null;
 
-    public $linkUserlistAllowedToShow;
+    public mixed $linkUserlistAllowedToShow = null;
 }

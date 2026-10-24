@@ -35,56 +35,56 @@ class HtmlView extends BaseHtmlView
      *
      * @since  6.0
      */
-    public $filterSearch;
+    public mixed $filterSearch = null;
 
     /**
      * Filter title
      *
      * @since  6.0
      */
-    public $filterTitle;
+    public mixed $filterTitle = null;
 
     /**
      * Filter topic
      *
      * @since  6.0
      */
-    public $filterTopic;
+    public mixed $filterTopic = null;
 
     /**
      * Filter category
      *
      * @since  6.0
      */
-    public $filterCategory;
+    public mixed $filterCategory = null;
 
     /**
      * Filter ip
      *
      * @since  6.0
      */
-    public $filterIp;
+    public mixed $filterIp = null;
 
     /**
      * Filter author
      *
      * @since  6.0
      */
-    public $filterAuthor;
+    public mixed $filterAuthor = null;
 
     /**
      * Filter active
      *
      * @since  6.0
      */
-    public $filterActive;
+    public mixed $filterActive = null;
 
     /**
      * The model state
      *
      * @since  6.0
      */
-    protected $state;
+    protected mixed $state = null;
 
     /**
      * @param   null  $tpl  tpl

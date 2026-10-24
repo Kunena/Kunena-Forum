@@ -33,7 +33,7 @@ abstract class KunenaEmail
      * @var     object
      * @since   Kunena 6.0
      */
-    public static $mailer_error_status = null;
+    public static mixed $mailer_error_status = null;
 
     /**
      * @param   integer  $errno    error number

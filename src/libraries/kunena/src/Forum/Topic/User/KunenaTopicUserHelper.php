@@ -34,19 +34,19 @@ abstract class KunenaTopicUserHelper
      * @var     array|KunenaTopicUser[]
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @var     array|KunenaTopicUser[]
      * @since   Kunena 6.0
      */
-    protected static $_topics = [];
+    protected static mixed $_topics = [];
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $subscribed;
+    public mixed $subscribed = null;
 
     /**
      * Free up memory by cleaning up all cached items.

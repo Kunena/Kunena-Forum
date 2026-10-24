@@ -23,5 +23,5 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetPaginationItem extends KunenaLayout
 {
-    public $item;
+    public mixed $item = null;
 }

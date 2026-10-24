@@ -34,7 +34,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since  6.0
      */
-    protected $state;
+    protected mixed $state = null;
 
     /**
      * DisplayDefault

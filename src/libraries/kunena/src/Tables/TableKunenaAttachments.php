@@ -48,73 +48,73 @@ class TableKunenaAttachments extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $mesid = null;
+    public mixed $mesid = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $protected = null;
+    public mixed $protected = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $hash = null;
+    public mixed $hash = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $size = null;
+    public mixed $size = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $folder = null;
+    public mixed $folder = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $filetype = null;
+    public mixed $filetype = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $filename = null;
+    public mixed $filename = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $filename_real = null;
+    public mixed $filename_real = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $comment = null;
+    public mixed $comment = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $inline = null;
+    public mixed $inline = null;
 
     /**
      * @var     mixed
      * @since   Kunena 7.2
      */
-    public $caption = null;
+    public mixed $caption = null;
 
     /**
      * @var     mixed
      * @since   Kunena 7.2
      */
-    public $status = null;
+    public mixed $status = null;
 
     /**
      * @param   DatabaseDriver  $db  Database driver

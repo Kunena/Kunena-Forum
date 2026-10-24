@@ -34,21 +34,21 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    public $usersUrl;
+    public mixed $usersUrl = null;
 
-    public $membersOnline;
+    public mixed $membersOnline = null;
 
-    public $onlineList;
+    public mixed $onlineList = null;
 
-    public $hiddenList;
+    public mixed $hiddenList = null;
 
-    public $linkUserlistAllowedToShow;
+    public mixed $linkUserlistAllowedToShow = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Widget/WhoIsOnline';
+    protected mixed $name = 'Widget/WhoIsOnline';
 
     /**
      * Prepare Who is online display.

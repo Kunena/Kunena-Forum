@@ -46,7 +46,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      * @var     string
      * @since   Kunena 7.2
      */
-    public const TYPE = 'kunena.rank';
+    public const string TYPE = 'kunena.rank';
 
     /**
      * The ranks of the forum, loaded once: rankId => rank.

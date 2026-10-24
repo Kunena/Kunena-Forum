@@ -43,25 +43,25 @@ class TableKunenaMessages extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $parent = null;
+    public mixed $parent = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $thread = null;
+    public mixed $thread = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $catid = null;
+    public mixed $catid = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $name = null;
+    public mixed $name = null;
 
     /**
      * @var     null
@@ -73,91 +73,91 @@ class TableKunenaMessages extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $email = null;
+    public mixed $email = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $subject = null;
+    public mixed $subject = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $time = null;
+    public mixed $time = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $ip = null;
+    public mixed $ip = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topic_emoticon = null;
+    public mixed $topic_emoticon = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $locked = null;
+    public mixed $locked = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $hold = null;
+    public mixed $hold = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $ordering = null;
+    public mixed $ordering = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $hits = null;
+    public mixed $hits = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $moved = null;
+    public mixed $moved = null;
 
     /**
      * @var     null
      * @since   Kunena 7.0
      */
-    public $deleted_time = null;
+    public mixed $deleted_time = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $modified_by = null;
+    public mixed $modified_by = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $modified_time = null;
+    public mixed $modified_time = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $modified_reason = null;
+    public mixed $modified_reason = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $params = null;
+    public mixed $params = null;
 
     /**
      * @var     null

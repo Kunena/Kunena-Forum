@@ -35,31 +35,31 @@ abstract class KunenaError
      * @var     integer
      * @since   Kunena 6.0
      */
-    public static $enabled = 0;
+    public static mixed $enabled = 0;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $handler = false;
+    public static mixed $handler = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $debug = false;
+    public static mixed $debug = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $admin = false;
+    public static mixed $admin = false;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public static $format;
+    public static mixed $format = null;
 
     /**
      * @return  void

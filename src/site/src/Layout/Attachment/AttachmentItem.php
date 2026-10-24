@@ -24,5 +24,5 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class AttachmentItem extends KunenaLayout
 {
-    public $attachment;
+    public mixed $attachment = null;
 }

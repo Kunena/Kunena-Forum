@@ -28,29 +28,29 @@ class CategoryList extends KunenaLayout
      * @var     object
      * @since   Kunena 6.1
      */
-    public $state;
+    public mixed $state = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.1
      */
-    public $total;
+    public mixed $total = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $model;
+    public mixed $model = null;
 
-    public $sections;
+    public mixed $sections = null;
 
-    public $categories;
+    public mixed $categories = null;
 
-    public $actions;
+    public mixed $actions = null;
 }

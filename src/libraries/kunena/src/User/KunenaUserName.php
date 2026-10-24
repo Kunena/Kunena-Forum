@@ -35,28 +35,28 @@ abstract class KunenaUserName
      *
      * @since   Kunena 7.2
      */
-    public const REALNAME = 0;
+    public const int REALNAME = 0;
 
     /**
      * The username.
      *
      * @since   Kunena 7.2
      */
-    public const USERNAME = 1;
+    public const int USERNAME = 1;
 
     /**
      * The nickname.
      *
      * @since   Kunena 7.2
      */
-    public const DISPLAYNAME = 2;
+    public const int DISPLAYNAME = 2;
 
     /**
      * The key of the choice of a user in the parameters of the Joomla user.
      *
      * @since   Kunena 7.2
      */
-    public const PARAM = 'kunena_name';
+    public const string PARAM = 'kunena_name';
 
     /**
      * The nicknames by user id.
@@ -64,7 +64,7 @@ abstract class KunenaUserName
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $displayNames = [];
+    protected static array $displayNames = [];
 
     /**
      * The name which is shown of a user: the choice of the user, else the one of the configuration; a name which is empty

@@ -24,9 +24,9 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetKarma extends KunenaLayout
 {
-    public $karmatype;
+    public mixed $karmatype = null;
 
     public $userid;
 
-    public $topicicontype;
+    public mixed $topicicontype = null;
 }

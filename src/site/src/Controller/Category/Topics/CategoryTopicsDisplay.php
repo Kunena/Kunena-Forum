@@ -45,47 +45,47 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @var     KunenaCategory
      * @since   Kunena 6.0
      */
-    public $category;
+    public mixed $category = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $total;
+    public mixed $total = null;
 
     /**
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topics;
+    public mixed $topics = null;
 
     /**
      * @var     KunenaPagination
      * @since   Kunena 6.0
      */
-    public $pagination;
+    public mixed $pagination = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
-    public $topicActions;
+    public mixed $topicActions = null;
 
-    public $actionMove;
+    public mixed $actionMove = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Category/Item';
+    protected mixed $name = 'Category/Item';
 
     /**
      * Prepare category display.

@@ -33,7 +33,7 @@ abstract class KunenaTemplateHelper
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * isDefault

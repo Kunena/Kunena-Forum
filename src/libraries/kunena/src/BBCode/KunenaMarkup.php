@@ -35,7 +35,7 @@ final class KunenaMarkup
      * @var     int
      * @since   Kunena 7.2
      */
-    private const MAX_QUOTE_DEPTH = 10;
+    private const int MAX_QUOTE_DEPTH = 10;
 
     /**
      * Pieces of text which are protected against the conversion, restored at the end.

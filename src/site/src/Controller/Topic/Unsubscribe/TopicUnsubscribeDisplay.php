@@ -37,13 +37,13 @@ class TopicUnsubscribeDisplay extends KunenaControllerDisplay
      * @var     object
      * @since   Kunena 7.2
      */
-    public $unsubscribe;
+    public mixed $unsubscribe = null;
 
     /**
      * @var     string
      * @since   Kunena 7.2
      */
-    protected $name = 'Topic/Unsubscribe';
+    protected mixed $name = 'Topic/Unsubscribe';
 
     /**
      * Check the link and find what it unsubscribes from.

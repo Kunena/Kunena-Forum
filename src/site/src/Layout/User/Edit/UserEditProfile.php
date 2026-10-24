@@ -24,21 +24,21 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserEditProfile extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $profile;
+    public mixed $profile = null;
 
-    public $genders;
+    public mixed $genders = null;
 
-    public $socials;
+    public mixed $socials = null;
 
-    public $birthdate;
+    public mixed $birthdate = null;
 }

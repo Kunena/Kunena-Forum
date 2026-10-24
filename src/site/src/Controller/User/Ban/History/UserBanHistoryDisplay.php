@@ -33,31 +33,31 @@ class UserBanHistoryDisplay extends KunenaControllerDisplay
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $profile;
+    public mixed $profile = null;
 
     /**
      * @var     array|KunenaBan[]
      * @since   Kunena 6.0
      */
-    public $banHistory;
+    public mixed $banHistory = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/Ban/History';
+    protected mixed $name = 'User/Ban/History';
 
     /**
      * Prepare ban history.

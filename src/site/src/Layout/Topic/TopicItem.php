@@ -24,43 +24,43 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class TopicItem extends KunenaLayout
 {
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $params;
+    public mixed $params = null;
 
-    public $image;
+    public mixed $image = null;
 
-    public $quickReply;
+    public mixed $quickReply = null;
 
-    public $userTopic;
+    public mixed $userTopic = null;
 
-    public $threaded;
+    public mixed $threaded = null;
 
-    public $messages;
+    public mixed $messages = null;
 
     public $message;
 
-    public $categorylist;
+    public mixed $categorylist = null;
 
-    public $catParams;
+    public mixed $catParams = null;
 
-    public $cache;
+    public mixed $cache = null;
 
-    public $allowed;
+    public mixed $allowed = null;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $category;
+    public mixed $category = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $pmHasBody;
+    public mixed $pmHasBody = null;
 }

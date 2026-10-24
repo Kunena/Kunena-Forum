@@ -38,7 +38,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class Router extends RouterView
 {
-    protected $noIDs = false;
+    protected mixed $noIDs = false;
 
     /**
      * The category factory
@@ -47,7 +47,7 @@ class Router extends RouterView
      *
      * @since   6.0
      */
-    private $categoryFactory;
+    private ?CategoryFactoryInterface $categoryFactory = null;
 
     /**
      * The db
@@ -56,7 +56,7 @@ class Router extends RouterView
      *
      * @since   6.0
      */
-    private $db;
+    private ?DatabaseInterface $db = null;
 
     /**
      * Kunena Component router constructor

@@ -24,5 +24,5 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserItemStatus extends KunenaLayout
 {
-    public $user;
+    public mixed $user = null;
 }

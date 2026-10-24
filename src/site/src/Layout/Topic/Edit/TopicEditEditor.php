@@ -32,13 +32,13 @@ class TopicEditEditor extends KunenaLayout
      * @var     KunenaConfig
      * @since   Kunena 6.0
      */
-    public $config;
+    public mixed $config = null;
 
     /**
      * @var     KunenaTemplate
      * @since   Kunena 6.0
      */
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
     /**
      * Define javascript variables to show or disable some bbcode buttons

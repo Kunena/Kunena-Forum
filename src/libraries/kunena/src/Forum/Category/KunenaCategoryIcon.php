@@ -32,14 +32,14 @@ abstract class KunenaCategoryIcon
      *
      * @since   Kunena 7.2
      */
-    public const TYPES = [IMAGETYPE_PNG => 'png', IMAGETYPE_JPEG => 'jpg', IMAGETYPE_GIF => 'gif', IMAGETYPE_WEBP => 'webp'];
+    public const array TYPES = [IMAGETYPE_PNG => 'png', IMAGETYPE_JPEG => 'jpg', IMAGETYPE_GIF => 'gif', IMAGETYPE_WEBP => 'webp'];
 
     /**
      * The biggest file which can be uploaded, in bytes.
      *
      * @since   Kunena 7.2
      */
-    public const MAX_SIZE = 1048576;
+    public const int MAX_SIZE = 1048576;
 
     /**
      * The icon files of all the categories, by category id (one look in the folder per request).
@@ -47,7 +47,7 @@ abstract class KunenaCategoryIcon
      * @var     string[]|null
      * @since   Kunena 7.2
      */
-    protected static $files = null;
+    protected static mixed $files = null;
 
     /**
      * Remove the icon of the category.

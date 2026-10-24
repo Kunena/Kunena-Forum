@@ -95,7 +95,7 @@ class KunenaUser
      * @var     null
      * @since   Kunena 6.0
      */
-    protected static $_ranks = null;
+    protected static mixed $_ranks = null;
 
     /**
      * @var     integer
@@ -107,295 +107,295 @@ class KunenaUser
      * @var     string
      * @since   Kunena 6.0
      */
-    public $status;
+    public mixed $status = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $status_text;
+    public mixed $status_text = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $view;
+    public mixed $view = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $signature;
+    public mixed $signature = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $moderator;
+    public mixed $moderator = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $banned;
+    public mixed $banned = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $ordering;
+    public mixed $ordering = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $posts;
+    public mixed $posts = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $avatar;
+    public mixed $avatar = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $timestamp;
+    public mixed $timestamp = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $karma;
+    public mixed $karma = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $group_id;
+    public mixed $group_id = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $uhits;
+    public mixed $uhits = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $personalText;
+    public mixed $personalText = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $gender;
+    public mixed $gender = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $birthdate;
+    public mixed $birthdate = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $location;
+    public mixed $location = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $websitename;
+    public mixed $websitename = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $websiteurl;
+    public mixed $websiteurl = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $rank;
+    public mixed $rank = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $hideEmail;
+    public mixed $hideEmail = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $showOnline;
+    public mixed $showOnline = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $canSubscribe;
+    public mixed $canSubscribe = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $userListtime;
+    public mixed $userListtime = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $thankyou;
+    public mixed $thankyou = null;
 
     /**
      * From Joomla user table
      * @var     string
      * @since   Kunena 6.0
      */
-    public $name;
+    public mixed $name = null;
 
     /**
      * From Joomla user table
      * @var     string
      * @since   Kunena 6.0
      */
-    public $username;
+    public mixed $username = null;
 
     /**
      * From Joomla user table
      * @var     string
      * @since   Kunena 6.0
      */
-    public $email;
+    public mixed $email = null;
 
     /**
      * From Joomla user table
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $blocked;
+    public mixed $blocked = null;
 
     /**
      * From Joomla user table
      * @var     string
      * @since   Kunena 6.0
      */
-    public $registerDate;
+    public mixed $registerDate = null;
 
     /**
      * From Joomla user table
      * @var     string
      * @since   Kunena 6.0
      */
-    public $lastvisitDate;
+    public mixed $lastvisitDate = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $typeAlias;
+    public mixed $typeAlias = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $ip;
+    public mixed $ip = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $socials;
+    public mixed $socials = null;
 
     /**
      * @var     string
      * @since   Kunena 7.0
      */
-    public $language;
+    public mixed $language = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $displayAgeBirthdate;
+    public mixed $displayAgeBirthdate = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_allowed = null;
+    protected mixed $_allowed = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_link = [];
+    protected mixed $_link = [];
 
     /**
      * @var     mixed
      * @since   Kunena 6.0
      */
-    protected $_time;
+    protected mixed $_time = null;
 
     /**
      * @var     mixed
      * @since   Kunena 6.0
      */
-    protected $_pm;
+    protected mixed $_pm = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_email;
+    protected mixed $_email = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_website;
+    protected mixed $_website = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_personalText;
+    protected mixed $_personalText = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_signature;
+    protected mixed $_signature = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @var KunenaConfig
      * @since Kunena 6.0
      */
-    private $_config;
+    private ?KunenaConfig $_config = null;
 
     /**
      * @var CMSApplicationInterface|null
      * @since Kunena 6.0
      */
-    private $_app;
+    private ?CMSApplicationInterface $_app = null;
 
     /**
      * @param   int  $identifier  identifier

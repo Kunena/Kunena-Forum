@@ -35,7 +35,7 @@ abstract class KunenaCategoryUserHelper
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * The users which have all their category rows loaded: a category without an instance has no row.
@@ -43,7 +43,7 @@ abstract class KunenaCategoryUserHelper
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $_allLoaded = [];
+    protected static array $_allLoaded = [];
 
     /**
      * Get an instance of \Kunena\Forum\Libraries\Forum\Category\CategoryUser object.

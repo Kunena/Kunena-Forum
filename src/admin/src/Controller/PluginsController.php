@@ -37,25 +37,25 @@ class PluginsController extends AdminController
      * @var     null|string
      * @since   Kunena 6.0
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * @var string
      * @since Kunena 2.0
      */
-    private $baseurl2;
+    private ?string $baseurl2 = null;
 
     /**
      * @var string
      * @since Kunena 2.0
      */
-    private $textPrefix = 'COM_PLUGINS';
+    private string $textPrefix = 'COM_PLUGINS';
 
     /**
      * @var string
      * @since Kunena 2.0
      */
-    private $viewList = 'plugins';
+    private string $viewList = 'plugins';
 
     /**
      * Construct

@@ -29,31 +29,31 @@ class TableKunenaPrivateUserMap extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $private_id = null;
+    public mixed $private_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $user_id = null;
+    public mixed $user_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $read_at = null;
+    public mixed $read_at = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $replied_at = null;
+    public mixed $replied_at = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $deleted_at = null;
+    public mixed $deleted_at = null;
 
     /**
      * @var     boolean

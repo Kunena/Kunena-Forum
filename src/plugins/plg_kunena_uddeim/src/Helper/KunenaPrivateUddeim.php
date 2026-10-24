@@ -30,7 +30,7 @@ class KunenaPrivateUddeim extends KunenaPrivate
      * @var null|uddeIMAPI
      * @since Kunena 6.0
      */
-    protected $uddeim = null;
+    protected mixed $uddeim = null;
 
     /**
      * @param   Registry  $params  params

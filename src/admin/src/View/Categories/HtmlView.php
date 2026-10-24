@@ -37,32 +37,32 @@ class HtmlView extends BaseHtmlView
      * @var     array|KunenaCategory[]
      * @since   Kunena 6.0
      */
-    public $categories = [];
+    public mixed $categories = [];
 
-    public $sortFields;
+    public mixed $sortFields = null;
 
-    public $ordering;
+    public mixed $ordering = null;
 
-    public $saveOrder;
+    public mixed $saveOrder = null;
 
     /**
      * @var     array|KunenaCategory[]
      * @since   Kunena 6.0
      */
-    public $batchCategories;
+    public mixed $batchCategories = null;
 
     /**
      * The model state
      *
      * @since  Kunena 6.0
      */
-    protected $state;
+    protected mixed $state = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $pagination;
+    protected mixed $pagination = null;
 
     /**
      * @param   null  $tpl  tpl

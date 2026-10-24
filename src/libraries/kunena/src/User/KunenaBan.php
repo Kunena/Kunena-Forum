@@ -134,62 +134,62 @@ class KunenaBan
      *
      * @since   Kunena 6.0
      */
-    public const ANY = 0;
+    public const int ANY = 0;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const ACTIVE = 1;
+    public const int ACTIVE = 1;
 
     /**
      * @var     array|KunenaBan[]
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_instancesByUserid = [];
+    protected static mixed $_instancesByUserid = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_instancesByIP = [];
+    protected static mixed $_instancesByIP = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_useridcache = [];
+    protected static mixed $_useridcache = [];
 
     /**
      * @var     Date|null
      * @since   Kunena 6.0
      */
-    protected static $_now = null;
+    protected static mixed $_now = null;
 
     /**
      * @var     User|null
      * @since   Kunena 6.0
      */
-    protected static $_my = null;
+    protected static mixed $_my = null;
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * Constructor

@@ -24,31 +24,31 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class MessageItemActions extends KunenaLayout
 {
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $ipLink;
+    public mixed $ipLink = null;
 
-    public $url;
+    public mixed $url = null;
 
-    public $quickReply;
+    public mixed $quickReply = null;
 
-    public $message_closed;
+    public mixed $message_closed = null;
 
-    public $category;
+    public mixed $category = null;
 
-    public $messageButtons;
+    public mixed $messageButtons = null;
 
     public $message;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $output;
+    public mixed $output = null;
 }

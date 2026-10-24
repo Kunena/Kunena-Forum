@@ -42,19 +42,19 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topic;
+    public mixed $topic = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $topicButtons;
+    public mixed $topicButtons = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/Item/Actions';
+    protected mixed $name = 'Topic/Item/Actions';
 
     /**
      * Prepare topic actions display.

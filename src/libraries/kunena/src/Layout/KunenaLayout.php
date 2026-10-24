@@ -43,115 +43,115 @@ class KunenaLayout extends KunenaBase
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $userkarma_plus;
+    public mixed $userkarma_plus = null;
 
     /**
      * @var false|mixed|string|void
      * @since Kunena 6.0
      */
-    public $personalText;
+    public mixed $personalText = null;
 
     /**
      * @var mixed|void|null
      * @since Kunena 6.0
      */
-    public $usermedals;
+    public mixed $usermedals = null;
 
     /**
      * @var mixed|void|null
      * @since Kunena 6.0
      */
-    public $userpoints;
+    public mixed $userpoints = null;
 
     /**
      * @var integer|mixed|void|null
      * @since Kunena 6.0
      */
-    public $userthankyou;
+    public mixed $userthankyou = null;
 
     /**
      * @var integer|mixed|void|null
      * @since Kunena 6.0
      */
-    public $userposts;
+    public mixed $userposts = null;
 
     /**
      * @var false|mixed|stdClass|string|void|null
      * @since Kunena 6.0
      */
-    public $userranktitle;
+    public mixed $userranktitle = null;
 
     /**
      * @var false|mixed|stdClass|string|void|null
      * @since Kunena 6.0
      */
-    public $userrankimage;
+    public mixed $userrankimage = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $userkarma;
+    public mixed $userkarma = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $userkarma_minus;
+    public mixed $userkarma_minus = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $userkarma_title;
+    public mixed $userkarma_title = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $usersUrl;
+    public mixed $usersUrl = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $membersOnline;
+    public mixed $membersOnline = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $onlineList;
+    public mixed $onlineList = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $hiddenList;
+    public mixed $hiddenList = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $target;
+    public mixed $target = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $url;
+    public mixed $url = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $internal;
+    public mixed $internal = null;
 
     /**
      * @var mixed|string|void
      * @since Kunena 6.0
      */
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
     /**
      * Content to be appended after the main output.
@@ -159,7 +159,7 @@ class KunenaLayout extends KunenaBase
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $after = [];
+    protected array $after = [];
 
     /**
      * Object KunenaView
@@ -167,53 +167,53 @@ class KunenaLayout extends KunenaBase
      * @var     mixed
      * @since   Kunena 6.0
      */
-    protected $legacy;
+    protected mixed $legacy = null;
 
-    public $breadcrumb;
+    public mixed $breadcrumb = null;
 
-    public $content;
+    public mixed $content = null;
 
-    public $input;
+    public mixed $input = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $header;
+    public mixed $header = null;
 
     public $message;
 
-    public $linkUserlistAllowedToShow;
+    public mixed $linkUserlistAllowedToShow = null;
 
-    public $drafts;
+    public mixed $drafts = null;
 
-    public $unsubscribeUrl;
+    public mixed $unsubscribeUrl = null;
 
-    public $unsubscribe;
+    public mixed $unsubscribe = null;
 
-    public $ignored;
+    public mixed $ignored = null;
 
-    public $following;
+    public mixed $following = null;
 
-    public $followers;
+    public mixed $followers = null;
 
-    public $feed;
+    public mixed $feed = null;
 
-    public $entries;
+    public mixed $entries = null;
 
-    public $logFilters;
+    public mixed $logFilters = null;
 
-    public $operations;
+    public mixed $operations = null;
 
-    public $logCategories;
+    public mixed $logCategories = null;
 
-    public $collecting;
+    public mixed $collecting = null;
 
-    public $isAdmin;
+    public mixed $isAdmin = null;
 
-    public $stickyFirst;
+    public mixed $stickyFirst = null;
 
-    public $filters;
+    public mixed $filters = null;
 
-    public $filterBar;
+    public mixed $filterBar = null;
 
     /**
      * Append HTML after the layout content.

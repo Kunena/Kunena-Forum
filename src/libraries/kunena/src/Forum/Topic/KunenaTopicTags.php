@@ -35,7 +35,7 @@ abstract class KunenaTopicTags
      *
      * @since   Kunena 7.2
      */
-    public const TYPE_ALIAS = 'com_kunena.topic';
+    public const string TYPE_ALIAS = 'com_kunena.topic';
 
     /**
      * The tags of the topics which were loaded, by topic id.
@@ -43,7 +43,7 @@ abstract class KunenaTopicTags
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $topicTags = [];
+    protected static array $topicTags = [];
 
     /**
      * Remove all the tags of a topic which is deleted.

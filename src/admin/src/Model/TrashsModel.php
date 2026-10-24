@@ -36,19 +36,19 @@ class TrashsModel extends ListModel
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $internalItems = false;
+    protected bool $internalItems = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $internalItemsOrder = false;
+    protected bool $internalItemsOrder = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $internalObject = false;
+    protected bool $internalObject = false;
 
     /**
      * Constructor

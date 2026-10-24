@@ -38,37 +38,37 @@ class KunenaModel extends BaseDatabaseModel
      * @var     object JSite|JAdministrator
      * @since   Kunena 6.0
      */
-    public $app = null;
+    public mixed $app = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me = null;
+    public mixed $me = null;
 
     /**
      * @var     KunenaConfig
      * @since   Kunena 6.0
      */
-    public $config = null;
+    public mixed $config = null;
 
     /**
      * @var     object Registry
      * @since   Kunena 6.0
      */
-    public $params = [];
+    public mixed $params = [];
 
     /**
      * @var     Input
      * @since   Kunena 6.0
      */
-    protected $input = null;
+    protected mixed $input = null;
 
     /**
      * @var     InputFilter
      * @since   Kunena 6.0
      */
-    protected $filter = null;
+    protected mixed $filter = null;
 
     /**
      * @since   Kunena 6.0
@@ -79,7 +79,7 @@ class KunenaModel extends BaseDatabaseModel
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $embedded = false;
+    protected mixed $embedded = false;
 
     /**
      * @param   array                                             $config   config

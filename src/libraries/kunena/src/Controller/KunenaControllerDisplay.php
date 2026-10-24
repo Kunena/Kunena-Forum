@@ -39,43 +39,43 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
      * @var     null|KunenaLayout
      * @since   Kunena 6.0
      */
-    public $output = null;
+    public mixed $output = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $layout = 'default';
+    public mixed $layout = 'default';
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
     /**
      * @var     KunenaConfig
      * @since   Kunena 6.0
      */
-    public $config;
+    public mixed $config = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Empty';
+    protected mixed $name = 'Empty';
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $primary = false;
+    protected mixed $primary = false;
 
     /**
      * @var     Document
      * @since   Kunena 6.0
      */
-    protected $document;
+    protected mixed $document = null;
 
     /**
      * Return view as a string.

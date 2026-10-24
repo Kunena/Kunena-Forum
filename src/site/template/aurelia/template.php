@@ -41,7 +41,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
      * @var array
      * @since   Kunena 6.0
      */
-    protected $default = ['Aurelia'];
+    protected mixed $default = ['Aurelia'];
 
     /**
      * Relative paths to various file types in this template.
@@ -51,7 +51,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
      * @var array
      * @since   Kunena 6.0
      */
-    protected $pathTypes = [
+    protected mixed $pathTypes = [
         'emoticons'     => 'media/kunena/emoticons',
         'ranks'         => 'media/kunena/ranks',
         'icons'         => 'media/kunena/icons',
@@ -68,7 +68,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
      *
      * @since   Kunena 6.0
      */
-    protected $userClasses = [
+    protected array $userClasses = [
         'kwho-',
         'admin'     => 'kwho-admin',
         'globalmod' => 'kwho-globalmoderator',

@@ -43,7 +43,7 @@ class UserController extends FormController
      * @var     null|string
      * @since   Kunena 6.0
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * Constructor.

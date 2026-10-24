@@ -26,5 +26,5 @@ class SearchResultsRow extends KunenaLayout
 {
     public $message;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 }

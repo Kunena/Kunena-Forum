@@ -29,33 +29,33 @@ class TopicEditHistory extends KunenaLayout
      * @var     KunenaConfig
      * @since   Kunena 6.0
      */
-    public $config;
+    public mixed $config = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $numLink;
+    public mixed $numLink = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $history;
+    public mixed $history = null;
 
-    public $replycount;
+    public mixed $replycount = null;
 
-    public $historycount;
+    public mixed $historycount = null;
 
-    public $attachments;
+    public mixed $attachments = null;
 
-    public $inline_attachments;
+    public mixed $inline_attachments = null;
 
     public $message;
 

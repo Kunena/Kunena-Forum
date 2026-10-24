@@ -29,13 +29,13 @@ abstract class KunenaRateHelper
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @var     array  Number of ratings by topic id, loaded before in this request.
      * @since   Kunena 7.2
      */
-    protected static $_counts = [];
+    protected static array $_counts = [];
 
     /**
      * Forget the loaded number of ratings of a topic (after a new rating).

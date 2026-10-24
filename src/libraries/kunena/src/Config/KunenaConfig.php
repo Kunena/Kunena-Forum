@@ -288,7 +288,7 @@ class KunenaConfig
     /**
      * @var string
      */
-    private const COMPONENT = 'com_kunena';
+    private const string COMPONENT = 'com_kunena';
 
     /**
      * @var KunenaConfig|null

@@ -36,19 +36,19 @@ class TableKunenaKeywords extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $name = null;
+    public mixed $name = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $public_count = null;
+    public mixed $public_count = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $total_count = null;
+    public mixed $total_count = null;
 
     /**
      * @param   DatabaseDriver  $db  Database driver

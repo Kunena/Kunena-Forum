@@ -33,19 +33,19 @@ class KunenaPath extends Path
      * @var     null
      * @since   Kunena 6.0
      */
-    public static $tmpdir = null;
+    public static mixed $tmpdir = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public static $apache = null;
+    public static mixed $apache = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public static $owner = null;
+    public static mixed $owner = null;
 
     /**
      * Method to determine if script owns the path.

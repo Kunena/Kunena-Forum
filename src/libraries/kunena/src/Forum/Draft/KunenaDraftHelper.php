@@ -34,7 +34,7 @@ abstract class KunenaDraftHelper
      *
      * @since   Kunena 7.2
      */
-    public const MAX_DRAFTS = 50;
+    public const int MAX_DRAFTS = 50;
 
     /**
      * Form fields which are kept in a draft (values are the defaults the editor needs).
@@ -42,7 +42,7 @@ abstract class KunenaDraftHelper
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $defaults = [
+    protected static mixed $defaults = [
         'catid'             => 0,
         'name'              => '',
         'email'             => null,

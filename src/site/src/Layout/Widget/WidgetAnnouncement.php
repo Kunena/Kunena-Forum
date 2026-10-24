@@ -24,15 +24,15 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetAnnouncement extends KunenaLayout
 {
-    public $announcement;
+    public mixed $announcement = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $output;
+    public mixed $output = null;
 }

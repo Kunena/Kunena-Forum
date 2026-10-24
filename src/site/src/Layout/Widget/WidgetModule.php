@@ -30,9 +30,9 @@ class WidgetModule extends KunenaLayout
      * @var     null
      * @since   Kunena 6.0
      */
-    public $position = null;
+    public mixed $position = null;
 
-    public $cols;
+    public mixed $cols = null;
 
     /**
      * Renders module position.

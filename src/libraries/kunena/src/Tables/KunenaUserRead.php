@@ -34,37 +34,37 @@ class KunenaUserRead extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $user_id = null;
+    public mixed $user_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topic_id = null;
+    public mixed $topic_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $categoryId = null;
+    public mixed $categoryId = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $message_id = null;
+    public mixed $message_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $time = null;
+    public mixed $time = null;
 
     /**
      * @var     mixed
      * @since   Kunena 7.2
      */
-    public $category_id = null;
+    public mixed $category_id = null;
 
     /**
      * @param   DatabaseDriver  $db  Database driver

@@ -31,19 +31,19 @@ class UserEditUserDisplay extends UserEditDisplay
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $changeUsername;
+    public mixed $changeUsername = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $frontendForm;
+    public mixed $frontendForm = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/Edit/User';
+    protected mixed $name = 'User/Edit/User';
 
     /**
      * Load user form.

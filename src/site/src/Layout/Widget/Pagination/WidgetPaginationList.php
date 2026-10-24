@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetPaginationList extends KunenaLayout
 {
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $display;
+    public mixed $display = null;
 }

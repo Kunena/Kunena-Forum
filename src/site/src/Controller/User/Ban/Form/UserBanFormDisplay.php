@@ -33,25 +33,25 @@ class UserBanFormDisplay extends KunenaControllerDisplay
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $profile;
+    public mixed $profile = null;
 
     /**
      * @var     KunenaBan
      * @since   Kunena 6.0
      */
-    public $banInfo;
+    public mixed $banInfo = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/Ban/Form';
+    protected mixed $name = 'User/Ban/Form';
 
     /**
      * Prepare ban form.

@@ -45,13 +45,13 @@ class CategoryController extends KunenaController
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $basecategoryurl = null;
+    protected mixed $basecategoryurl = null;
 
     /**
      * Constructor.

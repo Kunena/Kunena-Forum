@@ -41,15 +41,15 @@ use RuntimeException;
  */
 class TopicListingUserDisplay extends ListDisplay
 {
-    public $state;
+    public mixed $state = null;
 
-    public $moreUri;
+    public mixed $moreUri = null;
 
-    public $embedded;
+    public mixed $embedded = null;
 
-    public $page;
+    public mixed $page = null;
 
-    public $actions;
+    public mixed $actions = null;
 
     /**
      * Prepare user's topic list.

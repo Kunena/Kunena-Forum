@@ -42,19 +42,19 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      *
      * @since   Kunena 7.2
      */
-    private const LIMIT = 25;
+    private const int LIMIT = 25;
 
     /**
      * @var     object[]
      * @since   Kunena 7.2
      */
-    public $entries = [];
+    public mixed $entries = [];
 
     /**
      * @var     KunenaPagination
      * @since   Kunena 7.2
      */
-    public $pagination;
+    public mixed $pagination = null;
 
     /**
      * Values of the filters: operation, catid and user.
@@ -62,7 +62,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * @var     array
      * @since   Kunena 7.2
      */
-    public $logFilters = ['operation' => '', 'catid' => 0, 'user' => ''];
+    public mixed $logFilters = ['operation' => '', 'catid' => 0, 'user' => ''];
 
     /**
      * The operations which are in the log, as value => label.
@@ -70,7 +70,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * @var     array
      * @since   Kunena 7.2
      */
-    public $operations = [];
+    public mixed $operations = [];
 
     /**
      * The categories the log can be filtered on, as id => name.
@@ -78,7 +78,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * @var     array
      * @since   Kunena 7.2
      */
-    public $logCategories = [];
+    public mixed $logCategories = [];
 
     /**
      * The topics of the entries which the viewer may read, by id.
@@ -86,7 +86,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * @var     array
      * @since   Kunena 7.2
      */
-    public $topics = [];
+    public mixed $topics = [];
 
     /**
      * Is the collection of moderation data switched on (the option "Collect data" of the configuration).
@@ -94,19 +94,19 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * @var     boolean
      * @since   Kunena 7.2
      */
-    public $collecting = true;
+    public mixed $collecting = true;
 
     /**
      * @var     boolean
      * @since   Kunena 7.2
      */
-    public $isAdmin = false;
+    public mixed $isAdmin = false;
 
     /**
      * @var     string
      * @since   Kunena 7.2
      */
-    protected $name = 'Topic/Modlog';
+    protected mixed $name = 'Topic/Modlog';
 
     /**
      * Load the log entries the user may see.

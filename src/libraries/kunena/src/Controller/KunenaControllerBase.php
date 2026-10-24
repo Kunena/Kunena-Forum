@@ -38,7 +38,7 @@ abstract class KunenaControllerBase implements Serializable
      * @var     AbstractApplication
      * @since   Kunena 6.0
      */
-    protected $app;
+    protected mixed $app = null;
 
     /**
      * The input object.
@@ -46,7 +46,7 @@ abstract class KunenaControllerBase implements Serializable
      * @var     Input
      * @since   Kunena 6.0
      */
-    protected $input;
+    protected mixed $input = null;
 
     /**
      * Options object.
@@ -54,7 +54,7 @@ abstract class KunenaControllerBase implements Serializable
      * @var     Registry
      * @since   Kunena 4.0
      */
-    protected $options = null;
+    protected mixed $options = null;
 
     /**
      * Instantiate the controller.

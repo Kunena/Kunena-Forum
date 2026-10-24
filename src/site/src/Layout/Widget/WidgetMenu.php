@@ -24,29 +24,29 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetMenu extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $basemenu;
+    public mixed $basemenu = null;
 
-    public $list;
+    public mixed $list = null;
 
-    public $menu;
+    public mixed $menu = null;
 
-    public $active;
+    public mixed $active = null;
 
-    public $path;
+    public mixed $path = null;
 
-    public $active_id;
+    public mixed $active_id = null;
 
-    public $showAll;
+    public mixed $showAll = null;
 
-    public $class_sfx;
+    public mixed $class_sfx = null;
 }

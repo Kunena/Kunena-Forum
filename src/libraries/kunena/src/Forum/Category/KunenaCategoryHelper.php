@@ -45,19 +45,19 @@ abstract class KunenaCategoryHelper
      * @var     KunenaCategory[]
      * @since   Kunena 6.0
      */
-    public static $_instances;
+    public static mixed $_instances = null;
 
     /**
      * @var     mixed
      * @since   Kunena 6.0
      */
-    protected static $_tree;
+    protected static mixed $_tree = null;
 
     /**
      * @var     mixed
      * @since   Kunena 6.0
      */
-    protected static $allowed;
+    protected static mixed $allowed = null;
 
     /**
      * @param   array  $parents   parents

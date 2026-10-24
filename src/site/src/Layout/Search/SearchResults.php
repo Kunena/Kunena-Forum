@@ -45,89 +45,89 @@ class SearchResults extends KunenaLayout
      * @var     KunenaCategory
      * @since   Kunena 6.0
      */
-    public $category;
+    public mixed $category = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $categoryLink;
+    public mixed $categoryLink = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $results;
+    public mixed $results = null;
 
     /**
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topic;
+    public mixed $topic = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $useravatar;
+    public mixed $useravatar = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $searchwords;
+    public mixed $searchwords = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $author;
+    public mixed $author = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $topicAuthor;
+    public mixed $topicAuthor = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $topicTime;
+    public mixed $topicTime = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $subjectHtml;
+    public mixed $subjectHtml = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $messageHtml;
+    public mixed $messageHtml = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $model;
+    public mixed $model = null;
 
-    public $total;
+    public mixed $total = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $message_ordering;
+    public mixed $message_ordering = null;
 
-    public $isModerator;
+    public mixed $isModerator = null;
 
-    public $error;
+    public mixed $error = null;
 
     /**
      * Method to display the layout of search results

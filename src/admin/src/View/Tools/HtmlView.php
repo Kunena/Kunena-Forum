@@ -37,73 +37,73 @@ class HtmlView extends BaseHtmlView
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $systemReport = [];
+    protected mixed $systemReport = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $systemReportAnonymous = [];
+    protected mixed $systemReportAnonymous = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $listTrashDelete = [];
+    protected mixed $listTrashDelete = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $forumList = [];
+    protected mixed $forumList = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $controlOptions = [];
+    protected mixed $controlOptions = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $keepSticky = [];
+    protected mixed $keepSticky = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $legacy = [];
+    protected mixed $legacy = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $conflicts = [];
+    protected mixed $conflicts = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $invalid = [];
+    protected mixed $invalid = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $catSubscribersUsers = [];
+    protected mixed $catSubscribersUsers = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $topicSubscribersUsers = [];
+    protected mixed $topicSubscribersUsers = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $catTopicSubscribers = [];
+    protected mixed $catTopicSubscribers = [];
 
     /**
      * @param   null  $tpl  tpl

@@ -33,7 +33,7 @@ abstract class KunenaMultilanguage
      *
      * @since   Kunena 7.2
      */
-    public const ALL = '*';
+    public const string ALL = '*';
 
     /**
      * The language code of the page.

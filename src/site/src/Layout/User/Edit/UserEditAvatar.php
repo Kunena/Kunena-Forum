@@ -24,31 +24,31 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserEditAvatar extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $profile;
+    public mixed $profile = null;
 
-    public $gallery;
+    public mixed $gallery = null;
 
-    public $galleries;
+    public mixed $galleries = null;
 
-    public $galleryOptions;
+    public mixed $galleryOptions = null;
 
-    public $galleryImages;
+    public mixed $galleryImages = null;
 
-    public $avatar;
+    public mixed $avatar = null;
 
-    public $galleryUri;
+    public mixed $galleryUri = null;
 
-    public $doc;
+    public mixed $doc = null;
 
-    public $wa;
+    public mixed $wa = null;
 }

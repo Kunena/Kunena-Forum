@@ -38,13 +38,13 @@ class TemplatesController extends KunenaController
      * @var     null|string
      * @since   Kunena 2.0
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * @var     array
      * @since   Kunena 2.0
      */
-    protected $locked = ['aurelia'];
+    protected mixed $locked = ['aurelia'];
 
     /**
      * Construct

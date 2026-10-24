@@ -49,37 +49,37 @@ abstract class ListDisplay extends KunenaControllerDisplay
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     array|KunenaTopic[]
      * @since   Kunena 6.0
      */
-    public $topics;
+    public mixed $topics = null;
 
     /**
      * @var     KunenaPagination
      * @since   Kunena 6.0
      */
-    public $pagination;
+    public mixed $pagination = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $allowed;
+    public mixed $allowed = null;
 
-    public $cache;
+    public mixed $cache = null;
 
-    public $catParams;
+    public mixed $catParams = null;
 
-    public $categorylist;
+    public mixed $categorylist = null;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $input;
+    public mixed $input = null;
 
     /**
      * Values of the filter bar: status, q (subject), author and language.
@@ -87,7 +87,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
      * @var     array
      * @since   Kunena 7.2
      */
-    public $filters = ['status' => '', 'q' => '', 'author' => '', 'language' => ''];
+    public mixed $filters = ['status' => '', 'q' => '', 'author' => '', 'language' => ''];
 
     /**
      * Show the filter bar above the list.
@@ -95,13 +95,13 @@ abstract class ListDisplay extends KunenaControllerDisplay
      * @var     boolean
      * @since   Kunena 7.2
      */
-    public $filterBar = false;
+    public mixed $filterBar = false;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/List';
+    protected mixed $name = 'Topic/List';
 
     /**
      * Read the filters of the filter bar (status, subject, author, and the category when the list has none) and

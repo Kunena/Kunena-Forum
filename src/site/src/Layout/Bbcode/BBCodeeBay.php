@@ -24,11 +24,11 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class BBCodeeBay extends KunenaLayout
 {
-    public $naturalurl;
+    public mixed $naturalurl = null;
 
-    public $pictureurl;
+    public mixed $pictureurl = null;
 
-    public $status;
+    public mixed $status = null;
 
-    public $title;
+    public mixed $title = null;
 }

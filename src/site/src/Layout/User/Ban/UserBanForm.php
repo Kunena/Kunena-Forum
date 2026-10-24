@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserBanForm extends KunenaLayout
 {
-    public $banInfo;
+    public mixed $banInfo = null;
 
-    public $profile;
+    public mixed $profile = null;
 }

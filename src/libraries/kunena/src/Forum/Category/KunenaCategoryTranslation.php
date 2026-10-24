@@ -32,7 +32,7 @@ abstract class KunenaCategoryTranslation
      *
      * @since   Kunena 7.2
      */
-    public const FIELDS = ['name', 'description', 'headerdesc'];
+    public const array FIELDS = ['name', 'description', 'headerdesc'];
 
     /**
      * Remove the translations of a category.

@@ -42,19 +42,19 @@ class SearchModel extends KunenaModel
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $error = null;
+    protected mixed $error = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $total = false;
+    protected mixed $total = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $messages = false;
+    protected mixed $messages = false;
 
     /**
      * @return  boolean|integer

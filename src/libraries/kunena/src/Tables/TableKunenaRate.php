@@ -29,7 +29,7 @@ class TableKunenaRate extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topic_id = null;
+    public mixed $topic_id = null;
 
     /**
      * @var     null
@@ -41,13 +41,13 @@ class TableKunenaRate extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $rate = null;
+    public mixed $rate = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $time = null;
+    public mixed $time = null;
 
     /**
      * @var     mixed

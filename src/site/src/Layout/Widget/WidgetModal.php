@@ -24,13 +24,13 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetModal extends KunenaLayout
 {
-    public $name;
+    public mixed $name = null;
 
-    public $label;
+    public mixed $label = null;
 
-    public $description;
+    public mixed $description = null;
 
     public $id;
 
-    public $form;
+    public mixed $form = null;
 }

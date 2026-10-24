@@ -24,5 +24,5 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetSocial extends KunenaLayout
 {
-    public $ktemplate;
+    public mixed $ktemplate = null;
 }

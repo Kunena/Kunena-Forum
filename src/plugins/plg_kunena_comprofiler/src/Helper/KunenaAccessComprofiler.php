@@ -34,19 +34,19 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $categories = false;
+    protected mixed $categories = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $groups = false;
+    protected mixed $groups = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $tree = [];
+    protected mixed $tree = [];
 
     /**
      * Get list of supported access types.

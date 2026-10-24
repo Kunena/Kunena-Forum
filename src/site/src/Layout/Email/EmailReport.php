@@ -24,9 +24,9 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class EmailReport extends KunenaLayout
 {
-    public $mail;
+    public mixed $mail = null;
 
-    public $title;
+    public mixed $title = null;
 
-    public $messageLink;
+    public mixed $messageLink = null;
 }

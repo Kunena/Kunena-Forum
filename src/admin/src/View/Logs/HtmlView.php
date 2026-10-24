@@ -34,7 +34,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 6.0
      */
-    protected $group;
+    protected mixed $group = null;
 
     /**
      * @return  void

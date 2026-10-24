@@ -43,13 +43,13 @@ class KunenaCategoryUser
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @var     int

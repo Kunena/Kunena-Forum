@@ -34,7 +34,7 @@ abstract class KunenaAnnouncementHelper
      * @var     KunenaAnnouncement[]
      * @since   Kunena 6.0
      */
-    public static $_instances = null;
+    public static mixed $_instances = null;
 
     /**
      * The rows of the last query, by the filter: the start and the rows.
@@ -42,7 +42,7 @@ abstract class KunenaAnnouncementHelper
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $rows = [];
+    protected static array $rows = [];
 
     /**
      * Free up memory by cleaning up all cached items.

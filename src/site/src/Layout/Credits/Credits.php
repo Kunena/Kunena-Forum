@@ -24,21 +24,21 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class Credits extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $logo;
+    public mixed $logo = null;
 
-    public $intro;
+    public mixed $intro = null;
 
-    public $memberList;
+    public mixed $memberList = null;
 
-    public $thanks;
+    public mixed $thanks = null;
 }

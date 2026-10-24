@@ -30,27 +30,27 @@ class SearchForm extends KunenaLayout
      * @var     object
      * @since   Kunena 6.0
      */
-    public $state;
+    public mixed $state = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $model;
+    public mixed $model = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $isModerator;
+    public mixed $isModerator = null;
 
-    public $error;
+    public mixed $error = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
     /**
      * Method to display the list to choose between posts or titles

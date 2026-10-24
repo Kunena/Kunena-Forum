@@ -29,7 +29,7 @@ abstract class KunenaPollHelper
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * Returns \Kunena\Forum\Libraries\Forum\Topic\Poll\Poll object.

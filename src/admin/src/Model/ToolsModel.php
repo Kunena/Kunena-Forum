@@ -46,181 +46,181 @@ class ToolsModel extends AdminModel
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $jconfigSmtpUser = [];
+    protected mixed $jconfigSmtpUser = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $jconfigFtp = [];
+    protected mixed $jconfigFtp = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $jconfigSef = [];
+    protected mixed $jconfigSef = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $jconfigSefRewrite = [];
+    protected mixed $jconfigSefRewrite = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $htaccess = [];
+    protected mixed $htaccess = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $mbstring = [];
+    protected mixed $mbstring = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $gd_info = [];
+    protected array $gd_info = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $gdSupport = [];
+    protected mixed $gdSupport = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $openssl = [];
+    protected mixed $openssl = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $json = [];
+    protected mixed $json = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $fileinfo = [];
+    protected mixed $fileinfo = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $maxExecTime = [];
+    protected mixed $maxExecTime = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $maxExecMem = [];
+    protected mixed $maxExecMem = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $fileUploads = [];
+    protected mixed $fileUploads = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $kunenaVersionInfo = [];
+    protected mixed $kunenaVersionInfo = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $ktemplate = [];
+    protected mixed $ktemplate = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $ktemplateDetails = [];
+    protected mixed $ktemplateDetails = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $jtemplateDetails = [];
+    protected mixed $jtemplateDetails = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $joomlaMenuDetails = [];
+    protected mixed $joomlaMenuDetails = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $collation = [];
+    protected mixed $collation = [];
 
     /**
      * @var     boolean
      * @since   Kunena 7.2
      */
-    protected $reportDataLoaded = false;
+    protected mixed $reportDataLoaded = false;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $kconfigSettings = [];
+    protected mixed $kconfigSettings = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $joomlaLanguages = [];
+    protected mixed $joomlaLanguages = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $plgText = [];
+    protected mixed $plgText = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $modText = [];
+    protected mixed $modText = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $thirdPartyText = [];
+    protected mixed $thirdPartyText = [];
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    protected $sefText = [];
+    protected mixed $sefText = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $integrationSettings = [];
+    protected mixed $integrationSettings = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    private $ktemplateParams = [];
+    private array|string $ktemplateParams = [];
 
     /**
      * @var CMSApplicationInterface|null
      * @since Kunena 2.0
      */
-    private $app;
+    private ?CMSApplicationInterface $app = null;
 
     /**
      * @inheritDoc

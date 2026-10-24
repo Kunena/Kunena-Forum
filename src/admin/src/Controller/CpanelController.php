@@ -34,7 +34,7 @@ class CpanelController extends FormController
      * @var     string
      * @since   Kunena 2.0.0-BETA2
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * Construct

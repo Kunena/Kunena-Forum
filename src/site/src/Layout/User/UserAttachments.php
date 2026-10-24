@@ -30,37 +30,37 @@ class UserAttachments extends KunenaLayout
      * @var     KunenaUser
      * @since   Kunena 6.1
      */
-    public $profile;
+    public mixed $profile = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.1
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     KunenaConfig
      * @since   Kunena 6.1
      */
-    public $config;
+    public mixed $config = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.1
      */
-    public $user;
+    public mixed $user = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $total;
+    public mixed $total = null;
 
-    public $attachments;
+    public mixed $attachments = null;
 
-    public $moreUri;
+    public mixed $moreUri = null;
 
-    public $template;
+    public mixed $template = null;
 }

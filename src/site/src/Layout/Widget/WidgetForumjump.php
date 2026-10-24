@@ -24,5 +24,5 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetForumJump extends KunenaLayout
 {
-    public $categorylist;
+    public mixed $categorylist = null;
 }

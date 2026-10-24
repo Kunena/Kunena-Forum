@@ -50,31 +50,31 @@ class KunenaController extends BaseController
      * @var     KunenaUser|null
      * @since   Kunena 6.0
      */
-    public $me = null;
+    public mixed $me = null;
 
     /**
      * @var     KunenaConfig|null
      * @since   Kunena 6.0
      */
-    public $config = null;
+    public mixed $config = null;
 
     /**
      * @var     KunenaProfiler
      * @since   Kunena 6.0
      */
-    public $profiler;
+    public mixed $profiler = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $format;
+    public mixed $format = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $db;
+    public mixed $db = null;
 
     /**
      * @var     CMSApplicationInterface

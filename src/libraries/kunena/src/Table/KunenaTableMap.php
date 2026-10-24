@@ -35,7 +35,7 @@ class KunenaTableMap
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_tbl = '';
+    protected mixed $_tbl = '';
 
     /**
      * Name of the primary key field in the table.
@@ -43,7 +43,7 @@ class KunenaTableMap
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_tbl_key = '';
+    protected mixed $_tbl_key = '';
 
     /**
      * Name of the mapped key field in the table.
@@ -59,7 +59,7 @@ class KunenaTableMap
      * @var     DatabaseDriver
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * Indicator that the tables have been locked.
@@ -67,21 +67,21 @@ class KunenaTableMap
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_locked = false;
+    protected mixed $_locked = false;
 
-    public $message_id;
+    public mixed $message_id = null;
 
-    public $user_id;
+    public mixed $user_id = null;
 
-    public $private_id;
+    public mixed $private_id = null;
 
-    public $read_at;
+    public mixed $read_at = null;
 
-    public $replied_at;
+    public mixed $replied_at = null;
 
-    public $deleted_at;
+    public mixed $deleted_at = null;
 
-    public $attachment_id;
+    public mixed $attachment_id = null;
 
     /**
      * Object constructor to set table and key fields.  In most cases this will

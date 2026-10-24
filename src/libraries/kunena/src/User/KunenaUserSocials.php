@@ -66,163 +66,163 @@ class KunenaUserSocials
      *
      * @since   Kunena 7.2
      */
-    public const RETIRED = ['skype', 'yim', 'google'];
+    public const array RETIRED = ['skype', 'yim', 'google'];
 
     /**
      * @var    string  x_social
      * @since  Kunena 6.4.0
      */
-    public $x_social = '';
+    public mixed $x_social = '';
 
     /**
      * @var    string  Facebook
      * @since  Kunena 6.4.0
      */
-    public $facebook = '';
+    public mixed $facebook = '';
 
     /**
      * @var    string  Myspace
      * @since  Kunena 6.4.0
      */
-    public $myspace = '';
+    public mixed $myspace = '';
 
     /**
      * @var    string  Linkedin
      * @since  Kunena 6.4.0
      */
-    public $linkedin = '';
+    public mixed $linkedin = '';
 
     /**
      * @var    string Linkedin_company
      * @since  Kunena 6.4.0
      */
-    public $linkedin_company = '';
+    public mixed $linkedin_company = '';
 
     /**
      * @var    string    Digg
      * @since  Kunena 6.4.0
      */
-    public $digg = '';
+    public mixed $digg = '';
 
     /**
      * @var    string  Github
      * @since  Kunena 6.4.0
      */
-    public $github = '';
+    public mixed $github = '';
 
     /**
      * @var    string  Microsoft
      * @since  Kunena 6.4.0
      */
-    public $microsoft = '';
+    public mixed $microsoft = '';
 
     /**
      * @var    string  Blogspot
      * @since  Kunena 6.4.0
      */
-    public $blogspot = '';
+    public mixed $blogspot = '';
 
     /**
      * @var    string  Flickr
      * @since  Kunena 6.4.0
      */
-    public $flickr = '';
+    public mixed $flickr = '';
 
     /**
      * @var    string  Instagram
      * @since  Kunena 6.4.0
      */
-    public $instagram = '';
+    public mixed $instagram = '';
 
     /**
      * @var    string  Qqsocial
      * @since  Kunena 6.4.0
      */
-    public $qqsocial = '';
+    public mixed $qqsocial = '';
 
     /**
      * @var    string  Qzone
      * @since  Kunena 6.4.0
      */
-    public $qzone = '';
+    public mixed $qzone = '';
 
     /**
      * @var    string  Weibo
      * @since  Kunena 6.4.0
      */
-    public $weibo = '';
+    public mixed $weibo = '';
 
     /**
      * @var    string  Wechat
      * @since  Kunena 6.4.0
      */
-    public $wechat = '';
+    public mixed $wechat = '';
 
     /**
      * @var    string  Vk
      * @since  Kunena 6.4.0
      */
-    public $vk = '';
+    public mixed $vk = '';
 
     /**
      * @var    string  Telegram
      * @since  Kunena 6.4.0
      */
-    public $telegram = '';
+    public mixed $telegram = '';
 
     /**
      * @var    string  Apple
      * @since  Kunena 6.4.0
      */
-    public $apple = '';
+    public mixed $apple = '';
 
     /**
      * @var    string  Vimeo
      * @since  Kunena 6.4.0
      */
-    public $vimeo = '';
+    public mixed $vimeo = '';
 
     /**
      * @var    string  Whatsapp
      * @since  Kunena 6.4.0
      */
-    public $whatsapp = '';
+    public mixed $whatsapp = '';
 
     /**
      * @var    string  Youtube
      * @since  Kunena 6.4.0
      */
-    public $youtube = '';
+    public mixed $youtube = '';
 
     /**
      * @var    string  Ok
      * @since  Kunena 6.4.0
      */
-    public $ok = '';
+    public mixed $ok = '';
 
     /**
      * @var    string  Pinterest
      * @since  Kunena 6.4.0
      */
-    public $pinterest = '';
+    public mixed $pinterest = '';
 
     /**
      * @var    string  Reddit
      * @since  Kunena 6.4.0
      */
-    public $reddit = '';
+    public mixed $reddit = '';
 
     /**
      * @var    string  Bluesky_app
      * @since  Kunena 6.4.0
      */
-    public $bluesky_app = '';
+    public mixed $bluesky_app = '';
 
     /**
      * @var    string  Threads
      * @since  Kunena 6.4.0
      */
-    public $threads = '';
+    public mixed $threads = '';
 
     protected $userid = 0;
 

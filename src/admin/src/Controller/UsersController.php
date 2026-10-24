@@ -44,13 +44,13 @@ class UsersController extends KunenaController
      * @var    string  The prefix to use with controller messages.
      * @since  1.6
      */
-    protected $textPrefix = 'COM_KUNENA_USERS';
+    protected mixed $textPrefix = 'COM_KUNENA_USERS';
 
     /**
      * @var     null|string
      * @since   Kunena 6.0
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * Constructor.

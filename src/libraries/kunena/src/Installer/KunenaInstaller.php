@@ -27,7 +27,7 @@ class KunenaInstaller
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $downgrade = ['3.1' => '3.0.95'];
+    protected static array $downgrade = ['3.1' => '3.0.95'];
 
     /**
      * @var     null

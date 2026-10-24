@@ -41,13 +41,13 @@ class CategoryDisplay extends KunenaControllerDisplay
      * @var     mixed
      * @since   Kunena 6.0
      */
-    public $category;
+    public mixed $category = null;
 
     /**
      * @var     mixed
      * @since   Kunena 6.0
      */
-    public $topics;
+    public mixed $topics = null;
 
     /**
      * Return true if layout exists.

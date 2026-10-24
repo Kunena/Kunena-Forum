@@ -39,7 +39,7 @@ class AttachmentDisplay extends KunenaControllerDisplay
      * @var KunenaUser|null
      * @since Kunena 4.0
      */
-    private $me;
+    private ?KunenaUser $me = null;
 
     /**
      * Return true if layout exists.

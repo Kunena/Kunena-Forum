@@ -24,11 +24,11 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetSearch extends KunenaLayout
 {
-    public $catid;
+    public mixed $catid = null;
 
-    public $state;
+    public mixed $state = null;
 
     public $id;
 
-    public $title;
+    public mixed $title = null;
 }

@@ -33,7 +33,7 @@ abstract class KunenaUserIgnore
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $lists = [];
+    protected static mixed $lists = [];
 
     /**
      * Can the user put the other user on his ignore list. Guests can not ignore anybody, nobody can ignore himself

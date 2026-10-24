@@ -38,7 +38,7 @@ class HtmlView extends BaseHtmlView
      * @var    Form
      * @since  4.0.0
      */
-    public $filterForm;
+    public mixed $filterForm = null;
 
     /**
      * The active search filters
@@ -46,7 +46,7 @@ class HtmlView extends BaseHtmlView
      * @var    array
      * @since  4.0.0
      */
-    public $activeFilters;
+    public mixed $activeFilters = null;
 
     /**
      * An array of items
@@ -62,14 +62,14 @@ class HtmlView extends BaseHtmlView
      * @var    Pagination
      * @since  4.0.0
      */
-    protected $pagination;
+    protected mixed $pagination = null;
 
     /**
      * The model state
      *
      * @since  6.0
      */
-    protected $state;
+    protected mixed $state = null;
 
     /**
      * Display the view

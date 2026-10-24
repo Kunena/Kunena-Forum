@@ -49,33 +49,33 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class KunenaAnnouncement extends KunenaDatabaseObject
 {
-    public $typeAlias;
+    public mixed $typeAlias = null;
 
-    public $title;
+    public mixed $title = null;
 
-    public $created_by;
+    public mixed $created_by = null;
 
-    public $sdescription;
+    public mixed $sdescription = null;
 
-    public $description;
+    public mixed $description = null;
 
-    public $created;
+    public mixed $created = null;
 
-    public $publish_up;
+    public mixed $publish_up = null;
 
-    public $publish_down;
+    public mixed $publish_down = null;
 
-    public $published;
+    public mixed $published = null;
 
-    public $ordering;
+    public mixed $ordering = null;
 
-    public $showdate;
+    public mixed $showdate = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $actions = [
+    protected static mixed $actions = [
         'none'   => [],
         'read'   => ['Read'],
         'create' => ['New', 'NotBanned', 'Write'],
@@ -87,31 +87,31 @@ class KunenaAnnouncement extends KunenaDatabaseObject
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_table = 'KunenaAnnouncements';
+    protected mixed $_table = 'KunenaAnnouncements';
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_date = null;
+    protected mixed $_date = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_author = null;
+    protected mixed $_author = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_authcache = null;
+    protected mixed $_authcache = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_authfcache = null;
+    protected mixed $_authfcache = null;
 
     /**
      * @param   mixed  $properties  properties

@@ -40,55 +40,55 @@ class KunenaRead
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @var     int
      * @since   Kunena 6.4
      */
-    public $user_id = null;
+    public mixed $user_id = null;
 
     /**
      * @var     int
      * @since   Kunena 6.4
      */
-    public $topic_id = null;
+    public mixed $topic_id = null;
 
     /**
      * @var     int
      * @since   Kunena 6.4
      */
-    public $message_id = null;
+    public mixed $message_id = null;
 
     /**
      * @var     int
      * @since   Kunena 6.4
      */
-    public $time = null;
+    public mixed $time = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $typeAlias;
+    public mixed $typeAlias = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $categoryId;
+    public mixed $categoryId = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $category_id;
+    public mixed $category_id = null;
 
     /**
      * @param   mixed  $topic  topic

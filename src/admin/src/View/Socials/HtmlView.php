@@ -32,7 +32,7 @@ class HtmlView extends BaseHtmlView
      * @var     Form
      * @since   Kunena 7.2
      */
-    protected $form;
+    protected mixed $form = null;
 
     /**
      * @param   null  $tpl  tpl

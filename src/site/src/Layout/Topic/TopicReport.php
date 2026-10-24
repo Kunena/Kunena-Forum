@@ -24,21 +24,21 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class TopicReport extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $topic;
+    public mixed $topic = null;
 
     public $message;
 
-    public $uri;
+    public mixed $uri = null;
 
-    public $category;
+    public mixed $category = null;
 }

@@ -33,13 +33,13 @@ class TopicDraftsDisplay extends KunenaControllerDisplay
      * @var     array
      * @since   Kunena 7.2
      */
-    public $drafts = [];
+    public mixed $drafts = [];
 
     /**
      * @var     string
      * @since   Kunena 7.2
      */
-    protected $name = 'Topic/Drafts';
+    protected mixed $name = 'Topic/Drafts';
 
     /**
      * Load the drafts of the current user.

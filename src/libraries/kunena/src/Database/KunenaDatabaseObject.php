@@ -44,25 +44,25 @@ abstract class KunenaDatabaseObject
      * @var     null|string
      * @since   Kunena 6.0
      */
-    protected $_name = null;
+    protected mixed $_name = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_table = null;
+    protected mixed $_table = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_saving = false;
+    protected mixed $_saving = false;
 
     /**
      * Class constructor, overridden in descendant classes.

@@ -41,49 +41,49 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/Edit';
+    protected mixed $name = 'Topic/Edit';
 
-    public $wa;
+    public mixed $wa = null;
 
-    public $doc;
+    public mixed $doc = null;
 
-    public $UserCanPostImage;
+    public mixed $UserCanPostImage = null;
 
-    public $selectcatlist;
+    public mixed $selectcatlist = null;
 
-    public $editorType;
+    public mixed $editorType = null;
 
-    public $modified_reason;
+    public mixed $modified_reason = null;
 
-    public $canSubscribe;
+    public mixed $canSubscribe = null;
 
-    public $subscriptionsChecked;
+    public mixed $subscriptionsChecked = null;
 
-    public $postAnonymous;
+    public mixed $postAnonymous = null;
 
-    public $privateMessage;
+    public mixed $privateMessage = null;
 
-    public $allowedExtensions;
+    public mixed $allowedExtensions = null;
 
-    public $attachments;
+    public mixed $attachments = null;
 
-    public $action;
+    public mixed $action = null;
 
-    public $topicIcons;
+    public mixed $topicIcons = null;
 
-    public $category;
+    public mixed $category = null;
 
-    public $topic;
+    public mixed $topic = null;
 
     public $message;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $catid;
+    public mixed $catid = null;
 
-    public $poll;
+    public mixed $poll = null;
 
     /**
      * Prepare topic edit form.

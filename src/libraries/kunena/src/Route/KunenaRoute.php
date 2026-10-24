@@ -48,7 +48,7 @@ abstract class KunenaRoute
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $views = [
+    public static array $views = [
         'attachment'   => ['layout' => 'default', 'thumb' => 0, 'download' => 0],
         'announcement' => ['layout' => 'default'],
         'category'     => ['layout' => 'default', 'catid' => '0'],
@@ -68,115 +68,115 @@ abstract class KunenaRoute
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $layouts = ['create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1];
+    public static array $layouts = ['create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $sefviews = ['' => 1, 'home' => 1, 'category' => 1, 'topic' => 1];
+    public static array $sefviews = ['' => 1, 'home' => 1, 'category' => 1, 'topic' => 1];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $parsevars = ['do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1];
+    public static array $parsevars = ['do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1];
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public static $time = 0;
+    public static mixed $time = 0;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $adminApp = false;
+    public static mixed $adminApp = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $config = false;
+    public static mixed $config = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $menus = false;
+    public static mixed $menus = false;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public static $menu = false;
+    public static mixed $menu = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $default = false;
+    public static mixed $default = false;
 
     /**
      * @var     mixed
      * @since   Kunena 6.0
      */
-    public static $active = null;
+    public static mixed $active = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $home = false;
+    public static mixed $home = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $search = false;
+    public static mixed $search = false;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public static $current = null;
+    public static mixed $current = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $childlist = false;
+    public static bool $childlist = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $subtree = [];
+    public static array $subtree = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $parent = [];
+    public static mixed $parent = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public static $uris = [];
+    public static array $uris = [];
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $urisSave = false;
+    public static mixed $urisSave = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $filtered = [];
+    protected static array $filtered = [];
 
     /**
      * @param   string|Uri|null  $uri    uri

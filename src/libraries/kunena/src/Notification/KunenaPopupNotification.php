@@ -37,17 +37,17 @@ abstract class KunenaPopupNotification
     /**
      * Messages older than this (seconds) are never shown, whatever the last message of the browser was.
      */
-    protected const MAX_AGE = 86400;
+    protected const int MAX_AGE = 86400;
 
     /**
      * Most popups of one request: the others are only counted.
      */
-    protected const MAX_ITEMS = 3;
+    protected const int MAX_ITEMS = 3;
 
     /**
      * The text (language string) of the title of the popup for each reason.
      */
-    protected const TITLES = [
+    protected const array TITLES = [
         'mention'    => 'COM_KUNENA_POPUP_MENTION',
         'reply'      => 'COM_KUNENA_POPUP_REPLY_OWN',
         'subscribed' => 'COM_KUNENA_POPUP_REPLY_SUBSCRIBED',

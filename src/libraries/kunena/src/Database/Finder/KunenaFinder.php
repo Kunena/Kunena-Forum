@@ -38,43 +38,43 @@ abstract class KunenaFinder
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $table;
+    protected mixed $table = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $primaryKey = 'id';
+    protected mixed $primaryKey = 'id';
 
     /**
      * @var     DatabaseQuery
      * @since   Kunena 6.0
      */
-    protected $query;
+    protected mixed $query = null;
 
     /**
      * @var     DatabaseDriver
      * @since   Kunena 6.0
      */
-    protected $db;
+    protected mixed $db = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $start = 0;
+    protected mixed $start = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $limit = 20;
+    protected mixed $limit = 20;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $skip = false;
+    protected mixed $skip = false;
 
     /**
      * Constructor.

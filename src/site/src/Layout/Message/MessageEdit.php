@@ -26,5 +26,5 @@ class MessageEdit extends KunenaLayout
 {
     public $message;
 
-    public $captchaEnabled;
+    public mixed $captchaEnabled = null;
 }

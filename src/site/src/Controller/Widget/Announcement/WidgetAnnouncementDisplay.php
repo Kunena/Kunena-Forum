@@ -31,13 +31,13 @@ class WidgetAnnouncementDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Widget/Announcement';
+    protected mixed $name = 'Widget/Announcement';
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $announcement;
+    public mixed $announcement = null;
 
     /**
      * Prepare announcement box display.

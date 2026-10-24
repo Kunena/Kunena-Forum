@@ -24,5 +24,5 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserItemSocials extends KunenaLayout
 {
-    public $socials;
+    public mixed $socials = null;
 }

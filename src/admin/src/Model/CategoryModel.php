@@ -32,7 +32,7 @@ class CategoryModel extends CategoriesModel
      * @var     KunenaCategory
      * @since   Kunena 6.0
      */
-    protected $internalAdminCategory = false;
+    protected mixed $internalAdminCategory = false;
 
     /**
      * @return  boolean|KunenaCategory|void

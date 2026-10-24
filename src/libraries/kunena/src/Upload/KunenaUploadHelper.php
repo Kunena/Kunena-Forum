@@ -30,7 +30,7 @@ class KunenaUploadHelper
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @since   Kunena 6.0

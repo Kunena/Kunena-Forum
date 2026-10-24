@@ -41,61 +41,61 @@ class TableKunenaAnnouncements extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $title = null;
+    public mixed $title = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $created_by = null;
+    public mixed $created_by = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $sdescription = null;
+    public mixed $sdescription = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $description = null;
+    public mixed $description = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $created = null;
+    public mixed $created = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $publish_up = null;
+    public mixed $publish_up = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $publish_down = null;
+    public mixed $publish_down = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $published = null;
+    public mixed $published = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $ordering = null;
+    public mixed $ordering = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $showdate = null;
+    public mixed $showdate = null;
 
     /**
      * @param   DatabaseDriver  $db  Database driver

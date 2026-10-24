@@ -92,7 +92,7 @@ class KunenaMessage extends KunenaDatabaseObject
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $actions = [
+    protected static mixed $actions = [
         'none'                   => [],
         'read'                   => ['Read'],
         'reply'                  => ['Read', 'NotHold', 'GuestWrite'],
@@ -121,39 +121,39 @@ class KunenaMessage extends KunenaDatabaseObject
      * @var     array
      * @since   Kunena 6.0
      */
-    public $thankyou = [];
+    public mixed $thankyou = [];
 
-    public $replynum;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.4
-     */
-    public $typeAlias;
+    public mixed $replynum = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $parent;
+    public mixed $typeAlias = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $thread;
+    public mixed $parent = null;
+
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public mixed $thread = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $catid;
+    public mixed $catid = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $name;
+    public mixed $name = null;
 
     /**
      * @var     integer
@@ -165,91 +165,91 @@ class KunenaMessage extends KunenaDatabaseObject
      * @var     string
      * @since   Kunena 6.4
      */
-    public $email;
+    public mixed $email = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $subject;
+    public mixed $subject = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $time;
+    public mixed $time = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $ip;
+    public mixed $ip = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $topic_emoticon;
+    public mixed $topic_emoticon = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $locked;
+    public mixed $locked = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $hold;
+    public mixed $hold = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $ordering;
+    public mixed $ordering = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $hits;
+    public mixed $hits = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $moved;
+    public mixed $moved = null;
 
     /**
      * @var     integer
      * @since   Kunena 7.0
      */
-    public $deleted_time;
+    public mixed $deleted_time = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $modified_by;
+    public mixed $modified_by = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $modified_time;
+    public mixed $modified_time = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $modified_reason;
+    public mixed $modified_reason = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $params;
+    public mixed $params = null;
 
     /**
      * @var     string
@@ -261,25 +261,25 @@ class KunenaMessage extends KunenaDatabaseObject
      * @var     string
      * @since   Kunena 6.4
      */
-    public $pm;
+    public mixed $pm = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_table = 'KunenaMessages';
+    protected mixed $_table = 'KunenaMessages';
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @var     KunenaConfig|null
      * @since   Kunena 7.1
      */
-    protected $_config = null;
+    protected mixed $_config = null;
 
     /**
      * @var     KunenaAttachment[]
@@ -291,7 +291,7 @@ class KunenaMessage extends KunenaDatabaseObject
      * @var     KunenaAttachment[]
      * @since   Kunena 6.0
      */
-    protected $_attachments_del = [];
+    protected mixed $_attachments_del = [];
 
     /**
      * @var     null
@@ -303,43 +303,43 @@ class KunenaMessage extends KunenaDatabaseObject
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $_hold = 1;
+    protected mixed $_hold = 1;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $_thread = 0;
+    protected mixed $_thread = 0;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_authcache = [];
+    protected mixed $_authcache = [];
 
     /**
      * @var boolean
      * @since Kunena 5.2
      */
-    protected $_approved = false;
+    protected mixed $_approved = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_authtcache = [];
+    protected mixed $_authtcache = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_authfcache = [];
+    protected mixed $_authfcache = [];
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $urlNotification;
+    protected mixed $urlNotification = null;
 
     /**
      * @param   mixed  $properties  properties

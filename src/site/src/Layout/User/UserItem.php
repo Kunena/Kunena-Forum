@@ -43,51 +43,51 @@ class UserItem extends KunenaLayout
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $profile;
+    public mixed $profile = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     KunenaConfig
      * @since   Kunena 6.0
      */
-    public $config;
+    public mixed $config = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $user;
+    public mixed $user = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $tabs;
+    public mixed $tabs = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $candisplaymail;
+    public mixed $candisplaymail = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $points;
+    public mixed $points = null;
 
-    public $medals;
+    public mixed $medals = null;
 
-    public $private;
+    public mixed $private = null;
 
-    public $socials;
+    public mixed $socials = null;
 
-    public $avatar;
+    public mixed $avatar = null;
 
-    public $banInfo;
+    public mixed $banInfo = null;
 
     /**
      * Method to get tabs for user profile

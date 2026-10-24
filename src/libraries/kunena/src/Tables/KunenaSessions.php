@@ -39,37 +39,37 @@ class KunenaSessions extends KunenaTable
      * @var     string
      * @since   Kunena 6.0
      */
-    public $allowed = 'na';
+    public mixed $allowed = 'na';
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $allowedcats = null;
+    public mixed $allowedcats = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $lasttime = 0;
+    public mixed $lasttime = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $readtopics = 0;
+    public mixed $readtopics = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $currvisit = 0;
+    public mixed $currvisit = 0;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * TableKunenaSessions constructor.

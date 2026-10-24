@@ -40,13 +40,13 @@ class KunenaRate
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $topic_id = 0;
+    public mixed $topic_id = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $rate = 0;
+    public mixed $rate = 0;
 
     /**
      * @var     null
@@ -58,7 +58,7 @@ class KunenaRate
      * @var     null
      * @since   Kunena 6.0
      */
-    public $time = null;
+    public mixed $time = null;
 
     /**
      * @var     null
@@ -70,25 +70,25 @@ class KunenaRate
      * @var     null
      * @since   Kunena 7.0
      */
-    public $typeAlias = null;
+    public mixed $typeAlias = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $users = [];
+    protected mixed $users = [];
 
     /**
      * @param   int  $identifier  identifier

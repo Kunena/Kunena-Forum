@@ -29,7 +29,7 @@ class KunenaIntegrationComprofiler
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected static $open = false;
+    protected static mixed $open = false;
 
     /**
      * @return  void

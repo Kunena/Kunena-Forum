@@ -42,43 +42,43 @@ class TableKunenaCategories extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $parentid = null;
+    public mixed $parentid = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $name = null;
+    public mixed $name = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $alias = null;
+    public mixed $alias = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $icon = null;
+    public mixed $icon = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $icon_id = null;
+    public mixed $icon_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $locked = null;
+    public mixed $locked = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $accesstype = null;
+    public mixed $accesstype = null;
 
     /**
      * @var     integer
@@ -90,163 +90,163 @@ class TableKunenaCategories extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $pubAccess = null;
+    public mixed $pubAccess = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $pubRecurse = null;
+    public mixed $pubRecurse = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $adminAccess = null;
+    public mixed $adminAccess = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $adminRecurse = null;
+    public mixed $adminRecurse = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $ordering = null;
+    public mixed $ordering = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $published = null;
+    public mixed $published = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $channels = null;
+    public mixed $channels = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $checked_out = null;
+    public mixed $checked_out = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $checked_out_time = null;
+    public mixed $checked_out_time = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $review = null;
+    public mixed $review = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $allowAnonymous = null;
+    public mixed $allowAnonymous = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $postAnonymous = null;
+    public mixed $postAnonymous = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $hits = null;
+    public mixed $hits = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $description = null;
+    public mixed $description = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $headerdesc = null;
+    public mixed $headerdesc = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $class_sfx = null;
+    public mixed $class_sfx = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $allowPolls = null;
+    public mixed $allowPolls = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topicOrdering = null;
+    public mixed $topicOrdering = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $iconset = null;
+    public mixed $iconset = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $numTopics = null;
+    public mixed $numTopics = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $numPosts = null;
+    public mixed $numPosts = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $last_topic_id = null;
+    public mixed $last_topic_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $last_post_id = null;
+    public mixed $last_post_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $last_post_time = null;
+    public mixed $last_post_time = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $params = null;
+    public mixed $params = null;
 
     /**
      * @var     null
      * @since   Kunena 5.1.0
      */
-    public $topictemplate = null;
+    public mixed $topictemplate = null;
 
     /**
      * @var     mixed
      * @since   Kunena 7.2
      */
-    public $allowRatings = null;
+    public mixed $allowRatings = null;
 
     /**
      * @param   DatabaseDriver  $db  Database driver

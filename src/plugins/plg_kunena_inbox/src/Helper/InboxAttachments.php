@@ -38,7 +38,7 @@ class InboxAttachments
      * @var     string[]
      * @since   Kunena 7.2
      */
-    protected const FORBIDDEN = ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'pht', 'inc', 'cgi', 'pl', 'py', 'sh', 'exe', 'bat', 'cmd', 'com', 'js', 'html', 'htm', 'xhtml', 'svg', 'htaccess', 'ini'];
+    protected const array FORBIDDEN = ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'pht', 'inc', 'cgi', 'pl', 'py', 'sh', 'exe', 'bat', 'cmd', 'com', 'js', 'html', 'htm', 'xhtml', 'svg', 'htaccess', 'ini'];
 
     /**
      * @return  DatabaseInterface

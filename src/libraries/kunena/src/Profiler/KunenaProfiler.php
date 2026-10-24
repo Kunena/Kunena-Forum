@@ -31,19 +31,19 @@ class KunenaProfiler extends Profiler
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @var     boolean
      * @since   Kunena 7.2
      */
-    protected static $cssPrinted = false;
+    protected static mixed $cssPrinted = false;
 
     /**
      * @var     array| KunenaProfilerItem[]
      * @since   Kunena 6.0
      */
-    protected $_heap = [];
+    protected array $_heap = [];
 
     /**
      * Collect the database queries which were recorded by the query monitor.
@@ -721,63 +721,63 @@ class KunenaProfilerItem
      * @var array|KunenaProfilerItem[]
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $start = [];
+    public mixed $start = [];
     /**
      * @var string
      * @since Kunena 6.0
      */
-    public $name;
+    public mixed $name = null;
     /**
      * @var float
      * @since Kunena 6.0
      */
-    public $total;
+    public mixed $total = null;
     /**
      * @var int
      * @since Kunena 6.0
      */
-    public $calls;
+    public mixed $calls = null;
     /**
      * @var float
      * @since Kunena 6.0
      */
-    private $external;
+    private ?float $external = null;
 
     /**
      * @var     float  Net memory (bytes) which was allocated during the profiled calls.
      * @since   Kunena 7.2
      */
-    public $memory = 0.0;
+    public mixed $memory = 0.0;
 
     /**
      * @var     array  The single calls: [start in ms since the start of the request, duration in ms, name of the caller]; the first 300.
      * @since   Kunena 7.2
      */
-    public $log = [];
+    public array $log = [];
 
     /**
      * @var     array  Number of calls by the name of the profiled item which made the call.
      * @since   Kunena 7.2
      */
-    public $callers = [];
+    public array $callers = [];
 
     /**
      * @var     array  Callers of the open calls.
      * @since   Kunena 7.2
      */
-    protected $openCallers = [];
+    protected array $openCallers = [];
 
     /**
      * @var     array  Memory usage at the start of the open calls.
      * @since   Kunena 7.2
      */
-    protected $memoryStart = [];
+    protected array $memoryStart = [];
 
     /**
      * @param   string  $name  name

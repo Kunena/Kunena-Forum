@@ -24,49 +24,49 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class MessageItem extends KunenaLayout
 {
-    public $profile;
+    public mixed $profile = null;
 
-    public $reportMessageLink;
+    public mixed $reportMessageLink = null;
 
-    public $category;
+    public mixed $category = null;
 
-    public $ipLink;
+    public mixed $ipLink = null;
 
-    public $location;
+    public mixed $location = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $config;
+    public mixed $config = null;
 
     public $message;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $detail;
+    public mixed $detail = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $candisplaymail;
+    public mixed $candisplaymail = null;
 
-    public $captchaEnabled;
+    public mixed $captchaEnabled = null;
 
-    public $thankyou;
+    public mixed $thankyou = null;
 
-    public $total_thankyou;
+    public mixed $total_thankyou = null;
 
-    public $more_thankyou;
+    public mixed $more_thankyou = null;
 
-    public $thankyou_delete;
+    public mixed $thankyou_delete = null;
 
-    public $numLink;
+    public mixed $numLink = null;
 
-    public $pmHasBody;
+    public mixed $pmHasBody = null;
 
     /**
      * Check if the guest, moderator or registred can see attachments

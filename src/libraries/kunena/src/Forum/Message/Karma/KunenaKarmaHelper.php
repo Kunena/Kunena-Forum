@@ -28,7 +28,7 @@ abstract class KunenaKarmaHelper
      * @var     array
      * @since   Kunena 6.2
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * Returns \Kunena\Forum\Libraries\Forum\Topic\TopicRate object

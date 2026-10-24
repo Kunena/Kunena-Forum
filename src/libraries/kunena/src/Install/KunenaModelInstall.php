@@ -80,75 +80,75 @@ class KunenaModelInstall extends BaseDatabaseModel
      * @var     array|null
      * @since   Kunena 6.0
      */
-    public $steps = null;
+    public mixed $steps = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_versionprefix = false;
+    protected mixed $_versionprefix = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_installed = [];
+    protected mixed $_installed = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_versions = [];
+    protected array $_versions = [];
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_action = false;
+    protected mixed $_action = false;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_errormsg = null;
+    protected mixed $_errormsg = null;
 
     /**
      * @var     array|null
      * @since   Kunena 6.0
      */
-    protected $_versiontablearray = null;
+    protected mixed $_versiontablearray = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_versionarray = null;
+    protected mixed $_versionarray = null;
 
-    private $tables;
+    private ?array $tables = null;
 
     /**
      * @var DatabaseDriver|null
      * @since Kunena 6.0
      */
-    private $db;
+    private ?DatabaseDriver $db = null;
 
     /**
      * @var array
      * @since Kunena 6.0
      */
-    private $_sbVersions;
+    private ?array $_sbVersions = null;
 
     /**
      * @var array
      * @since Kunena 6.0
      */
-    private $_fbVersions;
+    private ?array $_fbVersions = null;
 
     /**
      * @var null[][]
      * @since Kunena 6.0
      */
-    private $_kVersions;
+    private ?array $_kVersions = null;
 
     /**
      * @throws  Exception

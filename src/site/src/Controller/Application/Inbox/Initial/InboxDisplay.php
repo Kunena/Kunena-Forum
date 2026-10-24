@@ -38,13 +38,13 @@ class InboxDisplay extends Display
      * @var     string
      * @since   Kunena 7.2
      */
-    public $header = '';
+    public mixed $header = '';
 
     /**
      * @var     string
      * @since   Kunena 7.2
      */
-    public $content = '';
+    public mixed $content = '';
 
     /**
      * Return the page with the inbox.

@@ -42,51 +42,51 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
      * @var     null
      * @since   Kunena 6.0
      */
-    public $captchaHtml = null;
+    public mixed $captchaHtml = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/Edit';
+    protected mixed $name = 'Topic/Edit';
 
-    public $me;
+    public mixed $me = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $wa;
+    public mixed $wa = null;
 
-    public $doc;
+    public mixed $doc = null;
 
-    public $UserCanPostImage;
+    public mixed $UserCanPostImage = null;
 
-    public $selectcatlist;
+    public mixed $selectcatlist = null;
 
-    public $editorType;
+    public mixed $editorType = null;
 
-    public $canSubscribe;
+    public mixed $canSubscribe = null;
 
-    public $subscriptionsChecked;
+    public mixed $subscriptionsChecked = null;
 
-    public $postAnonymous;
+    public mixed $postAnonymous = null;
 
-    public $allowedExtensions;
+    public mixed $allowedExtensions = null;
 
-    public $privateMessage;
+    public mixed $privateMessage = null;
 
-    public $action;
+    public mixed $action = null;
 
     public $message;
 
-    public $topicIcons;
+    public mixed $topicIcons = null;
 
-    public $captchaEnabled;
+    public mixed $captchaEnabled = null;
 
-    public $category;
+    public mixed $category = null;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $captchaDisplay;
+    public mixed $captchaDisplay = null;
 
     /**
      * Prepare topic reply form.

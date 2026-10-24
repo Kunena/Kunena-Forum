@@ -28,7 +28,7 @@ class KunenaExceptionAuthorise extends RuntimeException
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $responseCodes = [
+    protected array $responseCodes = [
         400 => '400 Bad Request',
         401 => '401 Unauthorized',
         403 => '403 Forbidden',

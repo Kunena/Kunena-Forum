@@ -29,31 +29,31 @@ class CategoryManage extends KunenaLayout
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $total;
+    public mixed $total = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $state;
+    public mixed $state = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $topics;
+    public mixed $topics = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $lists;
+    public mixed $lists = null;
 
     /**
      * @var     object
      * @since   Kunena 7.1
      */
-    public $moderators;
+    public mixed $moderators = null;
 
     /**
      * Method to return a KunenaPagination object

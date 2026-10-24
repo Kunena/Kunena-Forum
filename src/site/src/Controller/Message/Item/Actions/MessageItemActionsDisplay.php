@@ -47,7 +47,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topic;
+    public mixed $topic = null;
 
     /**
      * @var     string
@@ -59,23 +59,23 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
      * @var     array
      * @since   Kunena 6.0
      */
-    public $messageButtons;
+    public mixed $messageButtons = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Message/Item/Actions';
+    protected mixed $name = 'Message/Item/Actions';
 
-    public $category;
+    public mixed $category = null;
 
-    public $message_closed;
+    public mixed $message_closed = null;
 
-    public $quickReply;
+    public mixed $quickReply = null;
 
-    public $url;
+    public mixed $url = null;
 
-    public $ipLink;
+    public mixed $ipLink = null;
 
     /**
      * Prepare message actions display.

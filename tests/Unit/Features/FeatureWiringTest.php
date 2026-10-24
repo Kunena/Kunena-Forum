@@ -65,7 +65,7 @@ class FeatureWiringTest extends UnitTestCase
     public function testTheCardOfALink(): void
     {
         $this->assertFileHas(self::AURELIA . '/layouts/bbcode/linkcard/default.php', 'kbbcode-linkcard', 'referrerpolicy="no-referrer"', 'loading="lazy"', 'rel="nofollow noopener noreferrer"');
-        $this->assertFileHas('src/site/src/Layout/Bbcode/BbcodeLinkcard.php', 'public $url;', 'public $title;', 'public $description;', 'public $image;', 'public $site;');
+        $this->assertFileHas('src/site/src/Layout/Bbcode/BbcodeLinkcard.php', 'public mixed $url = null;', 'public mixed $title = null;', 'public mixed $description = null;', 'public mixed $image = null;', 'public mixed $site = null;');
 
         $parser = Files::read('src/libraries/kunena/src/BBCode/KunenaBBCode.php');
 

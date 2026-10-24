@@ -24,5 +24,5 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class BbcodeImage extends KunenaLayout
 {
-    public $title;
+    public mixed $title = null;
 }

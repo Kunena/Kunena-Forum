@@ -38,11 +38,11 @@ use RuntimeException;
  */
 class TopicListingRecentDisplay extends ListDisplay
 {
-    public $state;
+    public mixed $state = null;
 
-    public $embedded;
+    public mixed $embedded = null;
 
-    public $actions;
+    public mixed $actions = null;
 
     /**
      * Prepare recent topics list.

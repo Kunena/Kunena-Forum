@@ -72,7 +72,7 @@ use stdClass;
  */
 class UserController extends KunenaController
 {
-    public $user;
+    public mixed $user = null;
 
     /**
      * @param   bool  $cachable   catchable

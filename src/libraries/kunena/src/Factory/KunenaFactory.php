@@ -42,7 +42,7 @@ abstract class KunenaFactory
      * @var     void
      * @since   Kunena 6.0
      */
-    public static $session = null;
+    public static mixed $session = null;
 
     /**
      * Get Kunena activity integration object

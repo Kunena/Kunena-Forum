@@ -26,49 +26,49 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class TopicList extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $topics;
+    public mixed $topics = null;
 
-    public $allowed;
+    public mixed $allowed = null;
 
-    public $cache;
+    public mixed $cache = null;
 
-    public $catParams;
+    public mixed $catParams = null;
 
-    public $categorylist;
+    public mixed $categorylist = null;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $embedded;
+    public mixed $embedded = null;
 
-    public $actions;
+    public mixed $actions = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $moreUri;
+    public mixed $moreUri = null;
 
-    public $page;
+    public mixed $page = null;
 
-    public $model;
+    public mixed $model = null;
 
-    public $access;
+    public mixed $access = null;
 
-    public $params;
+    public mixed $params = null;
 
-    public $mesIds;
+    public mixed $mesIds = null;
 
     /**
      * Method to return HTML select list for time filter

@@ -35,7 +35,7 @@ abstract class KunenaUserBadges
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $cache = [];
+    protected static mixed $cache = [];
 
     /**
      * The badges of a user: the ones of the Joomla user groups of the user and of the rank of the user.

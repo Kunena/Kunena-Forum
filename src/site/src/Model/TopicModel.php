@@ -41,13 +41,13 @@ class TopicModel extends KunenaModel
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $topics = false;
+    protected mixed $topics = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $messages = false;
+    protected mixed $messages = false;
 
     /**
      * @var     boolean
@@ -59,7 +59,7 @@ class TopicModel extends KunenaModel
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $topic = false;
+    protected mixed $topic = false;
 
     /**
      * @return  array|boolean|KunenaMessage[]

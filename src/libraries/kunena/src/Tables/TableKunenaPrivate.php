@@ -40,49 +40,49 @@ class TableKunenaPrivate extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $parentid = null;
+    public mixed $parentid = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $author_id = null;
+    public mixed $author_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $created_at = null;
+    public mixed $created_at = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $attachments = null;
+    public mixed $attachments = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $subject = null;
+    public mixed $subject = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $body = null;
+    public mixed $body = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $params = null;
+    public mixed $params = null;
 
     /**
      * @var     mixed
      * @since   Kunena 7.2
      */
-    public $parent_id = null;
+    public mixed $parent_id = null;
 
     /**
      * @param   DatabaseDriver  $db  Database driver

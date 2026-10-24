@@ -32,13 +32,13 @@ class KunenaUserFinder extends KunenaFinder
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $table = '#__users';
+    protected mixed $table = '#__users';
 
     /**
      * @var     KunenaConfig|mixed
      * @since   Kunena 6.0
      */
-    protected $config;
+    protected mixed $config = null;
 
     /**
      * Constructor.

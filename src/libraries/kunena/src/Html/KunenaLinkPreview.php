@@ -34,19 +34,19 @@ abstract class KunenaLinkPreview
     /**
      * The card is kept for a week, a page without a card (or which did not answer) is asked again after a day.
      */
-    protected const TTL           = 7 * 86400;
-    protected const FAILED_TTL    = 86400;
+    protected const int TTL           = 7 * 86400;
+    protected const int FAILED_TTL    = 86400;
 
     /**
      * Pages which are read in one request: the cards of the cache are free, a new page waits for the other site.
      */
-    protected const MAX_FETCHES   = 3;
+    protected const int MAX_FETCHES   = 3;
 
     /**
      * @var     integer
      * @since   Kunena 7.2
      */
-    protected static $fetches = 0;
+    protected static mixed $fetches = 0;
 
     /**
      * The address of the picture of the page as an absolute http(s) address, or an empty text.

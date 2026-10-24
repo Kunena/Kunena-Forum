@@ -34,16 +34,16 @@ class HtmlView extends BaseHtmlView
      * @var     array|KunenaCategory[]
      * @since   Kunena 6.0
      */
-    public $category = [];
+    public mixed $category = [];
 
-    public $options;
+    public mixed $options = null;
 
     /**
      * The model state
      *
      * @since  6.0
      */
-    protected $state;
+    protected mixed $state = null;
 
     /**
      * @return  void

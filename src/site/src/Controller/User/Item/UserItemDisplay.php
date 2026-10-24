@@ -41,55 +41,55 @@ class UserItemDisplay extends KunenaControllerDisplay
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     User
      * @since   Kunena 6.0
      */
-    public $user;
+    public mixed $user = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $profile;
+    public mixed $profile = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $tabs;
+    public mixed $tabs = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/Item';
+    protected mixed $name = 'User/Item';
 
-    public $state;
+    public mixed $state = null;
 
-    public $candisplaymail;
+    public mixed $candisplaymail = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $points;
+    public mixed $points = null;
 
-    public $medals;
+    public mixed $medals = null;
 
-    public $private;
+    public mixed $private = null;
 
-    public $avatar;
+    public mixed $avatar = null;
 
-    public $banInfo;
+    public mixed $banInfo = null;
 
-    public $socials;
+    public mixed $socials = null;
 
     /**
      * Load user profile.

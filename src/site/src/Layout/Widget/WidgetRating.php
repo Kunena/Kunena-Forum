@@ -24,11 +24,11 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetRating extends KunenaLayout
 {
-    public $config;
+    public mixed $config = null;
 
-    public $reviewCount;
+    public mixed $reviewCount = null;
 
-    public $category;
+    public mixed $category = null;
 
-    public $topic;
+    public mixed $topic = null;
 }

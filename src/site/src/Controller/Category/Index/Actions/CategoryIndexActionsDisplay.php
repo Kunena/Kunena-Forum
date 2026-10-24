@@ -40,25 +40,25 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
      * @var     mixed
      * @since   Kunena 6.0
      */
-    public $template;
+    public mixed $template = null;
 
     /**
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $category;
+    public mixed $category = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $categoryButtons;
+    public mixed $categoryButtons = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Category/Index/Actions';
+    protected mixed $name = 'Category/Index/Actions';
 
     /**
      * Prepare message actions display.

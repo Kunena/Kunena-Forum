@@ -97,7 +97,7 @@ class KunenaCategory extends KunenaDatabaseObject
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $actions = [
+    protected static mixed $actions = [
         'none'                              => [],
         'read'                              => ['Read'],
         'subscribe'                         => ['Read', 'CatSubscribe', 'NotBanned', 'NotSection'],
@@ -151,139 +151,139 @@ class KunenaCategory extends KunenaDatabaseObject
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $level = 0;
+    public mixed $level = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $parentid;
+    public mixed $parentid = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $published;
+    public mixed $published = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $numTopics;
+    public mixed $numTopics = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $numPosts;
+    public mixed $numPosts = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $last_post_time;
+    public mixed $last_post_time = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $checked_out;
+    public mixed $checked_out = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $name;
+    public mixed $name = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $alias;
+    public mixed $alias = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $accessname;
+    public mixed $accessname = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $accesstype;
+    public mixed $accesstype = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $locked;
+    public mixed $locked = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $indent;
+    public mixed $indent = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $icon;
+    public mixed $icon = null;
 
     /**
      * @var     int
      * @since   Kunena 6.0
      */
-    public $icon_id;
+    public mixed $icon_id = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $class_sfx;
+    public mixed $class_sfx = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $access;
+    public mixed $access = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $review;
+    public mixed $review = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $allowPolls;
+    public mixed $allowPolls = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $allowAnonymous;
+    public mixed $allowAnonymous = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $postAnonymous;
+    public mixed $postAnonymous = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $topicOrdering;
+    public mixed $topicOrdering = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $allowRatings;
+    public mixed $allowRatings = null;
 
     /**
      * The language of the category: all (*) or the code of a content language of Joomla.
@@ -291,7 +291,7 @@ class KunenaCategory extends KunenaDatabaseObject
      * @var     string
      * @since   Kunena 7.2
      */
-    public $language = '*';
+    public mixed $language = '*';
 
     /**
      * The original values of the fields which got a translation for the language of the page (name, description and
@@ -300,145 +300,145 @@ class KunenaCategory extends KunenaDatabaseObject
      * @var     array
      * @since   Kunena 7.2
      */
-    protected $_translated = [];
+    protected mixed $_translated = [];
 
     /**
      * @var boolean|string|void
      * @since Kunena 6.0
      */
-    public $parent;
+    public mixed $parent = null;
 
     /**
      * @var boolean|string|void
      * @since Kunena 6.0
      */
-    public $rssURL;
+    public mixed $rssURL = null;
 
     /**
      * @var array
      * @since Kunena 6.0
      */
-    public $moderators;
+    public mixed $moderators = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $params;
+    public mixed $params = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $typeAlias;
+    public mixed $typeAlias = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $pubAccess;
+    public mixed $pubAccess = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $pubRecurse;
+    public mixed $pubRecurse = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $adminAccess;
+    public mixed $adminAccess = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $adminRecurse;
+    public mixed $adminRecurse = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $ordering;
+    public mixed $ordering = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $channels;
+    public mixed $channels = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $checked_out_time;
+    public mixed $checked_out_time = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $hits;
+    public mixed $hits = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $description;
+    public mixed $description = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $headerdesc;
+    public mixed $headerdesc = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $iconset;
+    public mixed $iconset = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $last_topic_id;
+    public mixed $last_topic_id = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $last_post_id;
+    public mixed $last_post_id = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $topictemplate;
+    public mixed $topictemplate = null;
 
     /**
      * @var     string
      * @since   Kunena 7.0.6
      */
-    public $aliases_all;
+    public mixed $aliases_all = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $authorised = [];
+    protected mixed $authorised = [];
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_aliases = null;
+    protected mixed $_aliases = null;
 
     /**
      * @var     mixed|null
      * @since   Kunena 6.0
      */
-    protected $_alias = null;
+    protected mixed $_alias = null;
 
     /**
      * Is the alias made from the name (the alias was empty when the category was saved)?
@@ -446,61 +446,61 @@ class KunenaCategory extends KunenaDatabaseObject
      * @var     boolean
      * @since   Kunena 7.2
      */
-    protected $autoAlias = false;
+    protected mixed $autoAlias = false;
 
     /**
      * @var     false|array
      * @since   Kunena 6.0
      */
-    protected $_channels = false;
+    protected mixed $_channels = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_topics = false;
+    protected mixed $_topics = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_posts = false;
+    protected mixed $_posts = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_lastcat = false;
+    protected mixed $_lastcat = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_authcache = [];
+    protected mixed $_authcache = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_authfcache = [];
+    protected mixed $_authfcache = [];
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $_new = null;
+    protected mixed $_new = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_table = 'KunenaCategories';
+    protected mixed $_table = 'KunenaCategories';
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $hold;
+    protected mixed $hold = null;
 
     /**
      * @var     boolean

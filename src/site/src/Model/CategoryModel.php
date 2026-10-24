@@ -41,13 +41,13 @@ class CategoryModel extends CategoriesModel
      * @var     boolean|array
      * @since   Kunena 6.0
      */
-    protected $topics = false;
+    protected mixed $topics = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $pending = [];
+    protected array $pending = [];
 
     /**
      * @var     boolean
@@ -59,19 +59,19 @@ class CategoryModel extends CategoriesModel
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $topicActions = false;
+    protected mixed $topicActions = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $actionMove = false;
+    protected mixed $actionMove = false;
 
     /**
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    protected $total;
+    protected mixed $total = null;
 
     /**
      * @return  boolean

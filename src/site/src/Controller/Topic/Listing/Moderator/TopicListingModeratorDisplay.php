@@ -35,21 +35,21 @@ use RuntimeException;
  */
 class TopicListingModeratorDisplay extends ListDisplay
 {
-    public $model;
+    public mixed $model = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $moreUri;
+    public mixed $moreUri = null;
 
-    public $access;
+    public mixed $access = null;
 
-    public $params;
+    public mixed $params = null;
 
-    public $embedded;
+    public mixed $embedded = null;
 
-    public $mesIds;
+    public mixed $mesIds = null;
 
-    public $actions;
+    public mixed $actions = null;
     /**
      * Prepare topic list for moderators.
      *

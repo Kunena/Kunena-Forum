@@ -30,7 +30,7 @@ class KunenaPost extends KunenaDatabaseObject
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_table = 'KunenaPrivatePostMap';
+    protected mixed $_table = 'KunenaPrivatePostMap';
 
     /**
      * Get the table relevant properties. Override for your specific Object

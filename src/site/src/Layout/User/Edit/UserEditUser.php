@@ -24,19 +24,19 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserEditUser extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $profile;
+    public mixed $profile = null;
 
-    public $changeUsername;
+    public mixed $changeUsername = null;
 
-    public $frontendForm;
+    public mixed $frontendForm = null;
 }

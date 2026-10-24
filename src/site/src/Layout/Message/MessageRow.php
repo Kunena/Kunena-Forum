@@ -24,11 +24,11 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class MessageRow extends KunenaLayout
 {
-    public $position;
+    public mixed $position = null;
 
     public $message;
 
-    public $checkbox;
+    public mixed $checkbox = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 }

@@ -31,7 +31,7 @@ abstract class KunenaIpLocation
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $locations = [];
+    protected static array $locations = [];
 
     /**
      * The place of an IP address.

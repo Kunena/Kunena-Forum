@@ -47,7 +47,7 @@ class KunenaMessageThankyou
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $users = [];
+    protected mixed $users = [];
 
     /**
      * @internal

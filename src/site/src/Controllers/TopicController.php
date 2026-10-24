@@ -83,17 +83,17 @@ use stdClass;
  */
 class TopicController extends KunenaController
 {
-    private const STOPFORUMSPAM_CACHE_TTL = 600;
+    private const int STOPFORUMSPAM_CACHE_TTL = 600;
 
-    private const STOPFORUMSPAM_TIMEOUT = 3;
+    private const int STOPFORUMSPAM_TIMEOUT = 3;
 
-    public $catid;
+    public mixed $catid = null;
 
-    public $return;
+    public mixed $return = null;
 
     public $id;
 
-    public $mesid;
+    public mixed $mesid = null;
 
     /**
      * @param   array  $config  config

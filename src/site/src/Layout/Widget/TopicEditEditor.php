@@ -29,5 +29,5 @@ class TopicEditEditor extends KunenaLayout
      * @var     KunenaTemplate
      * @since   Kunena 6.0
      */
-    public $ktemplate;
+    public mixed $ktemplate = null;
 }

@@ -35,49 +35,49 @@ class TableKunenaMailsqueue extends KunenaTable
      * @var     null
      * @since   Kunena 7.1
      */
-    public $subject = null;
+    public mixed $subject = null;
 
     /**
      * @var     null
      * @since   Kunena 7.1
      */
-    public $messageId = null;
+    public mixed $messageId = null;
 
     /**
      * @var     null
      * @since   Kunena 7.1
      */
-    public $url = null;
+    public mixed $url = null;
 
     /**
      * @var     null
      * @since   Kunena 7.1
      */
-    public $emailListJson = null;
+    public mixed $emailListJson = null;
 
     /**
      * @var     null
      * @since   Kunena 7.1
      */
-    public $categoryName = null;
+    public mixed $categoryName = null;
 
     /**
      * @var     null
      * @since   Kunena 7.1
      */
-    public $once = null;
+    public mixed $once = null;
 
     /**
      * @var     null
      * @since   Kunena 7.1
      */
-    public $send = null;
+    public mixed $send = null;
 
     /**
      * @var     mixed
      * @since   Kunena 7.2
      */
-    public $sentusers = null;
+    public mixed $sentusers = null;
 
     /**
      * Constructor

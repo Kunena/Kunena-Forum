@@ -40,19 +40,19 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $categories = false;
+    protected mixed $categories = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $groups = false;
+    protected mixed $groups = false;
 
     /**
      * @var     Object
      * @since   Kunena 6.0
      */
-    protected $tree = [];
+    protected mixed $tree = [];
 
     /**
      * @param   Registry  $params  params

@@ -28,17 +28,17 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class WidgetEditor extends KunenaLayout
 {
-    public $privateMessage;
+    public mixed $privateMessage = null;
 
-    public $wa;
+    public mixed $wa = null;
 
-    public $template;
+    public mixed $template = null;
 
-    public $allow_polls;
+    public mixed $allow_polls = null;
 
-    public $doc;
+    public mixed $doc = null;
 
-    public $config;
+    public mixed $config = null;
 
     public $message;
 

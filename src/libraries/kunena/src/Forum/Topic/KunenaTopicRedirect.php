@@ -40,7 +40,7 @@ abstract class KunenaTopicRedirect
      *
      * @since   Kunena 7.2
      */
-    public const COMMENT = 'Kunena: deleted topic';
+    public const string COMMENT = 'Kunena: deleted topic';
 
     /**
      * Make the redirect with the status 410 Gone for the topic.

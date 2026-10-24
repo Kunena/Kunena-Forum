@@ -37,51 +37,51 @@ class UserEditAvatarDisplay extends UserEditDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    public $gallery;
+    public mixed $gallery = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $galleries;
+    public mixed $galleries = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $galleryOptions;
+    public mixed $galleryOptions = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $galleryImages;
+    public mixed $galleryImages = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/Edit/Avatar';
+    protected mixed $name = 'User/Edit/Avatar';
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
+    protected mixed $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
 
-    public $avatar;
+    public mixed $avatar = null;
 
-    public $galleryUri;
+    public mixed $galleryUri = null;
 
-    public $doc;
+    public mixed $doc = null;
 
-    public $wa;
+    public mixed $wa = null;
 
     /**
      * Prepare avatar form.

@@ -40,13 +40,13 @@ class KunenaUpload
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $validExtensions = [];
+    protected array $validExtensions = [];
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $filename;
+    protected mixed $filename = null;
 
     /**
      * Add file extensions to allowed list.

@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\View\Templates;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -33,49 +34,49 @@ class HtmlView extends BaseHtmlView
      * @var mixed
      * @since Kunena 6.0
      */
-    public $templates = [];
+    public mixed $templates = [];
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    private $ftp;
+    private mixed $ftp = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    private $content;
+    private mixed $content = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    private $app;
+    private ?CMSApplicationInterface $app = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    private $filename;
+    private mixed $filename = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    private $templatename;
+    private mixed $templatename = null;
 
     /**
      * @var array|false
      * @since Kunena 6.0
      */
-    private $files;
+    private array|false|null $files = null;
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    private $dir;
+    private ?string $dir = null;
 
     /**
      * @return  void

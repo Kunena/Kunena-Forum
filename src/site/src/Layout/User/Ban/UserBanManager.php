@@ -24,23 +24,23 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserBanManager extends KunenaLayout
 {
-    public $user;
+    public mixed $user = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $profile;
+    public mixed $profile = null;
 
-    public $userBans;
+    public mixed $userBans = null;
 
-    public $moreUri;
+    public mixed $moreUri = null;
 
-    public $embedded;
+    public mixed $embedded = null;
 }

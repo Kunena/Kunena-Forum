@@ -47,85 +47,85 @@ class KunenaPoll
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_total = null;
+    protected mixed $_total = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $options = false;
+    protected mixed $options = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $newOptions = false;
+    protected mixed $newOptions = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $usercount = false;
+    protected mixed $usercount = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $users = false;
+    protected mixed $users = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $myvotes = [];
+    protected mixed $myvotes = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $mytime = [];
+    protected mixed $mytime = [];
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $mylastvoteId;
+    protected mixed $mylastvoteId = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $threadid;
+    public mixed $threadid = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $typeAlias;
+    public mixed $typeAlias = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $title;
+    public mixed $title = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $polltimetolive;
+    public mixed $polltimetolive = null;
 
     /**
      * @param   int  $identifier  identifier

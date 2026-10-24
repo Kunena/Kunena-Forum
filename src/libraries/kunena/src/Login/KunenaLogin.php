@@ -31,13 +31,13 @@ class KunenaLogin
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected static $instance = false;
+    protected static mixed $instance = false;
 
     /**
      * @var     array| KunenaLogin[]
      * @since   Kunena 6.0
      */
-    protected $instances = [];
+    protected mixed $instances = [];
 
     /**
      * @since   Kunena 6.0

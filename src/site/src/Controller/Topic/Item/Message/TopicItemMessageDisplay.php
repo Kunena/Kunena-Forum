@@ -41,7 +41,7 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     string
@@ -53,59 +53,59 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topic;
+    public mixed $topic = null;
 
     /**
      * @var     KunenaCategory
      * @since   Kunena 6.0
      */
-    public $category;
+    public mixed $category = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $profile;
+    public mixed $profile = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $reportMessageLink;
+    public mixed $reportMessageLink = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $ipLink;
+    public mixed $ipLink = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/Item/Message';
+    protected mixed $name = 'Topic/Item/Message';
 
-    public $location;
+    public mixed $location = null;
 
-    public $detail;
+    public mixed $detail = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $candisplaymail;
+    public mixed $candisplaymail = null;
 
-    public $captchaEnabled;
+    public mixed $captchaEnabled = null;
 
-    public $thankyou;
+    public mixed $thankyou = null;
 
-    public $total_thankyou;
+    public mixed $total_thankyou = null;
 
-    public $more_thankyou;
+    public mixed $more_thankyou = null;
 
-    public $thankyou_delete;
+    public mixed $thankyou_delete = null;
 
-    public $captchaDisplay;
+    public mixed $captchaDisplay = null;
 
-    public $pmHasBody;
+    public mixed $pmHasBody = null;
 
     /**
      * Prepare displaying message.

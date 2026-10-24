@@ -40,13 +40,13 @@ abstract class KunenaMessageHelper
      * @var     KunenaMessage[]
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_location = [];
+    protected static array $_location = [];
 
     /**
      * Free up memory by cleaning up all cached items.

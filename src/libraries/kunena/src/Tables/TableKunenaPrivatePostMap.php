@@ -29,13 +29,13 @@ class TableKunenaPrivatePostMap extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $private_id = null;
+    public mixed $private_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $message_id = null;
+    public mixed $message_id = null;
 
     /**
      * @var     boolean

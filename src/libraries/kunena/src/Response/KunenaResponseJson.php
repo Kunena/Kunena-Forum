@@ -29,13 +29,13 @@ class KunenaResponseJson extends JsonResponse
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $code = 200;
+    public mixed $code = 200;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $location;
+    public mixed $location = null;
 
     /**
      * Constructor

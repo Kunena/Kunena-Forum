@@ -35,19 +35,19 @@ class TableKunenaPolls extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $title = null;
+    public mixed $title = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $threadid = null;
+    public mixed $threadid = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $polltimetolive = null;
+    public mixed $polltimetolive = null;
 
     /**
      * @param   DatabaseDriver  $db  Database driver

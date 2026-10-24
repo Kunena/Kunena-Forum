@@ -26,25 +26,25 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetButton extends KunenaLayout
 {
-    public $url;
+    public mixed $url = null;
 
-    public $name;
+    public mixed $name = null;
 
-    public $scope;
+    public mixed $scope = null;
 
-    public $type;
+    public mixed $type = null;
 
-    public $primary;
+    public mixed $primary = null;
 
-    public $normal;
+    public mixed $normal = null;
 
-    public $icon;
+    public mixed $icon = null;
 
     public $id;
 
-    public $pullright;
+    public mixed $pullright = null;
 
-    public $modal;
+    public mixed $modal = null;
 
-    public $success;
+    public mixed $success = null;
 }

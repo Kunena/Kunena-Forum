@@ -34,7 +34,7 @@ class KunenaLogFinder extends KunenaFinder
      * @var     string
      * @since   Kunena 5.0
      */
-    protected $table = '#__kunena_logs';
+    protected mixed $table = '#__kunena_logs';
 
     /**
      * @param   QueryInterface|null  $query  query

@@ -41,13 +41,13 @@ class CategoriesController extends KunenaController
      * @var     string
      * @since   Kunena 2.0.0-BETA2
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * @var     string
      * @since   Kunena 2.0.0-BETA2
      */
-    protected $baseurl2 = null;
+    protected mixed $baseurl2 = null;
 
     /**
      * Construct

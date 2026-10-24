@@ -35,19 +35,19 @@ class AnnouncementListingDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    public $announcements;
+    public mixed $announcements = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $pagination;
+    public mixed $pagination = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Announcement/Listing';
+    protected mixed $name = 'Announcement/Listing';
 
     /**
      * Prepare announcement list display.

@@ -58,49 +58,49 @@ class TopicItemDisplay extends KunenaControllerDisplay
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     KunenaCategory
      * @since   Kunena 6.0
      */
-    public $category;
+    public mixed $category = null;
 
     /**
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topic;
+    public mixed $topic = null;
 
     /**
      * @var     KunenaPagination
      * @since   Kunena 6.0
      */
-    public $pagination;
+    public mixed $pagination = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/Item';
+    protected mixed $name = 'Topic/Item';
 
-    public $allowed;
+    public mixed $allowed = null;
 
-    public $cache;
+    public mixed $cache = null;
 
-    public $catParams;
+    public mixed $catParams = null;
 
-    public $categorylist;
+    public mixed $categorylist = null;
 
     public $message;
 
-    public $messages;
+    public mixed $messages = null;
 
     /**
      * The first message of the topic when it is shown on top of a page which does not have it (the template option
@@ -109,19 +109,19 @@ class TopicItemDisplay extends KunenaControllerDisplay
      * @var     KunenaMessage|null
      * @since   Kunena 7.2
      */
-    public $stickyFirst;
+    public mixed $stickyFirst = null;
 
-    public $threaded;
+    public mixed $threaded = null;
 
-    public $userTopic;
+    public mixed $userTopic = null;
 
-    public $quickReply;
+    public mixed $quickReply = null;
 
-    public $image;
+    public mixed $image = null;
 
-    public $params;
+    public mixed $params = null;
 
-    public $pmHasBody;
+    public mixed $pmHasBody = null;
 
     /**
      * Prepare topic display.

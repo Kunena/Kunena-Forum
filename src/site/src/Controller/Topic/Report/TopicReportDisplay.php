@@ -36,7 +36,7 @@ class TopicReportDisplay extends KunenaControllerDisplay
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topic;
+    public mixed $topic = null;
 
     /**
      * @var     KunenaMessage|null
@@ -48,15 +48,15 @@ class TopicReportDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    public $uri;
+    public mixed $uri = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/Report';
+    protected mixed $name = 'Topic/Report';
 
-    public $category;
+    public mixed $category = null;
 
     /**
      * Prepare report message form.

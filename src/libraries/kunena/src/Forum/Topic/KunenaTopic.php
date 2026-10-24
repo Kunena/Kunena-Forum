@@ -90,13 +90,13 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @since   Kunena 7.2
      */
-    public const ICON_SOLVED = 8;
+    public const int ICON_SOLVED = 8;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $actions = [
+    protected static mixed $actions = [
         'none'                        => [],
         'read'                        => ['Read'],
         'create'                      => ['NotExists', 'GuestWrite'],
@@ -146,115 +146,115 @@ class KunenaTopic extends KunenaDatabaseObject
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $unread = 0;
+    public mixed $unread = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $lastread = 0;
+    public mixed $lastread = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $hold = 0;
+    public mixed $hold = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $posts = 0;
+    public mixed $posts = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $category_id = 0;
+    public mixed $category_id = 0;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $subject;
+    public mixed $subject = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $icon_id;
+    public mixed $icon_id = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $label_id;
+    public mixed $label_id = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $locked;
+    public mixed $locked = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $ordering;
+    public mixed $ordering = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $hits;
+    public mixed $hits = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $attachments;
+    public mixed $attachments = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $poll_id;
+    public mixed $poll_id = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $moved_id;
+    public mixed $moved_id = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $first_post_id;
+    public mixed $first_post_id = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $first_post_time;
+    public mixed $first_post_time = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $first_post_userid;
+    public mixed $first_post_userid = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $first_post_message;
+    public mixed $first_post_message = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $first_post_guest_name;
+    public mixed $first_post_guest_name = null;
 
     /**
      * The language of the topic: all (*) or the code of a content language of Joomla.
@@ -262,169 +262,169 @@ class KunenaTopic extends KunenaDatabaseObject
      * @var     string
      * @since   Kunena 7.2
      */
-    public $language = '*';
+    public mixed $language = '*';
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $last_post_id;
+    public mixed $last_post_id = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $last_post_time;
+    public mixed $last_post_time = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $last_post_userid;
+    public mixed $last_post_userid = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $last_post_message;
+    public mixed $last_post_message = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $last_post_guest_name;
+    public mixed $last_post_guest_name = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $rating;
+    public mixed $rating = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $params;
+    public mixed $params = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $typeAlias;
+    public mixed $typeAlias = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $categoryId;
+    public mixed $categoryId = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $myposts;
+    public mixed $myposts = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $my_last_post_id;
+    public mixed $my_last_post_id = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $favorite;
+    public mixed $favorite = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $title;
+    public mixed $title = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $titleName;
+    public mixed $titleName = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $titleCount;
+    public mixed $titleCount = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $count;
+    public mixed $count = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $link;
+    public mixed $link = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $percent;
+    public mixed $percent = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $avatar;
+    public mixed $avatar = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_table = 'KunenaTopics';
+    protected mixed $_table = 'KunenaTopics';
 
     /**
      * @var     DatabaseDriver|void
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_authcache = [];
+    protected mixed $_authcache = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_authccache = [];
+    protected mixed $_authccache = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_authfcache = [];
+    protected mixed $_authfcache = [];
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $_hold = 1;
+    protected mixed $_hold = 1;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $_posts = 0;
+    protected mixed $_posts = 0;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_pagination = null;
+    protected mixed $_pagination = null;
 
     /**
      * @param   mixed  $properties  properties

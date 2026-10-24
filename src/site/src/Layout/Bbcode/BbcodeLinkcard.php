@@ -24,13 +24,13 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class BbcodeLinkcard extends KunenaLayout
 {
-    public $url;
+    public mixed $url = null;
 
-    public $title;
+    public mixed $title = null;
 
-    public $description;
+    public mixed $description = null;
 
-    public $image;
+    public mixed $image = null;
 
-    public $site;
+    public mixed $site = null;
 }

@@ -42,31 +42,31 @@ class TopicsModel extends KunenaModel
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $topics = false;
+    protected mixed $topics = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $messages = false;
+    protected mixed $messages = false;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    protected $total = 0;
+    protected mixed $total = 0;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $topicActions = false;
+    protected mixed $topicActions = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $actionMove = false;
+    protected mixed $actionMove = false;
 
     /**
      * @return  boolean

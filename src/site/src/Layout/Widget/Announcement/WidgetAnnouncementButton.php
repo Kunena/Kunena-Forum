@@ -24,15 +24,15 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetAnnouncementButton extends KunenaLayout
 {
-    public $url;
+    public mixed $url = null;
 
-    public $name;
+    public mixed $name = null;
 
-    public $scope;
+    public mixed $scope = null;
 
-    public $type;
+    public mixed $type = null;
 
     public $id;
 
-    public $normal;
+    public mixed $normal = null;
 }

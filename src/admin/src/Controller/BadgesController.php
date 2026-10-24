@@ -31,7 +31,7 @@ class BadgesController extends FormController
      * @var     string
      * @since   Kunena 7.2
      */
-    protected $baseurl = 'index.php?option=com_kunena&view=badges';
+    protected mixed $baseurl = 'index.php?option=com_kunena&view=badges';
 
     /**
      * Save the badges and stay on the page (apply) or go to the dashboard (save).

@@ -30,31 +30,31 @@ class UserList extends KunenaLayout
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     KunenaConfig
      * @since   Kunena 6.0
      */
-    public $config;
+    public mixed $config = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $user;
+    public mixed $user = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $total;
+    public mixed $total = null;
 
-    public $users;
+    public mixed $users = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 }

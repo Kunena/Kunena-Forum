@@ -45,31 +45,31 @@ class TemplatesModel extends AdminModel
      * @var CMSApplicationInterface|null
      * @since Kunena 2.0
      */
-    private $app;
+    private ?CMSApplicationInterface $app = null;
 
     /**
      * @var string
      * @since Kunena 2.0
      */
-    private $context;
+    private ?string $context = null;
 
     /**
      * @var string
      * @since Kunena 2.0
      */
-    private $cache;
+    private ?array $cache = null;
 
     /**
      * @var KunenaConfig
      * @since Kunena 2.0
      */
-    private $config;
+    private ?KunenaConfig $config = null;
 
     /**
      * @var KunenaUser|null
      * @since Kunena 2.0
      */
-    private $me;
+    private ?KunenaUser $me = null;
 
     /**
      * @param   array  $config  config

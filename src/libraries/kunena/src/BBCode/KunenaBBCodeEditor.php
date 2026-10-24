@@ -37,19 +37,19 @@ class KunenaBBCodeEditor
      * @var     array
      * @since   Kunena 6.0
      */
-    public $editor_elements = [];
+    public mixed $editor_elements = [];
 
     /**
      * @var KunenaTemplate
      * @since Kunena 2.0
      */
-    private $template;
+    private ?KunenaTemplate $template = null;
 
     /**
      * @var array
      * @since Kunena 2.0
      */
-    private $config;
+    private mixed $config = null;
 
     /**
      * @param   array  $config  config
@@ -261,7 +261,7 @@ abstract class KunenaBBCodeEditorElement
      * @var     string
      * @since   Kunena 6.0
      */
-    public $name;
+    public mixed $name = null;
 
     /**
      * Constructor for the base class for editor elements.
@@ -303,37 +303,37 @@ class KunenaBBCodeEditorButton extends KunenaBBCodeEditorElement
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $tag;
+    protected mixed $tag = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $config;
+    protected mixed $config = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $title;
+    protected mixed $title = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $alt;
+    protected mixed $alt = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $class;
+    protected mixed $class = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $actions = [];
+    protected mixed $actions = [];
 
     /**
      * Create a button that can be added to the BBCode Editor.

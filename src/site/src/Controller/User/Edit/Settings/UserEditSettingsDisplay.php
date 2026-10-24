@@ -34,13 +34,13 @@ class UserEditSettingsDisplay extends UserEditDisplay
      * @var     object
      * @since   Kunena 6.0
      */
-    public $settings;
+    public mixed $settings = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/Edit/Settings';
+    protected mixed $name = 'User/Edit/Settings';
 
     /**
      * Prepare Kunena user settings.

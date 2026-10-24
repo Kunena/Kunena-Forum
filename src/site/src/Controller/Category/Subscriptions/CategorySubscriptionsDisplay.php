@@ -38,31 +38,31 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $total;
+    public mixed $total = null;
 
     /**
      * @var     Pagination
      * @since   Kunena 6.0
      */
-    public $pagination;
+    public mixed $pagination = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $categories = [];
+    public mixed $categories = [];
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Category/List';
+    protected mixed $name = 'Category/List';
 
-    public $model;
+    public mixed $model = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $actions;
+    public mixed $actions = null;
 
     /**
      * Prepare category subscriptions display.

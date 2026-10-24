@@ -34,61 +34,61 @@ class KunenaUserTopics extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $user_id = null;
+    public mixed $user_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topic_id = null;
+    public mixed $topic_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $categoryId = null;
+    public mixed $categoryId = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $posts = null;
+    public mixed $posts = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $last_post_id = null;
+    public mixed $last_post_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $owner = null;
+    public mixed $owner = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $favorite = null;
+    public mixed $favorite = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $subscribed = null;
+    public mixed $subscribed = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $params = null;
+    public mixed $params = null;
 
     /**
      * @var     mixed
      * @since   Kunena 7.2
      */
-    public $category_id = null;
+    public mixed $category_id = null;
 
     /**
      * @param   DatabaseDriver  $db  Database driver

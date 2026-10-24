@@ -32,23 +32,23 @@ class AnnouncementItem extends KunenaLayout
      * @var     string
      * @since   Kunena 6.0
      */
-    public $buttons;
+    public mixed $buttons = null;
 
     /**
      * @var     KunenaAnnouncement
      * @since   Kunena 6.0
      */
-    public $announcement;
+    public mixed $announcement = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
     /**
      * Method to get moderation actions for announcements

@@ -33,13 +33,13 @@ class AnnouncementItemDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    public $announcement;
+    public mixed $announcement = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Announcement/Item';
+    protected mixed $name = 'Announcement/Item';
 
     /**
      * Prepare announcement display.

@@ -44,7 +44,7 @@ abstract class KunenaTableObject
      * @var     array
      * @since   Kunena 4.0
      */
-    protected static $instances = null;
+    protected static mixed $instances = null;
 
     /**
      * Name of the database table to model.
@@ -53,7 +53,7 @@ abstract class KunenaTableObject
      * @var     string
      * @since   Kunena 4.0
      */
-    protected static $tbl = '';
+    protected static mixed $tbl = '';
 
     /**
      * Array of table fields with their default value (field=>default).
@@ -62,7 +62,7 @@ abstract class KunenaTableObject
      * @var     array
      * @since   Kunena 4.0
      */
-    protected static $tbl_fields;
+    protected static mixed $tbl_fields = null;
 
     /**
      * Array of primary key fields in the table.
@@ -71,7 +71,7 @@ abstract class KunenaTableObject
      * @var     array
      * @since   Kunena 4.0
      */
-    protected static $tbl_keys = [];
+    protected static mixed $tbl_keys = [];
 
     /**
      * DatabaseDriver object.
@@ -79,7 +79,7 @@ abstract class KunenaTableObject
      * @var     DatabaseDriver
      * @since   Kunena 4.0
      */
-    protected static $db;
+    protected static mixed $db = null;
 
     /**
      * Indicator that the tables have been locked.
@@ -87,11 +87,11 @@ abstract class KunenaTableObject
      * @var     boolean
      * @since   Kunena 4.0
      */
-    protected static $_locked = false;
+    protected static mixed $_locked = false;
 
-    private static $tbl_key;
+    private static ?string $tbl_key = null;
 
-    private static $locked;
+    private static ?bool $locked = null;
 
     /**
      * Flag whether the object exists in the database or not.
@@ -99,7 +99,7 @@ abstract class KunenaTableObject
      * @var     boolean
      * @since   Kunena 4.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * Serialized key for the object.
@@ -107,7 +107,7 @@ abstract class KunenaTableObject
      * @var     string
      * @since   Kunena 4.0
      */
-    protected $_key;
+    protected mixed $_key = null;
 
     /**
      * Constructor to create the table object instance.  All objects with key set are stored into global instances.

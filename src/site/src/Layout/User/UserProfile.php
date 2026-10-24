@@ -24,15 +24,15 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserProfile extends KunenaLayout
 {
-    public $user;
+    public mixed $user = null;
 
-    public $candisplaymail;
+    public mixed $candisplaymail = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $topic_starter;
+    public mixed $topic_starter = null;
 
-    public $category_id;
+    public mixed $category_id = null;
 }

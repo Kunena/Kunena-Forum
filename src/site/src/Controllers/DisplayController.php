@@ -26,9 +26,9 @@ class DisplayController extends KunenaController
 {
     protected $default_view = 'Kunena\Forum\Site\Controller\Display';
 
-    protected $prefix = 'site';
+    protected mixed $prefix = 'site';
 
-    protected $layout = 'default';
+    protected mixed $layout = 'default';
 
     /**
      * Constructor.

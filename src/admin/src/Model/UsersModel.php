@@ -36,7 +36,7 @@ class UsersModel extends ListModel
      * @var KunenaUser|null
      * @since Kunena 2.0
      */
-    private $me;
+    private ?KunenaUser $me = null;
 
     /**
      * Constructor.

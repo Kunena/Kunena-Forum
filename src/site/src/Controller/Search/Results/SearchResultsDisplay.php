@@ -36,39 +36,39 @@ class SearchResultsDisplay extends KunenaControllerDisplay
      * @var     SearchModel
      * @since   Kunena 6.0
      */
-    public $model;
+    public mixed $model = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $total;
+    public mixed $total = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $data = [];
+    public mixed $data = [];
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Search/Results';
+    protected mixed $name = 'Search/Results';
 
-    public $state;
+    public mixed $state = null;
 
-    public $message_ordering;
+    public mixed $message_ordering = null;
 
-    public $searchwords;
+    public mixed $searchwords = null;
 
-    public $isModerator;
+    public mixed $isModerator = null;
 
-    public $results;
+    public mixed $results = null;
 
-    public $error;
+    public mixed $error = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
     /**
      * Prepare search results display.

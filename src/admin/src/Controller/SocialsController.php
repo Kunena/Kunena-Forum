@@ -31,7 +31,7 @@ class SocialsController extends FormController
      * @var     string
      * @since   Kunena 7.2
      */
-    protected $baseurl = 'index.php?option=com_kunena&view=socials';
+    protected mixed $baseurl = 'index.php?option=com_kunena&view=socials';
 
     /**
      * Save the socials and stay on the page (apply) or go to the dashboard (save).

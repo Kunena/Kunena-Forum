@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserBanHistory extends KunenaLayout
 {
-    public $banHistory;
+    public mixed $banHistory = null;
 
-    public $profile;
+    public mixed $profile = null;
 }

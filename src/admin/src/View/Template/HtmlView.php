@@ -30,7 +30,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
  */
 class HtmlView extends BaseHtmlView
 {
-    public $templatename;
+    public mixed $templatename = null;
 
     /**
      * @param   null  $tpl  tpl

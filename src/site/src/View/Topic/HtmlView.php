@@ -60,83 +60,83 @@ class HtmlView extends KunenaView
      * @var     null
      * @since   Kunena 6.0
      */
-    public $topicButtons = null;
+    public mixed $topicButtons = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $messageButtons = null;
+    public mixed $messageButtons = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $inline_attachments = [];
+    public array $inline_attachments = [];
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $poll = null;
+    public mixed $poll = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $mmm = 0;
+    public mixed $mmm = 0;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $k = 0;
+    public mixed $k = 0;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $cache = true;
+    public mixed $cache = true;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $app;
+    public mixed $app = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $inLayout;
+    public mixed $inLayout = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $total;
-
-    /**
-     * @var boolean|mixed
-     * @since Kunena 6.0
-     */
-    public $subscriptionsChecked;
+    public mixed $total = null;
 
     /**
      * @var boolean|mixed
      * @since Kunena 6.0
      */
-    public $postAnonymous;
+    public mixed $subscriptionsChecked = null;
+
+    /**
+     * @var boolean|mixed
+     * @since Kunena 6.0
+     */
+    public mixed $postAnonymous = null;
 
     /**
      * @var array|boolean
      * @since Kunena 6.0
      */
-    public $allowedExtensions;
+    public mixed $allowedExtensions = null;
 
     /**
      * @var KunenaAttachment[]
      * @since Kunena 6.0
      */
-    public $attachments;
+    public mixed $attachments = null;
 
     /**
      * Per-request cache for message authorisation results.
@@ -144,7 +144,7 @@ class HtmlView extends KunenaView
      * @var     array
      * @since   Kunena 7.1
      */
-    protected $messageAuthorisationCache = [];
+    protected array $messageAuthorisationCache = [];
 
     /**
      * Per-request cache for moderator checks scoped by user/category.
@@ -152,7 +152,7 @@ class HtmlView extends KunenaView
      * @var     array
      * @since   Kunena 7.1
      */
-    protected $messageModeratorCache = [];
+    protected array $messageModeratorCache = [];
 
     /**
      * Per-request cache for viewer user type keyed by category id.
@@ -160,7 +160,7 @@ class HtmlView extends KunenaView
      * @var     array
      * @since   Kunena 7.1
      */
-    protected $messageUserTypeCache = [];
+    protected array $messageUserTypeCache = [];
 
     /**
      * Precomputed template hash for the current displayMessages() call.
@@ -168,21 +168,21 @@ class HtmlView extends KunenaView
      * @var     string
      * @since   Kunena 7.1
      */
-    protected $messageTemplateHash = '';
+    protected mixed $messageTemplateHash = '';
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    public $action;
+    public mixed $action = null;
 
-    public $topicIcons;
+    public mixed $topicIcons = null;
 
     /**
      * @var KunenaCategory
      * @since Kunena 6.0
      */
-    public $category;
+    public mixed $category = null;
 
     /**
      * @var KunenaMessage
@@ -190,31 +190,31 @@ class HtmlView extends KunenaView
      */
     public $message;
 
-    public $catid;
+    public mixed $catid = null;
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    public $numLink;
+    public mixed $numLink = null;
 
-    public $messages;
+    public mixed $messages = null;
 
-    public $replynum;
+    public mixed $replynum = null;
 
     /**
      * @var KunenaUser
      * @since Kunena 6.0
      */
-    public $profile;
+    public mixed $profile = null;
 
-    public $quickReply;
+    public mixed $quickReply = null;
 
-    public $layout;
+    public mixed $layout = null;
 
-    public $usertopic;
+    public mixed $usertopic = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @param   null  $tpl  tpl

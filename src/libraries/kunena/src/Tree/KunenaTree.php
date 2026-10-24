@@ -28,55 +28,55 @@ class KunenaTree implements Iterator
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_instances = [];
+    protected mixed $_instances = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_tree = [];
+    protected array $_tree = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_parents = [];
+    protected array $_parents = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $_levels = [];
+    protected array $_levels = [];
 
     /**
      * @var     null|string
      * @since   Kunena 6.0
      */
-    protected $_id = null;
+    protected mixed $_id = null;
 
     /**
      * @var     null|string
      * @since   Kunena 6.0
      */
-    protected $_parent = null;
+    protected mixed $_parent = null;
 
     /**
      * @var     null|string
      * @since   Kunena 6.0
      */
-    protected $_level = null;
+    protected mixed $_level = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $heap = [];
+    protected mixed $heap = [];
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_count = null;
+    protected mixed $_count = null;
 
     /**
      * @param   mixed   $items   items

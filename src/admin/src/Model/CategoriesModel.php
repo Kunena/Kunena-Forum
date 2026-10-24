@@ -52,19 +52,19 @@ class CategoriesModel extends KunenaModel
      * @var     string
      * @since   Kunena 6.0
      */
-    public $context;
+    public mixed $context = null;
 
     /**
      * @var     KunenaCategory[]
      * @since   Kunena 6.0
      */
-    protected $internalAdminCategories = false;
+    protected mixed $internalAdminCategories = false;
 
     /**
      * @var     KunenaCategory
      * @since   Kunena 6.0
      */
-    protected $internalAdminCategory = false;
+    protected mixed $internalAdminCategory = false;
 
     /**
      * Valid filter fields or ordering.
@@ -72,7 +72,7 @@ class CategoriesModel extends KunenaModel
      * @var    array
      * @since  Kunena 6.3.0-BETA3
      */
-    protected $filter_fields = [];
+    protected mixed $filter_fields = [];
 
     /**
      * Name of the filter form to load
@@ -80,7 +80,7 @@ class CategoriesModel extends KunenaModel
      * @var    string
      * @since  Kunena 6.3.0-BETA3
      */
-    protected $filterFormName = 'filter_categories';
+    protected mixed $filterFormName = 'filter_categories';
 
     /**
      * A list of forbidden filter variables to not merge into the model's state
@@ -88,7 +88,7 @@ class CategoriesModel extends KunenaModel
      * @var    array
      * @since  Kunena 6.3.0-BETA3
      */
-    protected $filterForbiddenList = [];
+    protected array $filterForbiddenList = [];
 
     /**
      * A list of forbidden variables to not merge into the model's state
@@ -96,7 +96,7 @@ class CategoriesModel extends KunenaModel
      * @var    array
      * @since  Kunena 6.3.0-BETA3
      */
-    protected $listForbiddenList = ['select'];
+    protected array $listForbiddenList = ['select'];
 
     /**
      * Constructor.

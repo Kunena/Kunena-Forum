@@ -47,45 +47,45 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $sections = [];
+    public mixed $sections = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $categories = [];
+    public mixed $categories = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $pending = [];
+    public mixed $pending = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $more = [];
+    public mixed $more = [];
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Category/Index';
+    protected mixed $name = 'Category/Index';
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $templateParams;
+    public mixed $templateParams = null;
 
-    public $allowed;
+    public mixed $allowed = null;
 
-    public $categorylist;
+    public mixed $categorylist = null;
 
     /**
      * Prepare category index display.

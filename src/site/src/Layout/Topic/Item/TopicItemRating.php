@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class TopicItemRating extends KunenaLayout
 {
-    public $category;
+    public mixed $category = null;
 
-    public $topic;
+    public mixed $topic = null;
 }

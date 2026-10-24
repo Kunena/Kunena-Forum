@@ -34,7 +34,7 @@ abstract class KunenaMessageThankyouHelper
      * @var     KunenaMessageThankyou[]
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * Cleanup

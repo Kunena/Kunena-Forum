@@ -38,13 +38,13 @@ class KunenaActivity
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected static $instance = false;
+    protected static mixed $instance = false;
 
     /**
      * @var     array| KunenaActivity[]
      * @since   Kunena 6.0
      */
-    protected $instances = [];
+    protected mixed $instances = [];
 
     /**
      * @since   Kunena 6.0

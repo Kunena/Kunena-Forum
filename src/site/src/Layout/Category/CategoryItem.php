@@ -41,49 +41,49 @@ class CategoryItem extends KunenaLayout
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $total;
+    public mixed $total = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $state;
+    public mixed $state = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $subcategories;
+    public mixed $subcategories = null;
 
     /**
      * @var     void
      * @since   Kunena 6.0
      */
-    public $sections;
+    public mixed $sections = null;
 
     /**
      * @var     KunenaCategory
      * @since   Kunena 6.0
      */
-    public $category;
+    public mixed $category = null;
 
     /**
      * @var     KunenaTemplate|void
      * @since   Kunena 6.0
      */
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
-    public $topics;
+    public mixed $topics = null;
 
-    public $topicActions;
+    public mixed $topicActions = null;
 
-    public $actionMove;
+    public mixed $actionMove = null;
 
     /**
      * Method to display categories Index sublayout

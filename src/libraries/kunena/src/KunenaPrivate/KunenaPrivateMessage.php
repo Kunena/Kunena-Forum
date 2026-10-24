@@ -43,79 +43,79 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_table = 'KunenaPrivate';
+    protected mixed $_table = 'KunenaPrivate';
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_attachments = null;
+    protected mixed $_attachments = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_posts = null;
+    protected mixed $_posts = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $_users = null;
+    protected mixed $_users = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $typeAlias;
+    public mixed $typeAlias = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $parentid;
+    public mixed $parentid = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $author_id;
+    public mixed $author_id = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $created_at;
+    public mixed $created_at = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $attachments;
+    public mixed $attachments = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $subject;
+    public mixed $subject = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $body;
+    public mixed $body = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $params;
+    public mixed $params = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $parent_id;
+    public mixed $parent_id = null;
 
     /**
      * KunenaPrivateMessage constructor.

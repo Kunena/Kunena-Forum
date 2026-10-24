@@ -34,13 +34,13 @@ class HtmlView extends BaseHtmlView
      * @var stdClass
      * @since Kunena 1.X
      */
-    public $config;
+    public mixed $config = null;
 
     /**
      * @var KunenaStatistics
      * @since Kunena 6.3.0-BETA3
      */
-    public $kunenaStats;
+    public mixed $kunenaStats = null;
 
     /**
      * DisplayDefault

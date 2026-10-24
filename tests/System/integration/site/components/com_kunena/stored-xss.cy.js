@@ -11,10 +11,18 @@ describe('Kunena output: stored texts with markup', () => {
   const user = { name: 'ci-user', password: 'ci-user-17082005-x', id: 798 };
   const ids = {};
   let profile;
+  // The real name of the user and the option "username": the tests change them, they are put back after each test (also
+  // after a failure, else the other specs see the forum with the real names and a name which is a piece of markup).
+  let realName;
+  let usernameOption;
 
   const q = (value) => `'${String(value).replaceAll('\\', '\\\\').replaceAll("'", "\\'")}'`;
 
   beforeEach(() => {
+    usernameOption = undefined;
+    cy.task('queryDB', `SELECT name FROM #__users WHERE id = ${user.id}`).then((rows) => {
+      realName = rows[0].name;
+    });
     cy.task('queryDB', `SELECT signature, personalText, location, websitename, websiteurl, status_text, \`rank\` FROM #__kunena_users WHERE userid = ${user.id}`).then((rows) => {
       profile = JSON.parse(JSON.stringify(rows[0]));
     });
@@ -59,6 +67,12 @@ describe('Kunena output: stored texts with markup', () => {
   });
 
   afterEach(() => {
+    cy.task('queryDB', `UPDATE #__users SET name = ${q(realName)} WHERE id = ${user.id}`);
+
+    if (usernameOption !== undefined) {
+      cy.kunena_setOption('username', usernameOption);
+    }
+
     if (!ids.topic) {
       return;
     }
@@ -134,31 +148,25 @@ describe('Kunena output: stored texts with markup', () => {
   it('is escaped in the list of users of the search form', () => {
     const name = '<img src=x onerror=__xss=1>';
 
-    cy.task('queryDB', `SELECT name FROM #__users WHERE id = ${user.id}`).then((rows) => {
-      cy.task('queryDB', `UPDATE #__users SET name = ${q(name)} WHERE id = ${user.id}`);
-      cy.doFrontendLogin(Cypress.expose('username'), Cypress.expose('password'), false);
-      cy.visit(`${base}&view=search`);
-      cy.get('#kusersearch').type('@<img', { delay: 100 });
-      cy.wait(1000);
-      cy.window().then((win) => expect(win.__xss, 'the script of a name ran').to.be.undefined);
-      cy.document().then((doc) => expect(doc.querySelectorAll('img[src="x"]').length, 'an element made of a name').to.eq(0));
-      cy.task('queryDB', `UPDATE #__users SET name = ${q(rows[0].name)} WHERE id = ${user.id}`);
-    });
+    cy.task('queryDB', `UPDATE #__users SET name = ${q(name)} WHERE id = ${user.id}`);
+    cy.doFrontendLogin(Cypress.expose('username'), Cypress.expose('password'), false);
+    cy.visit(`${base}&view=search`);
+    cy.get('#kusersearch').type('@<img', { delay: 100 });
+    cy.wait(1000);
+    cy.window().then((win) => expect(win.__xss, 'the script of a name ran').to.be.undefined);
+    cy.document().then((doc) => expect(doc.querySelectorAll('img[src="x"]').length, 'an element made of a name').to.eq(0));
   });
 
   it('is escaped when the real name of a user is shown, not the username', () => {
     const name = '"><img src=x onerror=__xss=1>';
 
     cy.kunena_setOption('username', '0').then((oldOption) => {
-      cy.task('queryDB', `SELECT name FROM #__users WHERE id = ${user.id}`).then((rows) => {
-        cy.task('queryDB', `UPDATE #__users SET name = ${q(name)} WHERE id = ${user.id}`);
-        check(pages());
-        cy.doFrontendLogin(Cypress.expose('username'), Cypress.expose('password'), false);
-        check([...pages(), ...adminPages()]);
-        cy.task('queryDB', `UPDATE #__users SET name = ${q(rows[0].name)} WHERE id = ${user.id}`);
-      });
-      cy.kunena_setOption('username', oldOption ?? '1');
+      usernameOption = oldOption ?? '1';
     });
+    cy.task('queryDB', `UPDATE #__users SET name = ${q(name)} WHERE id = ${user.id}`);
+    check(pages());
+    cy.doFrontendLogin(Cypress.expose('username'), Cypress.expose('password'), false);
+    check([...pages(), ...adminPages()]);
   });
 
   it('is escaped for the administrator, also in the forms', () => {

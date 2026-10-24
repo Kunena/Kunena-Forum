@@ -36,19 +36,19 @@ class KunenaTopicFinder extends KunenaFinder
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $table = '#__kunena_topics';
+    protected mixed $table = '#__kunena_topics';
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $hold = [0];
+    protected mixed $hold = [0];
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $moved = null;
+    protected mixed $moved = null;
 
     /**
      * Constructor.

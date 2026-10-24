@@ -42,60 +42,60 @@ class CategoryManageDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @var     KunenaCategory
      * @since   Kunena 5.1
      */
-    public $category;
+    public mixed $category = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $total;
+    public mixed $total = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $topics;
+    public mixed $topics = null;
 
     /**
      * @var     KunenaPagination
      * @since   Kunena 5.1
      */
-    public $pagination;
+    public mixed $pagination = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 5.1
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Category/Manage';
+    protected mixed $name = 'Category/Manage';
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $state = null;
+    protected mixed $state = null;
 
     /**
      * @var array
      * @since Kunena 4.0
      */
-    public $lists;
+    public mixed $lists = null;
     /**
     * @var     array
     * @since   Kunena 7.1
     */
-    public $moderators = [];
+    public mixed $moderators = [];
     /**
      * Prepare category display.
      *

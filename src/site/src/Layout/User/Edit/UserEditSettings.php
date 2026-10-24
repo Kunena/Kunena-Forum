@@ -24,17 +24,17 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class UserEditSettings extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $profile;
+    public mixed $profile = null;
 
-    public $settings;
+    public mixed $settings = null;
 }

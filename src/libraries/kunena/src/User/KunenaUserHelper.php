@@ -47,49 +47,49 @@ abstract class KunenaUserHelper
      * @var     array|KunenaUser[]
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @var     array|KunenaUser[]
      * @since   Kunena 6.0
      */
-    protected static $_instances_name = [];
+    protected static array $_instances_name = [];
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected static $_online = null;
+    protected static mixed $_online = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected static $_online_status = null;
+    protected static mixed $_online_status = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected static $_lastid = null;
+    protected static mixed $_lastid = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected static $_total = null;
+    protected static mixed $_total = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected static $_topposters = null;
+    protected static mixed $_topposters = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected static $_me = null;
+    protected static mixed $_me = null;
 
     /**
      * @return  void
@@ -624,7 +624,7 @@ abstract class KunenaUserHelper
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $joomlaParams = [];
+    protected static array $joomlaParams = [];
 
     /**
      * Keep the Joomla parameters of a user which are loaded with the user, so they are not read again.

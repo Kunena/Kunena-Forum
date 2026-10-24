@@ -36,11 +36,11 @@ class HomeController extends KunenaController
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $home = 1;
+    public mixed $home = 1;
 
     protected $default_view = 'Kunena\Forum\Site\Controller\Display';
 
-    protected $prefix = 'site';
+    protected mixed $prefix = 'site';
 
     /**
      * @param   bool  $cachable   catchable

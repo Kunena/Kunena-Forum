@@ -30,45 +30,45 @@ class MessageList extends KunenaLayout
      * @var     object
      * @since   Kunena 6.0
      */
-    public $state;
+    public mixed $state = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $topics;
+    public mixed $topics = null;
 
-    public $allowed;
+    public mixed $allowed = null;
 
-    public $cache;
+    public mixed $cache = null;
 
-    public $catParams;
+    public mixed $catParams = null;
 
-    public $categorylist;
+    public mixed $categorylist = null;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $messages;
+    public mixed $messages = null;
 
-    public $model;
+    public mixed $model = null;
 
-    public $moreUri;
+    public mixed $moreUri = null;
 
-    public $embedded;
+    public mixed $embedded = null;
 
-    public $view;
+    public mixed $view = null;
 
-    public $messagemore;
+    public mixed $messagemore = null;
 
-    public $actions;
+    public mixed $actions = null;
 
     /**
      * Method to display the time filter

@@ -40,13 +40,13 @@ class TopicsDisplay extends KunenaControllerDisplay
      * @var     mixed
      * @since   Kunena 6.0
      */
-    public $messages;
+    public mixed $messages = null;
 
-    public $topicsModel;
+    public mixed $topicsModel = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $topics;
+    public mixed $topics = null;
 
     /**
      * Return true if layout exists.

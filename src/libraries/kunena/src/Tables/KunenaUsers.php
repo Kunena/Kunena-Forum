@@ -44,43 +44,43 @@ class KunenaUsers extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $name = null;
+    public mixed $name = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $username = null;
+    public mixed $username = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $email = null;
+    public mixed $email = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $blocked = null;
+    public mixed $blocked = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $registerDate = null;
+    public mixed $registerDate = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $lastvisitDate = null;
+    public mixed $lastvisitDate = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $view = null;
+    public mixed $view = null;
 
     /**
      * Signature
@@ -88,7 +88,7 @@ class KunenaUsers extends KunenaTable
      * @var     string
      * @since   Kunena 6.0
      **/
-    public $signature = null;
+    public mixed $signature = null;
 
     /**
      * Is moderator?
@@ -96,7 +96,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $moderator = null;
+    public mixed $moderator = null;
 
     /**
      * Banned until timestamp
@@ -104,7 +104,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $banned = null;
+    public mixed $banned = null;
 
     /**
      * Ordering of posts
@@ -112,7 +112,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $ordering = null;
+    public mixed $ordering = null;
 
     /**
      * User post count
@@ -120,7 +120,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $posts = null;
+    public mixed $posts = null;
 
     /**
      * Avatar image file
@@ -128,7 +128,7 @@ class KunenaUsers extends KunenaTable
      * @var     string
      * @since   Kunena 6.0
      **/
-    public $avatar = null;
+    public mixed $avatar = null;
 
     /**
      * User karma
@@ -136,7 +136,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $karma = null;
+    public mixed $karma = null;
 
     /**
      * Kunena Group ID
@@ -144,7 +144,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $group_id = null;
+    public mixed $group_id = null;
 
     /**
      * Kunena Profile hits
@@ -152,7 +152,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $uhits = null;
+    public mixed $uhits = null;
 
     /**
      * Personal text
@@ -160,7 +160,7 @@ class KunenaUsers extends KunenaTable
      * @var     string
      * @since   Kunena 6.0
      **/
-    public $personalText = null;
+    public mixed $personalText = null;
 
     /**
      * Gender
@@ -168,7 +168,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $gender = null;
+    public mixed $gender = null;
 
     /**
      * Birthdate
@@ -176,7 +176,7 @@ class KunenaUsers extends KunenaTable
      * @var     string
      * @since   Kunena 6.0
      **/
-    public $birthdate = null;
+    public mixed $birthdate = null;
 
     /**
      * User Location
@@ -184,7 +184,7 @@ class KunenaUsers extends KunenaTable
      * @var     string
      * @since   Kunena 6.0
      **/
-    public $location = null;
+    public mixed $location = null;
 
     /**
      * Name of web site
@@ -192,7 +192,7 @@ class KunenaUsers extends KunenaTable
      * @var     string
      * @since   Kunena 6.0
      **/
-    public $websitename = null;
+    public mixed $websitename = null;
 
     /**
      * URL to web site
@@ -200,7 +200,7 @@ class KunenaUsers extends KunenaTable
      * @var     string
      * @since   Kunena 6.0
      **/
-    public $websiteurl = null;
+    public mixed $websiteurl = null;
 
     /**
      * User rank
@@ -208,7 +208,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $rank = null;
+    public mixed $rank = null;
 
     /**
      * Hide Email address
@@ -216,7 +216,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $hideEmail = null;
+    public mixed $hideEmail = null;
 
     /**
      * Show online
@@ -224,13 +224,13 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      **/
-    public $showOnline = null;
+    public mixed $showOnline = null;
 
     /**
      * @var     integer|null
      * @since   Kunena 7.1
      */
-    public $displayAgeBirthdate = null;
+    public mixed $displayAgeBirthdate = null;
 
     /**
      * Thankyou count
@@ -238,7 +238,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $thankyou = null;
+    public mixed $thankyou = null;
 
     /**
      * canSubscribe
@@ -246,7 +246,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $canSubscribe = null;
+    public mixed $canSubscribe = null;
 
     /**
      * userListtime
@@ -254,7 +254,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $userListtime = null;
+    public mixed $userListtime = null;
 
     /**
      * Status
@@ -262,7 +262,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $status = null;
+    public mixed $status = null;
 
     /**
      * Status Text
@@ -270,7 +270,7 @@ class KunenaUsers extends KunenaTable
      * @var     string
      * @since   Kunena 6.0
      */
-    public $status_text = null;
+    public mixed $status_text = null;
 
     /**
      * social
@@ -278,7 +278,7 @@ class KunenaUsers extends KunenaTable
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $socials = null;
+    public mixed $socials = null;
 
     /**
     * social
@@ -286,19 +286,19 @@ class KunenaUsers extends KunenaTable
     * @var     string
     * @since   Kunena 7.0
     */
-    public $language = null;
+    public mixed $language = null;
 
     /**
      * @var     mixed
      * @since   Kunena 7.2
      */
-    public $timestamp = null;
+    public mixed $timestamp = null;
 
     /**
      * @var     mixed
      * @since   Kunena 7.2
      */
-    public $ip = null;
+    public mixed $ip = null;
 
     /**
      * Indicates that columns fully support the NULL value in the database

@@ -31,220 +31,220 @@ class KunenaLog
     /**
      * @since   Kunena 5.0
      */
-    public const TYPE_ADMINISTRATION = 0;
+    public const int TYPE_ADMINISTRATION = 0;
 
     /**
      * @since   Kunena 5.0
      */
-    public const TYPE_MODERATION = 1;
+    public const int TYPE_MODERATION = 1;
 
     /**
      * @since   Kunena 5.0
      */
-    public const TYPE_ACTION = 2;
+    public const int TYPE_ACTION = 2;
 
     /**
      * @since   Kunena 5.0
      */
-    public const TYPE_ERROR = 3;
+    public const int TYPE_ERROR = 3;
 
     /**
      * @since   Kunena 5.0
      */
-    public const TYPE_REPORT = 4;
+    public const int TYPE_REPORT = 4;
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ANNOUNCEMENT_CREATE = 'LOG_ANNOUNCEMENT_CREATE';
+    public const string LOG_ANNOUNCEMENT_CREATE = 'LOG_ANNOUNCEMENT_CREATE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ANNOUNCEMENT_EDIT = 'LOG_ANNOUNCEMENT_EDIT';
+    public const string LOG_ANNOUNCEMENT_EDIT = 'LOG_ANNOUNCEMENT_EDIT';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ANNOUNCEMENT_DELETE = 'LOG_ANNOUNCEMENT_DELETE';
+    public const string LOG_ANNOUNCEMENT_DELETE = 'LOG_ANNOUNCEMENT_DELETE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ANNOUNCEMENT_PUBLISH = 'LOG_ANNOUNCEMENT_PUBLISH';
+    public const string LOG_ANNOUNCEMENT_PUBLISH = 'LOG_ANNOUNCEMENT_PUBLISH';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ANNOUNCEMENT_UNPUBLISH = 'LOG_ANNOUNCEMENT_UNPUBLISH';
+    public const string LOG_ANNOUNCEMENT_UNPUBLISH = 'LOG_ANNOUNCEMENT_UNPUBLISH';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ATTACHMENT_CREATE = 'LOG_ATTACHMENT_CREATE';
+    public const string LOG_ATTACHMENT_CREATE = 'LOG_ATTACHMENT_CREATE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ATTACHMENT_DELETE = 'LOG_ATTACHMENT_DELETE';
+    public const string LOG_ATTACHMENT_DELETE = 'LOG_ATTACHMENT_DELETE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POST_CREATE = 'LOG_POST_CREATE';
+    public const string LOG_POST_CREATE = 'LOG_POST_CREATE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POST_EDIT = 'LOG_POST_EDIT';
+    public const string LOG_POST_EDIT = 'LOG_POST_EDIT';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POST_DELETE = 'LOG_POST_DELETE';
+    public const string LOG_POST_DELETE = 'LOG_POST_DELETE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POST_UNDELETE = 'LOG_POST_UNDELETE';
+    public const string LOG_POST_UNDELETE = 'LOG_POST_UNDELETE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POST_DESTROY = 'LOG_POST_DESTROY';
+    public const string LOG_POST_DESTROY = 'LOG_POST_DESTROY';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POST_MODERATE = 'LOG_POST_MODERATE';
+    public const string LOG_POST_MODERATE = 'LOG_POST_MODERATE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POST_APPROVE = 'LOG_POST_APPROVE';
+    public const string LOG_POST_APPROVE = 'LOG_POST_APPROVE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POST_REPORT = 'LOG_POST_REPORT';
+    public const string LOG_POST_REPORT = 'LOG_POST_REPORT';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POST_THANKYOU = 'LOG_POST_THANKYOU';
+    public const string LOG_POST_THANKYOU = 'LOG_POST_THANKYOU';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POST_UNTHANKYOU = 'LOG_POST_UNTHANKYOU';
+    public const string LOG_POST_UNTHANKYOU = 'LOG_POST_UNTHANKYOU';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_POLL_MODERATE = 'LOG_POLL_MODERATE';
+    public const string LOG_POLL_MODERATE = 'LOG_POLL_MODERATE';
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const LOG_USER_REPORT_STOPFORUMSPAM = 'LOG_USER_REPORT_STOPFORUMSPAM';
+    public const string LOG_USER_REPORT_STOPFORUMSPAM = 'LOG_USER_REPORT_STOPFORUMSPAM';
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
+    public const string LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
+    public const string LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
+    public const string LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_ICON = 'LOG_TOPIC_ICON';
+    public const string LOG_TOPIC_ICON = 'LOG_TOPIC_ICON';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_CREATE = 'LOG_TOPIC_CREATE';
+    public const string LOG_TOPIC_CREATE = 'LOG_TOPIC_CREATE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_EDIT = 'LOG_TOPIC_EDIT';
+    public const string LOG_TOPIC_EDIT = 'LOG_TOPIC_EDIT';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_FAVORITE = 'LOG_TOPIC_FAVORITE';
+    public const string LOG_TOPIC_FAVORITE = 'LOG_TOPIC_FAVORITE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_LOCK = 'LOG_TOPIC_LOCK';
+    public const string LOG_TOPIC_LOCK = 'LOG_TOPIC_LOCK';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_UNLOCK = 'LOG_TOPIC_UNLOCK';
+    public const string LOG_TOPIC_UNLOCK = 'LOG_TOPIC_UNLOCK';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_STICKY = 'LOG_TOPIC_STICKY';
+    public const string LOG_TOPIC_STICKY = 'LOG_TOPIC_STICKY';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_UNFAVORITE = 'LOG_TOPIC_UNFAVORITE';
+    public const string LOG_TOPIC_UNFAVORITE = 'LOG_TOPIC_UNFAVORITE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_UNSTICKY = 'LOG_TOPIC_UNSTICKY';
+    public const string LOG_TOPIC_UNSTICKY = 'LOG_TOPIC_UNSTICKY';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_MODERATE = 'LOG_TOPIC_MODERATE';
+    public const string LOG_TOPIC_MODERATE = 'LOG_TOPIC_MODERATE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_DELETE = 'LOG_TOPIC_DELETE';
+    public const string LOG_TOPIC_DELETE = 'LOG_TOPIC_DELETE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_UNDELETE = 'LOG_TOPIC_UNDELETE';
+    public const string LOG_TOPIC_UNDELETE = 'LOG_TOPIC_UNDELETE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_DESTROY = 'LOG_TOPIC_DESTROY';
+    public const string LOG_TOPIC_DESTROY = 'LOG_TOPIC_DESTROY';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_APPROVE = 'LOG_TOPIC_APPROVE';
+    public const string LOG_TOPIC_APPROVE = 'LOG_TOPIC_APPROVE';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_TOPIC_REPORT = 'LOG_TOPIC_REPORT';
+    public const string LOG_TOPIC_REPORT = 'LOG_TOPIC_REPORT';
 
     /**
      * @since   Kunena 5.1.16
@@ -268,27 +268,27 @@ class KunenaLog
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_USER_EDIT = 'LOG_USER_EDIT';
+    public const string LOG_USER_EDIT = 'LOG_USER_EDIT';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_USER_BLOCK = 'LOG_USER_BLOCK';
+    public const string LOG_USER_BLOCK = 'LOG_USER_BLOCK';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_USER_UNBLOCK = 'LOG_USER_UNBLOCK';
+    public const string LOG_USER_UNBLOCK = 'LOG_USER_UNBLOCK';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_USER_BAN = 'LOG_USER_BAN';
+    public const string LOG_USER_BAN = 'LOG_USER_BAN';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_USER_UNBAN = 'LOG_USER_UNBAN';
+    public const string LOG_USER_UNBAN = 'LOG_USER_UNBAN';
 
     /**
      * @return  void
@@ -314,48 +314,48 @@ class KunenaLog
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ERROR_GENERAL = 'LOG_ERROR_GENERAL';
+    public const string LOG_ERROR_GENERAL = 'LOG_ERROR_GENERAL';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ERROR_CRITICAL = 'LOG_ERROR_CRITICAL';
+    public const string LOG_ERROR_CRITICAL = 'LOG_ERROR_CRITICAL';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ERROR_ALERT = 'LOG_ERROR_ALERT';
+    public const string LOG_ERROR_ALERT = 'LOG_ERROR_ALERT';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ERROR_EMERGENCY = 'LOG_ERROR_EMERGENCY';
+    public const string LOG_ERROR_EMERGENCY = 'LOG_ERROR_EMERGENCY';
 
     /**
      * @since   Kunena 5.0
      */
-    public const LOG_ERROR_FATAL = 'LOG_ERROR_FATAL';
+    public const string LOG_ERROR_FATAL = 'LOG_ERROR_FATAL';
 
     /**
      * @since   Kunena 7.0
      */
-    public const LOG_EMAIL_NOTIFICATION_SENT = 'LOG_EMAIL_NOTIFICATION_SENT';
+    public const string LOG_EMAIL_NOTIFICATION_SENT = 'LOG_EMAIL_NOTIFICATION_SENT';
 
     /**
      * @since   Kunena 7.0
      */
-    public const LOG_EMAIL_NOTIFICATION_NOTSENT = 'LOG_EMAIL_NOTIFICATION_NOTSENT';
+    public const string LOG_EMAIL_NOTIFICATION_NOTSENT = 'LOG_EMAIL_NOTIFICATION_NOTSENT';
 
     /**
      * @since   Kunena 7.0
      */
-    public const LOG_EMAIL_NOTIFICATION_START = 'LOG_EMAIL_NOTIFICATION_START';
+    public const string LOG_EMAIL_NOTIFICATION_START = 'LOG_EMAIL_NOTIFICATION_START';
 
     /**
      * @var     array| KunenaEntry[]
      * @since   Kunena 5.0
      */
-    protected static $entries = [];
+    protected static array $entries = [];
 
     /**
      * Add a KunenaLogEntry entry to the Kunena log.

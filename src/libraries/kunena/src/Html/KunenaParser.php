@@ -42,13 +42,13 @@ abstract class KunenaParser
      * @var     null
      * @since   Kunena 6.0
      */
-    public static $emoticons = null;
+    public static mixed $emoticons = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public static $relative = true;
+    public static mixed $relative = true;
 
     /**
      * @param   string  $string  string

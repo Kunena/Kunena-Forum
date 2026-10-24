@@ -34,7 +34,7 @@ class KunenaEntry
      * @var     array
      * @since   Kunena 5.0
      */
-    public $data;
+    public mixed $data = null;
 
     /**
      * @param   mixed                $type       type

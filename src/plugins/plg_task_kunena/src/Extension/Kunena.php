@@ -53,7 +53,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
     /**
      * @var string[]
      */
-    private const TASKS_MAP = [
+    private const array TASKS_MAP = [
         'remove.expiredbans' => [
             'langConstPrefix' => 'PLG_TASK_KUNENA_REMOVEEXPIREDBANS',
             'method'          => 'removeExpiredBans',

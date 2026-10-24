@@ -24,11 +24,11 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetLabel extends KunenaLayout
 {
-    public $label;
+    public mixed $label = null;
 
-    public $description;
+    public mixed $description = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $link;
+    public mixed $link = null;
 }

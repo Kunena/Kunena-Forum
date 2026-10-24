@@ -52,45 +52,45 @@ class KunenaModelSchema extends BaseDatabaseModel
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $schema = null;
+    protected mixed $schema = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $xmlschema = null;
+    protected mixed $xmlschema = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $upgradeschema = null;
+    protected mixed $upgradeschema = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $diffschema = null;
+    protected mixed $diffschema = null;
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.0
      */
-    protected $db = null;
+    protected mixed $db = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $sql = null;
+    protected mixed $sql = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $version = null;
+    protected mixed $version = null;
 
-    private $tables;
+    private ?array $tables = null;
 
     /**
      * @throws  Exception

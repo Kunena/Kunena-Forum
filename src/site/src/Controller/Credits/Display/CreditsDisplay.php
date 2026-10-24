@@ -34,31 +34,31 @@ class CreditsDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    public $logo;
+    public mixed $logo = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $intro;
+    public mixed $intro = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $memberList;
+    public mixed $memberList = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $thanks;
+    public mixed $thanks = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Credits';
+    protected mixed $name = 'Credits';
 
     /**
      * Prepare credits display.

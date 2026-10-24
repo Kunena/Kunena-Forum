@@ -37,7 +37,7 @@ abstract class KunenaMailTemplate
      * @var     boolean[]
      * @since   Kunena 7.2
      */
-    protected static $found = [];
+    protected static array $found = [];
 
     /**
      * Is the mail made from the mail template of Joomla: the setting of the forum is on, and the template is in the database

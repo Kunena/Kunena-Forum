@@ -59,61 +59,61 @@ class KunenaTemplate
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @var     null|string
      * @since   Kunena 6.0
      */
-    public $name = null;
+    public mixed $name = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $params = [];
+    public mixed $params = [];
 
     /**
      * @var     boolean|integer
      * @since   Kunena 6.0
      */
-    public $paramstime = false;
+    public mixed $paramstime = false;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $topicIcons = [];
+    public mixed $topicIcons = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $categoryIcons = [];
+    public mixed $categoryIcons = [];
 
     /**
      * @var     KunenaConfig
      * @since   Kunena 6.0
      */
-    public $config = null;
+    public mixed $config = null;
 
     /**
      * @var     SiteApplication
      * @since   Kunena 7.0
      */
-    public $app = null;
+    public mixed $app = null;
 
     /**
      * @var     Input
      * @since   Kunena 7.0
      */
-    public $input = null;
+    public mixed $input = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $pathTypes = [
+    protected mixed $pathTypes = [
         'emoticons'     => 'media/emoticons',
         'ranks'         => 'media/ranks',
         'icons'         => 'media/icons',
@@ -127,7 +127,7 @@ class KunenaTemplate
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $pathTypeDefaults = [
+    protected array $pathTypeDefaults = [
         'avatars'       => 'media/avatars',
         'emoticons'     => 'media/emoticons',
         'ranks'         => 'media/ranks',
@@ -143,7 +143,7 @@ class KunenaTemplate
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $pathTypeOld = [
+    protected array $pathTypeOld = [
         'avatars'    => 'images/avatars',
         'emoticons'  => 'images/emoticons',
         'ranks'      => 'images/ranks',
@@ -158,25 +158,25 @@ class KunenaTemplate
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $default = ['Aurelia'];
+    protected mixed $default = ['Aurelia'];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $paths = [];
+    protected array $paths = [];
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $css_compile = true;
+    protected bool $css_compile = true;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $filecache = [];
+    protected array $filecache = [];
 
     /**
      * Cached XML documents keyed by file path and mtime.
@@ -184,7 +184,7 @@ class KunenaTemplate
      * @var     array
      * @since   Kunena 7.1
      */
-    protected static $xmlFileCache = [];
+    protected static array $xmlFileCache = [];
 
     /**
      * Cache controller instance for persistent template cache.
@@ -192,7 +192,7 @@ class KunenaTemplate
      * @var     mixed
      * @since   Kunena 7.1
      */
-    protected static $persistentTemplateCache;
+    protected static mixed $persistentTemplateCache = null;
 
     /**
      * Cached filesystem metadata keyed by original path.
@@ -200,7 +200,7 @@ class KunenaTemplate
      * @var     array
      * @since   Kunena 7.1
      */
-    protected static $pathStatCache = [];
+    protected static array $pathStatCache = [];
 
     /**
      * Cached file existence checks keyed by absolute file path.
@@ -208,7 +208,7 @@ class KunenaTemplate
      * @var     array
      * @since   Kunena 7.1
      */
-    protected static $fileExistsCache = [];
+    protected static array $fileExistsCache = [];
 
     /**
      * Cached maximum SCSS mtime per source directory.
@@ -216,25 +216,25 @@ class KunenaTemplate
      * @var     array
      * @since   Kunena 7.1
      */
-    protected static $scssDirectoryMtimeCache = [];
+    protected static array $scssDirectoryMtimeCache = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $smileyPath = [];
+    protected mixed $smileyPath = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $rankPath = [];
+    protected mixed $rankPath = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $userClasses = [
+    protected array $userClasses = [
         'kwho-',
         'admin'     => 'kwho-admin',
         'globalmod' => 'kwho-globalmoderator',
@@ -249,49 +249,49 @@ class KunenaTemplate
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $stylesheets = [];
+    protected array $stylesheets = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $style_variables = [];
+    protected array $style_variables = [];
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $compiled_style_variables = null;
+    protected mixed $compiled_style_variables = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $scripts = [];
+    protected array $scripts = [];
 
     /**
      * @var     null|SimpleXMLElement
      * @since   Kunena 6.0
      */
-    protected $xml = null;
+    protected mixed $xml = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $map;
+    protected mixed $map = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $hmvc;
+    protected mixed $hmvc = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $categoryIconset = '';
+    protected mixed $categoryIconset = '';
 
     /**
      * Constructor

@@ -24,17 +24,17 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetRanks extends KunenaLayout
 {
-    public $type;
+    public mixed $type = null;
 
-    public $topicicontype;
+    public mixed $topicicontype = null;
 
-    public $rank;
+    public mixed $rank = null;
 
-    public $stylesecond;
+    public mixed $stylesecond = null;
 
-    public $stylethird;
+    public mixed $stylethird = null;
 
-    public $stylefourth;
+    public mixed $stylefourth = null;
 
-    public $stylelast;
+    public mixed $stylelast = null;
 }

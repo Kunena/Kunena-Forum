@@ -35,12 +35,12 @@ class KunenaUserBans extends KunenaTable
     /**
      * @since   Kunena 6.0
      */
-    public const ANY = 0;
+    public const int ANY = 0;
 
     /**
      * @since   Kunena 6.0
      */
-    public const ACTIVE = 1;
+    public const int ACTIVE = 1;
 
     /**
      * @var     null
@@ -58,67 +58,67 @@ class KunenaUserBans extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $ip = null;
+    public mixed $ip = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $blocked = null;
+    public mixed $blocked = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $expiration = null;
+    public mixed $expiration = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $created_by = null;
+    public mixed $created_by = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $created_time = null;
+    public mixed $created_time = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $reason_private = null;
+    public mixed $reason_private = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $reason_public = null;
+    public mixed $reason_public = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $modified_by = null;
+    public mixed $modified_by = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $modified_time = null;
+    public mixed $modified_time = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $comments = null;
+    public mixed $comments = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $params = null;
+    public mixed $params = null;
 
     /**
      * @param   DatabaseDriver  $db  Database driver

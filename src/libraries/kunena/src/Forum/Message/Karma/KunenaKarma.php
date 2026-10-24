@@ -41,7 +41,7 @@ class KunenaKarma
      * @var     null
      * @since   Kunena 7.2
      */
-    public $typeAlias = null;
+    public mixed $typeAlias = null;
 
     /**
      * @var     null
@@ -53,31 +53,31 @@ class KunenaKarma
      * @var     null
      * @since   Kunena 6.2
      */
-    public $target_userid = null;
+    public mixed $target_userid = null;
 
     /**
      * @var     null
      * @since   Kunena 6.2
      */
-    public $time = null;
+    public mixed $time = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.2
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.2
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @var     array
      * @since   Kunena 6.2
      */
-    protected $users = [];
+    protected mixed $users = [];
 
     /**
      * @param   int  $identifier  identifier

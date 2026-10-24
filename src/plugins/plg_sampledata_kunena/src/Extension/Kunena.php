@@ -50,14 +50,14 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
      *
      * @since   4.0.0
      */
-    protected $path = null;
+    protected mixed $path = null;
 
     /**
      * @var   integer Admin Id, author of all generated content.
      *
      * @since   4.0.0
      */
-    protected $adminId;
+    protected mixed $adminId = null;
 
     /**
      * Holds the menuitem model
@@ -66,7 +66,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
      *
      * @since   4.0.0
      */
-    private $menuItemModel;
+    private mixed $menuItemModel = null;
 
     /**
      * Returns an array of events this subscriber will listen to.

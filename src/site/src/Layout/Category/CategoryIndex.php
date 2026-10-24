@@ -40,49 +40,49 @@ class CategoryIndex extends KunenaLayout
      * @var     object
      * @since   Kunena 6.0
      */
-    public $state;
+    public mixed $state = null;
 
     /**
      * @var     KunenaTemplate|void
      * @since   Kunena 6.0
      */
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
     /**
      * @var     KunenaTemplate|void
      * @since   Kunena 6.0
      */
-    public $categorylist;
+    public mixed $categorylist = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $total;
+    public mixed $total = null;
 
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $sections;
+    public mixed $sections = null;
 
-    public $categories;
+    public mixed $categories = null;
 
-    public $pending;
+    public mixed $pending = null;
 
-    public $more;
+    public mixed $more = null;
 
-    public $templateParams;
+    public mixed $templateParams = null;
 
-    public $allowed;
+    public mixed $allowed = null;
 
     /**
      * Method to return a KunenaPagination object

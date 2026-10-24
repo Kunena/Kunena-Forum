@@ -40,57 +40,57 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
      * @var     null
      * @since   Kunena 6.0
      */
-    public $captchaHtml = null;
-    public $headerText;
-    public $subscribed;
+    public mixed $captchaHtml = null;
+    public mixed $headerText  = null;
+    public mixed $subscribed  = null;
 
-    public $wa;
+    public mixed $wa = null;
 
-    public $doc;
+    public mixed $doc = null;
 
-    public $UserCanPostImage;
+    public mixed $UserCanPostImage = null;
 
-    public $editorType;
+    public mixed $editorType = null;
 
-    public $canSubscribe;
+    public mixed $canSubscribe = null;
 
-    public $subscriptionsChecked;
+    public mixed $subscriptionsChecked = null;
 
-    public $postAnonymous;
+    public mixed $postAnonymous = null;
 
-    public $privateMessage;
+    public mixed $privateMessage = null;
 
-    public $poll;
+    public mixed $poll = null;
 
-    public $allowedExtensions;
+    public mixed $allowedExtensions = null;
 
-    public $action;
+    public mixed $action = null;
 
-    public $selectcatlist;
+    public mixed $selectcatlist = null;
 
-    public $selected;
+    public mixed $selected = null;
 
-    public $captchaEnabled;
+    public mixed $captchaEnabled = null;
 
-    public $topicIcons;
+    public mixed $topicIcons = null;
 
     public $message;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $category;
+    public mixed $category = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $captchaDisplay;
+    public mixed $captchaDisplay = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/Edit';
+    protected mixed $name = 'Topic/Edit';
 
     /**
      * Prepare topic creation form.

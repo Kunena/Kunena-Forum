@@ -24,5 +24,5 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class CategoryListRow extends KunenaLayout
 {
-    public $checkbox;
+    public mixed $checkbox = null;
 }

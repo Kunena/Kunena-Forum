@@ -24,53 +24,53 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class StatisticsGeneral extends KunenaLayout
 {
-    public $name;
+    public mixed $name = null;
 
-    public $lastUserId;
+    public mixed $lastUserId = null;
 
-    public $memberCount;
+    public mixed $memberCount = null;
 
-    public $sectionCount;
+    public mixed $sectionCount = null;
 
-    public $categoryCount;
+    public mixed $categoryCount = null;
 
-    public $topicCount;
+    public mixed $topicCount = null;
 
-    public $messageCount;
+    public mixed $messageCount = null;
 
-    public $todayTopicCount;
+    public mixed $todayTopicCount = null;
 
-    public $yesterdayTopicCount;
+    public mixed $yesterdayTopicCount = null;
 
-    public $todayReplyCount;
+    public mixed $todayReplyCount = null;
 
-    public $yesterdayReplyCount;
+    public mixed $yesterdayReplyCount = null;
 
-    public $topTopics;
+    public mixed $topTopics = null;
 
-    public $topPosters;
+    public mixed $topPosters = null;
 
-    public $topProfiles;
+    public mixed $topProfiles = null;
 
-    public $topPolls;
+    public mixed $topPolls = null;
 
-    public $topThanks;
+    public mixed $topThanks = null;
 
-    public $top;
+    public mixed $top = null;
 
-    public $showGenStats;
+    public mixed $showGenStats = null;
 
-    public $showPopUserStats;
+    public mixed $showPopUserStats = null;
 
-    public $showPopSubjectStats;
+    public mixed $showPopSubjectStats = null;
 
-    public $showPopPollStats;
+    public mixed $showPopPollStats = null;
 
-    public $showPopThankYouStats;
+    public mixed $showPopThankYouStats = null;
 
-    public $showStats;
+    public mixed $showStats = null;
 
-    public $latestMemberLink;
+    public mixed $latestMemberLink = null;
 
-    public $userlistUrl;
+    public mixed $userlistUrl = null;
 }

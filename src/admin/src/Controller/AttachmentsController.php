@@ -34,7 +34,7 @@ class AttachmentsController extends FormController
      * @var     null|string
      * @since   Kunena 2.0.0-BETA2
      */
-    protected $baseurl = null;
+    protected mixed $baseurl = null;
 
     /**
      * Constructor

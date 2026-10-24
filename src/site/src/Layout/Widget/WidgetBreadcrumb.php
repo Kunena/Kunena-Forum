@@ -24,5 +24,5 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetBreadcrumb extends KunenaLayout
 {
-    public $breadcrumb;
+    public mixed $breadcrumb = null;
 }

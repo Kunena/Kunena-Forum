@@ -33,115 +33,115 @@ use Kunena\Forum\Libraries\View\KunenaView;
  */
 class HtmlView extends KunenaView
 {
-    public $me;
+    public mixed $me = null;
 
-    public $state;
+    public mixed $state = null;
 
-    public $embedded;
+    public mixed $embedded = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $topic;
+    public mixed $topic = null;
 
-    public $position;
+    public mixed $position = null;
 
     /**
      * @var false|float
      * @since Kunena 6.0
      */
-    public $pages;
+    public mixed $pages = null;
 
     /**
      * @var integer
      * @since Kunena 6.0
      */
-    public $message_position;
+    public mixed $message_position = null;
 
-    public $module;
+    public mixed $module = null;
 
-    public $firstUserName;
+    public mixed $firstUserName = null;
 
-    public $firstPostTime;
+    public mixed $firstPostTime = null;
 
-    public $firstPostAuthor;
+    public mixed $firstPostAuthor = null;
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    public $categoryLink;
+    public mixed $categoryLink = null;
 
     /**
      * @var boolean
      * @since Kunena 6.0
      */
-    public $cache;
+    public mixed $cache = null;
 
-    public $category;
+    public mixed $category = null;
 
-    public $topics;
+    public mixed $topics = null;
 
-    public $messages;
+    public mixed $messages = null;
 
-    public $layout;
+    public mixed $layout = null;
 
     /**
      * @var string
      * @since Kunena 6.0
      */
-    public $moreUri;
+    public mixed $moreUri = null;
 
     /**
      * @var boolean|string
      * @since Kunena 6.0
      */
-    public $URL;
+    public mixed $URL = null;
 
-    public $message_ordering;
+    public mixed $message_ordering = null;
 
     /**
      * @var false
      * @since Kunena 6.0
      */
-    public $actionMove;
+    public mixed $actionMove = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    public $total;
+    public mixed $total = null;
 
-    public $params;
+    public mixed $params = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    public $topicActions;
+    public mixed $topicActions = null;
 
     /**
      * @var array
      * @since   Kunena 7.1
      */
-    protected $userTypeCache = [];
+    protected array $userTypeCache = [];
 
     /**
      * @var array
      * @since   Kunena 7.1
      */
-    protected $avatarCache = [];
+    protected array $avatarCache = [];
 
     /**
      * @var array
      * @since   Kunena 7.1
      */
-    protected $categoryLinkCache = [];
+    protected array $categoryLinkCache = [];
 
     /**
      * @var array
      * @since   Kunena 7.1
      */
-    protected $userObjectCache = [];
+    protected array $userObjectCache = [];
 
     /**
      * @param   null  $tpl  tpl

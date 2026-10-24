@@ -37,73 +37,73 @@ class HtmlView extends BaseHtmlView
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $config;
+    protected mixed $config = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $avatar;
+    protected mixed $avatar = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $editavatar;
+    protected mixed $editavatar = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $maxSig = '';
+    protected mixed $maxSig = '';
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $maxPersonalText = '';
+    protected mixed $maxPersonalText = '';
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $selectMod;
+    protected mixed $selectMod = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $sub;
+    protected mixed $sub = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $ipslist;
+    protected mixed $ipslist = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $selectOrder;
+    protected mixed $selectOrder = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $settings;
+    protected mixed $settings = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $selectRank;
+    protected mixed $selectRank = null;
 
     /**
      * @var mixed
      * @since Kunena 6.0
      */
-    protected $modCats;
+    protected mixed $modCats = null;
 
     /**
      * @param   null  $tpl  tpl

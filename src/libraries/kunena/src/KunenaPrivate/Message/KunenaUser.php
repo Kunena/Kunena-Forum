@@ -33,7 +33,7 @@ class KunenaUser extends KunenaDatabaseObject
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_table = 'KunenaPrivateUserMap';
+    protected mixed $_table = 'KunenaPrivateUserMap';
 
     /**
      * Get the table relevant properties. Override for your specific Object

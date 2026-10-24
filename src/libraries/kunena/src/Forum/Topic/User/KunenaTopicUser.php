@@ -49,79 +49,79 @@ class KunenaTopicUser
     * @var     string
     * @since   Kunena 6.4
     */
-    public $typeAlias;
+    public mixed $typeAlias = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $user_id;
+    public mixed $user_id = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $topic_id;
+    public mixed $topic_id = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $categoryId;
+    public mixed $categoryId = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $posts;
+    public mixed $posts = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $last_post_id;
+    public mixed $last_post_id = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $owner;
+    public mixed $owner = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $favorite;
+    public mixed $favorite = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $subscribed;
+    public mixed $subscribed = null;
 
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $params;
+    public mixed $params = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
-    public $category_id;
+    public mixed $category_id = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * @var     DatabaseDriver|null
      * @since   Kunena 6.0
      */
-    protected $_db = null;
+    protected mixed $_db = null;
 
     /**
      * @param   mixed  $topic  topic

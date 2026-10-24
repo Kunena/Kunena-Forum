@@ -49,56 +49,56 @@ class KunenaAccess
      *
      * @since   Kunena 6.0
      */
-    public const CATEGORY_SUBSCRIPTION = 1;
+    public const int CATEGORY_SUBSCRIPTION = 1;
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public const TOPIC_SUBSCRIPTION = 2;
+    public const int TOPIC_SUBSCRIPTION = 2;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected static $instance = null;
+    protected static mixed $instance = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected static $cacheKey = 'com_kunena.access.global.v1';
+    protected static mixed $cacheKey = 'com_kunena.access.global.v1';
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected $accesstypes = ['all' => []];
+    protected array $accesstypes = ['all' => []];
 
     /**
      * @var     array|null
      * @since   Kunena 6.0
      */
-    protected $adminsByCatid = null;
+    protected mixed $adminsByCatid = null;
 
     /**
      * @var     array|null
      * @since   Kunena 6.0
      */
-    protected $adminsByUserid = null;
+    protected mixed $adminsByUserid = null;
 
     /**
      * @var     array|null
      * @since   Kunena 6.0
      */
-    protected $moderatorsByCatid = null;
+    protected mixed $moderatorsByCatid = null;
 
     /**
      * @var     array|null
      * @since   Kunena 6.0
      */
-    protected $moderatorsByUserid = null;
+    protected mixed $moderatorsByUserid = null;
 
     /**
      * @throws  Exception

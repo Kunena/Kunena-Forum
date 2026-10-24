@@ -40,13 +40,13 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
      * @var     array  User ids by group ("recursive|groupid" => int[]) which were already loaded in this request.
      * @since   Kunena 7.2
      */
-    protected $groupUsers = [];
+    protected array $groupUsers = [];
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    protected static $viewLevels = null;
+    protected static mixed $viewLevels = null;
 
     /**
      * Get list of supported access types.

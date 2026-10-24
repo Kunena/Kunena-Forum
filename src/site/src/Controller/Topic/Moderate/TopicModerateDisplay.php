@@ -41,7 +41,7 @@ class TopicModerateDisplay extends KunenaControllerDisplay
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topic;
+    public mixed $topic = null;
 
     /**
      * @var     KunenaMessage|null
@@ -53,43 +53,43 @@ class TopicModerateDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    public $uri;
+    public mixed $uri = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $title;
+    public mixed $title = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $topicIcons;
+    public mixed $topicIcons = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $userLink;
+    public mixed $userLink = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/Moderate';
+    protected mixed $name = 'Topic/Moderate';
 
-    public $catid;
+    public mixed $catid = null;
 
-    public $category;
+    public mixed $category = null;
 
-    public $banHistory;
+    public mixed $banHistory = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $replies;
+    public mixed $replies = null;
 
-    public $banInfo;
+    public mixed $banInfo = null;
 
     /**
      * Prepare topic moderate display.

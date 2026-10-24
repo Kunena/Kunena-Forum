@@ -32,7 +32,7 @@ class KunenaAttachmentFinder extends KunenaFinder
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $table = '#__kunena_attachments';
+    protected mixed $table = '#__kunena_attachments';
 
     /**
      * Filter by attachment private.

@@ -39,61 +39,61 @@ class KunenaSession
      * @var string
      * @since Kunena 6.4
      */
-    public $allowed;
+    public mixed $allowed = null;
 
     /**
      * @var     integer|string
      * @since   Kunena 6.0
      */
-    public $lasttime;
+    public mixed $lasttime = null;
 
     /**
      * @var     integer|string
      * @since   Kunena 6.0
      */
-    public $readtopics;
+    public mixed $readtopics = null;
 
     /**
      * @var     integer|string
      * @since   Kunena 6.0
      */
-    public $currvisit;
+    public mixed $currvisit = null;
 
     /**
      * @var     integer|string
      * @since   Kunena 6.4
      */
-    public $typeAlias;
+    public mixed $typeAlias = null;
 
     /**
      * @var     integer|string
      * @since   Kunena 6.4
      */
-    public $allowedcats;
+    public mixed $allowedcats = null;
 
     /**
      * @var     mixed
      * @since   Kunena 6.0
      */
-    private static $_instance;
+    private static ?KunenaSession $_instance = null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_exists = false;
+    protected mixed $_exists = false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $_sessionTimeOut = false;
+    protected mixed $_sessionTimeOut = false;
 
     /**
      * @var     integer|string
      * @since   Kunena 6.0
      */
-    protected $allreadtime;
+    protected mixed $allreadtime = null;
 
     /**
      * @param   mixed|null  $identifier  identifier

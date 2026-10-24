@@ -36,20 +36,20 @@ abstract class KunenaMap
      *
      * @since   Kunena 7.2
      */
-    protected const MAX_LOOKUPS = 3;
+    protected const int MAX_LOOKUPS = 3;
 
     /**
      * How long an address which was not found is kept (seconds), before it is looked up again.
      *
      * @since   Kunena 7.2
      */
-    protected const NOT_FOUND_TTL = 604800;
+    protected const int NOT_FOUND_TTL = 604800;
 
     /**
      * @var     int
      * @since   Kunena 7.2
      */
-    protected static $lookups = 0;
+    protected static mixed $lookups = 0;
 
     /**
      * The Joomla cache with the coordinates of the addresses: it is kept for a long time (also when the cache of the site is

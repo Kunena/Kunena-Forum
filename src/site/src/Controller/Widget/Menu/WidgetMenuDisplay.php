@@ -33,55 +33,55 @@ class WidgetMenuDisplay extends KunenaControllerDisplay
      * @var     object
      * @since   Kunena 6.0
      */
-    public $basemenu;
+    public mixed $basemenu = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $list;
+    public mixed $list = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $menu;
+    public mixed $menu = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $active;
+    public mixed $active = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $path;
+    public mixed $path = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $active_id;
+    public mixed $active_id = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $showAll;
+    public mixed $showAll = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $class_sfx;
+    public mixed $class_sfx = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Widget/Menu';
+    protected mixed $name = 'Widget/Menu';
 
     /**
      * Prepare menu display.

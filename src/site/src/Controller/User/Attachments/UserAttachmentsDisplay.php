@@ -40,37 +40,37 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $profile;
+    public mixed $profile = null;
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    public $attachments;
+    public mixed $attachments = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/Attachments';
+    protected mixed $name = 'User/Attachments';
 
-    public $template;
+    public mixed $template = null;
 
-    public $moreUri;
+    public mixed $moreUri = null;
 
-    public $total;
+    public mixed $total = null;
 
     /**
      * Prepare user attachments list.

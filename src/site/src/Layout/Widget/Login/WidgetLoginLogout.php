@@ -23,39 +23,39 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetLoginLogout extends KunenaLayout
 {
-    public $output;
+    public mixed $output = null;
 
-    public $user;
+    public mixed $user = null;
 
-    public $headerText;
+    public mixed $headerText = null;
 
-    public $pagination;
+    public mixed $pagination = null;
 
-    public $config;
+    public mixed $config = null;
 
-    public $me;
+    public mixed $me = null;
 
-    public $my;
+    public mixed $my = null;
 
-    public $registrationUrl;
+    public mixed $registrationUrl = null;
 
-    public $resetPasswordUrl;
+    public mixed $resetPasswordUrl = null;
 
-    public $remindUsernameUrl;
+    public mixed $remindUsernameUrl = null;
 
-    public $rememberMe;
+    public mixed $rememberMe = null;
 
-    public $lastvisitDate;
+    public mixed $lastvisitDate = null;
 
-    public $announcementsUrl;
+    public mixed $announcementsUrl = null;
 
-    public $pm_link;
+    public mixed $pm_link = null;
 
-    public $inboxCount;
+    public mixed $inboxCount = null;
 
-    public $inboxCountValue;
+    public mixed $inboxCountValue = null;
 
-    public $profile_edit_url;
+    public mixed $profile_edit_url = null;
 
-    public $plglogin;
+    public mixed $plglogin = null;
 }

@@ -49,43 +49,43 @@ class Display extends KunenaControllerDisplay
      * @var     KunenaConfig
      * @since   Kunena 6.0
      */
-    public $config;
+    public mixed $config = null;
 
     /**
      * @var     KunenaLayout
      * @since   Kunena 6.0
      */
-    public $page;
+    public mixed $page = null;
 
     /**
      * @var     KunenaLayout
      * @since   Kunena 6.0
      */
-    public $content;
+    public mixed $content = null;
 
     /**
      * @var     Pathway
      * @since   Kunena 6.0
      */
-    public $breadcrumb;
+    public mixed $breadcrumb = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     KunenaTemplate
      * @since   Kunena 6.0
      */
-    public $template;
+    public mixed $template = null;
 
     /**
      * @var     HtmlDocument
      * @since   Kunena 6.0
      */
-    public $document;
+    public mixed $document = null;
 
     /**
      * @return  void

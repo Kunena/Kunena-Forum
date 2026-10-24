@@ -29,13 +29,13 @@ class TopicJsonDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 6.0
      */
-    public $response;
+    public mixed $response = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/Json';
+    protected mixed $name = 'Topic/Json';
 
     /**
      * Prepare category display.

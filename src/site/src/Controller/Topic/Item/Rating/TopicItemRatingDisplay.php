@@ -30,13 +30,13 @@ class TopicItemRatingDisplay extends KunenaControllerDisplay
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */
-    public $topic;
+    public mixed $topic = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'Topic/Item/Rating';
+    protected mixed $name = 'Topic/Item/Rating';
 
     /**
      * Prepare topic actions display.

@@ -36,13 +36,13 @@ class MiscDisplay extends Display
      * @var     string
      * @since   Kunena 6.0
      */
-    public $header = '';
+    public mixed $header = '';
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $body;
+    public mixed $body = null;
 
     /**
      * Return custom display layout.

@@ -39,19 +39,19 @@ abstract class KunenaAttachmentHelper
      * @var     KunenaAttachment[]
      * @since   Kunena 6.0
      */
-    protected static $_instances = [];
+    protected static mixed $_instances = [];
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $_messages = [];
+    protected static array $_messages = [];
 
     /**
      * @var     array  Ids of the messages whose attachments were loaded by loadByMessage(), also those without attachments.
      * @since   Kunena 7.2
      */
-    protected static $_messagesLoaded = [];
+    protected static array $_messagesLoaded = [];
 
     /**
      * @return bool

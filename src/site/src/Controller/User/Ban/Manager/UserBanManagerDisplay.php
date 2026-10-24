@@ -37,35 +37,35 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     KunenaUser
      * @since   Kunena 6.0
      */
-    public $profile;
+    public mixed $profile = null;
 
     /**
      * @var     KunenaBan
      * @since   Kunena 6.0
      */
-    public $userBans;
+    public mixed $userBans = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $headerText;
+    public mixed $headerText = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/Ban/Manager';
+    protected mixed $name = 'User/Ban/Manager';
 
-    public $moreUri;
+    public mixed $moreUri = null;
 
-    public $embedded;
+    public mixed $embedded = null;
 
     /**
      * Prepare ban manager.

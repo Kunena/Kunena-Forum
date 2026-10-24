@@ -35,7 +35,7 @@ abstract class KunenaRankGroups
      * @var     array
      * @since   Kunena 7.2
      */
-    protected static $userRanks = [];
+    protected static array $userRanks = [];
 
     /**
      * The id of the group which is linked to a rank (0 when there is none).

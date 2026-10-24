@@ -38,37 +38,37 @@ class UserListingDisplay extends KunenaControllerDisplay
      * @var     object
      * @since   Kunena 6.0
      */
-    public $state;
+    public mixed $state = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $me;
+    public mixed $me = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $total;
+    public mixed $total = null;
 
     /**
      * @var     object
      * @since   Kunena 6.0
      */
-    public $users;
+    public mixed $users = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $pagination;
+    public mixed $pagination = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $name = 'User/List';
+    protected mixed $name = 'User/List';
 
     /**
      * Load user list.

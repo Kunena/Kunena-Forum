@@ -77,59 +77,59 @@ class KunenaAttachment extends KunenaDatabaseObject
     /**
      * @since   Kunena 6.0
      */
-    public const PROTECTION_NONE = 0;
+    public const int PROTECTION_NONE = 0;
 
     /**
      * @since   Kunena 6.0
      */
-    public const PROTECTION_PUBLIC = 1;
+    public const int PROTECTION_PUBLIC = 1;
 
     /**
      * @since   Kunena 6.0
      */
-    public const PROTECTION_ACL = 2;
+    public const int PROTECTION_ACL = 2;
 
     /**
      * @since   Kunena 6.0
      */
-    public const PROTECTION_FRIENDS = 4;
+    public const int PROTECTION_FRIENDS = 4;
 
     /**
      * @since   Kunena 6.0
      */
-    public const PROTECTION_MODERATORS = 8;
+    public const int PROTECTION_MODERATORS = 8;
 
     /**
      * @since   Kunena 6.0
      */
-    public const PROTECTION_ADMINS = 16;
+    public const int PROTECTION_ADMINS = 16;
 
     /**
      * @since   Kunena 6.0
      */
-    public const PROTECTION_PRIVATE = 32;
+    public const int PROTECTION_PRIVATE = 32;
 
     /**
      * @since   Kunena 6.0
      */
-    public const PROTECTION_AUTHOR = 64;
+    public const int PROTECTION_AUTHOR = 64;
 
     /**
      * @since   Kunena 6.0
      */
-    public const PROTECTION_UNPUBLISHED = 128;
+    public const int PROTECTION_UNPUBLISHED = 128;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected static $_directory = 'media/kunena/attachments';
+    protected static mixed $_directory = 'media/kunena/attachments';
 
     /**
      * @var     array
      * @since   Kunena 6.0
      */
-    protected static $actions = [
+    protected static mixed $actions = [
         'read'        => ['Read'],
         'createimage' => [],
         'createfile'  => [],
@@ -147,25 +147,25 @@ class KunenaAttachment extends KunenaDatabaseObject
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $disabled = false;
+    public mixed $disabled = false;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $width;
+    public mixed $width = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $height;
+    public mixed $height = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $folder;
+    public mixed $folder = null;
 
     /**
      * @var     integer
@@ -177,97 +177,97 @@ class KunenaAttachment extends KunenaDatabaseObject
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $mesid;
+    public mixed $mesid = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $protected;
+    public mixed $protected = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $hash;
+    public mixed $hash = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $size;
+    public mixed $size = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $filetype;
+    public mixed $filetype = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $filename;
+    public mixed $filename = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $filename_real;
+    public mixed $filename_real = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $comment; //ToDo does comment exist anymore?
+    public mixed $comment = null; //ToDo does comment exist anymore?
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $inline;
+    public mixed $inline = null;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $status;
+    public mixed $status = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $typeAlias;
+    public mixed $typeAlias = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $caption;
+    public mixed $caption = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $setLayout = 'default';
+    public mixed $setLayout = 'default';
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $_table = 'KunenaAttachments';
+    protected mixed $_table = 'KunenaAttachments';
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $path;
+    protected mixed $path = null;
 
     /**
      * @var     string
      * @since   Kunena 6.0
      */
-    protected $shortname;
+    protected mixed $shortname = null;
 
     /**
      * Destructor deletes the files from the filesystem if KunenaAttachment isn't stored in database.

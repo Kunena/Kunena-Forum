@@ -24,15 +24,15 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class TopicRow extends KunenaLayout
 {
-    public $topic;
+    public mixed $topic = null;
 
-    public $position;
+    public mixed $position = null;
 
-    public $checkbox;
+    public mixed $checkbox = null;
 
-    public $ktemplate;
+    public mixed $ktemplate = null;
 
-    public $cols;
+    public mixed $cols = null;
 
-    public $spacing;
+    public mixed $spacing = null;
 }

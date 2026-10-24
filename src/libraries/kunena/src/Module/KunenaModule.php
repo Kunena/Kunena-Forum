@@ -37,25 +37,25 @@ abstract class KunenaModule
      * @var     string
      * @since   Kunena 6.0
      */
-    protected static $css = null;
+    protected static mixed $css = null;
 
     /**
      * @var     stdClass
      * @since   Kunena 6.0
      */
-    protected $module = null;
+    protected mixed $module = null;
 
     /**
      * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected mixed $params = null;
 
     /**
      * @var     Document
      * @since   Kunena 6.0
      */
-    protected $document;
+    protected mixed $document = null;
 
     /**
      * @param   stdClass  $module  module

@@ -29,13 +29,13 @@ class TableKunenaPrivateAttachmentMap extends KunenaTable
      * @var     null
      * @since   Kunena 6.0
      */
-    public $private_id = null;
+    public mixed $private_id = null;
 
     /**
      * @var     null
      * @since   Kunena 6.0
      */
-    public $attachment_id = null;
+    public mixed $attachment_id = null;
 
     /**
      * @var     boolean

@@ -1719,7 +1719,7 @@ class KunenaCategory extends KunenaDatabaseObject
         $count = KunenaTopicHelper::delete($ids);
 
         KunenaUserHelper::recount();
-        KunenaCategoryHelper::recount($this->id);
+        KunenaCategoryHelper::recountBatch($this->id);
         KunenaAttachmentHelper::cleanup();
 
         return $count;
@@ -1770,7 +1770,7 @@ class KunenaCategory extends KunenaDatabaseObject
         $count = KunenaTopicHelper::trash($ids);
 
         KunenaUserHelper::recount();
-        KunenaCategoryHelper::recount($this->id);
+        KunenaCategoryHelper::recountBatch($this->id);
 
         return $count;
     }

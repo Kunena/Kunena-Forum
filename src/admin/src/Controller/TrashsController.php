@@ -191,7 +191,7 @@ class TrashsController extends AdminController
 
         KunenaUserHelper::recount();
         KunenaTopicHelper::recount();
-        KunenaCategoryHelper::recount();
+        KunenaCategoryHelper::recountBatch();
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
     }

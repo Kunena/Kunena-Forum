@@ -264,7 +264,7 @@ class TrashsModel extends ListModel
 
         if ($topicIds) {
             KunenaTopicHelper::recount($topicIds);
-            KunenaCategoryHelper::recount(array_values($categories));
+            KunenaCategoryHelper::recountBatch(array_values($categories));
         }
 
         return \true;
@@ -322,7 +322,7 @@ class TrashsModel extends ListModel
 
         if ($processed) {
             KunenaTopicHelper::recount(array_values($topicIds));
-            KunenaCategoryHelper::recount(array_values($categories));
+            KunenaCategoryHelper::recountBatch(array_values($categories));
         }
 
         return \true;

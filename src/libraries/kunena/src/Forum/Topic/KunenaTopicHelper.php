@@ -539,6 +539,18 @@ abstract class KunenaTopicHelper
               ->where($db->quoteName('thread') . ' IN (' . $idlist . ')');
         $queries [] = $query;
 
+        // The ratings of the topics and their Joomla tags (as KunenaTopic::delete() does): the rows stayed for topics which are gone.
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_rate'))
+              ->where($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
+        $queries [] = $query;
+
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__contentitem_tag_map'))
+              ->where($db->quoteName('type_alias') . ' = ' . $db->quote(KunenaTopicTags::TYPE_ALIAS))
+              ->where($db->quoteName('content_item_id') . ' IN (' . $idlist . ')');
+        $queries [] = $query;
+
         // TODO: delete attachments
         // Delete topics last, because the previous queries look up data in the topics table
         $query = $db->createQuery();

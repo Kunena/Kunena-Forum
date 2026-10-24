@@ -756,7 +756,8 @@ class CategoriesController extends KunenaController
 
         $cid       = $this->input->get('cid', '', 'array');
         $catParent = $this->input->getInt('batch_catid_target', 0);
-        $task      = $this->input->getString('move_copy');
+        // Move is the only action of the batch: a form without the radio checked did nothing, without a message.
+        $task      = $this->input->getString('move_copy', 'move') ?: 'move';
 
         if ($catParent == 0 || empty($cid)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_NOT_SELECTED'), 'notice');

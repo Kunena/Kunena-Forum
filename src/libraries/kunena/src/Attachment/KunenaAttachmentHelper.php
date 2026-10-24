@@ -538,7 +538,10 @@ abstract class KunenaAttachmentHelper
         $query->select('a.*')
             ->from($db->quoteName('#__kunena_attachments', 'a'))
             ->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON a.mesid = m.id')
-            ->where($db->quoteName('m.id') . ' IS NULL');
+            ->where($db->quoteName('m.id') . ' IS NULL')
+            // A file of a message which is still being written has no message yet (mesid 0): it is no orphan, the task
+            // "clean.pendingattachments" removes the uploads which were never posted.
+            ->where($db->quoteName('a.mesid') . ' > 0');
         $query->setLimit(50);
         $db->setQuery($query);
 

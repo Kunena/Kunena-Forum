@@ -30,7 +30,7 @@ use Joomla\CMS\Language\Text;
                     <div id="batch-move-copy" class="mb-3">
                         <div>
                             <label>
-                                <input type="radio" name="move_copy" value="move" />
+                                <input type="radio" name="move_copy" value="move" checked />
                             </label>
                             <label>
                                 <?php echo Text::_('COM_KUNENA_BATCH_CATEGORY_MOVE') ?>

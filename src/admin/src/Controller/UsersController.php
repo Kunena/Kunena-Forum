@@ -140,7 +140,8 @@ class UsersController extends KunenaController
 
         if ($cid) {
             foreach ($cid as $id) {
-                list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+                // All the messages of the user (without nolimit only one page of them was trashed).
+                list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'nolimit' => -1, 'user' => $id]);
 
                 foreach ($messages as $mes) {
                     $mes->publish(KunenaForum::DELETED);
@@ -385,22 +386,20 @@ class UsersController extends KunenaController
 
         $ban = KunenaBan::getInstanceByUserid($userid, true);
 
-        if (!$ban->id) {
-            $ban->ban($userid);
-        } else {
-            $now = new Date();
-            $ban->setExpiration($now);
-        }
-
         $message = Text::_('COM_KUNENA_USER_UNBAN_DONE');
 
-        try {
-            $ban->save();
-        } catch (Exception $e) {
-            $this->app->enqueueMessage($e->getMessage(), 'error');
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        // Lift the active ban; without one there is nothing to lift (a new ban here banned the user for ever).
+        if ($ban->id) {
+            $ban->setExpiration(new Date());
 
-            return;
+            try {
+                $ban->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+                return;
+            }
         }
 
         $this->app->enqueueMessage($message, 'success');
@@ -563,6 +562,9 @@ class UsersController extends KunenaController
 
         if (!$ban->id) {
             $ban->ban($userid, null, 1);
+        } elseif (!$ban->blocked) {
+            // A banned user gets the block button: the ban becomes a block (lifting it here unbanned the user instead).
+            $ban->blocked = 1;
         } else {
             $now = new Date();
             $ban->setExpiration($now);
@@ -614,22 +616,20 @@ class UsersController extends KunenaController
 
         $ban = KunenaBan::getInstanceByUserid($userid, true);
 
-        if (!$ban->id) {
-            $ban->ban($userid, null, 1);
-        } else {
-            $now = new Date();
-            $ban->setExpiration($now);
-        }
-
         $message = Text::_('COM_KUNENA_USER_UNBLOCK_DONE');
 
-        try {
-            $ban->save();
-        } catch (Exception $e) {
-            $this->app->enqueueMessage($e->getMessage(), 'error');
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        // Lift the active block; without one there is nothing to lift (a new block here blocked the user for ever).
+        if ($ban->id) {
+            $ban->setExpiration(new Date());
 
-            return;
+            try {
+                $ban->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+                return;
+            }
         }
 
         $this->app->enqueueMessage($message, 'success');

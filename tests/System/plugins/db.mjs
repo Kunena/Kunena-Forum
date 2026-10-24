@@ -159,8 +159,9 @@ function deleteInsertedItems(config) {
       return;
     }
 
-    // Delete the items from the database
-    promises.push(queryTestDB(`DELETE FROM ${item.table} WHERE id IN (${item.rows.join(',')})`, config).then(() => {
+    // Delete the items from the database (by their primary key, which is not always id)
+    const key = item.table === `${config.env.db_prefix}kunena_ranks` ? 'rankId' : 'id';
+    promises.push(queryTestDB(`DELETE FROM ${item.table} WHERE ${key} IN (${item.rows.join(',')})`, config).then(() => {
       // Cleanup some tables we do not have control over from inserted items
       if (item.table === `${config.env.db_prefix}users`) {
         promises.push(queryTestDB(`DELETE FROM #__user_usergroup_map WHERE user_id IN (${item.rows.join(',')})`, config));

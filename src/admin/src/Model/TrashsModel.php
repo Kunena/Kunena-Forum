@@ -227,8 +227,10 @@ class TrashsModel extends ListModel
         }
 
         // Add the list ordering clause.
-        $direction = strtoupper($this->getState('list.direction'));
-        $ordering  = strtoupper($this->getState('list.ordering'));
+        // A list[] in the request without ordering (list[limit] only) leaves both empty: "ORDER BY  " broke the query.
+        $direction = strtoupper((string) $this->getState('list.direction'));
+        $direction = \in_array($direction, ['ASC', 'DESC'], true) ? $direction : 'ASC';
+        $ordering  = strtoupper((string) $this->getState('list.ordering')) ?: 'ID';
         $query->order($ordering . ' ' . $direction);
 
         return $query;

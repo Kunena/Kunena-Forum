@@ -246,7 +246,8 @@ class UserController extends FormController
 
         if ($uids) {
             foreach ($uids as $id) {
-                list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+                // All the messages of the user (without nolimit only one page of them was moved).
+                list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'nolimit' => -1, 'user' => $id]);
 
                 foreach ($messages as $message) {
                     $topic = $message->getTopic();

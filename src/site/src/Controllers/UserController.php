@@ -1441,30 +1441,33 @@ class UserController extends KunenaController
             $number = 0;
 
             foreach ($cid as $id) {
-                $attachment  = KunenaAttachmentHelper::get($id);
-                $message     = $attachment->getMessage();
-                $attachments = [$attachment->id, 1];
-                $attach      = [];
-                $removeList  = array_keys(array_diff_key($attachments, $attach));
-                $removeList  = ArrayHelper::toInteger($removeList);
-                $message->removeAttachments($removeList);
+                $attachment = KunenaAttachmentHelper::get($id);
+                $message    = $attachment->getMessage();
 
-                $topic = $message->getTopic();
+                if (!$attachment->isAuthorised('delete')) {
+                    continue;
+                }
 
-                if ($attachment->isAuthorised('delete') && $attachment->delete()) {
-                    $message_text = $attachment->removeBBCodeInMessage($message->message);
-
-                    if (!empty($message_text) && $attachment->inline) {
-                        $message->message = $message_text;
+                // A file which belongs to no message: only the file goes.
+                if (!$message->exists()) {
+                    if ($attachment->delete()) {
+                        $number++;
                     }
 
-                    $message->save();
+                    continue;
+                }
 
-                    if ($topic->attachments > 0) {
-                        $topic->attachments = $topic->attachments - 1;
-                        $topic->save(false);
-                    }
+                // The chosen file: the message deletes it and counts it off the topic on save. (The list was [0, 1], the keys
+                // of an array: the attachment 1 of the message went too.)
+                $message->removeAttachments([$attachment->id]);
 
+                $message_text = $attachment->removeBBCodeInMessage($message->message);
+
+                if (!empty($message_text) && $attachment->inline) {
+                    $message->message = $message_text;
+                }
+
+                if ($message->save()) {
                     $number++;
                 }
             }

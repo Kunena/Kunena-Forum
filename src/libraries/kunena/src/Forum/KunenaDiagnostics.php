@@ -896,7 +896,8 @@ abstract class KunenaDiagnostics
      */
     protected static function delete_messageOrphaned(): string
     {
-        return "DELETE a FROM #__kunena_messages AS a LEFT JOIN #__kunena_topics AS t ON t.id=a.thread LEFT JOIN #__kunena_messages_text AS mt ON a.id=mt.mesid WHERE t.id IS NULL";
+        // The texts go with their messages (without "mt" they stayed, as orphans of the check messageBodyMissingMessage).
+        return "DELETE a, mt FROM #__kunena_messages AS a LEFT JOIN #__kunena_topics AS t ON t.id=a.thread LEFT JOIN #__kunena_messages_text AS mt ON a.id=mt.mesid WHERE t.id IS NULL";
     }
 
     /**

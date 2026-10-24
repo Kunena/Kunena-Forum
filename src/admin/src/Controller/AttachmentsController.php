@@ -94,11 +94,9 @@ class AttachmentsController extends FormController
                 continue;
             }
 
-            $attachments = [$attachment->id, 1];
-            $attach      = [];
-            $removeList  = array_keys(array_diff_key($attachments, $attach));
-            $removeList  = ArrayHelper::toInteger($removeList);
-            $message->removeAttachments($removeList);
+            // The chosen attachment: the message deletes it and counts it off the topic on save. (The list was [0, 1], the keys
+            // of an array: the attachment 1 of the message went too.)
+            $message->removeAttachments([$attachment->id]);
 
             $messageText = $attachment->removeBBCodeInMessage($message->message);
 
@@ -107,14 +105,6 @@ class AttachmentsController extends FormController
             }
 
             $message->save();
-
-            $topic = $message->getTopic();
-            $attachment->delete();
-
-            if ($topic->attachments > 0) {
-                --$topic->attachments;
-                $topic->save(false);
-            }
         }
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_DELETED_SUCCESSFULLY'), 'success');

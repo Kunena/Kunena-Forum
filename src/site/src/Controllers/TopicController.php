@@ -324,6 +324,9 @@ class TopicController extends KunenaController
 
         $this->checkpermissions($instance);
 
+        // changeinline() gives back the text of the editor for one attachment, it does not change the attachment.
+        $instance->setInline(0);
+
         $this->changeinline($instance, '0');
     }
 

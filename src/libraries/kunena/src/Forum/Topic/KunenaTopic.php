@@ -1064,17 +1064,17 @@ class KunenaTopic extends KunenaDatabaseObject
             $query->bind(':thread', $this->id, ParameterType::INTEGER);
             $queries[] = $query;
 
+            // Delete all messages text (first: the texts are found by their messages, which are deleted next)
+            $query = $db->createQuery();
+            $query->delete($db->quoteName('#__kunena_messages_text'))
+                ->where($db->quoteName('mesid') . ' IN (SELECT ' . $db->quoteName('id') . ' FROM ' . $db->quoteName('#__kunena_messages') . ' WHERE ' . $db->quoteName('thread') . ' = :thread)');
+            $query->bind(':thread', $this->id, ParameterType::INTEGER);
+            $queries[] = $query;
+
             // Delete all messages
             $query = $db->createQuery();
             $query->delete($db->quoteName('#__kunena_messages'))
                 ->where($db->quoteName('thread') . ' = :thread');
-            $query->bind(':thread', $this->id, ParameterType::INTEGER);
-            $queries[] = $query;
-
-            // Delete all messages text
-            $query = $db->createQuery();
-            $query->delete($db->quoteName('#__kunena_messages_text'))
-                ->where($db->quoteName('mesid') . ' IN (SELECT ' . $db->quoteName('id') . ' FROM ' . $db->quoteName('#__kunena_messages') . ' WHERE ' . $db->quoteName('thread') . ' = :thread)');
             $query->bind(':thread', $this->id, ParameterType::INTEGER);
             $queries[] = $query;
 

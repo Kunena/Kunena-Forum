@@ -5,6 +5,7 @@ describe('Kunena permissions: tasks which a user may not do', () => {
   const user = { name: 'ci-user', password: 'ci-user-17082005-x', id: 798 };
   const tables = ['topics', 'messages', 'messages_text', 'categories', 'users_banned', 'ranks', 'polls', 'polls_options', 'attachments', 'announcement', 'smileys'];
   let topic;
+  let adminKarma;
   let token;
 
   const checksum = () => cy.task('queryDB', `CHECKSUM TABLE ${tables.map((table) => `#__kunena_${table}`).join(', ')}`).then((rows) => rows.map((row) => `${row.Table}=${row.Checksum}`).join(','));
@@ -17,6 +18,15 @@ describe('Kunena permissions: tasks which a user may not do', () => {
     ).then((rows) => {
       topic = rows[0];
     });
+    // A user may give karma: the karma of the administrator is put back after the tests (it went up by one in every run).
+    cy.task('queryDB', 'SELECT karma FROM #__kunena_users WHERE userid = 797').then((rows) => {
+      adminKarma = Number(rows[0].karma);
+    });
+  });
+
+  after(() => {
+    cy.task('queryDB', `DELETE FROM #__kunena_karma WHERE userid = ${user.id} AND target_userid = 797`);
+    cy.then(() => cy.task('queryDB', `UPDATE #__kunena_users SET karma = ${adminKarma} WHERE userid = 797`));
   });
 
   beforeEach(() => {

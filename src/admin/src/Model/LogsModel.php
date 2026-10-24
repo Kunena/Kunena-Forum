@@ -316,7 +316,7 @@ class LogsModel extends ListModel
             $query->where("kl.time < {$db->quote(strtotime($time_stop))}");
         }
         // Add the list ordering clause.
-        $direction = strtoupper($this->state->get('list.direction'));
+        $direction = strtoupper((string) $this->state->get('list.direction'));
 
         switch ($this->state->get('list.ordering')) {
             case 'id':

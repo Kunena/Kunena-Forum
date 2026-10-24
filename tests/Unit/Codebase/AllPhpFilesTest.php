@@ -14,11 +14,11 @@ namespace Kunena\Tests\Unit\Codebase;
 
 use FilesystemIterator;
 use Kunena\Tests\Unit\Support\Files;
+use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Throwable;
-use Kunena\Tests\Unit\UnitTestCase;
 
 /**
  * Every PHP file of the source (one test case for each file): it can be parsed, a file which Joomla loads refuses to run on its

@@ -12,6 +12,7 @@
 
 namespace Kunena\Tests\Integration\Libraries\Kunena\Install;
 
+use Exception;
 use FilesystemIterator;
 use Kunena\Tests\Integration\DBTestInterface;
 use Kunena\Tests\Integration\DBTestTrait;
@@ -94,7 +95,7 @@ class KunenaSchemaTest extends IntegrationTestCase implements DBTestInterface
         $this->insertRow('#__kunena_aliases', ['alias' => 'general', 'type' => 'catid', 'item' => '2']);
 
         // The alias of a category is unique (the update of 7.2 makes it the primary key).
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
 
         $this->insertRow('#__kunena_aliases', ['alias' => 'general', 'type' => 'catid', 'item' => '3']);
     }

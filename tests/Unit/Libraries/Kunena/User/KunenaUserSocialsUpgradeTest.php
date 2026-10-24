@@ -48,7 +48,7 @@ class KunenaUserSocialsUpgradeTest extends UnitTestCase
         $queries = [];
 
         foreach ($xml->upgrade[0]->version as $version) {
-            if ((string) $version['version'] === '7.2.0-DEV') {
+            if ((string) $version['version'] === '8.0.0-DEV') {
                 foreach ($version->query as $query) {
                     $queries[] = (string) $query;
                 }
@@ -57,7 +57,7 @@ class KunenaUserSocialsUpgradeTest extends UnitTestCase
 
         $cleaning = array_values(array_filter($queries, static fn ($query) => str_contains($query, 'JSON_REMOVE')));
 
-        $this->assertCount(1, $cleaning, 'The block 7.2.0-DEV has no query which cleans the stored socials.');
+        $this->assertCount(1, $cleaning, 'The block 8.0.0-DEV has no query which cleans the stored socials.');
 
         foreach (KunenaUserSocials::RETIRED as $key) {
             $this->assertStringContainsString("'$.$key'", $cleaning[0], "The upgrade file does not remove $key.");

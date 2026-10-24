@@ -14,10 +14,10 @@ namespace Kunena\Tests\Unit\Codebase;
 
 use FilesystemIterator;
 use Kunena\Tests\Unit\Support\Files;
+use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use Kunena\Tests\Unit\UnitTestCase;
 
 /**
  * The pages and the layouts of the template ask for controllers ($this->execute('Topic/Item'), $this->subRequest('Widget/Login')):

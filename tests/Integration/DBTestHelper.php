@@ -12,10 +12,12 @@
 
 namespace Kunena\Tests\Integration;
 
+use JConfig;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseFactory;
 use mysqli;
 use RuntimeException;
+use Throwable;
 
 /**
  * The database of the integration tests: the connection, the tables and a clean state for every test.
@@ -187,7 +189,7 @@ class DBTestHelper
             require_once $file;
         }
 
-        return class_exists('JConfig', false) ? new \JConfig() : null;
+        return class_exists('JConfig', false) ? new JConfig() : null;
     }
 
     /**
@@ -250,7 +252,7 @@ class DBTestHelper
 
             // The tests put rows in with the columns they need: a column without a start value is not an error.
             self::$driver->setQuery("SET SESSION sql_mode = ''")->execute();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             self::$driver = null;
 
             throw new DBUnavailableException('The database of the tests can not be opened: ' . $e->getMessage());

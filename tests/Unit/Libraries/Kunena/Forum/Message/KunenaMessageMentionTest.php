@@ -13,8 +13,8 @@
 namespace Kunena\Tests\Unit\Libraries\Kunena\Forum\Message;
 
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Kunena\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * The users which are mentioned in a message with [mention userid=1]name[/mention].

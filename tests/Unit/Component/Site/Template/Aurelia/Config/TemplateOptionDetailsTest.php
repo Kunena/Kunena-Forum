@@ -14,11 +14,11 @@ namespace Kunena\Tests\Unit\Component\Site\Template\Aurelia\Config;
 
 use FilesystemIterator;
 use Kunena\Tests\Unit\Support\Files;
+use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SimpleXMLElement;
-use Kunena\Tests\Unit\UnitTestCase;
 
 /**
  * The options of the template Aurelia in detail: the texts of the choices, the numbers and the colours, the place where each option

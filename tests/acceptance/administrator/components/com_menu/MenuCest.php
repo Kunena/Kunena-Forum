@@ -8,9 +8,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use Page\Acceptance\Administrator\MenuListPage;
 use Page\Acceptance\Administrator\MenuFormPage;
-use Page\Acceptance\Administrator\AdminPage;
+use Page\Acceptance\Administrator\MenuListPage;
 
 /**
  * Administrator Menu Tests

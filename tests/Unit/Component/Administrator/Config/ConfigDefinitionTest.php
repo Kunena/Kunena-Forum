@@ -13,9 +13,9 @@
 namespace Kunena\Tests\Unit\Component\Administrator\Config;
 
 use Kunena\Tests\Unit\Support\Files;
+use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use SimpleXMLElement;
-use Kunena\Tests\Unit\UnitTestCase;
 
 /**
  * The options of the features of 7.2: each one is in the configuration with its type and start value, has its texts in the

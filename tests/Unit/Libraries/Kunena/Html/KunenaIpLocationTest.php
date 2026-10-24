@@ -13,8 +13,8 @@
 namespace Kunena\Tests\Unit\Libraries\Kunena\Html;
 
 use Kunena\Forum\Libraries\Html\KunenaIpLocation;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Kunena\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * The place of an IP address: a local or reserved address has none, and no plugin is asked for it.

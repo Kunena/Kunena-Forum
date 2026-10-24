@@ -13,8 +13,8 @@
 namespace Kunena\Tests\Unit\Libraries\Kunena\BBCode;
 
 use Kunena\Forum\Libraries\BBCode\KunenaMarkup;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Kunena\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Markdown and html in a message are converted to BBCode before the message is parsed.

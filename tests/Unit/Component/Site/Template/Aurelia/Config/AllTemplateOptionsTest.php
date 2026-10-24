@@ -13,9 +13,9 @@
 namespace Kunena\Tests\Unit\Component\Site\Template\Aurelia\Config;
 
 use Kunena\Tests\Unit\Support\Files;
+use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use SimpleXMLElement;
-use Kunena\Tests\Unit\UnitTestCase;
 
 /**
  * Every option of the template Aurelia (src/site/template/aurelia/config/config.xml): one test case for each option.

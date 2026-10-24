@@ -14,8 +14,8 @@ namespace Kunena\Tests\Unit\Features;
 
 use Kunena\Forum\Libraries\Notification\KunenaPopupNotification;
 use Kunena\Tests\Unit\Support\Files;
-use ReflectionClassConstant;
 use Kunena\Tests\Unit\UnitTestCase;
+use ReflectionClassConstant;
 
 /**
  * Guards for the features of 7.2: the parts of a feature (the layout, the script, the task of the controller, the setting) are

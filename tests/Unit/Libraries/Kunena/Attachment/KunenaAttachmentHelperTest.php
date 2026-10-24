@@ -13,8 +13,8 @@
 namespace Kunena\Tests\Unit\Libraries\Kunena\Attachment;
 
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Kunena\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * The parts of the attachment helper which need no Joomla and no database.

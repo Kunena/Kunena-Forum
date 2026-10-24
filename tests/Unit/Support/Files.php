@@ -11,6 +11,7 @@
  **/
 
 namespace Kunena\Tests\Unit\Support;
+use RuntimeException;
 
 /**
  * The files of the source which the tests of the definitions read.
@@ -32,7 +33,7 @@ abstract class Files
         $content = file_get_contents(self::path($relative));
 
         if ($content === false) {
-            throw new \RuntimeException('The file ' . $relative . ' can not be read.');
+            throw new RuntimeException('The file ' . $relative . ' can not be read.');
         }
 
         return str_replace("\r\n", "\n", $content);

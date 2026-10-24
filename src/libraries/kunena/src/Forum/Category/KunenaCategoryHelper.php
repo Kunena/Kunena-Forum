@@ -1008,7 +1008,7 @@ abstract class KunenaCategoryHelper
         $tree = new KunenaTree($categories);
 
         return $tree->getIndentation();
-    }    
+    }
 
     /**
      * Recount categories in batches to avoid SQL errors with large numbers of categories

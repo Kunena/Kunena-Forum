@@ -15,6 +15,7 @@ namespace Kunena\Tests\Unit\Libraries\Kunena\Notification;
 use Kunena\Forum\Libraries\Notification\KunenaPopupNotification;
 use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use ReflectionClassConstant;
 
 class KunenaPopupNotificationTest extends UnitTestCase
 {
@@ -40,7 +41,7 @@ class KunenaPopupNotificationTest extends UnitTestCase
         $ini = (string) file_get_contents(\dirname(__DIR__, 5) . '/src/site/language/en-GB/com_kunena.ini');
 
         foreach (['mention', 'reply', 'subscribed', 'topic'] as $reason) {
-            $key = (new \ReflectionClassConstant(KunenaPopupNotification::class, 'TITLES'))->getValue()[$reason];
+            $key = (new ReflectionClassConstant(KunenaPopupNotification::class, 'TITLES'))->getValue()[$reason];
             $this->assertMatchesRegularExpression('/^' . preg_quote($key, '/') . '\s*=/m', $ini, "$key is not in the language file.");
         }
     }

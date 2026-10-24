@@ -12,9 +12,12 @@
 
 namespace Kunena\Tests\Unit\Language;
 
+use FilesystemIterator;
 use Kunena\Tests\Unit\Support\Files;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Kunena\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * The English language files: every line is valid (a wrong quote breaks the file for Joomla), and the texts of the features of
@@ -116,7 +119,7 @@ class LanguageFilesTest extends UnitTestCase
     {
         $keys = [];
 
-        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(Files::path('src'), \FilesystemIterator::SKIP_DOTS)) as $file) {
+        foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Files::path('src'), FilesystemIterator::SKIP_DOTS)) as $file) {
             if ($file->getExtension() === 'ini' && str_contains(str_replace('\\', '/', $file->getPathname()), '/en-GB/')) {
                 foreach (file($file->getPathname()) ?: [] as $line) {
                     if (preg_match('/^\s*([A-Z0-9_]+)\s*=/', $line, $match)) {
@@ -128,7 +131,7 @@ class LanguageFilesTest extends UnitTestCase
 
         $missing = [];
 
-        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(Files::path('src'), \FilesystemIterator::SKIP_DOTS)) as $file) {
+        foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Files::path('src'), FilesystemIterator::SKIP_DOTS)) as $file) {
             $name = str_replace('\\', '/', $file->getPathname());
 
             if ($file->getExtension() !== 'php' || str_contains($name, '/External/')) {

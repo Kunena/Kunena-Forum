@@ -14,8 +14,8 @@ namespace Kunena\Tests\Unit\Component\Administrator\Config;
 
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Tests\Unit\Support\Files;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Kunena\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionMethod;
 use SimpleXMLElement;
 

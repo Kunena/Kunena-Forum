@@ -14,9 +14,9 @@ namespace Kunena\Tests\Unit\Component\Site\Template\Aurelia;
 
 use FilesystemIterator;
 use Kunena\Tests\Unit\Support\Files;
+use Kunena\Tests\Unit\UnitTestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use Kunena\Tests\Unit\UnitTestCase;
 
 /**
  * A script of the template which needs a library: the layout which loads the script loads the library too (the user list loaded

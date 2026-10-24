@@ -13,8 +13,8 @@
 namespace Kunena\Tests\Unit\Codebase;
 
 use Kunena\Tests\Unit\Support\Files;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Kunena\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Every page of the template (pages/<view>/<layout>) is opened by at least one of the Cypress specs of the site: a new page which

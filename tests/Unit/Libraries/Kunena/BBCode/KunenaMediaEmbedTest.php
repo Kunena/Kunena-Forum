@@ -13,8 +13,8 @@
 namespace Kunena\Tests\Unit\Libraries\Kunena\BBCode;
 
 use Kunena\Forum\Libraries\BBCode\KunenaMediaEmbed;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Kunena\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * The Spotify and Deezer players of a link (the auto embed of the music services).

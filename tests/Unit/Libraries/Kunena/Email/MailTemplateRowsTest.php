@@ -13,8 +13,8 @@
 namespace Kunena\Tests\Unit\Libraries\Kunena\Email;
 
 use Kunena\Tests\Unit\Support\Files;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Kunena\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * The mail templates of Joomla which the update of 7.2 adds: every text of a template is in the language file, and every tag

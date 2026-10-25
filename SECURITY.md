@@ -12,7 +12,7 @@
 
 Please send a email to: security@kunena.org with a example or POC.
 
-We will send you a email within 24 hours.
+We will send you a email under a week depending on the aviability of the volunteers.
 After the confirmation we will work on the fix asap.
 
 

@@ -70,6 +70,11 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             'langConstPrefix' => 'PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTS',
             'method'          => 'cleanPendingAttachments',
         ],
+        'unsubscribe.inactiveusers' => [
+            'langConstPrefix' => 'PLG_TASK_KUNENA_UNSUBSCRIBEINACTIVE',
+            'form'            => 'unsubscribeinactive',
+            'method'          => 'unsubscribeInactiveUsers',
+        ],
     ];
 
     /**
@@ -399,6 +404,66 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSSUCCESS', $countDeleted));
         } catch (\Exception $e) {
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSERROR', $e->getMessage()));
+
+            return Status::KNOCKOUT;
+        }
+
+        return Status::OK;
+    }
+
+    /**
+     * Method to unsubscribe from categories the users inactive for a configured duration.
+     *
+     * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
+     *
+     * @return integer  The routine exit code.
+     *
+     * @since  7.1.0
+     * @throws \Exception
+     */
+    private function unsubscribeInactiveUsers(ExecuteTaskEvent $event): int
+    {
+        if (
+            !ComponentHelper::isEnabled('com_kunena')
+            || !KunenaForum::isCompatible('7.1')
+            || !KunenaForum::installed()
+        ) {
+            return Status::NO_RUN;
+        }
+
+        $params = (object) $event->getArgument('params');
+        $years  = (int) ($params->years ?? 1);
+
+        if (!\in_array($years, [1, 2], \true)) {
+            $years = 1;
+        }
+
+        try {
+            /** @var DatabaseDriver */
+            $db        = $this->getDatabase();
+            $threshold = (new Date('now'))->modify('-' . $years . ' years')->toSql();
+
+            $subQuery = $db->createQuery()
+                ->select($db->quoteName('u.id'))
+                ->from($db->quoteName('#__users', 'u'))
+                ->where($db->quoteName('u.lastvisitDate') . ' IS NOT NULL')
+                ->where($db->quoteName('u.lastvisitDate') . ' > ' . $db->quote('0000-00-00 00:00:00'))
+                ->where($db->quoteName('u.lastvisitDate') . ' <= :threshold');
+
+            $query = $db->createQuery()
+                ->update($db->quoteName('#__kunena_user_categories'))
+                ->set($db->quoteName('subscribed') . ' = 0')
+                ->where($db->quoteName('subscribed') . ' = 1')
+                ->where($db->quoteName('user_id') . ' IN (' . $subQuery . ')')
+                ->bind(':threshold', $threshold);
+
+            $db->setQuery($query);
+            $db->execute();
+            $count = $db->getAffectedRows();
+
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_UNSUBSCRIBEINACTIVESUCCESS', $count));
+        } catch (\Exception $e) {
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_UNSUBSCRIBEINACTIVEERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
         }

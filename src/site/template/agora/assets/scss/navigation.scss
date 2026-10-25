@@ -1,0 +1,220 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The menu bar, the menu of the user and the breadcrumbs.
+ */
+
+.agora-navbar {
+  --bs-navbar-color: var(--agora-text-muted);
+  --bs-navbar-hover-color: var(--agora-text);
+  --bs-navbar-active-color: var(--agora-accent-strong);
+  --bs-navbar-toggler-border-color: var(--agora-border-strong);
+  --bs-navbar-toggler-focus-width: 0.2rem;
+  position: relative;
+  z-index: 3;
+  gap: 0.5rem;
+  padding: 0.45rem 0.6rem;
+  margin-bottom: 0.75rem;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+
+  > .container-fluid {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    padding-inline: 0.25rem;
+  }
+
+  .navbar-toggler {
+    min-width: var(--agora-touch);
+    min-height: var(--agora-touch);
+    padding: 0.35rem 0.55rem;
+    color: var(--agora-text);
+    border-color: var(--agora-border-strong);
+    border-radius: var(--agora-radius-sm);
+  }
+
+  /* The icon of the toggler in the colour of the text, light or dark. */
+  .navbar-toggler-icon {
+    background-color: currentcolor;
+    background-image: none;
+    -webkit-mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='black' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") center / 100% no-repeat;
+    mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='black' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") center / 100% no-repeat;
+  }
+
+  .navbar-nav {
+    flex-wrap: wrap;
+    gap: 0.2rem;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    min-height: var(--agora-touch);
+    color: var(--bs-navbar-color);
+    padding: 0.4rem 0.7rem !important;
+    white-space: nowrap;
+    font-weight: 550;
+    border-radius: var(--agora-radius-sm);
+
+    &:hover {
+      color: var(--bs-navbar-hover-color);
+      text-decoration: none;
+      background: var(--agora-surface-hover);
+    }
+  }
+
+  .nav-item.active > .nav-link,
+  .nav-link.active {
+    color: var(--agora-accent-strong);
+    background: var(--agora-accent-soft);
+  }
+
+  .dropdown-menu .btn-link {
+    justify-content: flex-start;
+    width: 100%;
+    min-height: calc(var(--agora-touch) - 4px);
+    padding: 0.4rem 0.7rem;
+    color: var(--agora-text);
+    text-align: start;
+    border-radius: calc(var(--agora-radius-sm) - 3px);
+
+    &:hover {
+      text-decoration: none;
+      background: var(--agora-surface-hover);
+    }
+  }
+
+  .dropdown-menu {
+    min-width: 15rem;
+    max-width: calc(100vw - 2rem);
+  }
+
+  .dropdown-menu .btn.m-2 {
+    width: calc(100% - 1rem);
+    margin: 0.25rem 0.5rem !important;
+  }
+
+  .klogout .dropdown-toggle,
+  #klogin-desktop,
+  #klogin-mobile {
+    min-height: var(--agora-touch);
+    padding-inline: 0.6rem;
+    border-radius: var(--agora-radius-pill);
+  }
+
+  .klogout .dropdown-toggle .rounded > svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .klogout .dropdown-toggle img,
+  .klogout .dropdown-toggle .rounded {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50% !important;
+  }
+
+  #kdesktop-userdropdown,
+  #kmobile-userdropdown {
+    min-width: 17rem;
+    padding: 0.9rem;
+  }
+}
+
+.agora-navbar-end {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  margin-inline-start: auto;
+}
+
+/* The menu in the offcanvas (small screens). */
+@media (max-width: 991.98px) {
+  .knav-offcanvas {
+    .offcanvas-header {
+      border-bottom: 1px solid var(--agora-border);
+    }
+
+    .navbar-nav {
+      gap: 0.15rem;
+    }
+
+    .nav-link {
+      min-height: 48px;
+      font-size: 1.02rem;
+    }
+  }
+}
+
+/* Breadcrumbs. */
+.pagination-container-links {
+  padding-top: 0 !important;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.breadcrumb {
+  --bs-breadcrumb-divider-color: var(--agora-text-muted);
+  --bs-breadcrumb-item-active-color: var(--agora-text-muted);
+  flex-wrap: wrap;
+  gap: 0.15rem 0;
+  padding: 0.25rem 0.35rem;
+  margin: 0;
+  font-size: 0.88rem;
+  background: transparent;
+
+  .breadcrumb-item {
+    display: inline-flex;
+    gap: 0.35rem;
+    align-items: center;
+  }
+
+  .breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    font-size: 1.1em;
+    line-height: 1;
+  }
+
+  a {
+    color: var(--agora-text-muted);
+
+    &:hover {
+      color: var(--agora-accent);
+    }
+  }
+
+  .breadcrumb-item:last-child a {
+    font-weight: 600;
+    color: var(--agora-text);
+  }
+}
+
+/* The jump to a category. */
+#jumpto .selector {
+  max-width: 22rem;
+}
+
+/* Announcements. */
+#announcement,
+.kannouncement {
+  background: var(--agora-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--agora-accent) 25%, transparent);
+  border-radius: var(--agora-radius);
+}
+
+/* The footer of the forum. */
+.kfooter,
+.agora + .kfooter {
+  color: var(--agora-text-muted);
+}

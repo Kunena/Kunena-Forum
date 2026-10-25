@@ -1,0 +1,32 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The styles of Aurelia (all the features of the forum), then the look of Agora on top of them.
+ */
+#kunena.layout {
+  @import "../../../aurelia/assets/scss/variables";
+  @import "../../../aurelia/assets/scss/quirks";
+  @import "../../../aurelia/assets/scss/general";
+  @import "../../../aurelia/assets/scss/editor";
+  @import "../../../aurelia/assets/scss/icons";
+  @import "../../../aurelia/assets/scss/user";
+  @import "../../../aurelia/assets/scss/profile";
+  @import "../../../aurelia/assets/scss/categories";
+  @import "../../../aurelia/assets/scss/mediaqueries";
+  @import "../../../aurelia/assets/scss/twitter";
+}
+
+@import "tokens";
+
+#kunena.layout.agora {
+  @import "base";
+}
+
+@import "custom";

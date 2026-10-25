@@ -1,0 +1,170 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The profile of a user, the edit form of the profile, the inbox and the lists of users.
+ */
+
+.agora-profile {
+  margin-bottom: var(--agora-gap);
+}
+
+.agora-profile-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  background:
+    linear-gradient(135deg, var(--agora-accent-soft), transparent 70%),
+    var(--agora-surface-2);
+  border-bottom: 1px solid var(--agora-border);
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.agora-profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin: 0;
+  font-size: 0.95rem;
+
+  .btn {
+    --bs-btn-color: var(--agora-text);
+    --bs-btn-bg: var(--agora-surface);
+    --bs-btn-border-color: var(--agora-border-strong);
+    --bs-btn-hover-color: var(--agora-text);
+    --bs-btn-hover-bg: var(--agora-surface-hover);
+    --bs-btn-hover-border-color: var(--agora-border-strong);
+    font-size: 0.9rem;
+    border: 1px solid var(--agora-border-strong);
+  }
+}
+
+.agora-profile-summary {
+  padding: 1.1rem 1.25rem 1.25rem;
+
+  /* The empty line and column at the end of the summary of Aurelia. */
+  > br,
+  > .clearfix + .row ~ .col-md-12 {
+    display: none;
+  }
+
+  > .row {
+    --bs-gutter-x: 1.25rem;
+    row-gap: 1rem;
+  }
+
+  /* The avatar and the status. */
+  .col-md-3:first-child {
+    .center:first-child {
+      margin-bottom: 0.6rem;
+    }
+
+    img,
+    .rounded > svg {
+      max-width: 160px;
+      border-radius: 50% !important;
+      box-shadow: 0 0 0 4px var(--agora-surface), 0 0 0 5px var(--agora-border);
+    }
+  }
+
+  .list-group-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+    background: transparent;
+
+    strong {
+      font-weight: 550;
+      color: var(--agora-text-muted);
+    }
+
+    span {
+      font-weight: 600;
+      text-align: end;
+    }
+  }
+}
+
+.agora-profile-tabs {
+  margin-bottom: var(--agora-gap);
+  overflow: hidden;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+
+  > .nav-tabs {
+    padding: 0.25rem 0.75rem 0;
+    background: var(--agora-surface-2);
+  }
+
+  > .tab-content {
+    padding: 1rem;
+  }
+}
+
+/* The edit form of the profile. */
+#kuserprofile-edit,
+.kprofile-edit,
+form[id^="kform-user"],
+.kunena-user-edit {
+  .tab-content {
+    padding: 1rem;
+    background: var(--agora-surface);
+    border: 1px solid var(--agora-border);
+    border-top: 0;
+    border-radius: 0 0 var(--agora-radius) var(--agora-radius);
+  }
+}
+
+/* The gallery of the avatars. */
+#gallery_list,
+.kavatar-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  img {
+    border-radius: var(--agora-radius-sm);
+  }
+}
+
+/* The inbox (private messages). */
+.kinbox,
+#kinbox {
+  .table > tbody > tr.unread > * {
+    font-weight: 650;
+  }
+}
+
+/* The list of the users. */
+.kuserlist .table img,
+#kuserlist-rows img,
+.userlist img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Avatars everywhere: the option "avatarType" of the template. */
+.img-circle,
+.rounded-circle {
+  border-radius: 50% !important;
+}

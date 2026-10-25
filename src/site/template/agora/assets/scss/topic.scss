@@ -1,0 +1,475 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * A topic: its title and actions, the messages (one card per message, the author beside it on large screens and above it on small
+ * ones), the content of the messages (BBCode), the attachments, the poll and the quick reply.
+ */
+
+.kunena-topic-item {
+  > h1 {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    margin: 0.25rem 0 0.75rem;
+
+    > svg,
+    > img,
+    > i,
+    > span:first-child {
+      flex-shrink: 0;
+      width: 1.3rem;
+      height: 1.3rem;
+      color: var(--agora-accent);
+    }
+  }
+
+  #topic-actions-toolbar {
+    margin-bottom: 0.5rem;
+  }
+
+  > .float-start,
+  > h2.float-end {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.btn-marging {
+  margin: 0.5rem 0;
+}
+
+.kmessagepadding {
+  padding: 0.5rem 0 0;
+}
+
+/* The messages. */
+.topic-item-messages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--agora-gap);
+  margin-block: 0.5rem var(--agora-gap);
+}
+
+.row.message {
+  --bs-gutter-x: 0;
+  position: relative;
+  display: flex;
+  margin: 0 !important;
+  overflow: visible;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+
+  > [class*="col-"] {
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  /* The author. */
+  > .col-md-2 {
+    padding: 1.1rem 0.75rem;
+    background: var(--agora-surface-2);
+    border-inline-end: 1px solid var(--agora-border);
+    border-start-start-radius: var(--agora-radius) !important;
+    border-end-start-radius: var(--agora-radius) !important;
+  }
+
+  > .col-md-10 + .col-md-2 {
+    border-inline-start: 1px solid var(--agora-border);
+    border-inline-end: 0;
+    border-radius: 0 var(--agora-radius) var(--agora-radius) 0 !important;
+  }
+
+  /* The message. */
+  > .col-md-10,
+  > .col-md-12 {
+    min-width: 0;
+    padding: 1rem 1.25rem 0.85rem;
+  }
+
+  > .col-md-10 > small.float-end,
+  > .col-md-12 > small.float-end {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 0.25rem 0.75rem;
+    font-size: 0.82rem;
+
+    a {
+      color: var(--agora-text-muted);
+    }
+  }
+
+  .shadow-none.p-4 {
+    padding: 0 !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+.message-unapproved,
+.message-deleted {
+  > .col-md-10,
+  > .col-md-12,
+  &.row > .col-md-12 {
+    background: color-mix(in srgb, var(--agora-warning) 8%, var(--agora-surface));
+  }
+}
+
+.message-deleted > .col-md-10,
+.message-deleted > .col-md-12 {
+  background: color-mix(in srgb, var(--agora-danger) 8%, var(--agora-surface));
+}
+
+/* The box of the author. */
+.profilebox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--agora-text-muted);
+  text-align: center;
+  list-style: none;
+
+  li {
+    max-width: 100%;
+  }
+
+  strong a {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  img.rounded,
+  img.img-rounded,
+  .rounded img,
+  .kavatar,
+  img[class*="avatar"] {
+    max-width: 96px;
+    object-fit: cover;
+  }
+
+  /* The avatar of a user without a picture. */
+  .rounded > svg {
+    width: 72px;
+    height: 72px;
+    padding: 16px;
+    color: var(--agora-text-muted);
+    background: var(--agora-surface-hover);
+    border-radius: 50%;
+  }
+
+  .topic-starter,
+  .topic-moderator {
+    display: inline-block;
+    width: auto;
+    padding: 0.15rem 0.6rem;
+    line-height: 1.4;
+    text-transform: none;
+    white-space: nowrap;
+    border: 0;
+    margin-top: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 650;
+    color: var(--agora-accent-strong);
+    background: var(--agora-accent-soft);
+    border-radius: var(--agora-radius-pill);
+  }
+}
+
+.profile-expand {
+  margin-top: 0.5rem;
+  font-size: 0.84rem;
+  text-align: center;
+
+  .heading {
+    min-height: 30px;
+    font-size: 0.78rem;
+  }
+
+  .content ul {
+    padding: 0;
+    margin: 0.4rem 0 0;
+    list-style: none;
+  }
+}
+
+/* The header of a message and its content. */
+.mykmsg-header {
+  padding: 0 0 0.6rem !important;
+  margin: 0 0 0.75rem;
+  font-weight: 400;
+  background: transparent;
+  border-radius: 0;
+  font-size: 0.86rem;
+  color: var(--agora-text-muted);
+  border-bottom: 1px solid var(--agora-border);
+
+  em {
+    font-style: normal;
+  }
+
+  .topictitle {
+    font-weight: 650;
+    color: var(--agora-text);
+  }
+}
+
+.kmsg {
+  margin: 0;
+  font-family: var(--agora-font);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--agora-text);
+  overflow-wrap: anywhere;
+
+  p {
+    margin-bottom: 0.85em;
+  }
+
+  img {
+    border-radius: var(--agora-radius-sm);
+  }
+
+  a {
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, currentcolor 35%, transparent);
+  }
+
+  ul,
+  ol {
+    padding-inline-start: 1.5em;
+  }
+
+  table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+/* Quotes, code, spoilers and the hidden texts of BBCode. */
+.kmsg blockquote,
+.kmsgtext-quote,
+blockquote {
+  padding: 0.7rem 1rem;
+  margin: 0.75rem 0;
+  font-size: 0.95rem;
+  color: var(--agora-text);
+  background: var(--agora-surface-2);
+  border: 0;
+  border-inline-start: 3px solid var(--agora-accent);
+  border-radius: 0 var(--agora-radius-sm) var(--agora-radius-sm) 0;
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.kmsg pre,
+.kmsg code,
+pre.bbcode_code,
+.highlight pre,
+.kmsgtext-code {
+  font-family: var(--agora-font-mono);
+  font-size: 0.875rem;
+}
+
+.kmsg pre,
+pre.bbcode_code,
+.highlight pre {
+  max-width: 100%;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  color: var(--agora-text);
+  white-space: pre;
+  background: var(--agora-surface-2) !important;
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius-sm);
+  overflow-wrap: normal;
+}
+
+.kmsg :not(pre) > code {
+  padding: 0.1em 0.35em;
+  background: var(--agora-surface-hover);
+  border-radius: 5px;
+}
+
+.kspoiler,
+.kmsgtext-confidential,
+.kmsgtext-hide,
+.khide {
+  padding: 0.6rem 0.9rem;
+  margin: 0.6rem 0;
+  background: var(--agora-surface-2);
+  border: 1px dashed var(--agora-border-strong);
+  border-radius: var(--agora-radius-sm);
+}
+
+/* The link cards and the embeds (video, social networks, maps). */
+.kmsg .card,
+.klinkcard,
+.kunena-link-card {
+  max-width: 34rem;
+  overflow: hidden;
+  border-radius: var(--agora-radius-sm);
+}
+
+.kmsg iframe,
+.kmsg video,
+.embed-responsive,
+.ratio {
+  max-width: 100%;
+  border-radius: var(--agora-radius-sm);
+}
+
+/* The signature, the "edited by" line and the thank you. */
+.ksig,
+.kmessage-signature,
+.ksignature {
+  padding-top: 0.6rem;
+  margin-top: 0.75rem;
+  font-size: 0.86rem;
+  color: var(--agora-text-muted);
+  border-top: 1px dashed var(--agora-border);
+}
+
+.alert.alert-info.kmessage-editmarkup,
+.kmessage-editmarkup {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.82rem;
+}
+
+.kmessage-thankyou,
+#kthankyou,
+.kthankyou {
+  font-size: 0.86rem;
+  color: var(--agora-text-muted);
+}
+
+/* The report button and the actions of a message. */
+.report.pb-5 {
+  padding-bottom: 0 !important;
+
+  &::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+
+  .btn {
+    min-height: 32px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.8rem;
+    color: var(--agora-text-muted);
+    background: transparent;
+    border-color: transparent !important;
+
+    &:hover {
+      color: var(--agora-danger);
+      background: var(--agora-surface-hover);
+    }
+  }
+}
+
+.row.message .btn-toolbar.kmessagepadding {
+  padding-top: 0.25rem;
+  margin: 0.4rem 0 0;
+}
+
+/* The quick reply under a message. */
+.row.message .modal[id^="kreply"] {
+  position: static !important;
+  width: 100% !important;
+  margin-top: 0.75rem;
+
+  .modal-dialog {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .modal-content {
+    border: 1px solid var(--agora-border);
+    box-shadow: none;
+  }
+}
+
+/* The attachments of a message. */
+.kattach,
+.kmsgattach,
+.kattachments,
+.message .thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0.75rem 0 0;
+  margin: 0.75rem 0 0;
+  list-style: none;
+  border-top: 1px dashed var(--agora-border);
+
+  li,
+  .thumbnail {
+    max-width: 180px;
+    padding: 0.4rem;
+    font-size: 0.8rem;
+    background: var(--agora-surface-2);
+    border: 1px solid var(--agora-border);
+    border-radius: var(--agora-radius-sm);
+  }
+
+  img {
+    border-radius: calc(var(--agora-radius-sm) - 3px);
+  }
+}
+
+/* The poll of a topic. */
+.kpoll,
+#kpoll,
+.kunena-poll,
+form[id^="kpoll"] {
+  .progress {
+    height: 0.65rem;
+  }
+
+  .table > :not(caption) > * > * {
+    padding-block: 0.55rem;
+  }
+}
+
+/* The rating of a topic. */
+.krating,
+#krating {
+  color: var(--agora-warning);
+}
+
+/* The ignored messages. */
+.kignored-message summary {
+  cursor: pointer;
+  background: var(--agora-surface-2);
+}
+
+/* Similar topics, the moderation tools and the history of a topic. */
+.similar-topics,
+#similar-topics,
+.ksimilar {
+  .card-header {
+    font-size: 0.95rem;
+  }
+}
+
+.kmoderate,
+#kmod-topicactions,
+.kmod-page {
+  .card,
+  .kfrontend {
+    margin-bottom: var(--agora-gap);
+  }
+}

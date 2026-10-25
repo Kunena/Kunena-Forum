@@ -165,7 +165,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
             $this->addScript('localstorage.js');
         }
 
-        $filenamescss = JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss';
+        $filenamescss = JPATH_SITE . "/components/com_kunena/template/{$this->name}/assets/scss/custom.scss";
 
         if (file_exists($filenamescss) && 0 != fileSize($filenamescss)) {
             $this->addStyleSheet('kunena-custom.css');

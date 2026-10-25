@@ -1,0 +1,645 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The base of Agora (imported inside #kunena.layout.agora): the page of the forum, the type, the links, the buttons and the forms.
+ */
+
+& {
+  padding: clamp(0.5rem, 2vw, 1.25rem);
+  margin-bottom: 1.5rem;
+  font-family: var(--agora-font);
+  font-size: 0.975rem;
+  line-height: 1.55;
+  color: var(--agora-text);
+  background: var(--agora-bg);
+  border-radius: var(--agora-radius);
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--agora-font);
+  font-weight: 650;
+  line-height: 1.3;
+  color: var(--agora-text);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.65rem);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+a {
+  color: var(--agora-link);
+  text-decoration: none;
+  text-underline-offset: 0.18em;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--agora-accent);
+    text-decoration: underline;
+  }
+}
+
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--agora-accent) !important;
+  outline-offset: 2px;
+}
+
+small,
+.small {
+  font-size: 0.85em;
+}
+
+.text-muted,
+.text-secondary,
+.datepost,
+.kdate,
+.started,
+.lastpostby,
+.header-desc {
+  color: var(--agora-text-muted) !important;
+}
+
+img,
+video,
+iframe,
+embed,
+object {
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+hr {
+  border-color: var(--agora-border);
+  opacity: 1;
+}
+
+/* Bootstrap shadows and borders of Aurelia are replaced by the cards of Agora. */
+.shadow,
+.shadow-lg,
+.shadow-sm {
+  box-shadow: none !important;
+}
+
+.border {
+  border-color: var(--agora-border) !important;
+}
+
+/* The containers of Bootstrap and the colours which Aurelia gives to them, with the surfaces of Agora. */
+.bg-light,
+.bg-white,
+.bg-body,
+.bg-faded,
+.table-light,
+.bg-body-tertiary {
+  color: var(--agora-text) !important;
+  background-color: var(--agora-surface-2) !important;
+}
+
+.text-dark,
+.text-body {
+  color: var(--agora-text) !important;
+}
+
+.card {
+  --bs-card-bg: var(--agora-surface);
+  --bs-card-border-color: var(--agora-border);
+  --bs-card-border-radius: var(--agora-radius);
+  --bs-card-inner-border-radius: calc(var(--agora-radius) - 1px);
+  --bs-card-cap-bg: var(--agora-surface-2);
+  --bs-card-color: var(--agora-text);
+  box-shadow: var(--agora-shadow);
+}
+
+.card-header {
+  font-weight: 650;
+  color: var(--agora-text);
+  background: var(--agora-surface-2);
+  border-bottom: 1px solid var(--agora-border);
+}
+
+.card-footer {
+  background: var(--agora-surface-2);
+  border-top: 1px solid var(--agora-border);
+}
+
+.well,
+.kfrontend,
+.kblock {
+  color: var(--agora-text);
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border) !important;
+  border-radius: var(--agora-radius) !important;
+  box-shadow: var(--agora-shadow) !important;
+}
+
+/* Buttons. */
+.btn {
+  --bs-btn-border-radius: var(--agora-radius-sm);
+  --bs-btn-font-weight: 550;
+  --bs-btn-focus-box-shadow: 0 0 0 0.2rem var(--bs-focus-ring-color);
+  display: inline-flex;
+  gap: 0.4em;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--agora-touch);
+  padding-inline: 0.95rem;
+  line-height: 1.2;
+  white-space: normal;
+  color: var(--bs-btn-color);
+  background-color: var(--bs-btn-bg);
+  border-color: var(--bs-btn-border-color);
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+
+  /* The site template (Cassiopeia) gives its own colours to .btn: the variables of Bootstrap are used again. */
+  &:hover {
+    color: var(--bs-btn-hover-color);
+    text-decoration: none;
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+  }
+
+  &:active,
+  &.active,
+  &.show {
+    color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color);
+  }
+
+  &:disabled,
+  &.disabled {
+    color: var(--bs-btn-disabled-color);
+    background-color: var(--bs-btn-disabled-bg);
+    border-color: var(--bs-btn-disabled-border-color);
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.btn-sm,
+.btn-small,
+.btn-xs {
+  --bs-btn-padding-y: 0.25rem;
+  --bs-btn-padding-x: 0.6rem;
+  --bs-btn-font-size: 0.85rem;
+  min-height: calc(var(--agora-touch) - 6px);
+}
+
+.btn-primary,
+.btn-outline-primary.kbutton-create,
+.btn-outline-success.kbutton-create,
+.kreply-submit,
+#form .btn-success,
+.kbutton-reply.btn-outline-primary {
+  --bs-btn-color: var(--agora-accent-text);
+  --bs-btn-bg: var(--agora-accent);
+  --bs-btn-border-color: var(--agora-accent);
+  --bs-btn-hover-color: var(--agora-accent-text);
+  --bs-btn-hover-bg: var(--agora-accent-strong);
+  --bs-btn-hover-border-color: var(--agora-accent-strong);
+  --bs-btn-active-color: var(--agora-accent-text);
+  --bs-btn-active-bg: var(--agora-accent-strong);
+  --bs-btn-active-border-color: var(--agora-accent-strong);
+  border-color: var(--agora-accent) !important;
+}
+
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-success,
+.btn-outline-danger,
+.btn-outline-warning,
+.btn-outline-info,
+.btn-outline-dark,
+.btn-light,
+.btn-default,
+.btn-secondary {
+  --bs-btn-color: var(--agora-text);
+  --bs-btn-bg: var(--agora-surface);
+  --bs-btn-border-color: var(--agora-border-strong);
+  --bs-btn-hover-color: var(--agora-text);
+  --bs-btn-hover-bg: var(--agora-surface-hover);
+  --bs-btn-hover-border-color: var(--agora-border-strong);
+  --bs-btn-active-color: var(--agora-text);
+  --bs-btn-active-bg: var(--agora-surface-hover);
+  --bs-btn-active-border-color: var(--agora-accent);
+  --bs-btn-disabled-color: var(--agora-text-muted);
+  --bs-btn-disabled-bg: var(--agora-surface-2);
+  --bs-btn-disabled-border-color: var(--agora-border);
+}
+
+.btn-outline-danger {
+  --bs-btn-color: var(--agora-danger);
+  --bs-btn-hover-color: var(--agora-danger);
+}
+
+.btn-outline-success {
+  --bs-btn-color: var(--agora-success);
+  --bs-btn-hover-color: var(--agora-success);
+}
+
+.btn-danger {
+  --bs-btn-bg: var(--agora-danger);
+  --bs-btn-border-color: var(--agora-danger);
+}
+
+.btn-link {
+  --bs-btn-color: var(--agora-link);
+  --bs-btn-hover-color: var(--agora-accent);
+  min-height: 0;
+  padding-inline: 0.25rem;
+}
+
+.btn-close {
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+.btn-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn-group > .btn {
+  min-height: var(--agora-touch);
+}
+
+/* Badges and labels. */
+.badge {
+  padding: 0.35em 0.65em;
+  color: var(--bs-badge-color);
+  font-weight: 600;
+  border-radius: var(--agora-radius-pill);
+}
+
+.badge.bg-secondary {
+  color: var(--agora-text-muted) !important;
+  background-color: var(--agora-surface-hover) !important;
+  border: 1px solid var(--agora-border);
+}
+
+.badge.bg-success {
+  background-color: var(--agora-success) !important;
+}
+
+/* Forms. */
+.form-control,
+.form-select,
+.input-group-text,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  max-width: 100%;
+  min-height: var(--agora-touch);
+  font-size: max(16px, 0.95rem);
+  color: var(--agora-text);
+  background-color: var(--agora-surface);
+  border: 1px solid var(--agora-border-strong);
+  border-radius: var(--agora-radius-sm);
+}
+
+.input-group-text {
+  color: var(--agora-text-muted);
+  background-color: var(--agora-surface-2);
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus,
+input:focus {
+  border-color: var(--agora-accent);
+  box-shadow: 0 0 0 0.2rem var(--bs-focus-ring-color);
+}
+
+.form-control::placeholder {
+  color: var(--agora-text-muted);
+  opacity: 0.85;
+}
+
+.form-check-input {
+  width: 1.15em;
+  height: 1.15em;
+  background-color: var(--agora-surface);
+  border-color: var(--agora-border-strong);
+
+  &:checked {
+    background-color: var(--agora-accent);
+    border-color: var(--agora-accent);
+  }
+}
+
+.form-switch .form-check-input {
+  width: 2.2em;
+  border-radius: 2em;
+}
+
+.form-label,
+.col-form-label,
+.control-label,
+label {
+  font-weight: 550;
+}
+
+.form-check-label,
+.radio label,
+.checkbox label {
+  font-weight: 400;
+}
+
+.alert {
+  border-radius: var(--agora-radius-sm);
+}
+
+.alert-info {
+  color: var(--agora-text);
+  background: var(--agora-accent-soft);
+  border-color: color-mix(in srgb, var(--agora-accent) 25%, transparent);
+}
+
+/* Dropdowns, modals, offcanvas and tooltips. */
+.dropdown-menu {
+  --bs-dropdown-bg: var(--agora-surface);
+  --bs-dropdown-color: var(--agora-text);
+  --bs-dropdown-border-color: var(--agora-border);
+  --bs-dropdown-link-color: var(--agora-text);
+  --bs-dropdown-link-hover-color: var(--agora-text);
+  --bs-dropdown-link-hover-bg: var(--agora-surface-hover);
+  --bs-dropdown-link-active-bg: var(--agora-accent);
+  --bs-dropdown-divider-bg: var(--agora-border);
+  --bs-dropdown-border-radius: var(--agora-radius-sm);
+  padding: 0.4rem;
+  box-shadow: var(--agora-shadow-raised);
+}
+
+.dropdown-item {
+  color: var(--bs-dropdown-link-color);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: calc(var(--agora-touch) - 4px);
+  border-radius: calc(var(--agora-radius-sm) - 3px);
+}
+
+.modal {
+  --bs-modal-bg: var(--agora-surface);
+  --bs-modal-color: var(--agora-text);
+  --bs-modal-border-color: var(--agora-border);
+  --bs-modal-border-radius: var(--agora-radius);
+  --bs-modal-header-border-color: var(--agora-border);
+  --bs-modal-footer-border-color: var(--agora-border);
+}
+
+.offcanvas {
+  --bs-offcanvas-bg: var(--agora-surface);
+  --bs-offcanvas-color: var(--agora-text);
+  --bs-offcanvas-border-color: var(--agora-border);
+}
+
+/* Pagination. */
+.pagination {
+  --bs-pagination-color: var(--agora-text);
+  --bs-pagination-bg: var(--agora-surface);
+  --bs-pagination-border-color: var(--agora-border);
+  --bs-pagination-hover-color: var(--agora-text);
+  --bs-pagination-hover-bg: var(--agora-surface-hover);
+  --bs-pagination-hover-border-color: var(--agora-border-strong);
+  --bs-pagination-active-color: var(--agora-accent-text);
+  --bs-pagination-active-bg: var(--agora-accent);
+  --bs-pagination-active-border-color: var(--agora-accent);
+  --bs-pagination-disabled-color: var(--agora-text-muted);
+  --bs-pagination-disabled-bg: var(--agora-surface);
+  --bs-pagination-disabled-border-color: var(--agora-border);
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-block: 0.5rem;
+
+  /* The colours are given again: the site template (Cassiopeia) has its own ones for the pagination. */
+  .page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--agora-touch);
+    min-height: var(--agora-touch);
+    color: var(--bs-pagination-color);
+    background-color: var(--bs-pagination-bg);
+    border: 1px solid var(--bs-pagination-border-color);
+    border-radius: var(--agora-radius-sm) !important;
+
+    &:hover {
+      color: var(--bs-pagination-hover-color);
+      text-decoration: none;
+      background-color: var(--bs-pagination-hover-bg);
+      border-color: var(--bs-pagination-hover-border-color);
+    }
+  }
+
+  .page-item.active .page-link,
+  .page-link.active {
+    color: var(--bs-pagination-active-color);
+    background-color: var(--bs-pagination-active-bg);
+    border-color: var(--bs-pagination-active-border-color);
+  }
+
+  .page-item.disabled .page-link,
+  .page-link.disabled {
+    color: var(--bs-pagination-disabled-color);
+    background-color: var(--bs-pagination-disabled-bg);
+    border-color: var(--bs-pagination-disabled-border-color);
+  }
+}
+
+/* Nav tabs and pills (profile, posting form). */
+.nav-tabs {
+  --bs-nav-tabs-border-color: var(--agora-border);
+  --bs-nav-tabs-link-active-color: var(--agora-accent-strong);
+  --bs-nav-tabs-link-active-bg: transparent;
+  --bs-nav-tabs-link-active-border-color: transparent transparent var(--agora-accent);
+  --bs-nav-tabs-link-hover-border-color: transparent transparent var(--agora-border-strong);
+  flex-wrap: nowrap;
+  gap: 0.25rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+
+  .nav-link {
+    min-height: var(--agora-touch);
+    color: var(--agora-text-muted);
+    white-space: nowrap;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+
+    &:hover {
+      color: var(--agora-text);
+      border-bottom-color: var(--agora-border-strong);
+    }
+
+    &.active {
+      font-weight: 650;
+      color: var(--agora-accent-strong);
+      background: transparent;
+      border-bottom-color: var(--agora-accent);
+    }
+  }
+}
+
+.nav-tabs + .tab-content {
+  color: var(--agora-text);
+  background: transparent;
+}
+
+.list-group-item {
+  color: var(--agora-text);
+  background-color: transparent;
+  border-color: var(--agora-border);
+}
+
+.list-group {
+  --bs-list-group-bg: var(--agora-surface);
+  --bs-list-group-color: var(--agora-text);
+  --bs-list-group-border-color: var(--agora-border);
+  --bs-list-group-action-hover-bg: var(--agora-surface-hover);
+  --bs-list-group-active-bg: var(--agora-accent);
+  --bs-list-group-active-border-color: var(--agora-accent);
+}
+
+.progress {
+  --bs-progress-bg: var(--agora-surface-hover);
+  --bs-progress-bar-bg: var(--agora-accent);
+  border-radius: var(--agora-radius-pill);
+}
+
+/* Tables: no grid, rows with a line between them. */
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--agora-text);
+  --bs-table-border-color: var(--agora-border);
+  --bs-table-striped-bg: var(--agora-surface-2);
+  --bs-table-striped-color: var(--agora-text);
+  --bs-table-hover-bg: var(--agora-surface-hover);
+  --bs-table-hover-color: var(--agora-text);
+  --bs-table-active-bg: var(--agora-accent-soft);
+  margin-bottom: 0;
+  color: var(--agora-text);
+  vertical-align: middle;
+  border-color: var(--agora-border);
+
+  > :not(caption) > * > * {
+    padding: 0.8rem 0.9rem;
+    color: inherit;
+    background-color: transparent;
+    border-bottom-color: var(--agora-border);
+    box-shadow: none;
+  }
+
+  > thead th,
+  > thead td {
+    font-size: 0.78rem;
+    font-weight: 650;
+    color: var(--agora-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--agora-surface-2);
+  }
+
+  > tbody > tr {
+    transition: background-color 0.15s ease;
+
+    &:hover > * {
+      background-color: var(--agora-surface-hover);
+    }
+  }
+
+  > tbody > tr:last-child > * {
+    border-bottom: 0;
+  }
+}
+
+.table-bordered > :not(caption) > * > * {
+  border-width: 0 0 1px;
+}
+
+.table-responsive {
+  border-radius: 0 0 var(--agora-radius) var(--agora-radius);
+}
+
+/* The spinner, the "new" marks and the user colours of Kunena. */
+.knewchar,
+sup.knewchar {
+  padding: 0.1em 0.5em;
+  font-size: 0.7em;
+  font-weight: 700;
+  color: #fff !important;
+  text-transform: uppercase;
+  vertical-align: middle;
+  background: var(--agora-success);
+  border-radius: var(--agora-radius-pill);
+}
+
+.kwho-admin {
+  color: var(--agora-danger) !important;
+}
+
+.kwho-globalmoderator,
+.kwho-moderator {
+  color: var(--agora-success) !important;
+}
+
+.kwho-guest {
+  color: var(--agora-text-muted) !important;
+}
+
+@import "navigation";
+@import "forum";
+@import "topic";
+@import "profile";
+@import "editor";
+@import "mobile";

@@ -2093,7 +2093,15 @@ HTML;
             if (is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages")) {
                 $this->hmvc = is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages");
             } else {
-                $this->hmvc = is_dir(KPATH_SITE . "/template/{$this->name}/pages");
+                // A template which only overrides some files takes its pages from its parent templates.
+                $this->hmvc = false;
+
+                foreach ($this->default as $template) {
+                    if (is_dir(KPATH_SITE . "/template/{$template}/pages")) {
+                        $this->hmvc = true;
+                        break;
+                    }
+                }
             }
         }
 

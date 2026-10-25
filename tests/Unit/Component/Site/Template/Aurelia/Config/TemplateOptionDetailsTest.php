@@ -91,7 +91,11 @@ class TemplateOptionDetailsTest extends UnitTestCase
             foreach ($files as $file) {
                 $path = str_replace('\\', '/', $file->getPathname());
 
-                if (!preg_match('/\.(php|js|scss)$/', $path) || str_contains($path, '/language/') || str_contains($path, '/install/sql/')) {
+                // The template Agora reads its own options (config.xml of Agora, AgoraOptionsTest).
+                if (
+                    !preg_match('/\.(php|js|scss)$/', $path) || str_contains($path, '/language/') || str_contains($path, '/install/sql/')
+                    || str_contains($path, '/site/template/agora/')
+                ) {
                     continue;
                 }
 

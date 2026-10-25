@@ -1,0 +1,296 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * Small screens: the tables become lists of cards, the author of a message is shown above it, nothing is wider than the screen.
+ */
+
+@media (max-width: 767.98px) {
+  & {
+    padding: 0.5rem;
+    border-radius: var(--agora-radius-sm);
+  }
+
+  .agora-navbar .navbar-toggler {
+    order: -1;
+  }
+
+  /* The tables of the index and of the lists: one block per row. */
+  .kfrontend.section .table,
+  #categoryactions .table,
+  #ktopicsform .table,
+  .kfrontend > form .table {
+    display: block;
+
+    > thead {
+      display: block;
+
+      > tr {
+        display: block;
+      }
+
+      > tr:not(:first-child),
+      > tr > th {
+        display: none;
+      }
+
+      > tr > td {
+        display: block;
+      }
+    }
+
+    > tbody {
+      display: block;
+    }
+
+    > tbody > tr {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      align-items: flex-start;
+      padding: 0.8rem 0.9rem;
+      border-bottom: 1px solid var(--agora-border);
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      > td,
+      > th {
+        display: block;
+        padding: 0;
+        border: 0;
+      }
+
+      > .d-none {
+        display: none !important;
+      }
+
+      > td:not(.d-none) {
+        flex: 1 1 100%;
+        min-width: 0;
+      }
+    }
+  }
+
+  /* The last post of a category, under its name. */
+  tr.category > td:last-child:not(:first-child) {
+    padding-top: 0.45rem !important;
+    border-top: 1px dashed var(--agora-border) !important;
+
+    .lastpostlink {
+      white-space: normal;
+    }
+  }
+
+  tr.category > td > .float-end,
+  tr.category > td > .float-start {
+    float: none !important;
+  }
+
+  .kfrontend > .card-header,
+  .kfrontend > h1.card-header,
+  .kfrontend > h2.card-header {
+    padding-inline-start: 0.9rem;
+    font-size: 1rem;
+  }
+
+  /* The search, the pagination and the buttons over the lists stack. */
+  .kunena-topic-item > .float-start,
+  .kunena-topic-item > h2.float-end,
+  .row > .col-md-12 > h2.float-end,
+  .row > .col-md-12 > .float-start,
+  #categoryactions + .float-start,
+  h2.float-end {
+    float: none !important;
+    width: 100%;
+  }
+
+  .kunena-search {
+    min-width: 0;
+  }
+
+  #categoryactions ul.inline > li > .btn,
+  ul.inline > li > .btn {
+    flex: 1 1 auto;
+  }
+
+  /* A message: the author above it, in one line. */
+  .row.message {
+    flex-direction: column;
+
+    > .col-md-2.d-none.d-sm-block {
+      display: block !important;
+    }
+
+    > .col-md-2,
+    > .col-md-10 + .col-md-2 {
+      order: -1;
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      border-inline: 0;
+      border-bottom: 1px solid var(--agora-border);
+      border-radius: var(--agora-radius) var(--agora-radius) 0 0 !important;
+    }
+
+    > .col-md-10,
+    > .col-md-12 {
+      width: 100%;
+      padding: 0.85rem 0.9rem 0.75rem;
+    }
+
+    .profilebox {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.25rem 0.6rem;
+      justify-content: flex-start;
+      text-align: start;
+
+      > li:nth-child(2) {
+        order: -1;
+      }
+
+      > li:nth-child(2) img,
+      .rounded > svg,
+      .kavatar {
+        width: 40px !important;
+        max-width: 40px;
+        height: 40px !important;
+        border-radius: 50% !important;
+      }
+
+      .rounded > svg {
+        padding: 9px;
+      }
+
+      .topic-starter,
+      .topic-moderator {
+        display: none !important;
+      }
+
+      > li:empty {
+        display: none;
+      }
+    }
+
+    .profile-expand {
+      display: none;
+    }
+
+    /* The date of the message on its own line, over the header. */
+    > .col-md-10 > small.float-end,
+    > .col-md-12 > small.float-end {
+      display: block;
+      float: none !important;
+      margin: 0 0 0.35rem;
+    }
+
+    /* The name of the author is in the box above: the line "by ..." of Aurelia is not needed. */
+    small.float-end .d-block.d-sm-none {
+      display: none !important;
+    }
+
+    .btn-toolbar.kmessagepadding {
+      > .btn,
+      > .btn-group {
+        flex: 1 1 auto;
+      }
+    }
+  }
+
+  .kmsg {
+    font-size: 0.98rem;
+  }
+
+  /* The profile. */
+  .agora-profile-head,
+  .agora-profile-summary {
+    padding: 0.9rem;
+  }
+
+  .agora-profile-summary .col-md-3:first-child {
+    text-align: center;
+  }
+
+  /* The posting form: the labels above the fields. */
+  #postform {
+    > .shadow-lg,
+    > .p-3.rounded {
+      padding: 0.9rem !important;
+    }
+
+    .col-sm-2,
+    .col-md-10 {
+      width: 100%;
+    }
+
+    .offset-sm-2 {
+      margin-left: 0;
+    }
+
+    .col-md-10.center > .btn {
+      flex: 1 1 auto;
+    }
+  }
+
+  .form-horizontal .controls {
+    margin-left: 0;
+  }
+
+  .ktxtarea {
+    margin-left: 0;
+  }
+
+  /* Modals use the whole width. */
+  .modal-dialog {
+    margin: 0.5rem;
+  }
+}
+
+/* Very small screens (360px): less padding, the buttons with only their icon when they are in groups. */
+@media (max-width: 400px) {
+  & {
+    padding: 0.35rem;
+  }
+
+  .agora-navbar {
+    padding: 0.35rem;
+  }
+
+  .pagination .page-link {
+    min-width: 36px;
+    padding-inline: 0.45rem;
+  }
+
+  .btn {
+    padding-inline: 0.7rem;
+  }
+}
+
+/* Tablets: the author column a bit narrower. */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .row.message > .col-md-2 {
+    flex: 0 0 auto;
+    width: 26%;
+  }
+
+  .row.message > .col-md-10 {
+    flex: 1 1 0;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

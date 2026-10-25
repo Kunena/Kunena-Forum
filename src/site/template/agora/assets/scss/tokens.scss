@@ -1,0 +1,95 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The design tokens of Agora. The accent colour comes from the options of the template (--agora-accent, set on the page), every other
+ * colour of the forum is taken from these variables, so the dark scheme only has to change them.
+ */
+#kunena.layout.agora {
+  --agora-accent: #3d5afe;
+  --agora-accent-strong: color-mix(in srgb, var(--agora-accent) 82%, #000);
+  --agora-accent-soft: color-mix(in srgb, var(--agora-accent) 10%, transparent);
+  --agora-accent-text: #fff;
+  --agora-link: var(--agora-accent-strong);
+
+  --agora-bg: #f4f6fb;
+  --agora-surface: #fff;
+  --agora-surface-2: #f8f9fc;
+  --agora-surface-hover: #f2f4fa;
+  --agora-border: #e3e7f0;
+  --agora-border-strong: #cfd5e3;
+  --agora-text: #1c2230;
+  --agora-text-muted: #636b7e;
+  --agora-success: #1f9d61;
+  --agora-danger: #d64545;
+  --agora-warning: #c7811a;
+
+  --agora-radius: 14px;
+  --agora-radius-sm: 9px;
+  --agora-radius-pill: 999px;
+  --agora-shadow: 0 1px 2px rgba(20, 28, 45, 0.05), 0 2px 8px rgba(20, 28, 45, 0.05);
+  --agora-shadow-raised: 0 4px 14px rgba(20, 28, 45, 0.1);
+  --agora-gap: 1rem;
+  --agora-touch: 40px;
+
+  --agora-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+  --agora-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Bootstrap, inside the forum, with the colours of Agora. */
+  --bs-body-bg: var(--agora-bg);
+  --bs-body-color: var(--agora-text);
+  --bs-border-color: var(--agora-border);
+  --bs-secondary-color: var(--agora-text-muted);
+  --bs-tertiary-bg: var(--agora-surface-2);
+  --bs-border-radius: var(--agora-radius-sm);
+  --bs-border-radius-lg: var(--agora-radius);
+  --bs-focus-ring-color: color-mix(in srgb, var(--agora-accent) 30%, transparent);
+
+  /* The site template Cassiopeia has its own build of Bootstrap, with variables without prefix: the same colours for them. */
+  --body-bg: var(--agora-surface);
+  --body-color: var(--agora-text);
+  --emphasis-color: var(--agora-text);
+  --heading-color: var(--agora-text);
+  --secondary-color: var(--agora-text-muted);
+  --secondary-bg: var(--agora-surface-2);
+  --tertiary-color: var(--agora-text-muted);
+  --tertiary-bg: var(--agora-surface-2);
+  --border-color: var(--agora-border);
+  --link-color: var(--agora-link);
+  --link-hover-color: var(--agora-accent);
+}
+
+#kunena.layout.agora[data-bs-theme="dark"] {
+  --agora-accent-strong: color-mix(in srgb, var(--agora-accent) 55%, #fff);
+  --agora-accent-soft: color-mix(in srgb, var(--agora-accent) 22%, transparent);
+  --agora-link: var(--agora-accent-strong);
+
+  --agora-bg: #0f131b;
+  --agora-surface: #171c27;
+  --agora-surface-2: #1c2230;
+  --agora-surface-hover: #212838;
+  --agora-border: #2a3243;
+  --agora-border-strong: #3a4458;
+  --agora-text: #e5e9f2;
+  --agora-text-muted: #9aa4b8;
+  --agora-success: #4cc38a;
+  --agora-danger: #f07171;
+  --agora-warning: #e7a948;
+
+  --agora-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --agora-shadow-raised: 0 6px 20px rgba(0, 0, 0, 0.45);
+
+  color-scheme: dark;
+}
+
+@media (pointer: coarse) {
+  #kunena.layout.agora {
+    --agora-touch: 44px;
+  }
+}

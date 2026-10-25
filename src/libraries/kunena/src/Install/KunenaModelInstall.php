@@ -2827,6 +2827,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
                     if ($dest == KUNENA_INSTALLER_SITEPATH) {
                         $this->deleteFolder("$dest/template/aurelia", ['params.ini']);
+                        $this->deleteFolder("$dest/template/agora", ['params.ini']);
                     }
                 }
 

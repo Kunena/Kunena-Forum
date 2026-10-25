@@ -44,7 +44,7 @@ class TemplatesController extends KunenaController
      * @var     array
      * @since   Kunena 2.0
      */
-    protected mixed $locked = ['aurelia'];
+    protected mixed $locked = ['aurelia', 'agora'];
 
     /**
      * Construct

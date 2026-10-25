@@ -27,6 +27,7 @@
             <filename>com_kunena.templates.ini</filename>
             <filename>com_kunena.views.ini</filename>
             <filename>kunena_tmpl_aurelia.ini</filename>
+            <filename>kunena_tmpl_agora.ini</filename>
         </files>
     </fileset>
 </extension>

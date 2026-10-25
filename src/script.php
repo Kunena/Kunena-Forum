@@ -222,8 +222,13 @@ return new class () implements ServiceProviderInterface {
                         return false;
                     }
 
-                    if (file_exists(JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss')) {
-                        File::copy(JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss', JPATH_SITE . '/tmp/custom.scss');
+                    // The custom styles of the templates of Kunena are kept during the upgrade.
+                    foreach (['aurelia', 'agora'] as $template) {
+                        $custom = JPATH_SITE . "/components/com_kunena/template/{$template}/assets/scss/custom.scss";
+
+                        if (file_exists($custom)) {
+                            File::copy($custom, JPATH_SITE . "/tmp/custom-{$template}.scss");
+                        }
                     }
 
                     $this->deleteRemovedFolder($this->installedVersion);
@@ -415,8 +420,10 @@ return new class () implements ServiceProviderInterface {
                         }
                     }
 
-                    if (file_exists(JPATH_SITE . '/tmp/custom.scss')) {
-                        File::copy(JPATH_SITE . '/tmp/custom.scss', JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss');
+                    foreach (['aurelia', 'agora'] as $template) {
+                        if (file_exists(JPATH_SITE . "/tmp/custom-{$template}.scss")) {
+                            File::copy(JPATH_SITE . "/tmp/custom-{$template}.scss", JPATH_SITE . "/components/com_kunena/template/{$template}/assets/scss/custom.scss");
+                        }
                     }
 
                     return true;

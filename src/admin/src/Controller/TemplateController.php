@@ -56,7 +56,7 @@ class TemplateController extends FormController
      * @var     array
      * @since   Kunena 2.0
      */
-    protected mixed $locked = ['aurelia'];
+    protected mixed $locked = ['aurelia', 'agora'];
 
     /**
      * Constructor.

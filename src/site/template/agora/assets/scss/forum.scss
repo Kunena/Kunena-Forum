@@ -1,0 +1,401 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The index of the forum, the categories, the lists of topics and messages, and the blocks of the index (who is online, statistics).
+ */
+
+/* The sections of the index and the blocks: cards with a header. */
+.kfrontend {
+  position: relative;
+  margin-top: 0 !important;
+  margin-bottom: var(--agora-gap) !important;
+  overflow: hidden;
+
+  > .btn-toolbar.float-end,
+  > h2.btn-toolbar.float-end,
+  > h2.float-end {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.6rem;
+    z-index: 1;
+    float: none !important;
+    margin: 0;
+  }
+
+  > .btn-toolbar .btn,
+  > h2 > .btn {
+    width: 34px;
+    min-height: 34px;
+    padding: 0;
+    color: var(--agora-text-muted);
+    background: transparent;
+    border: 1px solid transparent !important;
+
+    &:hover {
+      color: var(--agora-text);
+      background: var(--agora-surface-hover);
+    }
+  }
+
+  > .card-header,
+  > h1.card-header,
+  > h2.card-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.6rem;
+    align-items: baseline;
+    min-height: 50px;
+    padding: 0.8rem 3.5rem 0.8rem 1.1rem;
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+
+    a {
+      color: var(--agora-text);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--agora-accent);
+      }
+    }
+
+    small {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--agora-text-muted);
+    }
+  }
+
+  /* Aurelia shows the buttons of a block only on hover: on a touch screen there is no hover, they are always shown. */
+  .btn {
+    visibility: visible;
+  }
+
+  > .collapse,
+  > .collapsing {
+    border-radius: 0 !important;
+  }
+
+  .card-body {
+    padding: 1rem 1.1rem;
+  }
+
+  .bg-faded {
+    padding: 0.65rem 0.25rem !important;
+    color: var(--agora-text-muted) !important;
+    background: transparent !important;
+  }
+}
+
+/* The categories of the index. */
+.kfrontend.section .table > thead > tr:first-child > td {
+  padding-block: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  background: var(--agora-surface);
+}
+
+tr.category {
+  #kcat-icon,
+  > th:first-child {
+    width: 64px;
+  }
+
+  #kcat-icon > a,
+  > th:first-child > a {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    font-size: 1.35rem;
+    color: var(--agora-accent);
+    background: var(--agora-accent-soft);
+    border-radius: 12px;
+
+    svg,
+    img,
+    i {
+      width: 1.35rem;
+      height: 1.35rem;
+      color: inherit !important;
+    }
+  }
+
+  h3 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: baseline;
+    margin: 0 0 0.15rem;
+    font-size: 1.02rem;
+    font-weight: 650;
+
+    > a {
+      color: var(--agora-text);
+
+      &:hover {
+        color: var(--agora-accent);
+      }
+    }
+
+    small {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--agora-text-muted);
+
+      a {
+        color: var(--agora-warning);
+      }
+    }
+  }
+
+  .header-desc {
+    font-size: 0.9rem;
+  }
+
+  .lastpostlink a,
+  .topictitle {
+    font-weight: 600;
+    color: var(--agora-text);
+
+    &:hover {
+      color: var(--agora-accent);
+    }
+  }
+
+  .lastpostlink,
+  .lastpostby,
+  .datepost {
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .lastpostlink {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* The subcategories of a category. */
+  .list-unstyled,
+  ul.inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.9rem;
+    padding: 0;
+    margin: 0.35rem 0 0;
+    font-size: 0.88rem;
+    list-style: none;
+  }
+}
+
+/* The lists of topics (category, recent topics, unread, user topics, ...). */
+#categoryactions,
+.topic-list,
+#ktopicsform,
+.kfrontend .table {
+  .topictitle {
+    font-size: 1rem;
+    font-weight: 650;
+    line-height: 1.35;
+    color: var(--agora-text);
+
+    &:hover {
+      color: var(--agora-accent);
+    }
+  }
+
+  .started {
+    margin-top: 0.15rem;
+    font-size: 0.84rem;
+    line-height: 1.45;
+
+    br {
+      display: none;
+    }
+
+    .ktopic-category {
+      margin-inline-end: 0.35rem;
+    }
+  }
+
+  .replies,
+  .views {
+    font-size: 0.84rem;
+    color: var(--agora-text-muted);
+    white-space: nowrap;
+  }
+
+  .repliesnum,
+  .viewsnum {
+    margin-inline-start: 0.3rem;
+    font-weight: 700;
+    color: var(--agora-text);
+  }
+
+  .table > tbody > tr > th:first-child,
+  .table > tbody > tr > td:first-child {
+    width: 56px;
+  }
+}
+
+#categoryactions,
+#ktopicsform,
+.kfrontend > form,
+.ktopics-list {
+  > .table,
+  table.table {
+    overflow: hidden;
+    background: var(--agora-surface);
+    border: 1px solid var(--agora-border);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--agora-radius);
+    box-shadow: var(--agora-shadow);
+  }
+}
+
+/* Topic icons of the lists. */
+.category-item > tr > th:first-child a,
+tr.category > th[scope="row"] a {
+  color: var(--agora-text-muted);
+}
+
+/* An unread topic or category: a mark of the accent. */
+.topic-item-unread {
+  > :first-child {
+    box-shadow: inset 3px 0 0 var(--agora-success);
+  }
+
+  .topictitle {
+    font-weight: 750;
+  }
+}
+
+.krow-orange,
+.ksticky,
+tr.sticky,
+.topic-item-sticky {
+  background: color-mix(in srgb, var(--agora-warning) 7%, transparent);
+}
+
+/* The buttons over the lists. */
+#categoryactions > div > ul.inline,
+ul.inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0 0 0.75rem;
+  list-style: none;
+
+  > li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+/* The search box over the lists and the topic. */
+.kunena-search {
+  min-width: min(20rem, 100%);
+
+  .input-group {
+    flex-wrap: nowrap;
+  }
+
+  .form-control {
+    border-start-start-radius: var(--agora-radius-pill);
+    border-end-start-radius: var(--agora-radius-pill);
+  }
+
+  .btn {
+    border-start-end-radius: var(--agora-radius-pill) !important;
+    border-end-end-radius: var(--agora-radius-pill) !important;
+  }
+}
+
+h2.float-end {
+  margin-bottom: 0.5rem;
+}
+
+/* The filters and the bulk actions of the lists. */
+.filter-sel,
+.filter,
+#kchecktask,
+#kchecktarget,
+#kcheckstatus {
+  width: auto;
+  max-width: 100%;
+}
+
+/* Who is online and the statistics of the index. */
+#kwho,
+#kstats {
+  .container {
+    max-width: none;
+    padding: 0;
+  }
+
+  /* The icon of the block in a tile, as the icons of the categories. */
+  .col-md-1 li.btn-link {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0 !important;
+    color: var(--agora-accent);
+    background: var(--agora-accent-soft);
+    border-radius: 12px;
+
+    svg,
+    img,
+    i {
+      width: 1.35rem;
+      height: 1.35rem;
+      color: inherit !important;
+    }
+  }
+
+  .list-unstyled {
+    margin: 0;
+
+    li {
+      padding-block: 0.12rem;
+    }
+  }
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+/* The statistics page and the list of the users. */
+#kstats-page,
+.kstatistics {
+  .card {
+    margin-bottom: var(--agora-gap);
+  }
+}
+
+.kuserlist,
+#kuserlist {
+  img {
+    border-radius: 50%;
+  }
+}
+
+/* Credits, help and the other text pages. */
+.kfrontend .card-body > p:last-child {
+  margin-bottom: 0;
+}

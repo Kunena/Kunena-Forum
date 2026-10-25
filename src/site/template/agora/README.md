@@ -42,4 +42,5 @@ The style sheet is compiled to `media/kunena/cache/agora/css/kunena.css` when a 
 
 ## ./assets/js
 
-`agora.js`: with the scheme auto, the colours follow the device when it changes them. The other scripts are the ones of Aurelia (`KunenaTemplateAgora::addScript()`).
+`agora.js`: the text of SCEditor (in a frame with its own style sheet) gets the colours of the scheme, and with the scheme auto
+the colours follow the device when it changes them. The other scripts are the ones of Aurelia (`KunenaTemplateAgora::addScript()`).

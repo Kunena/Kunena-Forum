@@ -101,6 +101,17 @@
     font-size: 1rem;
   }
 
+  /* The tabs (profile, forms) wrap on rows: every tab stays in sight on a phone. */
+  .nav-tabs {
+    flex-wrap: wrap;
+    overflow: visible;
+
+    .nav-link {
+      min-height: 40px;
+      padding-inline: 0.65rem;
+    }
+  }
+
   /* The search, the pagination and the buttons over the lists stack. */
   .kunena-topic-item > .float-start,
   .kunena-topic-item > h2.float-end,

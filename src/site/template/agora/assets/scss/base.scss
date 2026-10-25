@@ -145,6 +145,8 @@ hr {
   --bs-card-inner-border-radius: calc(var(--agora-radius) - 1px);
   --bs-card-cap-bg: var(--agora-surface-2);
   --bs-card-color: var(--agora-text);
+  /* Cassiopeia gives the cards a light border. */
+  border-color: var(--agora-border);
   box-shadow: var(--agora-shadow);
 }
 
@@ -348,6 +350,41 @@ textarea {
 .input-group-text {
   color: var(--agora-text-muted);
   background-color: var(--agora-surface-2);
+}
+
+/* Aurelia takes the background of the lists away (also their arrow): the lists get the colours of the scheme and an arrow. */
+.form-select,
+select.inputbox {
+  color: var(--agora-text);
+  background-color: var(--agora-surface) !important;
+}
+
+.form-select:not([multiple]):not([size]),
+.form-select[size="1"],
+select.inputbox:not([multiple]):not([size]) {
+  padding-inline-end: 2.25rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23636b7e' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 14px 10px !important;
+  appearance: none;
+}
+
+&[data-bs-theme="dark"] .form-select:not([multiple]):not([size]),
+&[data-bs-theme="dark"] .form-select[size="1"],
+&[data-bs-theme="dark"] select.inputbox:not([multiple]):not([size]) {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%239aa4b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+}
+
+select option,
+select optgroup {
+  color: var(--agora-text);
+  background-color: var(--agora-surface);
+}
+
+select[multiple] option:checked {
+  color: var(--agora-accent-text);
+  background: var(--agora-accent) linear-gradient(0deg, var(--agora-accent), var(--agora-accent));
 }
 
 .form-control:focus,

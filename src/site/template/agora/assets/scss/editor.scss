@@ -67,12 +67,15 @@
     padding-inline: 1.4rem;
   }
 
+  /* The buttons of the form, in the middle of the whole form. */
   .col-md-10.center {
     display: flex;
+    flex: 0 0 100%;
     flex-wrap: wrap;
     gap: 0.5rem;
-    justify-content: flex-start;
-    text-align: start;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -98,7 +101,10 @@
     place-items: center;
     width: var(--agora-touch);
     height: var(--agora-touch);
+    /* Aurelia gives the choices a padding, which pushes the icon out of the middle of the tile. */
+    padding: 0;
     margin: 0;
+    line-height: 1;
     cursor: pointer;
     background: var(--agora-surface);
     border: 1px solid var(--agora-border);
@@ -183,6 +189,15 @@ textarea.span12,
   }
 }
 
+/* The icons of SCEditor are drawn for a light toolbar: light glyphs in the dark scheme, with the same hues. */
+&[data-bs-theme="dark"] .sceditor-button div {
+  filter: invert(1) hue-rotate(180deg) brightness(1.1);
+}
+
+&[data-bs-theme="dark"] .sceditor-button.disabled div {
+  opacity: 0.45;
+}
+
 .sceditor-dropdown {
   color: var(--agora-text);
   background: var(--agora-surface) !important;
@@ -262,5 +277,113 @@ textarea.span12,
 
   li.highlight {
     background: var(--agora-accent-soft);
+  }
+}
+
+/* The form of a category in the forum (the moderators): the fields in a table of Aurelia. */
+#adminForm {
+  .tabbable-line > .nav-tabs {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Aurelia puts a light line under the tabs in the element itself. */
+  .tab-content {
+    padding-bottom: 0 !important;
+    border-bottom: 0 !important;
+  }
+
+  fieldset {
+    margin: 0;
+  }
+
+  legend {
+    margin: 0.75rem 0 0.25rem;
+    font-size: 1rem;
+    font-weight: 650;
+  }
+
+  .table > tbody > tr > td,
+  .table > tr > td {
+    vertical-align: top;
+  }
+
+  .table td:first-child {
+    padding-top: 1.35rem;
+    font-weight: 550;
+  }
+
+  .table td label {
+    display: block;
+    margin: 0;
+  }
+
+  .table td p {
+    margin: 0.35rem 0 0;
+    font-size: 0.86rem;
+    color: var(--agora-text-muted);
+  }
+
+  .form-control,
+  .form-select,
+  textarea {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Aurelia gives the texts of the category a width of 500px in the element itself. */
+  textarea {
+    width: 100% !important;
+    min-height: 8rem;
+  }
+
+  /* The list of the aliases of the category, under the alias. */
+  #aliascheck .form-select {
+    margin-top: 0.4rem;
+  }
+
+  .form-group.row.pt-3 .col-md-10.center {
+    display: flex;
+    flex: 0 0 100%;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  input[name="submit"] {
+    --bs-btn-color: var(--agora-accent-text);
+    --bs-btn-bg: var(--agora-accent);
+    --bs-btn-border-color: var(--agora-accent);
+    --bs-btn-hover-color: var(--agora-accent-text);
+    --bs-btn-hover-bg: var(--agora-accent-strong);
+    --bs-btn-hover-border-color: var(--agora-accent-strong);
+    padding-inline: 1.4rem;
+  }
+}
+
+/* The striped rows of the forms in the colours of the scheme. */
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-bg-type: var(--agora-surface-2);
+  color: var(--agora-text);
+}
+
+@media (max-width: 767.98px) {
+  /* The label above its field. */
+  #adminForm .table {
+    tr,
+    td {
+      display: block;
+      width: 100% !important;
+    }
+
+    td:first-child {
+      padding: 0.75rem 0.25rem 0.25rem;
+      border-bottom: 0;
+    }
+
+    td:not(:first-child) {
+      padding: 0 0.25rem 0.75rem;
+    }
   }
 }

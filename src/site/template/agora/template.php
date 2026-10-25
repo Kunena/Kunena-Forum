@@ -132,10 +132,8 @@ class KunenaTemplateAgora extends KunenaTemplateAurelia
 
         parent::initialize();
 
-        // The colours follow the device: the script changes them when the device does.
-        if ($this->getColorScheme() === 'auto') {
-            $this->addScript('assets/js/agora.js');
-        }
+        // The colours of the scheme for the editor, and for the scheme auto the colours of the device when it changes them.
+        $this->addScript('assets/js/agora.js');
 
         $accent = (string) $this->params->get('accentColor');
 

@@ -1,0 +1,344 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The statistics page: the numbers of the forum as tiles, the top lists as cards with ranks and bars.
+ */
+
+.agora-stats-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 0.25rem 0 1rem;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.agora-stats-head-icon,
+.agora-stats-tile-icon {
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--agora-accent);
+  background: var(--agora-accent-soft);
+  border-radius: 12px;
+
+  svg,
+  i,
+  img {
+    width: 1.35rem;
+    height: 1.35rem;
+    color: inherit !important;
+  }
+}
+
+/* The numbers of the forum. */
+.agora-stats-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0 0 var(--agora-gap);
+  list-style: none;
+}
+
+.agora-stats-tile {
+  display: grid;
+  grid-template-areas:
+    "icon value"
+    "icon label";
+  grid-template-columns: auto 1fr;
+  column-gap: 0.8rem;
+  align-items: center;
+  min-width: 0;
+  padding: 0.9rem 1rem;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+
+  .agora-stats-tile-icon {
+    grid-area: icon;
+  }
+}
+
+.agora-stats-tile-value {
+  grid-area: value;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 1.5rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  color: var(--agora-text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  a {
+    color: inherit;
+  }
+}
+
+.agora-stats-tile-label {
+  grid-area: label;
+  font-size: 0.82rem;
+  line-height: 1.3;
+  color: var(--agora-text-muted);
+}
+
+/* The activity of today and yesterday, and the latest member. */
+.agora-stats-more {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 0.75rem;
+  margin-bottom: var(--agora-gap);
+}
+
+.agora-stats-activity {
+  padding: 0.9rem 1rem;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+}
+
+.agora-stats-activity-title {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.agora-stats-activity-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 0;
+
+  > div {
+    padding: 0.55rem 0.75rem;
+    background: var(--agora-surface-2);
+    border: 1px solid var(--agora-border);
+    border-radius: var(--agora-radius-sm);
+  }
+
+  dt {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--agora-text-muted);
+  }
+
+  dd {
+    margin: 0.1rem 0 0;
+    font-size: 1.25rem;
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+    color: var(--agora-text);
+  }
+}
+
+/* The latest member: a name, not a number. */
+.agora-stats-tile-member {
+  align-content: center;
+
+  .agora-stats-tile-value {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .agora-stats-more {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Two tiles in a row: a last tile alone takes the whole row. */
+  .agora-stats-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .agora-stats-tile:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* The top lists. */
+.agora-stats-boards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: var(--agora-gap);
+  align-items: start;
+}
+
+.agora-stats-board {
+  margin: 0 !important;
+
+  > .card-header {
+    padding-inline-end: 1.1rem;
+  }
+}
+
+.agora-stats-board-columns {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--agora-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--agora-border);
+}
+
+.agora-stats-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.agora-stats-row {
+  display: grid;
+  grid-template-areas:
+    "rank avatar name count"
+    "rank avatar bar  bar";
+  grid-template-columns: auto auto 1fr auto;
+  gap: 0.25rem 0.7rem;
+  align-items: center;
+  padding: 0.65rem 1.1rem;
+  border-bottom: 1px solid var(--agora-border);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover {
+    background: var(--agora-surface-hover);
+  }
+}
+
+.agora-stats-rank {
+  display: inline-grid;
+  grid-area: rank;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--agora-text-muted);
+  background: var(--agora-surface-2);
+  border: 1px solid var(--agora-border);
+  border-radius: 50%;
+}
+
+/* Gold, silver and bronze for the first three. */
+.agora-stats-rank-1 .agora-stats-rank {
+  color: #7a5200;
+  background: #ffd970;
+  border-color: #f1c447;
+}
+
+.agora-stats-rank-2 .agora-stats-rank {
+  color: #3d4654;
+  background: #dfe4ec;
+  border-color: #c7ced9;
+}
+
+.agora-stats-rank-3 .agora-stats-rank {
+  color: #6b3a12;
+  background: #f1bf94;
+  border-color: #e0a877;
+}
+
+.agora-stats-avatar-box {
+  display: grid;
+  grid-area: avatar;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  color: var(--agora-text-muted);
+  background: var(--agora-surface-hover);
+  border-radius: 50%;
+
+  > .rounded > svg,
+  > svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  img,
+  svg,
+  .agora-stats-avatar {
+    display: block;
+    width: 36px !important;
+    height: 36px !important;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  /* A user without a picture: the icon of a user. */
+  .rounded {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    color: var(--agora-text-muted);
+    background: var(--agora-surface-hover);
+
+    svg {
+      width: 18px !important;
+      height: 18px !important;
+    }
+  }
+}
+
+.agora-stats-name {
+  grid-area: name;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  a {
+    color: var(--agora-text);
+
+    &:hover {
+      color: var(--agora-accent);
+    }
+  }
+}
+
+.agora-stats-count {
+  grid-area: count;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--agora-text);
+}
+
+.agora-stats-bar {
+  display: block;
+  grid-area: bar;
+  height: 6px;
+  overflow: hidden;
+  background: var(--agora-surface-hover);
+  border-radius: var(--agora-radius-pill);
+
+  > span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--agora-accent), color-mix(in srgb, var(--agora-accent) 60%, #22c1c3));
+    border-radius: inherit;
+  }
+}

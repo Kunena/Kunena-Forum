@@ -1,0 +1,188 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The lists of topics (my topics, recent topics, unread, no replies, ...): a header, the filters as a card, the list as a card with
+ * the bulk actions under it.
+ */
+
+.agora-list-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.25rem 0 0.9rem;
+}
+
+.agora-list-title {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  min-width: 0;
+
+  h1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: baseline;
+    margin: 0;
+
+    small {
+      padding: 0.1rem 0.6rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--agora-accent-strong);
+      background: var(--agora-accent-soft);
+      border-radius: var(--agora-radius-pill);
+    }
+  }
+}
+
+.agora-list-time .form-select {
+  width: auto;
+  min-width: 11rem;
+}
+
+/* The filters of the list. */
+.agora-list-filters {
+  --bs-gutter-x: 0.5rem;
+  padding: 0.75rem 0.5rem;
+  margin: 0 0 0.9rem !important;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+
+  .form-select-sm,
+  .form-control-sm {
+    min-height: 38px;
+    font-size: 0.9rem;
+  }
+
+  .text-end {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: flex-end;
+  }
+}
+
+/* The pagination and the search. */
+.agora-list-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+
+  .pagination {
+    margin: 0;
+  }
+
+  .agora-list-search {
+    margin-inline-start: auto;
+  }
+}
+
+.agora-list-toolbar[data-ktopics-pagination] {
+  margin-top: 0.75rem;
+}
+
+/* The list: the card is the frame, the table has no frame of its own. */
+.agora-topics {
+  margin-bottom: 0 !important;
+
+  #ktopicsform > table.table {
+    margin: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* The bulk actions of the moderators, under the list. */
+.agora-topics-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  background: var(--agora-surface-2);
+  border-top: 1px solid var(--agora-border);
+
+  &:not(:has(.btn, select)) {
+    display: none;
+  }
+}
+
+.agora-topics-top {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: var(--agora-text-muted);
+  border: 1px solid var(--agora-border);
+  border-radius: 50%;
+
+  &:hover {
+    color: var(--agora-accent);
+    text-decoration: none;
+  }
+}
+
+.agora-topics-bulk {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-inline-start: auto;
+
+  .form-select {
+    width: auto;
+    min-width: 11rem;
+    max-width: 100%;
+  }
+}
+
+/* No pagination when the list has only one page. */
+.agora-list-toolbar nav:has(> .pagination):not(:has(.page-item:not(.disabled):not(.active))) {
+  display: none !important;
+}
+
+/* The checkboxes of the bulk actions. */
+#ktopicsform input[type="checkbox"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  cursor: pointer;
+  accent-color: var(--agora-accent);
+}
+
+@media (max-width: 767.98px) {
+  .agora-list-time,
+  .agora-list-time .form-select,
+  .agora-list-toolbar .agora-list-search {
+    width: 100%;
+  }
+
+  .agora-list-toolbar .agora-list-search {
+    margin-inline-start: 0;
+  }
+
+  .agora-topics-bulk {
+    width: 100%;
+    margin-inline-start: 0;
+
+    .form-select,
+    .btn {
+      flex: 1 1 100%;
+    }
+  }
+}

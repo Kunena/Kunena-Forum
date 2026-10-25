@@ -412,6 +412,19 @@ input:focus {
   }
 }
 
+/* Aurelia hides the radios and shows their labels as buttons: in a .form-check they are radios again. */
+.form-check > input[type="radio"].form-check-input {
+  display: inline-block;
+  border-radius: 50%;
+
+  + label {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: 0;
+  }
+}
+
 .form-switch .form-check-input {
   width: 2.2em;
   border-radius: 2em;
@@ -706,4 +719,9 @@ sup.knewchar {
 @import "topic";
 @import "profile";
 @import "editor";
+@import "statistics";
+@import "members";
+@import "search";
+@import "lists";
+@import "index";
 @import "mobile";

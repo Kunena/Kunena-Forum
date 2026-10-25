@@ -1,0 +1,205 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The index of the forum: each section a card with its header (name, number of topics, description, buttons), the categories as
+ * rows with their icon, numbers and last post, the subcategories as chips.
+ */
+
+.agora-section-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0.9rem 1rem 0.9rem 1.1rem;
+  background: var(--agora-surface-2);
+  border-bottom: 1px solid var(--agora-border);
+}
+
+.agora-section-title {
+  min-width: 0;
+
+  h1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.6rem;
+    align-items: baseline;
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+
+    a {
+      color: var(--agora-text);
+
+      &:hover {
+        color: var(--agora-accent);
+        text-decoration: none;
+      }
+    }
+
+    small {
+      padding: 0.05rem 0.55rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--agora-accent-strong);
+      background: var(--agora-accent-soft);
+      border-radius: var(--agora-radius-pill);
+    }
+  }
+}
+
+.agora-section-desc {
+  margin-top: 0.2rem;
+  font-size: 0.88rem;
+  color: var(--agora-text-muted);
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.agora-section-actions {
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+  gap: 0.3rem;
+
+  .btn {
+    width: 34px;
+    min-height: 34px;
+    padding: 0;
+    color: var(--agora-text-muted);
+    background: transparent;
+    border-color: transparent !important;
+
+    &:hover {
+      color: var(--agora-text);
+      background: var(--agora-surface-hover);
+    }
+  }
+}
+
+/* The categories. */
+.agora-section {
+  .table > tbody > tr > td {
+    padding-block: 0.95rem;
+  }
+
+  .table > tbody > tr:not(:last-child) > td {
+    border-bottom: 1px solid var(--agora-border);
+  }
+}
+
+/* The numbers of a category: topics and posts. */
+.agora-cat-stats {
+  width: 9.5rem;
+
+  dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+    margin: 0;
+    text-align: center;
+  }
+
+  dt {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--agora-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+    color: var(--agora-text);
+  }
+}
+
+/* The last post of a category: a little card. */
+.agora-section tr.category > td:last-child {
+  width: 34%;
+
+  .klast-avatar img,
+  .klast-avatar .rounded {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+/* The subcategories. */
+.agora-subcats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0;
+  margin: 0.55rem 0 0;
+  list-style: none;
+
+  > li {
+    display: inline-flex;
+    gap: 0.3rem;
+    align-items: center;
+    padding: 0.2rem 0.65rem;
+    font-size: 0.84rem;
+    background: var(--agora-surface-2);
+    border: 1px solid var(--agora-border);
+    border-radius: var(--agora-radius-pill);
+
+    a {
+      color: var(--agora-text);
+
+      &:hover {
+        color: var(--agora-accent);
+      }
+    }
+
+    /* The number of topics of a subcategory, in the chip. */
+    small.d-none.d-sm-block {
+      display: inline !important;
+      color: var(--agora-text-muted);
+    }
+
+    svg,
+    img {
+      width: 0.95rem;
+      height: 0.95rem;
+    }
+  }
+}
+
+.agora-section .moderators {
+  margin-top: 0.45rem;
+  font-size: 0.84rem;
+  color: var(--agora-text-muted);
+}
+
+/* The button for a new section of the administrators: always shown (Aurelia shows it only on hover). */
+.kcat-new-top {
+  min-height: 0 !important;
+  margin: -0.25rem 0 0.5rem !important;
+
+  .btn {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .agora-section-head {
+    padding: 0.8rem 0.75rem 0.8rem 0.9rem;
+  }
+
+  .agora-section tr.category > td:last-child {
+    width: auto;
+  }
+}

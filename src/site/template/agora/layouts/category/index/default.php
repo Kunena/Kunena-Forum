@@ -1,0 +1,307 @@
+<?php
+
+/**
+ * Kunena Component
+ *
+ * @package         Kunena.Template.Agora
+ * @subpackage      Layout.Category
+ *
+ * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
+
+namespace Kunena\Forum\Site;
+
+\defined('_JEXEC') or die();
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+
+// Display time it took to create the entire page in the footer.
+$kunena_profiler = KunenaProfiler::instance();
+$kunena_profiler->start('Total Time');
+KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
+
+if ($this->config->enableForumJump) {
+    echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+}
+
+$mmm             = 0;
+
+// Reload the categories in the background and make a category with a new message blink.
+if ($this->templateParams->get('ajaxTopicList', 1)) {
+    Factory::getApplication()->getDocument()->addScriptOptions(
+        'com_kunena.categorylist',
+        ['interval' => (int) $this->templateParams->get('ajaxTopicListInterval', 30)]
+    );
+    $this->addScript('assets/js/categorylist.js');
+}
+
+// A link like forum#123 goes to the category.
+$this->addScript('assets/js/categoryanchor.js');
+
+if ($this->templateParams->get('displayModule')) {
+    echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
+}
+
+$isAdmin  = $this->me->isAdmin();
+$activeId = (int) (Factory::getApplication()->getMenu()->getActive()->id ?? 0);
+
+// The menu item of the sections: a menu item of the index itself keeps the layout of the list.
+$firstSection = !empty($this->sections) ? reset($this->sections) : null;
+$newItemid    = $firstSection ? (int) KunenaRoute::getCategoryItemid($firstSection) : $activeId;
+
+// The button for a new section belongs to the index of the forum, not to the page of a category.
+if ($isAdmin && !Factory::getApplication()->getInput()->getInt('catid', 0)) : ?>
+    <style>
+        /* The button for a new category shows when the row is hovered (or has the focus); a touch screen has no hover: always. */
+        .kcat-new-top { min-height: 2rem; }
+        .kcat-new-top .btn { opacity: 0; transition: opacity .15s; }
+        .kcat-new-top:hover .btn, .kcat-new-top:focus-within .btn { opacity: 1; }
+        @media (hover: none) { .kcat-new-top .btn { opacity: 1; } }
+    </style>
+    <div class="mb-2 text-end kcat-new-top">
+        <a class="btn btn-outline-primary btn-sm <?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SECTION')); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SECTION')); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&layout=create&parentid=0&Itemid=' . $newItemid); ?>"><?php echo KunenaIcons::plus(); ?></a>
+    </div>
+<?php endif;
+
+foreach ($this->sections as $section) :
+    $Itemid      = KunenaRoute::getCategoryItemid($section);
+
+    if ($this->templateParams->get('displayModule')) {
+        echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm);
+    } ?>
+    <div class="kfrontend section agora-section">
+        <div class="agora-section-head">
+            <div class="agora-section-title">
+                <h1 id="category-header<?php echo (int) $section->id; ?>">
+                    <?php echo $this->getCategoryLink($section, $this->escape($section->name), null, $this->ktemplate->tooltips(), true, false); ?>
+                    <small class="nowrap" id="ksection-count<?php echo $section->id; ?>">
+                        <?php echo KunenaCategory::getInstance()->totalCount($section->getTopics()); ?>
+                    </small>
+                </h1>
+                <?php if (!empty($section->description)) : ?>
+                    <div class="agora-section-desc"><?php echo $section->displayField('description'); ?></div>
+                <?php endif; ?>
+            </div>
+
+            <?php if (\count($this->sections) > 0) : ?>
+                <div class="btn-toolbar agora-section-actions">
+                    <?php if ($this->me->isAdmin()) : ?>
+                        <a class="btn btn-outline-primary btn-sm <?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SUB')); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SUB')); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&layout=create&parentid=' . (int) $section->id . '&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::plus(); ?></a>
+                        <a class="btn btn-outline-primary btn-sm" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_EDIT')); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
+                    <?php endif; ?>
+
+                    <button class="btn btn-outline-primary btn-sm" type="button" aria-expanded="true" aria-controls="section<?php echo $section->id; ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_TEMPLATE_AGORA_TOGGLE_SECTION')); ?>" data-bs-toggle="collapse" data-bs-target="#section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="<?php if (!empty($section->class)) :
+                    ?>section<?php echo $this->escape($section->class_sfx); ?><?php
+                                                                            endif; ?> collapse show" id="section<?php echo $section->id; ?>">
+            <table class="table<?php echo $this->ktemplate->borderless(); ?> align-middle mb-0">
+
+                <tbody>
+                <?php if ($section->isSection() && empty($this->categories[$section->id]) && empty($this->more[$section->id])) : ?>
+                    <tr>
+                        <td colspan="4">
+                            <h4>
+                                <?php echo Text::_('COM_KUNENA_GEN_NOFORUMS'); ?>
+                            </h4>
+                        </td>
+                    </tr>
+                <?php else : ?>
+                    <?php
+                    foreach ((array) ($this->categories[$section->id] ?? []) as $category) : ?>
+                        <?php $lastTopic = $category->getLastTopic(); ?>
+                        <tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>"
+                            data-category-id="<?php echo (int) $category->id; ?>"
+                            data-last-post="<?php echo (int) $lastTopic->last_post_id; ?>"
+                            data-sig="<?php echo (int) $lastTopic->last_post_id . '-' . (int) $category->numTopics . '-' . (int) $category->numPosts . '-' . (int) $category->getNewCount(); ?>">
+                            <td id="kcat-icon" class="d-none d-md-table-cell">
+                                <?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '', null, true, false); ?>
+                            </td>
+                            <td>
+                                <div>
+                                    <h3>
+                                        <?php echo $this->getCategoryLink($category, $this->escape($category->name), null, $this->ktemplate->tooltips(), true, false); ?>
+                                        <?php if ($isAdmin) : ?>
+                                            <a class="btn btn-link btn-sm p-0" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $category->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
+                                        <?php endif; ?>
+                                        <small class="nowrap">
+                                            <span id="kcatcount"><?php echo KunenaCategory::getInstance()->totalCount($category->getTopics()); ?></span>
+                                            <span>
+                                                <?php if (($new = $category->getNewCount()) > 0) : ?>
+                                                    <sup class="knewchar"> (<?php echo $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') ?>
+                                                        )</sup>
+                                                <?php endif; ?>
+                                                <?php if ($category->locked) : ?>
+                                                    <span <?php echo $this->ktemplate->tooltips(true); ?> data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_LOCKED_CATEGORY') ?>"><?php echo KunenaIcons::lock(); ?></span>
+                                                <?php endif; ?>
+                                                <?php if ($category->review) : ?>
+                                                    <span <?php echo $this->ktemplate->tooltips(true); ?> data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo KunenaIcons::shield(); ?></span>
+                                                <?php endif; ?>
+
+                                                <?php if ($this->config->enableRss) : ?>
+                                                    <a href="<?php echo $this->getCategoryRSSURL($category->id); ?>"
+                                                       rel="alternate" type="application/rss+xml">
+                                                        <?php echo KunenaIcons::rss(); ?>
+                                                    </a>
+                                                <?php endif; ?>
+                                            </span>
+                                        </small>
+                                    </h3>
+                                </div>
+
+                                <?php if (!empty($category->description)) : ?>
+                                    <div class="d-none d-sm-block header-desc"><?php echo $category->displayField('description'); ?></div>
+                                <?php endif; ?>
+
+                                <?php
+                                // Display subcategories
+                                if (!empty($this->categories[$category->id])) : ?>
+                                    <div>
+                                        <ul class="list-inline agora-subcats">
+
+                                            <?php foreach ($this->categories[$category->id] as $subcategory) : ?>
+                                                <li>
+                                                    <?php $totaltopics = KunenaCategory::getInstance()->totalCount($subcategory->getTopics()); ?>
+
+                                                    <?php if ($this->config->showChildCatIcon) : ?>
+                                                        <?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, $this->ktemplate->tooltips(), true, false) . '<small class="d-none d-sm-block muted"> ('
+                                                            . $totaltopics . ')</small>';
+                                                    else : ?>
+                                                        <?php echo $this->getCategoryLink($subcategory, '', null, $this->ktemplate->tooltips(), true, false) . '<small class="d-none d-sm-block muted"> ('
+                                                            . $totaltopics . ')</small>';
+                                                    endif;
+
+                                                    if (($new = $subcategory->getNewCount()) > 0) {
+                                                        echo '<sup class="knewchar">(' . $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
+                                                    }
+
+                                                    if ($isAdmin) {
+                                                        echo ' <a class="btn btn-link btn-sm p-0" href="' . Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $subcategory->id . '&layout=manage&Itemid=' . $Itemid) . '">' . KunenaIcons::pencil() . '</a>';
+                                                    }
+                                                    ?>
+                                                </li>
+                                            <?php endforeach; ?>
+
+                                            <?php if (!empty($this->more[$category->id])) : ?>
+                                                <li>
+                                                    <?php echo $this->getCategoryLink($category, Text::_('COM_KUNENA_SEE_MORE'), null, $this->ktemplate->tooltips(), true, false); ?>
+                                                    <small class="d-none d-sm-block muted">
+                                                        (<?php echo Text::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>
+                                                        )
+                                                    </small>
+                                                </li>
+                                            <?php endif; ?>
+
+                                        </ul>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if ($category->getmoderators() && $this->config->listCatShowModerators) : ?>
+                                    <br/>
+                                    <div class="moderators">
+                                        <?php
+                                        // get the Moderator list for display
+                                        $modslist = [];
+                                        foreach ($category->getmoderators() as $moderator) {
+                                            $modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, '', null, $this->ktemplate->tooltips());
+                                        }
+
+                                        echo Text::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
+                                        ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if (!empty($this->pending[$category->id])) : ?>
+                                    <div class="alert alert-warning" role="alert" style="margin-top:10px;">
+                                        <a class="alert-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . \intval($category->id)); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_SHOWCAT_PENDING') ?>" rel="nofollow"><?php echo \intval($this->pending[$category->id]) . ' ' . Text::_('COM_KUNENA_SHOWCAT_PENDING') ?></a>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
+
+                            <td class="d-none d-lg-table-cell agora-cat-stats">
+                                <dl>
+                                    <div>
+                                        <dt><?php echo Text::_('COM_KUNENA_TOPICS'); ?></dt>
+                                        <dd><?php echo $this->formatLargeNumber($category->getTopics()); ?></dd>
+                                    </div>
+                                    <div>
+                                        <dt><?php echo rtrim(Text::_('COM_KUNENA_POSTS'), ': '); ?></dt>
+                                        <dd><?php echo $this->formatLargeNumber($category->getPosts()); ?></dd>
+                                    </div>
+                                </dl>
+                            </td>
+
+                            <?php $last = $category->getLastTopic(); ?>
+
+                            <?php if ($last->exists()) :
+                                $author = $last->getLastPostAuthor();
+                                $time = $last->getLastPostTime();
+                                $this->ktemplate = KunenaFactory::getTemplate();
+                                $avatar = $this->config->avatarOnCategory ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
+                                ?>
+
+                                <td>
+                                    <div class="d-flex align-items-start">
+                                        <?php if ($avatar) : ?>
+                                            <div class="flex-shrink-0 me-3 klast-avatar" id="kcat-avatar">
+                                                <?php echo $author->getLink($avatar, null, '', '', $this->ktemplate->tooltips(), $category->id, $this->config->avatarEdit); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <div class="flex-grow-1" style="min-width: 0" id="kcat-last">
+                                            <div class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, $this->ktemplate->tooltips(), 30, false, true) ?></div>
+                                            <div class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', $this->ktemplate->tooltips(), $category->id)); ?></div>
+                                            <div class="datepost"><?php echo $time->toKunena('config_postDateFormat'); ?></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            <?php else : ?>
+                                <td>
+                                    <div class="last-post-message">
+                                        <?php echo Text::_('COM_KUNENA_X_TOPICS_0'); ?>
+                                    </div>
+                                </td>
+                            <?php endif; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+                <?php if (!empty($this->more[$section->id])) : ?>
+                    <tr>
+                        <td colspan="4">
+                            <h4>
+                                <?php echo $this->getCategoryLink($section, Text::sprintf('COM_KUNENA_SEE_ALL_SUBJECTS')); ?>
+                                <small>
+                                    (<?php echo Text::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]); ?>
+                                    )
+                                </small>
+                            </h4>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Begin: Category Module Position -->
+    <?php
+    if ($this->templateParams->get('displayModule')) {
+        echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm);
+    } ?>
+    <!-- Finish: Category Module Position -->
+<?php endforeach;
+
+if ($this->templateParams->get('displayModule')) {
+    echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_bottom');
+}

@@ -225,10 +225,6 @@
     padding: 0.9rem;
   }
 
-  .agora-profile-summary .col-md-3:first-child {
-    text-align: center;
-  }
-
   /* The posting form: the labels above the fields. */
   #postform {
     > .shadow-lg,
@@ -261,6 +257,13 @@
   /* Modals use the whole width. */
   .modal-dialog {
     margin: 0.5rem;
+  }
+}
+
+/* Aurelia gives the lists 80% of the width on tablets and phones: the lists of Bootstrap take their whole place. */
+@media (max-width: 959px) {
+  .form-select {
+    width: 100%;
   }
 }
 

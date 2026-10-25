@@ -53,51 +53,224 @@
 }
 
 .agora-profile-summary {
-  padding: 1.1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+}
 
-  /* The empty line and column at the end of the summary of Aurelia. */
-  > br,
-  > .clearfix + .row ~ .col-md-12 {
+/* The avatar, the type, the status, the rank, the badges and the ways to reach the user. */
+.agora-profile-hero {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.agora-profile-avatar {
+  flex-shrink: 0;
+
+  a {
+    display: grid;
+    place-items: center;
+    width: 112px;
+    height: 112px;
+    overflow: hidden;
+    color: var(--agora-text-muted);
+    background: var(--agora-surface-hover);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--agora-surface), 0 0 0 6px var(--agora-accent-soft);
+  }
+
+  img {
+    width: 112px !important;
+    height: 112px !important;
+    object-fit: cover;
+    border-radius: 50% !important;
+  }
+
+  /* A user without a picture: the icon of a user. */
+  .rounded > svg,
+  a > svg {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.agora-profile-identity {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.agora-profile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+
+  .badge {
+    font-size: 0.78rem;
+  }
+}
+
+.agora-profile-type,
+.agora-profile-rank {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: var(--agora-radius-pill);
+}
+
+.agora-profile-type {
+  color: var(--agora-accent-strong);
+  background: var(--agora-accent-soft);
+}
+
+.agora-profile-rank {
+  color: var(--agora-text);
+  background: var(--agora-surface-2);
+  border: 1px solid var(--agora-border);
+
+  img {
+    height: 14px;
+  }
+}
+
+.agora-profile-ban {
+  padding: 0.5rem 0.75rem;
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--agora-danger);
+  background: color-mix(in srgb, var(--agora-danger) 10%, transparent);
+  border-radius: var(--agora-radius-sm);
+}
+
+.agora-profile-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+
+  &:empty {
     display: none;
   }
+}
 
-  > .row {
-    --bs-gutter-x: 1.25rem;
-    row-gap: 1rem;
+.agora-profile-socials:empty,
+.agora-profile-socials:not(:has(a)) {
+  display: none;
+}
+
+/* The numbers of the user. */
+.agora-profile-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+  gap: 0.6rem;
+  margin: 0;
+
+  > div {
+    padding: 0.75rem 0.9rem;
+    background: var(--agora-surface-2);
+    border: 1px solid var(--agora-border);
+    border-radius: var(--agora-radius-sm);
   }
 
-  /* The avatar and the status. */
-  .col-md-3:first-child {
-    .center:first-child {
-      margin-bottom: 0.6rem;
-    }
-
-    img,
-    .rounded > svg {
-      max-width: 160px;
-      border-radius: 50% !important;
-      box-shadow: 0 0 0 4px var(--agora-surface), 0 0 0 5px var(--agora-border);
-    }
+  dt {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--agora-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
   }
 
-  .list-group-item {
+  dd {
+    margin: 0.1rem 0 0;
+    font-size: 1.4rem;
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+    color: var(--agora-text);
+  }
+}
+
+/* The details: dates, time, place, gender, birthday, medals. */
+.agora-profile-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--agora-border);
+
+  > div {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem 0.5rem;
-    justify-content: space-between;
-    padding: 0.5rem 0;
-    font-size: 0.9rem;
-    background: transparent;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.7rem 0.25rem;
+    border-bottom: 1px solid var(--agora-border);
+  }
 
-    strong {
-      font-weight: 550;
-      color: var(--agora-text-muted);
-    }
+  dt {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 550;
+    color: var(--agora-text-muted);
 
-    span {
-      font-weight: 600;
-      text-align: end;
+    svg {
+      flex-shrink: 0;
+      width: 0.95rem;
+      height: 0.95rem;
     }
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+    color: var(--agora-text);
+  }
+}
+
+/* About me and the signature. */
+.agora-profile-texts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 0.75rem;
+}
+
+.agora-profile-text {
+  padding: 0.85rem 1rem;
+  background: var(--agora-surface-2);
+  border-inline-start: 3px solid var(--agora-accent);
+  border-radius: 0 var(--agora-radius-sm) var(--agora-radius-sm) 0;
+
+  h2 {
+    margin: 0 0 0.35rem;
+    font-size: 0.82rem;
+    font-weight: 650;
+    color: var(--agora-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  > div {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .agora-profile-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .agora-profile-tags,
+  .agora-profile-contact {
+    justify-content: center;
   }
 }
 

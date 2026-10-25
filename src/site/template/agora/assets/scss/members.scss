@@ -1,0 +1,284 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The list of the users: a header with the search, the sorting as buttons, and the users as cards.
+ */
+
+.agora-members-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.25rem 0 1rem;
+}
+
+.agora-members-title {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+
+  h1 {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    margin: 0;
+
+    small {
+      padding: 0.1rem 0.55rem;
+      font-size: 0.85rem;
+      font-weight: 650;
+      color: var(--agora-accent-strong);
+      background: var(--agora-accent-soft);
+      border-radius: var(--agora-radius-pill);
+    }
+  }
+}
+
+.agora-members-search {
+  flex: 0 1 20rem;
+  min-width: 0;
+}
+
+/* The sorting and the pagination. */
+.agora-members-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+
+  .pagination {
+    margin: 0;
+  }
+}
+
+.agora-members-sort {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.agora-members-sort-label {
+  margin-inline-end: 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--agora-text-muted);
+}
+
+.agora-members-sort-item a {
+  display: inline-flex;
+  gap: 0.3rem;
+  align-items: center;
+  min-height: 34px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.86rem;
+  font-weight: 550;
+  color: var(--agora-text);
+  text-decoration: none;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius-pill);
+
+  &:hover {
+    color: var(--agora-text);
+    text-decoration: none;
+    background: var(--agora-surface-hover);
+  }
+}
+
+.agora-members-sort-item.active a {
+  color: var(--agora-accent-strong);
+  background: var(--agora-accent-soft);
+  border-color: color-mix(in srgb, var(--agora-accent) 40%, transparent);
+}
+
+/* The arrow of the sorted column: Kunena gives the direction of the next click (grid_asc: the list is now descending). */
+.agora-members-sort-item [class^="grid_"]::after {
+  font-size: 0.75em;
+  content: "▼";
+}
+
+.agora-members-sort-item .grid_desc::after {
+  content: "▲";
+}
+
+/* The users. */
+.agora-members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr));
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0 0 0.75rem;
+  list-style: none;
+}
+
+.agora-member {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 1rem;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: var(--agora-border-strong);
+    box-shadow: var(--agora-shadow-raised);
+  }
+}
+
+.agora-member-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.agora-member-avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+  color: var(--agora-text-muted);
+  background: var(--agora-surface-hover);
+  border-radius: 50%;
+
+  img {
+    width: 52px !important;
+    height: 52px !important;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.agora-member-name {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+
+  strong {
+    overflow: hidden;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.agora-member-type {
+  font-size: 0.8rem;
+  color: var(--agora-text-muted);
+}
+
+.agora-member-status {
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+/* Posts, karma and hits. */
+.agora-member-stats {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 0.4rem;
+  margin: 0;
+
+  > div {
+    padding: 0.45rem 0.5rem;
+    text-align: center;
+    background: var(--agora-surface-2);
+    border: 1px solid var(--agora-border);
+    border-radius: var(--agora-radius-sm);
+  }
+
+  dt {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--agora-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* The dates and the e-mail. */
+.agora-member-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.6rem 0 0;
+  margin: auto 0 0;
+  font-size: 0.82rem;
+  color: var(--agora-text-muted);
+  list-style: none;
+  border-top: 1px dashed var(--agora-border);
+
+  li {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    min-width: 0;
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  span {
+    color: var(--agora-text-muted);
+  }
+}
+
+.agora-member-email a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* No pagination when the list has only one page. */
+.agora-members nav:has(> .pagination):not(:has(.page-item:not(.disabled):not(.active))) {
+  display: none !important;
+}
+
+@media (max-width: 767.98px) {
+  .agora-members-search {
+    flex: 1 1 100%;
+  }
+
+  .agora-members-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

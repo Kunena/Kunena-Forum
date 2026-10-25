@@ -1,0 +1,380 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The search: a large search bar, the options in a panel which opens, and the results as cards.
+ */
+
+.agora-search-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 0.25rem 0 1rem;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+/* The search bar: the words, the button in the field, and the mode. */
+.agora-search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: stretch;
+  margin-bottom: 0.75rem;
+}
+
+.agora-search-query {
+  position: relative;
+  display: flex;
+  flex: 1 1 24rem;
+  align-items: center;
+  min-width: 0;
+
+  .agora-search-query-icon {
+    position: absolute;
+    left: 1.1rem;
+    display: inline-flex;
+    color: var(--agora-text-muted);
+    pointer-events: none;
+
+    svg {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
+  }
+
+  input[type="search"] {
+    min-height: 54px;
+    padding: 0 7.5rem 0 3rem;
+    font-size: 1.05rem;
+    border-radius: var(--agora-radius-pill);
+    box-shadow: var(--agora-shadow);
+  }
+
+  > .btn {
+    position: absolute;
+    right: 6px;
+    min-height: 42px;
+    padding-inline: 1.3rem;
+    border-radius: var(--agora-radius-pill);
+  }
+}
+
+.agora-search-mode {
+  flex: 0 1 14rem;
+  min-width: 0;
+
+  .form-select {
+    width: 100%;
+    height: 100%;
+    min-height: 54px;
+    border-radius: var(--agora-radius-pill);
+  }
+}
+
+/* The options. */
+.agora-search-options {
+  margin-bottom: var(--agora-gap);
+  overflow: hidden;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+
+  > summary {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    min-height: 48px;
+    padding: 0.6rem 1.1rem;
+    font-weight: 650;
+    cursor: pointer;
+    list-style: none;
+    background: var(--agora-surface-2);
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::marker {
+      content: "";
+    }
+
+    &::after {
+      margin-inline-start: auto;
+      font-size: 0.8rem;
+      color: var(--agora-text-muted);
+      content: "▼";
+      transition: transform 0.15s ease;
+    }
+
+    svg {
+      width: 1.05rem;
+      height: 1.05rem;
+      color: var(--agora-accent);
+    }
+  }
+
+  &[open] > summary {
+    border-bottom: 1px solid var(--agora-border);
+
+    &::after {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.agora-search-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+}
+
+.agora-search-field {
+  min-width: 0;
+  padding: 0.85rem;
+  margin: 0;
+  background: var(--agora-surface-2);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius-sm);
+
+  /* The title inside the card, not on its border (a legend floats, the fields come under it). */
+  legend {
+    float: left;
+    width: 100%;
+    padding: 0;
+    margin: 0 0 0.45rem;
+    font-size: 0.8rem;
+    font-weight: 650;
+    color: var(--agora-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  > legend + * {
+    clear: left;
+  }
+
+  > :not(legend) + :not(label.visually-hidden) {
+    margin-top: 0.45rem;
+  }
+
+  .form-check {
+    margin-bottom: 0;
+  }
+
+  .form-select,
+  .form-control {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* The date and its button stay on one line. */
+  .input-group {
+    flex-wrap: nowrap;
+
+    .form-control {
+      flex: 1 1 auto;
+      width: 1%;
+      min-width: 0;
+    }
+  }
+}
+
+/* The categories take two columns where there is room. */
+.agora-search-field-wide {
+  grid-column: span 2;
+
+  select[multiple] {
+    min-height: 10rem;
+  }
+}
+
+.agora-search-pair {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 0.45rem;
+}
+
+.agora-search-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0 1.1rem 1.1rem;
+}
+
+/* The results. */
+.agora-search-results-title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  align-items: baseline;
+  margin: 1.25rem 0 0.75rem;
+  font-size: 1.15rem;
+
+  small {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--agora-text-muted);
+  }
+}
+
+.agora-search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.75rem;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+
+  &.agora-search-result-moderator {
+    border-inline-start: 3px solid var(--agora-success);
+  }
+
+  &.message-unapproved {
+    background: color-mix(in srgb, var(--agora-warning) 8%, var(--agora-surface));
+  }
+
+  &.message-deleted {
+    background: color-mix(in srgb, var(--agora-danger) 8%, var(--agora-surface));
+  }
+}
+
+.agora-search-result-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.agora-search-result-avatar {
+  flex-shrink: 0;
+
+  a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    color: var(--agora-text-muted);
+    background: var(--agora-surface-hover);
+    border-radius: 50%;
+  }
+
+  img {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.agora-search-result-title.mykmsg-header {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 !important;
+  margin: 0;
+  font-size: 0.9rem;
+  border: 0;
+
+  .topictitle {
+    font-size: 1rem;
+  }
+}
+
+.agora-search-result-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.9rem;
+  align-items: center;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--agora-text-muted);
+
+  span {
+    display: inline-flex;
+    gap: 0.3rem;
+    align-items: center;
+  }
+
+  svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+}
+
+.agora-search-result-category {
+  padding: 0.1rem 0.55rem;
+  font-weight: 600;
+  color: var(--agora-accent-strong);
+  background: var(--agora-accent-soft);
+  border-radius: var(--agora-radius-pill);
+}
+
+/* The text of the message, at most six lines (Aurelia gives .kmessage a height of 120px at least). */
+.agora-search-result-text.kmessage {
+  min-height: 0;
+  padding-bottom: 0;
+}
+
+.agora-search-result-text {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--agora-text);
+  -webkit-box-orient: vertical;
+  overflow-wrap: anywhere;
+
+  img {
+    max-height: 12rem;
+  }
+}
+
+.agora-search-results-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  color: var(--agora-text-muted);
+}
+
+@media (max-width: 767.98px) {
+  .agora-search-field-wide {
+    grid-column: auto;
+  }
+
+  .agora-search-mode {
+    flex: 1 1 100%;
+  }
+
+  .agora-search-query input[type="search"] {
+    padding-right: 6rem;
+  }
+
+  .agora-search-query > .btn {
+    padding-inline: 0.9rem;
+  }
+}

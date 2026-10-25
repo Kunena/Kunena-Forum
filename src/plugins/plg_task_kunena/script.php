@@ -215,7 +215,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         /** @var \Joomla\Component\Scheduler\Administrator\Model\TaskModel $model */
         $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
         $task  = [
-            'title'           => 'Kunena - Send the mail nofitications queued',
+            'title'           => 'Kunena - Send the mail notifications queued',
             'type'            => 'add.mailsqueue',
             'execution_rules' => [
                 'rule-type'      => 'interval-minutes',

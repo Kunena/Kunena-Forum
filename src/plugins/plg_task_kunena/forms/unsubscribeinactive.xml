@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fields name="params">
+		<fieldset name="task_params">
+			<field
+				name="years"
+				type="list"
+				label="PLG_TASK_KUNENA_INACTIVITY_YEARS_LABEL"
+				description="PLG_TASK_KUNENA_INACTIVITY_YEARS_DESC"
+				required="true"
+				default="1"
+				filter="int">
+				<option value="1">PLG_TASK_KUNENA_INACTIVITY_1YEAR</option>
+				<option value="2">PLG_TASK_KUNENA_INACTIVITY_2YEARS</option>
+			</field>
+		</fieldset>
+	</fields>
+</form>

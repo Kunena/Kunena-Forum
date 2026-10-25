@@ -46,9 +46,33 @@ body:
       default: 0
     validations:
       required: true
+  - type: input
+    id: exact_version
+    attributes:
+      label: Exact Kunena version
+      description: |
+        The full version you tested, e.g. 7.1.0-RC3 or 7.0.4.
+        If you use a build from GitHub, add the date and/or commit hash.
+      placeholder: 7.1.0-RC3
+    validations:
+      required: true
+  - type: input
+    id: joomla_version
+    attributes:
+      label: Joomla version
+      placeholder: 6.0.1
+    validations:
+      required: true
+  - type: input
+    id: php_version
+    attributes:
+      label: PHP version
+      placeholder: "8.3"
+    validations:
+      required: true
   - type: checkboxes
     attributes:
-      label: Do-you tried to reproduce with Aurelia template?
+      label: Did you try to reproduce with the Aurelia template?
       description: Please try to reproduce your issue with Aurelia template.
       options:
         - label: I have tried to reproduce the issues with Aurelia template
@@ -59,7 +83,7 @@ body:
       label: Bug description
       description: A concise description of the problem you are experiencing and what you expected to happen.
     validations:
-      required: false
+      required: true
   - type: textarea
     id: logs
     attributes:
@@ -86,7 +110,7 @@ body:
         3. Scroll down to...
         4. See error...
     validations:
-      required: false
+      required: true
   - type: textarea
     attributes:
       label: Your Kunena setup information

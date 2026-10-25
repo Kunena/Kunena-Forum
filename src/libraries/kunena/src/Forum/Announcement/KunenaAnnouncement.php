@@ -443,7 +443,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function isPublishedNow(): bool
     {

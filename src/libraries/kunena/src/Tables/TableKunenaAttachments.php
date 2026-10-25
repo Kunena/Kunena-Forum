@@ -106,13 +106,13 @@ class TableKunenaAttachments extends KunenaTable
 
     /**
      * @var     mixed
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $caption = null;
 
     /**
      * @var     mixed
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $status = null;
 

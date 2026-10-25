@@ -26,14 +26,14 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  * The tags of the topics: the tags of the core Joomla component Tags, kept in the table #__contentitem_tag_map with the type
  * alias com_kunena.topic.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaTopicTags
 {
     /**
      * The type alias in the map of Joomla tags.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const string TYPE_ALIAS = 'com_kunena.topic';
 
@@ -41,7 +41,7 @@ abstract class KunenaTopicTags
      * The tags of the topics which were loaded, by topic id.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $topicTags = [];
 
@@ -52,7 +52,7 @@ abstract class KunenaTopicTags
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function delete(int $topicId): void
     {
@@ -77,7 +77,7 @@ abstract class KunenaTopicTags
      *
      * @return  array  Objects with id and title, by id.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function get(int $topicId): array
     {
@@ -93,7 +93,7 @@ abstract class KunenaTopicTags
      *
      * @return  int[]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function getAllIds(int $topicId): array
     {
@@ -113,7 +113,7 @@ abstract class KunenaTopicTags
      *
      * @return  array  Objects with id and title, by title.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getAvailable(): array
     {
@@ -153,7 +153,7 @@ abstract class KunenaTopicTags
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getUrl(int $tagId): string
     {
@@ -165,7 +165,7 @@ abstract class KunenaTopicTags
      *
      * @return  bool
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isEnabled(): bool
     {
@@ -181,7 +181,7 @@ abstract class KunenaTopicTags
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function preload(array $topicIds): void
     {
@@ -230,7 +230,7 @@ abstract class KunenaTopicTags
      *
      * @return  string  The html, or an empty string when the topic has no tags (or tags are off).
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function render(int $topicId, string $class = ''): string
     {
@@ -262,7 +262,7 @@ abstract class KunenaTopicTags
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function save(int $topicId, array $tagIds): void
     {

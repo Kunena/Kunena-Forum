@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  * The badges of the users: a label with a colour for the members of a Joomla user group or the users with a Kunena rank.
  * The badges are set in the configuration (Users tab), a user gets a badge when he is in the group or has the rank of the badge.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaUserBadges
 {
@@ -33,7 +33,7 @@ abstract class KunenaUserBadges
      * The badges of the users which were asked for, by user id.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static mixed $cache = [];
 
@@ -44,7 +44,7 @@ abstract class KunenaUserBadges
      *
      * @return  array  Badge objects.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function get(KunenaUser $user): array
     {
@@ -96,7 +96,7 @@ abstract class KunenaUserBadges
      *
      * @return  array  Objects with title, color, usergroup and rank.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getDefinitions(): array
     {
@@ -132,7 +132,7 @@ abstract class KunenaUserBadges
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function getTextColor(string $color): string
     {
@@ -151,7 +151,7 @@ abstract class KunenaUserBadges
      *
      * @return  string  The html, or an empty string when the user has no badges.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function render(KunenaUser $user, string $class = ''): string
     {

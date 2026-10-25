@@ -406,7 +406,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function addForumHeaders(Mail $mail): void
     {
@@ -465,7 +465,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  string  The address to unsubscribe (empty when the mail has none).
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function addNotificationHeaders(Mail $mail, int $subscription, int $recipientId, bool $follower): string
     {
@@ -1076,7 +1076,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function deliverNotification(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId, bool $follower, string $email, string $language): bool
     {
@@ -1362,7 +1362,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function getEmailMessageId(int $messageId, int $topicId, int $firstPostId): string
     {
@@ -1397,7 +1397,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  array  html and plain.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function getMailTemplateData(int $subscription, string $url, bool $once, string $unsubscribeUrl): array
     {
@@ -1455,7 +1455,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  int[]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getMentionedUserIds(string $text): array
     {
@@ -1471,7 +1471,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function getMessageIdDomain(): string
     {
@@ -2169,7 +2169,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  int  The number of e-mails which were sent.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function sendMentionNotifications(string $oldText = '', bool $isNew = true): int
     {

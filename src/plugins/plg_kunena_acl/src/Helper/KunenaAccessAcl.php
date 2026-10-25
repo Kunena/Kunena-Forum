@@ -36,7 +36,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  * Guests have no rank, so they never have access to a category which is limited by rank. Moderators and
  * administrators are handled by Kunena, they always have access.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class KunenaAccessAcl extends KunenaAccessAbstract
 {
@@ -44,7 +44,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      * The access type of this plugin. It must be less than 20 characters.
      *
      * @var     string
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const string TYPE = 'kunena.rank';
 
@@ -52,7 +52,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      * The ranks of the forum, loaded once: rankId => rank.
      *
      * @var     array|null
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private static ?array $ranks = null;
 
@@ -60,7 +60,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      * Get list of supported access types.
      *
      * @return  array  Supported access types.
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getAccessTypes(): array
     {
@@ -72,7 +72,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      *
      * @return  array  rankId => object with rankId, rankTitle, rankMin and rankSpecial.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function getRanks(): array
     {
@@ -99,7 +99,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      *
      * @return  string  The title of the rank.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function getRankTitle(int $rankId): string
     {
@@ -115,7 +115,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      *
      * @return  Registry
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function getParams(KunenaCategory $category): Registry
     {
@@ -131,7 +131,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function hasRank(int $userid, int $minRank, array $special = []): bool
     {
@@ -170,7 +170,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function getMinRankSelect(string $name, int $selected, string $zero): string
     {
@@ -194,7 +194,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getAccessOptions($accesstype, KunenaCategory $category): array
     {
@@ -261,7 +261,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getCategoryAccess(KunenaCategory $category): array
     {
@@ -292,7 +292,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getAuthoriseActions(KunenaCategory $category, int $userid): array
     {
@@ -319,7 +319,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      *
      * @return  array  Category ids in the keys.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function authoriseCategories(int $userid, array $categories): array
     {
@@ -348,7 +348,7 @@ class KunenaAccessAcl extends KunenaAccessAbstract
      *
      * @return  array  list(allow, deny).
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function authoriseUsers(KunenaDatabaseObject $topic, array $userids): array
     {

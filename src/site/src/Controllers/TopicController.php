@@ -446,7 +446,7 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function similar()
     {
@@ -531,7 +531,7 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function reportspam()
     {
@@ -1965,7 +1965,7 @@ class TopicController extends KunenaController
      *
      * @return  string|null  The end as SQL date, null for a text which is no date.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function pollEndDate(string $value): ?string
     {
@@ -2000,7 +2000,7 @@ class TopicController extends KunenaController
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function ownPrivateAttachments(array $ids, KunenaMessage $message): array
     {
@@ -2488,7 +2488,7 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function solved()
     {
@@ -3358,7 +3358,7 @@ class TopicController extends KunenaController
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function postedText(string $name): string
     {
@@ -3452,7 +3452,7 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function savedraft()
     {
@@ -3570,7 +3570,7 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function loaddraft()
     {
@@ -3618,7 +3618,7 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function deletedraft()
     {
@@ -3650,7 +3650,7 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function unsubscribemail()
     {

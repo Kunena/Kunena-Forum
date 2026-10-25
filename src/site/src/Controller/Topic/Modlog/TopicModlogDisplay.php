@@ -33,26 +33,26 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  *
  * Administrators see everything, a moderator sees the actions in the categories which he moderates.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class TopicModlogDisplay extends KunenaControllerDisplay
 {
     /**
      * Entries per page.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private const int LIMIT = 25;
 
     /**
      * @var     object[]
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $entries = [];
 
     /**
      * @var     KunenaPagination
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $pagination = null;
 
@@ -60,7 +60,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * Values of the filters: operation, catid and user.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $logFilters = ['operation' => '', 'catid' => 0, 'user' => ''];
 
@@ -68,7 +68,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * The operations which are in the log, as value => label.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $operations = [];
 
@@ -76,7 +76,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * The categories the log can be filtered on, as id => name.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $logCategories = [];
 
@@ -84,7 +84,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * The topics of the entries which the viewer may read, by id.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $topics = [];
 
@@ -92,19 +92,19 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * Is the collection of moderation data switched on (the option "Collect data" of the configuration).
      *
      * @var     boolean
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $collecting = true;
 
     /**
      * @var     boolean
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $isAdmin = false;
 
     /**
      * @var     string
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected mixed $name = 'Topic/Modlog';
 
@@ -114,7 +114,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function before()
     {
@@ -243,7 +243,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function prepareDocument()
     {

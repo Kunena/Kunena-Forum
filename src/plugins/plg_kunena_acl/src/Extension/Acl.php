@@ -26,7 +26,7 @@ use Kunena\Forum\Plugin\Kunena\Acl\Helper\KunenaAccessAcl;
 /**
  * Permission by rank (ACL) for the categories of the forum.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class Acl extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
@@ -36,7 +36,7 @@ class Acl extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterfa
      * Load language file for front-end translations
      *
      * @var     boolean
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected $autoloadLanguage = \true;
 
@@ -44,7 +44,7 @@ class Acl extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterfa
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getSubscribedEvents(): array
     {
@@ -61,7 +61,7 @@ class Acl extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterfa
     /**
      * @param   array  $config  An optional associative array of configuration settings.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function __construct($config)
     {
@@ -76,7 +76,7 @@ class Acl extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterfa
      * @param   KunenaGetAccessControlEvent  $event  The event instance
      *
      * @return  void
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function onKunenaGetAccessControl(KunenaGetAccessControlEvent $event)
     {

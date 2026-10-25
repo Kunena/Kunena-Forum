@@ -24,14 +24,14 @@ use Joomla\CMS\Language\Multilanguage;
  *
  * On a site with one language nothing changes: the language of every category and topic is "All" (*).
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaMultilanguage
 {
     /**
      * The code of "all languages".
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const string ALL = '*';
 
@@ -40,7 +40,7 @@ abstract class KunenaMultilanguage
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getCurrent(): string
     {
@@ -52,7 +52,7 @@ abstract class KunenaMultilanguage
      *
      * @return  array  Title by language code, like en-GB => English (en-GB).
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getLanguages(): array
     {
@@ -76,7 +76,7 @@ abstract class KunenaMultilanguage
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function hasLanguages(): bool
     {
@@ -89,7 +89,7 @@ abstract class KunenaMultilanguage
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isEnabled(): bool
     {
@@ -106,7 +106,7 @@ abstract class KunenaMultilanguage
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isVisible(?string $language): bool
     {

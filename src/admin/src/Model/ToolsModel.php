@@ -164,7 +164,7 @@ class ToolsModel extends AdminModel
 
     /**
      * @var     boolean
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected mixed $reportDataLoaded = false;
 

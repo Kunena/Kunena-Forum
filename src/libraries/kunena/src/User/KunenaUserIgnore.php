@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 /**
  * Ignore list: users whose messages and topics a user does not want to see.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaUserIgnore
 {
@@ -31,7 +31,7 @@ abstract class KunenaUserIgnore
      * The ignore lists which were loaded in this request.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static mixed $lists = [];
 
@@ -44,7 +44,7 @@ abstract class KunenaUserIgnore
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function canIgnore(KunenaUser $user, KunenaUser $target): bool
     {
@@ -61,7 +61,7 @@ abstract class KunenaUserIgnore
      *
      * @return  int[]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getIgnored(int $userid): array
     {
@@ -91,7 +91,7 @@ abstract class KunenaUserIgnore
      *
      * @return  int[]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getIgnoredBy(int $targetid): array
     {
@@ -116,7 +116,7 @@ abstract class KunenaUserIgnore
      *
      * @return  object[]  Rows with ignored_id and created_time.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getIgnoredList(int $userid): array
     {
@@ -143,7 +143,7 @@ abstract class KunenaUserIgnore
      *
      * @return  boolean  False if it is not allowed.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function ignore(KunenaUser $user, KunenaUser $target): bool
     {
@@ -179,7 +179,7 @@ abstract class KunenaUserIgnore
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isEnabled(): bool
     {
@@ -196,7 +196,7 @@ abstract class KunenaUserIgnore
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isIgnoring(int $userid, int $targetid): bool
     {
@@ -211,7 +211,7 @@ abstract class KunenaUserIgnore
      *
      * @return  boolean  True if the user was on the list.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function unignore(int $userid, int $targetid): bool
     {

@@ -622,7 +622,7 @@ abstract class KunenaUserHelper
      * The Joomla parameters (JSON) of the users, as far as they were loaded together with the users.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $joomlaParams = [];
 
@@ -634,7 +634,7 @@ abstract class KunenaUserHelper
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function cacheJoomlaParams(int $id, ?string $params): void
     {
@@ -652,7 +652,7 @@ abstract class KunenaUserHelper
      *
      * @return  mixed
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getJoomlaParam(int $id, string $key, $default = null)
     {
@@ -687,7 +687,7 @@ abstract class KunenaUserHelper
      *
      * @return  User
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getJoomlaUser(int $id): User
     {
@@ -722,7 +722,7 @@ abstract class KunenaUserHelper
      *
      * @return  string|null
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getTimezone(int $id, ?string $default = null): ?string
     {
@@ -886,7 +886,7 @@ abstract class KunenaUserHelper
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function setJoomlaParam(int $id, string $key, $value): void
     {

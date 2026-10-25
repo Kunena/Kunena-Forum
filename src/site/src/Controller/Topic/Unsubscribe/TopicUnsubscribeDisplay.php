@@ -29,19 +29,19 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  *
  * The page changes nothing, mail programs and virus scanners open links without anybody reading them.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class TopicUnsubscribeDisplay extends KunenaControllerDisplay
 {
     /**
      * @var     object
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $unsubscribe = null;
 
     /**
      * @var     string
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected mixed $name = 'Topic/Unsubscribe';
 
@@ -51,7 +51,7 @@ class TopicUnsubscribeDisplay extends KunenaControllerDisplay
      * @return  void
      *
      * @throws  KunenaExceptionAuthorise
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function before()
     {
@@ -93,7 +93,7 @@ class TopicUnsubscribeDisplay extends KunenaControllerDisplay
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function prepareDocument()
     {

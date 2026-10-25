@@ -30,19 +30,19 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  * The inbox of the user: a page for a menu item. A plugin which gives the inbox (private messages and notifications) shows
  * it through the event onKunenaInboxView.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class InboxDisplay extends Display
 {
     /**
      * @var     string
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $header = '';
 
     /**
      * @var     string
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $content = '';
 
@@ -51,7 +51,7 @@ class InboxDisplay extends Display
      *
      * @return  KunenaLayout
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      *
      * @throws  Exception
      */
@@ -76,7 +76,7 @@ class InboxDisplay extends Display
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      *
      * @throws  Exception
      */

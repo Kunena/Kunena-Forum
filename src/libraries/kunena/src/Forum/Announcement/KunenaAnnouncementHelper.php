@@ -40,7 +40,7 @@ abstract class KunenaAnnouncementHelper
      * The rows of the last query, by the filter: the start and the rows.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $rows = [];
 
@@ -167,7 +167,7 @@ abstract class KunenaAnnouncementHelper
      * @return  KunenaAnnouncement|null
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getBanner(): ?KunenaAnnouncement
     {
@@ -277,7 +277,7 @@ abstract class KunenaAnnouncementHelper
      * @return  boolean
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isVisible(int $id): bool
     {

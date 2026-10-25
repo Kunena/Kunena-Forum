@@ -29,13 +29,13 @@ use Kunena\Forum\Libraries\Log\KunenaLog;
  * The e-mails of the forum which are made from the mail templates of Joomla (Users, Mail Templates): the subject and the body
  * are edited there, the forum gives the values of the tags (like {TOPIC} and {URL}).
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaMailTemplate
 {
     /**
      * @var     boolean[]
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $found = [];
 
@@ -47,7 +47,7 @@ abstract class KunenaMailTemplate
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isUsed(string $templateId): bool
     {
@@ -87,7 +87,7 @@ abstract class KunenaMailTemplate
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function send(string $templateId, string $language, Mail $mail, array $html, array $plain, array $unsafe, string $to): bool
     {

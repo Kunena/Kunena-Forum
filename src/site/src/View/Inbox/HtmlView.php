@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\View\KunenaView;
 /**
  * Inbox View
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class HtmlView extends KunenaView
 {
@@ -73,7 +73,7 @@ class HtmlView extends KunenaView
     /**
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function _prepareDocument()
     {

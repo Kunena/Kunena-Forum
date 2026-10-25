@@ -38,7 +38,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
 {
     /**
      * @var     array  User ids by group ("recursive|groupid" => int[]) which were already loaded in this request.
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected array $groupUsers = [];
 
@@ -310,7 +310,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
      *
      * @return  array  ['allow' => group ids, 'deny' => group ids]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function getActionGroups(string $action, $asset = null): array
     {
@@ -445,7 +445,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function loadGroupUsers(array $groupIds, bool $recursive): void
     {

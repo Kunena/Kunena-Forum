@@ -39,7 +39,7 @@ use stdClass;
 /**
  * An inbox for the users with the private messages and the notifications of the forum.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
@@ -47,7 +47,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
 
     /**
      * @var     boolean
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected $autoloadLanguage = true;
 
@@ -55,7 +55,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getSubscribedEvents(): array
     {
@@ -70,7 +70,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
     /**
      * @param   array  $config  config
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function __construct(array $config = [])
     {
@@ -91,7 +91,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
      * @param   KunenaGetPrivateEvent  $event  The event instance
      *
      * @return  void
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function onKunenaGetPrivate(KunenaGetPrivateEvent $event): void
     {
@@ -109,7 +109,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
      * @param   KunenaUserTabsEvent  $event  The event instance
      *
      * @return  void
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function onKunenaUserTabs(KunenaUserTabsEvent $event): void
     {
@@ -150,7 +150,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
      * @param   GenericEvent  $event  The event instance
      *
      * @return  void
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function onKunenaInboxView(GenericEvent $event): void
     {
@@ -172,7 +172,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function render(int $userid, int $toId): string
     {
@@ -199,7 +199,7 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
      *
      * @return  void
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function onAjaxInbox(AjaxEvent $event): void
     {

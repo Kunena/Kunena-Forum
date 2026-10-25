@@ -23,21 +23,21 @@ use RuntimeException;
 /**
  * The image a category has as its own icon: the file media/kunena/category_images/icon_<category id>.<extension>.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaCategoryIcon
 {
     /**
      * The types of the images which can be uploaded and their extension.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const array TYPES = [IMAGETYPE_PNG => 'png', IMAGETYPE_JPEG => 'jpg', IMAGETYPE_GIF => 'gif', IMAGETYPE_WEBP => 'webp'];
 
     /**
      * The biggest file which can be uploaded, in bytes.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const int MAX_SIZE = 1048576;
 
@@ -45,7 +45,7 @@ abstract class KunenaCategoryIcon
      * The icon files of all the categories, by category id (one look in the folder per request).
      *
      * @var     string[]|null
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static mixed $files = null;
 
@@ -56,7 +56,7 @@ abstract class KunenaCategoryIcon
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function delete(int $id): void
     {
@@ -76,7 +76,7 @@ abstract class KunenaCategoryIcon
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function folder(): string
     {
@@ -91,7 +91,7 @@ abstract class KunenaCategoryIcon
      *
      * @return  string  The image, or an empty string when the category has no icon of its own.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getImage(int $id, int $size = 48): string
     {
@@ -111,7 +111,7 @@ abstract class KunenaCategoryIcon
      *
      * @return  string|null  The address, or null when the category has no icon of its own.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getUrl(int $id): ?string
     {
@@ -142,7 +142,7 @@ abstract class KunenaCategoryIcon
      * @return  void
      *
      * @throws  RuntimeException  When the file is not an image which can be used.
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function save(int $id, array $file): void
     {

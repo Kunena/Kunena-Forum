@@ -465,7 +465,7 @@ abstract class KunenaCategoryHelper
      *
      * @return  array  id => id
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function getCategoriesWithChildren(array $roots): array
     {
@@ -556,7 +556,7 @@ abstract class KunenaCategoryHelper
      *
      * @return  array|null  Category ids (id => id), null when the forum is not limited.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getForumScope(): ?array
     {
@@ -819,7 +819,7 @@ abstract class KunenaCategoryHelper
      *
      * @return  int[]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getOwnTopicsOnlyIds(?KunenaUser $user = null): array
     {
@@ -846,7 +846,7 @@ abstract class KunenaCategoryHelper
      *
      * @return  string  Empty when nothing has to be removed.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getOwnTopicsOnlyWhere(?KunenaUser $user, string $catField, string $ownerField, bool $byTopic = false): string
     {
@@ -1187,7 +1187,7 @@ abstract class KunenaCategoryHelper
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function redirectToForum(int $catid, string $uri): void
     {

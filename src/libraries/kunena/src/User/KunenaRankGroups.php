@@ -25,7 +25,7 @@ use Joomla\Database\DatabaseInterface;
  * The ranks which are linked to a Joomla user group: a user in the group gets the rank. The links are kept in the parameters of
  * the component (rank id => group id).
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaRankGroups
 {
@@ -33,7 +33,7 @@ abstract class KunenaRankGroups
      * The rank of a user by the groups of the user, by user id.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $userRanks = [];
 
@@ -44,7 +44,7 @@ abstract class KunenaRankGroups
      *
      * @return  int
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getGroup(int $rankId): int
     {
@@ -56,7 +56,7 @@ abstract class KunenaRankGroups
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getLinks(): array
     {
@@ -80,7 +80,7 @@ abstract class KunenaRankGroups
      *
      * @return  int  The rank id, or 0 when no group of the user has a rank.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getRankIdForUser(int $userid): int
     {
@@ -129,7 +129,7 @@ abstract class KunenaRankGroups
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function setGroup(int $rankId, int $groupId): void
     {

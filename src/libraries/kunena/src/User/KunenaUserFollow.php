@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 /**
  * Follow list: users whose new topics a user wants to see and to get an e-mail about.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaUserFollow
 {
@@ -31,7 +31,7 @@ abstract class KunenaUserFollow
      * The follow lists which were loaded in this request.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static mixed $lists = [];
 
@@ -44,7 +44,7 @@ abstract class KunenaUserFollow
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function canFollow(KunenaUser $user, KunenaUser $target): bool
     {
@@ -61,7 +61,7 @@ abstract class KunenaUserFollow
      *
      * @return  int
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function countFollowers(int $followedid): int
     {
@@ -87,7 +87,7 @@ abstract class KunenaUserFollow
      *
      * @return  boolean  False if it is not allowed.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function follow(KunenaUser $user, KunenaUser $target): bool
     {
@@ -122,7 +122,7 @@ abstract class KunenaUserFollow
      *
      * @return  object[]  Rows with user_id and created_time.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getFollowersList(int $followedid): array
     {
@@ -148,7 +148,7 @@ abstract class KunenaUserFollow
      *
      * @return  int[]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getFollowing(int $userid): array
     {
@@ -178,7 +178,7 @@ abstract class KunenaUserFollow
      *
      * @return  object[]  Rows with followed_id and created_time.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getFollowingList(int $userid): array
     {
@@ -205,7 +205,7 @@ abstract class KunenaUserFollow
      *
      * @return  object[]  Rows with id, name, username and email.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getRecipients(int $followedid): array
     {
@@ -234,7 +234,7 @@ abstract class KunenaUserFollow
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isEnabled(): bool
     {
@@ -251,7 +251,7 @@ abstract class KunenaUserFollow
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isFollowing(int $userid, int $followedid): bool
     {
@@ -266,7 +266,7 @@ abstract class KunenaUserFollow
      *
      * @return  boolean  True if the user was followed.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function unfollow(int $userid, int $followedid): bool
     {

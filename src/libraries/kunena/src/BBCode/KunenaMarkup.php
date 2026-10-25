@@ -25,7 +25,7 @@ namespace Kunena\Forum\Libraries\BBCode;
  * Existing BBCode is not touched: code blocks and links are protected, so a message in BBCode looks the same with
  * and without this conversion.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 final class KunenaMarkup
 {
@@ -33,7 +33,7 @@ final class KunenaMarkup
      * The deepest quote in a quote which Markdown makes.
      *
      * @var     int
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private const int MAX_QUOTE_DEPTH = 10;
 
@@ -41,7 +41,7 @@ final class KunenaMarkup
      * Pieces of text which are protected against the conversion, restored at the end.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private array $store = [];
 
@@ -53,7 +53,7 @@ final class KunenaMarkup
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function codeBlock(string $code, string $language = ''): string
     {
@@ -71,7 +71,7 @@ final class KunenaMarkup
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function convert(string $text, bool $markdown, bool $html): string
     {
@@ -107,7 +107,7 @@ final class KunenaMarkup
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function fencedCode(string $text): string
     {
@@ -125,7 +125,7 @@ final class KunenaMarkup
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function html(string $text): string
     {
@@ -204,7 +204,7 @@ final class KunenaMarkup
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function inline(string $text): string
     {
@@ -261,7 +261,7 @@ final class KunenaMarkup
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function markdown(string $text, int $depth = 0): string
     {
@@ -354,7 +354,7 @@ final class KunenaMarkup
      *
      * @return  string  The text with the protected pieces back in place.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function restore(string $text): string
     {
@@ -373,7 +373,7 @@ final class KunenaMarkup
      *
      * @return  string|null  The address, null when it is not allowed.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function safeUrl(string $url): ?string
     {
@@ -393,7 +393,7 @@ final class KunenaMarkup
      *
      * @return  string  A marker for the text.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function stash(string $value): string
     {
@@ -408,7 +408,7 @@ final class KunenaMarkup
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     private function tableCells(string $row, string $tag): string
     {
@@ -431,7 +431,7 @@ final class KunenaMarkup
      *
      * @return  string  The message as BBCode.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function toBBCode(string $text, bool $markdown, bool $html): string
     {

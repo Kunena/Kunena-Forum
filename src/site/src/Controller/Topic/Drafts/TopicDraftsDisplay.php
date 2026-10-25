@@ -25,19 +25,19 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 /**
  * Class TopicDraftsDisplay: the drafts of the current user.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class TopicDraftsDisplay extends KunenaControllerDisplay
 {
     /**
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $drafts = [];
 
     /**
      * @var     string
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected mixed $name = 'Topic/Drafts';
 
@@ -47,7 +47,7 @@ class TopicDraftsDisplay extends KunenaControllerDisplay
      * @return  void
      *
      * @throws  KunenaExceptionAuthorise
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function before()
     {
@@ -74,7 +74,7 @@ class TopicDraftsDisplay extends KunenaControllerDisplay
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function prepareDocument()
     {

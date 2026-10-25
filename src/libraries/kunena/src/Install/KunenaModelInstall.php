@@ -363,7 +363,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      *
      * @throws  KunenaInstallerException
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function buildMenuForLanguage(array $menu, int $component_id, string $langCode, string $parentLanguage, bool $multilingual): bool
     {

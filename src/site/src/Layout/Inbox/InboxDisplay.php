@@ -20,7 +20,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 /**
  * The page of the inbox.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class InboxDisplay extends KunenaLayout
 {

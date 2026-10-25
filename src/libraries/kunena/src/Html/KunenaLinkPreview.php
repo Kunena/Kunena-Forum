@@ -27,7 +27,7 @@ use Throwable;
 /**
  * The card of a link (title, description and image of the page, from its Open Graph data), kept in the Joomla cache.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaLinkPreview
 {
@@ -44,7 +44,7 @@ abstract class KunenaLinkPreview
 
     /**
      * @var     integer
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static mixed $fetches = 0;
 
@@ -56,7 +56,7 @@ abstract class KunenaLinkPreview
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function absolute(string $image, string $page): string
     {
@@ -84,7 +84,7 @@ abstract class KunenaLinkPreview
      *
      * @return  Cache|null
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function cache()
     {
@@ -108,7 +108,7 @@ abstract class KunenaLinkPreview
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function clean(string $text, int $length): string
     {
@@ -126,7 +126,7 @@ abstract class KunenaLinkPreview
      *
      * @return  string|null  Null when the page can not be read.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function fetchPage(string $url, int $timeout = 3): ?string
     {
@@ -200,7 +200,7 @@ Accept: text/html,application/xhtml+xml
      *
      * @return  array|null  title, description, image and site; null when there is no card.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function get(string $url): ?array
     {
@@ -250,7 +250,7 @@ Accept: text/html,application/xhtml+xml
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isBlocked(string $url): bool
     {
@@ -285,7 +285,7 @@ Accept: text/html,application/xhtml+xml
      *
      * @return  array|null
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function parse(string $html, string $url): ?array
     {

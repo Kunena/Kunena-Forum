@@ -23,14 +23,14 @@ use Joomla\Database\ParameterType;
 /**
  * The translations of the name and the descriptions of the categories, one row per category and language.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaCategoryTranslation
 {
     /**
      * The fields of a category which can be translated.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const array FIELDS = ['name', 'description', 'headerdesc'];
 
@@ -41,7 +41,7 @@ abstract class KunenaCategoryTranslation
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function delete(int $categoryId): void
     {
@@ -65,7 +65,7 @@ abstract class KunenaCategoryTranslation
      *
      * @return  array  Rows (name, description, headerdesc) by language code.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getAll(int $categoryId): array
     {
@@ -90,7 +90,7 @@ abstract class KunenaCategoryTranslation
      *
      * @return  array  Rows (name, description, headerdesc) by category id.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function loadLanguage(string $language): array
     {
@@ -118,7 +118,7 @@ abstract class KunenaCategoryTranslation
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function save(int $categoryId, array $translations, array $languages): void
     {

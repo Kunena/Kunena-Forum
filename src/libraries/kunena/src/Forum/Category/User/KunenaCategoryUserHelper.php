@@ -41,7 +41,7 @@ abstract class KunenaCategoryUserHelper
      * The users which have all their category rows loaded: a category without an instance has no row.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $_allLoaded = [];
 

@@ -24,13 +24,13 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * Socials view for Kunena backend
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class HtmlView extends BaseHtmlView
 {
     /**
      * @var     Form
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected mixed $form = null;
 
@@ -40,7 +40,7 @@ class HtmlView extends BaseHtmlView
      * @return  mixed
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function display($tpl = null)
     {
@@ -56,7 +56,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function addToolbar(): void
     {

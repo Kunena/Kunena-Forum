@@ -35,7 +35,7 @@ class KunenaProfiler extends Profiler
 
     /**
      * @var     boolean
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static mixed $cssPrinted = false;
 
@@ -50,7 +50,7 @@ class KunenaProfiler extends Profiler
      *
      * @return  array  List of arrays: sql, ms (duration), at (ms since the start of the request), caller, memory (bytes), dup (times the same statement ran), similar (times the statement ran with any values).
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function collectQueries(): array
     {
@@ -157,7 +157,7 @@ class KunenaProfiler extends Profiler
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function panelCss(): string
     {
@@ -236,7 +236,7 @@ CSS;
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function panelScript(): string
     {
@@ -395,7 +395,7 @@ JS;
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function queryCaller(array $stack): string
     {
@@ -426,7 +426,7 @@ JS;
      *
      * @return  array  Lines like "Class::method() File.php:123".
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function queryStack(array $stack): array
     {
@@ -462,7 +462,7 @@ JS;
      *
      * @return  string  Html.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function render(string $title = 'Kunena Profile Information'): string
     {
@@ -694,7 +694,7 @@ JS;
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function watchQueries(): void
     {
@@ -751,31 +751,31 @@ class KunenaProfilerItem
 
     /**
      * @var     float  Net memory (bytes) which was allocated during the profiled calls.
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $memory = 0.0;
 
     /**
      * @var     array  The single calls: [start in ms since the start of the request, duration in ms, name of the caller]; the first 300.
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public array $log = [];
 
     /**
      * @var     array  Number of calls by the name of the profiled item which made the call.
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public array $callers = [];
 
     /**
      * @var     array  Callers of the open calls.
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected array $openCallers = [];
 
     /**
      * @var     array  Memory usage at the start of the open calls.
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected array $memoryStart = [];
 

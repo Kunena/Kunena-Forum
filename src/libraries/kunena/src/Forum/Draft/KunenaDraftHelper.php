@@ -25,14 +25,14 @@ use Joomla\Database\ParameterType;
  * A draft keeps the posted form fields as JSON, so that it can be loaded back into the editor exactly like
  * the fields of a post which failed. The subject and message are also stored in their own columns for the list.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaDraftHelper
 {
     /**
      * Maximum number of drafts a user can keep.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const int MAX_DRAFTS = 50;
 
@@ -40,7 +40,7 @@ abstract class KunenaDraftHelper
      * Form fields which are kept in a draft (values are the defaults the editor needs).
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static mixed $defaults = [
         'catid'             => 0,
@@ -68,7 +68,7 @@ abstract class KunenaDraftHelper
      *
      * @return  int
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function count(int $userid): int
     {
@@ -94,7 +94,7 @@ abstract class KunenaDraftHelper
      *
      * @return  boolean  True if a draft was deleted.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function delete(int $id, int $userid): bool
     {
@@ -122,7 +122,7 @@ abstract class KunenaDraftHelper
      *
      * @return  object|null  The draft row with the form fields decoded into $draft->fields, or null.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function get(int $id, int $userid): ?object
     {
@@ -157,7 +157,7 @@ abstract class KunenaDraftHelper
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getAll(int $userid): array
     {
@@ -190,7 +190,7 @@ abstract class KunenaDraftHelper
      *
      * @return  int  Id of the draft, or 0 if it was not possible to save it.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function save(int $userid, array $fields, int $parentId = 0, int $topicId = 0, int $draftId = 0, int $messageId = 0): int
     {

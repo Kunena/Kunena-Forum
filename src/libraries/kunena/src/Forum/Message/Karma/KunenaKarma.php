@@ -33,13 +33,13 @@ class KunenaKarma
 {
     /**
      * @var     null
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public $id = null;
 
     /**
      * @var     null
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $typeAlias = null;
 

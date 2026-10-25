@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 /**
  * The place of an IP address, from the library GeoIp of Regular Labs (the database of MaxMind GeoLite2, IPv4 and IPv6).
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class GeoIp extends CMSPlugin implements SubscriberInterface
 {
@@ -32,7 +32,7 @@ class GeoIp extends CMSPlugin implements SubscriberInterface
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getSubscribedEvents(): array
     {
@@ -42,7 +42,7 @@ class GeoIp extends CMSPlugin implements SubscriberInterface
     /**
      * @param   array  $config  config
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function __construct(array $config = [])
     {
@@ -63,7 +63,7 @@ class GeoIp extends CMSPlugin implements SubscriberInterface
      * @param   GenericEvent  $event  The event instance: the argument ip in, the argument location out.
      *
      * @return  void
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function onKunenaGetIpLocation(GenericEvent $event): void
     {

@@ -332,7 +332,7 @@ class TopicsController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function status()
     {

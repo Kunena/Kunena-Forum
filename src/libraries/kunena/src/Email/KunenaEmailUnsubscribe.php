@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  * A link is valid for one user and one subscription (a topic or a category) and carries a signature made with
  * the secret of the site, so nobody can unsubscribe somebody else and the recipient does not need to log in.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaEmailUnsubscribe
 {
@@ -48,7 +48,7 @@ abstract class KunenaEmailUnsubscribe
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getPostUrl(string $type, int $id, int $userid): string
     {
@@ -64,7 +64,7 @@ abstract class KunenaEmailUnsubscribe
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getUrl(string $type, int $id, int $userid): string
     {
@@ -78,7 +78,7 @@ abstract class KunenaEmailUnsubscribe
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function query(string $type, int $id, int $userid): string
     {
@@ -99,7 +99,7 @@ abstract class KunenaEmailUnsubscribe
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function sign(string $type, int $id, int $userid): string
     {
@@ -118,7 +118,7 @@ abstract class KunenaEmailUnsubscribe
      * @return  boolean  True if the subscription was removed.
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function unsubscribe(string $type, int $id, int $userid): bool
     {
@@ -154,7 +154,7 @@ abstract class KunenaEmailUnsubscribe
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function verify(string $type, int $id, int $userid, string $signature): bool
     {

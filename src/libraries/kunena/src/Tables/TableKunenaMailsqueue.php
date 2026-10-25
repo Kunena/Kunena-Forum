@@ -75,7 +75,7 @@ class TableKunenaMailsqueue extends KunenaTable
 
     /**
      * @var     mixed
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $sentusers = null;
 

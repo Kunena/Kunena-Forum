@@ -290,13 +290,13 @@ class KunenaUsers extends KunenaTable
 
     /**
      * @var     mixed
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $timestamp = null;
 
     /**
      * @var     mixed
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $ip = null;
 

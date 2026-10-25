@@ -23,13 +23,13 @@ use Joomla\CMS\Router\Route;
 /**
  * Kunena Backend Badges Controller
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class BadgesController extends FormController
 {
     /**
      * @var     string
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected mixed $baseurl = 'index.php?option=com_kunena&view=badges';
 
@@ -42,7 +42,7 @@ class BadgesController extends FormController
      * @return  boolean
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function save($key = null, $urlVar = null)
     {
@@ -80,7 +80,7 @@ class BadgesController extends FormController
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function cancel($key = null)
     {

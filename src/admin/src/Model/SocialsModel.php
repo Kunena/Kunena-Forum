@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\User\KunenaUserSocials;
 /**
  * Socials Model for Kunena: the providers (social websites) of the profile are kept in the parameters of the component.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class SocialsModel extends AdminModel
 {
@@ -39,7 +39,7 @@ class SocialsModel extends AdminModel
      *
      * @return  Form|false
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getForm($data = [], $loadData = true)
     {
@@ -51,7 +51,7 @@ class SocialsModel extends AdminModel
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function loadFormData()
     {
@@ -87,7 +87,7 @@ class SocialsModel extends AdminModel
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function save($data)
     {

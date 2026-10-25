@@ -49,7 +49,7 @@ abstract class KunenaAttachmentHelper
 
     /**
      * @var     array  Ids of the messages whose attachments were loaded by loadByMessage(), also those without attachments.
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $_messagesLoaded = [];
 
@@ -730,7 +730,7 @@ abstract class KunenaAttachmentHelper
      *
      * @return  KunenaAttachment[]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function sort(array $attachments, string $by = 'id', string $direction = 'asc'): array
     {

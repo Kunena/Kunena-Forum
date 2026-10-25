@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 /**
  * Inbox Model for Kunena
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class InboxModel extends ListModel
 {

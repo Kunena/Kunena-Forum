@@ -23,13 +23,13 @@ use Joomla\CMS\Plugin\PluginHelper;
 /**
  * The IP address of a message with its place: the place comes from a plugin (the event onKunenaGetIpLocation), when there is one.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaIpLocation
 {
     /**
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $locations = [];
 
@@ -40,7 +40,7 @@ abstract class KunenaIpLocation
      *
      * @return  array|null  label, country (code), latitude and longitude; null when the place is not known.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function get(string $ip): ?array
     {
@@ -79,7 +79,7 @@ abstract class KunenaIpLocation
      *
      * @return  string  Html.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function html(string $ip): string
     {

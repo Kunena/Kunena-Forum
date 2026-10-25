@@ -39,13 +39,13 @@ class TableKunenaKarma extends KunenaTable
 
     /**
      * @var     mixed
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public $id = null;
 
     /**
      * @var     mixed
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public $userid = null;
 

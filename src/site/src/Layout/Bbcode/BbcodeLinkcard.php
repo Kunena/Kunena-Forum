@@ -20,7 +20,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 /**
  * BbcodeLinkcard: the card of a link in a message.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class BbcodeLinkcard extends KunenaLayout
 {

@@ -28,7 +28,7 @@ use RuntimeException;
  * The files which are sent with a private message. They are stored with a random name in a folder which the web server does
  * not serve, and they are only given to the sender and the recipient of the message.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class InboxAttachments
 {
@@ -36,14 +36,14 @@ class InboxAttachments
      * Types which are never accepted, whatever the configuration of the forum says.
      *
      * @var     string[]
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected const array FORBIDDEN = ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'pht', 'inc', 'cgi', 'pl', 'py', 'sh', 'exe', 'bat', 'cmd', 'com', 'js', 'html', 'htm', 'xhtml', 'svg', 'htaccess', 'ini'];
 
     /**
      * @return  DatabaseInterface
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function db(): DatabaseInterface
     {
@@ -53,7 +53,7 @@ class InboxAttachments
     /**
      * @return  string  The folder of the files (it is created with a file which keeps the web server from serving it).
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function folder(): string
     {
@@ -79,7 +79,7 @@ class InboxAttachments
      *
      * @return  string[]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function extensions(): array
     {
@@ -97,7 +97,7 @@ class InboxAttachments
      *
      * @return  array[]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getUploads(string $field = 'files'): array
     {
@@ -129,7 +129,7 @@ class InboxAttachments
      * @return  void
      *
      * @throws  RuntimeException
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function check(array $uploads, Registry $params): void
     {
@@ -183,7 +183,7 @@ class InboxAttachments
      * @return  void
      *
      * @throws  RuntimeException
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function store(int $inboxId, int $userId, array $uploads): void
     {
@@ -221,7 +221,7 @@ class InboxAttachments
      *
      * @return  array  message id => list of files
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getFiles(array $inboxIds): array
     {
@@ -257,7 +257,7 @@ class InboxAttachments
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function formatSize(int $bytes): string
     {
@@ -273,7 +273,7 @@ class InboxAttachments
      * @return  void
      *
      * @throws  RuntimeException
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function download(int $userid, int $id): void
     {
@@ -316,7 +316,7 @@ class InboxAttachments
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function deleteFiles(array $inboxIds): void
     {

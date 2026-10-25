@@ -40,7 +40,7 @@ class KunenaDate extends Date
      *
      * @return  string|null  The date as Y-m-d, null for a text which is no date.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function fromPicker(string $value, string $format = ''): ?string
     {
@@ -93,7 +93,7 @@ class KunenaDate extends Date
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function pickerToPhp(string $format): string
     {
@@ -219,7 +219,7 @@ class KunenaDate extends Date
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function toPicker(string $date, string $format = ''): string
     {

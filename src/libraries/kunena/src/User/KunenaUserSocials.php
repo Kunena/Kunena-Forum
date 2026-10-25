@@ -64,7 +64,7 @@ class KunenaUserSocials
     /**
      * The providers which are shut down: they are not in the default list any more.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const array RETIRED = ['skype', 'yim', 'google'];
 
@@ -289,7 +289,7 @@ class KunenaUserSocials
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getCustomProviderRows(): array
     {
@@ -585,7 +585,7 @@ JSON;
      *
      * @return  object  The providers by key.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getProviders(): object
     {
@@ -628,7 +628,7 @@ JSON;
      *
      * @return  bool
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function hasCustomProviders(): bool
     {

@@ -30,7 +30,7 @@ use Kunena\Forum\Libraries\User\KunenaUserIgnore;
  * a category he follows. Nothing is stored: the new messages are asked from the messages, after the last message the
  * browser has seen.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaPopupNotification
 {
@@ -67,7 +67,7 @@ abstract class KunenaPopupNotification
      *
      * @return  object[]  id, parent, mentioned, own and topicsub of each message, the oldest first.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function candidates(DatabaseInterface $db, int $userid, int $after, int $cursor, ?int $now = null): array
     {
@@ -118,7 +118,7 @@ abstract class KunenaPopupNotification
      *
      * @return  integer
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function cursor(DatabaseInterface $db): int
     {
@@ -138,7 +138,7 @@ abstract class KunenaPopupNotification
      *
      * @return  array  cursor (the last message now), items (type, id, title, topic, excerpt, url) and more (not shown).
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function get(int $userid, int $after): array
     {
@@ -213,7 +213,7 @@ abstract class KunenaPopupNotification
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isEnabledFor(int $userid): bool
     {
@@ -230,7 +230,7 @@ abstract class KunenaPopupNotification
      * @return  string  mention, reply (in a topic of the user), subscribed (in a topic he follows) or topic (a new topic in a
      *                  category he follows).
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function reason(object $row): string
     {

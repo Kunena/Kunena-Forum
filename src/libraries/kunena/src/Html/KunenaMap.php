@@ -27,27 +27,27 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
  * The maps of the forum: the provider (Google Maps or OpenStreetMap), the links to a location and the coordinates of an
  * address for the maps of OpenStreetMap (Nominatim, the answer is kept in the database).
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaMap
 {
     /**
      * The number of addresses which are looked up in one request: a page with many maps does not wait for many requests.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected const int MAX_LOOKUPS = 3;
 
     /**
      * How long an address which was not found is kept (seconds), before it is looked up again.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected const int NOT_FOUND_TTL = 604800;
 
     /**
      * @var     int
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static mixed $lookups = 0;
 
@@ -57,7 +57,7 @@ abstract class KunenaMap
      *
      * @return  Cache|null
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function cache()
     {
@@ -81,7 +81,7 @@ abstract class KunenaMap
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function coordinatesUrl(float $latitude, float $longitude): string
     {
@@ -99,7 +99,7 @@ abstract class KunenaMap
      *
      * @return  float[]|null  [latitude, longitude], null when the address is not known.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function geocode(string $address): ?array
     {
@@ -152,7 +152,7 @@ abstract class KunenaMap
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function linkUrl(string $address): string
     {
@@ -170,7 +170,7 @@ abstract class KunenaMap
      *
      * @return  float[]|null|false  The coordinates, null when the service does not know the address, false when it did not answer.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function lookup(string $address)
     {
@@ -220,7 +220,7 @@ abstract class KunenaMap
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function osmEmbedUrl(float $latitude, float $longitude, int $zoom = 10): string
     {
@@ -242,7 +242,7 @@ abstract class KunenaMap
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function osmPageUrl(float $latitude, float $longitude, int $zoom = 10): string
     {
@@ -254,7 +254,7 @@ abstract class KunenaMap
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function provider(): string
     {

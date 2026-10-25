@@ -85,7 +85,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
      * Values of the filter bar: status, q (subject), author and language.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $filters = ['status' => '', 'q' => '', 'author' => '', 'language' => ''];
 
@@ -93,7 +93,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
      * Show the filter bar above the list.
      *
      * @var     boolean
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $filterBar = false;
 
@@ -112,7 +112,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function applyFilters(KunenaTopicFinder $finder, bool $category = false): void
     {

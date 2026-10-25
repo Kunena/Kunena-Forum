@@ -33,7 +33,7 @@ abstract class KunenaRateHelper
 
     /**
      * @var     array  Number of ratings by topic id, loaded before in this request.
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $_counts = [];
 
@@ -44,7 +44,7 @@ abstract class KunenaRateHelper
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function flushCount(int $id): void
     {
@@ -169,7 +169,7 @@ abstract class KunenaRateHelper
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function loadCounts(array $ids): void
     {

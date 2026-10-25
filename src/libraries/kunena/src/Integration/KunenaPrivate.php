@@ -144,7 +144,7 @@ class KunenaPrivate
      *
      * @return  int[]  The users who must not get the e-mail (all get it by default).
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function notify(KunenaMessage $message, string $type, array $userids, int $senderId = 0): array
     {

@@ -289,7 +289,7 @@ class KunenaCategory extends KunenaDatabaseObject
      * The language of the category: all (*) or the code of a content language of Joomla.
      *
      * @var     string
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $language = '*';
 
@@ -298,7 +298,7 @@ class KunenaCategory extends KunenaDatabaseObject
      * headerdesc). Those are saved, not the translated ones.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected mixed $_translated = [];
 
@@ -444,7 +444,7 @@ class KunenaCategory extends KunenaDatabaseObject
      * Is the alias made from the name (the alias was empty when the category was saved)?
      *
      * @var     boolean
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected mixed $autoAlias = false;
 
@@ -633,7 +633,7 @@ class KunenaCategory extends KunenaDatabaseObject
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function applyTranslation(?object $translation): void
     {
@@ -1968,7 +1968,7 @@ class KunenaCategory extends KunenaDatabaseObject
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function hidesRepliesForGuests(): bool
     {
@@ -2541,7 +2541,7 @@ class KunenaCategory extends KunenaDatabaseObject
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function withId(string $alias): string
     {

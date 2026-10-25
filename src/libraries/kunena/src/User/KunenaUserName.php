@@ -26,35 +26,35 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
  * field of the Joomla users, chosen in the configuration). The configuration says which one is shown, and the user can choose
  * which one others see when the configuration lets the users choose.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaUserName
 {
     /**
      * The real name.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const int REALNAME = 0;
 
     /**
      * The username.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const int USERNAME = 1;
 
     /**
      * The nickname.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const int DISPLAYNAME = 2;
 
     /**
      * The key of the choice of a user in the parameters of the Joomla user.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const string PARAM = 'kunena_name';
 
@@ -62,7 +62,7 @@ abstract class KunenaUserName
      * The nicknames by user id.
      *
      * @var     array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $displayNames = [];
 
@@ -74,7 +74,7 @@ abstract class KunenaUserName
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function get(KunenaUser $user): string
     {
@@ -109,7 +109,7 @@ abstract class KunenaUserName
      *
      * @return  int|null
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getChoice(int $userid): ?int
     {
@@ -129,7 +129,7 @@ abstract class KunenaUserName
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getDisplayName(int $userid): string
     {
@@ -149,7 +149,7 @@ abstract class KunenaUserName
      *
      * @return  int
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getDisplayNameField(): int
     {
@@ -186,7 +186,7 @@ abstract class KunenaUserName
      *
      * @return  int  REALNAME, USERNAME or DISPLAYNAME.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getGlobalType(): int
     {
@@ -204,7 +204,7 @@ abstract class KunenaUserName
      *
      * @return  string  The condition (without AND).
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getSearchCondition(string $search, string $alias = 'a'): string
     {
@@ -231,7 +231,7 @@ abstract class KunenaUserName
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function preload(array $userids): void
     {
@@ -276,7 +276,7 @@ abstract class KunenaUserName
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function setChoice(int $userid, ?int $choice): void
     {
@@ -291,7 +291,7 @@ abstract class KunenaUserName
      *
      * @return  bool  False when there is no field for the nickname or the value could not be saved.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function setDisplayName(int $userid, string $nickname): bool
     {
@@ -338,7 +338,7 @@ abstract class KunenaUserName
      *
      * @return  bool
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function userCanChoose(): bool
     {

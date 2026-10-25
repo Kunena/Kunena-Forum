@@ -35,7 +35,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 /**
  * The reports of posts become topics in a category for the moderators.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
@@ -43,7 +43,7 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
 
     /**
      * @var     boolean
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected $autoloadLanguage = true;
 
@@ -51,7 +51,7 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
      * Returns an array of events this subscriber will listen to.
      *
      * @return  array
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getSubscribedEvents(): array
     {
@@ -61,7 +61,7 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
     /**
      * @param   array  $config  config
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function __construct(array $config = [])
     {
@@ -82,7 +82,7 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
      * @param   GenericEvent  $event  The event instance
      *
      * @return  void
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function onKunenaReportMessage(GenericEvent $event): void
     {
@@ -200,7 +200,7 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
      *
      * @return  int[]  id => id
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function getReporters(DatabaseInterface $db, int $messageId): array
     {
@@ -223,7 +223,7 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
      *
      * @return  int
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function getReportTopicId(DatabaseInterface $db, int $messageId): int
     {

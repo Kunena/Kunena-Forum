@@ -57,7 +57,7 @@ class CpanelController extends FormController
      *                            true when the update site is disabled, null when the user may not see updates.
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getUpdateInfo()
     {
@@ -108,7 +108,7 @@ class CpanelController extends FormController
      * @return  integer  Unix timestamp, 0 when the update servers were never checked.
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getLastUpdateCheck(): int
     {

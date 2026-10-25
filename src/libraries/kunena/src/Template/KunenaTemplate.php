@@ -1156,7 +1156,7 @@ HTML;
      * An icon without any data, returned when the icon definition cannot be found
      *
      * @return StdClass
-     * @since Kunena 7.2
+     * @since Kunena 8.0
      */
     private function getEmptyIcon()
     {
@@ -1997,7 +1997,7 @@ HTML;
      * @return  array  The icons, by id.
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getUserTopicIcons(): array
     {

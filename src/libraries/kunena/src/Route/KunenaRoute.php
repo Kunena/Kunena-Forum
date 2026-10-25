@@ -799,7 +799,7 @@ abstract class KunenaRoute
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      * @throws  Exception
      */
     public static function keepQuery(array $params): array

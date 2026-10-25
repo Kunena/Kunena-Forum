@@ -107,7 +107,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
      * "Show the first post on every page"), else null.
      *
      * @var     KunenaMessage|null
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $stickyFirst = null;
 
@@ -480,7 +480,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
      * @return  KunenaMessage|null
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function getStickyFirst(): ?KunenaMessage
     {

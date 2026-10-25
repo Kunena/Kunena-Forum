@@ -147,7 +147,7 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         $domains[] = $this->createKunenaTopicsDomain($user->id);
         $domains[] = $this->createKunenaUserbannedDomain($user->id);
 
-        // The data of Kunena 7.2.
+        // The data of Kunena 8.0.
         $domains[] = $this->createKunenaTableDomain('drafts', '#__kunena_drafts', 'user_id', $user->id);
         $domains[] = $this->createKunenaTableDomain('follows', '#__kunena_user_follow', 'user_id', $user->id);
         $domains[] = $this->createKunenaTableDomain('ignores', '#__kunena_user_ignore', 'user_id', $user->id);
@@ -208,7 +208,7 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         KunenaHelper::deleteUserData('#__kunena_thankyou', 'targetuserid', $user->id);
         KunenaHelper::deleteUserData('#__kunena_users_banned', 'userid', $user->id);
 
-        // The data of Kunena 7.2: drafts, follows, ignore list, karma, session, poll votes and the private parts he may read.
+        // The data of Kunena 8.0: drafts, follows, ignore list, karma, session, poll votes and the private parts he may read.
         KunenaHelper::deleteUserData('#__kunena_drafts', 'user_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_user_follow', 'user_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_user_follow', 'followed_id', $user->id);

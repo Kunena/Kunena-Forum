@@ -31,7 +31,7 @@ use RuntimeException;
 /**
  * The storage of the inbox: private messages and notifications of the forum.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class InboxHelper
 {
@@ -39,14 +39,14 @@ class InboxHelper
      * The number of unread entries, by user: it is asked for several times on a page.
      *
      * @var     int[]
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static array $unread = [];
 
     /**
      * @return  DatabaseInterface
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function db(): DatabaseInterface
     {
@@ -61,7 +61,7 @@ class InboxHelper
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function wantsEmail(int $userid, Registry $params): bool
     {
@@ -75,7 +75,7 @@ class InboxHelper
      *
      * @return  int
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function unreadCount(int $userid): int
     {
@@ -110,7 +110,7 @@ class InboxHelper
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function addNotification(KunenaMessage $message, string $type, array $userids, Registry $params, int $senderId = 0): void
     {
@@ -194,7 +194,7 @@ class InboxHelper
      * @return  int  The id of the new message.
      *
      * @throws  RuntimeException
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function send(int $from, int $to, string $subject, string $body, int $replyTo = 0): int
     {
@@ -274,7 +274,7 @@ class InboxHelper
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isBlocked(int $userid, int $blocked): bool
     {
@@ -303,7 +303,7 @@ class InboxHelper
      * @return  void
      *
      * @throws  RuntimeException
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function block(int $userid, int $target): void
     {
@@ -337,7 +337,7 @@ class InboxHelper
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function unblock(int $userid, int $target): void
     {
@@ -359,7 +359,7 @@ class InboxHelper
      *
      * @return  array[]  id and name.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getBlocked(int $userid): array
     {
@@ -382,7 +382,7 @@ class InboxHelper
      *
      * @return  object|null
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function getRow(int $id): ?object
     {
@@ -406,7 +406,7 @@ class InboxHelper
      *
      * @return  array  [total, entries]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getList(int $userid, string $filter, int $start, int $limit): array
     {
@@ -449,7 +449,7 @@ class InboxHelper
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getThread(int $userid, int $id): array
     {
@@ -500,7 +500,7 @@ class InboxHelper
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function markRead(int $userid, array $ids = []): void
     {
@@ -532,7 +532,7 @@ class InboxHelper
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function delete(int $userid, array $ids): void
     {
@@ -588,7 +588,7 @@ class InboxHelper
      *
      * @return  array[]
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function withFiles(array $items): array
     {
@@ -611,7 +611,7 @@ class InboxHelper
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function toArray(object $row, int $userid, bool $sent, bool $full = false): array
     {

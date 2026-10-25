@@ -21,14 +21,14 @@ use Kunena\Forum\Libraries\Controller\KunenaController;
 /**
  * Kunena Inbox Controller
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class InboxController extends KunenaController
 {
     /**
      * @param   array  $config  config
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      *
      * @throws  Exception
      */

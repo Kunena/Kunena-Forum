@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\User\KunenaUserBadges;
 /**
  * Badges Model for Kunena: the badges are kept in the parameters of the component.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class BadgesModel extends AdminModel
 {
@@ -36,7 +36,7 @@ class BadgesModel extends AdminModel
      *
      * @return  Form|false
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getForm($data = [], $loadData = true)
     {
@@ -48,7 +48,7 @@ class BadgesModel extends AdminModel
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function loadFormData()
     {
@@ -68,7 +68,7 @@ class BadgesModel extends AdminModel
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function save($data)
     {

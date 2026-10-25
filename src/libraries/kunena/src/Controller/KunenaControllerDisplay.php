@@ -162,7 +162,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
      * @return  void
      *
      * @throws  KunenaExceptionAuthorise
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function checkForumIsOpen(): void
     {

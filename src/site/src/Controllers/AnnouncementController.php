@@ -189,7 +189,7 @@ class AnnouncementController extends KunenaController
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      *
      * @throws  Exception
      */

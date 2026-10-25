@@ -28,7 +28,7 @@ return new class () implements ServiceProviderInterface {
      * @param   Container  $container  The DI container.
      *
      * @return  void
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function register(Container $container): void
     {

@@ -169,7 +169,7 @@ class SearchModel extends KunenaModel
      *
      * @return  string  An SQL expression.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function searchedText($db): string
     {

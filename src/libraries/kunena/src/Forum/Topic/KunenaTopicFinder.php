@@ -94,7 +94,7 @@ class KunenaTopicFinder extends KunenaFinder
      *
      * @return  $this
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function filterByAuthorName(string $text): KunenaTopicFinder
     {
@@ -130,7 +130,7 @@ class KunenaTopicFinder extends KunenaFinder
      *
      * @return  $this
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function filterByAuthors(array $userids): KunenaTopicFinder
     {
@@ -202,7 +202,7 @@ class KunenaTopicFinder extends KunenaFinder
      *
      * @return  $this
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function filterByLanguage(string $language): KunenaTopicFinder
     {
@@ -234,7 +234,7 @@ class KunenaTopicFinder extends KunenaFinder
      *
      * @return  $this
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function filterBySimilarSubject(array $words): KunenaTopicFinder
     {
@@ -257,7 +257,7 @@ class KunenaTopicFinder extends KunenaFinder
      *
      * @return  $this
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function filterByStatus(string $status): KunenaTopicFinder
     {
@@ -289,7 +289,7 @@ class KunenaTopicFinder extends KunenaFinder
      *
      * @return  $this
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function filterBySubject(string $text): KunenaTopicFinder
     {
@@ -309,7 +309,7 @@ class KunenaTopicFinder extends KunenaFinder
      *
      * @return  $this
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function filterByTag(int $tagId): KunenaTopicFinder
     {
@@ -487,7 +487,7 @@ class KunenaTopicFinder extends KunenaFinder
      *
      * @return  $this
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function filterOutAuthors(array $userids): KunenaTopicFinder
     {

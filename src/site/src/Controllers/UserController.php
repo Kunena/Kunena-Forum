@@ -1497,7 +1497,7 @@ class UserController extends KunenaController
      *
      * @return  array
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function searchUsersToMention($me, array $ignoredBy): array
     {
@@ -1618,7 +1618,7 @@ class UserController extends KunenaController
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function notifications()
     {
@@ -1698,7 +1698,7 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function ignore()
     {
@@ -1731,7 +1731,7 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function unignore()
     {
@@ -1762,7 +1762,7 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function follow()
     {
@@ -1795,7 +1795,7 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function unfollow()
     {

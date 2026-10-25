@@ -19,7 +19,7 @@ namespace Kunena\Forum\Libraries\BBCode;
  * The players of a link to a music service: only the known services, and only addresses of the form which the service gives
  * for its own players, so nothing of the link itself is put in the player.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaMediaEmbed
 {
@@ -31,7 +31,7 @@ abstract class KunenaMediaEmbed
      *
      * @return  string|null  The html of the player, null when the link has none.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function deezer(string $host, string $path): ?string
     {
@@ -53,7 +53,7 @@ abstract class KunenaMediaEmbed
      *
      * @return  string|null  The html of the player, null when the link has none.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function spotify(string $host, string $path): ?string
     {

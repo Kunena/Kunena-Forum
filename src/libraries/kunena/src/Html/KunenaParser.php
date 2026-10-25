@@ -268,7 +268,7 @@ abstract class KunenaParser
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected static function prepareContentWithPlugins(string $text, Registry $params, string $context, array $plugins): string
     {

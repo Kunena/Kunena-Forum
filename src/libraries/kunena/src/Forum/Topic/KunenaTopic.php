@@ -88,7 +88,7 @@ class KunenaTopic extends KunenaDatabaseObject
     /**
      * The id of the topic icon "solved" of the topic icons of Kunena.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const int ICON_SOLVED = 8;
 
@@ -260,7 +260,7 @@ class KunenaTopic extends KunenaDatabaseObject
      * The language of the topic: all (*) or the code of a content language of Joomla.
      *
      * @var     string
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $language = '*';
 
@@ -507,7 +507,7 @@ class KunenaTopic extends KunenaDatabaseObject
      * @return  KunenaExceptionAuthorise|void
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function authoriseNotInactive(KunenaUser $user)
     {
@@ -1047,7 +1047,7 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @return  int
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getInactiveLockDays(): int
     {
@@ -1559,7 +1559,7 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @return  bool
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function isInactive(): bool
     {

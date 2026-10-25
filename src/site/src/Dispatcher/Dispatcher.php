@@ -53,7 +53,7 @@ class Dispatcher extends ComponentDispatcher
      * The parameters of the request which have one value (never a list).
      *
      * @var    string[]
-     * @since  Kunena 7.2
+     * @since  Kunena 8.0
      */
     protected static array $singleValues = ['view', 'layout', 'task', 'func', 'mode', 'catid', 'id', 'mesid', 'userid', 'topic_id', 'parentid', 'draftid', 'return', 'limit', 'limitstart', 'start', 'sel', 'search', 'query', 'type', 'sig', 'uid',
         'subject', 'authorname', 'email', 'modified_reason', 'reason_public', 'reason_private', 'comment'];

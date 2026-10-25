@@ -172,19 +172,19 @@ class TableKunenaTopics extends KunenaTable
 
     /**
      * @var     mixed
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $category_id = null;
 
     /**
      * @var     mixed
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $label_id = null;
 
     /**
      * @var     mixed
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public mixed $rating = null;
 

@@ -481,7 +481,7 @@ class KunenaUpload
      *
      * @return  integer  Size in bytes, at least 1.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function getPhpUploadLimit(): int
     {

@@ -720,7 +720,7 @@ class TemplateController extends FormController
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function isSafeTemplateName($templatename): bool
     {
@@ -735,7 +735,7 @@ class TemplateController extends FormController
      *
      * @return  boolean
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function isSafeFilename($filename, string $extension): bool
     {

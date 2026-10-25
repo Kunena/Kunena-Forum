@@ -104,7 +104,7 @@ class CategoryController extends KunenaController
      * @return  KunenaCategory|false
      *
      * @throws  Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function saveCategory()
     {

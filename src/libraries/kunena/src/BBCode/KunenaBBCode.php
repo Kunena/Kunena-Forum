@@ -130,7 +130,7 @@ class KunenaBBCode extends BBCode
      * The link cards of the message which is parsed now.
      *
      * @var     integer
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected $linkCards = 0;
 
@@ -385,7 +385,7 @@ class KunenaBBCode extends BBCode
      *
      * @return  string  The message as HTML.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function parse($string)
     {

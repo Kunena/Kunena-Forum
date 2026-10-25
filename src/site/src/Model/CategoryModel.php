@@ -349,7 +349,7 @@ class CategoryModel extends CategoriesModel
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function setTopics(int $total, array $topics): void
     {

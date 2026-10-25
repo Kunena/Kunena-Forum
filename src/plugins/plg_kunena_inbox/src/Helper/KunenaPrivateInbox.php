@@ -24,14 +24,14 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 /**
  * The private messages of the forum: the inbox in the profile of the user.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 class KunenaPrivateInbox extends KunenaPrivate
 {
     /**
      * @param   Registry  $params  The parameters of the plugin.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function __construct(Registry $params)
     {
@@ -43,7 +43,7 @@ class KunenaPrivateInbox extends KunenaPrivate
      *
      * @return  int
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getUnreadCount(int $userid): int
     {
@@ -55,7 +55,7 @@ class KunenaPrivateInbox extends KunenaPrivate
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getInboxLink(string $text)
     {
@@ -69,7 +69,7 @@ class KunenaPrivateInbox extends KunenaPrivate
     /**
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function getInboxURL()
     {
@@ -83,7 +83,7 @@ class KunenaPrivateInbox extends KunenaPrivate
      *
      * @return  string
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     protected function getURL(int $userid): string
     {
@@ -102,7 +102,7 @@ class KunenaPrivateInbox extends KunenaPrivate
      *
      * @return  int[]  The users who do not want the e-mail.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function notify(KunenaMessage $message, string $type, array $userids, int $senderId = 0): array
     {

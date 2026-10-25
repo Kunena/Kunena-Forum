@@ -31,14 +31,14 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
  * Joomla (System - Redirect) never gets the error. The entry is also there for the plugin, which uses it for addresses outside
  * the forum pages when its advanced mode is on.
  *
- * @since   Kunena 7.2
+ * @since   Kunena 8.0
  */
 abstract class KunenaTopicRedirect
 {
     /**
      * The comment of the entries: it shows where they came from and makes them recognisable when a topic is restored.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public const string COMMENT = 'Kunena: deleted topic';
 
@@ -49,7 +49,7 @@ abstract class KunenaTopicRedirect
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function add(string $url): void
     {
@@ -112,7 +112,7 @@ abstract class KunenaTopicRedirect
      *
      * @return  string  The address, or an empty string when there is none.
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function getOldUrl(KunenaTopic $topic): string
     {
@@ -138,7 +138,7 @@ abstract class KunenaTopicRedirect
      *
      * @return  bool
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isEnabled(): bool
     {
@@ -155,7 +155,7 @@ abstract class KunenaTopicRedirect
      *
      * @return  bool
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function isGone(): bool
     {
@@ -218,7 +218,7 @@ abstract class KunenaTopicRedirect
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public static function remove(string $url): void
     {

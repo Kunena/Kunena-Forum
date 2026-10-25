@@ -20,7 +20,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Kunena rank plugin installer script.
  *
- * @since Kunena 7.2
+ * @since Kunena 8.0
  */
 class plgKunenaAclInstallerScript extends InstallerScript
 {
@@ -28,7 +28,7 @@ class plgKunenaAclInstallerScript extends InstallerScript
      * The extension name. This should be set in the installer script.
      *
      * @var    string
-     * @since  Kunena 7.2
+     * @since  Kunena 8.0
      */
     protected $extension = 'plg_kunena_acl';
 
@@ -41,7 +41,7 @@ class plgKunenaAclInstallerScript extends InstallerScript
      * @return void
      *
      * @throws Exception
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function postflight($type, $parent)
     {
@@ -56,7 +56,7 @@ class plgKunenaAclInstallerScript extends InstallerScript
      * @param   string  $pluginName  The name of the plugin as it is stored in the extensions table.
      *
      * @return  boolean
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function enablePlugin(string $pluginName): bool
     {

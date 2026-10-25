@@ -216,7 +216,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function onUserAfterDelete(AfterDeleteEvent $event): void
     {
@@ -320,7 +320,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      *
      * @return  void
      *
-     * @since   Kunena 7.2
+     * @since   Kunena 8.0
      */
     public function onExtensionBeforeSave(ModelBeforeSaveEvent $event): void
     {

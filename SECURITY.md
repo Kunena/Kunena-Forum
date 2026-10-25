@@ -4,15 +4,15 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 7.0.x   | :white_check_mark: |
+| 7.1.x   | :white_check_mark: |
 | 6.4.x   | :white_check_mark: |
-| < 6.3   | :x:                |
+| < 6.3.x | :x:                |
 
 ## Reporting a Vulnerability
 
 Please send a email to: security@kunena.org with a example or POC.
 
-We will send you a email under a week depending on the aviability of the volunteers.
+We will send you a email within a week depending on the availability of the volunteers.
 After the confirmation we will work on the fix asap.
 
 

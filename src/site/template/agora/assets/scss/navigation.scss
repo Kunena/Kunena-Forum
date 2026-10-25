@@ -87,9 +87,13 @@
     text-align: start;
     border-radius: calc(var(--agora-radius-sm) - 3px);
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
+      color: var(--agora-text);
       text-decoration: none;
       background: var(--agora-surface-hover);
+      border-color: transparent;
     }
   }
 

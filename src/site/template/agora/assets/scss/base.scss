@@ -415,16 +415,37 @@ label {
   --bs-dropdown-divider-bg: var(--agora-border);
   --bs-dropdown-border-radius: var(--agora-radius-sm);
   padding: 0.4rem;
+  /* Cassiopeia gives the menus a white background and a light border. */
+  color: var(--agora-text);
+  background-color: var(--agora-surface);
+  border-color: var(--agora-border);
   box-shadow: var(--agora-shadow-raised);
+
+  .dropdown-divider {
+    border-top-color: var(--agora-border);
+    opacity: 1;
+  }
 }
 
 .dropdown-item {
-  color: var(--bs-dropdown-link-color);
   display: flex;
   gap: 0.5rem;
   align-items: center;
   min-height: calc(var(--agora-touch) - 4px);
+  color: var(--bs-dropdown-link-color);
   border-radius: calc(var(--agora-radius-sm) - 3px);
+
+  &:hover,
+  &:focus {
+    color: var(--bs-dropdown-link-hover-color);
+    background-color: var(--bs-dropdown-link-hover-bg);
+  }
+
+  &.active,
+  &:active {
+    color: var(--agora-accent-text);
+    background-color: var(--bs-dropdown-link-active-bg);
+  }
 }
 
 .modal {

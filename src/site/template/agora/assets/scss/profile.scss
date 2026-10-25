@@ -117,6 +117,38 @@
   > .tab-content {
     padding: 1rem;
   }
+
+  /* The lists of the tabs (posts, subscriptions, favorites, ...): a title of the tab, not of the page. */
+  .tab-pane h1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.5rem;
+    align-items: baseline;
+    margin: 0.25rem 0 0.5rem;
+    font-size: 1.1rem;
+
+    small {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--agora-text-muted);
+    }
+  }
+
+  /* The list is already in the card of the tabs. */
+  .tab-pane .table {
+    box-shadow: none;
+  }
+
+  /* No pagination when the list has only one page. */
+  .tab-pane nav:has(> .pagination):not(:has(.page-item:not(.disabled):not(.active))) {
+    display: none !important;
+  }
+}
+
+@media (min-width: 576px) {
+  .agora-profile-tabs .tab-pane h1 small.d-sm-block {
+    display: inline !important;
+  }
 }
 
 /* The edit form of the profile. */

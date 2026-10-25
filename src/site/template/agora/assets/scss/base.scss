@@ -505,6 +505,11 @@ label {
   flex-wrap: nowrap;
   gap: 0.25rem;
   overflow-x: auto;
+  background: transparent;
+  /* Cassiopeia gives the tabs a light border on every side and a white inner shadow. */
+  border: 0;
+  border-bottom: 1px solid var(--agora-border);
+  box-shadow: none;
   overflow-y: hidden;
   scrollbar-width: thin;
 
@@ -534,6 +539,7 @@ label {
 .nav-tabs + .tab-content {
   color: var(--agora-text);
   background: transparent;
+  border: 0;
 }
 
 .list-group-item {

@@ -670,6 +670,11 @@ class TopicsModel extends KunenaModel
                         $latestCategory = $klatestCategory;
                     }
                 } elseif ($latestCategoryIn && !$klatestContext) {
+                    // A single category or a list in a text (the posts of a profile give 0: all the categories).
+                    if (!\is_array($latestCategory)) {
+                        $latestCategory = explode(',', (string) $latestCategory);
+                    }
+
                     // Check if it selected show all, else show only the category(ies) selected in the list are showed
                     if (\is_array($latestCategory)) {
                         if (\count($latestCategory) == 1) {

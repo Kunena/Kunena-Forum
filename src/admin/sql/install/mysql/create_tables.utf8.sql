@@ -338,7 +338,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_rate`
     `userid`   int(11)               NULL,
     `rate`     mediumint(8) unsigned NOT NULL default '0',
     `time`     datetime 			 NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE KEY `topic_user` (`topic_id`, `userid`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4

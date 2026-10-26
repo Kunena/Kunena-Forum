@@ -68,3 +68,6 @@ INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, 
 VALUES ('com_kunena.mention', 'com_kunena', '', 'COM_KUNENA_MAILTPL_MENTION_SUBJECT', 'COM_KUNENA_MAILTPL_MENTION_BODY', 'COM_KUNENA_MAILTPL_MENTION_HTMLBODY', '', '{"tags":["sitename","author","topic","url"]}');
 INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
 VALUES ('com_kunena.reportmessage', 'com_kunena', '', 'COM_KUNENA_MAILTPL_REPORT_SUBJECT', 'COM_KUNENA_MAILTPL_REPORT_BODY', 'COM_KUNENA_MAILTPL_REPORT_HTMLBODY', '', '{"tags":["sitename","boardtitle","title","sender","reason","report","poster","subject","message","url"]}');
+-- One rating of a user for a topic: the duplicates of a race of two requests are removed, the key keeps it so.
+DELETE r1 FROM `#__kunena_rate` AS r1 INNER JOIN `#__kunena_rate` AS r2 ON r1.`topic_id` = r2.`topic_id` AND r1.`userid` = r2.`userid` AND r1.`id` > r2.`id`;
+ALTER TABLE `#__kunena_rate` ADD UNIQUE KEY `topic_user` (`topic_id`, `userid`);

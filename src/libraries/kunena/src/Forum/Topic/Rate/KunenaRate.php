@@ -345,7 +345,11 @@ class KunenaRate
 
             $response = new KunenaResponseJson(null, 'COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
         } catch (Exception $e) {
-            $response = new KunenaResponseJson($e);
+            // Two requests at the same time: the key of the table (topic_id, userid) keeps one rating, the second one is a
+            // rating which is already there.
+            $response = new KunenaResponseJson(
+                stripos($e->getMessage(), 'Duplicate') !== false ? new RuntimeException('COM_KUNENA_RATE_ALLREADY', 500) : $e
+            );
         }
 
         return $response;

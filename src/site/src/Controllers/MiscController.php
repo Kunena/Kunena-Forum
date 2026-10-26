@@ -57,7 +57,8 @@ class MiscController extends KunenaController
         if ($name) {
             $name = KunenaPath::clean($name);
 
-            if (!is_readable(KPATH_SITE . "/template/{$name}/config/template.xml")) {
+            // The name of a folder of the templates, never a path.
+            if (preg_match('/^[\w\-]+$/', $name) !== 1 || !is_readable(KPATH_SITE . "/template/{$name}/config/template.xml")) {
                 $name = 'aurelia';
             }
 

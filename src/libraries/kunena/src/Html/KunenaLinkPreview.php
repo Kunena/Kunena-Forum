@@ -137,25 +137,42 @@ abstract class KunenaLinkPreview
             return null;
         }
 
-        // Do not let the server read addresses of its own network (private and reserved ranges).
-        $ips = gethostbynamel($parts['host']);
+        // Do not let the server read addresses of its own network: every address of the name (IPv4 and IPv6) must be public.
+        $host = trim($parts['host'], '[]');
+
+        if (filter_var($host, FILTER_VALIDATE_IP)) {
+            $ips = [$host];
+        } else {
+            $ips = gethostbynamel($host) ?: [];
+
+            foreach (@dns_get_record($host, DNS_AAAA) ?: [] as $record) {
+                if (!empty($record['ipv6'])) {
+                    $ips[] = $record['ipv6'];
+                }
+            }
+        }
 
         if (!$ips) {
             return null;
         }
 
         foreach ($ips as $ip) {
-            if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+            if (!static::isPublicAddress($ip)) {
                 return null;
             }
         }
 
+        // The page is read from the address which was checked: a second lookup of the name could give another one (an
+        // address of the own network, given by the DNS of the other site after the check).
+        [$target, $hostHeader] = static::pinned($parts, $ips[0]);
+
         // Many sites refuse a request which does not say who asks.
-        $agent   = 'Mozilla/5.0 (compatible; KunenaLinkPreview/7.2; +' . Uri::root() . ')';
-        $context = stream_context_create(['http' => ['timeout' => $timeout, 'follow_location' => 0, 'ignore_errors' => true, 'header' => "User-Agent: $agent
-Accept: text/html,application/xhtml+xml
-"]]);
-        $body    = @file_get_contents($url, false, $context, 0, 262144);
+        $agent   = 'Mozilla/5.0 (compatible; KunenaLinkPreview/8.0; +' . Uri::root() . ')';
+        $context = stream_context_create([
+            'http' => ['timeout' => $timeout, 'follow_location' => 0, 'ignore_errors' => true, 'header' => "Host: $hostHeader\r\nUser-Agent: $agent\r\nAccept: text/html,application/xhtml+xml\r\n"],
+            'ssl'  => ['peer_name' => $host, 'SNI_enabled' => true, 'verify_peer' => true, 'verify_peer_name' => true],
+        ]);
+        $body = @file_get_contents($target, false, $context, 0, 262144);
 
         if ($body === false || $body === '') {
             return null;
@@ -191,6 +208,74 @@ Accept: text/html,application/xhtml+xml
         }
 
         return $body;
+    }
+
+    /**
+     * Is the address one of the public internet? Not the own computer, not a private or reserved network, and not an IPv6
+     * address which leads to IPv4 (mapped, NAT64, 6to4, Teredo), where the IPv4 address could be one of the own network.
+     *
+     * @param   string  $ip  The address.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function isPublicAddress(string $ip): bool
+    {
+        $bytes = @inet_pton($ip);
+
+        if ($bytes === false) {
+            return false;
+        }
+
+        if (\strlen($bytes) === 16) {
+            // IPv4 written as IPv6 (::ffff:a.b.c.d): the IPv4 address decides
+            if (str_starts_with($bytes, str_repeat("\0", 10) . "\xff\xff")) {
+                return static::isPublicAddress(inet_ntop(substr($bytes, 12)));
+            }
+
+            $hex = bin2hex($bytes);
+
+            // NAT64 (64:ff9b::/96, 64:ff9b:1::/48), 6to4 (2002::/16), Teredo (2001::/32), documentation (2001:db8::/32)
+            if (
+                str_starts_with($hex, '0064ff9b0000000000000000') || str_starts_with($hex, '0064ff9b0001')
+                || str_starts_with($hex, '2002') || str_starts_with($hex, '20010000') || str_starts_with($hex, '20010db8')
+            ) {
+                return false;
+            }
+        } else {
+            $long = ip2long($ip);
+
+            // The shared address space of the providers (100.64.0.0/10), the IETF protocol assignments (192.0.0.0/24) and
+            // the networks for benchmarks (198.18.0.0/15), which filter_var lets through.
+            if (
+                ($long & 0xFFC00000) === (100 << 24 | 64 << 16) || ($long & 0xFFFFFF00) === (192 << 24)
+                || ($long & 0xFFFE0000) === (198 << 24 | 18 << 16)
+            ) {
+                return false;
+            }
+        }
+
+        return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false;
+    }
+
+    /**
+     * The address of the page with the checked IP address in place of the name, and the Host header with the name.
+     *
+     * @param   array   $parts  The parts of the address of the page (parse_url).
+     * @param   string  $ip     The checked IP address of the name.
+     *
+     * @return  array  The address to read, the Host header.
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function pinned(array $parts, string $ip): array
+    {
+        $port = isset($parts['port']) ? ':' . (int) $parts['port'] : '';
+        $ip   = str_contains($ip, ':') ? '[' . $ip . ']' : $ip;
+        $url  = strtolower($parts['scheme']) . '://' . $ip . $port . ($parts['path'] ?? '/') . (isset($parts['query']) ? '?' . $parts['query'] : '');
+
+        return [$url, trim($parts['host'], '[]') . $port];
     }
 
     /**

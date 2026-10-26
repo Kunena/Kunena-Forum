@@ -125,4 +125,58 @@ class KunenaLinkPreviewTest extends UnitTestCase
         $this->assertSame(10, mb_strlen($text));
         $this->assertStringEndsWith('…', $text);
     }
+
+    /**
+     * The addresses the server may read a page from: only public ones, never one of its own network, also when the address
+     * is written as IPv6 or reached through a gateway which leads to IPv4 (NAT64, 6to4, Teredo).
+     */
+    public static function addresses(): array
+    {
+        return [
+            'a public IPv4 address'            => ['93.184.215.14', true],
+            'a public IPv6 address'            => ['2606:2800:21f:cb07:6820:80da:af6b:8b2c', true],
+            'the loopback'                     => ['127.0.0.1', false],
+            'another loopback'                 => ['127.1.2.3', false],
+            'a private network'                => ['10.0.0.5', false],
+            'a private network (192.168)'      => ['192.168.1.1', false],
+            'a private network (172.16)'       => ['172.16.0.1', false],
+            'the cloud metadata service'       => ['169.254.169.254', false],
+            'the shared address space'         => ['100.64.0.1', false],
+            'no address'                       => ['0.0.0.0', false],
+            'the IPv6 loopback'                => ['::1', false],
+            'the IPv6 unspecified address'     => ['::', false],
+            'a unique local IPv6 address'      => ['fd00::1', false],
+            'a link local IPv6 address'        => ['fe80::1', false],
+            'IPv4 in IPv6 (mapped)'            => ['::ffff:127.0.0.1', false],
+            'IPv4 in IPv6 (mapped, hex)'       => ['::ffff:7f00:1', false],
+            'NAT64 to the loopback'            => ['64:ff9b::7f00:1', false],
+            'NAT64 to a public address'        => ['64:ff9b::5db8:d70e', false],
+            '6to4 to the loopback'             => ['2002:7f00:1::1', false],
+            'Teredo'                           => ['2001:0:4136:e378:8000:63bf:3fff:fdd2', false],
+            'the documentation range'          => ['2001:db8::1', false],
+            'not an address'                   => ['example.com', false],
+        ];
+    }
+
+    #[DataProvider('addresses')]
+    public function testOnlyPublicAddressesAreRead(string $ip, bool $public): void
+    {
+        $this->assertSame($public, $this->call('isPublicAddress', $ip));
+    }
+
+    /**
+     * The page is read from the address which was checked, not from a second lookup of the name (which could give another
+     * address): the address goes into the URL, the name stays in the Host header and for the certificate.
+     */
+    public function testThePageIsReadFromTheCheckedAddress(): void
+    {
+        $this->assertSame(
+            ['https://93.184.215.14/a/b?c=1', 'example.com'],
+            $this->call('pinned', parse_url('https://example.com/a/b?c=1#frag'), '93.184.215.14')
+        );
+        $this->assertSame(
+            ['http://[2606:2800:21f:cb07:6820:80da:af6b:8b2c]:8080/', 'example.com:8080'],
+            $this->call('pinned', parse_url('http://user:pass@example.com:8080'), '2606:2800:21f:cb07:6820:80da:af6b:8b2c')
+        );
+    }
 }

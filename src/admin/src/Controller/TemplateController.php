@@ -579,7 +579,8 @@ class TemplateController extends FormController
         $cid      = $this->input->get('cid', [], 'array');
         $template = array_shift($cid);
 
-        if (!$template) {
+        // The name of a folder in the templates, no path (../ would lead out of the folder of the templates).
+        if (!$this->isSafeTemplateName($template)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error');
 
             return;

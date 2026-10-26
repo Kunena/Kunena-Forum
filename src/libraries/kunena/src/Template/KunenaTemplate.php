@@ -1316,6 +1316,11 @@ HTML;
             $name = $input->cookie->getString('kunena_template', KunenaFactory::getConfig()->template);
         }
 
+        // The name of a folder of the templates, never a path (../ leads out of the folder, and its template.php is loaded).
+        if (!\is_string($name) || preg_match('/^[\w\-]+$/', $name) !== 1) {
+            $name = KunenaFactory::getConfig()->template;
+        }
+
         $name = KunenaPath::clean($name);
 
         if (empty(self::$_instances[$name])) {

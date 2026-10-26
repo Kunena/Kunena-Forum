@@ -240,6 +240,7 @@ class AttachmentsModel extends ListModel
 
         // Add the list ordering clause.
         $direction = strtoupper((string) $this->state->get('list.direction'));
+        $direction = \in_array($direction, ['ASC', 'DESC'], true) ? $direction : 'ASC';
 
         switch ($this->state->get('list.ordering')) {
             case 'filename':

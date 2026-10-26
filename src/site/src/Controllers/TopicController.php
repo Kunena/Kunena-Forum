@@ -3121,6 +3121,27 @@ class TopicController extends KunenaController
 
             return;
         }
+
+        // The flood protection of the forum is for the reports too (except for the moderators): each report sends the
+        // moderators an e-mail and a notification. The time of the last report of the user is kept in a cache of its own.
+        $flood = (int) $this->config->floodProtection;
+
+        if ($flood > 0 && !$this->me->isModerator()) {
+            $floodCache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController(
+                'output',
+                ['defaultgroup' => 'kunena_report_flood', 'caching' => true, 'lifetime' => (int) ceil($flood / 60) + 1]
+            );
+            $floodKey   = 'user' . (int) $this->me->userid;
+
+            if ((int) $floodCache->get($floodKey) > time() - $flood) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_REPORT_FLOOD', $flood), 'error');
+                $this->setRedirectBack();
+
+                return;
+            }
+
+            $floodCache->store((string) time(), $floodKey);
+        }
         $acl         = KunenaAccess::getInstance();
         $emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false);
         $msglink     = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $target->getPermaUrl(null, false);

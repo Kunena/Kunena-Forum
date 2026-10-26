@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
             <?php echo KunenaIcons::user(); ?>
         </button>
         <div class="dropdown-menu dropdown-menu-end" id="kmobile-userdropdown">
-            <form id="kmobile-loginform" action="<?php echo KunenaRoute::current('index.php?option=com_kunena'); ?>" method="post">
+            <form id="kmobile-loginform" action="<?php echo $this->escape((string) KunenaRoute::current(true)); ?>" method="post">
                 <input type="hidden" name="view" value="user"/>
                 <input type="hidden" name="task" value="login"/>
                 <?php echo HTMLHelper::_('form.token'); ?>

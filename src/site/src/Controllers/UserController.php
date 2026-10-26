@@ -1677,20 +1677,26 @@ class UserController extends KunenaController
         if (($this->me->exists() || $this->config->userlistAllowed) && $user !== '') {
             $db     = Factory::getContainer()->get('DatabaseDriver');
             $query  = $db->createQuery();
-            $query->select($db->quoteName(['id', 'username']))
-                ->from($db->quoteName('#__users'))
-                ->where($db->quoteName('block') . ' = 0')
-                ->where($db->quoteName('username') . ' LIKE ' . $db->quote('%' . $db->escape($user, true) . '%'))
-                ->order($db->quoteName('username') . ' ASC')
+            // The user is found by any of his names, like in the list of the users.
+            $query->select($db->quoteName('u.id'))
+                ->from($db->quoteName('#__users', 'u'))
+                ->where($db->quoteName('u.block') . ' = 0')
+                ->where(KunenaUserName::getSearchCondition($user, 'u'))
+                ->order($db->quoteName('u.username') . ' ASC')
                 ->setLimit(10);
+
+            // The super users are not in the list of the users when the forum hides them.
+            if ($this->config->superAdminUserlist) {
+                $query->where($db->quoteName('u.id') . ' NOT IN (SELECT ' . $db->quoteName('user_id') . ' FROM '
+                    . $db->quoteName('#__user_usergroup_map') . ' WHERE ' . $db->quoteName('group_id') . ' = 8)');
+            }
+
             $db->setQuery($query);
 
-            // The name which the forum shows (not the real name of Joomla when the forum shows usernames).
-            foreach ((array) $db->loadObjectList() as $found) {
-                $row[] = (object) [
-                    'name'     => KunenaUserHelper::get((int) $found->id)->getName('', false),
-                    'username' => $found->username,
-                ];
+            // Only the name which the forum shows: the username is the name with which the user logs in, and the forum may keep
+            // it for itself (when it shows the real names).
+            foreach ((array) $db->loadColumn() as $id) {
+                $row[] = (object) ['name' => KunenaUserHelper::get((int) $id)->getName('', false)];
             }
         }
 

@@ -768,8 +768,8 @@ class KunenaMessage extends KunenaDatabaseObject
      */
     protected function authorisePermdelete(KunenaUser $user)
     {
-
-        if ($user->isAdmin() || $user->isModerator()) {
+        // The administrators always; a moderator (also a global one) when the option allows it to the moderators.
+        if ($user->isAdmin()) {
             return false;
         }
 

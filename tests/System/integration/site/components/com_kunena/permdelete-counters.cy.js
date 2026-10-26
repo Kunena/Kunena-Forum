@@ -6,6 +6,8 @@ describe('Kunena counters: a topic removed for ever', () => {
   const stamp = Date.now();
   const admin = 797;
   const ids = {};
+  // The option moderatorPermDelete when a test changed it (put back after the test, also after a failure).
+  let permDelete;
 
   const counters = () => cy.task('queryDB', `SELECT posts, thankyou FROM #__kunena_users WHERE userid = ${ids.user}`).then((rows) => rows[0]);
 
@@ -46,6 +48,13 @@ describe('Kunena counters: a topic removed for ever', () => {
   });
 
   afterEach(() => {
+    if (permDelete !== undefined) {
+      cy.kunena_setOption('moderatorPermDelete', permDelete);
+      permDelete = undefined;
+    }
+
+    cy.task('queryDB', 'UPDATE #__kunena_users SET moderator = 0 WHERE userid = 798');
+    cy.task('queryDB', 'DELETE FROM #__kunena_user_categories WHERE user_id = 798 AND category_id = 0');
     cy.task('queryDB', `DELETE FROM #__kunena_thankyou WHERE targetuserid = ${ids.user}`);
     cy.task('queryDB', `DELETE FROM #__kunena_messages_text WHERE mesid = ${ids.message}`);
     cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE id = ${ids.message}`);
@@ -82,5 +91,17 @@ describe('Kunena counters: a topic removed for ever', () => {
       expect(Number(row.posts), 'the posts of the author').to.eq(0);
       expect(Number(row.thankyou), 'the thanks of the author').to.eq(0);
     });
+  });
+  it('does not let a global moderator remove a topic for ever when the option does not allow it to the moderators', () => {
+    // The option "Allow moderators to permdelete" was only for the moderators of a category: a global moderator always could.
+    cy.kunena_setOption('moderatorPermDelete', '0').then((old) => {
+      permDelete = old ?? null;
+    });
+    cy.task('queryDB', "INSERT INTO #__kunena_user_categories (user_id, category_id, role, allreadtime, subscribed, params) VALUES (798, 0, 1, UNIX_TIMESTAMP(), 0, '') ON DUPLICATE KEY UPDATE role = 1");
+    cy.task('queryDB', 'UPDATE #__kunena_users SET moderator = 1 WHERE userid = 798');
+    cy.doFrontendLogin('ci-user', 'ci-user-17082005-x', false);
+    adminTask('permdelete');
+
+    cy.task('queryDB', `SELECT id FROM #__kunena_topics WHERE id = ${ids.topic}`).should('have.length', 1);
   });
 });

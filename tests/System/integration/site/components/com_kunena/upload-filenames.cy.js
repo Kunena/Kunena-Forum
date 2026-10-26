@@ -5,6 +5,7 @@ describe('Kunena upload: the names of the files', () => {
   const base = '/index.php?option=com_kunena';
   const folder = 'media/kunena/attachments/798';
   let token;
+  let protection;
 
   const upload = (filename, mime, content, extra = {}) => {
     const size = Buffer.byteLength(content);
@@ -29,6 +30,12 @@ describe('Kunena upload: the names of the files', () => {
   });
 
   afterEach(() => {
+    // The option which a test changed, put back also after a failure.
+    if (protection !== undefined) {
+      cy.kunena_setOption('attachmentProtection', protection);
+      protection = undefined;
+    }
+
     cy.task('queryDB', 'DELETE FROM #__kunena_attachments WHERE userid = 798 AND mesid = 0');
     cy.task('deleteRelativePath', folder);
   });
@@ -84,5 +91,31 @@ describe('Kunena upload: the names of the files', () => {
   it('accepts a name with spaces and characters of other languages', () => {
     upload('spaces and ünïcode ☃.txt', 'text/plain', 'x').its('success').should('eq', true);
     upload('<img src=x onerror=__xss=1>.txt', 'text/plain', 'x').its('success').should('eq', false);
+  });
+
+  it('gives the download the name of the upload, and no other name (filename* in the name)', () => {
+    // A quote in the name ended the name in the header Content-Disposition: the rest of the name became a second parameter,
+    // filename*, which the browsers take before filename, and the file was saved with a name (and an extension) which the
+    // forum does not allow for an upload.
+    const name = 'a"; filename*=UTF-8\'\'evil.exe; x=".txt';
+
+    cy.kunena_setOption('attachmentProtection', '1').then((old) => {
+      protection = old ?? null;
+    });
+    upload(name, 'text/plain', 'x').then((body) => {
+      if (body.success === false) {
+        return;
+      }
+
+      cy.task('queryDB', 'SELECT id FROM #__kunena_attachments WHERE userid = 798 AND mesid = 0 ORDER BY id DESC LIMIT 1').then((rows) => {
+        cy.request(`${base}&view=attachment&id=${rows[0].id}&download=1&format=raw`).then((response) => {
+          // Two parameters: filename="..." (no quote in it) and filename*=UTF-8''... which is the whole name of the upload.
+          const parts = /^attachment; filename="([^"]*)"; filename\*=UTF-8''(\S+)$/.exec(response.headers['content-disposition']);
+
+          expect(parts, 'the header').not.to.be.null;
+          expect(decodeURIComponent(parts[2]), 'the name of the download').to.eq(name);
+        });
+      });
+    });
   });
 });

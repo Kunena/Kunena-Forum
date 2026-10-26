@@ -154,6 +154,9 @@ class AttachmentDisplay extends KunenaControllerDisplay
         header('ETag: ' . $attachment->hash);
         header('Pragma: public');
         header('X-Content-Type-Options: nosniff');
+        // A file opened by itself runs no script and reaches no other address (a picture with a script, an SVG): it is shown,
+        // and a picture in a page is not changed by it.
+        header("Content-Security-Policy: default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; sandbox");
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
 
         if (!$download && $attachment->isImage()) {
@@ -173,7 +176,7 @@ class AttachmentDisplay extends KunenaControllerDisplay
             }
 
             header('Content-type: ' . $attachment->filetype);
-            header('Content-Disposition: inline; filename="' . $attachment->getFilename(false) . '"');
+            header('Content-Disposition: inline; ' . self::dispositionName($attachment->getFilename(false)));
         } else {
             // Otherwise force file download.
             header('Expires: 0');
@@ -182,7 +185,7 @@ class AttachmentDisplay extends KunenaControllerDisplay
             header('Content-Type: application/force-download');
             header('Content-Type: application/octet-stream');
             header('Content-Type: application/download');
-            header('Content-Disposition: attachment; filename="' . $attachment->getFilename(false) . '"');
+            header('Content-Disposition: attachment; ' . self::dispositionName($attachment->getFilename(false)));
         }
 
         header('Content-Transfer-Encoding: binary');
@@ -213,5 +216,22 @@ class AttachmentDisplay extends KunenaControllerDisplay
         $this->me       = KunenaUserHelper::getMyself();
         $this->config   = KunenaConfig::getInstance();
         $this->document = $this->app->getDocument();
+    }
+
+    /**
+     * The name of the file in the header Content-Disposition. The name of the upload can have any character: a quote in it
+     * ended the name, and the rest became a second name (filename*), which the browsers take before the first one.
+     *
+     * @param   string  $name  The name of the file.
+     *
+     * @return  string  filename="..." in ASCII and filename*=UTF-8''... with the whole name.
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function dispositionName(string $name): string
+    {
+        $ascii = preg_replace('/[^\x20-\x7e]|["\\\\;]/', '_', $name);
+
+        return 'filename="' . $ascii . '"; filename*=UTF-8\'\'' . rawurlencode($name);
     }
 }

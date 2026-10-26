@@ -37,6 +37,13 @@ abstract class KunenaDraftHelper
     public const int MAX_DRAFTS = 50;
 
     /**
+     * The most characters of the text of a draft.
+     *
+     * @since   Kunena 8.0
+     */
+    public const int MAX_LENGTH = 200000;
+
+    /**
      * Form fields which are kept in a draft (values are the defaults the editor needs).
      *
      * @var     array
@@ -200,11 +207,13 @@ abstract class KunenaDraftHelper
 
         $fields  = array_intersect_key($fields, static::$defaults) + static::$defaults;
         $subject = mb_substr(trim((string) $fields['subject']), 0, 255);
-        $message = (string) $fields['message'];
-        $catid   = (int) $fields['catid'];
-        $json    = json_encode($fields, JSON_INVALID_UTF8_SUBSTITUTE);
-        $now     = time();
-        $db      = Factory::getContainer()->get(DatabaseInterface::class);
+        // The text has a limit (more than any message): a user has up to MAX_DRAFTS drafts and the text is kept twice.
+        $fields['message'] = mb_substr((string) $fields['message'], 0, static::MAX_LENGTH);
+        $message           = $fields['message'];
+        $catid             = (int) $fields['catid'];
+        $json              = json_encode($fields, JSON_INVALID_UTF8_SUBSTITUTE);
+        $now               = time();
+        $db                = Factory::getContainer()->get(DatabaseInterface::class);
 
         if ($draftId && static::get($draftId, $userid)) {
             $query = $db->createQuery()

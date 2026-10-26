@@ -344,8 +344,16 @@ class UserController extends KunenaController
             $errors++;
             $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_ACCOUNT_NOT_SAVED'), 'error');
         } elseif ($this->app->getInput()->post->get('nickname', null, 'raw') !== null && $this->user->id) {
-            // The nickname is a custom field of the Joomla users: it is saved with the account.
-            KunenaUserName::setDisplayName((int) $this->user->id, (string) $this->app->getInput()->post->get('nickname', '', 'raw'));
+            // The nickname is a custom field of the Joomla users: it is saved with the account. The name of another member is
+            // no nickname (the posts would carry his name).
+            $nickname = (string) $this->app->getInput()->post->get('nickname', '', 'raw');
+
+            if (KunenaUserName::isTaken($nickname, (int) $this->user->id)) {
+                $errors++;
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NICKNAME_TAKEN'), 'error');
+            } else {
+                KunenaUserName::setDisplayName((int) $this->user->id, $nickname);
+            }
         }
 
         // Save Kunena user.
@@ -696,6 +704,14 @@ class UserController extends KunenaController
         $this->user = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
 
         if ($this->app->getInput()->get('hidemail', null) === null) {
+            return;
+        }
+
+        // The settings (hide the e-mail address, show the online status and the age, the e-mails of mentions) are the choices
+        // of the user: a moderator who saves the profile of a user does not change them (he made the e-mail address public).
+        $me = KunenaUserHelper::getMyself();
+
+        if ((int) $this->user->userid !== (int) $me->userid && !$me->isAdmin()) {
             return;
         }
 

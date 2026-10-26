@@ -50,6 +50,19 @@ describe('Kunena profiles: who may save whose profile', () => {
     });
   });
 
+  it('does not let a moderator change the privacy settings of a user', () => {
+    // Hide the e-mail address, show the online status, show the age: the choices of the user (a moderator made the e-mail
+    // address of a user public).
+    cy.task('queryDB', `INSERT INTO #__kunena_users (userid, hideEmail, showOnline) VALUES (${second}, 1, 1)`);
+    cy.doFrontendLogin(user.name, user.password, false);
+    save({ userid: second, hidemail: 0, showonline: 0, personalText: 'A text of the moderator' });
+    cy.task('queryDB', `SELECT hideEmail, showOnline, personalText FROM #__kunena_users WHERE userid = ${second}`).then((rows) => {
+      expect(rows[0].personalText, 'the forum profile, which the moderator may change').to.eq('A text of the moderator');
+      expect(Number(rows[0].hideEmail), 'the e-mail address stays hidden').to.eq(1);
+      expect(Number(rows[0].showOnline), 'the online status').to.eq(1);
+    });
+  });
+
   it('does not let a moderator change the profile of an administrator', () => {
     cy.doFrontendLogin(user.name, user.password, false);
     save({ userid: admin, personalText: 'A text of the moderator' });

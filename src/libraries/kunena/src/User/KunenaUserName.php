@@ -284,6 +284,58 @@ abstract class KunenaUserName
     }
 
     /**
+     * Is the nickname the name of another member: his username, his real name or his nickname (in any case)? A user who took
+     * the name of another member (an administrator) as his nickname posted under that name.
+     *
+     * @param   string  $nickname  The nickname.
+     * @param   int     $userid    The user who wants it.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isTaken(string $nickname, int $userid): bool
+    {
+        $nickname = trim(preg_replace('/\s+/', ' ', strip_tags($nickname)));
+
+        if ($nickname === '') {
+            return false;
+        }
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__users'))
+            ->where('(LOWER(' . $db->quoteName('username') . ') = LOWER(:name1) OR LOWER(' . $db->quoteName('name') . ') = LOWER(:name2))')
+            ->where($db->quoteName('id') . ' <> :userid')
+            ->bind(':name1', $nickname)
+            ->bind(':name2', $nickname)
+            ->bind(':userid', $userid, ParameterType::INTEGER);
+
+        if ((int) $db->setQuery($query)->loadResult() > 0) {
+            return true;
+        }
+
+        $field = self::getDisplayNameField();
+
+        if (!$field) {
+            return false;
+        }
+
+        $itemId = (string) $userid;
+        $query  = $db->createQuery()
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__fields_values'))
+            ->where($db->quoteName('field_id') . ' = ' . $field)
+            ->where('LOWER(' . $db->quoteName('value') . ') = LOWER(:nickname)')
+            ->where($db->quoteName('item_id') . ' <> :item')
+            ->bind(':nickname', $nickname)
+            ->bind(':item', $itemId);
+
+        return (int) $db->setQuery($query)->loadResult() > 0;
+    }
+
+    /**
      * Save the nickname of a user in the Joomla custom field (an empty nickname removes the value).
      *
      * @param   int     $userid    The user id.

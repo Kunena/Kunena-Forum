@@ -3023,6 +3023,21 @@ class TopicController extends KunenaController
             return; // -- abort
         }
 
+        // The moderator may write in the target, or moderates it: else the move puts posts where he may not write (a locked
+        // category, a topic which he may not answer in a category which he does not moderate).
+        if ($target instanceof KunenaTopic) {
+            $allowed = $target->isAuthorised('reply') || $target->getCategory()->isAuthorised('moderate');
+        } else {
+            $allowed = $target->isAuthorised('topic.create') || $target->isAuthorised('moderate');
+        }
+
+        if (!$allowed) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirect($redirect);
+
+            return; // -- abort
+        }
+
         $changesubject  = $this->app->getInput()->getBool('changesubject', false);
         $subject        = $this->app->getInput()->getString('subject', '');
         $shadow         = $this->app->getInput()->getBool('shadow', false);

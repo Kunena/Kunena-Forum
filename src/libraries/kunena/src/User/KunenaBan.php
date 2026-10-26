@@ -667,6 +667,38 @@ class KunenaBan
     }
 
     /**
+     * Was the ban, as it is stored now (before the save of the changes), a block which is in force? Then the forum blocked the
+     * account of Joomla, and the end of the block unblocks it.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    protected function wasBlocking(): bool
+    {
+        if (!$this->id) {
+            return false;
+        }
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery()
+            ->select($db->quoteName(['blocked', 'expiration']))
+            ->from($db->quoteName('#__kunena_users_banned'))
+            ->where($db->quoteName('id') . ' = ' . (int) $this->id);
+        $db->setQuery($query);
+        $stored = $db->loadObject();
+
+        if (!$stored || (int) $stored->blocked !== 1) {
+            return false;
+        }
+
+        $before             = clone $this;
+        $before->expiration = $stored->expiration;
+
+        return $before->isEnabled();
+    }
+
+    /**
      * @return  boolean
      *
      * @since   Kunena 6.0
@@ -839,17 +871,21 @@ class KunenaBan
                 throw new KunenaException("User {$this->userid} does not exist!");
             }
 
-            $banlevel = 0;
-
             if ($this->isEnabled()) {
-                $banlevel = $this->blocked;
-
                 $app = Factory::getApplication();
                 $app->logout((int) $this->userid);
             }
 
-            if ($user->block != $banlevel) {
-                $user->block = $banlevel;
+            // Only a block of the forum blocks the account of Joomla, and only the end of such a block unblocks it: a ban
+            // leaves the account as it is (it unblocked an account which an administrator had blocked in Joomla).
+            $blocks    = $this->isEnabled() && (int) $this->blocked === 1;
+            $blockedBy = !$isnew && $this->wasBlocking();
+
+            if ($blocks && !$user->block) {
+                $user->block = 1;
+                $user->save();
+            } elseif (!$blocks && $blockedBy && $user->block) {
+                $user->block = 0;
                 $user->save();
             }
 

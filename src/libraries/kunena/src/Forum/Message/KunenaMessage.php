@@ -1929,9 +1929,8 @@ class KunenaMessage extends KunenaDatabaseObject
                 $userfromparentname = 'anonymous';
             }
 
-            $find             = ['/\[confidential\](.*?)\[\/confidential\]/su'];
-            $replace          = '';
-            $text             = preg_replace($find, $replace, $this->message);
+            // The confidential text like the parser hides it: the tags in any case, a block in a block.
+            $text             = KunenaParser::removeBlocks((string) $this->message, ['confidential']);
             $message->message = "[quote=\"{$userfromparentname} post={$this->id} userid={$useridfromparent}\"]" . $text . "[/quote]";
         } else {
             if (\is_array($safefields)) {

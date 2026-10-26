@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Image;
 \defined('_JEXEC') or die;
 
 use Exception;
+use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Kunena\Forum\Libraries\Folder\KunenaFolder;
@@ -59,6 +60,11 @@ class KunenaImageHelper
             $info = KunenaImage::getImageFileProperties($file);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
+        }
+
+        // A picture whose pixels do not fit in the memory of PHP is not decoded (it ended the request in a fatal error).
+        if (!KunenaImage::canDecode((int) $info->width, (int) $info->height)) {
+            throw new Exception(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_TOO_MANY_PIXELS'));
         }
 
         if ($info->width > $maxWidth || $info->height > $maxHeight) {

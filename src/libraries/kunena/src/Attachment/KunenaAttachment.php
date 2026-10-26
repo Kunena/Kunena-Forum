@@ -1133,6 +1133,11 @@ class KunenaAttachment extends KunenaDatabaseObject
                     return false;
                 }
 
+                // A picture whose pixels do not fit in the memory of PHP is no attachment (decoded, it ended the request).
+                if (!KunenaImage::canDecode((int) $imageInfo->width, (int) $imageInfo->height)) {
+                    return false;
+                }
+
                 if ($file->size / 1024 > (float) $config->imageSize || $imageInfo->width > $config->imageWidth || $imageInfo->height > $config->imageHeight) {
                     // Calculate quality for both JPG and PNG.
                     $quality = $config->imageQuality;

@@ -32,6 +32,46 @@ use stdClass;
 class KunenaImage extends Image
 {
     /**
+     * Do the pixels of a picture fit in the memory which PHP has left, to decode and to resize it? A picture which is small on
+     * disk can have very many pixels (30000 x 30000 is 107 KB as a PNG of one bit): decoded, it took more memory than PHP may
+     * use, and the request ended in a fatal error. GD needs about 5 bytes for a pixel (with the copy of a resize).
+     *
+     * @param   integer  $width   The width in pixels.
+     * @param   integer  $height  The height in pixels.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function canDecode(int $width, int $height): bool
+    {
+        if ($width < 1 || $height < 1) {
+            return false;
+        }
+
+        $limit = trim((string) \ini_get('memory_limit'));
+        $bytes = (float) $limit;
+
+        switch (strtolower(substr($limit, -1))) {
+            case 'g':
+                $bytes *= 1024;
+                // No break
+            case 'm':
+                $bytes *= 1024;
+                // No break
+            case 'k':
+                $bytes *= 1024;
+        }
+
+        // No limit of PHP: still not more than 100 million pixels.
+        if ($bytes <= 0) {
+            return (float) $width * $height <= 100000000;
+        }
+
+        return memory_get_usage() + 5.0 * $width * $height + 16 * 1024 * 1024 < $bytes;
+    }
+
+    /**
      * Correct Image Orientation
      *
      * @return  void

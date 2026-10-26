@@ -824,6 +824,14 @@ class TopicController extends KunenaController
                 if ($attachment->isImage()) {
                     $imageInfo = KunenaImage::getImageFileProperties($uploadFile);
 
+                    // A picture whose pixels do not fit in the memory of PHP is not decoded (it ended the request in a fatal
+                    // error, a picture of a few KB can have very many pixels): the file is removed.
+                    if (!KunenaImage::canDecode((int) $imageInfo->width, (int) $imageInfo->height)) {
+                        @unlink($uploadFile);
+
+                        throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_TOO_MANY_PIXELS'), 400);
+                    }
+
                     if ($imageInfo->width > $this->config->imageWidth || $imageInfo->height > $this->config->imageHeight) {
                         // Calculate quality for both JPG and PNG.
                         $quality = $this->config->imageQuality;

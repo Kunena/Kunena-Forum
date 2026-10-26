@@ -5,7 +5,9 @@ describe('Kunena search: the hidden parts of a message', () => {
   const stamp = Date.now();
   const user = { name: 'ci-user', password: 'ci-user-17082005-x', id: 798 };
   const admin = 797;
-  const words = { open: `zqxopen${stamp}`, hidden: `zqxhidden${stamp}`, confidential: `zqxconf${stamp}`, own: `zqxown${stamp}`, nested: `zqxnest${stamp}` };
+  const words = { open: `zqxopen${stamp}`, hidden: `zqxhidden${stamp}`, confidential: `zqxconf${stamp}`, own: `zqxown${stamp}`, nested: `zqxnest${stamp}`,
+    spacedHidden: `zqxsphide${stamp}`, spacedConfidential: `zqxspconf${stamp}`,
+  };
   const messages = {
     hidden: { author: admin, text: `${words.open} and [hide]${words.hidden}[/hide]` },
     confidential: { author: admin, text: `[confidential]${words.confidential}[/confidential] of the administrator` },
@@ -13,6 +15,9 @@ describe('Kunena search: the hidden parts of a message', () => {
     // A block in a block of the same tag: the word after the inner block is hidden too (the pattern stopped at the first
     // closing tag and the search found the word).
     nested: { author: admin, text: `[confidential]a[confidential]b[/confidential]${words.nested}[/confidential] nested` },
+    // A closing tag with a space ([/hide ]) closes the block for the parser too: the message was not looked at for hidden parts
+    // (only the ones with [/hide] or [/confidential] were), and the search found the words.
+    spaced: { author: admin, text: `[hide]${words.spacedHidden}[/hide ] and [confidential]${words.spacedConfidential}[/confidential ]` },
   };
 
   const addMessage = (name, { author, text }) => cy.task(
@@ -53,6 +58,8 @@ describe('Kunena search: the hidden parts of a message', () => {
     found(words.hidden).should('deep.eq', []);
     found(words.confidential).should('deep.eq', []);
     found(words.nested).should('deep.eq', []);
+    found(words.spacedHidden).should('deep.eq', []);
+    found(words.spacedConfidential).should('deep.eq', []);
   });
 
   it('finds for a user the hidden words and his own confidential ones, and not those of another', () => {
@@ -61,6 +68,8 @@ describe('Kunena search: the hidden parts of a message', () => {
     found(words.own).should('deep.eq', ['own']);
     found(words.confidential).should('deep.eq', []);
     found(words.nested).should('deep.eq', []);
+    found(words.spacedHidden).should('deep.eq', ['spaced']);
+    found(words.spacedConfidential).should('deep.eq', []);
   });
 
   it('finds for a moderator everything', () => {

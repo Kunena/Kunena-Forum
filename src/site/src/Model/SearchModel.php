@@ -190,8 +190,8 @@ class SearchModel extends KunenaModel
             $stripped = 'REGEXP_REPLACE(' . $stripped . ', ' . $pattern . ", '')";
         }
 
-        // The regular expression runs for the messages with such a part only.
-        $text = "CASE WHEN t.message LIKE '%[/hide]%' OR t.message LIKE '%[/confidential]%' THEN {$stripped} ELSE t.message END";
+        // The regular expression runs for the messages with such a part only: a closing tag with a space ([/hide ]) is one too.
+        $text = "CASE WHEN t.message LIKE '%[/hide%' OR t.message LIKE '%[/confidential%' THEN {$stripped} ELSE t.message END";
 
         // The author sees his own confidential parts.
         if ($this->me->exists()) {

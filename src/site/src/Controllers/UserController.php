@@ -950,7 +950,7 @@ class UserController extends KunenaController
         // The ban box of a message goes back to the page (of the same site) where it was opened.
         $return = $this->app->getInput()->getString('return', '');
 
-        $this->setRedirect($return !== '' && Uri::isInternal($return) ? $return : $user->getUrl(false));
+        $this->setRedirect($return !== '' && KunenaRoute::isInternal($return) ? $return : $user->getUrl(false));
     }
 
     // Internal functions:
@@ -1095,7 +1095,7 @@ class UserController extends KunenaController
         // Get the return url from the request and validate that it is internal.
         $return = base64_decode($input->post->get('return', '', 'BASE64'));
 
-        if (!$error && $return && Uri::isInternal($return)) {
+        if (!$error && $return && KunenaRoute::isInternal($return)) {
             // Redirect the user.
             $this->setRedirect(Route::_($return, false));
 
@@ -1130,7 +1130,7 @@ class UserController extends KunenaController
         if (!empty($this->app->getInput()->getBase64('return'))) {
             $return = base64_decode($this->app->getInput()->getBase64('return'));
 
-            if ($return && Uri::isInternal($return)) {
+            if ($return && KunenaRoute::isInternal($return)) {
                 // Redirect the user.
                 $this->setRedirect(Route::_($return, false));
 

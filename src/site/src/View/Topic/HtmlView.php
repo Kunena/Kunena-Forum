@@ -1630,7 +1630,7 @@ class HtmlView extends KunenaView
 
         $uri = Uri::getInstance($referrer ? $referrer : $default);
 
-        if (Uri::isInternal($uri->toString())) {
+        if (KunenaRoute::isInternal($uri->toString())) {
             // Parse route.
             $vars = $this->app->getRouter()->parse($uri);
             $uri  = new Uri('index.php');

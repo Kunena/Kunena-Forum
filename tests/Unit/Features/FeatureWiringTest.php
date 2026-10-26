@@ -40,7 +40,7 @@ class FeatureWiringTest extends UnitTestCase
         $this->assertFileHas(self::AURELIA . '/layouts/message/item/actions/default.php', 'Message/Item/Ban', "get('ban_dropdown')");
         $this->assertFileHas('src/site/src/Controller/Message/Item/Actions/MessageItemActionsDisplay.php', "'ban' => false, 'ban_dropdown' => true", 'quickBan');
         // Only the administrators block a user from the whole site, and the way back is an address of the site.
-        $this->assertFileHas('src/site/src/Controllers/UserController.php', "getInt('ban_days'", 'Uri::isInternal($return)', '!$this->me->isAdmin()');
+        $this->assertFileHas('src/site/src/Controllers/UserController.php', "getInt('ban_days'", 'KunenaRoute::isInternal($return)', '!$this->me->isAdmin()');
     }
 
     public function testTheDefaultAnnouncement(): void

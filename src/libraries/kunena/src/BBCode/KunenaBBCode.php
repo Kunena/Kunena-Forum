@@ -43,6 +43,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Html\KunenaLinkPreview;
 use Kunena\Forum\Libraries\Html\KunenaMap;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Nbbc\BBCode;
 use Nbbc\BBCodeLibrary;
@@ -576,7 +577,7 @@ class KunenaBBCode extends BBCode
             $host = $uri->getHost();
 
             // The cms will catch most of these well
-            if (empty($host) || Uri::isInternal($url)) {
+            if (empty($host) || KunenaRoute::isInternal($url)) {
                 $internal = true;
             }
 
@@ -2510,7 +2511,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $host = $uri->getHost();
 
         // The cms will catch most of these well
-        if (empty($host) || Uri::isInternal($url)) {
+        if (empty($host) || KunenaRoute::isInternal($url)) {
             $internal = true;
         }
 

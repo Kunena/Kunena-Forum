@@ -34,6 +34,7 @@ use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
+use Throwable;
 
 KunenaRoute::initialize();
 
@@ -618,6 +619,25 @@ abstract class KunenaRoute
         }
 
         return self::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$topic->id}", $xhtml);
+    }
+
+    /**
+     * Is the address one of the site? Like Uri::isInternal(), but an address which Joomla can not read (///evil.com) is no address
+     * of the site: Uri::isInternal() threw an exception for it, and the request ended on an error page.
+     *
+     * @param   string  $url  The address.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isInternal(string $url): bool
+    {
+        try {
+            return Uri::isInternal($url);
+        } catch (Throwable $e) {
+            return false;
+        }
     }
 
     /**

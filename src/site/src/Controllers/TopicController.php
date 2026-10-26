@@ -1567,7 +1567,7 @@ class TopicController extends KunenaController
                 $host = $uri->getHost();
 
                 // The cms will catch most of these well
-                if (empty($host) || Uri::isInternal($link)) {
+                if (empty($host) || KunenaRoute::isInternal($link)) {
                     $countlink--;
                 }
             }

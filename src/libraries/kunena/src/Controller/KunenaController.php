@@ -319,7 +319,7 @@ class KunenaController extends BaseController
                 }
 
                 // Only allow internal urls to be used.
-                if ($return && Uri::isInternal($return)) {
+                if ($return && KunenaRoute::isInternal($return)) {
                     $redirect = Route::_($return, false);
                 }
                 // Otherwise return back to the referrer.

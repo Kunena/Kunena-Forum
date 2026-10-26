@@ -757,7 +757,11 @@ abstract class KunenaUserHelper
      */
     public static function getUserIp(): string
     {
-        return IpHelper::getIp();
+        // An IP address or nothing: behind a load balancer (an option of Joomla) the address comes from the header
+        // X-Forwarded-For, which the visitor writes himself (a text with markup was kept with the posts).
+        $ip = trim((string) IpHelper::getIp());
+
+        return filter_var($ip, FILTER_VALIDATE_IP) !== false ? $ip : '';
     }
 
     /**

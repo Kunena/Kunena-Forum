@@ -33,4 +33,15 @@ describe('Kunena backend logs: clean old entries', () => {
     // Only the old entry is gone.
     cy.task('queryDB', 'SELECT COUNT(*) AS n FROM #__kunena_logs').then((rows) => expect(Number(rows[0].n)).to.eq(ids.before - 1));
   });
+
+  it('deletes nothing for a number of days below 1 (a negative number, 0 or a text deleted the whole log)', () => {
+    cy.doAdministratorLogin();
+    cy.request(`${admin}&view=logs`).then((page) => {
+      const token = /name="([0-9a-f]{32})" value="1"/.exec(page.body)[1];
+
+      ['-5', '0', 'abc'].forEach((days) => cy.request({ method: 'POST', url: `${admin}&task=logs.clean`, form: true, body: { clean_days: days, [token]: '1' }, followRedirect: false }));
+    });
+    cy.then(() => exists(ids.old)).should('eq', true);
+    cy.then(() => exists(ids.recent)).should('eq', true);
+  });
 });

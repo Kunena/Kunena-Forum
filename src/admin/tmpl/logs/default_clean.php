@@ -24,7 +24,7 @@ use Joomla\CMS\Language\Text;
                     <label for="cleandays" class="col-form-label"><?php echo Text::_('COM_KUNENA_LOG_CLEAN_FROM') ?></label>
                 </div>
                 <div class="col-auto">
-                    <input type="text" class="form-control" id="cleandays" name="clean_days" value="30">
+                    <input type="number" min="1" step="1" required class="form-control" id="cleandays" name="clean_days" value="30">
                 </div>
                 <div class="col-auto">
                     <span class="input-group-text"><?php echo Text::_('COM_KUNENA_LOG_CLEAN_FROM_DAYS') ?></span>

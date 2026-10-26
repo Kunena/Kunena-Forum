@@ -67,7 +67,16 @@ class LogsController extends FormController
             return false;
         }
 
-        $days      = $this->input->getInt('clean_days', 0);
+        $days = $this->input->getInt('clean_days', 0);
+
+        // At least one day: 0, a negative number or a text (which is 0) took the time of now or later, and deleted the whole log.
+        if ($days < 1) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_LOG_CLEAN_DAYS_INVALID'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return false;
+        }
+
         $timestamp = new Date('now -' . $days . ' days');
 
         $db    = Factory::getContainer()->get('DatabaseDriver');

@@ -250,6 +250,15 @@ class UsersController extends KunenaController
             return;
         }
 
+        // The account of Joomla is deleted too: that is for those who may delete users in Joomla, not for every user of the
+        // backend of the forum.
+        if (!$this->app->getIdentity()->authorise('core.delete', 'com_users')) {
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $cid = $this->input->get('cid', [], 'array');
         $cid = ArrayHelper::toInteger($cid, []);
 

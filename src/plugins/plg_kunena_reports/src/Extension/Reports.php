@@ -30,6 +30,7 @@ use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -117,7 +118,7 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
             $profile = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $reporter->getURL(false);
             $author  = $message->getAuthor();
 
-            $quoted = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', (string) $message->message);
+            $quoted = KunenaParser::removeBlocks((string) $message->message, ['confidential']);
             $body   = Text::_('PLG_KUNENA_REPORTS_REPORTED_BY') . ' [url=' . $profile . ']' . $name . '[/url]';
 
             if ($reason !== '') {

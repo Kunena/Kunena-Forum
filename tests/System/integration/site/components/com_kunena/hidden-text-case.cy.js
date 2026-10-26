@@ -4,8 +4,13 @@
 describe('Kunena hidden text: tags in capitals', () => {
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
-  const words = { open: `zqxopen${stamp}`, hidden: `zqxhidden${stamp}`, confidential: `zqxconf${stamp}` };
-  const text = `${words.open} [HIDE]${words.hidden}[/HIDE] [Confidential]${words.confidential}[/Confidential]`;
+  const words = {
+    open: `zqxopen${stamp}`, hidden: `zqxhidden${stamp}`, confidential: `zqxconf${stamp}`, nestedHidden: `zqxnesthide${stamp}`, nestedConfidential: `zqxnestconf${stamp}`,
+  };
+  // A tag in a tag of the same kind: the hidden text after the inner block is hidden on the page too. (The regular expression
+  // stopped at the first closing tag and left that text, with the closing tag, in the description and the tooltips.)
+  const text = `${words.open} [HIDE]${words.hidden}[/HIDE] [Confidential]${words.confidential}[/Confidential]`
+    + ` [hide]a[hide]b[/hide]${words.nestedHidden}[/hide] [confidential]c[confidential]d[/confidential]${words.nestedConfidential}[/confidential]`;
   const ids = {};
   let rssType;
 
@@ -45,6 +50,7 @@ describe('Kunena hidden text: tags in capitals', () => {
   it('keeps the text of the tags in capitals from a visitor on the page and in the feeds', () => {
     const pages = [
       `${base}&view=topic&catid=3&id=${ids.topic}`,
+      `${base}&view=category&catid=3`,
       `${base}&view=category&catid=3&format=feed&layout=feed&type=rss`,
       `${base}&view=topics&format=feed&layout=feed&type=rss`,
     ];
@@ -56,6 +62,8 @@ describe('Kunena hidden text: tags in capitals', () => {
         expect(response.status, `the status of ${url}`).to.be.lessThan(500);
         expect(body, `the hidden word on ${url}`).to.not.include(words.hidden);
         expect(body, `the confidential word on ${url}`).to.not.include(words.confidential);
+        expect(body, `the nested hidden word on ${url}`).to.not.include(words.nestedHidden);
+        expect(body, `the nested confidential word on ${url}`).to.not.include(words.nestedConfidential);
         expect(body, `the open word on ${url}`).to.include(words.open);
       });
     });

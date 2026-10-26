@@ -298,6 +298,31 @@ abstract class KunenaParser
     }
 
     /**
+     * Take the blocks of the tags (with their text) out of a BBCode text, like the parser hides them: the names of the tags in
+     * any case, a block in a block of the same tag. The innermost blocks go first, until there is none left (a regular
+     * expression which stops at the first closing tag left the text after an inner block, with the closing tag).
+     *
+     * @param   string    $txt   The text.
+     * @param   string[]  $tags  The names of the tags, for example confidential and hide.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function removeBlocks(string $txt, array $tags): string
+    {
+        $names   = implode('|', array_map(static fn ($tag) => preg_quote($tag, '/'), $tags));
+        $pattern = '/\[(' . $names . ')(?:[\s=][^\]]*)?\](?:(?!\[\/?(?:' . $names . ')\b).)*\[\/\1\s*\]/isu';
+
+        do {
+            $before = $txt;
+            $txt    = (string) preg_replace($pattern, '', $txt);
+        } while ($txt !== $before);
+
+        return $txt;
+    }
+
+    /**
      * @param   string  $txt     text
      * @param   int     $len     len
      * @param   bool    $html    html
@@ -314,9 +339,8 @@ abstract class KunenaParser
             return false;
         }
 
-        $txt = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $txt);
+        $txt = self::removeBlocks($txt, ['confidential', 'hide']);
         $txt = preg_replace('/\[color(.*?)\](.*?)\[\/color\]/s', '', $txt);
-        $txt = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $txt);
         $txt = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $txt);
         $txt = preg_replace('/\[code(.*?)\](.*?)\[\/code]/s', '', $txt);
         $txt = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $txt);

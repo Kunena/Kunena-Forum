@@ -563,7 +563,7 @@ final class Kunena extends Adapter implements SubscriberInterface
 
         // Set body context.
         // The text for some readers only ([hide], [confidential]) is not for the index of the site: the search shows the text.
-        $text          = preg_replace('/\[(confidential|hide)\](.*?)\[\/\1\]/su', '', (string) $message->message);
+        $text          = KunenaParser::removeBlocks((string) $message->message, ['confidential', 'hide']);
         $item->body    = KunenaParser::stripBBCode($text);
         $item->summary = $item->body;
 

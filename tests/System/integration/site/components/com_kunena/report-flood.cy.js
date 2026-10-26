@@ -37,6 +37,18 @@ describe('Kunena reports: the flood protection', () => {
     });
     // The time of the last report of the user is kept in the cache.
     cy.task('deleteRelativePath', 'cache/kunena_report_flood');
+    // The reports plugin makes a topic of a report (in the category of its options): the topics of the reports of the test.
+    cy.task('queryDB', `SELECT id FROM #__kunena_topics WHERE subject LIKE '%report ${stamp}'`).then((rows) => {
+      rows.forEach(({ id }) => {
+        cy.task('queryDB', `DELETE x FROM #__kunena_messages_text AS x INNER JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.thread = ${id}`);
+        cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE thread = ${id}`);
+        cy.task('queryDB', `DELETE FROM #__kunena_user_topics WHERE topic_id = ${id}`);
+        cy.task('queryDB', `DELETE FROM #__kunena_user_read WHERE topic_id = ${id}`);
+        cy.task('queryDB', `DELETE FROM #__kunena_topics WHERE id = ${id}`);
+      });
+    });
+    cy.kunena_fixUserCounters();
+    cy.kunena_fixCategoryCounters();
   });
 
   it('refuses a second report within the time of the flood protection', () => {

@@ -144,6 +144,29 @@ describe('Kunena polls: the votes', () => {
     cy.then(() => lastVote()).should('eq', ids.open.second);
   });
 
+  // The votes of the option went up before the row of the voter was added: with requests at the same time each request saw no
+  // vote of the user and counted his vote in the option, and only the row of the first one was added.
+  it('counts one vote of a user who sends his vote several times at the same time', () => {
+    cy.doFrontendLogin(user.name, user.password, false);
+    cy.visit(`${base}&view=topic&catid=3&id=${ids.open.topic}`);
+    cy.document().then((doc) => {
+      const token = /name="([0-9a-f]{32})" value="1"/.exec(doc.documentElement.innerHTML)[1];
+
+      return cy.window().then((win) => Promise.all(Array.from({ length: 8 }, () => {
+        const body = new win.FormData();
+
+        body.append('id', ids.open.topic);
+        body.append('catid', 3);
+        body.append('kpollradio', ids.open.first);
+        body.append(token, '1');
+
+        // From the page: its address is not prefixed with the base address like the ones of cy.request.
+        return win.fetch(`${Cypress.config('baseUrl').replace(/\/$/, '')}${base}&view=topic&task=vote`, { method: 'POST', body, credentials: 'same-origin' });
+      })));
+    });
+    totalVotes(ids.open.poll).should('eq', 1);
+  });
+
   it('does not count a vote in a topic which is locked or a poll which has ended', () => {
     cy.doFrontendLogin(user.name, user.password, false);
     vote(ids.locked, ids.locked.first);

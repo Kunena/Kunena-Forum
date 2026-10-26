@@ -28,7 +28,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Tables\TableKunenaPolls;
-use StdClass;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicPoll
@@ -719,88 +718,83 @@ class KunenaPoll
         }
 
         $lastVoteId = $this->getLastVoteId($user);
-        $myvotes    = $this->getMyVotes($user);
-
-        if (!$myvotes) {
-            // First vote
-            $votes         = new StdClass();
-            $votes->new    = true;
-            $votes->pollid = $this->id;
-            $votes->votes  = 1;
-        } elseif ($change && isset($lastVoteId)) {
-            $votes           = new StdClass();
-            $votes->new      = false;
-            $votes->lasttime = null;
-            $votes->lastvote = null;
-            $votes->votes    = 1;
-
-            // Change vote: decrease votes in the last option
-            if (!$this->changeOptionVotes($lastVoteId, -1)) {
-                // Saving option failed, add a vote to the user
-                $votes->votes++;
-            }
-        } else {
-            // Additional vote without changing the previous one
-            $votes        = new StdClass();
-            $votes->new   = false;
-            $votes->votes = (int) $myvotes + 1;
-        }
+        $myvotes    = (int) $this->getMyVotes($user);
+        $userid     = (int) $user->userid;
 
         // Store the vote time in UTC like the other database dates (the user's own time zone would be stored otherwise).
-        $votes->lasttime = Factory::getDate()->toSql();
-        $votes->lastvote = $option;
-        $votes->userid   = (int) $user->userid;
-
-        // Increase vote count from current option
-        $this->changeOptionVotes($votes->lastvote, 1);
+        $now = Factory::getDate()->toSql();
 
         // The stored number of votes of the user changes below.
-        unset($this->myvotes[$votes->userid], $this->mytime[$votes->userid]);
+        unset($this->myvotes[$userid], $this->mytime[$userid]);
 
-        if ($votes->new) {
-            // No votes
-            $query = $this->_db->createQuery();
-
-            // Insert columns.
-            $columns = ['pollid', 'userid', 'votes', 'lastvote', 'lasttime'];
-
-            // Insert values.
-            $values = [$this->_db->quote($this->id), $this->_db->quote($votes->userid), $this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime)];
-
-            // Prepare the insert query.
-            $query
-            ->insert($this->_db->quoteName('#__kunena_polls_users'))
-            ->columns($this->_db->quoteName($columns))
-            ->values(implode(',', $values));
+        // The row of the voter is written first, and the votes of the options change only when that row changed: two requests
+        // at the same time found the same votes of the user, and each one counted its vote in the option.
+        if (!$myvotes) {
+            // First vote: the key of the table (pollid, userid) keeps one row of the user.
+            $query = $this->_db->createQuery()
+                ->insert($this->_db->quoteName('#__kunena_polls_users'))
+                ->columns($this->_db->quoteName(['pollid', 'userid', 'votes', 'lastvote', 'lasttime']))
+                ->values(implode(',', [(int) $this->id, $userid, 1, $option, $this->_db->quote($now)]));
             $this->_db->setQuery($query);
 
             try {
                 $this->_db->execute();
             } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
+                // The user voted in another request meanwhile.
+                if (stripos($e->getMessage(), 'Duplicate') === false) {
+                    KunenaError::displayDatabaseError($e);
+                }
 
                 throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_INSERT_FAIL'));
             }
-        } else {
-            // Already voted
-            // Update the existing vote row
-            $query = $this->_db->createQuery();
-            $query->update($this->_db->quoteName('#__kunena_polls_users'))
-                ->set($this->_db->quoteName('votes') . ' = ' . $this->_db->quote($votes->votes))
-                ->set($this->_db->quoteName('lastvote') . ' = ' . $this->_db->quote($votes->lastvote))
-                ->set($this->_db->quoteName('lasttime') . ' = ' . $this->_db->quote($votes->lasttime))
-                ->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
-                ->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($votes->userid));
-            $this->_db->setQuery($query);
 
-            try {
-                $this->_db->execute();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
+            $this->changeOptionVotes($option, 1);
 
-                throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
-            }
+            return true;
         }
+
+        if ($change && isset($lastVoteId)) {
+            // Change the vote: only when the last vote is still the one which was read.
+            $query = $this->_db->createQuery()
+                ->update($this->_db->quoteName('#__kunena_polls_users'))
+                ->set($this->_db->quoteName('votes') . ' = 1')
+                ->set($this->_db->quoteName('lastvote') . ' = ' . $option)
+                ->set($this->_db->quoteName('lasttime') . ' = ' . $this->_db->quote($now))
+                ->where($this->_db->quoteName('pollid') . ' = ' . (int) $this->id)
+                ->where($this->_db->quoteName('userid') . ' = ' . $userid)
+                ->where($this->_db->quoteName('lastvote') . ' = ' . (int) $lastVoteId);
+        } else {
+            // Additional vote without changing the previous one: only when the number of votes is still the one which was read.
+            $query = $this->_db->createQuery()
+                ->update($this->_db->quoteName('#__kunena_polls_users'))
+                ->set($this->_db->quoteName('votes') . ' = ' . ($myvotes + 1))
+                ->set($this->_db->quoteName('lastvote') . ' = ' . $option)
+                ->set($this->_db->quoteName('lasttime') . ' = ' . $this->_db->quote($now))
+                ->where($this->_db->quoteName('pollid') . ' = ' . (int) $this->id)
+                ->where($this->_db->quoteName('userid') . ' = ' . $userid)
+                ->where($this->_db->quoteName('votes') . ' = ' . $myvotes);
+        }
+
+        $this->_db->setQuery($query);
+
+        try {
+            $this->_db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
+        }
+
+        // Another request changed the votes of the user meanwhile.
+        if ($this->_db->getAffectedRows() < 1) {
+            throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
+        }
+
+        if ($change && isset($lastVoteId)) {
+            $this->changeOptionVotes((int) $lastVoteId, -1);
+        }
+
+        $this->changeOptionVotes($option, 1);
 
         return true;
     }

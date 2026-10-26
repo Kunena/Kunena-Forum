@@ -5,6 +5,8 @@ describe('Kunena profiles: who may save whose profile', () => {
   const user = { name: 'ci-user', password: 'ci-user-17082005-x', id: 798 };
   const admin = 797;
   let second;
+  // The rules of com_users, when a test changed them (they are put back after the test, also after a failure).
+  let usersRules;
 
   const save = (fields) => cy.request(`${base}&view=home`).then((page) => {
     const token = /name="([0-9a-f]{32})" value="1"/.exec(page.body)?.[1] ?? 'x';
@@ -29,6 +31,11 @@ describe('Kunena profiles: who may save whose profile', () => {
   });
 
   afterEach(() => {
+    if (usersRules !== undefined) {
+      cy.task('queryDB', `UPDATE #__assets SET rules = '${usersRules}' WHERE name = 'com_users'`);
+      usersRules = undefined;
+    }
+
     cy.task('queryDB', `DELETE FROM #__kunena_users WHERE userid = ${second}`);
     cy.task('queryDB', `UPDATE #__kunena_users SET moderator = 0, personalText = NULL WHERE userid IN (${user.id}, ${admin})`);
     cy.task('queryDB', `DELETE FROM #__kunena_user_categories WHERE user_id = ${user.id} AND category_id = 0`);
@@ -57,6 +64,46 @@ describe('Kunena profiles: who may save whose profile', () => {
     profileText(user.id).should('eq', 'My own text');
     save({ userid: second, personalText: 'A text of another user' });
     profileText(second).should('not.eq', 'A text of another user');
+  });
+
+  it('does not let an administrator of the forum change the account of a user when he may not edit the users in Joomla', () => {
+    // An administrator of the forum (the group Administrator manages the components) for whom the users of Joomla are closed
+    // (core.edit of com_users denied): before, he changed the e-mail address and the password of another user in the profile.
+    const forumAdmin = 'ci-forumadmin2';
+    let forumAdminId;
+
+    cy.task('queryDB', "SELECT rules FROM #__assets WHERE name = 'com_users'").then((rows) => {
+      usersRules = rows[0].rules;
+      const rules = JSON.parse(usersRules || '{}');
+
+      rules['core.edit'] = { ...(rules['core.edit'] ?? {}), 7: 0 };
+      cy.task('queryDB', `UPDATE #__assets SET rules = '${JSON.stringify(rules)}' WHERE name = 'com_users'`);
+    });
+    cy.task(
+      'queryDB',
+      `INSERT INTO #__users (name, username, email, password, block, sendEmail, registerDate, lastvisitDate, activation, params, lastResetTime, resetCount, otpKey, otep, requireReset, authProvider) SELECT 'CI Forum Admin', '${forumAdmin}', '${forumAdmin}@example.com', password, 0, 0, NOW(), NULL, '', '{}', NULL, 0, '', '', 0, '' FROM #__users WHERE id = 798`,
+    ).then((result) => {
+      forumAdminId = result.insertId;
+      cy.task('queryDB', `INSERT INTO #__user_usergroup_map (user_id, group_id) VALUES (${forumAdminId}, 7)`);
+    });
+    // The lists of the administrators of the forum are kept in the cache.
+    cy.task('deleteRelativePath', 'cache/kunena');
+    cy.task('deleteRelativePath', 'administrator/cache/kunena');
+
+    cy.doFrontendLogin(forumAdmin, user.password, false);
+    account(second).then((before) => {
+      save({ userid: second, name: 'Hijacked', email: 'hijack@example.test', password: 'NewPassword-12345', password2: 'NewPassword-12345' });
+      account(second).then((after) => expect(after, 'the account of the user').to.deep.eq(before));
+    });
+
+    cy.then(() => {
+      cy.task('queryDB', `DELETE FROM #__user_usergroup_map WHERE user_id = ${forumAdminId}`);
+      cy.task('queryDB', `DELETE FROM #__kunena_users WHERE userid = ${forumAdminId}`);
+      cy.task('queryDB', `DELETE FROM #__session WHERE userid = ${forumAdminId}`);
+      cy.task('queryDB', `DELETE FROM #__users WHERE id = ${forumAdminId}`);
+      cy.task('deleteRelativePath', 'cache/kunena');
+      cy.task('deleteRelativePath', 'administrator/cache/kunena');
+    });
   });
 
   it('lets a visitor save nothing', () => {

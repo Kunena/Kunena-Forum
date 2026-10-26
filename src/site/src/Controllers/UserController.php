@@ -334,7 +334,11 @@ class UserController extends KunenaController
 
         // The account of Joomla (the name, the e-mail address, the password) is changed by the user himself or an administrator;
         // a moderator changes the profile of the forum only.
-        $success = ($this->user->id == $my->id || $this->me->isAdmin()) ? $this->saveUser() : true;
+        // The account of Joomla (name, e-mail address, password) of another user: for an administrator of the forum who may also
+        // edit the users in Joomla (an administrator of the forum is not always one of the users, and the password of another
+        // user is his account).
+        $mayEditAccount = $this->user->id == $my->id || ($this->me->isAdmin() && $my->authorise('core.edit', 'com_users'));
+        $success        = $mayEditAccount ? $this->saveUser() : true;
 
         if (!$success) {
             $errors++;

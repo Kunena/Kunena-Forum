@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+    The taint analysis of Kunena (the flow of the data of the request to the HTML, the SQL, the files...): vendor/bin/psalm with
+    the option taint-analysis, and the environment variable KUNENA_TEST_JOOMLA=/path/to/joomla.
+
+    Psalm needs the classes of Joomla (a Joomla installation, like for the unit tests: tests/Psalm/autoload.php), and the stub
+    tests/Psalm/JoomlaInput.phpstub tells it that the values of the request (the Input of Joomla) come from the user.
+-->
+<psalm
+    errorLevel="8"
+    resolveFromConfigFile="true"
+    findUnusedCode="false"
+    findUnusedBaselineEntry="false"
+    autoloader="tests/Psalm/autoload.php"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <directory name="src/libraries/kunena/External" />
+            <directory name="src/media" />
+        </ignoreFiles>
+    </projectFiles>
+    <stubs>
+        <file name="tests/Psalm/JoomlaInput.phpstub" />
+    </stubs>
+</psalm>

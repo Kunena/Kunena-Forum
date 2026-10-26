@@ -1,0 +1,92 @@
+<?php
+
+/*
+ * The Input of Joomla for the taint analysis of Psalm (psalm.xml): Psalm knows only the superglobals ($_GET...) as data of the
+ * user, and Joomla reads them in its constructor. The methods which give a text are the sources of the data of the user; the
+ * ones which give a number, a boolean or a command (a filter of Joomla which keeps only letters, digits, "_", "-" and ".")
+ * are not.
+ */
+
+namespace Joomla\Input;
+
+class Input implements \Countable
+{
+    /**
+     * @psalm-taint-source input
+     * @return mixed
+     */
+    public function get($name, $default = null, $filter = 'cmd') {}
+
+    /**
+     * @psalm-taint-source input
+     * @return array
+     */
+    public function getArray(array $vars = [], $datasource = null) {}
+
+    /**
+     * @psalm-taint-source input
+     * @return string
+     */
+    public function getString($name, $default = null) {}
+
+    /**
+     * @psalm-taint-source input
+     * @return string
+     */
+    public function getHtml($name, $default = null) {}
+
+    /**
+     * @psalm-taint-source input
+     * @return mixed
+     */
+    public function getRaw($name, $default = null) {}
+
+    /**
+     * @psalm-taint-source input
+     * @return string
+     */
+    public function getPath($name, $default = null) {}
+
+    /**
+     * @psalm-taint-source input
+     * @return string
+     */
+    public function getUsername($name, $default = null) {}
+
+    /**
+     * @psalm-taint-source input
+     * @return string
+     */
+    public function getBase64($name, $default = null) {}
+
+    /** @return int */
+    public function getInt($name, $default = null) {}
+
+    /** @return int */
+    public function getUint($name, $default = null) {}
+
+    /** @return float */
+    public function getFloat($name, $default = null) {}
+
+    /** @return bool */
+    public function getBool($name, $default = null) {}
+
+    /** @return string */
+    public function getWord($name, $default = null) {}
+
+    /** @return string */
+    public function getAlnum($name, $default = null) {}
+
+    /** @return string */
+    public function getCmd($name, $default = null) {}
+
+    /**
+     * The input of a method of the request: $input->get, $input->post...
+     *
+     * @return Input
+     */
+    public function __get($name) {}
+
+    /** @return int */
+    public function count() {}
+}

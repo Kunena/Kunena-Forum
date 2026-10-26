@@ -142,8 +142,16 @@ abstract class ListDisplay extends KunenaControllerDisplay
 
         // Not in a list which is shown inside another page (a module, the profile of a user).
         $this->filterBar = !$this->getOptions()->get('embedded', false);
+
+        // Only a tag which the user can see filters: a filter by another tag would show which topics have it.
+        $tag = KunenaTopicTags::isEnabled() ? $this->input->getInt('ftag', 0) : 0;
+
+        if ($tag && !isset(KunenaTopicTags::getAvailable()[$tag])) {
+            $tag = 0;
+        }
+
         $this->filters   = [
-            'tag'      => KunenaTopicTags::isEnabled() ? $this->input->getInt('ftag', 0) : 0,
+            'tag'      => $tag,
             'status'   => $this->input->getCmd('fstatus', ''),
             'q'        => trim($this->input->getString('fq', '')),
             'author'   => trim($this->input->getString('fauthor', '')),

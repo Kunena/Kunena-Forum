@@ -22,6 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -237,6 +238,24 @@ class InboxHelper
         // A user who ignores or has blocked the sender gets no message from him.
         if (\in_array($to, KunenaUserIgnore::getIgnoredBy($from), true) || self::isBlocked($to, $from)) {
             throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_IGNORED'));
+        }
+
+        // The flood protection of the forum (the time between two posts) is for the private messages too, except for the
+        // moderators like for the posts: else a user can send messages one after the other to all the users.
+        $flood = (int) KunenaConfig::getInstance()->floodProtection;
+
+        if ($flood > 0 && !KunenaUserHelper::get($from)->isModerator()) {
+            $query = $db->createQuery()
+                ->select('MAX(' . $db->quoteName('created_time') . ')')
+                ->from($db->quoteName('#__kunena_inbox'))
+                ->where($db->quoteName('sender_id') . ' = :from')
+                ->where($db->quoteName('type') . ' = ' . $db->quote('message'))
+                ->bind(':from', $from, ParameterType::INTEGER);
+            $last = (int) $db->setQuery($query)->loadResult();
+
+            if ($last > time() - $flood) {
+                throw new RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_FLOOD', $flood));
+            }
         }
 
         $row = (object) [
@@ -620,8 +639,17 @@ class InboxHelper
 
         if ($row->type !== 'message') {
             $message = $row->message_id ? KunenaMessageHelper::get((int) $row->message_id) : null;
-            $url     = $message && $message->exists() ? (string) $message->getPermaUrl() : '';
-            $text    = Text::sprintf('PLG_KUNENA_INBOX_NOTIFY_' . strtoupper($row->type), $name, $row->subject);
+
+            // The subject and the link only while the user may read the message (the topic can be deleted, moved into a
+            // closed category, or the access of the user can change after the notification).
+            if ($message && $message->exists() && $message->isAuthorised('read', KunenaUserHelper::get($userid))) {
+                $url  = (string) $message->getPermaUrl();
+                $text = Text::sprintf('PLG_KUNENA_INBOX_NOTIFY_' . strtoupper($row->type), $name, $row->subject);
+            } else {
+                $row          = clone $row;
+                $row->subject = '';
+                $text         = Text::_('PLG_KUNENA_INBOX_NOTIFY_UNAVAILABLE');
+            }
         } else {
             $text = $full ? (string) $row->body : mb_substr(preg_replace('/\s+/', ' ', (string) $row->body), 0, 160);
         }

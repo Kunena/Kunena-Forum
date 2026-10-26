@@ -43,6 +43,8 @@ body:
         - 6.4.x
         - 7.0.x
         - 7.1.x
+        - 7.1 nightly build
+        - 8.0 nightly build
       default: 0
     validations:
       required: true
@@ -51,9 +53,10 @@ body:
     attributes:
       label: Exact Kunena version
       description: |
-        The full version you tested, e.g. 7.1.0-RC3 or 7.0.4.
-        If you use a build from GitHub, add the date and/or commit hash.
-      placeholder: 7.1.0-RC3
+        The full version you tested, e.g. 7.0.4 or 7.1.0-RC2.
+        For a nightly build or a build from GitHub: give the date of the build (and the commit hash if you know it).
+        The version number shown in a nightly build is not reliable.
+      placeholder: "7.1.0-RC2 / nightly build 2026-10-25"
     validations:
       required: true
   - type: input

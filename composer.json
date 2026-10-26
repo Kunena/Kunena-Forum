@@ -9,7 +9,8 @@
 		"codeception/codeception" : "~5.3.5",
 		"symfony/css-selector" : "^7.3",
 		"phing/phing" : "dev-main",
-		"squizlabs/php_codesniffer": "^4.0"
+		"squizlabs/php_codesniffer": "^4.0",
+		"vimeo/psalm": "^6.20"
 	},
 	"autoload" : {
 		"psr-4" : {

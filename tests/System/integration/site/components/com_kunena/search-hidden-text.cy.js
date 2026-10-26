@@ -5,11 +5,14 @@ describe('Kunena search: the hidden parts of a message', () => {
   const stamp = Date.now();
   const user = { name: 'ci-user', password: 'ci-user-17082005-x', id: 798 };
   const admin = 797;
-  const words = { open: `zqxopen${stamp}`, hidden: `zqxhidden${stamp}`, confidential: `zqxconf${stamp}`, own: `zqxown${stamp}` };
+  const words = { open: `zqxopen${stamp}`, hidden: `zqxhidden${stamp}`, confidential: `zqxconf${stamp}`, own: `zqxown${stamp}`, nested: `zqxnest${stamp}` };
   const messages = {
     hidden: { author: admin, text: `${words.open} and [hide]${words.hidden}[/hide]` },
     confidential: { author: admin, text: `[confidential]${words.confidential}[/confidential] of the administrator` },
     own: { author: user.id, text: `[confidential]${words.own}[/confidential] of the user` },
+    // A block in a block of the same tag: the word after the inner block is hidden too (the pattern stopped at the first
+    // closing tag and the search found the word).
+    nested: { author: admin, text: `[confidential]a[confidential]b[/confidential]${words.nested}[/confidential] nested` },
   };
 
   const addMessage = (name, { author, text }) => cy.task(
@@ -49,6 +52,7 @@ describe('Kunena search: the hidden parts of a message', () => {
     found(words.open).should('deep.eq', ['hidden']);
     found(words.hidden).should('deep.eq', []);
     found(words.confidential).should('deep.eq', []);
+    found(words.nested).should('deep.eq', []);
   });
 
   it('finds for a user the hidden words and his own confidential ones, and not those of another', () => {
@@ -56,6 +60,7 @@ describe('Kunena search: the hidden parts of a message', () => {
     found(words.hidden).should('deep.eq', ['hidden']);
     found(words.own).should('deep.eq', ['own']);
     found(words.confidential).should('deep.eq', []);
+    found(words.nested).should('deep.eq', []);
   });
 
   it('finds for a moderator everything', () => {

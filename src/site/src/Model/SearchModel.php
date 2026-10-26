@@ -178,9 +178,17 @@ class SearchModel extends KunenaModel
             return 't.message';
         }
 
-        $tags     = $this->me->exists() ? 'confidential' : 'hide|confidential';
-        $pattern  = $db->quote('(?is)\[(' . $tags . ')\].*?\[/\1\]');
-        $stripped = 'REGEXP_REPLACE(t.message, ' . $pattern . ", '')";
+        $tags = $this->me->exists() ? 'confidential' : 'hide|confidential';
+
+        // The innermost blocks (with no tag of these kinds in them) go first, several times: a block in a block of the same
+        // tag is taken out completely, like the parser hides it (one pattern up to the first closing tag left the text after
+        // an inner block, and the search found it).
+        $pattern  = $db->quote('(?is)\[(' . $tags . ')(?:[\s=][^\]]*)?\]((?:(?!\[/?(?:' . $tags . ')\b).)*?)\[/\1\s*\]');
+        $stripped = 't.message';
+
+        for ($level = 0; $level < 8; $level++) {
+            $stripped = 'REGEXP_REPLACE(' . $stripped . ', ' . $pattern . ", '')";
+        }
 
         // The regular expression runs for the messages with such a part only.
         $text = "CASE WHEN t.message LIKE '%[/hide]%' OR t.message LIKE '%[/confidential]%' THEN {$stripped} ELSE t.message END";

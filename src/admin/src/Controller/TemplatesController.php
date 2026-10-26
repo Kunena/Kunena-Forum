@@ -82,6 +82,13 @@ class TemplatesController extends KunenaController
             return false;
         }
 
+        if (!KunenaTemplateHelper::canInstall()) {
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return false;
+        }
+
         if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error'])) {
             $this->app->enqueueMessage(
                 Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $this->escape($file['name'])),
@@ -89,12 +96,16 @@ class TemplatesController extends KunenaController
             );
             $result = false;
         } else {
-            $success = File::upload($file ['tmp_name'], $dest . $file ['name'], false, true);
+            // The package goes to the folder of the temporary files with a name of its own (only its extension, which tells the
+            // kind of archive, is kept), not to the folder of the templates which the web server shows.
+            $extension = preg_match('/\.(zip|tar|tgz|tar\.gz|tbz2|tar\.bz2|gz|bz2)$/i', (string) $file['name'], $m) ? strtolower($m[1]) : 'zip';
+            $package   = KunenaPath::tmpdir() . '/kinstall-' . bin2hex(random_bytes(8)) . '.' . $extension;
+            $success   = File::upload($file ['tmp_name'], $package, false, true);
 
             if ($success) {
                 try {
                     $archive = new Archive();
-                    $archive->extract($dest . $file ['name'], $tmpKunena);
+                    $archive->extract($package, $tmpKunena);
                 } catch (Exception $e) {
                     $this->app->enqueueMessage(
                         Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),
@@ -103,7 +114,7 @@ class TemplatesController extends KunenaController
                     $result = false;
                 }
 
-                File::delete($dest . $file ['name']);
+                File::delete($package);
             }
 
             if ($result) {

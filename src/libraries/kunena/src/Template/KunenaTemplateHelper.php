@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Template;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Folder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -34,6 +35,21 @@ abstract class KunenaTemplateHelper
      * @since   Kunena 6.0
      */
     protected static mixed $_instances = [];
+
+    /**
+     * May the user install and remove templates? A template is code (PHP files), like an extension: the user needs the right
+     * of Joomla to install extensions, not only the right to manage the forum.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function canInstall(): bool
+    {
+        $user = Factory::getApplication()->getIdentity();
+
+        return $user && $user->authorise('core.manage', 'com_installer');
+    }
 
     /**
      * isDefault

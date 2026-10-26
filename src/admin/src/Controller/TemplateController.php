@@ -1002,6 +1002,13 @@ class TemplateController extends FormController
             return;
         }
 
+        if (!KunenaTemplateHelper::canInstall()) {
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         // Initialize variables
         $otemplate = $this->isSafeTemplateName($id) ? KunenaTemplateHelper::parseXmlFile($id) : false;
 

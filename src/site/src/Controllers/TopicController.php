@@ -766,6 +766,24 @@ class TopicController extends KunenaController
                 }
             }
 
+            // The files which wait for a message (mesid 0) have a limit: twice the files of a message, 50 when those have no
+            // limit (else a user uploads file after file without posting, and fills the disk). It is checked at the start of a
+            // file, not in the middle of its parts.
+            if ($this->input->getInt('chunkStart', 0) === 0) {
+                $perMessage = (int) $this->config->attachmentLimit;
+                $maxPending = $perMessage > 0 ? 2 * $perMessage : 50;
+                $db         = Factory::getContainer()->get('DatabaseDriver');
+                $query      = $db->createQuery()
+                    ->select('COUNT(*)')
+                    ->from($db->quoteName('#__kunena_attachments'))
+                    ->where($db->quoteName('userid') . ' = ' . (int) $this->me->userid)
+                    ->where($db->quoteName('mesid') . ' = 0');
+
+                if ((int) $db->setQuery($query)->loadResult() >= $maxPending) {
+                    throw new RuntimeException(Text::sprintf('COM_KUNENA_UPLOAD_ERROR_PENDING', $maxPending), 400);
+                }
+            }
+
             $caption = $this->input->getString('caption');
             $options = [
                 'filename'   => $this->input->getString('filename'),

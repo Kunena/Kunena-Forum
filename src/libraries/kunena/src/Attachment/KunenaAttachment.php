@@ -698,8 +698,8 @@ class KunenaAttachment extends KunenaDatabaseObject
         $protect = (bool) KunenaConfig::getInstance()->attachmentProtection;
 
         // Use direct URLs to the KunenaAttachments if protection is turned off and file wasn't protected (a private file always
-        // goes through the forum, which checks who may read it).
-        if (!$protect && !((int) $this->protected & self::PROTECTION_PRIVATE)) {
+        // goes through the forum, which checks who may read it; the file of an anonymous message too: its folder names the user).
+        if (!$protect && !((int) $this->protected & self::PROTECTION_PRIVATE) && !$this->isOfAnonymousMessage()) {
             $file      = $this->folder . '/' . $this->filename;
             $fileThumb = $this->folder . '/thumb/' . $this->filename;
 
@@ -876,8 +876,29 @@ class KunenaAttachment extends KunenaDatabaseObject
     }
 
     /**
+     * Is the attachment a file of an anonymous message: the message has no user, the file keeps the user who uploaded it. Its
+     * folder (media/kunena/attachments/<user>) and the name of the upload would tell who wrote the message.
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function isOfAnonymousMessage(): bool
+    {
+        if (!(int) $this->userid || !(int) $this->mesid) {
+            return false;
+        }
+
+        $message = $this->getMessage();
+
+        return $message->exists() && !(int) $message->userid;
+    }
+
+    /**
      * Save the attachment. The file of a private attachment gets a name which nobody can guess: without the protection of the
-     * attachments the site serves their folder, and the name of the upload gave the private file to anybody who tried it.
+     * attachments the site serves their folder, and the name of the upload gave the private file to anybody who tried it. The
+     * file of an anonymous message too: the name of the upload in the folder of a user told who wrote the message.
      *
      * @return  boolean
      *
@@ -889,7 +910,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         $old    = null;
         $folder = JPATH_ROOT . '/' . $this->folder;
 
-        if (((int) $this->protected & self::PROTECTION_PRIVATE) && $this->filename && !preg_match('/^[0-9a-f]{32}$/', (string) $this->filename) && is_file($folder . '/' . $this->filename)) {
+        if ((((int) $this->protected & self::PROTECTION_PRIVATE) || $this->isOfAnonymousMessage()) && $this->filename && !preg_match('/^[0-9a-f]{32}$/', (string) $this->filename) && is_file($folder . '/' . $this->filename)) {
             $new = KunenaAttachmentHelper::getAvailableFilename((string) $this->folder, '', '', true);
 
             if (rename($folder . '/' . $this->filename, $folder . '/' . $new)) {

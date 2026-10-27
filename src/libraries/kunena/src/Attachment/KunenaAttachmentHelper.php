@@ -556,7 +556,8 @@ abstract class KunenaAttachmentHelper
 
     /**
      * Give the files of the private attachments which still have the name of their upload a name which nobody can guess (the save
-     * of the attachment renames the file): without the protection of the attachments the site serves their folder.
+     * of the attachment renames the file): without the protection of the attachments the site serves their folder. The files of
+     * the anonymous messages too: the name of the upload in the folder of a user told who wrote the message.
      *
      * @return  integer  The number of the renamed files.
      *
@@ -567,10 +568,12 @@ abstract class KunenaAttachmentHelper
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery()
-            ->select($db->quoteName('id'))
-            ->from($db->quoteName('#__kunena_attachments'))
-            ->where('(' . $db->quoteName('protected') . ' & ' . KunenaAttachment::PROTECTION_PRIVATE . ') > 0')
-            ->where('NOT ' . $db->quoteName('filename') . ' REGEXP ' . $db->quote('^[0-9a-f]{32}$'));
+            ->select($db->quoteName('a.id'))
+            ->from($db->quoteName('#__kunena_attachments', 'a'))
+            ->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('a.mesid'))
+            ->where('((' . $db->quoteName('a.protected') . ' & ' . KunenaAttachment::PROTECTION_PRIVATE . ') > 0 OR ('
+                . $db->quoteName('a.userid') . ' > 0 AND ' . $db->quoteName('m.userid') . ' = 0))')
+            ->where('NOT ' . $db->quoteName('a.filename') . ' REGEXP ' . $db->quote('^[0-9a-f]{32}$'));
         $db->setQuery($query);
 
         $renamed = 0;
@@ -578,8 +581,13 @@ abstract class KunenaAttachmentHelper
         foreach (self::getById(array_map('intval', (array) $db->loadColumn()), 'none') as $attachment) {
             $before = (string) $attachment->filename;
 
-            if ($attachment->save() && $attachment->filename !== $before) {
-                $renamed++;
+            // A row which cannot be saved (its message is gone) keeps its file: it does not stop the upgrade for the others.
+            try {
+                if ($attachment->save() && $attachment->filename !== $before) {
+                    $renamed++;
+                }
+            } catch (Exception $e) {
+                continue;
             }
         }
 

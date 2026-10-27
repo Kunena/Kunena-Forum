@@ -16,7 +16,8 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 
 /**
  * The files of the private attachments had the name of their upload, in a folder which the site serves (without the protection of
- * the attachments): anybody who guessed the name opened the file. They get a name which nobody can guess.
+ * the attachments): anybody who guessed the name opened the file. They get a name which nobody can guess, and the files of the
+ * anonymous messages too (the name of the upload in the folder of a user told who wrote the message).
  *
  * @param   mixed  $parent  The installer.
  *

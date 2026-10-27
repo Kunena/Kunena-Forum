@@ -151,7 +151,7 @@ class TopicController extends KunenaController
             $object->size      = round($attach->size / '1024', 0);
             $object->name      = $attach->filename;
             $object->protected = $attach->protected;
-            $object->folder    = $attach->folder;
+            // No folder: it is the folder of the user who uploaded the file, and the author of an anonymous message is not named.
             $object->caption   = $attach->caption;
             $object->type      = $attach->filetype;
             $object->path      = $attach->getUrl();

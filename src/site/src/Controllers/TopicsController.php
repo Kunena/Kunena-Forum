@@ -449,6 +449,14 @@ class TopicsController extends KunenaController
             return;
         }
 
+        // The moderator may write in the target category, or moderates it (like the move of one topic).
+        if (!$target->isAuthorised('topic.create') && !$target->isAuthorised('moderate')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
         if ($topics) {
             foreach ($topics as $topic) {
                 try {

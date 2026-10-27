@@ -89,6 +89,25 @@ describe('Kunena moderation: the rights on the target of a move', () => {
     });
   });
 
+  // The moderation of the topic lists moves the chosen topics with a task of its own.
+  it('does not move topics of a list into a category in which the moderator may not write', () => {
+    cy.task('queryDB', `UPDATE #__kunena_categories SET locked = 1 WHERE id = ${target.category}`);
+    cy.doFrontendLogin(user.name, user.password, false);
+    cy.request(`${base}&view=category&catid=3`).then((page) => {
+      const token = /name="([0-9a-f]{32})" value="1"/.exec(page.body)[1];
+
+      cy.request({
+        method: 'POST',
+        url: `${base}&view=topics&task=move`,
+        form: true,
+        body: { [`topics[${topic}]`]: '1', target: target.category, [token]: '1' },
+        failOnStatusCode: false,
+        followRedirect: false,
+      });
+    });
+    where().its('category_id').should('eq', 3);
+  });
+
   it('moves a topic into a category in which the moderator may write', () => {
     cy.task('queryDB', `UPDATE #__kunena_categories SET locked = 0 WHERE id = ${target.category}`);
     cy.doFrontendLogin(user.name, user.password, false);

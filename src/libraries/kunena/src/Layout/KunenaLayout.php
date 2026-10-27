@@ -386,7 +386,10 @@ class KunenaLayout extends KunenaBase
         }
 
         if ($title === null) {
-            $title = KunenaParser::stripBBCode($lastTopic->last_post_message, 200, false);
+            // A category which hides the replies from the guests gives them the first message (like getTopicLink()).
+            $message = !KunenaUserHelper::getMyself()->userid && $lastTopic->getCategory()->hidesRepliesForGuests()
+                ? $lastTopic->first_post_message : $lastTopic->last_post_message;
+            $title   = KunenaParser::stripBBCode((string) $message, 200, false);
 
             if (strpos($class, 'hasTooltip') !== false) {
                 // Tooltips will decode HTML and we don't want the HTML to be parsed

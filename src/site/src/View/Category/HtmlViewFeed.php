@@ -22,6 +22,7 @@ use Joomla\CMS\User\UserFactoryInterface;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
@@ -74,6 +75,9 @@ class KunenaViewCategory extends KunenaView
         foreach ($this->topics as $topic) {
             if ($this->config->rssType == 'topic') {
                 $description = Text::sprintf('COM_KUNENA_RSS_TOPICS_CONTAINS_MESSAGES', $topic->posts) . ' - ' . Text::sprintf('COM_KUNENA_RSS_LAST_AUTHOR', KunenaFactory::getUser($topic->last_post_userid)->getName($topic->last_post_guest_name));
+            } elseif (!KunenaUserHelper::getMyself()->userid && $topic->getCategory()->hidesRepliesForGuests() && $topic->last_post_id != $topic->first_post_id) {
+                // The replies are hidden from the guests (like the feed of the topics).
+                $description = Text::_('COM_KUNENA_TEASER_TEXT');
             } else {
                 $description = $topic->last_post_message;
             }

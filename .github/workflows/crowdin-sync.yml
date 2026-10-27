@@ -30,6 +30,7 @@ jobs:
     - name: Download translations from Crowdin
       uses: crowdin/github-action@v2
       with:
+        user: auto
         config: crowdin.yml
         upload_sources: false
         upload_translations: false

@@ -697,8 +697,9 @@ class KunenaAttachment extends KunenaDatabaseObject
     {
         $protect = (bool) KunenaConfig::getInstance()->attachmentProtection;
 
-        // Use direct URLs to the KunenaAttachments if protection is turned off and file wasn't protected.
-        if (!$protect) {
+        // Use direct URLs to the KunenaAttachments if protection is turned off and file wasn't protected (a private file always
+        // goes through the forum, which checks who may read it).
+        if (!$protect && !((int) $this->protected & self::PROTECTION_PRIVATE)) {
             $file      = $this->folder . '/' . $this->filename;
             $fileThumb = $this->folder . '/thumb/' . $this->filename;
 
@@ -872,6 +873,65 @@ class KunenaAttachment extends KunenaDatabaseObject
         $replace = '';
 
         return preg_replace($find, $replace, $editor_text);
+    }
+
+    /**
+     * Save the attachment. The file of a private attachment gets a name which nobody can guess: without the protection of the
+     * attachments the site serves their folder, and the name of the upload gave the private file to anybody who tried it.
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function save()
+    {
+        $old    = null;
+        $folder = JPATH_ROOT . '/' . $this->folder;
+
+        if (((int) $this->protected & self::PROTECTION_PRIVATE) && $this->filename && !preg_match('/^[0-9a-f]{32}$/', (string) $this->filename) && is_file($folder . '/' . $this->filename)) {
+            $new = KunenaAttachmentHelper::getAvailableFilename((string) $this->folder, '', '', true);
+
+            if (rename($folder . '/' . $this->filename, $folder . '/' . $new)) {
+                if (is_file($folder . '/thumb/' . $this->filename)) {
+                    rename($folder . '/thumb/' . $this->filename, $folder . '/thumb/' . $new);
+                }
+
+                $old = (string) $this->filename;
+
+                if (!$this->filename_real) {
+                    $this->filename_real = $old;
+                }
+
+                $this->filename = $new;
+            }
+        }
+
+        $error = null;
+
+        try {
+            $saved = parent::save();
+        } catch (Exception $e) {
+            $saved = false;
+            $error = $e;
+        }
+
+        // The file keeps the name of the row when the row was not saved.
+        if (!$saved && $old !== null) {
+            rename($folder . '/' . $this->filename, $folder . '/' . $old);
+
+            if (is_file($folder . '/thumb/' . $this->filename)) {
+                rename($folder . '/thumb/' . $this->filename, $folder . '/thumb/' . $old);
+            }
+
+            $this->filename = $old;
+        }
+
+        if ($error) {
+            throw $error;
+        }
+
+        return $saved;
     }
 
     /**

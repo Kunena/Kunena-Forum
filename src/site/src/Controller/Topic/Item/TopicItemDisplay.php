@@ -350,7 +350,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $data->{'author'}               = [];
         $tmp                            = new stdClass();
         $tmp->{'@type'}                 = "Person";
-        $tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
+        // The name which the forum shows: the username is the name with which the user logs in, and the forum may keep it for itself.
+        $tmp->{'name'}                  = $this->topic->getLastPostAuthor()->getName('', false);
         $tmp->{'url'}                   = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getLastPostAuthor()->getURL();
         $data->{'author'}               = $tmp;
         $data->interactionStatistic     = [];
@@ -637,7 +638,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $this->setMetaData('og:url', Uri::current(), 'property');
         $this->setMetaData('og:type', 'article', 'property');
         $this->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
-        $this->setMetaData('profile:username', $this->topic->getAuthor()->username, 'property');
+        $this->setMetaData('profile:username', $this->topic->getAuthor()->getName('', false), 'property');
 
         $image = $this->docImage();
 

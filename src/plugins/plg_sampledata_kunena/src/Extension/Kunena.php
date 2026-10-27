@@ -129,6 +129,16 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
             return;
         }
 
+        // The token of the form is no right: every visitor has one, and com_ajax runs on the site too. The sample data is for
+        // the administrators of the forum in the backend (like the overview of the step).
+        $app = $this->getApplication();
+
+        if (!$app->isClient('administrator') || !$app->getIdentity()->authorise('core.manage', 'com_kunena')) {
+            $event->addResult(['success' => false, 'message' => Text::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN')]);
+
+            return;
+        }
+
         if (!$this->enablePlugin('plg_system_kunena')) {
             $response            = [];
             $response['success'] = false;

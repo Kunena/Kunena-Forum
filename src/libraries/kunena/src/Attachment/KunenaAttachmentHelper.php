@@ -555,6 +555,38 @@ abstract class KunenaAttachmentHelper
     }
 
     /**
+     * Give the files of the private attachments which still have the name of their upload a name which nobody can guess (the save
+     * of the attachment renames the file): without the protection of the attachments the site serves their folder.
+     *
+     * @return  integer  The number of the renamed files.
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public static function hidePrivateFiles(): int
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select($db->quoteName('id'))
+            ->from($db->quoteName('#__kunena_attachments'))
+            ->where('(' . $db->quoteName('protected') . ' & ' . KunenaAttachment::PROTECTION_PRIVATE . ') > 0')
+            ->where('NOT ' . $db->quoteName('filename') . ' REGEXP ' . $db->quote('^[0-9a-f]{32}$'));
+        $db->setQuery($query);
+
+        $renamed = 0;
+
+        foreach (self::getById(array_map('intval', (array) $db->loadColumn()), 'none') as $attachment) {
+            $before = (string) $attachment->filename;
+
+            if ($attachment->save() && $attachment->filename !== $before) {
+                $renamed++;
+            }
+        }
+
+        return $renamed;
+    }
+
+    /**
      * Check if mime type is image.
      *
      * @param   string  $mime  mime

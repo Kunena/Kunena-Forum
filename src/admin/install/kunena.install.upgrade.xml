@@ -680,6 +680,8 @@
             <!-- One rating of a user for a topic: the duplicates of a race of two requests are removed, the key keeps it so -->
             <query mode="silenterror">DELETE r1 FROM `#__kunena_rate` AS r1 INNER JOIN `#__kunena_rate` AS r2 ON r1.`topic_id` = r2.`topic_id` AND r1.`userid` = r2.`userid` AND r1.`id` &gt; r2.`id`</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_rate` ADD UNIQUE KEY `topic_user` (`topic_id`, `userid`)</query>
+            <!-- The files of the private attachments get a name which nobody can guess (their folder is served by the site) -->
+            <phpfile name="8.0.0-2026-10-27_hide_private_attachments"/>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

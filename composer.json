@@ -4,10 +4,10 @@
 	"homepage" : "https://github.com/Kunena/Kunena-Forum",
 	"license" : "GPL-3.0-or-later",
 	"require-dev" : {
-		"phpunit/phpunit" : "~12.5.42",
+		"phpunit/phpunit" : "^13.4.5",
 		"friendsofphp/php-cs-fixer" : "~3.95",
 		"codeception/codeception" : "~5.3.5",
-		"symfony/css-selector" : "^7.3",
+		"symfony/css-selector" : "^8.1",
 		"phing/phing" : "dev-main",
 		"squizlabs/php_codesniffer": "^4.0",
 		"vimeo/psalm": "^6.20.3"

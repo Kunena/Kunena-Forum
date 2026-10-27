@@ -206,6 +206,9 @@ class CategoryController extends KunenaController
             if (!$me->isAdmin($parent) || ($category->exists() && !$me->isAdmin($category->getParent()))) {
                 $ignore            = array_merge($ignore, ['parentid', 'ordering']);
                 $post['parentid']  = $category->parentid;
+
+                // The move is refused: the category keeps its parent, and the access is not taken from the refused one.
+                $parent = $category->getParent();
             }
 
             // Only global admin can change access control and class_sfx (others are inherited from parent)

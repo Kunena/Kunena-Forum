@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88aad779d9edf8ea11f56fb784589230",
+    "content-hash": "dcc4a53b8781cc330caa3439394d99ad",
     "packages": [],
     "packages-dev": [
         {
@@ -2465,12 +2465,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "c038a886734b4921ba5fb678a355b8ff6d58db14"
+                "reference": "acf989ca02364e8bd96248e187ff6b4df5de95f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/c038a886734b4921ba5fb678a355b8ff6d58db14",
-                "reference": "c038a886734b4921ba5fb678a355b8ff6d58db14",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/acf989ca02364e8bd96248e187ff6b4df5de95f5",
+                "reference": "acf989ca02364e8bd96248e187ff6b4df5de95f5",
                 "shasum": ""
             },
             "require": {
@@ -2743,7 +2743,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2026-10-23T10:45:49+00:00"
+            "time": "2026-10-26T08:28:39+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -3332,16 +3332,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "12.5.40",
+            "version": "12.5.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "76bd3198f16aeb375a4d5f3626471445aed0966e"
+                "reference": "1d6dbe748c079e5d2b03bca1be69d0f4cc52a578"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/76bd3198f16aeb375a4d5f3626471445aed0966e",
-                "reference": "76bd3198f16aeb375a4d5f3626471445aed0966e",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1d6dbe748c079e5d2b03bca1be69d0f4cc52a578",
+                "reference": "1d6dbe748c079e5d2b03bca1be69d0f4cc52a578",
                 "shasum": ""
             },
             "require": {
@@ -3410,7 +3410,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.5.40"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.5.42"
             },
             "funding": [
                 {
@@ -3418,7 +3418,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-10-16T05:55:07+00:00"
+            "time": "2026-10-27T04:15:03+00:00"
         },
         {
             "name": "psr/container",
@@ -7293,16 +7293,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.20.1",
+            "version": "6.20.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "376425b8e67b79773add388e16b4f6be5693dc87"
+                "reference": "23d217da099cc4a9a3bd03b644c1adf520022375"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/376425b8e67b79773add388e16b4f6be5693dc87",
-                "reference": "376425b8e67b79773add388e16b4f6be5693dc87",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/23d217da099cc4a9a3bd03b644c1adf520022375",
+                "reference": "23d217da099cc4a9a3bd03b644c1adf520022375",
                 "shasum": ""
             },
             "require": {
@@ -7407,7 +7407,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2026-10-20T11:18:42+00:00"
+            "time": "2026-10-27T17:55:32+00:00"
         },
         {
             "name": "webmozart/assert",

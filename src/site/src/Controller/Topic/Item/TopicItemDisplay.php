@@ -642,7 +642,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         $image = $this->docImage();
 
-        $message = KunenaParser::parseText($this->topic->first_post_message);
+        // An image of a hidden part of the message is no image of the page: every visitor and the search engines read the head.
+        $message = KunenaParser::parseText(KunenaParser::removeBlocks((string) $this->topic->first_post_message, ['confidential', 'hide', 'private']));
         $matches = preg_match("/\[img]http(s?):\/\/.*\/img]/iu", $message, $title);
 
         if ($matches) {

@@ -37,6 +37,15 @@ use StdClass;
 class KunenaUpload
 {
     /**
+     * The types which are never stored, whatever the configuration says: scripts and pages which a server or a browser runs (the
+     * .htaccess of the media folders protects only on Apache). The same list as the files of the inbox, with shtml.
+     *
+     * @var     string[]
+     * @since   Kunena 8.0
+     */
+    protected const array FORBIDDEN = ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'pht', 'inc', 'cgi', 'pl', 'py', 'sh', 'shtml', 'exe', 'bat', 'cmd', 'com', 'js', 'html', 'htm', 'xhtml', 'svg', 'htaccess', 'ini'];
+
+    /**
      * @var     array
      * @since   Kunena 6.0
      */
@@ -63,6 +72,13 @@ class KunenaUpload
             $ext = trim((string) $ext, ". \t\n\r\0\x0B");
 
             if (!$ext) {
+                continue;
+            }
+
+            // A type of a script is never allowed, also as the last part of a type with several parts (tar.php).
+            $parts = explode('.', strtolower($ext));
+
+            if (\in_array(end($parts), self::FORBIDDEN, true)) {
                 continue;
             }
 

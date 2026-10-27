@@ -6,7 +6,7 @@ describe('Kunena search: the hidden parts of a message', () => {
   const user = { name: 'ci-user', password: 'ci-user-17082005-x', id: 798 };
   const admin = 797;
   const words = { open: `zqxopen${stamp}`, hidden: `zqxhidden${stamp}`, confidential: `zqxconf${stamp}`, own: `zqxown${stamp}`, nested: `zqxnest${stamp}`,
-    spacedHidden: `zqxsphide${stamp}`, spacedConfidential: `zqxspconf${stamp}`,
+    spacedHidden: `zqxsphide${stamp}`, spacedConfidential: `zqxspconf${stamp}`, priv: `zqxpriv${stamp}`,
   };
   const messages = {
     hidden: { author: admin, text: `${words.open} and [hide]${words.hidden}[/hide]` },
@@ -18,6 +18,8 @@ describe('Kunena search: the hidden parts of a message', () => {
     // A closing tag with a space ([/hide ]) closes the block for the parser too: the message was not looked at for hidden parts
     // (only the ones with [/hide] or [/confidential] were), and the search found the words.
     spaced: { author: admin, text: `[hide]${words.spacedHidden}[/hide ] and [confidential]${words.spacedConfidential}[/confidential ]` },
+    // The text in [private] is shown to nobody (the tag shows a note in its place): the search found its words.
+    priv: { author: admin, text: `[private]${words.priv}[/private] of the administrator` },
   };
 
   const addMessage = (name, { author, text }) => cy.task(
@@ -60,6 +62,7 @@ describe('Kunena search: the hidden parts of a message', () => {
     found(words.nested).should('deep.eq', []);
     found(words.spacedHidden).should('deep.eq', []);
     found(words.spacedConfidential).should('deep.eq', []);
+    found(words.priv).should('deep.eq', []);
   });
 
   it('finds for a user the hidden words and his own confidential ones, and not those of another', () => {
@@ -70,6 +73,7 @@ describe('Kunena search: the hidden parts of a message', () => {
     found(words.nested).should('deep.eq', []);
     found(words.spacedHidden).should('deep.eq', ['spaced']);
     found(words.spacedConfidential).should('deep.eq', []);
+    found(words.priv).should('deep.eq', []);
   });
 
   it('finds for a moderator everything', () => {

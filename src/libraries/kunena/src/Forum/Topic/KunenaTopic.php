@@ -2010,7 +2010,7 @@ class KunenaTopic extends KunenaDatabaseObject
 
         if ($fields === true) {
             $user             = KunenaUserHelper::get($this->first_post_userid);
-            $text             = KunenaParser::removeBlocks((string) $this->first_post_message, ['confidential']);
+            $text             = KunenaParser::removeBlocks((string) $this->first_post_message, ['confidential', 'private']);
             $message->message = "[quote=\"{$user->getName($this->first_post_guest_name)}\" post={$this->first_post_id}]" . $text . "[/quote]";
         } else {
             if ($safefields) {

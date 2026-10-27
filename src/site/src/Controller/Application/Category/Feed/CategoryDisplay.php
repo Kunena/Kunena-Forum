@@ -166,7 +166,8 @@ class CategoryDisplay extends KunenaControllerDisplay
         if ((int) $this->config->rssWordCount === -1) {
             $description = '';
         } else {
-            $description = KunenaParser::removeBlocks((string) $description, ['confidential', 'hide']);
+            // The text of [private] is shown to nobody: without HTML the feed gives the stored text.
+            $description = KunenaParser::removeBlocks((string) $description, ['confidential', 'hide', 'private']);
             $description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
             $description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
 

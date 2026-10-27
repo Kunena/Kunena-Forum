@@ -178,7 +178,8 @@ class SearchModel extends KunenaModel
             return 't.message';
         }
 
-        $tags = $this->me->exists() ? 'confidential' : 'hide|confidential';
+        // The text of [private] is shown to nobody but its author.
+        $tags = $this->me->exists() ? 'confidential|private' : 'hide|confidential|private';
 
         // The innermost blocks (with no tag of these kinds in them) go first, several times: a block in a block of the same
         // tag is taken out completely, like the parser hides it (one pattern up to the first closing tag left the text after
@@ -191,7 +192,7 @@ class SearchModel extends KunenaModel
         }
 
         // The regular expression runs for the messages with such a part only: a closing tag with a space ([/hide ]) is one too.
-        $text = "CASE WHEN t.message LIKE '%[/hide%' OR t.message LIKE '%[/confidential%' THEN {$stripped} ELSE t.message END";
+        $text = "CASE WHEN t.message LIKE '%[/hide%' OR t.message LIKE '%[/confidential%' OR t.message LIKE '%[/private%' THEN {$stripped} ELSE t.message END";
 
         // The author sees his own confidential parts.
         if ($this->me->exists()) {

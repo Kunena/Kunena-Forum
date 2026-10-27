@@ -5,7 +5,7 @@ name: Crowdin translations sync
 
 on:
   schedule:
-  - cron: '0 19 * * 2'
+  - cron: '0 14 * * 2'
   workflow_dispatch:
 
 permissions:
@@ -51,5 +51,5 @@ jobs:
         add-paths: |
           src/admin/language
           src/site/language
-          src/plugins/**/language
+          :(glob)src/plugins/*/language/**
         delete-branch: true

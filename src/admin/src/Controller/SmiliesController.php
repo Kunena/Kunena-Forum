@@ -205,6 +205,20 @@ class SmiliesController extends FormController
 
         $file = $this->input->files->get('Filedata');
 
+        // A smiley is a picture: the folder of the emoticons is served by the site, and an svg or an html file with a script in
+        // it would run in the browser of everyone who opens it.
+        $extension = strtolower(pathinfo((string) ($file['name'] ?? ''), PATHINFO_EXTENSION));
+
+        if (
+            !\in_array($extension, ['gif', 'jpg', 'jpeg', 'png', 'webp'], true)
+            || empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || @getimagesize($file['tmp_name']) === false
+        ) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         // TODO : change this part to use other method than \Kunena\Forum\Libraries\Upload\KunenaUploadHelper::upload()
         $upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), 'html');
 

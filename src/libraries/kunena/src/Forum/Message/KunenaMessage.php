@@ -2326,6 +2326,16 @@ class KunenaMessage extends KunenaDatabaseObject
                 continue;
             }
 
+            // The queue is sent later than the message was posted: a message which was deleted or moved to a category which the
+            // user may not read in the meantime is not for him any more (the e-mail gives its text).
+            if (!empty($emailTo->id) && !$this->isAuthorised('read', KunenaUserHelper::get((int) $emailTo->id))) {
+                if ($onRecipientSent !== null) {
+                    $onRecipientSent($recipientIndex);
+                }
+
+                continue;
+            }
+
             // Determine subscription type (1 = subscriber, 0 = moderator/admin).
             $subscriptionType = $emailTo->subscription ? 1 : 0;
 

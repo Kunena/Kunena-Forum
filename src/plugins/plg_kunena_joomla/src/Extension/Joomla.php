@@ -57,6 +57,12 @@ class Joomla extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         $app     = Factory::getApplication();
         $mapping = [];
 
+        // The rights of the users are also asked for on the console (the scheduled task which sends the e-mails of the queue checks
+        // that each user may still read the message): without them nobody may read anything there.
+        if ($app->isClient('cli')) {
+            $mapping['onKunenaGetAccessControl'] = 'onKunenaGetAccessControl';
+        }
+
         if ($app->isClient('site') || $app->isClient('administrator')) {
             $mapping['onKunenaGetAccessControl'] = 'onKunenaGetAccessControl';
             $mapping['onKunenaGetLogin']         = 'onKunenaGetLogin';

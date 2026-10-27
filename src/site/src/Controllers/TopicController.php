@@ -1711,12 +1711,14 @@ class TopicController extends KunenaController
         // Update message contents (the old text: a user who was mentioned before does not get a second e-mail)
         $oldMessageText = (string) $message->message;
         $message->edit($fields);
-        $message->sendMentionNotifications($oldMessageText, false);
 
         // If requested: Make message to be anonymous
         if ($fields['anonymous'] && $message->getCategory()->allowAnonymous) {
             $message->makeAnonymous();
         }
+
+        // After the message was made anonymous: the e-mail of a mention names the author of the message.
+        $message->sendMentionNotifications($oldMessageText, false);
 
         // Prevent user abort from this point in order to maintain data integrity.
         @ignore_user_abort(true);

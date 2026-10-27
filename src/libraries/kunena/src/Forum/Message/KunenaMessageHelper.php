@@ -223,13 +223,17 @@ abstract class KunenaMessageHelper
 
         $catlist = [];
 
+        // The channels of a category are searched with the right which the category needed: the unapproved or deleted messages of a
+        // channel only for who may approve or undelete them there.
+        $channelAction = $authorise === 'read' ? 'read' : 'topic.' . $authorise;
+
         foreach ($categories as $category) {
             if ($view == 'search') {
                 if ($category->isAuthorised('read')) {
-                    $catlist += $category->getChannels();
+                    $catlist += $category->getChannels($channelAction);
                 }
             } else {
-                $catlist += $category->getChannels();
+                $catlist += $category->getChannels($channelAction);
             }
         }
 

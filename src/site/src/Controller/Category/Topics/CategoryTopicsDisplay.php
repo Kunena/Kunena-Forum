@@ -178,6 +178,18 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
             $params['where'] = ' AND tt.first_post_userid NOT IN (' . implode(',', array_map('intval', $ignored)) . ')';
         }
 
+        // The list has the topics of the channels of the category too (other categories): the topics which wait for the approval
+        // or were deleted are listed only for the categories where the user may see them, not by his rights in this category.
+        $holds = [];
+
+        foreach ($this->category->getChannels() as $channel) {
+            $holds[] = '(tt.category_id = ' . (int) $channel->id . ' AND tt.hold IN (' . $access->getAllowedHold($this->me, (int) $channel->id) . '))';
+        }
+
+        if ($holds) {
+            $params['where'] = ($params['where'] ?? '') . ' AND (' . implode(' OR ', $holds) . ')';
+        }
+
         list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 
         if ($this->total > 0) {

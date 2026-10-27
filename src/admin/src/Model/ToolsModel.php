@@ -708,12 +708,15 @@ class ToolsModel extends AdminModel
             $kconfigSettings .= '[tr][th]Kunena config settings:[/th][/tr]';
 
             foreach ($params as $key => $value) {
+                // The report is posted on the forum of the support: no keys, secrets or passwords of the services (also of the
+                // options which come later, by the end of their name).
                 if (
                     !\is_array($value) && $key != 'id' && $key != 'boardTitle' && $key != 'email' && $key != 'offlineMessage'
                     && $key != 'emailVisibleAddress' && $key != 'stopForumSpamKey' && $key != 'ebayAffiliateId'
-                    && $key != 'ebayApiKey' && $key != 'blueskyappHandleOfApp' && $key != 'blueskyappPasswordOfApp'
+                    && $key != 'ebayApiKey' && $key != 'ebayCertId' && $key != 'blueskyappHandleOfApp' && $key != 'blueskyappPasswordOfApp'
                     && $key != 'XConsumerKey' && $key != 'XConsumerSecret'
                     && $key != 'googleMapApiKey'
+                    && !preg_match('/(Key|Secret|Password|Token|CertId)$/i', (string) $key)
                 ) {
                     $kconfigSettings .= '[tr][td]' . $key . '[/td][td]' . $value . '[/td][/tr]';
                 }

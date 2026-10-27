@@ -5,7 +5,7 @@ name: Crowdin translations sync
 
 on:
   schedule:
-  - cron: '0 14 * * 2'
+  - cron: '0 19 * * 2'
   workflow_dispatch:
 
 permissions:

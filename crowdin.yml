@@ -1,5 +1,5 @@
 # Crowdin project: https://crowdin.com/project/kunena-forum-7-1
-project_id_env: CROWDIN_PROJECT_ID
+project_id: 939687
 # The API token is read from the CROWDIN_TOKEN environment variable.
 api_token_env: CROWDIN_TOKEN
 preserve_hierarchy: true

@@ -23,7 +23,7 @@ jobs:
 
     steps:
     - name: Checkout K7.1
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: K7.1
 
@@ -37,8 +37,6 @@ jobs:
         push_translations: false
         create_pull_request: false
       env:
-        CROWDIN_PROJECT_ID: ${{ vars.CROWDIN_PROJECT_ID }}
-        CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_TOKEN }}
         CROWDIN_TOKEN: ${{ secrets.CROWDIN_TOKEN }}
 
     - name: Create Pull Request

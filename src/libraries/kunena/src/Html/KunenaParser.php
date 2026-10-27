@@ -339,7 +339,9 @@ abstract class KunenaParser
             return false;
         }
 
-        $txt = self::removeBlocks($txt, ['confidential', 'hide']);
+        // The text of [private] is shown to nobody: the block goes in any case of the name of the tag (the parser in the plain
+        // mode drops it, not after the opening tag [PRIVATE] was taken out below).
+        $txt = self::removeBlocks($txt, ['confidential', 'hide', 'private']);
         $txt = preg_replace('/\[color(.*?)\](.*?)\[\/color\]/s', '', $txt);
         $txt = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $txt);
         $txt = preg_replace('/\[code(.*?)\](.*?)\[\/code]/s', '', $txt);

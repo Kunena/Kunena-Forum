@@ -177,7 +177,11 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
     protected function render(int $userid, int $toId): string
     {
         $to     = $toId > 0 && $toId !== $userid ? KunenaUserHelper::get($toId) : null;
-        $toName = $to && $to->exists() ? $to->username : '';
+
+        // The name which the forum shows (the username is the name with which the user logs in, and the forum may keep it for
+        // itself): the form sends the number of the user with it.
+        $toName = $to && $to->exists() ? $to->getName('', false) : '';
+        $toId   = $toName !== '' ? (int) $to->userid : 0;
 
         $messages      = (int) $this->params->get('private', 1);
         $notifications = (int) $this->params->get('notifications', 1);
@@ -251,9 +255,16 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
 
                 $replyTo  = $input->getInt('reply', 0);
                 $username = trim($input->getString('to', ''));
-                $toId     = 0;
 
-                if (!$replyTo) {
+                // The form of a message to a user of a profile sends his number (its field shows the name which the forum
+                // shows); a typed name is a username.
+                $toId     = $replyTo ? 0 : max(0, $input->getInt('toid', 0));
+
+                if ($toId && !KunenaUserHelper::get($toId)->exists()) {
+                    throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_RECIPIENT'));
+                }
+
+                if (!$replyTo && !$toId) {
                     $db    = Factory::getContainer()->get('DatabaseDriver');
                     $query = $db->createQuery()
                         ->select($db->quoteName('id'))

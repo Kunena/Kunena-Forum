@@ -33,6 +33,7 @@ $strings = [
 <div class="kinbox" id="kinbox" data-ajax="<?php echo htmlspecialchars($ajax, ENT_QUOTES, 'UTF-8'); ?>"
      data-token="<?php echo htmlspecialchars($token, ENT_QUOTES, 'UTF-8'); ?>"
      data-to="<?php echo htmlspecialchars((string) $toName, ENT_QUOTES, 'UTF-8'); ?>"
+     data-toid="<?php echo (int) $toId; ?>"
      data-attach="<?php echo $attachments ? 1 : 0; ?>"
      data-strings="<?php echo htmlspecialchars(json_encode($strings), ENT_QUOTES, 'UTF-8'); ?>">
     <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
@@ -272,6 +273,11 @@ $strings = [
         }).catch(function (error) { notice(error.message, 'danger'); });
     }
 
+    // The user of the link of a profile: his number, as long as the field shows the name which was filled in.
+    function recipientId() {
+        return root.dataset.toid && document.getElementById('kinbox-to').value === root.dataset.to ? root.dataset.toid : 0;
+    }
+
     function send(data, fileInput) {
         var form = new FormData();
 
@@ -317,7 +323,7 @@ $strings = [
                     el('compose').classList.add('d-none');
                     break;
                 case 'send':
-                    send({to: document.getElementById('kinbox-to').value, subject: document.getElementById('kinbox-subject').value, body: document.getElementById('kinbox-body').value}, document.getElementById('kinbox-files')).then(function (ok) {
+                    send({to: document.getElementById('kinbox-to').value, toid: recipientId(), subject: document.getElementById('kinbox-subject').value, body: document.getElementById('kinbox-body').value}, document.getElementById('kinbox-files')).then(function (ok) {
                         if (ok) {
                             state.filter = 'sent';
                             root.querySelectorAll('[data-filter]').forEach(function (button) { button.classList.toggle('active', button.dataset.filter === 'sent'); });

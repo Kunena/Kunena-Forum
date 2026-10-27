@@ -260,7 +260,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $pmFinder = new KunenaPrivateMessageFinder();
             $pmFinder->filterByMessageIds(array_keys($this->messages))->order('id');
 
-            if (!$this->me->isModerator($this->category)) {
+            // The moderators of the category of the topic: the category of the address can be one of which it is a channel.
+            if (!$this->me->isModerator($this->topic->getCategory())) {
                 $pmFinder->filterByUser($this->me);
             }
 

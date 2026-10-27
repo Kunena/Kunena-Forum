@@ -46,6 +46,14 @@ describe('Kunena channels: the unapproved messages of a channel', () => {
   });
 
   afterEach(() => {
+    cy.then(() => {
+      if (ids.note) {
+        cy.task('queryDB', `DELETE FROM #__kunena_private_post_map WHERE private_id = ${ids.note}`);
+        cy.task('queryDB', `DELETE FROM #__kunena_private_user_map WHERE private_id = ${ids.note}`);
+        cy.task('queryDB', `DELETE FROM #__kunena_private WHERE id = ${ids.note}`);
+        ids.note = 0;
+      }
+    });
     cy.task('queryDB', `SELECT id FROM #__kunena_topics WHERE subject LIKE 'Cypress held % ${stamp}'`).then((rows) => {
       rows.forEach(({ id }) => {
         cy.task('queryDB', `DELETE x FROM #__kunena_messages_text AS x INNER JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.thread = ${id}`);
@@ -65,6 +73,33 @@ describe('Kunena channels: the unapproved messages of a channel', () => {
     cy.doFrontendLogin(user.name, user.password, false);
     found(1).should('deep.eq', ['own']);
     found(2).should('deep.eq', ['own']);
+  });
+
+  // The private part of a post (for its author and the moderators of its category) was shown to the moderators of the category
+  // of the address, which may be a category of which the topic is a channel.
+  it('shows no private part of a post of the channel, opened in his category', () => {
+    cy.task(
+      'queryDB',
+      `INSERT INTO #__kunena_topics (category_id, subject, icon_id, label_id, locked, hold, ordering, posts, hits, attachments, poll_id, moved_id, first_post_id, first_post_time, first_post_userid, first_post_message, first_post_guest_name, last_post_id, last_post_time, last_post_userid, last_post_message, last_post_guest_name, rating, params) VALUES (${ids.channel}, 'Cypress held private ${stamp}', 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, UNIX_TIMESTAMP(), 797, 'x', '', 0, UNIX_TIMESTAMP(), 797, 'x', '', 0, '')`,
+    ).then((topic) => cy.task(
+      'queryDB',
+      `INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon, locked, hold, ordering, hits, moved, modified_by, modified_time, modified_reason) VALUES (0, ${topic.insertId}, ${ids.channel}, 'ci-admin', 797, '', 'Cypress held private ${stamp}', UNIX_TIMESTAMP(), '127.0.0.1', 0, 0, 0, 0, 0, 0, 0, 0, '')`,
+    ).then((message) => {
+      ids.topic = topic.insertId;
+      ids.message = message.insertId;
+      cy.task('queryDB', `INSERT INTO #__kunena_messages_text (mesid, message) VALUES (${message.insertId}, 'The open message')`);
+      cy.task('queryDB', `UPDATE #__kunena_topics SET first_post_id = ${message.insertId}, last_post_id = ${message.insertId} WHERE id = ${topic.insertId}`);
+      cy.task('queryDB', `INSERT INTO #__kunena_private (parent_id, author_id, created_at, attachments, subject, body, params) VALUES (0, 797, NOW(), 0, '', 'zqxnote${stamp}', '{"receivers":{"users":[797],"posts":[${message.insertId}]}}')`).then((note) => {
+        ids.note = note.insertId;
+        cy.task('queryDB', `INSERT INTO #__kunena_private_user_map (private_id, user_id) VALUES (${note.insertId}, 797)`);
+        cy.task('queryDB', `INSERT INTO #__kunena_private_post_map (private_id, message_id) VALUES (${note.insertId}, ${message.insertId})`);
+      });
+    }));
+    cy.doFrontendLogin(user.name, user.password, false);
+    cy.then(() => cy.request(`${base}&view=topic&catid=${ids.own}&id=${ids.topic}`)).then((page) => {
+      expect(page.body, 'the open message').to.contain('The open message');
+      expect(page.body, 'the private part').not.to.contain(`zqxnote${stamp}`);
+    });
   });
 
   it('lists in his category the unapproved topics of his category only', () => {

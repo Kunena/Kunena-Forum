@@ -28,7 +28,7 @@ jobs:
         ref: K7.1
 
     - name: Download translations from Crowdin
-      uses: crowdin/github-action@v2
+      uses: crowdin/github-action@v3
       with:
         user: auto
         config: crowdin.yml

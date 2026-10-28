@@ -65,7 +65,7 @@ class UserEditDisplay extends KunenaControllerDisplay
         // If profile integration is disabled, this view doesn't exist.
         $integration = KunenaFactory::getProfile();
 
-        if (\get_class($integration) == 'KunenaProfileNone') {
+        if (!$integration->enabled) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
         }
 

@@ -87,7 +87,10 @@ class KunenaProfile
             } elseif (\is_array($profile) && !empty($profile) && $profile[0] instanceof KunenaProfile) {
                 self::$instance = $profile[0];
             } else {
-                self::$instance = new self();
+                // No plugin gives a profile: the profile integration is switched off. The names are the ones of the forum
+                // (KunenaUser::getName()), not the empty name of this class, and there are no pages of the profiles.
+                self::$instance          = new self();
+                self::$instance->enabled = false;
             }
         }
 

@@ -22,6 +22,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
@@ -1726,6 +1727,34 @@ class KunenaCategory extends KunenaDatabaseObject
     }
 
     /**
+     * The topics of a category whose last post is older than the time (the oldest first): the topics which purge() and trash()
+     * take. The time is a condition of its own, not only of the caller (else a caller which gives only the time takes every topic).
+     *
+     * @param   DatabaseInterface  $db           The database.
+     * @param   int                $catid        The category.
+     * @param   int                $time         The time: the topics of a last post before it.
+     * @param   string             $where        More conditions (SQL which starts with AND), from the prune of the tools.
+     * @param   int                $limit        The most topics.
+     * @param   bool               $skipDeleted  Leave out the deleted topics (the trash).
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 8.0
+     */
+    public static function getOldTopicIds(DatabaseInterface $db, int $catid, int $time, string $where = '', int $limit = 1000, bool $skipDeleted = false): array
+    {
+        $query = $db->createQuery()
+            ->select($db->quoteName('id'))
+            ->from($db->quoteName('#__kunena_topics', 'tt'))
+            ->where($db->quoteName('tt.category_id') . ' = ' . $catid)
+            ->where($db->quoteName('tt.last_post_time') . ' < ' . $time . ($skipDeleted ? ' AND ' . $db->quoteName('tt.hold') . ' != 2' : '') . ' ' . $where)
+            ->order($db->quoteName('tt.last_post_time') . ' ASC');
+        $query->setLimit($limit);
+
+        return array_map('intval', (array) $db->setQuery($query)->loadColumn());
+    }
+
+    /**
      * @return  KunenaCategory
      *
      * @since   Kunena 6.0
@@ -2137,26 +2166,15 @@ class KunenaCategory extends KunenaDatabaseObject
      */
     public function purge(int $time, $params = [], $limit = 1000): int
     {
-        // FIXME: why time isn't used?
         if (!$this->exists()) {
             return 0;
         }
 
         $where = isset($params['where']) ? (string) $params['where'] : '';
-
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select($db->quoteName('id'))
-            ->from($db->quoteName('#__kunena_topics', 'tt'))
-            ->where($db->quoteName('tt.category_id') . ' = ' . $this->id . ' ' . $where)
-            ->order($db->quoteName('tt.last_post_time') . ' ASC');
-        $query->setLimit($limit);
-        $db->setQuery($query);
-
-        $ids = [];
+        $ids   = [];
 
         try {
-            $ids = $db->loadColumn();
+            $ids = self::getOldTopicIds(Factory::getContainer()->get('DatabaseDriver'), (int) $this->id, $time, $where, (int) $limit);
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
         }
@@ -2332,26 +2350,15 @@ class KunenaCategory extends KunenaDatabaseObject
      */
     public function trash(int $time, $params = [], $limit = 1000): int
     {
-        // FIXME: why time isn't used?
         if (!$this->exists()) {
             return 0;
         }
 
         $where = isset($params['where']) ? (string) $params['where'] : '';
-
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select($db->quoteName('id'))
-            ->from($db->quoteName('#__kunena_topics', 'tt'))
-            ->where($db->quoteName('tt.category_id') . ' = ' . $this->id . ' AND ' . $db->quoteName('tt.hold') . ' !=2 ' . $where)
-            ->order($db->quoteName('tt.last_post_time') . ' ASC');
-        $query->setLimit($limit);
-        $db->setQuery($query);
-
-        $ids = [];
+        $ids   = [];
 
         try {
-            $ids = $db->loadColumn();
+            $ids = self::getOldTopicIds(Factory::getContainer()->get('DatabaseDriver'), (int) $this->id, $time, $where, (int) $limit, true);
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
         }

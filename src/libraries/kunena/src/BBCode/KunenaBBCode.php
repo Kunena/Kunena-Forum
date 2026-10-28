@@ -2143,7 +2143,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if ($postid > 0) {
             $message = KunenaMessageHelper::get($postid);
-            $msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getUrl(null, false);
+
+            // Only a link to a message which the reader may read: its address names the category and the subject of the topic.
+            if ($message->exists() && $message->isAuthorised('read')) {
+                $msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getUrl(null, false);
+            } elseif ($username !== '') {
+                $username .= ' ' . Text::_('COM_KUNENA_POST_WROTE') . ': ';
+            }
         }
 
         // Support bbcode quote tag done in K5.1 and first versions of K5.2

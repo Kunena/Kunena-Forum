@@ -763,7 +763,17 @@ class TopicController extends KunenaController
                     } else {
                         $category->tryAuthorise('topic.post.attachment.createfile');
                     }
+                } elseif (!$this->me->exists() || $this->me->isBanned()) {
+                    // No category yet (a new topic): no rule of a category stops a guest or a banned user.
+                    throw new RuntimeException(Text::_('COM_KUNENA_NO_ACCESS'), 403);
                 }
+            }
+
+            // No file type is allowed to the user (the uploads are switched off for him).
+            $extensions = KunenaAttachmentHelper::getExtensions($category->id, $this->me->userid);
+
+            if ($extensions === false) {
+                throw new RuntimeException(Text::_('COM_KUNENA_NO_ACCESS'), 403);
             }
 
             // The files which wait for a message (mesid 0) have a limit: twice the files of a message, 50 when those have no
@@ -796,7 +806,7 @@ class TopicController extends KunenaController
             ];
 
             // Upload!
-            $upload->addExtensions(KunenaAttachmentHelper::getExtensions($category->id, $this->me->userid));
+            $upload->addExtensions($extensions);
             $response = (object) $upload->ajaxUpload($options);
 
             if (!empty($response->completed)) {

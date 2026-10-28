@@ -90,6 +90,15 @@ describe('Kunena permissions: a banned user', () => {
           body: 'x',
           failOnStatusCode: false,
         }).its('body.success').should('eq', false);
+        // Without a category (the editor of a new topic before the category is chosen): no category rule stopped the ban.
+        cy.request({
+          method: 'POST',
+          url: `${base}&view=topic&task=upload&format=json&${value}=1`,
+          qs: { catid: 0, filename: 'banned0.txt', size: 1, mime: 'text/plain', hash: 'abc', chunkStart: 0, chunkEnd: 1 },
+          headers: { 'Content-Type': 'application/octet-stream' },
+          body: 'x',
+          failOnStatusCode: false,
+        }).its('body.success').should('eq', false);
 
         snapshot().then((end) => expect(end, 'the data after the requests of a banned user').to.eq(start));
       });

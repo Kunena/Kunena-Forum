@@ -1237,6 +1237,22 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $db->setQuery($query);
         $article = $db->loadObject();
 
+        // The article as Joomla shows it: published (or archived) between its dates, in a published category of an access level
+        // of the reader (else nothing of it is shown, the setting show_noauth is for the level of the article only).
+        if ($article) {
+            $now        = Factory::getDate()->toSql();
+            $viewlevels = $user->getAuthorisedViewLevels();
+
+            if (
+                !\in_array((int) $article->state, [1, 2], true)
+                || (!empty($article->publish_up) && $article->publish_up > $now)
+                || (!empty($article->publish_down) && $article->publish_down < $now)
+                || ($article->catid && ((int) $article->cat_pub < 1 || !\in_array((int) $article->cat_access, $viewlevels)))
+            ) {
+                return Text::_('COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_UNPUBLISHED');
+            }
+        }
+
         if ($article) {
             // Get credentials to check if the user has right to see the article
             $params   = $site->getParams('com_content');

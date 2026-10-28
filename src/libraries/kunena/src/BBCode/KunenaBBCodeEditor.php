@@ -147,7 +147,8 @@ class KunenaBBCodeEditor
      */
     public function insertElement($element, $pos = null, $where = null): void
     {
-        if (is_subclass_of($element, 'KunenaBBCodeEditorElement')) {
+        // The class of the namespace: the name alone ('KunenaBBCodeEditorElement') is no class, and nothing was ever inserted.
+        if ($element instanceof KunenaBBCodeEditorElement) {
             $this->insertElements([$element], $pos, $where);
         }
     }

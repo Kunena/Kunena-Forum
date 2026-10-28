@@ -23,7 +23,7 @@ jobs:
 
     steps:
     - name: Checkout K7.1
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         ref: K7.1
 

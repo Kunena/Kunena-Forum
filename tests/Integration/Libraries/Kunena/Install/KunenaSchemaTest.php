@@ -34,7 +34,8 @@ class KunenaSchemaTest extends IntegrationTestCase implements DBTestInterface
      * Tables which the code names but neither the schema of the installer nor the install file of a plugin has (found by the first
      * run of this test). A new one fails; one which gets a table is taken out of the list.
      * - kunena_keywords: the class TableKunenaKeywords is for a table which is not made, and no code uses the class.
-     * - kunena_karma: KunenaKarma reads and writes it, but the installer does not make it (a new install fails when karma is used).
+     * - kunena_karma: KunenaKarma reads and writes it. A new install makes it (sql/install/mysql/create_tables.utf8.sql), but the
+     *   schema (install.xml) does not have it, so the database of these tests has no karma table either.
      */
     private const KNOWN_NOT_IN_SCHEMA = ['kunena_keywords', 'kunena_karma'];
 

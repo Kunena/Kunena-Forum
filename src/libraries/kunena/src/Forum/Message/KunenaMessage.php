@@ -1388,7 +1388,11 @@ class KunenaMessage extends KunenaDatabaseObject
 
         if ($postDelta < 0) {
             $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-            $dispatcher->dispatch('onDeleteKunenaPost', new KunenaDeleteEvent('onDeleteKunenaPost', [[$this->id]]));
+            $dispatcher->dispatch('onDeleteKunenaPost', new KunenaDeleteEvent('onDeleteKunenaPost', [
+                'context' => 'com_kunena.message',
+                'subject' => $this,
+                'pks'     => [$this->id],
+            ]));
             $activity->onAfterDelete($this);
         } elseif ($postDelta > 0) {
             $topic->markRead();

@@ -711,7 +711,9 @@ abstract class KunenaUserHelper
      */
     public static function getUserIp(): string
     {
-        return IpHelper::getIp();
+        // An address, or nothing: behind a load balancer the framework hands over the header X-Forwarded-For as it is, also when it is no
+        // address, and this value is stored in the database.
+        return KunenaIpAddress::clean(IpHelper::getIp(), $_SERVER['REMOTE_ADDR'] ?? '');
     }
 
     /**

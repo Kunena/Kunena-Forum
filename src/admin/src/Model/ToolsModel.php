@@ -28,6 +28,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Config\KunenaConfigReport;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
@@ -695,13 +696,8 @@ class ToolsModel extends AdminModel
             $kconfigSettings .= '[tr][th]Kunena config settings:[/th][/tr]';
 
             foreach ($params as $key => $value) {
-                if (
-                    !\is_array($value) && $key != 'id' && $key != 'boardTitle' && $key != 'email' && $key != 'offlineMessage'
-                    && $key != 'emailVisibleAddress' && $key != 'stopForumSpamKey' && $key != 'ebayAffiliateId'
-                    && $key != 'ebayApiKey' && $key != 'blueskyappHandleOfApp' && $key != 'blueskyappPasswordOfApp'
-                    && $key != 'XConsumerKey' && $key != 'XConsumerSecret'
-                    && $key != 'googleMapApiKey'
-                ) {
+                // The report is pasted into support forums: keys, secrets, passwords and tokens stay out (by name, not by a list).
+                if (!\is_array($value) && !KunenaConfigReport::isHidden((string) $key)) {
                     $kconfigSettings .= '[tr][td]' . $key . '[/td][td]' . $value . '[/td][/tr]';
                 }
             }

@@ -118,7 +118,11 @@ class UserModel extends KunenaModel
         $db->setQuery($query);
 
         try {
-            $ipList = implode("','", (array) $db->loadColumn());
+            // Only real addresses, each one quoted: older rows can hold what a visitor sent in a header.
+            $ipList = implode(',', array_map(
+                static fn (string $ip): string => $db->quote($ip),
+                array_values(array_filter((array) $db->loadColumn(), static fn ($ip): bool => \is_string($ip) && filter_var($ip, FILTER_VALIDATE_IP) !== false))
+            ));
         } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
@@ -128,7 +132,6 @@ class UserModel extends KunenaModel
         $list = [];
 
         if ($ipList) {
-            $ipList = "'{$ipList}'";
             $query  = $db->createQuery();
             $query->select('m.ip,m.userid,u.username,COUNT(*) as mescnt')
                 ->from($db->quoteName('#__kunena_messages', 'm'))

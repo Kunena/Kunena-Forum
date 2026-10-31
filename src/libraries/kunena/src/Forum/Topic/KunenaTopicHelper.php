@@ -299,17 +299,27 @@ abstract class KunenaTopicHelper
             $catlist += $category->getChannels();
         }
 
-        if (\count($catlist) > 0) {
-            $catlist = implode(',', array_keys($catlist));
+        if ($exclude) {
+            // Everything the user may read except the given categories. A plain NOT IN would also let through the
+            // categories which the user is not allowed to read.
+            $readable = [];
 
-            if ($exclude) {
-                $catlist = 'AND ' . $db->quoteName('tt.category_id') . ' NOT IN (' . $catlist . ')';
-            } else {
-                $catlist = 'AND ' . $db->quoteName('tt.category_id') . ' IN (' . $catlist . ')';
+            foreach (KunenaCategoryHelper::getCategories(false) as $category) {
+                $readable += $category->getChannels();
             }
-        } else {
-            $catlist = '';
+
+            $catlist = array_diff_key($readable, $catlist);
         }
+
+        // No category the user may use: there is nothing to show. Without this, the query would have no category
+        // restriction at all and return the topics of every category.
+        if (!$catlist) {
+            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+            return [0, []];
+        }
+
+        $catlist = 'AND ' . $db->quoteName('tt.category_id') . ' IN (' . implode(',', array_map('intval', array_keys($catlist))) . ')';
 
         $whereuser = [];
 

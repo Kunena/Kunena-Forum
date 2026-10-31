@@ -175,12 +175,12 @@ if (!$config->plainEmail) :
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
                             <div>
-                                <p><?php echo Text::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . $subject; ?></p>
-                                <p><?php echo Text::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
-                                <p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
+                                <p><?php echo Text::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . htmlspecialchars((string) $subject, ENT_QUOTES, 'UTF-8'); ?></p>
+                                <p><?php echo Text::_('COM_KUNENA_CATEGORY') . " : " . htmlspecialchars((string) $this->message->getCategory()->name, ENT_QUOTES, 'UTF-8'); ?></p>
+                                <p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . htmlspecialchars((string) $author->getName('???', false), ENT_QUOTES, 'UTF-8'); ?></p>
 
                                 <p><?php echo Text::_('COM_KUNENA_EMAIL_MESSAGE_LINK_URL');?> :
-                                    <a href="<?php echo $this->messageLink; ?>"><b><?php echo $this->messageLink; ?></b></a>
+                                    <a href="<?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?>"><b><?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?></b></a>
                                 </p>
                             </div>
 
@@ -211,7 +211,7 @@ if (!$config->plainEmail) :
                                             bgcolor="#0072C6">
                                             <a target="_blank" style="text-decoration: underline;
                     color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
-                                               href="<?php echo $this->messageLink; ?>">
+                                               href="<?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?>">
                                                 <?php echo Text::_('COM_KUNENA_READMORE'); ?>
                                             </a>
                                         </td>

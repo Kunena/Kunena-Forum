@@ -22,6 +22,7 @@ use Joomla\Filesystem\Path;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
+use Kunena\Forum\Libraries\Access\KunenaForumAvailability;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -235,6 +236,25 @@ class KunenaView extends HtmlView
 
         KunenaProfiler::getInstance() ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
 
+        // The raw and the json output have no common view, so the checks below do not run for them. They have to obey
+        // the same rules: an offline board, or a forum for registered users only, shows nothing to the visitor.
+        if (!$this->embedded && !isset($this->common)) {
+            $status = KunenaForumAvailability::getBlockingStatus(
+                (bool) $this->config->boardOffline,
+                $this->me->isAdmin(),
+                (bool) $this->config->regOnly,
+                $this->me->exists(),
+                (bool) $this->teaser
+            );
+
+            if ($status !== null) {
+                $this->sendBlocked($status);
+                KunenaProfiler::getInstance() ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
+
+                return;
+            }
+        }
+
         if (!$this->embedded && isset($this->common)) {
             if ($this->config->boardOffline && !$this->me->isAdmin()) {
                 // Forum is offline
@@ -291,6 +311,29 @@ class KunenaView extends HtmlView
         KunenaProfiler::getInstance() ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 
         return $contents;
+    }
+
+    /**
+     * Answer a raw or json request of a visitor who may not see the forum, without running the view.
+     *
+     * @param   integer  $status  503 when the board is offline, 403 when it is for registered users only.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    protected function sendBlocked(int $status): void
+    {
+        $app     = Factory::getApplication();
+        $json    = $app->getInput()->getWord('format', 'html') === 'json';
+        $message = $status === 503 ? Text::_('COM_KUNENA_FORUM_IS_OFFLINE') : Text::_('COM_KUNENA_LOGIN_NOTIFICATION');
+
+        $app->setHeader('Status', $status === 503 ? '503 Service Temporarily Unavailable' : '403 Forbidden', true);
+        $app->setHeader('Content-Type', $json ? 'application/json; charset=utf-8' : 'text/plain; charset=utf-8', true);
+        $app->sendHeaders();
+
+        echo $json ? json_encode(['error' => $message]) : $message;
     }
 
     /**

@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\User\KunenaAvatarPath;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
@@ -521,7 +522,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
      */
     protected function docImage()
     {
-        if (is_file(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar)) {
+        if (KunenaAvatarPath::isValid(KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar) && is_file(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar)) {
             $image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
         } elseif ($this->topic->getAuthor()->avatar == null) {
             if (is_file(JPATH_SITE . '/' . $this->config->emailHeader)) {

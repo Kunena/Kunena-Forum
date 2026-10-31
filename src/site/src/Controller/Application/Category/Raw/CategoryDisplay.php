@@ -30,6 +30,15 @@ use Kunena\Forum\Site\Model\CategoryModel;
 class CategoryDisplay extends KunenaControllerDisplay
 {
     /**
+     * The current user. Declared, because PHP 8.2 reports a deprecation (a text in the middle of the json) for every
+     * property which is created without being declared.
+     *
+     * @var     \Kunena\Forum\Libraries\User\KunenaUser|null
+     * @since   Kunena 7.1
+     */
+    protected $me = null;
+
+    /**
      * Return true if layout exists.
      *
      * @return  boolean
@@ -62,13 +71,15 @@ class CategoryDisplay extends KunenaControllerDisplay
         if ($this->me->exists()) {
             $category = $model->getCategory();
 
-            try {
-                $category->isAuthorised('read');
-            } catch (Exception $response) {
-                // TODO: how to throw or show the exception ?
-            }
+            $topics = [];
 
-            $topics = $model->getTopics();
+            try {
+                $category->tryAuthorise('read');
+                $topics = $model->getTopics();
+            } catch (Exception $e) {
+                // No access: the list stays empty, and the reason is not told to the visitor.
+                $topics = [];
+            }
 
             foreach ($topics as $topic) {
                 $item                    = new \StdClass();

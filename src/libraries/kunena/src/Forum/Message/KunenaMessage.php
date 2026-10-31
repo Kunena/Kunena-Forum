@@ -51,6 +51,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaGuestName;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use StdClass;
 
@@ -1182,21 +1183,26 @@ class KunenaMessage extends KunenaDatabaseObject
                 }
             }
 
-            $attachment->mesid = $this->id;
+            // An attachment which is new to this message needs the right to attach a file (or an image) in the category.
+            // The result of the check was thrown away before, so everybody could attach everything.
+            $newToMessage = $attachment->mesid != $this->id;
 
-            if ($attachment->IsImage()) {
-                try {
-                    $attachment->tryAuthorise('createimage', null, false);
-                } catch (Exception $e) {
-                    $app->enqueueMessage($e->getMessage(), 'error');
-                }
-            } else {
-                try {
-                    $attachment->tryAuthorise('createfile', null, false);
-                } catch (Exception $e) {
-                    $app->enqueueMessage($e->getMessage(), 'error');
+            if ($newToMessage) {
+                $denied = $this->getCategory()->tryAuthorise(
+                    $attachment->IsImage() ? 'topic.post.attachment.createimage' : 'topic.post.attachment.createfile',
+                    null,
+                    false
+                );
+
+                if ($denied) {
+                    $app->enqueueMessage($denied->getMessage(), 'error');
+
+                    // Not attached: the attachment is left as it was.
+                    continue;
                 }
             }
+
+            $attachment->mesid = $this->id;
 
             try {
                 $attachment->save();
@@ -1692,7 +1698,19 @@ class KunenaMessage extends KunenaDatabaseObject
      */
     public function addAttachments(array $ids): void
     {
-        $this->_attachments_add += $this->getAttachments($ids, 'none');
+        $me = KunenaUserHelper::getMyself();
+
+        // 'none' skips the authorisation of the attachments, so the ids from the request are checked here: an attachment
+        // may be added when it already belongs to this message, or when it is the user's own (or the user is a moderator).
+        // Without this, the pending upload of somebody else could be taken over by guessing its id.
+        foreach ($this->getAttachments($ids, 'none') as $id => $attachment) {
+            $ofThisMessage = $this->id && $attachment->mesid == $this->id;
+            $mayAdd        = $me->exists() && ($attachment->userid == $me->userid || $me->isModerator($this->getCategory()));
+
+            if ($ofThisMessage || $mayAdd) {
+                $this->_attachments_add[$id] = $attachment;
+            }
+        }
     }
 
     /**
@@ -1784,6 +1802,33 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
+     * Is this the login name or the name of an account of the site (a guest must not sign with it)?
+     *
+     * @param   string  $name  The name, cleaned.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.1
+     */
+    protected function isAccountName(string $name): bool
+    {
+        if (UserHelper::getUserId($name)) {
+            return true;
+        }
+
+        // The database compares without regard to case and accents; the name is what the forum prints for a member.
+        $query = $this->_db->getQuery(true)
+            ->select($this->_db->quoteName('id'))
+            ->from($this->_db->quoteName('#__users'))
+            ->where($this->_db->quoteName('name') . ' = :name OR ' . $this->_db->quoteName('username') . ' = :username')
+            ->bind(':name', $name)
+            ->bind(':username', $name);
+        $this->_db->setQuery($query, 0, 1);
+
+        return (bool) $this->_db->loadResult();
+    }
+
+    /**
      * @return  boolean
      *
      * @throws  Exception
@@ -1796,14 +1841,13 @@ class KunenaMessage extends KunenaDatabaseObject
 
         // Check username
         if (!$this->userid) {
-            $this->name = trim($this->name);
-
-            // Unregistered or anonymous users: Do not allow existing username
-            $nicktaken = UserHelper::getUserId($this->name);
-
-            if (empty($this->name) || $nicktaken) {
-                $this->name = Text::_('COM_KUNENA_USERNAME_ANONYMOUS');
-            }
+            // Unregistered or anonymous users: Do not allow the login name or the name of an account (as it is shown), whatever the
+            // case, the spacing or the invisible characters are. The anonymous name is used instead.
+            $this->name = KunenaGuestName::resolve(
+                (string) $this->name,
+                fn (string $name): bool => $this->isAccountName($name),
+                Text::_('COM_KUNENA_USERNAME_ANONYMOUS')
+            );
         } else {
             $this->name = $author->getName();
         }

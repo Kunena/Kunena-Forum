@@ -785,11 +785,11 @@ jQuery(document).ready(function ($) {
 			$('#form_submit_button').removeAttr("disabled");
 		} else {
 			if (Joomla.getOptions('com_kunena.localstorage')) {
-				const cat = localStorage.getItem('copyKunenaeditor');
+				const cat = KunenaDraft.take();
 	
 				if (cat) {
 					sceditor.instance(textarea).val(cat);
-					localStorage.removeItem('copyKunenaeditor');
+					KunenaDraft.clear();
 				}
 			}
 		}

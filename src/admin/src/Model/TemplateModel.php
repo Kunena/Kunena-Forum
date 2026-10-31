@@ -98,14 +98,17 @@ class TemplateModel extends AdminModel
         $template = $app->getUserState('kunena.templatename');
         $filename = $app->getUserState('kunena.editscss.filename');
 
-        $content = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/scss/' . $filename);
-        $content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
+        $file = KunenaTemplateHelper::isInstalled($template)
+            ? KunenaTemplateHelper::getEditablePath(KPATH_SITE . '/template/' . $template . '/assets/scss', $filename, 'scss')
+            : null;
+
+        $content = $file !== null && is_file($file) ? file_get_contents($file) : false;
 
         if ($content === false) {
             return;
         }
 
-        return $content;
+        return htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
     }
 
     /**
@@ -118,15 +121,14 @@ class TemplateModel extends AdminModel
         $app = Factory::getApplication();
 
         $filename = $app->getUserState('kunena.editCss.filename');
-        $content  = file_get_contents(KPATH_MEDIA . '/core/css/' . $filename);
+        $file     = KunenaTemplateHelper::getEditablePath(KPATH_MEDIA . '/core/css', $filename, 'css');
+        $content  = $file !== null && is_file($file) ? file_get_contents($file) : false;
 
         if ($content === false) {
             return;
         }
 
-        $content = htmlspecialchars($content, ENT_COMPAT);
-
-        return $content;
+        return htmlspecialchars($content, ENT_COMPAT);
     }
 
     /**

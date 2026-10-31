@@ -18,6 +18,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Aurelia template.
@@ -122,6 +123,9 @@ class KunenaTemplateAurelia extends KunenaTemplate
         $wa = $doc->getWebAssetManager();
         $wa->useScript('jquery');
 
+        // The owner of the draft of the editor: the text is only handed back to the member who wrote it.
+        $this->addScriptOptions('com_kunena.draftowner', (int) KunenaUserHelper::getMyself()->userid);
+        $this->addScript('assets/js/draft.js');
         $this->addScript('assets/js/main.js');
         $this->addScript('assets/js/tooltips.js');
 

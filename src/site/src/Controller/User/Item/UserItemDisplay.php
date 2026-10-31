@@ -25,6 +25,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaAvatarPath;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -207,7 +208,7 @@ class UserItemDisplay extends KunenaControllerDisplay
         $this->setMetaData('og:url', Uri::current(), 'property');
         $this->setMetaData('og:type', 'profile', 'property');
 
-        if (is_file(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar)) {
+        if (KunenaAvatarPath::isValid(KunenaFactory::getUser($this->profile->id)->avatar) && is_file(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar)) {
             $image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
         } elseif ($this->profile->avatar == null || $this->config->avatarType && KunenaFactory::getUser($this->profile->id)->avatar == null) {
             if (is_file(JPATH_SITE . '/' . $this->config->emailHeader)) {

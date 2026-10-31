@@ -534,7 +534,7 @@ class CategoriesController extends KunenaController
                 continue;
             }
 
-            if (!$category->getParent()->tryAuthorise('admin')) {
+            if (!$category->getParent()->isAuthorised('admin')) {
                 $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->getParent()->name)), 'error');
             } elseif (!$category->isCheckedOut($this->me->userid)) {
                 $category->set('ordering', $order[$category->id]);
@@ -675,7 +675,7 @@ class CategoriesController extends KunenaController
 
         $category = KunenaCategoryHelper::get($id);
 
-        if (!$category->getParent()->tryAuthorise('admin')) {
+        if (!$category->getParent()->isAuthorised('admin')) {
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->getParent()->name)), 'error');
 
             return;

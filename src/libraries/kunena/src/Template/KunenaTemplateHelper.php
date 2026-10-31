@@ -55,6 +55,199 @@ abstract class KunenaTemplateHelper
     }
 
     /**
+     * Why a template may not be uninstalled, or null when it may.
+     *
+     * The name is compared as the file system does (not case-sensitive on Windows and macOS: "Aurelia" is the folder "aurelia"),
+     * and a name which is no plain folder name ("../template/aurelia" is the system template, reached through a path) is refused
+     * before anything is compared.
+     *
+     * @param   mixed        $name     The name from the request.
+     * @param   array        $locked   Names of the templates of the system.
+     * @param   string|null  $default  Name of the template which is set as the default.
+     *
+     * @return  string|null  'invalid', 'locked', 'default' or null.
+     *
+     * @since   Kunena 7.1
+     */
+    public static function uninstallBlock($name, array $locked, ?string $default): ?string
+    {
+        if (!self::isValidName($name)) {
+            return 'invalid';
+        }
+
+        foreach ($locked as $system) {
+            if (strcasecmp($name, (string) $system) === 0) {
+                return 'locked';
+            }
+        }
+
+        if ($default !== null && strcasecmp($name, $default) === 0) {
+            return 'default';
+        }
+
+        return null;
+    }
+
+    /**
+     * May this user install, remove, restore or edit the files of a template?
+     *
+     * A template is PHP which the site runs, so this is the right to install code: the permission to install extensions
+     * (core.manage of com_installer), or to administer Kunena (core.admin of com_kunena). The permission to manage Kunena is not
+     * enough: it is given to people who run the forum.
+     *
+     * @param   object|null  $user  The user, with authorise($action, $asset).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.1
+     */
+    public static function mayChangeTemplates($user): bool
+    {
+        if (!\is_object($user) || !method_exists($user, 'authorise')) {
+            return false;
+        }
+
+        return (bool) $user->authorise('core.manage', 'com_installer') || (bool) $user->authorise('core.admin', 'com_kunena');
+    }
+
+    /**
+     * Is this the name of a template of the system. The folder is not case sensitive on Windows and macOS, so neither is the
+     * comparison.
+     *
+     * @param   mixed  $name    The name of the folder.
+     * @param   array  $locked  The names of the templates of the system.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.1
+     */
+    public static function isLocked($name, array $locked): bool
+    {
+        if (!\is_string($name)) {
+            return false;
+        }
+
+        foreach ($locked as $system) {
+            if (strcasecmp($name, (string) $system) === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * The name under which an uploaded package is kept while it is extracted: made here, never taken from the client (the name
+     * of the file is chosen by the one who uploads it), and only for a kind of archive which can be extracted.
+     *
+     * @param   mixed  $clientName  The name the browser sent.
+     *
+     * @return  string|null  A name without a path, or null when the file is not an archive of a template.
+     *
+     * @since   Kunena 7.1
+     */
+    public static function packageName($clientName): ?string
+    {
+        if (!\is_string($clientName)) {
+            return null;
+        }
+
+        $lower = strtolower(trim($clientName));
+
+        if (preg_match('/\.(tar\.(?:gz|bz2))\z/', $lower, $m)) {
+            $ext = $m[1];
+        } elseif (preg_match('/\.(zip|tar|tgz|gz|bz2)\z/', $lower, $m)) {
+            $ext = $m[1];
+        } else {
+            return null;
+        }
+
+        return 'kunena-template-' . bin2hex(random_bytes(8)) . '.' . $ext;
+    }
+
+    /**
+     * Is this a possible name of a template folder: letters, digits, underscore and hyphen, so it can not leave the
+     * template folder (no slash, no dots).
+     *
+     * @param   mixed  $name  The name from the request.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.1
+     */
+    public static function isValidName($name): bool
+    {
+        return \is_string($name) && preg_match('/^[A-Za-z0-9_-]+\z/', $name) === 1;
+    }
+
+    /**
+     * Is this the name of an installed Kunena template.
+     *
+     * @param   mixed  $name  The name from the request.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.1
+     */
+    public static function isInstalled($name): bool
+    {
+        return self::isValidName($name) && self::parseXmlFile($name) !== false;
+    }
+
+    /**
+     * The path of a file which may be edited in the template editor, or null when the file is not allowed: the name has
+     * to be a plain file name with the wanted extension (no folders, no hidden files, no script extension in the
+     * middle of it), and the file has to be inside the given folder (also after links are followed).
+     *
+     * @param   string  $baseDir    The folder with the editable files.
+     * @param   mixed   $filename   The name of the file from the request.
+     * @param   string  $extension  The only extension which is allowed, without the dot.
+     *
+     * @return  string|null
+     *
+     * @since   Kunena 7.1
+     */
+    public static function getEditablePath(string $baseDir, $filename, string $extension): ?string
+    {
+        $filename = \is_string($filename) ? $filename : '';
+
+        if ($filename === '' || $filename[0] === '.' || $filename !== basename(str_replace('\\', '/', $filename))) {
+            return null;
+        }
+
+        $parts = explode('.', strtolower($filename));
+
+        if (\count($parts) < 2 || array_pop($parts) !== strtolower($extension)) {
+            return null;
+        }
+
+        // Never a script in disguise, like shell.php.css
+        foreach ($parts as $part) {
+            if (preg_match('/^(php\d?|phtml|pht|phps|phar|inc|cgi|pl|py|asp|aspx|jsp|exe|sh)$/', $part)) {
+                return null;
+            }
+        }
+
+        $base = realpath($baseDir);
+
+        if ($base === false) {
+            return null;
+        }
+
+        $path = $base . DIRECTORY_SEPARATOR . $filename;
+
+        if (file_exists($path) || is_link($path)) {
+            $real = realpath($path);
+
+            if ($real === false || dirname($real) !== $base) {
+                return null;
+            }
+        }
+
+        return $path;
+    }
+
+    /**
      * parseXmlFiles
      *
      * @param   null  $templateBaseDir  template

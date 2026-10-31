@@ -39,6 +39,7 @@ use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\KunenaFloodPolicy;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
@@ -48,6 +49,7 @@ use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Image\KunenaImage;
+use Kunena\Forum\Libraries\Image\KunenaImageHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
@@ -192,6 +194,11 @@ class TopicController extends KunenaController
 
         $instances = KunenaAttachmentHelper::getById($attach_ids_final, 'none');
 
+        // 'none' skips the authorisation of the attachments, so every one of them has to be checked here.
+        foreach ($instances as $instance) {
+            $this->checkpermissions($instance->userid);
+        }
+
         $this->changeinline($instances, '1');
     }
 
@@ -316,10 +323,119 @@ class TopicController extends KunenaController
      * @since Kunena 5.1
      */
     protected function checkpermissions($attachment_userid)
-    {        
-        if ($this->me->userid != $attachment_userid && !$this->me->isAdmin() && !$this->me->isModerator()) {
+    {
+        if (!$this->canManageAttachment($attachment_userid)) {
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
+    }
+
+    /**
+     * The time (unix) of the last post of the current poster, from every place where it is known: the posts of the user, the
+     * posts of the IP address for a guest, and the session (an anonymous post has neither the user nor the IP address).
+     *
+     * @return  integer[]
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    protected function getLastPostTimes(): array
+    {
+        $times   = [(int) $this->app->getUserState('com_kunena.lastposttime', 0)];
+        $userid  = (int) $this->me->userid;
+        $ip      = (string) KunenaUserHelper::getUserIp();
+        $query   = $this->db->createQuery();
+        $isKnown = $userid > 0 || $ip !== '';
+
+        if ($isKnown) {
+            $query->select('MAX(' . $this->db->quoteName('time') . ')')
+                ->from($this->db->quoteName('#__kunena_messages'))
+                ->where($userid > 0 ? $this->db->quoteName('userid') . ' = ' . $userid : $this->db->quoteName('userid') . ' = 0 AND ' . $this->db->quoteName('ip') . ' = ' . $this->db->quote($ip));
+            $this->db->setQuery($query);
+
+            try {
+                $times[] = (int) $this->db->loadResult();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+        }
+
+        return $times;
+    }
+
+    /**
+     * May the current user do this poll action on the topic. A refusal is shown to the user and the action is skipped.
+     *
+     * @param   object  $topic   The topic of the poll.
+     * @param   string  $action  poll.create, poll.edit or poll.delete.
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    protected function canUsePoll(object $topic, string $action): bool
+    {
+        try {
+            $topic->tryAuthorise($action);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Keep only the attachments which may be made private together with the message: the ones of the current user or
+     * of the author of the message, which are not attached to another message. Anything else (an unknown id, the file
+     * of somebody else) is dropped, otherwise the id could be used to read or to lock the attachments of others.
+     *
+     * @param   array          $ids      The ids sent with the request.
+     * @param   KunenaMessage  $message  The message which gets the private part.
+     *
+     * @return  integer[]
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    protected function filterPrivateAttachmentIds(array $ids, KunenaMessage $message): array
+    {
+        $ids = array_values(array_filter(array_map('intval', $ids)));
+
+        if (!$ids || !$this->me->exists()) {
+            return [];
+        }
+
+        $owners  = [(int) $this->me->userid, (int) $message->userid];
+        $allowed = [];
+
+        foreach (KunenaAttachmentHelper::getById($ids, 'none') as $id => $attachment) {
+            $unattached = !$attachment->mesid || $attachment->mesid == $message->id;
+
+            if ($attachment->exists() && $unattached && \in_array((int) $attachment->userid, $owners, true)) {
+                $allowed[] = (int) $id;
+            }
+        }
+
+        return $allowed;
+    }
+
+    /**
+     * Can the current user change an attachment which belongs to the given user: guests never can (their user id 0
+     * must not match anything), everybody else needs to own it, or to be a moderator or an administrator.
+     *
+     * @param   mixed  $attachment_userid  The owner of the attachment, taken from the attachment itself.
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    protected function canManageAttachment($attachment_userid): bool
+    {
+        return $this->me->exists()
+            && ($this->me->userid == $attachment_userid || $this->me->isAdmin() || $this->me->isModerator());
     }
 
     /**
@@ -342,14 +458,15 @@ class TopicController extends KunenaController
         }
 
         $attach_id = $this->input->getInt('files_id_delete', 0);
-        $userid = $this->input->getInt('userid', 0);
         $success   = [];
         $instance  = KunenaAttachmentHelper::get($attach_id);
 
-        if (
-            $this->me->userid == $userid || $this->me->isAdmin()
-            || $this->me->isModerator()
-        ) {
+        if (!$instance->exists()) {
+            throw new RuntimeException(Text::_('Not found'), 404);
+        }
+
+        // The owner comes from the attachment, never from the request.
+        if ($this->canManageAttachment($instance->userid)) {
             $editor_text = $this->app->getInput()->get->get('editor_text', '', 'raw');
 
             $success['text_prepared'] = $instance->removeBBCodeInMessage($editor_text);
@@ -393,6 +510,18 @@ class TopicController extends KunenaController
 
         $category = KunenaCategoryHelper::get($catid);
 
+        // The template text of a category is only for those who may read the category: it can be a private one. No
+        // category chosen (yet) is an empty template, as before.
+        $template = '';
+
+        if ($category->exists()) {
+            if (!$category->isAuthorised('read')) {
+                throw new RuntimeException(Text::_('Forbidden'), 403);
+            }
+
+            $template = $category->topictemplate;
+        }
+
         // Set the MIME type and header for JSON output.
         header('Content-type: application/json');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -404,7 +533,7 @@ class TopicController extends KunenaController
         while (@ob_end_clean()) {
         }
 
-        echo new KunenaResponseJson($category->topictemplate);
+        echo new KunenaResponseJson($template);
 
         jexit();
     }
@@ -427,7 +556,14 @@ class TopicController extends KunenaController
 
         $topicid  = $this->app->getInput()->get('topic_id', 0, 'int');
 
-        if ($user->id == 0 || KunenaTopicHelper::get($topicid)->first_post_userid == $this->me->userid) {
+        // The ratings of a topic are only for those who may read the topic (it can be in a private category).
+        $topic = KunenaTopicHelper::get($topicid);
+
+        if (!$topic->exists() || !$topic->isAuthorised('read')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
+        if ($user->id == 0 || $topic->first_post_userid == $this->me->userid) {
             $response = KunenaRateHelper::getSelected($topicid);
         } else {
             $response = KunenaRateHelper::getRate($topicid, $user->id);
@@ -583,6 +719,16 @@ class TopicController extends KunenaController
 
                 // Resize image if needed.
                 if ($attachment->isImage()) {
+                    // The image is loaded into memory below: refuse one that is too large for that (a small file can describe
+                    // billions of pixels), instead of ending the request with a fatal error.
+                    try {
+                        KunenaImageHelper::assertSafeFile($uploadFile);
+                    } catch (Exception $refused) {
+                        @unlink($uploadFile);
+
+                        throw $refused;
+                    }
+
                     $imageInfo = KunenaImage::getImageFileProperties($uploadFile);
 
                     if ($imageInfo->width > $this->config->imageWidth || $imageInfo->height > $this->config->imageHeight) {
@@ -698,7 +844,7 @@ class TopicController extends KunenaController
             $category = KunenaCategoryHelper::get($this->catid);
 
             try {
-                $category->isAuthorised('topic.create');
+                $category->tryAuthorise('topic.create');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
                 $this->setRedirectBack();
@@ -712,7 +858,7 @@ class TopicController extends KunenaController
             $parent = KunenaMessageHelper::get($this->id);
 
             try {
-                $parent->isAuthorised('reply');
+                $parent->tryAuthorise('reply');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
                 $this->setRedirectBack();
@@ -757,25 +903,12 @@ class TopicController extends KunenaController
 
         $dateNowUnix = Factory::getDate()->toUnix();
         
-        // Flood protection
-        if ($this->config->floodProtection && !$this->me->isModerator($category) && $isNew) {
-            $timelimit = $dateNowUnix - $this->config->floodProtection;
-            $ip        = KunenaUserHelper::getUserIp();
+        // Flood protection: the time between two consecutive posts, for a new topic and for a reply.
+        if ($this->config->floodProtection && !$this->me->isModerator($category)) {
+            $wait = KunenaFloodPolicy::secondsToWait($dateNowUnix, (int) $this->config->floodProtection, $this->getLastPostTimes());
 
-            $query = $this->db->createQuery();
-            $query->select('COUNT(*)')
-                ->from($this->db->quoteName('#__kunena_messages'))
-                ->where('ip=' . $this->db->quote($ip) . ' AND time > ' . $this->db->quote($timelimit));
-            $this->db->setQuery($query);
-
-            try {
-                $count = $this->db->loadResult();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-            }
-
-            if ($count) {
-                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodProtection), 'error');
+            if ($wait > 0) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $wait), 'error');
                 $this->setRedirectBack();
 
                 return;
@@ -934,6 +1067,9 @@ class TopicController extends KunenaController
         // Save message
         try {
             $message->save();
+
+            // Remembered for the flood protection: a message of an anonymous post keeps no user and no IP address.
+            $this->app->setUserState('com_kunena.lastposttime', $dateNowUnix);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -962,13 +1098,7 @@ class TopicController extends KunenaController
         $poll_title   = $fields['poll_title'];
         $poll_options = $fields['poll_options'];
 
-        if (!empty($poll_options) && !empty($poll_title)) {
-            try {
-                $topic->isAuthorised('poll.create', null, false);
-            } catch (Exception $e) {
-                $this->app->enqueueMessage($e->getMessage(), 'error');
-            }
-
+        if (!empty($poll_options) && !empty($poll_title) && $this->canUsePoll($topic, 'poll.create')) {
             $poll        = $topic->getPoll();
             $poll->title = $poll_title;
 
@@ -1051,10 +1181,12 @@ class TopicController extends KunenaController
      *    
      * @throws  Exception
      * 
-     * @since   Kunena 6.4    
+     * @since   Kunena 6.4
      */
-    public function removeOrphanedAttachments()
+    protected function removeOrphanedAttachments()
     {
+        // protected on purpose: a public method of a controller is a task which anybody can start with a link, and this one
+        // deletes the pending uploads of the user. It is only called by post() and edit(), which check their own token.
         $params['file'] = '1';
         $params['image'] = '1';
         $params['mesid'] = '0';
@@ -1292,7 +1424,12 @@ class TopicController extends KunenaController
             return;
         }
 
-        $attachIds          = explode(',', $attachIds[0]);
+        $attachIds = $this->filterPrivateAttachmentIds(explode(',', (string) $attachIds[0]), $message);
+
+        if (!trim($body) && !$attachIds) {
+            return;
+        }
+
         $moderator          = $this->me->isModerator($message->getCategory());
         $parent             = $message->getParent();
         $author             = $message->getAuthor();
@@ -1369,8 +1506,9 @@ class TopicController extends KunenaController
             'params'            => '',
         ];
 
+        // A request without a valid token may come from another site, so nothing of it is kept in the session: the data
+        // is shown again in the edit form, and a forged request could otherwise put its own values in the form of the user.
         if (!Session::checkToken('post')) {
-            $this->app->setUserState('com_kunena.postfields', $fields);
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirectBack();
 
@@ -1378,7 +1516,7 @@ class TopicController extends KunenaController
         }
 
         try {
-            $message->isAuthorised('edit');
+            $message->tryAuthorise('edit');
         } catch (Exception $e) {
             $this->app->setUserState('com_kunena.postfields', $fields);
             $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -1574,30 +1712,20 @@ class TopicController extends KunenaController
 
                 if (!$topic->poll_id) {
                     // Create a new poll
-                    try {
-                        $topic->isAuthorised('poll.create');
-                    } catch (Exception $e) {
-                        $this->app->enqueueMessage($e->getMessage(), 'error');
-                    }
-
-                    try {
-                        $poll->save();
-                    } catch (Exception $e) {
-                        $this->app->enqueueMessage($e->getMessage(), 'error');
-                    }
-
-                    $topic->poll_id = $poll->id;
-                    $topic->save();
-                    $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
-                } else {
-                    if ($this->config->allowUserEditPoll || (!$this->config->allowUserEditPoll && !$poll->getUserCount())) {
-                        // Edit existing poll
+                    if ($this->canUsePoll($topic, 'poll.create')) {
                         try {
-                            $topic->isAuthorised('poll.edit');
+                            $poll->save();
                         } catch (Exception $e) {
                             $this->app->enqueueMessage($e->getMessage(), 'error');
                         }
 
+                        $topic->poll_id = $poll->id;
+                        $topic->save();
+                        $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
+                    }
+                } else {
+                    if (($this->config->allowUserEditPoll || (!$this->config->allowUserEditPoll && !$poll->getUserCount())) && $this->canUsePoll($topic, 'poll.edit')) {
+                        // Edit existing poll
                         try {
                             $poll->save();
                         } catch (Exception $e) {
@@ -1607,14 +1735,8 @@ class TopicController extends KunenaController
                         $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_EDITED'), 'success');
                     }
                 }
-            } elseif ($poll->exists() && $topic->isAuthorised('poll.edit')) {
+            } elseif ($poll->exists() && $topic->isAuthorised('poll.edit') && $this->canUsePoll($topic, 'poll.delete')) {
                 // Delete poll
-                try {
-                    $topic->isAuthorised('poll.delete');
-                } catch (Exception $e) {
-                    $this->app->enqueueMessage($e->getMessage(), 'error');
-                }
-
                 try {
                     $poll->delete();
                 } catch (Exception $e) {
@@ -1756,7 +1878,7 @@ class TopicController extends KunenaController
         $message = KunenaMessageHelper::get($this->mesid);
 
         try {
-            $message->isAuthorised($type);
+            $message->tryAuthorise($type);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -1852,7 +1974,7 @@ class TopicController extends KunenaController
         $topic = KunenaTopicHelper::get($this->id);
 
         try {
-            $topic->isAuthorised('read');
+            $topic->tryAuthorise('read');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -1929,7 +2051,7 @@ class TopicController extends KunenaController
         $topic = KunenaTopicHelper::get($this->id);
 
         try {
-            $topic->isAuthorised('read');
+            $topic->tryAuthorise('read');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -1970,7 +2092,7 @@ class TopicController extends KunenaController
         $topic = KunenaTopicHelper::get($this->id);
 
         try {
-            $topic->isAuthorised('read');
+            $topic->tryAuthorise('read');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -2011,7 +2133,7 @@ class TopicController extends KunenaController
         $topic = KunenaTopicHelper::get($this->id);
 
         try {
-            $topic->isAuthorised('sticky');
+            $topic->tryAuthorise('sticky');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -2062,7 +2184,7 @@ class TopicController extends KunenaController
         $topic = KunenaTopicHelper::get($this->id);
 
         try {
-            $topic->isAuthorised('sticky');
+            $topic->tryAuthorise('sticky');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -2111,7 +2233,7 @@ class TopicController extends KunenaController
         $topic = KunenaTopicHelper::get($this->id);
 
         try {
-            $topic->isAuthorised('lock');
+            $topic->tryAuthorise('lock');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -2160,7 +2282,7 @@ class TopicController extends KunenaController
         $topic = KunenaTopicHelper::get($this->id);
 
         try {
-            $topic->isAuthorised('lock');
+            $topic->tryAuthorise('lock');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -2224,7 +2346,7 @@ class TopicController extends KunenaController
         $category = $topic->getCategory();
         
         try {
-            $target->isAuthorised('delete');
+            $target->tryAuthorise('delete');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -2293,7 +2415,7 @@ class TopicController extends KunenaController
         $category = $topic->getCategory();
 
         try {
-            $target->isAuthorised('undelete');
+            $target->tryAuthorise('undelete');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -2356,7 +2478,7 @@ class TopicController extends KunenaController
         $category = $topic->getCategory();
         
         try {
-            $topic->isAuthorised('permdelete');
+            $topic->tryAuthorise('permdelete');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -2427,7 +2549,7 @@ class TopicController extends KunenaController
         $category = $topic->getCategory();
 
         try {
-            $target->isAuthorised('approve');            
+            $target->tryAuthorise('approve');            
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirect($target->getUrl($this->return, false));
@@ -2514,7 +2636,7 @@ class TopicController extends KunenaController
         }
 
         try {
-            $object->isAuthorised('move');
+            $object->tryAuthorise('move');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirect($redirect);
@@ -2522,7 +2644,7 @@ class TopicController extends KunenaController
         }
 
         try {
-            $target->isAuthorised('read');
+            $target->tryAuthorise('read');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirect($redirect);
@@ -2634,7 +2756,7 @@ class TopicController extends KunenaController
         }
 
         try {
-            $target->isAuthorised('read');
+            $target->tryAuthorise('read');
         } catch (Exception $e) {
             // Deny access if user cannot read target
             $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -2803,6 +2925,15 @@ class TopicController extends KunenaController
         }
 
         $topic = KunenaTopicHelper::get($this->id);
+
+        // Only the moderators of the category (the ones who see the reset button) may reset a poll.
+        if (!$topic->exists() || !$topic->poll_id || !$this->me->isModerator($topic->getCategory())) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
         $topic->resetvotes();
 
         if ($this->config->logModeration) {

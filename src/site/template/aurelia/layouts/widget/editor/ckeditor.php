@@ -59,11 +59,11 @@ $template = KunenaTemplate::getInstance();
 ?>
 <script>
     function localstorage() {
-        localStorage.getItem("copyKunenaeditor");
+        // The hand-over of the text is done by KunenaDraft (assets/js/draft.js).
     }
 
     function localstorageremove() {
-        localStorage.removeItem("copyKunenaeditor");
+        KunenaDraft.clear();
     }
 </script>
 

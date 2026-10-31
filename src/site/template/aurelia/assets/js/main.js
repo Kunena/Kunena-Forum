@@ -60,7 +60,16 @@ jQuery(document).ready(function ($) {
 			data: 'gallery_name=' + gallery_selected
 		}).done(function (response) {
 			$.each(response, function (key, value) {
-				gallery_list.append('<li class="span2"><input id="radio' + gallery_selected + '/' + value.filename + '" type="radio" value="gallery/' + gallery_selected + '/' + value.filename + '" name="avatar_gallery"><label class=" radio thumbnail" for="radio' + gallery_selected + '/' + value.filename + '"><img alt="" src="' + value.url + '"></label></li>');
+				// File names and addresses are set as attributes, never written into a string of html.
+				const radio_id = 'radio' + gallery_selected + '/' + value.filename;
+				const radio = $('<input type="radio" name="avatar_gallery">')
+					.attr('id', radio_id)
+					.val('gallery/' + gallery_selected + '/' + value.filename);
+				const label = $('<label class="radio thumbnail">')
+					.attr('for', radio_id)
+					.append($('<img alt="">').attr('src', value.url));
+
+				gallery_list.append($('<li class="span2">').append(radio).append(label));
 			});
 		}).fail(function (response) {
 

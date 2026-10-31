@@ -132,8 +132,16 @@ jQuery(function ($) {
 			$('#form_submit_button').prop('disabled', false);
 
 			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
-			$('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
-			$('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
+			// The file name is what the member called the file: it is set as an attribute, never written into a string of html.
+			$('#kattach-list').append($('<input type="hidden" value="1">').attr({
+				id: 'kattachs-' + data.result.data.id,
+				name: 'attachments[' + data.result.data.id + ']'
+			}));
+			$('#kattach-list').append($('<input type="hidden" value="1">').attr({
+				id: 'kattach-' + data.result.data.id,
+				placeholder: data.result.data.filename,
+				name: 'attachment[' + data.result.data.id + ']'
+			}));
 
 			data.uploaded = true;
 

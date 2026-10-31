@@ -1374,13 +1374,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             }
         }
 
-        if (isset($params['target'])) {
-            $target = $bbcode->url_target;
-            $class  = $params['class'];
-        } else {
-            $target = '';
-            $class  = null;
-        }
+        // A member may choose where the link opens, not how it looks: the class parameter of the tag is ignored. A class
+        // name would be a way to restyle the link with the classes of the site (a full-page link, for example), and to
+        // reach the scripts which look for a class.
+        $target = isset($params['target']) ? $bbcode->url_target : '';
 
         $uri  = Uri::getInstance($url);
         $host = $uri->getHost();
@@ -1405,7 +1402,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if ($layout->getPath()) {
             return (string) $layout
-                ->set('class', $class)
                 ->set('content', $content)
                 ->set('url', $url)
                 ->set('target', $target)
@@ -1933,6 +1929,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $db->setQuery($query);
         $article = $db->loadObject();
 
+        $hidden = KunenaArticleVisibility::OK;
+
         if ($article) {
             // Get credentials to check if the user has right to see the article
             $params   = $site->getParams('com_content');
@@ -1947,12 +1945,32 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             if (!\in_array($article->access, $viewlevels)) {
                 $denied = true;
             }
+
+            // A draft, a trashed, a not yet published or an expired article, and an article of a category the reader may not see, are
+            // not shown -- except to those who may edit the article.
+            $assetId = 'com_content.article.' . (int) $article->id;
+            $mayEdit = $user->authorise('core.edit', $assetId)
+                || $user->authorise('core.edit.state', $assetId)
+                || ($user->authorise('core.edit.own', $assetId) && (int) $article->created_by === (int) $user->id);
+            $hidden  = KunenaArticleVisibility::check(
+                (int) $article->state,
+                $article->publish_up,
+                $article->publish_down,
+                (int) $article->cat_access,
+                $viewlevels,
+                $mayEdit,
+                Factory::getDate()->toSql()
+            );
         }
 
         $html = $link = '';
 
         if (!$article || (!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
             $html = Text::_('COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_UNPUBLISHED');
+        } elseif ($hidden === KunenaArticleVisibility::UNPUBLISHED) {
+            $html = Text::_('COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_UNPUBLISHED');
+        } elseif ($hidden === KunenaArticleVisibility::CATEGORY) {
+            $html = Text::_('COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS');
         } elseif (!empty($denied) && !$params->get('show_noauth')) {
             $html = Text::_('COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS');
         } else {
@@ -2073,9 +2091,17 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             }
         }
 
+        // No link unless the reader may read the message: the address is built by the router from the subject of the topic
+        // and the alias of the category, so a link to a message of a private category would tell the title of its topic to
+        // anybody who writes [quote post=<id>]. The tag is then shown without the link.
+        $msglink = '';
+
         if ($postid > 0) {
             $message = KunenaMessageHelper::get($postid);
-            $msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
+
+            if ($message->exists() && $message->isAuthorised('read')) {
+                $msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
+            }
         }
 
         // Support bbcode quote tag done in K5.1 and first versions of K5.2
@@ -2496,6 +2522,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display tag in activity streams etc..
         if (!isset($attachments) || !empty($bbcode->parent->forceMinimal)) {
+            // The attachment is chosen by its id, so it has to exist and the reader has to be allowed to see it before anything of it
+            // (its link, its name, its size) is shown.
+            if (!$attachment || !$attachment->exists() || !$attachment->isAuthorised('read')) {
+                return '';
+            }
+
             if ($attachment->isImage()) {
                 $hide = $this->config->showImgForGuest == 0 && Factory::getApplication()->getIdentity()->id == 0;
 
@@ -2715,7 +2747,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             ->set('url', null)
             ->set('filename', null)
             ->set('size', isset($params['size']) ? $params['size'] : 0)
-            ->set('float', isset($params['float']) ? $params['float'] : 0)
+            ->set('float', isset($params['float']) && \in_array($params['float'], ['left', 'right', 'none'], true) ? $params['float'] : 0)
             ->set('alt', \count($matches) > 0 ? $altText : 0)
             ->set('canLink', $bbcode->autoLink_disable == 0);
 

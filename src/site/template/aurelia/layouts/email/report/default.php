@@ -133,7 +133,7 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 16px; font-weight: bold; line-height: 130%;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;" class="header">
-                            <?php echo Text::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})"; ?>
+                            <?php echo Text::_('COM_KUNENA_REPORT_RSENDER') . " " . htmlspecialchars((string) $this->me->username, ENT_QUOTES, 'UTF-8') . " (" . htmlspecialchars((string) $this->me->name, ENT_QUOTES, 'UTF-8') . ")"; ?>
                         </td>
                     </tr>
 
@@ -157,11 +157,11 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_RREASON') . " " . $this->title; ?></div>
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_RMESSAGE') . " " . $this->content; ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_RREASON') . " " . htmlspecialchars((string) $this->title, ENT_QUOTES, 'UTF-8'); ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_RMESSAGE') . " " . htmlspecialchars((string) $this->content, ENT_QUOTES, 'UTF-8'); ?></div>
 
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_POSTER') . " {$user->username} ({$user->name})"; ?></div>
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_SUBJECT') . ": " . $this->message->getTopic()->subject; ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_POSTER') . " " . htmlspecialchars((string) $user->username, ENT_QUOTES, 'UTF-8') . " (" . htmlspecialchars((string) $user->name, ENT_QUOTES, 'UTF-8') . ")"; ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_SUBJECT') . ": " . htmlspecialchars((string) $this->message->getTopic()->subject, ENT_QUOTES, 'UTF-8'); ?></div>
                             <br/>
                             <div><?php echo Text::_('COM_KUNENA_REPORT_POST_MESSAGE'); ?></div>
                             <hr/>
@@ -172,7 +172,7 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
             padding: 25px 6.25% 5px;" class="button"><a
-                                    href="<?php echo $this->messageLink; ?>" target="_blank"
+                                    href="<?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?>" target="_blank"
                                     style="text-decoration: underline;">
                                 <table border="0" cellpadding="0" cellspacing="0" align="center"
                                        style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">
@@ -181,7 +181,7 @@ if (!$config->plainEmail) :
                                             style="padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
                                             bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
                     color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
-                                                                 href="<?php echo $this->messageLink; ?>">
+                                                                 href="<?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?>">
                                                 <?php echo Text::_('COM_KUNENA_REPORT_POST_LINK'); ?>
                                             </a>
                                         </td>

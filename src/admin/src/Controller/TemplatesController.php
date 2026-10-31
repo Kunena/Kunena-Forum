@@ -82,19 +82,31 @@ class TemplatesController extends KunenaController
             return false;
         }
 
-        if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error'])) {
+        if (!KunenaTemplateHelper::mayChangeTemplates($this->app->getIdentity())) {
+            // A template is code which the site runs: managing the forum is not enough to change it.
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return false;
+        }
+        $package = KunenaTemplateHelper::packageName($file['name'] ?? null);
+
+        if ($package === null || empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error'])) {
             $this->app->enqueueMessage(
             	Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $this->escape($file['name'])),
             	'error'
             );
             $result = false;
         } else {
-            $success = File::upload($file ['tmp_name'], $dest . $file ['name'], false, true);
+            // The package is kept in the temporary folder under a name made here, not in the folder of the templates under the name the
+            // client sent.
+            $packagePath = KunenaPath::tmpdir() . '/' . $package;
+            $success     = File::upload($file ['tmp_name'], $packagePath, false, true);
 
             if ($success) {
                 try {
                     $archive = new Archive();
-                    $archive->extract($dest . $file ['name'], $tmpKunena);
+                    $archive->extract($packagePath, $tmpKunena);
                 } catch (Exception $e) {
                     $this->app->enqueueMessage(
                     	Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),
@@ -103,7 +115,7 @@ class TemplatesController extends KunenaController
                     $result = false;
                 }
 
-                File::delete($dest . $file ['name']);
+                File::delete($packagePath);
             }
 
             if ($result) {
@@ -113,7 +125,7 @@ class TemplatesController extends KunenaController
                     if (!empty($templates)) {
                         foreach ($templates as $template) {
                             // Never overwrite locked templates
-                            if (\in_array($template->directory, $this->locked)) {
+                            if (KunenaTemplateHelper::isLocked($template->directory, $this->locked)) {
                                 continue;
                             }
 

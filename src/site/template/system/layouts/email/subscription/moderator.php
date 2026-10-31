@@ -170,12 +170,12 @@ if (!$config->plainEmail) :
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
                             <div>
-                                <p><?php echo Text::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . $subject; ?></p>
-                                <p><?php echo Text::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
-                                <p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
+                                <p><?php echo Text::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . htmlspecialchars((string) $subject, ENT_QUOTES, 'UTF-8'); ?></p>
+                                <p><?php echo Text::_('COM_KUNENA_CATEGORY') . " : " . htmlspecialchars((string) $this->message->getCategory()->name, ENT_QUOTES, 'UTF-8'); ?></p>
+                                <p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . htmlspecialchars((string) $author->getName('???', false), ENT_QUOTES, 'UTF-8'); ?></p>
 
                                 <p><?php echo Text::_('COM_KUNENA_EMAIL_MESSAGE_LINK_URL');?> :
-                                    <a href="<?php echo $this->messageLink; ?>"><b><?php echo $this->messageLink; ?></b></a>
+                                    <a href="<?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?>"><b><?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?></b></a>
                                 </p>
                             </div>
 
@@ -196,7 +196,7 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
             padding: 25px 6.25% 5px;" class="button"><a
-                                    href="<?php echo $this->messageLink; ?>" target="_blank"
+                                    href="<?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?>" target="_blank"
                                     style="text-decoration: underline;">
                                 <table border="0" cellpadding="0" cellspacing="0" align="center"
                                        style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">
@@ -205,7 +205,7 @@ if (!$config->plainEmail) :
                                             style="padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
                                             bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
                     color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
-                                                                 href="<?php echo $this->messageLink; ?>">
+                                                                 href="<?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?>">
                                                 <?php echo Text::_('COM_KUNENA_READMORE'); ?>
                                             </a>
                                         </td>

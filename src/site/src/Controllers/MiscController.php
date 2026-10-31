@@ -16,10 +16,12 @@ namespace Kunena\Forum\Site\Controllers;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
 
 /**
  * Kunena Misc Controller
@@ -50,21 +52,39 @@ class MiscController extends KunenaController
      */
     public function template()
     {
+        // The choice of a template is kept in a cookie for the visitor, so a link from another site must not set it.
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
         $name = $this->input->getString(
         	'name',
         	$this->input->cookie->getString('kunena_template', '')
         );
 
-        if ($name) {
-            $name = KunenaPath::clean($name);
+        $options = [
+            'expires'  => 0,
+            'path'     => Uri::root(true) . '/',
+            'domain'   => '',
+            'secure'   => Uri::getInstance()->isSsl(),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ];
 
-            if (!is_readable(KPATH_SITE . "/template/{$name}/config/template.xml")) {
+        if ($name) {
+            // Only the name of an installed template (letters, digits, _ and -): the name becomes part of file paths.
+            if (!KunenaTemplateHelper::isInstalled($name)) {
                 $name = 'aurelia';
             }
 
-            setcookie('kunena_template', $name, 0, Uri::root(true) . '/', '', true);
+            setcookie('kunena_template', $name, $options);
         } else {
-            setcookie('kunena_template', null, time() - 3600, Uri::root(true) . '/', '', true);
+            $options['expires'] = time() - 3600;
+
+            setcookie('kunena_template', '', $options);
         }
 
         $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));

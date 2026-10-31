@@ -33,6 +33,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Image\KunenaImage;
+use Kunena\Forum\Libraries\Image\KunenaImageHelper;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -744,6 +745,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         $upload->splitFilename($fileInput['name']);
 
+        // What the user has called the file: this is shown, and never a path of the server.
+        $clientName = KunenaAttachmentHelper::getClientFilename($fileInput['name']);
+        $protected  = (bool) $config->attachmentProtection;
+
         $fileInput['name'] = preg_replace('/[[:space:]]/', '', $fileInput['name']);
 
         $fileNameWithoutExt = File::stripExt($fileInput['name']);
@@ -755,7 +760,12 @@ class KunenaAttachment extends KunenaDatabaseObject
         $fileNameWithExt = $fileInput['name'];
         $fileNameWithExt = strtolower($fileNameWithExt);
 
-        if (file_exists($uploadBasePath . $fileInput['name'])) {
+        if ($protected) {
+            // The file is served by Kunena after the permissions were checked, so nobody may be able to guess its address:
+            // the name on the disk is random, like it is for the files of the ajax upload.
+            $fileNameWithoutExt = KunenaAttachmentHelper::getAvailableFilename('media/kunena/attachments/' . $this->userid, $fileNameWithoutExt, $fileExt, true);
+            $fileNameWithExt    = $fileNameWithoutExt . '.' . $fileExt;
+        } elseif (file_exists($uploadBasePath . $fileInput['name'])) {
             for ($i = 2; file_exists($uploadBasePath . $fileNameWithoutExt . '.' . $fileExt); $i++) {
                 $fileNameWithoutExt = $fileNameWithoutExt . "-$i";
                 $fileNameWithExt    = $fileNameWithoutExt . '.' . $fileExt;
@@ -776,6 +786,14 @@ class KunenaAttachment extends KunenaDatabaseObject
             }
 
             if (stripos($type, 'image/') !== false) {
+                // The image is loaded into memory below (to resize it): one that is too large for that is refused and removed,
+                // a small file can describe billions of pixels and loading it ends the request with a fatal error.
+                if (!KunenaImageHelper::isSafeFile($uploadBasePath . $fileNameWithExt)) {
+                    File::delete($uploadBasePath . $fileNameWithExt);
+
+                    return false;
+                }
+
                 try {
                     $imageInfo = KunenaImage::getImageFileProperties($uploadBasePath . $fileNameWithExt);
                 } catch (Exception $e) {
@@ -811,12 +829,12 @@ class KunenaAttachment extends KunenaDatabaseObject
                 $this->filetype = $imageInfo->mime;
             }
 
-            $this->protected     = (bool) $config->attachmentProtection;
+            $this->protected     = $protected;
             $this->hash          = md5_file($uploadBasePath . $fileNameWithExt);
             $this->size          = $file->size;
             $this->folder        = 'media/kunena/attachments/' . $this->userid;
             $this->filename      = $fileInput['name'];
-            $this->filename_real = $uploadBasePath . $fileNameWithExt;
+            $this->filename_real = $clientName !== '' ? $clientName : $fileInput['name'];
             $this->caption       = '';
             $this->inline        = 0;
             $this->status        = 0;
@@ -1004,7 +1022,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         
         // TODO: Add support for PROTECTION_PUBLIC
         // Currently we only support ACL checks, not public KunenaAttachments.
-        if ($exception && $this->mesid && $this->protected && (self::PROTECTION_PUBLIC + self::PROTECTION_ACL)) {
+        if ($exception && $this->mesid && KunenaAttachmentProtection::usesMessageAccess((int) $this->protected)) {
             // Load message authorisation.
             $exception = $this->getMessage()->tryAuthorise('attachment.' . $action, $user, false);
         }
@@ -1013,12 +1031,12 @@ class KunenaAttachment extends KunenaDatabaseObject
         // TODO: Add support for PROTECTION_MODERATORS
         // TODO: Add support for PROTECTION_ADMINS
         // Check if KunenaAttachment is private.
-        if ($exception && $this->protected && self::PROTECTION_PRIVATE) {
+        if ($exception && KunenaAttachmentProtection::isPrivate((int) $this->protected)) {
             $exception = $this->authorisePrivate($user, $action);
         }
         
         // Check author access.
-        if ($exception && $this->protected && self::PROTECTION_AUTHOR) {
+        if ($exception && KunenaAttachmentProtection::authorMaySee((int) $this->protected)) {
             $exception = $user->exists() && $user->id == $this->userid
             ? null : new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401);
         }
@@ -1038,7 +1056,9 @@ class KunenaAttachment extends KunenaDatabaseObject
                         break;
                     }
                 } catch (Exception $e) {
-                    new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401, $e);
+                    // A check which fails is a refusal: the exception used to be created and thrown away, so the user got in.
+                    $exception = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401, $e);
+                    break;
                 }
             }
         }

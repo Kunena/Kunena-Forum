@@ -30,6 +30,7 @@ use Joomla\Component\Finder\Administrator\Indexer\Helper;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\QueryInterface;
 use Joomla\Event\SubscriberInterface;
+use Kunena\Forum\Libraries\Access\KunenaFinderAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Event\KunenaBeforeDeleteEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -104,6 +105,20 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @since  7.0.0
      */
     protected $old_cataccesstype = \null;
+
+    /**
+     * @var    ?int
+     * @since  7.1.0
+     */
+    protected $old_catpubaccess = \null;
+
+    /**
+     * The view levels of the site: id => groups (read when the first message is indexed).
+     *
+     * @var    ?array
+     * @since  7.1.0
+     */
+    protected $viewLevels = \null;
 
     /**
      * The table name.
@@ -196,6 +211,7 @@ final class Kunena extends Adapter implements SubscriberInterface
             $old_table->load();
             $this->old_cataccess     = $old_table->access;
             $this->old_cataccesstype = $old_table->accesstype;
+            $this->old_catpubaccess  = $old_table->pubAccess;
         }
     }
 
@@ -218,14 +234,20 @@ final class Kunena extends Adapter implements SubscriberInterface
 
         // If a category has been changed, we want to check if the access has been changed
         if (($row instanceof TableKunenaCategories) && !$isNew) {
-            // Access type of Category is still not the joomla access level system.
-            // We didn't show them before and we don't show them now. No reindex necessary
-            if ($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level') {
+            // The access of the messages comes from a view level (joomla.level) or from a group (joomla.group); other types of access
+            // were not shown before and are not shown now. No reindex necessary
+            $supported = ['joomla.level', 'joomla.group'];
+
+            if (!\in_array($row->accesstype, $supported, true) && !\in_array($this->old_cataccesstype, $supported, true)) {
                 return;
             }
 
-            // Access level did not change. We do not need to reindex
-            if ($row->accesstype == 'joomla.level' && $this->old_cataccesstype == 'joomla.level' && $row->access == $this->old_cataccess) {
+            // Access did not change. We do not need to reindex
+            if (
+                $row->accesstype == $this->old_cataccesstype
+                && $row->access == $this->old_cataccess
+                && $row->pubAccess == $this->old_catpubaccess
+            ) {
                 return;
             }
 
@@ -750,27 +772,21 @@ final class Kunena extends Adapter implements SubscriberInterface
     protected function getAccessLevel($catid): int
     {
         $category = KunenaCategoryHelper::get($catid);
-        $user     = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById(0);
 
-        $accesslevels = (array) $user->getAuthorisedViewLevels();
-        $groups_r     = (array) Access::getGroupsByUser($user->id, \true);
-        $groups       = (array) Access::getGroupsByUser($user->id, \false);
+        // Smart Search needs the id of a view level; the view levels of the site are read once (id => groups).
+        if ($this->viewLevels === \null) {
+            $db   = $this->getDatabase();
+            $rows = $db->setQuery($db->getQuery(true)->select($db->quoteName(['id', 'rules']))->from($db->quoteName('#__viewlevels')))->loadObjectList();
 
-        // Check against Joomla access level
-        if ($category->accesstype == 'joomla.level') {
-            if (\in_array($category->access, $accesslevels)) {
-                return 1;
-            }
-        }
-        // Check against Joomla user group
-        elseif ($category->accesstype == 'joomla.group') {
-            $pubAccess = \in_array($category->pubAccess, $category->pubRecurse ? $groups_r : $groups);
+            $this->viewLevels = [];
 
-            if ($pubAccess) {
-                return 1;
+            foreach ($rows as $row) {
+                $groups = json_decode((string) $row->rules, true);
+
+                $this->viewLevels[(int) $row->id] = \is_array($groups) ? $groups : [];
             }
         }
 
-        return 0;
+        return KunenaFinderAccess::viewLevel((string) $category->accesstype, (int) $category->access, (int) $category->pubAccess, $this->viewLevels);
     }
 }

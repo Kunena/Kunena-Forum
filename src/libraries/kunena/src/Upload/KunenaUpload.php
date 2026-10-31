@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\File\KunenaFile;
 use Kunena\Forum\Libraries\Image\KunenaImage;
+use Kunena\Forum\Libraries\Image\KunenaImageHelper;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use RuntimeException;
 use StdClass;
@@ -448,15 +449,15 @@ class KunenaUpload
      *
      * @param   string  $value  Value, for example: 1G, 10M, 120k...
      *
-     * @return  float  Value in bytes.
+     * @return  integer  Value in bytes; PHP_INT_MAX when there is no limit (-1, 0) or the value is not understood, so that
+     *                    min() of several limits ignores it.
      *
      * @since   Kunena 6.0
      */
     public static function toBytes(string $value)
     {
-        $base = log((int) $value, 1024);
-
-        return round(pow(1024, $base - floor($base)));
+        // The old calculation gave 128 for "128M" and NAN for "-1".
+        return KunenaImageHelper::parseBytes($value) ?? PHP_INT_MAX;
     }
 
     /**
@@ -620,14 +621,15 @@ class KunenaUpload
                 }
             }
 
-            if (!$file->isAvatar && stripos($type, 'image/') !== true) {
+            if (!$file->isAvatar && stripos($type, 'image/') === false) {
                 if (!$this->checkFileSizeFileAttachment($file->size)) {
                     throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
                 }
             }
         }
 
-        KunenaImage::correctImageOrientation($file->tmp_name);
+        // Turning a photo needs an image object (the method of the image is not static): calling it on the class was a fatal error.
+        $this->correctOrientation($file->tmp_name);
 
         if (!File::copy($file->tmp_name, $file->destination)) {
             throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_RIGHT_MEDIA_DIR'), 500);
@@ -640,6 +642,33 @@ class KunenaUpload
         $file->success = true;
 
         return $file;
+    }
+
+    /**
+     * Turn a photo which is stored rotated (see KunenaImageHelper::needsOrientationFix()) the way it is meant to be seen.
+     *
+     * A photo which can not be turned is no reason to refuse the upload: the file stays as it was uploaded.
+     *
+     * @param   string  $file  The path of the uploaded file.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.1
+     */
+    protected function correctOrientation(string $file): void
+    {
+        if (!KunenaImageHelper::isSafeFile($file) || !KunenaImageHelper::needsOrientationFix($file)) {
+            return;
+        }
+
+        try {
+            $image = new KunenaImage($file);
+            $image->correctImageOrientation();
+            $image->toFile($file, IMAGETYPE_JPEG, ['quality' => 90]);
+            unset($image);
+        } catch (\Throwable $e) {
+            // Keep the file as it is.
+        }
     }
 
     /**

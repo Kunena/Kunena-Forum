@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Image\KunenaImageHelper;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaAvatarPath;
 use Kunena\Forum\Libraries\User\KunenaUser;
 
 /**
@@ -80,7 +81,9 @@ class KunenaAvatarKunena extends KunenaAvatar
         $avatar = $user->avatar;
         $config = KunenaFactory::getConfig();
 
-        if (!empty($avatar)) {
+        // The value of the avatar becomes a path to read, resize and write files. A value which is not one of the forms
+        // Kunena makes (users/avatar<id>.<ext>, gallery/...) is ignored and the default avatar is shown.
+        if (!empty($avatar) && KunenaAvatarPath::isValid($avatar)) {
             $path     = KPATH_MEDIA . "/avatars";
             $origPath = "{$path}/{$avatar}";
 
@@ -114,6 +117,16 @@ class KunenaAvatarKunena extends KunenaAvatar
             }
 
             if (!is_file("{$path}/{$resized}/{$file}")) {
+                // An image which is too large to be loaded into memory (a small file can describe billions of pixels) ends the
+                // request with a fatal error, again at every page that shows it. It is not resized: the default avatar is shown.
+                if (!KunenaImageHelper::isSafeFile($origPath)) {
+                    KunenaError::error('Avatar skipped, it is not an image or it is too large: ' . basename((string) $origPath));
+
+                    return $config->avatarType
+                        ? KURL_MEDIA . 'core/svg/person.svg'
+                        : KURL_MEDIA . 'avatars/' . $config->defaultAvatar;
+                }
+
                 try {
                     KunenaImageHelper::version(
                         $origPath,

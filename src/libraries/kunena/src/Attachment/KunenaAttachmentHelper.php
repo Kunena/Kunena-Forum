@@ -318,6 +318,32 @@ abstract class KunenaAttachmentHelper
     }
 
     /**
+     * The name of an uploaded file as it may be shown and stored as the "real" name: only the name of the file, never
+     * the folders which the browser (or an attacker) has put in front of it, and without control characters.
+     *
+     * @param   mixed    $name       The name from the upload.
+     * @param   integer  $maxLength  The most characters.
+     *
+     * @return  string  Empty when there is no usable name.
+     *
+     * @since   Kunena 7.1
+     */
+    public static function getClientFilename($name, int $maxLength = 255): string
+    {
+        $name = \is_string($name) ? $name : '';
+
+        // No control characters, and never a folder: only the last part of the path the browser has sent.
+        $name = preg_replace('/[\x00-\x1f\x7f]+/', '', $name) ?? '';
+        $name = trim(basename(str_replace('\\', '/', $name)));
+
+        if ($name === '.' || $name === '..') {
+            return '';
+        }
+
+        return mb_substr($name, 0, $maxLength, 'UTF-8');
+    }
+
+    /**
      * Find filename which isn't already taken in the filesystem.
      *
      * @param   string  $folder     Relative path from JPATH_ROOT.

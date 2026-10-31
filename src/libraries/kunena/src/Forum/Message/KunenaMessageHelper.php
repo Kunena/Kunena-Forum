@@ -335,12 +335,14 @@ abstract class KunenaMessageHelper
             }
         }
 
-        if (\count($catlist) > 0) {
-            $allowed = implode(',', array_keys($catlist));
-            $query->where($db->quoteName('m.catid') . ' IN (' . $allowed . ')');
-        } else {
-            $catlist = '';
+        // No category the user may use: there is nothing to show. Without this, the query would have no category
+        // restriction at all and return the messages of every category.
+        if (!$catlist) {
+            return [0, []];
         }
+
+        $allowed = implode(',', array_map('intval', array_keys($catlist)));
+        $query->where($db->quoteName('m.catid') . ' IN (' . $allowed . ')');
 
         $query->where($hold);
 

@@ -33,7 +33,7 @@ jQuery(document).ready(function ($) {
     }
 
     $('#reset').onclick = function () {
-        localStorage.removeItem('copyKunenaeditor');
+        KunenaDraft.clear();
     };
 
     /* To enabled emojis in kunena textera feature like on github */
@@ -65,7 +65,7 @@ jQuery(document).ready(function ($) {
     $('#form_submit_button').click(function () {
         $("#subject").attr('required', 'required');
         $("#editor").attr('required', 'required');
-        localStorage.removeItem('copyKunenaeditor');
+        KunenaDraft.clear();
     });
 
     // Needed to open and close quickreply from template
@@ -247,7 +247,7 @@ jQuery(document).ready(function ($) {
     }
 
 	$('#gotoeditor').click(function () {
-		localStorage.setItem("copyKunenaeditor", $('#editor').val());
+		KunenaDraft.save($('#editor').val());
 	});
 
     if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
@@ -288,11 +288,11 @@ jQuery(document).ready(function ($) {
 
 				},
                 mode: function (evt) {
-                    const cat = localStorage.getItem('copyKunenaeditor');
+                    const cat = KunenaDraft.take();
 
                     if (cat) {
                         evt.editor.setData(cat);
-                        localStorage.removeItem('copyKunenaeditor');
+                        KunenaDraft.clear();
                     }
 
                     if (polliconstatus === false) {
@@ -396,11 +396,11 @@ function dataFeed(opts, callback) {
 				},
                 mode: function (evt) {
                     if (Joomla.getOptions('com_kunena.localstorage')) {
-						const cat = localStorage.getItem('copyKunenaeditor');
+						const cat = KunenaDraft.take();
 	
 	                    if (cat) {
 	                        evt.editor.setData(cat);
-	                        localStorage.removeItem('copyKunenaeditor');
+	                        KunenaDraft.clear();
 	                    }
 					}
 

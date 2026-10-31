@@ -237,10 +237,10 @@ Text::script('COM_KUNENA_POLL_TITLE');
     if ($this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id) :
     ?>
         <input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo \intval($this->message->getTopic()->getPoll()->id) ?>" />
-        <input type="hidden" id="ckeditor_dialog_polltitle" name="ckeditor_dialog_polltitle" value="<?php echo $this->message->getTopic()->getPoll()->title ?>" />
-        <input type="hidden" id="ckeditor_dialog_polltimetolive" name="ckeditor_dialog_polltimetolive" value="<?php echo $this->message->getTopic()->getPoll()->polltimetolive ?>" />
+        <input type="hidden" id="ckeditor_dialog_polltitle" name="ckeditor_dialog_polltitle" value="<?php echo $this->escape($this->message->getTopic()->getPoll()->title) ?>" />
+        <input type="hidden" id="ckeditor_dialog_polltimetolive" name="ckeditor_dialog_polltimetolive" value="<?php echo $this->escape($this->message->getTopic()->getPoll()->polltimetolive) ?>" />
         <?php foreach ($this->message->getTopic()->getPoll()->getOptions() as $index => $option) : ?>
-            <input type="hidden" class="ckeditor_dialog_polloption" id="ckeditor_dialog_polloption<?php echo $index; ?>" name="ckeditor_dialog_polloption<?php echo $index; ?>" value="<?php echo $option->text; ?>" />
+            <input type="hidden" class="ckeditor_dialog_polloption" id="ckeditor_dialog_polloption<?php echo $index; ?>" name="ckeditor_dialog_polloption<?php echo $index; ?>" value="<?php echo $this->escape($option->text); ?>" />
         <?php endforeach; ?>
     <?php endif; ?>
     <input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo \intval($this->message->catid) ?>" />
@@ -361,7 +361,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
                     <input class="form-control" name="modified_reason"
                         maxlength="200"
                         type="text"
-                        value="<?php echo $this->modified_reason; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"
+                        value="<?php echo $this->escape($this->modified_reason); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"
                         placeholder="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>" />
 
                 </div>

@@ -468,6 +468,12 @@ class KunenaTemplate
             $name = $input->cookie->getString('kunena_template', KunenaFactory::getConfig()->template);
         }
 
+        // The name comes from a cookie of the visitor (or from a caller) and becomes part of file paths and of a class name
+        // that is loaded. Only a plain name is accepted, otherwise the template of the configuration is used.
+        if (!KunenaTemplateHelper::isValidName($name)) {
+            $name = KunenaTemplateHelper::isValidName(KunenaFactory::getConfig()->template) ? KunenaFactory::getConfig()->template : 'aurelia';
+        }
+
         $name = KunenaPath::clean($name);
 
         if (empty(self::$_instances[$name])) {

@@ -22,6 +22,7 @@ use Joomla\CMS\Event\User\AfterSaveEvent;
 use Joomla\CMS\Event\User\BeforeSaveEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
@@ -32,6 +33,7 @@ use Joomla\CMS\User\User;
 use Joomla\Http\Http;
 use Joomla\Utilities\IpHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\User\KunenaSpamCheck;
 
 /**
  * Class Kunena
@@ -105,31 +107,24 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             return;
         };
 
-        // Check that the terms is checked if required ie only in registration from frontend.
-        $data              = $event->getData();
-        $query['username'] = $data['username'];
-        $query['email']    = $data['email'];
-        $query['ip']       = IpHelper::getIp();
+        // The service is asked for the new user; when it does not answer in time (or answers with something else than a verdict) the
+        // registration goes on and the reason is written in the log, see KunenaSpamCheck.
+        $listed = KunenaSpamCheck::isListed(
+            static function (string $url, int $timeout): array {
+                $response = (new Http())->get($url, [], $timeout);
 
-        if ($query['ip'] === '::1' || $query['ip'] === '127.0.0.1') {
-            // Local Host
-            unset($query['ip']);
-        }
-
-        $http     = new Http();
-        $request  = 'https://api.stopforumspam.org/api?' . \http_build_query($query) . '&json';
-        $response = $http->get($request);
-
-        if ($response->getStatusCode() == '200') {
-            // The query has worked
-            $result = \json_decode($response->getBody());
-
-            if ($result && $result->success) {
-                if (($result->username->appears ?? false) || ($result->email->appears ?? false) || ($result->ip->appears ?? false)) {
-                    $this->loadLanguage('plg_system_kunena.sys');
-                    throw new \Exception(Text::_('PLG_SYSTEM_KUNENA_STOPFORUMSPAMLISTED'), 400);
-                }
+                return [$response->getStatusCode(), (string) $response->getBody()];
+            },
+            (array) $event->getData(),
+            IpHelper::getIp(),
+            static function (string $message): void {
+                Log::add($message, Log::WARNING, 'kunena');
             }
+        );
+
+        if ($listed) {
+            $this->loadLanguage('plg_system_kunena.sys');
+            throw new \Exception(Text::_('PLG_SYSTEM_KUNENA_STOPFORUMSPAMLISTED'), 400);
         }
     }
 

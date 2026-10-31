@@ -1495,7 +1495,7 @@ class HtmlView extends KunenaView
         }
 
         try {
-            $parent->isAuthorised('reply');
+            $parent->tryAuthorise('reply');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
 
@@ -1559,7 +1559,7 @@ class HtmlView extends KunenaView
         $this->message = KunenaMessageHelper::get($mesid);
 
         try {
-            $this->message->isAuthorised('edit');
+            $this->message->tryAuthorise('edit');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
 

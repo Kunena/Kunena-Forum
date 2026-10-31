@@ -713,6 +713,57 @@ JSON;
     }
 
     /**
+     * The schemes which a link to a social network may use.
+     *
+     * @var    string[]
+     * @since  Kunena 7.1
+     */
+    public const SAFE_SCHEMES = ['http', 'https', 'mailto', 'tel', 'sms', 'callto', 'skype', 'xmpp'];
+
+    /**
+     * Is this address safe to put into a link: it has no scheme (a relative address), or a scheme of the list.
+     * Scripts, data: documents and any other scheme are refused. Characters which a browser ignores inside the scheme
+     * (spaces, tabs, line breaks) are removed first, so they can not be used to hide it.
+     *
+     * @param   string  $url  The address.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.1
+     */
+    public static function isSafeUrl(string $url): bool
+    {
+        $clean = preg_replace('/[\x00-\x20\x7f]+/', '', $url) ?? '';
+
+        if (!preg_match('/^([a-z][a-z0-9+.\-]*):/i', $clean, $match)) {
+            return true;
+        }
+
+        return \in_array(strtolower($match[1]), self::SAFE_SCHEMES, true);
+    }
+
+    /**
+     * The address for the link of a social network: the value of the user goes into the ##VALUE## of the template of the
+     * network. Returns null when the result is not a safe address, then no link may be made.
+     *
+     * @param   string  $template  The address of the network, like https://example.com/##VALUE##
+     * @param   string  $value     What the user has entered (a name or an address).
+     *
+     * @return  string|null
+     *
+     * @since   Kunena 7.1
+     */
+    public static function getSafeHref(string $template, string $value): ?string
+    {
+        $value  = trim($value);
+        $parsed = parse_url($value);
+        $path   = ltrim(\is_array($parsed) && isset($parsed['path']) ? $parsed['path'] : $value, '/');
+        $href   = str_replace('##VALUE##', $path, $template);
+
+        return $href !== '' && self::isSafeUrl($href) ? $href : null;
+    }
+
+    /**
      * Add the JSON content in colum params for the current user if it's empty
      *
      * @since   Kunena 6.4

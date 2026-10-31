@@ -75,6 +75,8 @@ class KunenaAvatarGravatar extends KunenaAvatar
             $gravatar->disableSecureImages();
         }
 
-        return $gravatar->buildGravatarURL($user->email);
+        // The hash of the address is in the html of every page with this avatar: not for a member who hides the address. An
+        // empty address gives the default image (the all-zero hash, forced).
+        return $gravatar->buildGravatarURL(GravatarPrivacy::emailForHash($user->email, $user->hideEmail));
     }
 }

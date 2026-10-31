@@ -21,7 +21,8 @@ $title    = $this->title;
 $url      = $this->url;
 $size     = $this->size;
 $alt      = $this->alt;
-$style    = $this->float ? " float:".$this->float.";" : '';
+$float    = \in_array($this->float, ['left', 'right', 'none'], true) ? $this->float : '';
+$style    = $float ? " float:" . $float . ";" : '';
 $canLink = isset($this->canLink) ? $this->canLink : true;
 
 echo $this->subLayout('Widget/Lightbox');
@@ -32,12 +33,14 @@ $attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 $width          = $size ? (int) $size . "px;" : 'auto ';
 $attributesImg  = ' style="max-height: ' . (int) $config->imageHeight . 'px;' . ' max-width:' . $width . $style . '"';
 $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
-if (stripos(get_headers($url)[0],"200 OK")) {
+
+// The address is chosen by the member who wrote the message: the server never requests it (it would reach any host the server
+// can reach, at every view of the page). The browser of the reader loads the image, and shows the alt text when it is missing.
 ?>
 <div class="kmsgimage<?php echo ($style ? ' float' : ''); ?>">
     <?php if ($canLink) :
         ?>
-    <a href="<?php echo $this->escape($url); ?>" data-bs-toggle="tooltip" title="<?php echo $alt; ?>" <?php echo $attributesLink; ?>>
+    <a href="<?php echo $this->escape($url); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape($alt); ?>" <?php echo $attributesLink; ?>>
     <?php endif; ?>
 
         <img loading=lazy src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?> alt="<?php echo $title; ?>"/>
@@ -46,7 +49,4 @@ if (stripos(get_headers($url)[0],"200 OK")) {
             ?>
     </a>
         <?php endif; ?>
-</div> 
-<?php }
-    else
-    echo 'image missing '.$url;
+</div>

@@ -534,7 +534,30 @@ class TemplateController extends FormController
      */
     public function restore(): void
     {
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        if (!KunenaTemplateHelper::mayChangeTemplates($this->app->getIdentity())) {
+            // A template is code which the site runs: managing the forum is not enough to change it.
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
         $template = $this->input->get('templatename');
+
+        // Only the name of an installed template: the name is part of the path of the file which is deleted.
+        if (!KunenaTemplateHelper::isInstalled($template)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $file     = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
         if (file_exists($file)) {
@@ -598,6 +621,13 @@ class TemplateController extends FormController
     {
         $template     = $this->input->getArray(['cid' => '']);
         $templatename = array_shift($template['cid']);
+
+        if (!KunenaTemplateHelper::isInstalled($templatename)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
+
+            return;
+        }
+
         $this->app->setUserState('kunena.templatename', $templatename);
 
         $tBaseDir = KunenaPath::clean(KPATH_SITE . '/template');
@@ -627,9 +657,14 @@ class TemplateController extends FormController
 
         $filename = $this->app->getInput()->get('filename');
 
-        if (File::getExt($filename) !== 'scss') {
+        if (
+            !KunenaTemplateHelper::isInstalled($templatename)
+            || !KunenaTemplateHelper::getEditablePath(KPATH_SITE . '/template/' . $templatename . '/assets/scss', $filename, 'scss')
+        ) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_SCSS'), 'warning');
-            $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosescss&id=' . $template, false));
+            $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosescss', false));
+
+            return;
         }
 
         $this->app->setUserState('kunena.templatename', $templatename);
@@ -652,6 +687,12 @@ class TemplateController extends FormController
         $template     = $this->input->getArray(['cid' => '']);
         $templatename = array_shift($template['cid']);
 
+        if (!KunenaTemplateHelper::isInstalled($templatename)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
+
+            return;
+        }
+
         $this->app->setUserState('kunena.templatename', $templatename);
 
         $this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=choosecss", false));
@@ -673,9 +714,11 @@ class TemplateController extends FormController
 
         $filename = $this->app->getInput()->get('filename');
 
-        if (File::getExt($filename) !== 'css') {
+        if (!KunenaTemplateHelper::isInstalled($templatename) || !KunenaTemplateHelper::getEditablePath(KPATH_MEDIA . '/core/css', $filename, 'css')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'), 'error');
-            $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename, false));
+            $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss', false));
+
+            return;
         }
 
         $this->app->setUserState('kunena.editCss.tmpl', $templatename);
@@ -735,7 +778,15 @@ class TemplateController extends FormController
             return;
         }
 
-        if (!$templatename) {
+        if (!KunenaTemplateHelper::mayChangeTemplates($this->app->getIdentity())) {
+            // A template is code which the site runs: managing the forum is not enough to change its files.
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        if (!KunenaTemplateHelper::isInstalled($templatename)) {
             $this->app->enqueueMessage(
                 Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
                     . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'),
@@ -746,7 +797,16 @@ class TemplateController extends FormController
             return;
         }
 
-        $file   = KPATH_SITE . '/template/' . $templatename . '/assets/scss/' . $filename;
+        // Only .scss files inside the scss folder of that template, nothing else may be written.
+        $file = KunenaTemplateHelper::getEditablePath(KPATH_SITE . '/template/' . $templatename . '/assets/scss', $filename, 'scss');
+
+        if ($file === null) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_SCSS'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $return = File::write($file, $filecontent);
 
         $ktemplate = KunenaFactory::getTemplate();
@@ -825,14 +885,31 @@ class TemplateController extends FormController
             return;
         }
 
-        if (!$templatename) {
+        if (!KunenaTemplateHelper::mayChangeTemplates($this->app->getIdentity())) {
+            // A template is code which the site runs: managing the forum is not enough to change its files.
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        if (!KunenaTemplateHelper::isInstalled($templatename)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
         }
 
-        $file   = KPATH_MEDIA . '/core/css/' . $filename;
+        // Only .css files inside the css folder may be written.
+        $file = KunenaTemplateHelper::getEditablePath(KPATH_MEDIA . '/core/css', $filename, 'css');
+
+        if ($file === null) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $return = File::write($file, $filecontent);
 
         if ($return && $task == 'applyCss') {
@@ -926,8 +1003,20 @@ class TemplateController extends FormController
             return;
         }
 
+        if (!KunenaTemplateHelper::mayChangeTemplates($this->app->getIdentity())) {
+            // A template is code which the site runs: managing the forum is not enough to change it.
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+        // Only the plain name of a folder of the templates: a path ("../template/aurelia") would pass the checks below with another
+        // spelling and the folder of the system template would be deleted. The system and the default template are compared the
+        // way the file system does (not case-sensitive on Windows and macOS).
+        $block = KunenaTemplateHelper::uninstallBlock($id, $this->locked, (string) KunenaFactory::getConfig()->template);
+
         // Initialize variables
-        $otemplate = KunenaTemplateHelper::parseXmlFile($id);
+        $otemplate = $block === 'invalid' ? false : KunenaTemplateHelper::parseXmlFile($id);
 
         if (!$otemplate) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error');
@@ -936,14 +1025,14 @@ class TemplateController extends FormController
             return;
         }
 
-        if (\in_array($id, $this->locked)) {
+        if ($block === 'locked') {
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_SYSTEM_TEMPLATE', $otemplate->name), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
         }
 
-        if (KunenaTemplateHelper::isDefault($template)) {
+        if ($block === 'default') {
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_DEFAULT_TEMPLATE', $otemplate->name), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
@@ -951,6 +1040,15 @@ class TemplateController extends FormController
         }
 
         $tpl = KPATH_SITE . '/template/' . $template;
+
+        // A folder which is a link (a checkout of the sources, a shared folder) is not removed: deleting through it would delete the
+        // folder it points to.
+        if (is_link($tpl)) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_SYSTEM_TEMPLATE', $otemplate->name), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
 
         // Delete the template directory
         if (is_dir($tpl)) {

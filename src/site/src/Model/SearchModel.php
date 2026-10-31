@@ -24,6 +24,7 @@ use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaSearchUserFilter;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -205,11 +206,10 @@ class SearchModel extends KunenaModel
             if ($username) {
                 // Escape the username for use in SQL
                 $escapedUsername = $db->escape($username, true);
-                if ($this->getState('query.exactname') == '1') {
-                    $querystrings[] = "m.name LIKE '" . $escapedUsername . "'";
-                } else {
-                    $querystrings[] = "m.name LIKE '%" . $escapedUsername . "%'";
-                }
+                // The messages of the account, and of guests who signed with that name; not the ones of a guest who signed with the name of
+                // somebody else (see KunenaSearchUserFilter).
+                $like = $this->getState('query.exactname') == '1' ? "'" . $escapedUsername . "'" : "'%" . $escapedUsername . "%'";
+                $querystrings[] = KunenaSearchUserFilter::condition($like);
             }
         }
 

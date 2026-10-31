@@ -257,9 +257,19 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
     protected function saveInternal()
     {
         if (!\is_null($this->_attachments)) {
+            // Only the attachments of the author, or the ones of the posts of this private message, may be mapped and
+            // made private. 'none' skips the authorisation of the attachments, so this is the only check.
+            $postIds     = \is_null($this->_posts) ? [] : array_map('intval', $this->_posts->getMapped());
+            $attachments = [];
+
+            foreach (KunenaAttachmentHelper::getById($this->_attachments->getMapped(), 'none') as $id => $attachment) {
+                if ($attachment->exists() && ($attachment->userid == $this->author_id || \in_array((int) $attachment->mesid, $postIds, true))) {
+                    $attachments[$id] = $attachment;
+                }
+            }
+
+            $this->_attachments->setMapped(array_map('intval', array_keys($attachments)));
             $this->_attachments->setKey($this->id)->save();
-            $ids         = $this->_attachments->getMapped();
-            $attachments = KunenaAttachmentHelper::getById($ids, 'none');
 
             foreach ($attachments as $attachment) {
                 $attachment->protected = KunenaAttachment::PROTECTION_PRIVATE;

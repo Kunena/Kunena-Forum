@@ -38,6 +38,7 @@ use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Event\KunenaAfterProfileUpdateEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
+use Kunena\Forum\Libraries\Image\KunenaImageHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Karma\KunenaKarmaHelper;
@@ -49,7 +50,10 @@ use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
+use Kunena\Forum\Libraries\User\KunenaAvatarPath;
 use Kunena\Forum\Libraries\User\KunenaBan;
+use Kunena\Forum\Libraries\User\KunenaMentionSearch;
+use Kunena\Forum\Libraries\User\KunenaProfileEditPolicy;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
@@ -326,7 +330,43 @@ class UserController extends KunenaController
             $this->user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
         }
 
-        $success = $this->saveUser();
+        // Who may change this profile: the user, a moderator (not for an administrator or a moderator, like banning), and for
+        // the login of the Joomla account (name, email, user name, password) only somebody who may edit users in Joomla.
+        // Without this a moderator of the forum could set a new password for a Super User and log in as that user.
+        $target        = KunenaUserHelper::get((int) $this->user->id);
+        $isSelf        = (int) $this->user->id === (int) $my->id;
+        $actorIsSuper  = (bool) $my->authorise('core.admin');
+        $targetIsSuper = (bool) $this->user->authorise('core.admin');
+
+        if (
+            !KunenaProfileEditPolicy::canEditProfile(
+                $isSelf,
+                $moderator,
+                $actorIsSuper || KunenaUserHelper::getMyself()->isAdmin(),
+                $targetIsSuper || $target->isAdmin(),
+                $target->isModerator()
+            )
+        ) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_NOT_MODERATOR_RIGHT'), 403);
+        }
+
+        $mayEditAccount = KunenaProfileEditPolicy::canEditAccount(
+            $isSelf,
+            (bool) $my->authorise('core.edit', 'com_users'),
+            $actorIsSuper,
+            $targetIsSuper
+        );
+
+        if ($mayEditAccount) {
+            $success = $this->saveUser();
+        } else {
+            // The fields of the Joomla account are not changed, the Kunena profile below is.
+            $success = true;
+
+            if ($this->app->getInput()->post->get('password', '', 'raw') !== '') {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NOT_MODERATOR_RIGHT'), 'warning');
+            }
+        }
 
         if (!$success) {
             $errors++;
@@ -576,7 +616,8 @@ class UserController extends KunenaController
     {
         $input  = $this->app->getInput();
         $method = $input->getMethod();
-        $user   = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
+        // The user which save() has checked, not the userid of the request once more.
+        $user   = KunenaFactory::getUser((int) $this->user->id);
 
         if ($this->config->signature) {
             $signature = $input->$method->get('signature', '', 'raw');
@@ -633,8 +674,15 @@ class UserController extends KunenaController
         // Save avatar from gallery
         $avatar_gallery = $input->$method->get('avatar_gallery', '', 'string');
 
-        if (!empty($avatar_gallery)) {
-            $user->avatar = $avatar_gallery;
+        // Only a picture of the avatar gallery may be chosen. The value is a path which is later used to read, resize and
+        // delete files, so it is not taken from the request as it is (no ../, nothing outside the gallery, and not the
+        // uploaded picture of another user).
+        if (!empty($avatar_gallery) && KunenaAvatarPath::isGallery($avatar_gallery)) {
+            $galleryFile = KunenaAvatarPath::getPath(KPATH_MEDIA . '/avatars', $avatar_gallery);
+
+            if ($galleryFile !== null && is_file($galleryFile)) {
+                $user->avatar = $avatar_gallery;
+            }
         }
     }
 
@@ -646,7 +694,8 @@ class UserController extends KunenaController
      */
     protected function saveSettings()
     {
-        $this->user = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
+        // The user which save() has checked, not the userid of the request once more.
+        $this->user = KunenaFactory::getUser((int) $this->user->id);
 
         if ($this->app->getInput()->get('hidemail', null) === null) {
             return;
@@ -779,9 +828,14 @@ class UserController extends KunenaController
         if (!empty($DelAvatar) || !empty($DelProfileInfo)) {
             $avatar_deleted = '';
 
-            // Delete avatar from file system
-            if (is_file(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar) && !stristr($user->avatar, 'gallery/')) {
-                File::delete(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar);
+            // Delete avatar from file system: only the picture which this user has uploaded, never a gallery picture, the
+            // picture of somebody else, or a path which leaves the folder with the avatars.
+            $avatarFile = KunenaAvatarPath::isUploadOf($user->avatar, (int) $user->userid)
+                ? KunenaAvatarPath::getPath(JPATH_ROOT . '/media/kunena/avatars', $user->avatar)
+                : null;
+
+            if ($avatarFile !== null && is_file($avatarFile)) {
+                File::delete($avatarFile);
                 $avatar_deleted = Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
             }
 
@@ -1161,10 +1215,22 @@ class UserController extends KunenaController
             $response = (object) $upload->ajaxUpload($options);
 
             if (!empty($response->completed)) {
+                // The avatar has to be an image which can be loaded into memory: a few kilobytes of PNG can describe billions of
+                // pixels, and resizing that ends every page which shows the avatar with a fatal error. Checked before the old
+                // avatar is deleted, so a refused file changes nothing.
+                $uploadFile = $upload->getProtectedFile();
+
+                try {
+                    KunenaImageHelper::assertSafeFile($uploadFile);
+                } catch (Exception $refused) {
+                    @unlink($uploadFile);
+
+                    throw $refused;
+                }
+
                 $this->deleteOldAvatars($user);
 
                 // We have it all, lets update the avatar in user table
-                $uploadFile = $upload->getProtectedFile();
                 list($basename, $extension) = $upload->splitFilename();
 
                 File::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
@@ -1214,22 +1280,26 @@ class UserController extends KunenaController
             throw new RuntimeException('Delete avatar cannot be done, user not exist');
         }
 
-        if (!empty($user->avatar)) {
-            if (preg_match('|^users/|', $user->avatar)) {
-                // Delete old uploaded avatars:
-                if (is_dir(KPATH_MEDIA . '/avatars/resized')) {
-                    $deletelist = Folder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
+        // Only the picture which this user has uploaded is deleted (users/avatar<id>.<ext>). The value of the avatar is
+        // data of the user, so a path with ../ or the file of another user must never reach File::delete().
+        if (!empty($user->avatar) && KunenaAvatarPath::isUploadOf($user->avatar, (int) $user->userid)) {
+            // Delete old uploaded avatars:
+            if (is_dir(KPATH_MEDIA . '/avatars/resized')) {
+                $deletelist = Folder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
 
-                    foreach ($deletelist as $delete) {
-                        if (is_file($delete . '/' . $user->avatar)) {
-                            File::delete($delete . '/' . $user->avatar);
-                        }
+                foreach ($deletelist as $delete) {
+                    $resized = KunenaAvatarPath::getPath($delete, $user->avatar);
+
+                    if ($resized !== null && is_file($resized)) {
+                        File::delete($resized);
                     }
                 }
+            }
 
-                if (is_file(KPATH_MEDIA . '/avatars/' . $user->avatar)) {
-                    File::delete(KPATH_MEDIA . '/avatars/' . $user->avatar);
-                }
+            $original = KunenaAvatarPath::getPath(KPATH_MEDIA . '/avatars', $user->avatar);
+
+            if ($original !== null && is_file($original)) {
+                File::delete($original);
             }
         }
     }
@@ -1356,32 +1426,37 @@ class UserController extends KunenaController
             $number = 0;
 
             foreach ($cid as $id) {
-                $attachment  = KunenaAttachmentHelper::get($id);
-                $message     = $attachment->getMessage();
-                $attachments = [$attachment->id, 1];
-                $attach      = [];
-                $removeList  = array_keys(array_diff_key($attachments, $attach));
-                $removeList  = ArrayHelper::toInteger($removeList);
-                $message->removeAttachments($removeList);
+                $attachment = KunenaAttachmentHelper::get($id);
 
-                $topic = $message->getTopic();
+                // Only an attachment which exists and which the user may delete; nothing is changed for any other.
+                if (!$attachment->exists() || !$attachment->isAuthorised('delete')) {
+                    continue;
+                }
 
-                if ($attachment->isAuthorised('delete') && $attachment->delete()) {
+                $message = $attachment->getMessage();
+                $topic   = $message->getTopic();
+
+                if (!$attachment->delete()) {
+                    continue;
+                }
+
+                // An attachment which was never added to a message (an upload that was not posted) has no message and no topic to
+                // update: saving the empty message would create a topic and a message that do not exist.
+                if ($message->exists()) {
                     $message_text = $attachment->removeBBCodeInMessage($message->message);
 
                     if (!empty($message_text) && $attachment->inline) {
                         $message->message = $message_text;
+                        $message->save();
                     }
 
-                    $message->save();
-
-                    if ($topic->attachments > 0) {
+                    if ($topic->exists() && $topic->attachments > 0) {
                         $topic->attachments = $topic->attachments - 1;
                         $topic->save(false);
                     }
-
-                    $number++;
                 }
+
+                $number++;
             }
 
             if ($number > 0) {
@@ -1471,15 +1546,34 @@ class UserController extends KunenaController
      */
     public function getusersmentionssearch()
     {
-        $user = $this->input->getString('usersearch', null);
+        $row    = [];
+        $status = 200;
+        $term   = KunenaMentionSearch::normaliseTerm($this->input->getString('usersearch', ''));
 
-        $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->createQuery();
-        $query->select($db->quoteName(array('name', 'username')))
-            ->from($db->quoteName('#__users'))
-            ->where($db->quoteName('username') . ' LIKE \'%' . $db->escape($user) . '%\'');
-        $db->setQuery($query);
-        $row = $db->loadObjectList();
+        if (!$this->me->exists()) {
+            // Only members search for members (the script of the form shows nothing on a 403).
+            $status = 403;
+        } elseif ($term !== null) {
+            $useUsername = (bool) $this->config->username;
+            $column      = $useUsername ? 'username' : 'name';
+
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery();
+            $query->select($db->quoteName(['name', 'username']))
+                ->from($db->quoteName('#__users'))
+                // The word the member typed is the start of the name that is shown; the account must be active.
+                ->where($db->quoteName($column) . ' LIKE ' . $db->quote($db->escape($term, true) . '%'))
+                ->where($db->quoteName('block') . ' = 0')
+                ->where('(' . $db->quoteName('activation') . ' = ' . $db->quote('') . ' OR ' . $db->quoteName('activation') . ' = ' . $db->quote('0') . ')')
+                ->order($db->quoteName($column) . ' ASC')
+                ->setLimit(KunenaMentionSearch::LIMIT);
+            $db->setQuery($query);
+
+            // Nothing but the name that the forum shows for a member.
+            $row = KunenaMentionSearch::formatResults((array) $db->loadObjectList(), $useUsername);
+        }
+
+        http_response_code($status);
 
         header('Content-type: application/json');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

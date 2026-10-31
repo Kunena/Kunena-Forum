@@ -91,7 +91,8 @@ jQuery(document).ready(function ($) {
 
 			$.each(json, function (index, object) {
 				$.each(object, function (key, element) {
-					$('#kmod_topics').append('<option value="' + element['id'] + '">' + element['subject'] + '</option>');
+					// The subject is text typed by a member: it is set as text, never written as html.
+					$('#kmod_topics').append($('<option>').val(element['id']).text(element['subject']));
 				});
 			});
 		})

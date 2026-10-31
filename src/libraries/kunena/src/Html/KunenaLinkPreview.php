@@ -131,7 +131,87 @@ abstract class KunenaLinkPreview
     }
     
     /**
-     * The page as UTF-8 text. Only web pages are read, never an address of the own network, there are no redirects (they
+     * Is the address one of the internet? Private, loopback, link-local (cloud metadata is 169.254.169.254), carrier-grade NAT,
+     * benchmarking, documentation, multicast and reserved ranges are not. IPv6 is never used (see planRequest()).
+     *
+     * @param   string  $ip  An IPv4 address.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    public static function isPublicIp(string $ip): bool
+    {
+        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+            return false;
+        }
+
+        $long = ip2long($ip);
+
+        // Ranges which the filter flags of PHP do not all know (they differ by version).
+        foreach (['100.64.0.0/10', '192.0.0.0/24', '192.0.2.0/24', '192.88.99.0/24', '198.18.0.0/15', '198.51.100.0/24', '203.0.113.0/24', '224.0.0.0/3'] as $range) {
+            [$net, $bits] = explode('/', $range);
+            $mask         = -1 << (32 - (int) $bits);
+
+            if (($long & $mask) === (ip2long($net) & $mask)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Where to connect to. The name is resolved here, once, every answer has to be a public IPv4 address, and the request goes to
+     * that address: when the connection looked the name up again, the other site could answer with an internal address the
+     * second time (DNS rebinding) after the check was passed with a public one.
+     *
+     * @param   string         $url      The address.
+     * @param   callable|null  $resolve  Name to the list of IPv4 addresses (gethostbynamel by default).
+     *
+     * @return  array|null  url (with the IP), host (for the Host header and the certificate) and ip; null when the page is not to be read.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function planRequest(string $url, ?callable $resolve = null): ?array
+    {
+        $parts  = parse_url($url);
+        $scheme = strtolower($parts['scheme'] ?? '');
+
+        // Only fetch web pages (not file:, php:, ftp: ...), of a host, without a login in the address.
+        if (!$parts || empty($parts['host']) || !\in_array($scheme, ['http', 'https'], true) || isset($parts['user']) || isset($parts['pass'])) {
+            return null;
+        }
+
+        // Web ports only: a link must not be a way to knock on other services of the internet.
+        $port = $parts['port'] ?? ($scheme === 'https' ? 443 : 80);
+
+        if (!\in_array($port, [80, 443, 8080, 8443], true)) {
+            return null;
+        }
+
+        $host = $parts['host'];
+        $ips  = ($resolve ?? 'gethostbynamel')($host);
+
+        if (!$ips) {
+            return null;
+        }
+
+        foreach ($ips as $ip) {
+            if (!self::isPublicIp((string) $ip)) {
+                return null;
+            }
+        }
+
+        $ip       = (string) $ips[0];
+        $pinned   = $scheme . '://' . $ip . ':' . $port . ($parts['path'] ?? '/') . (isset($parts['query']) ? '?' . $parts['query'] : '');
+        $hostName = $host . (isset($parts['port']) ? ':' . $parts['port'] : '');
+
+        return ['url' => $pinned, 'host' => $host, 'host_header' => $hostName, 'ip' => $ip, 'scheme' => $scheme];
+    }
+
+    /**
+     * The page as UTF-8 text. Only web pages are read, never an address of the own network (the checked address is the one connected to), there are no redirects (they
      * could lead to an internal address), and only the start of the page is taken.
      *
      * @param   string   $url      The address.
@@ -143,33 +223,24 @@ abstract class KunenaLinkPreview
      */
     public static function fetchPage(string $url, int $timeout = 3): ?string
     {
-        $parts = parse_url($url);
-        
-        // Only fetch web pages. Other schemes (file:, php:, ftp: ...) are never read.
-        if (!$parts || empty($parts['host']) || !\in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true)) {
+        $plan = self::planRequest($url);
+
+        if ($plan === null) {
             return null;
         }
-        
-        // Do not let the server read addresses of its own network (private and reserved ranges).
-        $ips = gethostbynamel($parts['host']);
-        
-        if (!$ips) {
-            return null;
-        }
-        
-        foreach ($ips as $ip) {
-            if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-                return null;
-            }
-        }
-        
-        // Many sites refuse a request which does not say who asks.
+
+        // Many sites refuse a request which does not say who asks. The connection goes to the address which was checked; the
+        // name is only sent as Host and used to check the certificate.
         $agent   = 'Mozilla/5.0 (compatible; KunenaLinkPreview/7.2; +' . Uri::root() . ')';
-        $context = stream_context_create(['http' => ['timeout' => $timeout, 'follow_location' => 0, 'ignore_errors' => true, 'header' => "User-Agent: $agent
-Accept: text/html,application/xhtml+xml
-"]]);
-        $body    = @file_get_contents($url, false, $context, 0, 262144);
-        
+        $options = ['http' => ['timeout' => $timeout, 'follow_location' => 0, 'ignore_errors' => true, 'header' => "Host: " . $plan['host_header'] . "\r\nUser-Agent: $agent\r\nAccept: text/html,application/xhtml+xml\r\nConnection: close\r\n"]];
+
+        if ($plan['scheme'] === 'https') {
+            $options['ssl'] = ['peer_name' => $plan['host'], 'SNI_enabled' => true, 'SNI_server_name' => $plan['host'], 'verify_peer' => true, 'verify_peer_name' => true];
+        }
+
+        $context = stream_context_create($options);
+        $body    = @file_get_contents($plan['url'], false, $context, 0, 262144);
+
         if ($body === false || $body === '') {
             return null;
         }

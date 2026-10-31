@@ -669,17 +669,40 @@ class ToolsController extends FormController
     }
 
     /**
-     * Trash Menu
+     * Check the form token of the request. These tasks change the site (menu items, tables, plugins), so a link from
+     * another site must not be able to start them. When the token is wrong, the user is sent back with a message.
+     *
+     * @return  boolean  True when the token is valid.
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    protected function hasValidToken(): bool
+    {
+        if (Session::checkToken()) {
+            return true;
+        }
+
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+        return false;
+    }
+
+    /**
+     * Trash the menu items of Kunena and create them again.
      *
      * @return  void
-     *
-     * @since   Kunena 2.0
      *
      * @throws  null
      * @throws  Exception
      */
     public function trashMenu(): void
     {
+        if (!$this->hasValidToken()) {
+            return;
+        }
+
         $installer = new KunenaModelInstall();
         $installer->deleteMenu();
         $installer->createMenu();
@@ -863,6 +886,10 @@ class ToolsController extends FormController
      */
     public function setupcolumnlanguage(): void
     {
+        if (!$this->hasValidToken()) {
+            return;
+        }
+
         $db     = Factory::getContainer()->get('DatabaseDriver');
         
         $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'language';";
@@ -876,9 +903,13 @@ class ToolsController extends FormController
             try {
                 $db->execute();
             } catch (Exception $e) {
-                echo $e->getMessage();
+                // Do not say that the column has been created when it was not.
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+                return;
             }
-            
+
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_COLUMN_LANGUAGE_HAS_BEEN_CREATED'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         }
@@ -899,6 +930,10 @@ class ToolsController extends FormController
      */
     public function setupsocials(): void
     {
+        if (!$this->hasValidToken()) {
+            return;
+        }
+
         $db     = Factory::getContainer()->get('DatabaseDriver');
         
         $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'socials';";
@@ -907,15 +942,20 @@ class ToolsController extends FormController
         
         if (!$columnSocials) {
             // Create the column socials
-            $query = "ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`";
-            $query = $db->setQuery($query);
-            
+            $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`';
+            $db->setQuery($query);
+
             try {
                 $db->execute();
             } catch (Exception $e) {
-                echo $e->getMessage();
+                // Without the new column nothing may be moved, and above all nothing may be dropped: the old columns hold the only
+                // copy of the links of the users.
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+                return;
             }
-            
+
             // Move values of old socials columns to the JSON in column socials
             $listOldSocialsColumns = ['userid', 'facebook', 'myspace', 'linkedin', 'linkedin_company', 'digg', 'skype', 'yim', 'google', 'github', 'microsoft', 'blogspot', 'flickr', 'bebo', 'instagram', 'qqsocial', 'qzone', 'weibo', 'wechat',
                 'vk', 'telegram', 'apple', 'vimeo', 'whatsapp', 'youtube', 'ok', 'pinterest', 'reddit', 'icq'];
@@ -1243,8 +1283,7 @@ class ToolsController extends FormController
                     $column = $db->loadResult();
                  
                     if ($column) {
-                        $query = $db->getQuery(true);
-                        $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $column . ';';
+                        $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $db->quoteName($column) . ';';
                         $db->setQuery($query);
                         $db->execute();
                     }
@@ -1282,6 +1321,10 @@ class ToolsController extends FormController
      */
     public function modifysocials()
     {
+        if (!$this->hasValidToken()) {
+            return;
+        }
+
         if (!PluginHelper::isEnabled('system', 'modifysocials')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_PLUGIN_MODIFYSOCIALS_PLUGIN_NOT_ENABLED'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
@@ -1323,6 +1366,10 @@ class ToolsController extends FormController
      */
     public function deletesocials()
     {
+        if (!$this->hasValidToken()) {
+            return;
+        }
+
         if (!PluginHelper::isEnabled('system', 'modifysocials')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_PLUGIN_MODIFYSOCIALS_PLUGIN_NOT_ENABLED'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));

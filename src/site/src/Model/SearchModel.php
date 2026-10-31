@@ -24,6 +24,7 @@ use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaSearchHiddenText;
 use Kunena\Forum\Libraries\Forum\Message\KunenaSearchUserFilter;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Model\KunenaModel;
@@ -172,6 +173,8 @@ class SearchModel extends KunenaModel
     {
         $db           = $this->getDatabase();
         $querystrings = [];
+        $me           = KunenaUserHelper::getMyself();
+        $searchable   = KunenaSearchHiddenText::searchableCondition($me->exists(), $me->isModerator(), (int) $me->userid);
 
         foreach ($this->getSearchWords() as $searchword) {
             $searchword = StringHelper::trim($searchword);
@@ -193,7 +196,8 @@ class SearchModel extends KunenaModel
             $escapedSearchword = $db->escape($searchword, true);
 
             if (!$this->getState('query.titleonly')) {
-                $querystrings[] = "(t.message {$not} LIKE '%{$escapedSearchword}%' {$operator} m.subject {$not} LIKE '%{$escapedSearchword}%')";
+                // The text of a message is searched only where the visitor may read it (see KunenaSearchHiddenText).
+                $querystrings[] = KunenaSearchHiddenText::wordCondition("'%{$escapedSearchword}%'", $not !== '', $searchable);
             } else {
                 $querystrings[] = "(m.subject {$not} LIKE '%{$escapedSearchword}%')";
             }

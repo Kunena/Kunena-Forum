@@ -25,6 +25,7 @@ use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
+use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivatePartsMap;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -101,15 +102,7 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
 
             foreach ($pms as $pm) {
                 $registry = new Registry($pm->params);
-                $posts    = $registry->get('receivers.posts');
-
-                foreach ($posts as $post) {
-                    if (!isset($messages[$post]->pm)) {
-                        $messages[$post]->pm = [];
-                    }
-
-                    $messages[$post]->pm[$pm->id] = $pm;
-                }
+                KunenaPrivatePartsMap::attach($messages, $pm, $registry->get('receivers.posts'));
             }
         }
 

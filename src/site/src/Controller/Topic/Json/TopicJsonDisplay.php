@@ -51,6 +51,15 @@ class TopicJsonDisplay extends KunenaControllerDisplay
 
         $category = KunenaCategoryHelper::get($catid);
 
-        $this->response = $category->topictemplate;
+        // The template text of a category is only for those who may read the category (it can be a private one): for anybody else the
+        // answer is empty, like it is for a category that does not exist.
+        $this->response = '';
+
+        try {
+            $category->tryAuthorise('read');
+            $this->response = (string) $category->topictemplate;
+        } catch (\Exception $e) {
+            // No access.
+        }
     }
 }

@@ -37,6 +37,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
+use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivatePartsMap;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -250,15 +251,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
             foreach ($pms as $pm) {
                 $registry = new Registry($pm->params);
-                $posts    = $registry->get('receivers.posts');
-
-                foreach ($posts as $post) {
-                    if (!isset($this->messages[$post]->pm)) {
-                        $this->messages[$post]->pm = [];
-                    }
-                }
-
-                $this->messages[$post]->pm[$pm->id] = $pm;
+                // On every post of the page that the private message belongs to (not only on the last one of the list).
+                KunenaPrivatePartsMap::attach($this->messages, $pm, $registry->get('receivers.posts'));
             }
         }
 

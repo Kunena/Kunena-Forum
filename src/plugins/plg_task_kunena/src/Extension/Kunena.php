@@ -32,6 +32,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Administrator\Model\TrashsModel;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaPendingAttachment;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -396,6 +397,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 ->select('id')
                 ->from($db->quoteName('#__kunena_attachments'))
                 ->where($db->quoteName('status') . ' = 0')
+                // Never attached to a message; the oldest first.
+                ->where($db->quoteName('mesid') . ' = 0')
+                ->order($db->quoteName('id') . ' ASC')
                 ->setLimit(50);
 
             $db->setQuery($query);
@@ -405,6 +409,16 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
 
             foreach ($ids ?? [] as $id) {
                 $attachment = KunenaAttachmentHelper::get($id);
+
+                // An upload of the last hours may belong to a message that is still being written: it stays.
+                $path     = $attachment->getPath();
+                $fileTime = $path && is_file($path) ? (int) filemtime($path) : null;
+
+                if (!KunenaPendingAttachment::mayRemove($fileTime, time())) {
+                    unset($attachment);
+
+                    continue;
+                }
 
                 if ($attachment->delete()) {
                     $countDeleted++;

@@ -530,7 +530,9 @@ return new class() implements ServiceProviderInterface {
                     }
 
                     if (!$major) {
-                        $minor = reset($this->versions[$name]);
+                        $supportedVersions = $this->versions[$name];
+                        unset($supportedVersions[0]);
+                        $minor = end($supportedVersions);
                     }
 
                     $recommended = end($this->versions[$name]);

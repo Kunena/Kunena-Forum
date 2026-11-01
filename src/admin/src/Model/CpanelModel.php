@@ -41,7 +41,7 @@ class CpanelModel extends AdminModel
     }
     
     /**
-     * Get number of mails queues not yet send to be displayed in cpanel
+     * Get number of mail queue entries to be displayed in cpanel
      * 
      * @since   Kunena 7.1
      */
@@ -53,16 +53,17 @@ class CpanelModel extends AdminModel
         $query->select('COUNT(*)');
         
         $query->from($db->quoteName('#__kunena_notifications_mailsqueue', 'a'));
-        
-        $query->where($db->quoteName('a.send') . ' = ' . 1);
+
+        $db->setQuery($query);
         
         try {
             $result = $db->loadResult();
-        } catch (Exception $e) {
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
             return 0;
         }
         
-        return $result;
+        return (int) $result;
     }
     
     /**

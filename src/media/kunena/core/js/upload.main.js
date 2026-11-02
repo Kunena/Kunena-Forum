@@ -20,6 +20,74 @@ jQuery(function ($) {
         return String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     };
 
+    const deleteAttachment = function (fileId) {
+        return $.ajax({
+            url: Joomla.getOptions('com_kunena.kunena_upload_files_rem'),
+            type: 'POST',
+            data: {
+                files_id_delete: fileId
+            }
+        });
+    };
+
+    const removeAttachmentFromEditor = function (fileId) {
+        let editorText = '';
+
+        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+            editorText = CKEDITOR.instances.message.getData();
+        } else {
+            editorText = sceditor.instance(document.getElementById('message')).val();
+        }
+
+        const cleanedEditorText = editorText.replace(new RegExp('\\[attachment=' + fileId + '\\][^[\\]]+\\[/attachment\\]', 'g'), '');
+
+        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+            CKEDITOR.instances.message.setData(cleanedEditorText);
+        } else {
+            sceditor.instance(document.getElementById('message')).val(cleanedEditorText);
+        }
+    };
+
+    const removeAttachmentFromList = function (fileId) {
+        $('#kattachs-' + fileId).remove();
+        $('#kattach-' + fileId).remove();
+        $('#kattachments-message-container').find('.attachment-removal-error').remove();
+
+        $('#files > div').each(function () {
+            const containsAttachment = $(this).find('button').toArray().some(function (button) {
+                const data = $(button).data();
+                const buttonFileId = data.result?.data?.id || data.file_id || data.id;
+
+                return String(buttonFileId) === String(fileId);
+            });
+
+            if (containsAttachment) {
+                $(this).remove();
+            }
+        });
+
+        fileCount = Math.max(0, fileCount - 1);
+        if (fileCount === 0) {
+            $('#insert-all').hide();
+            $('#remove-all').hide();
+            $('#set-secure-all').hide();
+        }
+    };
+
+    const reportRemovalFailure = function (error) {
+        console.error('Failed to remove attachment', error);
+
+        const message = error?.responseJSON?.message || Joomla.Text._('COM_KUNENA_UPLOADED_LABEL_ERROR_REMOVE_FILE');
+        $('#kattachments-message-container').find('.attachment-removal-error').remove();
+        $('<div class="alert alert-danger attachment-removal-error" role="alert"/>')
+            .text(message)
+            .appendTo('#kattachments-message-container');
+
+        if (fileCount > 0) {
+            $('#remove-all').show();
+        }
+    };
+
 	// Add click handler for remove-all button
 	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
@@ -63,8 +131,8 @@ jQuery(function ($) {
 	            const $btn = $(this);
 	            const data = $btn.data();
 	            if (data.result?.data?.id || data.file_id) {
-	                const fileId = data.result?.data?.id || data.file_id;
-	                if (!attachments.some(a => a.id === fileId)) {
+	                const fileId = Number(data.result?.data?.id || data.file_id);
+	                if (Number.isInteger(fileId) && fileId > 0 && !attachments.some(a => Number(a.id) === fileId)) {
 	                    attachments.push({
 	                        id: fileId,
 	                        filename: data.result?.data?.filename || data.name
@@ -76,36 +144,22 @@ jQuery(function ($) {
 	
 	    // Remove all attachments if we found any
 	    if (attachments.length > 0) {
-	        // Clean editor content
-	        const cleanedEditorText = editor_text.replace(attachmentRegex, '');
-	        
-	        // Update editor content
-	        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-	            CKEDITOR.instances.message.setData(cleanedEditorText);
-	        } else {
-	            sceditor.instance(document.getElementById('message')).val(cleanedEditorText);
-	        }
-	
 	        // Remove each attachment via AJAX
 	        let i = 0;
 	        const removeAttachments = function() {
 	            if (i < attachments.length) {
 	                const attachment = attachments[i];
-	                $.ajax({
-	                    url: Joomla.getOptions('com_kunena.kunena_upload_files_rem'),
-	                    type: 'POST',
-	                    data: {
-	                        files_id_delete: JSON.stringify([attachment.id])
+	                deleteAttachment(attachment.id).done(function (response) {
+	                    if (response.result !== true) {
+	                        reportRemovalFailure(new Error('The server did not confirm attachment removal.'));
+	                        return;
 	                    }
-	                })
-	                .always(function () {
-	                    // Remove the attachment's input fields
-	                    $('#kattachs-' + attachment.id).remove();
-	                    $('#kattach-' + attachment.id).remove();
-	                    
+
+	                    removeAttachmentFromList(attachment.id);
+	                    removeAttachmentFromEditor(attachment.id);
 	                    i++;
 	                    removeAttachments();
-	                });
+	                }).fail(reportRemovalFailure);
 	            } else {
 	                // Clear the files container and reset counters
 	                $('#files').empty();
@@ -475,31 +529,18 @@ jQuery(function ($) {
             console.error('Could not determine file ID');
             return;
         }
-        $('#kattachs-' + file_id).remove();
-        $('#kattach-' + file_id).remove();
-        fileCount = Math.max(0, fileCount - 1);
-        if (fileCount === 0) {
-            $('#insert-all').hide();
-            $('#remove-all').hide();
-            $('#set-secure-all').hide();
-        }
-        $('#alert_max_file').remove();
-        let editor_text = '';
-        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-            editor_text = CKEDITOR.instances.message.getData();
-        } else {
-            editor_text = sceditor.instance(document.getElementById('message')).val();
-        }
-        const cleanedEditorText = editor_text.replace(new RegExp('\\[attachment=' + file_id + '\\][^[\\]]+\\[/attachment\\]'), '');
-        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-            CKEDITOR.instances.message.setData(cleanedEditorText);
-        } else {
-            sceditor.instance(document.getElementById('message')).val(cleanedEditorText);
-        }
-        const file_query_id = [file_id];
-		$('#form_submit_button').prop('disabled', false);
-        
-		$('#attachments').val(file_query_id);
+        deleteAttachment(file_id).done(function (response) {
+            if (response.result !== true) {
+                reportRemovalFailure(new Error('The server did not confirm attachment removal.'));
+                return;
+            }
+
+            removeAttachmentFromList(file_id);
+            removeAttachmentFromEditor(file_id);
+
+            $('#alert_max_file').remove();
+            $('#form_submit_button').prop('disabled', false);
+        }).fail(reportRemovalFailure);
     });
     // Initialize fileupload
     $('#fileupload').fileupload({

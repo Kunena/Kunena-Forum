@@ -64,9 +64,9 @@ CKEDITOR.editorConfig = function( config ) {
 		list_emoticons.push(value);
 	});
 
-	if (Joomla.getOptions('com_kunena.ckeditor_subfolder')!==undefined)
+	if (Joomla.getOptions('com_kunena.ckeditor_smiley_path')!==undefined)
 	{
-		config.smiley_path = Joomla.getOptions('com_kunena.ckeditor_subfolder')+'/media/kunena/emoticons/';
+		config.smiley_path = Joomla.getOptions('com_kunena.ckeditor_smiley_path');
 	}
 	else
 	{

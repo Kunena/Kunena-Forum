@@ -74,6 +74,31 @@ CKEDITOR.editorConfig = function( config ) {
 	}
 
 	config.smiley_images = list_emoticons;
+
+	// Emoticons are stored as an image path in the message. When a message is loaded
+	// in the editor, point them to the current smiley_path, so they also show after the
+	// site moved to another (sub)folder or domain.
+	if (!CKEDITOR.plugins.get('kunenaemoticons')) {
+		CKEDITOR.plugins.add('kunenaemoticons', {
+			init: function (editor) {
+				editor.dataProcessor.dataFilter.addRules({
+					elements: {
+						img: function (element) {
+							var src = element.attributes['data-cke-saved-src'] || element.attributes.src || '';
+							var match = src.match(/^(?:https?:\/\/[^\/]+)?(?:\/[^?#]*)?\/media\/kunena\/emoticons\/([^\/?#]+)$/i);
+
+							if (match) {
+								element.attributes.src = editor.config.smiley_path + match[1];
+								element.attributes['data-cke-saved-src'] = editor.config.smiley_path + match[1];
+							}
+						}
+					}
+				});
+			}
+		});
+	}
+
+	config.extraPlugins += ',kunenaemoticons';
 	config.linkDefaultProtocol= 'https://'
 
 	// Define font sizes in percent values.

@@ -2353,7 +2353,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             $vid_source = preg_replace("/^http:/", "https:", $vid_source);
         }
 
-        $vid_source = preg_replace('/%vcode%/', $content, $vid_source);
+        $vid_source = str_replace('%vcode%', htmlspecialchars($content, ENT_QUOTES, 'UTF-8'), $vid_source);
 
         if (!\is_array($vid_par2)) {
             $vid_par2 = [];

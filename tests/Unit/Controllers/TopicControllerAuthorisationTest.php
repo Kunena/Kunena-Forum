@@ -80,6 +80,7 @@ class TopicControllerAuthorisationTest extends TestCase
         $this->assertNotFalse($categoryCheck, 'Uploads require an existing category.');
         $this->assertNotFalse($upload);
         $this->assertLessThan($upload, $categoryCheck, 'Reject invalid category ids before processing an upload.');
+        $this->assertStringContainsString("throw new RuntimeException(Text::_('Forbidden'), 403);", $body);
         $this->assertStringNotContainsString('if ($category->id)', $body, 'Authorization must not be skipped for category id 0.');
         $this->assertStringContainsString("tryAuthorise('topic.post.attachment.createimage')", $body);
         $this->assertStringContainsString("tryAuthorise('topic.post.attachment.createfile')", $body);

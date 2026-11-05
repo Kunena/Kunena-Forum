@@ -70,6 +70,21 @@ class TopicControllerAuthorisationTest extends TestCase
         $this->assertStringContainsString('canManageAttachment(', $this->method('checkpermissions'));
     }
 
+    public function testUploadRejectsMissingCategoryBeforeUploading(): void
+    {
+        $body = $this->method('upload');
+
+        $categoryCheck = strpos($body, '!$category->exists()');
+        $upload        = strpos($body, '$upload->ajaxUpload($options)');
+
+        $this->assertNotFalse($categoryCheck, 'Uploads require an existing category.');
+        $this->assertNotFalse($upload);
+        $this->assertLessThan($upload, $categoryCheck, 'Reject invalid category ids before processing an upload.');
+        $this->assertStringNotContainsString('if ($category->id)', $body, 'Authorization must not be skipped for category id 0.');
+        $this->assertStringContainsString("tryAuthorise('topic.post.attachment.createimage')", $body);
+        $this->assertStringContainsString("tryAuthorise('topic.post.attachment.createfile')", $body);
+    }
+
     public function testSetInlineChecksEveryAttachment(): void
     {
         $body = $this->method('setinline');

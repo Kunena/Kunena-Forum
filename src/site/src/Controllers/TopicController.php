@@ -672,12 +672,14 @@ class TopicController extends KunenaController
             } else {
                 $category = KunenaCategoryHelper::get($catid);
 
-                if ($category->id) {
-                    if (stripos($this->input->getString('mime'), 'image/') !== false) {
-                        $category->tryAuthorise('topic.post.attachment.createimage');
-                    } else {
-                        $category->tryAuthorise('topic.post.attachment.createfile');
-                    }
+                if (!$category->exists()) {
+                    throw new RuntimeException(Text::_('Forbidden'), 403);
+                }
+
+                if (stripos($this->input->getString('mime'), 'image/') !== false) {
+                    $category->tryAuthorise('topic.post.attachment.createimage');
+                } else {
+                    $category->tryAuthorise('topic.post.attachment.createfile');
                 }
             }
 

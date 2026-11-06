@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -43,7 +44,13 @@ class SocialsModel extends AdminModel
      */
     public function getForm($data = [], $loadData = true)
     {
-        return $this->loadForm('com_kunena.socials', 'socials', ['control' => 'jform', 'load_data' => $loadData]);
+        $form = $this->loadForm('com_kunena.socials', 'socials', ['control' => 'jform', 'load_data' => $loadData]);
+
+        if ($form && !PluginHelper::isEnabled('system', 'modifysocials')) {
+            $form->setFieldAttribute('socials', 'buttons', 'none');
+        }
+
+        return $form;
     }
 
     /**

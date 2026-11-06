@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 
 // The toolbar buttons check the form before it is sent.
@@ -29,6 +30,7 @@ $this->getDocument()->getWebAssetManager()->addInlineStyle(
     . '#adminForm .subform-repeatable-wrapper th:nth-child(4) { width: 19% !important; }'
     . '#adminForm .subform-repeatable-wrapper th:nth-child(5) { width: 10% !important; }'
     . '#adminForm .subform-repeatable-wrapper thead td:last-child { width: 110px !important; }'
+    . '#adminForm .socials-no-controls .subform-repeatable-wrapper tr > :last-child { display: none; }'
     . '#adminForm .subform-repeatable-wrapper td .form-control, #adminForm .subform-repeatable-wrapper td .form-select { min-width: 0; max-width: 100%; }'
     . '#adminForm .subform-repeatable-wrapper td .minicolors { display: block; width: 100%; }'
     . '#adminForm .subform-repeatable-wrapper td .controls { min-width: 0; width: 100%; }'
@@ -46,7 +48,7 @@ $this->getDocument()->getWebAssetManager()->addInlineStyle(
                 </div>
 
                 <?php // The table uses the whole width: no label column and no second description. ?>
-                <div class="table-responsive">
+                <div class="table-responsive<?php echo PluginHelper::isEnabled('system', 'modifysocials') ? '' : ' socials-no-controls'; ?>">
                     <?php echo $this->form->getInput('socials'); ?>
                 </div>
             </div>

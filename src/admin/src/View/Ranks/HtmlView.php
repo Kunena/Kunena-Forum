@@ -94,10 +94,10 @@ class HtmlView extends BaseHtmlView
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            ToolbarHelper::preferences('com_kunena');
+            $toolbar->preferences('com_kunena');
         }
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
-        ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+        $toolbar->help('COM_KUNENA', false, $helpUrl);
     }
 }

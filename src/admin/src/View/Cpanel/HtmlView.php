@@ -111,19 +111,21 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        $toolbar = $this->getDocument()->getToolbar();
+        
         ToolbarHelper::spacer();
-        ToolbarHelper::divider();
+        $toolbar->divider();
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_DASHBOARD'), 'dashboard');
 
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            ToolbarHelper::preferences('com_kunena');
+            $toolbar->preferences('com_kunena');
         }
 
         ToolbarHelper::spacer();
         $helpUrl = 'https://docs.kunena.org/en/';
-        ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+        $toolbar->help('COM_KUNENA', false, $helpUrl);
     }
 
     /**

@@ -234,7 +234,7 @@ $labels          = $this->ktemplate->params->get('labels');
                         </div>
                         <?php if (!empty($this->replies)) :
                         ?>
-                            <div class="control-group kmod-moveoption"<?php echo isset($this->message) ? ' style="display: none;"' : ''; ?>>
+                            <div class="control-group kmod-moveoption"<?php echo !isset($this->message) ? ' style="display: none;"' : ''; ?>>
                                 <div class="controls">
                                     <label class="checkbox">
                                         <input id="kmoderate-mode-selected" type="radio" name="mode" checked="checked"

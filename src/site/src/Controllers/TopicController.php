@@ -2679,6 +2679,9 @@ class TopicController extends KunenaController
             $ids = false;
         }
 
+        // A topic which stays in its category and is not merged is only changed (icon, subject), not moved.
+        $onlyChanged = !$messageId && !$targetTopic && $targetCategory == $topic->category_id;
+
         try {
             $targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
         } catch (Exception $e) {
@@ -2703,7 +2706,7 @@ class TopicController extends KunenaController
         if ($error) {
             $this->app->enqueueMessage($error, 'error');
         } else {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'), 'success');
+            $this->app->enqueueMessage(Text::_($onlyChanged ? 'COM_KUNENA_MODERATION_TOPIC_SAVED' : 'COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'), 'success');
         }
 
         // Go to where the messages are now (the new or merged topic), not to the topic they left.

@@ -159,7 +159,6 @@ class TopicModerateDisplay extends KunenaControllerDisplay
             $query = $db->createQuery();
             $query->select('COUNT(mm.id) AS replies')
                 ->from($db->quoteName('#__kunena_messages', 'm'))
-                ->innerJoin($db->quoteName('#__kunena_messages', 't') . ' ON m.thread=t.id')
                 ->leftJoin($db->quoteName('#__kunena_messages', 'mm') . ' ON mm.thread=m.thread AND mm.time > m.time')
                 ->where('m.id=' . $db->quote($this->message->id));
             $query->setLimit(1);

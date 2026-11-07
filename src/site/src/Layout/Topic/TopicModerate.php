@@ -96,6 +96,7 @@ class TopicModerate extends KunenaLayout
         if (!$this->message) {
             $options[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_MODERATION_MERGE_TOPIC'));
         } else {
+            $options[] = HTMLHelper::_('select.option', -2, Text::_('COM_KUNENA_MODERATION_DO_NOT_MOVE'));
             $options[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_MODERATION_CREATE_TOPIC'));
         }
 

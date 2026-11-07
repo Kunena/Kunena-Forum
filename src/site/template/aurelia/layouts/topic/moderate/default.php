@@ -92,7 +92,8 @@ $labels          = $this->ktemplate->params->get('labels');
                             <?php endif; ?>
                         </dl>
                        <?php $canModerate = KunenaUserHelper::getMyself()->isModerator($this->category);?>
-                        <?php if ($this->config->topicIcons || $canModerate || $this->me->authorise('core.admin')): ?>
+                        <?php // The icon belongs to the topic: it is changed when moderating the topic, not one of its messages. ?>
+                        <?php if (!isset($this->message) && ($this->config->topicIcons || $canModerate || $this->me->authorise('core.admin'))): ?>
     <div><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
     <br />
     <div class="kmoderate-topicIcons">
@@ -129,7 +130,7 @@ $labels          = $this->ktemplate->params->get('labels');
     </div>
 <?php endif; ?>
 
-<?php if ($labels && !$this->config->topicIcons && !$canModerate && !$this->me->authorise('core.admin')): ?>
+<?php if (!isset($this->message) && $labels && !$this->config->topicIcons && !$canModerate && !$this->me->authorise('core.admin')): ?>
     <div>
         <strong><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_LABEL'); ?>:</strong>
     </div>
@@ -204,7 +205,7 @@ $labels          = $this->ktemplate->params->get('labels');
                                                                             'class="form-select"',
                                                                             'value',
                                                                             'text',
-                                                                            0,
+                                                                            isset($this->message) ? -2 : 0,
                                                                             'kmod_topics'
                                                                         ); ?> </div>
                         </div>

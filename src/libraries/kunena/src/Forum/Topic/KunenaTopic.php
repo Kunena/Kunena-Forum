@@ -1771,6 +1771,7 @@ class KunenaTopic extends KunenaDatabaseObject
         }
 
         $categoryFrom = $this->getCategory();
+        $newTarget    = false;
 
         // Find out where we are moving the messages
         if (!$target || !$target->exists()) {
@@ -1827,6 +1828,7 @@ class KunenaTopic extends KunenaDatabaseObject
                 $target->id     = 0;
                 $target->hits   = 0;
                 $target->params = '';
+                $newTarget      = true;
             } else {
                 // If we just move into another category, we can keep using the old topic
                 $target = $this;

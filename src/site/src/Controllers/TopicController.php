@@ -44,6 +44,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -2610,16 +2611,24 @@ class TopicController extends KunenaController
         $targetCategory = $this->app->getInput()->getInt('targetcategory', 0);
         $targetTopic    = $this->app->getInput()->getInt('targettopic', 0);
 
-        if ($targetTopic < 0) {
-            $targetTopic = $this->app->getInput()->getInt('targetid', 0);
-        }
-
         if ($messageId) {
             $message = $object = KunenaMessageHelper::get($messageId);
             $topic   = $message->getTopic();
         } else {
             $topic   = $object = KunenaTopicHelper::get($topicId);
             $message = KunenaMessageHelper::get($topic->first_post_id);
+        }
+
+        // A message stays in its topic unless the moderator chose a target topic: submitting the form without a choice must not split it.
+        if ($messageId && $targetTopic == -2) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATION_NOTHING_CHANGED'), 'notice');
+            $this->setRedirect($message->getUrl($this->return, false));
+
+            return;
+        }
+
+        if ($targetTopic < 0) {
+            $targetTopic = $this->app->getInput()->getInt('targetid', 0);
         }
 
         if ($targetTopic) {
@@ -2630,12 +2639,7 @@ class TopicController extends KunenaController
 
         $error        = null;
         $targetobject = null;
-        
-        if ($targetobject) {
-            $redirect = $targetobject->getUrl($this->return, false, 'last');
-        } else {
-            $redirect = $topic->getUrl($this->return, false, 'first');
-        }
+        $redirect     = $topic->getUrl($this->return, false, 'first');
 
         try {
             $object->tryAuthorise('move');
@@ -2675,10 +2679,13 @@ class TopicController extends KunenaController
             $ids = false;
         }
 
+        // A topic which stays in its category and is not merged is only changed (icon, subject), not moved.
+        $onlyChanged = !$messageId && !$targetTopic && $targetCategory == $topic->category_id;
+
         try {
             $targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
         } catch (Exception $e) {
-            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $error = $e->getMessage();
         }
 
         if ($this->config->logModeration) {
@@ -2699,7 +2706,12 @@ class TopicController extends KunenaController
         if ($error) {
             $this->app->enqueueMessage($error, 'error');
         } else {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'), 'success');
+            $this->app->enqueueMessage(Text::_($onlyChanged ? 'COM_KUNENA_MODERATION_TOPIC_SAVED' : 'COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'), 'success');
+        }
+
+        // Go to where the messages are now (the new or merged topic), not to the topic they left.
+        if ($targetobject instanceof KunenaTopic) {
+            $redirect = $targetobject->getUrl($this->return, false, 'last');
         }
 
         $this->setRedirect($redirect);

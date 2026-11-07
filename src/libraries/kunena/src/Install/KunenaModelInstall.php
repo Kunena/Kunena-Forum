@@ -2956,7 +2956,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         $this->setAttachmentStatus();
         $this->addStatus(Text::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true);
 
-        $cache = Cache::getInstance();
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
         $cache->clean('kunena');
         $action = $this->getAction();
 

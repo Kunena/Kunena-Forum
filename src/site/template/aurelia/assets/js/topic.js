@@ -76,6 +76,14 @@ jQuery(document).ready(function ($) {
 		else {
 			$('#kmod_targetid').hide();
 		}
+
+		// "- Do not move -": the subject and move options do nothing, so do not show them.
+		if (id_item_selected == -2) {
+			$('.kmod-moveoption').hide();
+		}
+		else {
+			$('.kmod-moveoption').not('#kmod_subject').show();
+		}
 	});
 
 	$('#kmod_categories').change(function () {

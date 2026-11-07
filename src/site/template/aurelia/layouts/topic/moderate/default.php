@@ -217,7 +217,8 @@ $labels          = $this->ktemplate->params->get('labels');
                                 <input type="text" size="7" class="form-control" name="targetid" value="" />
                             </div>
                         </div>
-                        <div class="control-group" id="kmod_subject">
+                        <?php // Subject and move options only apply when the message is moved: hidden while "- Do not move -" (the default for a message) is selected. ?>
+                        <div class="control-group kmod-moveoption" id="kmod_subject"<?php echo isset($this->message) ? ' style="display: none;"' : ''; ?>>
                             <label class="control-label"
                                 for="kmod_subject"> <?php echo Text::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?> </label>
 
@@ -231,7 +232,7 @@ $labels          = $this->ktemplate->params->get('labels');
                         </div>
                         <?php if (!empty($this->replies)) :
                         ?>
-                            <div class="control-group">
+                            <div class="control-group kmod-moveoption"<?php echo isset($this->message) ? ' style="display: none;"' : ''; ?>>
                                 <div class="controls">
                                     <label class="checkbox">
                                         <input id="kmoderate-mode-selected" type="radio" name="mode" checked="checked"
@@ -247,7 +248,7 @@ $labels          = $this->ktemplate->params->get('labels');
                             </div>
                         <?php endif; ?>
 
-                        <div class="control-group">
+                        <div class="control-group kmod-moveoption"<?php echo isset($this->message) ? ' style="display: none;"' : ''; ?>>
                             <div class="controls">
                                 <label class="checkbox">
                                     <input type="checkbox" name="changesubject" value="1" />

@@ -215,6 +215,67 @@ class EmailLayoutEscapingTest extends TestCase
         return [['aurelia'], ['system']];
     }
 
+    public static function subscriptionLayouts(): array
+    {
+        return [
+            ['aurelia', 'subscription/default'],
+            ['aurelia', 'subscription/moderator'],
+            ['system', 'subscription/default'],
+            ['system', 'subscription/moderator'],
+        ];
+    }
+
+    #[DataProvider('subscriptionLayouts')]
+    public function testSubscriptionUsesQueuedMessageUrl(string $template, string $layout): void
+    {
+        $url = 'https://www.example.com/forum/topic?first=1&second="quoted\'#10614';
+        $message = $this->message('Hello', 'Visitor', 'General');
+        $config = \Kunena\Tests\Unit\BBCode\Fixtures\GenericConfig::$values;
+
+        try {
+            \Kunena\Tests\Unit\BBCode\Fixtures\GenericConfig::$values['plainEmail'] = 0;
+            $html = $this->render($template, $layout, $message, ['messageUrl' => $url]);
+            $escapedUrl = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+
+            $this->assertSame(3, substr_count($html, 'href="' . $escapedUrl . '"'));
+            $this->assertStringContainsString('>' . $escapedUrl . '</b>', $html);
+            $this->assertStringNotContainsString('https://forum.example/forum/1-general/7-hello', $html);
+
+            \Kunena\Tests\Unit\BBCode\Fixtures\GenericConfig::$values['plainEmail'] = 1;
+            $text = $this->render($template, $layout, $message, ['messageUrl' => $url]);
+
+            $this->assertStringContainsString('COM_KUNENA_EMAIL_MESSAGE_LINK_URL : ' . $url, $text);
+            $this->assertStringNotContainsString($escapedUrl, $text);
+        } finally {
+            \Kunena\Tests\Unit\BBCode\Fixtures\GenericConfig::$values = $config;
+        }
+    }
+
+    #[DataProvider('subscriptionLayouts')]
+    public function testSubscriptionFallsBackWhenMessageUrlIsMissing(string $template, string $layout): void
+    {
+        $message = $this->message('Hello', 'Visitor', 'General');
+        $fallback = 'https://forum.example/forum/1-general/7-hello?mesid=5';
+        $config = \Kunena\Tests\Unit\BBCode\Fixtures\GenericConfig::$values;
+
+        try {
+            foreach ([0, 1] as $plainEmail) {
+                \Kunena\Tests\Unit\BBCode\Fixtures\GenericConfig::$values['plainEmail'] = $plainEmail;
+
+                foreach ([[], ['messageUrl' => null], ['messageUrl' => '']] as $props) {
+                    $output = $this->render($template, $layout, $message, $props);
+                    $this->assertStringContainsString($fallback, $output);
+
+                    if (!$plainEmail) {
+                        $this->assertSame(3, substr_count($output, 'href="' . $fallback . '"'));
+                    }
+                }
+            }
+        } finally {
+            \Kunena\Tests\Unit\BBCode\Fixtures\GenericConfig::$values = $config;
+        }
+    }
+
     #[DataProvider('reportLayouts')]
     public function testReportTextAndReporterAreText(string $template): void
     {

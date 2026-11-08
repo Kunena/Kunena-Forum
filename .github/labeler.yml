@@ -1,5 +1,5 @@
-# Add '7.1' label to any changes within the entire repository
-7.1:
+# Add '8.0' label to any changes within the entire repository
+8.0:
 - changed-files:
   - any-glob-to-any-file: '**'
 

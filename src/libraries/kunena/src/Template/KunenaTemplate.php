@@ -410,6 +410,35 @@ class KunenaTemplate
             }
         }
     }
+    
+    /**
+     * Get the name of the Joomla site template; console applications (cron tasks) have no getTemplate().
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.1
+     */
+    protected function getSiteTemplateName(): string
+    {
+        if (method_exists($this->app, 'getTemplate')) {
+            $template = $this->app->getTemplate();
+            
+            return \is_object($template) ? (string) $template->template : (string) $template;
+        }
+        
+        try {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->getQuery(true)
+            ->select($db->quoteName('template'))
+            ->from($db->quoteName('#__template_styles'))
+            ->where($db->quoteName('client_id') . ' = 0')
+            ->where($db->quoteName('home') . ' = ' . $db->quote('1'));
+            
+            return (string) $db->setQuery($query, 0, 1)->loadResult();
+        } catch (\Exception $e) {
+            return '';
+        }
+    }
 
     /**
      * @param   string  $filename   filename
@@ -1332,9 +1361,8 @@ HTML;
                 !is_file(KPATH_SITE . "/template/{$templatename}/config/template.xml")
                 && !is_file(KPATH_SITE . "/template/{$templatename}/config/config.xml")
             ) {
-                // If template xml doesn't exist, raise warning and use aurelia instead
-                $file         = JPATH_THEMES . "/{$app->getTemplate()}/html/com_kunena/template.php";
-                $templatename = 'aurelia';
+                // If template xml doesn't exist, raise warning and use agora instead
+                $templatename = 'agora';
                 $classname    = "KunenaTemplate{$templatename}";
 
                 if (is_dir(KPATH_SITE . "/template/{$templatename}")) {
@@ -1342,7 +1370,7 @@ HTML;
                 }
             }
 
-            if (!class_exists($classname) && $app->isClient('site')) {
+            if (!class_exists($classname) && $app->isClient('site') || $app->isClient('cli')) {
                 $file = KPATH_SITE . "/template/{$templatename}/template.php";
 
                 if (!is_file($file)) {
@@ -1618,7 +1646,7 @@ HTML;
 
         foreach (array_reverse($this->default) as $template) {
             $array[] = ($fullpath ? KPATH_SITE : KPATH_COMPONENT_RELATIVE) . "/template/" . $template . $path;
-            $array[] = ($fullpath ? JPATH_ROOT : JPATH_SITE) . "/templates/{$this->app->getTemplate()}/html/com_kunena" . $path;
+            $array[] = ($fullpath ? JPATH_ROOT : JPATH_SITE) . "/templates/{$this->getSiteTemplateName()}/html/com_kunena" . $path;
         }
 
         foreach (array_reverse($this->paths) as $template) {
@@ -2095,8 +2123,8 @@ HTML;
     public function isHmvc()
     {
         if (\is_null($this->hmvc)) {
-            if (is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages")) {
-                $this->hmvc = is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages");
+            if (is_dir(JPATH_THEMES . "/{$this->getSiteTemplateName()}/com_kunena/pages")) {
+                $this->hmvc = is_dir(JPATH_THEMES . "/{$this->getSiteTemplateName()}/com_kunena/pages");
             } else {
                 // A template which only overrides some files takes its pages from its parent templates.
                 $this->hmvc = false;

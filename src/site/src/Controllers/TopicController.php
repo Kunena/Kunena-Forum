@@ -759,6 +759,8 @@ class TopicController extends KunenaController
 
                 if (!$category->exists()) {
                     throw new RuntimeException(Text::_('Forbidden'), 403);
+                }
+                    
                 if ($category->id) {
                     if (stripos($this->input->getString('mime'), 'image/') !== false) {
                         $category->tryAuthorise('topic.post.attachment.createimage');

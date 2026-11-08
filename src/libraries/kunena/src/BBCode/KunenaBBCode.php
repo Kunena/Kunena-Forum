@@ -2882,6 +2882,17 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             $config->cacheTime = 60;
         }
 
+        // Emoticons inserted by the editor are stored as an image path in the message.
+        // Rebuild the URL at render time, so they keep working after the site moved to
+        // another (sub)folder or domain, and in absolute contexts (RSS, e-mail).
+        if (
+            preg_match('#^(?:https?://[^/]+)?(?:/[^?\#]*)?/media/kunena/emoticons/([^/?\#]+)$#i', $fileurl, $emoticon)
+            && is_file(JPATH_ROOT . '/media/kunena/emoticons/' . $emoticon[1])
+        ) {
+            $fileurl = $bbcode->getSmileyURL() . '/media/kunena/emoticons/' . $emoticon[1];
+        }
+
+        $filename = basename($fileurl);
         $cache->setLifeTime($config->cacheTime);
 
         /**

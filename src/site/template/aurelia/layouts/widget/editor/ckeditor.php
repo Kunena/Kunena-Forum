@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 $this->wa->registerAndUseScript('ckeditor', 'media/kunena/core/js/ckeditor.js');
 $this->doc->addScriptOptions('com_kunena.ckeditor_config', $this->template->params->get('ckeditorcustomprefixconfigfile') . 'ckeditor_config.js');
 $this->doc->addScriptOptions('com_kunena.ckeditor_buttons_configuration', $this->template->params->get('editorButtons'));
-$this->doc->addScriptOptions('com_kunena.ckeditor_subfolder', Uri::root(true));
+$this->doc->addScriptOptions('com_kunena.ckeditor_smiley_path', Uri::root(true) . '/media/kunena/emoticons/');
 $this->doc->addScriptOptions('com_kunena.ckeditor_skiname', $this->template->params->get('nameskinckeditor'));
 $this->doc->addScriptOptions('com_kunena.localstorage', $this->template->params->get('localstorage'));
 

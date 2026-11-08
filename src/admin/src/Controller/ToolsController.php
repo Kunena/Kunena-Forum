@@ -1037,6 +1037,8 @@ class ToolsController extends FormController
                 $listOldSocialsColumns[] = 'delicious';
             }
 
+            $listOldSocialsColumnsForImport = array_diff($listOldSocialsColumns, ['icq']);
+            
             // Prepare the JSON for each user with putting the old value of each social
             // Set the content in the column socials
             $limit  = 100;
@@ -1044,7 +1046,7 @@ class ToolsController extends FormController
 
             do {
                 $query  = $db->createQuery()
-                    ->select($db->quoteName($listOldSocialsColumns))
+                    ->select($db->quoteName($listOldSocialsColumnsForImport))
                     ->from($db->quoteName('#__kunena_users'))
                     ->where($db->quoteName('banned') . '= ' . $db->quote('1000-01-01 00:00:00'))
                     ->setLimit($limit, $offset);

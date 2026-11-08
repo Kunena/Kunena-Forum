@@ -78,6 +78,14 @@ jQuery(document).ready(function ($) {
 		else {
 			$('#kmod_targetid').hide();
 		}
+
+		// "- Do not move -": the subject and move options do nothing, so do not show them.
+		if (id_item_selected == -2) {
+			$('.kmod-moveoption').hide();
+		}
+		else {
+			$('.kmod-moveoption').not('#kmod_subject').show();
+		}
 	});
 
 	$('#kmod_categories').change(function () {
@@ -86,10 +94,18 @@ jQuery(document).ready(function ($) {
 		).done(function (json) {
 			const first_item = $('#kmod_topics option:nth-child(1)').clone();
 			const second_item = $('#kmod_topics option:nth-child(2)').clone();
+			// Keep the fixed options (do not move, new topic, enter an id): their values are 0 or below, topics are above.
+			const fixed_items = $('#kmod_topics option').filter(function () {
+				return parseInt($(this).val(), 10) <= 0;
+			}).clone();
 
 			$('#kmod_topics').empty();
-			first_item.appendTo('#kmod_topics');
-			second_item.appendTo('#kmod_topics');
+			fixed_items.appendTo('#kmod_topics');
+
+			// Another category is a move: a message which would not move goes into a new topic there.
+			if ($('#kmod_topics').val() == -2) {
+				$('#kmod_topics').val(0).trigger('change');
+			}
 
 			$.each(json, function (index, object) {
 				$.each(object, function (key, element) {

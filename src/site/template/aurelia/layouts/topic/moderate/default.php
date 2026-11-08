@@ -92,7 +92,8 @@ $labels          = $this->ktemplate->params->get('labels');
                             <?php endif; ?>
                         </dl>
                        <?php $canModerate = KunenaUserHelper::getMyself()->isModerator($this->category);?>
-                        <?php if ($this->config->topicIcons || $canModerate || $this->me->authorise('core.admin')): ?>
+                        <?php // The icon belongs to the topic: it is changed when moderating the topic, not one of its messages. ?>
+                        <?php if (!isset($this->message) && ($this->config->topicIcons || $canModerate || $this->me->authorise('core.admin'))): ?>
     <div><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
     <br />
     <div class="kmoderate-topicIcons">
@@ -129,7 +130,7 @@ $labels          = $this->ktemplate->params->get('labels');
     </div>
 <?php endif; ?>
 
-<?php if ($labels && !$this->config->topicIcons && !$canModerate && !$this->me->authorise('core.admin')): ?>
+<?php if (!isset($this->message) && $labels && !$this->config->topicIcons && !$canModerate && !$this->me->authorise('core.admin')): ?>
     <div>
         <strong><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_LABEL'); ?>:</strong>
     </div>
@@ -204,7 +205,7 @@ $labels          = $this->ktemplate->params->get('labels');
                                                                             'class="form-select"',
                                                                             'value',
                                                                             'text',
-                                                                            0,
+                                                                            isset($this->message) ? -2 : 0,
                                                                             'kmod_topics'
                                                                         ); ?> </div>
                         </div>
@@ -218,7 +219,8 @@ $labels          = $this->ktemplate->params->get('labels');
                                 </label>
                             </div>
                         </div>
-                        <div class="control-group" id="kmod_subject">
+                        <?php // Subject and move options only apply when the message is moved: hidden while "- Do not move -" (the default for a message) is selected. ?>
+                        <div class="control-group kmod-moveoption" id="kmod_subject"<?php echo isset($this->message) ? ' style="display: none;"' : ''; ?>>
                             <label class="control-label"
                                 for="kmod_subject"> <?php echo Text::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?> </label>
 
@@ -232,7 +234,7 @@ $labels          = $this->ktemplate->params->get('labels');
                         </div>
                         <?php if (!empty($this->replies)) :
                         ?>
-                            <div class="control-group">
+                            <div class="control-group kmod-moveoption"<?php echo isset($this->message) ? ' style="display: none;"' : ''; ?>>
                                 <div class="controls">
                                     <label class="checkbox">
                                         <input id="kmoderate-mode-selected" type="radio" name="mode" checked="checked"
@@ -248,7 +250,7 @@ $labels          = $this->ktemplate->params->get('labels');
                             </div>
                         <?php endif; ?>
 
-                        <div class="control-group">
+                        <div class="control-group kmod-moveoption"<?php echo isset($this->message) ? ' style="display: none;"' : ''; ?>>
                             <div class="controls">
                                 <label class="checkbox">
                                     <input type="checkbox" name="changesubject" value="1" />

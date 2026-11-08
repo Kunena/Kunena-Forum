@@ -412,8 +412,36 @@ class KunenaTemplate
     }
 
     /**
-     * @param   string  $filename   filename
-     * @param   string  $condition  condition
+     * Get the name of the Joomla site template; console applications (cron tasks) have no getTemplate().
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.1
+     */
+    protected function getSiteTemplateName(): string
+    {
+        if (method_exists($this->app, 'getTemplate')) {
+            $template = $this->app->getTemplate();
+
+            return \is_object($template) ? (string) $template->template : (string) $template;
+        }
+
+        try {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->getQuery(true)
+                ->select($db->quoteName('template'))
+                ->from($db->quoteName('#__template_styles'))
+                ->where($db->quoteName('client_id') . ' = 0')
+                ->where($db->quoteName('home') . ' = ' . $db->quote('1'));
+
+            return (string) $db->setQuery($query, 0, 1)->loadResult();
+        } catch (\Exception $e) {
+            return '';
+        }
+    }
+
+    /**
+     * @return  boolean
      *
      * @return  void
      *
@@ -422,51 +450,9 @@ class KunenaTemplate
      */
     public function addIEStyleSheet(string $filename, $condition = 'IE'): void
     {
-        $filename  = preg_replace('|^css/|u', '', $filename);
-        $url       = $this->getFile($filename, true, $this->pathTypes['css'], 'media/kunena/css');
-        $stylelink = "<!--[if {$condition}]>\n";
-        $stylelink .= '<link rel="stylesheet" href="' . $url . '" />' . "\n";
-        $stylelink .= "<![endif]-->\n";
-        Factory::getApplication()->getDocument()->addCustomTag($stylelink);
-    }
-
-    /**
-     * @param   string  $path  path
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function addPath(string $path): void
-    {
-        $this->paths[] = KunenaPath::clean("/$path");
-    }
-
-    /**
-     * Wrapper to addScript
-     *
-     * @param   string  $filename  filename
-     * @param   array   $options   options
-     * @param   array   $attribs   attribs
-     *
-     * @return  Document|void
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function addScript(string $filename, $options = [], $attribs = [])
-    {
-        $format = $this->input->getCmd('format');
-
-        if (!empty($format) && $format != 'html') {
-            return false;
-        }
-
-        if (!preg_match('|https?://|', $filename)) {
-            if (preg_match('/assets/', $filename)) {
-                $filename = preg_replace('|^css/|u', '', $filename);
-                $filename = preg_replace('/^assets\//', '', $filename);
-                $filename = $this->getFile($filename, false, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name . '/assets');
+        if (\is_null($this->hmvc)) {
+            if (is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages")) {
+                $this->hmvc = is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages");
             } else {
                 $filename = $this->getFile($filename, false, $this->pathTypes['js'], $this->pathTypes['js']);
             }
@@ -589,9 +575,14 @@ class KunenaTemplate
     {
         $format = $this->input->getCmd('format');
 
-        if (!empty($format) && $format != 'html') {
-            return;
-        }
+            if (
+                !is_file(KPATH_SITE . "/template/{$templatename}/config/template.xml")
+                && !is_file(KPATH_SITE . "/template/{$templatename}/config/config.xml")
+            ) {
+                // If template xml doesn't exist, raise warning and use aurelia instead
+                $file         = JPATH_THEMES . "/{$app->getTemplate()}/html/com_kunena/template.php";
+                $templatename = 'aurelia';
+                $classname    = "KunenaTemplate{$templatename}";
 
         if (!preg_match('|https?://|', $filename) && !preg_match('|media/jui|', $filename)) {
             if (preg_match('/assets/', $filename)) {
@@ -606,9 +597,8 @@ class KunenaTemplate
                 $filename = $this->getFile($filename, false, $this->pathTypes['css'], $this->pathTypes['css']);
             }
 
-            $filemin      = $filename;
-            $filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
-            $fileminAbs   = JPATH_ROOT . "/$filemin_path";
+            if (!class_exists($classname) && $app->isClient('site')) {
+                $file = KPATH_SITE . "/template/{$templatename}/template.php";
 
             if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && $this->isFileCached($fileminAbs)) {
                 $filemin = preg_replace('/\.css$/u', '-min.css', $filename);
@@ -1516,7 +1506,10 @@ HTML;
             'lifetime'     => 86400,
         ];
 
-        self::$persistentTemplateCache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        foreach (array_reverse($this->default) as $template) {
+            $array[] = ($fullpath ? KPATH_SITE : KPATH_COMPONENT_RELATIVE) . "/template/" . $template . $path;
+            $array[] = ($fullpath ? JPATH_ROOT : JPATH_SITE) . "/templates/{$this->app->getTemplate()}/html/com_kunena" . $path;
+        }
 
         return self::$persistentTemplateCache;
     }

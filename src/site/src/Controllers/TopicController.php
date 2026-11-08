@@ -757,6 +757,8 @@ class TopicController extends KunenaController
             } else {
                 $category = KunenaCategoryHelper::get($catid);
 
+                if (!$category->exists()) {
+                    throw new RuntimeException(Text::_('Forbidden'), 403);
                 if ($category->id) {
                     if (stripos($this->input->getString('mime'), 'image/') !== false) {
                         $category->tryAuthorise('topic.post.attachment.createimage');
@@ -766,6 +768,12 @@ class TopicController extends KunenaController
                 } elseif (!$this->me->exists() || $this->me->isBanned()) {
                     // No category yet (a new topic): no rule of a category stops a guest or a banned user.
                     throw new RuntimeException(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+                }
+
+                if (stripos($this->input->getString('mime'), 'image/') !== false) {
+                    $category->tryAuthorise('topic.post.attachment.createimage');
+                } else {
+                    $category->tryAuthorise('topic.post.attachment.createfile');
                 }
             }
 

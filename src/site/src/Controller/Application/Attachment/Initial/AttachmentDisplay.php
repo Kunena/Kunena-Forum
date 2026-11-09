@@ -174,7 +174,7 @@ class AttachmentDisplay extends KunenaControllerDisplay
             }
 
             header('Content-type: ' . $attachment->filetype);
-            header('Content-Disposition: inline; filename="' . $attachment->getFilename(false) . '"');
+            header('Content-Disposition: inline; ' . KunenaAttachmentHelper::getContentDispositionFilename($attachment->getFilename(false)));
         } else {
             // Otherwise force file download.
             header('Expires: 0');
@@ -183,7 +183,7 @@ class AttachmentDisplay extends KunenaControllerDisplay
             header('Content-Type: application/force-download');
             header('Content-Type: application/octet-stream');
             header('Content-Type: application/download');
-            header('Content-Disposition: attachment; filename="' . $attachment->getFilename(false) . '"');
+            header('Content-Disposition: attachment; ' . KunenaAttachmentHelper::getContentDispositionFilename($attachment->getFilename(false)));
         }
 
         header('Content-Transfer-Encoding: binary');

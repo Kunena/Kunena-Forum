@@ -116,7 +116,7 @@ class ArticleAttachmentEbayTest extends TestCase
         $this->assertIsInt($check, 'The branch asks whether the reader may see the attachment.');
         $this->assertStringContainsString('!$attachment || !$attachment->exists()', substr($body, $start, $check - $start + 40));
 
-        foreach (['->isImage()', '->getImageLink()', '->getUrl()', '->filename', '->size'] as $use) {
+        foreach (['->isImage()', '->getImageLink()', '->getUrl()', '->getFilename()', '->size'] as $use) {
             $at = strpos($body, $use, $start);
 
             $this->assertIsInt($at, $use);

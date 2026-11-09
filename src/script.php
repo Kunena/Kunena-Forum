@@ -50,7 +50,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      * @var    string
      * @since  6.0.0
      */
-    protected $maximumJoomla = '6.2.0-alpha1';
+    protected $maximumJoomla = '6.3.0-alpha1';
 
     /**
      * List of supported versions. Newest version first!
@@ -97,6 +97,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             '0' => '10.8.6', // Preferred version
         ],
         'Joomla!' => [
+            '6.2' => '6.2.0',
             '6.1' => '6.1.4',
             '6.0' => '6.0.4',
             '5.4' => '5.4.10',

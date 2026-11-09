@@ -254,10 +254,9 @@ class KunenaBBCode extends BBCode
         }
 
         if ($this->config->autoEmbedInstagram && empty($this->parent->forceMinimal) && isset($params['host'])) {
-            parse_str($params['query'], $query);
             $path = explode('/', $params['path']);
 
-            if (strstr($params['host'], 'instagram.') && !empty($path[1])) {
+            if (\in_array(strtolower($params['host']), ['instagram.com', 'www.instagram.com', 'instagr.am', 'www.instagr.am'], true) && !empty($path[1])) {
                 return KunenaBBCodeLibrary::DoInstagram('', '', '', '', '', rtrim($params['url']));
             }
         }
@@ -1243,47 +1242,35 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     /**
      * Method to render the instagram content
      *
-     * @param   string  $content
+     * @param   mixed   $bbcode   bbcode
+     * @param   string  $content  Instagram URL or post ID
      *
      * @return string
      * @since Kunena 5.2
      */
     public static function renderInstagram($bbcode, $content)
     {
-        $before  = $content;
-        $content = strip_tags($content);
-
         $content = trim($content);
 
-        $url_parsed = parse_url($content);
+        if (preg_match('~\A(?:https?://)?((?:www\.)?(?:instagram\.com|instagr\.am))/([A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*)/?(?:[?#][^\x00-\x20\x7f<>"\']*)?\z~i', $content, $matches)) {
+            $segments = explode('/', $matches[2]);
 
-        if (isset($url_parsed['scheme'])) {
-            if ($url_parsed['scheme'] == 'https' || $url_parsed['scheme'] == 'http') {
-                $content = $url_parsed['host'] . $url_parsed['path'];
-            } else {
-                $content = $url_parsed['path'];
+            if (!\in_array('.', $segments, true) && !\in_array('..', $segments, true)) {
+                $url = 'https://' . strtolower($matches[1]) . '/' . $matches[2] . '/embed/';
+
+                return '<div class="embed-container"><iframe src="' . htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" style="border: 0"></iframe></div>';
             }
         }
 
-        if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content)) {
-            if (!preg_match('#^(/|https?:|ftp:)#ui', $content)) {
-                // Add scheme to raw domain URLs.
-                $url = "https://{$content}";
+        if (preg_match('/\A[A-Za-z0-9_-]+\z/', $content)) {
+            if (!empty($bbcode->parent->forceMinimal)) {
+                return '<a href="' . $content . '" rel="nofollow noopener noreferrer" target="_blank">' . $content . '</a>';
             }
 
-            return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" style="border: 0"></iframe></div>';
-        }
-
-        // Display tag in activity streams etc..
-        if (!empty($bbcode->parent->forceMinimal)) {
-            return "<a href=\"" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . '</a>';
-        }
-
-        if (!empty($content)) {
             return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" style="border: 0"></iframe></div>';
-        } else {
-            return $before;
         }
+
+        return htmlspecialchars($content, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 
     /**

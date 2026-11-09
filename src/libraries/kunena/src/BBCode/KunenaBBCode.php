@@ -2531,7 +2531,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 $hide = $this->config->showFileForGuest == 0 && Factory::getApplication()->getIdentity()->id == 0;
 
                 if (!$hide) {
-                    return "<div class=\"kmsgattach\"><h4>" . Text::_('COM_KUNENA_FILEATTACH') . "</h4>" . Text::_('COM_KUNENA_FILENAME') . " <a href=\"" . $attachment->getUrl() . "\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">" . $attachment->filename . "</a><br />" . Text::_('COM_KUNENA_FILESIZE') . ' ' . number_format(\intval($attachment->size) / 1024, 0, '', ',') . ' KB' . "</div>";
+                    return "<div class=\"kmsgattach\"><h4>" . Text::_('COM_KUNENA_FILEATTACH') . "</h4>" . Text::_('COM_KUNENA_FILENAME') . " <a href=\"" . $attachment->getUrl() . "\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">" . $attachment->getFilename() . "</a><br />" . Text::_('COM_KUNENA_FILESIZE') . ' ' . number_format(\intval($attachment->size) / 1024, 0, '', ',') . ' KB' . "</div>";
                 }
             }
         }

@@ -1555,7 +1555,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display only spoiler text in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return '[' . ($default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
+            // The title is the text of the member as it was written: it is encoded here.
+            return '[' . ($default ? htmlspecialchars((string) $default, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') : Text::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
         }
 
         $document = Factory::getApplication()->getDocument();
@@ -2621,7 +2622,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return '[ ' . basename(!empty($params["name"]) ? $params["name"] : trim(strip_tags($content))) . ' ]';
+            // The name parameter is the text of the member as it was written (the content is encoded by the parser already).
+            $minimalName = !empty($params["name"])
+                ? htmlspecialchars(basename((string) $params["name"]), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')
+                : basename(trim(strip_tags($content)));
+
+            return '[ ' . $minimalName . ' ]';
         }
 
         // Make sure that filename does not contain path or URL.

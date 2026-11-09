@@ -35,6 +35,30 @@ use RuntimeException;
 abstract class KunenaAttachmentHelper
 {
     /**
+     * Format a filename for a Content-Disposition header.
+     *
+     * @param   string  $filename  The original filename.
+     *
+     * @return  string  Filename parameters with an ASCII fallback.
+     *
+     * @since   Kunena 7.1
+     */
+    public static function getContentDispositionFilename(string $filename): string
+    {
+        $filename = str_replace(['/', '\\'], '_', $filename);
+        $filename = preg_replace('/[\x00-\x1f\x7f]/', '', $filename);
+        $filename = $filename !== '' ? $filename : 'attachment';
+        $fallback = preg_replace('/[^\x20-\x7e]|["%]/', '_', $filename);
+        $params   = 'filename="' . $fallback . '"';
+
+        if (preg_match('//u', $filename)) {
+            $params .= "; filename*=UTF-8''" . rawurlencode($filename);
+        }
+
+        return $params;
+    }
+
+    /**
      * @var     KunenaAttachment[]
      * @since   Kunena 6.0
      */

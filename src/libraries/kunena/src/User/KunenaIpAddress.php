@@ -57,4 +57,32 @@ abstract class KunenaIpAddress
 
         return '';
     }
+
+    /**
+     * The html of the stored address of a message, for a moderator. A message that was written before the address was checked
+     * can hold the text of a header: the value is always encoded, and only a real address becomes a link to the lookup site.
+     *
+     * @param   mixed  $ip  The stored value.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.1
+     */
+    public static function lookupLink($ip): string
+    {
+        $ip = \is_string($ip) ? trim($ip) : '';
+
+        if ($ip === '') {
+            return '&nbsp;';
+        }
+
+        $text = htmlspecialchars($ip, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        if (filter_var($ip, FILTER_VALIDATE_IP) === false) {
+            return ' IP: ' . $text;
+        }
+
+        return '<a href="https://search.dnslytics.com/ip/' . rawurlencode($ip)
+            . '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $text . '</a>';
+    }
 }

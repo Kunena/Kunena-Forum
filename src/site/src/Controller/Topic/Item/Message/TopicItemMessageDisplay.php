@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\User\KunenaIpAddress;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -213,12 +214,8 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
             $this->category->isAuthorised('admin')
             || ($this->category->isAuthorised('moderate') && !$this->config->hideIp)
         ) {
-            if (!empty($this->message->ip)) {
-                $this->ipLink = '<a href="https://search.dnslytics.com/ip/' . $this->message->ip
-                    . '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
-            } else {
-                $this->ipLink = '&nbsp;';
-            }
+            // The stored value is encoded: an old message can hold text of a header in place of an address.
+            $this->ipLink = KunenaIpAddress::lookupLink($this->message->ip);
         }
     }
 }

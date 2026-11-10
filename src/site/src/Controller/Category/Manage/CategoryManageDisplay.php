@@ -108,8 +108,9 @@ class CategoryManageDisplay extends KunenaControllerDisplay
     {
         $this->me = KunenaUserHelper::getMyself();
 
+        // Thrown, not returned: a returned exception does not stop the page.
         if (!$this->me->isAdmin()) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $this->me->exists() ? 403 : 401);
         }
 
         parent::before();

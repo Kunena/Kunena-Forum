@@ -47,6 +47,7 @@ use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateStars;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Image\KunenaImage;
@@ -599,15 +600,27 @@ class TopicController extends KunenaController
         if (!Session::checkToken('request')) {
             throw new RuntimeException(Text::_('JINVALID_TOKEN'), 403);
         }
-        $catid  = $this->app->input->get('catid', 0, 'int');
+        $topicid = $this->app->getInput()->get('topic_id', 0, 'int');
+        $topic   = KunenaTopicHelper::get($topicid);
 
-        // To use rating feature it should be enabled at same time in Kunena configuration and in the category
-        if (!$this->config->ratingEnabled || !KunenaCategoryHelper::get($catid)->allowRatings) {
+        // Only a topic that exists and that the member may read is rated (it can be in a private category).
+        if (!$topic->exists() || !$topic->isAuthorised('read')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
+        // To use rating feature it should be enabled at same time in Kunena configuration and in the category. The category is
+        // the one of the topic, not one that the request names.
+        if (!$this->config->ratingEnabled || !$topic->getCategory()->allowRatings) {
             throw new RuntimeException(Text::_('Bad Request'), 400);
         }
 
-        $starid   = $this->app->getInput()->get('starid', 0, 'int');
-        $topicid  = $this->app->getInput()->get('topic_id', 0, 'int');
+        // One to five stars: the rating of the topic is the average of what is stored.
+        $starid = KunenaRateStars::clean($this->app->getInput()->get('starid', 0, 'int'));
+
+        if ($starid === null) {
+            throw new RuntimeException(Text::_('Bad Request'), 400);
+        }
+
         $response = [];
 
         if ($this->me->exists()) {
@@ -619,7 +632,6 @@ class TopicController extends KunenaController
 
             $selected = KunenaRateHelper::getSelected($topicid);
 
-            $topic         = KunenaTopicHelper::get($topicid);
             $topic->rating = $selected;
             $topic->save();
         }

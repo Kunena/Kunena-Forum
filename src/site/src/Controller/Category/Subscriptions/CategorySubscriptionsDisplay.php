@@ -25,6 +25,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserScope;
 use Kunena\Forum\Site\Model\CategoryModel;
 
 /**
@@ -85,6 +86,11 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 
         if (!$me->exists()) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+        }
+
+        // The subscriptions of oneself, and a moderator those of anybody (the id of the user comes from the request).
+        if (!KunenaUserScope::maySeeList('subscriptions', (int) $me->userid, (bool) $me->isModerator(), $this->state->get('user'))) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
         }
 
         $this->user = KunenaUserHelper::get($this->state->get('user'));

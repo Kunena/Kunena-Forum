@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
+use Kunena\Forum\Libraries\User\KunenaUserScope;
 
 /**
  * Kunena Topics Controller
@@ -488,6 +489,17 @@ class TopicsController extends KunenaController
         }
 
         $userid = $this->app->getInput()->getInt('userid');
+
+        // The subscriptions of oneself, and a moderator those of anybody: the id of the request is not enough (and a guest has
+        // no subscriptions).
+        if (!KunenaUserScope::mayActFor((int) $this->me->userid, (bool) $this->me->isModerator(), $userid)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $userid = (int) $userid > 0 ? (int) $userid : (int) $this->me->userid;
 
         $ids = array_keys($this->app->getInput()->get('topics', [], 'post', 'array'));
         $ids = ArrayHelper::toInteger($ids);

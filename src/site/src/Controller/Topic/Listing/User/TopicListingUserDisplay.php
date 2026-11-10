@@ -22,12 +22,14 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Event\KunenaGetUserTopics;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserScope;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
 use RuntimeException;
@@ -67,6 +69,18 @@ class TopicListingUserDisplay extends ListDisplay
         $this->state   = $model->getState();
         $this->me      = KunenaUserHelper::getMyself();
         $this->moreUri = null;
+
+        // The favorites and the subscriptions of a user are not for everybody (the id of the user comes from the request).
+        if (
+            !KunenaUserScope::maySeeList(
+                (string) $this->state->get('list.mode'),
+                (int) $this->me->userid,
+                (bool) $this->me->isModerator(),
+                $this->state->get('user')
+            )
+        ) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $this->me->exists() ? 403 : 401);
+        }
 
         $this->embedded = $this->getOptions()->get('embedded', true);
 

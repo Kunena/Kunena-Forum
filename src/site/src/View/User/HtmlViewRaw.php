@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\User\KunenaAvatarGalleryName;
 use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
@@ -114,9 +115,10 @@ class KunenaViewUser extends KunenaView
     {
         $response = [];
 
-        $gallery_name = $this->app->getInput()->get('gallery_name', null, 'string');
-
-        $list_files = Folder::files(JPATH_BASE . '/media/kunena/avatars/gallery/' . $gallery_name);
+        // The name of one folder of the galleries, for a member: any other name is no gallery.
+        $gallery_name = KunenaAvatarGalleryName::clean($this->app->getInput()->get('gallery_name', null, 'string'));
+        $folder       = JPATH_BASE . '/media/kunena/avatars/gallery/' . $gallery_name;
+        $list_files   = $this->me->exists() && $gallery_name !== null && is_dir($folder) ? Folder::files($folder) : [];
 
         foreach ($list_files as $key => $file) {
             $response[$key]['filename'] = $file;

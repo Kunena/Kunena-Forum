@@ -1555,7 +1555,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display only spoiler text in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return '[' . ($default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
+            // The title is the text of the member as it was written: it is encoded here.
+            return '[' . ($default ? htmlspecialchars((string) $default, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') : Text::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
         }
 
         $document = Factory::getApplication()->getDocument();
@@ -2190,14 +2191,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $maxwidth  = (int) $this->config->rteWidth;
         $maxheight = (int) (isset($params["height"]) && is_numeric($params["height"])) ? $params["height"] : $this->config->rteHeight;
 
-        if (preg_match('/(https:\/\/public.tableau.com\/views)\/(.*)\/(.*)\?.*/', $content, $matches)) {
-            $tableauserver = $matches[1];
-            $vizualization = $matches[2];
-            $vizualizationTab = $matches[3];
+        $names = self::tableauNames((string) $content);
 
-            if ($tableauserver != 'https://public.tableau.com/views') {
-                return '';
-            }
+        if ($names !== null) {
+            list($vizualization, $vizualizationTab) = $names;
 
             $layout = KunenaLayout::factory('BBCode/Tableau');
 
@@ -2212,6 +2209,33 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         }
 
         return '';
+    }
+
+    /**
+     * The workbook and the sheet of an address of Tableau Public (https://public.tableau.com/views/<workbook>/<sheet>?...).
+     * Both are printed into attributes of the embed code, so they are plain names only: letters, digits, "_", "-" and ".".
+     * Anything else (a quote, a space, a further "/") is no address of a view, and nothing is shown.
+     *
+     * @param   string  $content  The content of the tag.
+     *
+     * @return  array|null  The workbook and the sheet, or null.
+     *
+     * @since   Kunena 7.1
+     */
+    public static function tableauNames(string $content): ?array
+    {
+        if (!preg_match('#^https://public\.tableau\.com/views/([\w.\-]+)/([\w.\-]+)(?:[?\#].*)?$#Ds', trim($content), $matches)) {
+            return null;
+        }
+
+        foreach ([$matches[1], $matches[2]] as $name) {
+            // "." and ".." are parts of a path, not names.
+            if (trim($name, '.') === '') {
+                return null;
+            }
+        }
+
+        return [$matches[1], $matches[2]];
     }
 
     /**
@@ -2621,7 +2645,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return '[ ' . basename(!empty($params["name"]) ? $params["name"] : trim(strip_tags($content))) . ' ]';
+            // The name parameter is the text of the member as it was written (the content is encoded by the parser already).
+            $minimalName = !empty($params["name"])
+                ? htmlspecialchars(basename((string) $params["name"]), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')
+                : basename(trim(strip_tags($content)));
+
+            return '[ ' . $minimalName . ' ]';
         }
 
         // Make sure that filename does not contain path or URL.
@@ -3154,9 +3183,35 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return true;
         }
 
-        $user = KunenaUserHelper::get($params['userid']);
-        $urlUserProfile = $user->getURL();
+        $user = KunenaUserHelper::get((int) ($params['userid'] ?? 0));
 
-        return '<a href="' . $urlUserProfile . '" data-bs-toggle="tooltip" title="' . $content . '">@' . $content . '</a>';
+        return self::renderMention($user->getURL(), (string) $content);
+    }
+
+    /**
+     * The html of a mention. The content of the tag is html of the parser already: a tag inside it ([url] for example) is real
+     * markup with quotes, which closed the title attribute and made the rest attributes of the link (onmouseover...). Only the
+     * text of the content is used, encoded once, for the title and for the link.
+     *
+     * @param   mixed   $url      The address of the profile (xhtml), or false when there is none to show.
+     * @param   string  $content  The parsed content of the tag.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.1
+     */
+    public static function renderMention($url, string $content): string
+    {
+        $name = trim(html_entity_decode(strip_tags($content), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        $name = htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        if (!\is_string($url) || $url === '') {
+            return '@' . $name;
+        }
+
+        // The address comes from the router with &amp; already: it is not encoded twice.
+        $url = htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
+
+        return '<a href="' . $url . '" data-bs-toggle="tooltip" title="' . $name . '">@' . $name . '</a>';
     }
 }

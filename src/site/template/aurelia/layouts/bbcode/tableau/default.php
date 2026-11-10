@@ -18,22 +18,25 @@ namespace Kunena\Forum\Site;
 // [tableau height=1000]https://public.tableau.com/views/VGContest_InteractiveFiscalCalendar_ShinichiroMurakami/FYCalendar?:embed=y&:embed_code_version=3&:loadOrderID=0&:display_count=y&publish=yes&:origin=viz_share_link[/tableau]
 
 // Display visual analytics from https://www.tableau.com/
+
+// The names are inside attributes with single quotes: these are encoded too.
+$name = htmlspecialchars($this->vizualization . '/' . $this->vizualizationTab, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 ?>
 
 <div class='tableauPlaceholder' id='viz748596' style='position: relative'>
     <noscript>
         <a href='https://www.tableau.com/'>
-            <img alt=' ' src='https://public.tableau.com/static/images/VG/<?php echo $this->vizualization; ?>/<?php echo $this->vizualizationTab; ?>/1_rss.png' style='border: none' />
+            <img alt=' ' src='https://public.tableau.com/static/images/VG/<?php echo $name; ?>/1_rss.png' style='border: none' />
         </a>
     </noscript>
     <object class='tableauViz'  style='display:none;'>
         <param name='host_url' value='https://public.tableau.com/' />
         <param name='embed_code_version' value='3' />
         <param name='site_root' value='' />
-        <param name='name' value='<?php echo $this->vizualization; ?>/<?php echo $this->vizualizationTab; ?>' />
+        <param name='name' value='<?php echo $name; ?>' />
         <param name='tabs' value='yes' />
         <param name='toolbar' value='yes' />
-        <param name='static_image' value='https://public.tableau.com/static/images/VG/<?php echo $this->vizualization; ?>/<?php echo $this->vizualizationTab; ?>/1_rss.png' />
+        <param name='static_image' value='https://public.tableau.com/static/images/VG/<?php echo $name; ?>/1_rss.png' />
         <param name='animate_transition' value='yes' />
         <param name='display_static_image' value='yes' />
         <param name='display_spinner' value='yes' />

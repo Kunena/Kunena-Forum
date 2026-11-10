@@ -2191,14 +2191,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $maxwidth  = (int) $this->config->rteWidth;
         $maxheight = (int) (isset($params["height"]) && is_numeric($params["height"])) ? $params["height"] : $this->config->rteHeight;
 
-        if (preg_match('/(https:\/\/public.tableau.com\/views)\/(.*)\/(.*)\?.*/', $content, $matches)) {
-            $tableauserver = $matches[1];
-            $vizualization = $matches[2];
-            $vizualizationTab = $matches[3];
+        $names = self::tableauNames((string) $content);
 
-            if ($tableauserver != 'https://public.tableau.com/views') {
-                return '';
-            }
+        if ($names !== null) {
+            list($vizualization, $vizualizationTab) = $names;
 
             $layout = KunenaLayout::factory('BBCode/Tableau');
 
@@ -2213,6 +2209,33 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         }
 
         return '';
+    }
+
+    /**
+     * The workbook and the sheet of an address of Tableau Public (https://public.tableau.com/views/<workbook>/<sheet>?...).
+     * Both are printed into attributes of the embed code, so they are plain names only: letters, digits, "_", "-" and ".".
+     * Anything else (a quote, a space, a further "/") is no address of a view, and nothing is shown.
+     *
+     * @param   string  $content  The content of the tag.
+     *
+     * @return  array|null  The workbook and the sheet, or null.
+     *
+     * @since   Kunena 7.1
+     */
+    public static function tableauNames(string $content): ?array
+    {
+        if (!preg_match('#^https://public\.tableau\.com/views/([\w.\-]+)/([\w.\-]+)(?:[?\#].*)?$#Ds', trim($content), $matches)) {
+            return null;
+        }
+
+        foreach ([$matches[1], $matches[2]] as $name) {
+            // "." and ".." are parts of a path, not names.
+            if (trim($name, '.') === '') {
+                return null;
+            }
+        }
+
+        return [$matches[1], $matches[2]];
     }
 
     /**

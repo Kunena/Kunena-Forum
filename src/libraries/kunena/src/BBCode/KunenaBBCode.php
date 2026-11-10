@@ -2521,13 +2521,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         }
 
-        if (isset($params['target'])) {
-            $target = $bbcode->url_target;
-            $class  = $params['class'];
-        } else {
-            $target = '';
-            $class  = null;
-        }
+        // A member may choose where the link opens, not how it looks: the class parameter of the tag is ignored. It was printed
+        // into the class attribute as it was written (a quote left the attribute: stored XSS), and a class name alone is a way to
+        // restyle the link with the classes of the site (a full-page link, for example) and to reach the scripts which look for a
+        // class.
+        $target = isset($params['target']) ? $bbcode->url_target : '';
 
         $uri  = Uri::getInstance($url);
         $host = $uri->getHost();
@@ -2552,7 +2550,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if ($layout->getPath()) {
             return (string) $layout
-                ->set('class', $class)
                 ->set('content', $content)
                 ->set('url', $url)
                 ->set('target', $target)

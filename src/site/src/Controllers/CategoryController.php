@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserScope;
 
 /**
  * Kunena Category Controller
@@ -215,6 +216,16 @@ class CategoryController extends CategoriesController
         $me = KunenaUserHelper::getMyself();
 
         $userid = $this->app->getInput()->getInt('userid');
+
+        // The subscriptions of oneself, and a moderator those of anybody: the id of the request is not enough.
+        if (!KunenaUserScope::mayActFor((int) $me->userid, (bool) $me->isModerator(), $userid)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $userid = (int) $userid > 0 ? (int) $userid : (int) $me->userid;
 
         $catid  = $this->app->getInput()->getInt('catid', 0);
         $catids = $catid

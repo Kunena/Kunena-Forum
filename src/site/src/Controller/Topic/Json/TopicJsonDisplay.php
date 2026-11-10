@@ -50,6 +50,8 @@ class TopicJsonDisplay extends KunenaControllerDisplay
 
         $category = KunenaCategoryHelper::get($catid);
 
-        $this->response = $category->topictemplate;
+        // The template text of a category is only for those who may start a topic there (it can be a private category), as in
+        // the task categorytemplate of the topic controller. Anybody else, or no category, gets an empty template.
+        $this->response = $category->exists() && $category->isAuthorised('topic.create') ? (string) $category->topictemplate : '';
     }
 }

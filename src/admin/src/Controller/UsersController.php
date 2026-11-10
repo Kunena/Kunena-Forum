@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaAccountActionPolicy;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -226,11 +227,63 @@ class UsersController extends KunenaController
             return;
         }
 
+        if (!$this->accountActionAllowed(KunenaAccountActionPolicy::LOGOUT, (int) $id)) {
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $options = ['clientid' => 0];
         $this->app->logout((int) $id, $options);
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_A_USER_LOGOUT_DONE'), 'success');
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
+
+    /**
+     * May the administrator do this to the account? Having the right to manage Kunena is not the right to manage the users of
+     * the site: these tasks block an account of Joomla, end its sessions or ban it, so they need the right of com_users, they are
+     * not for an own account, and only a Super User touches a Super User (see KunenaAccountActionPolicy). The reason of a
+     * refusal is shown.
+     *
+     * @param   string   $action    One of the constants of KunenaAccountActionPolicy.
+     * @param   integer  $targetId  The account.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     * @throws  Exception
+     */
+    protected function accountActionAllowed(string $action, int $targetId): bool
+    {
+        $me     = $this->app->getIdentity();
+        $target = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($targetId);
+
+        $reason = KunenaAccountActionPolicy::refusal(
+            $action,
+            (int) $me->id,
+            $targetId,
+            (bool) $target->authorise('core.admin'),
+            KunenaUserHelper::get($targetId)->isAdmin(),
+            (bool) $me->authorise('core.admin'),
+            static fn (string $right): bool => (bool) $me->authorise($right, 'com_users')
+        );
+
+        if ($reason === null) {
+            return true;
+        }
+
+        if ($reason === KunenaAccountActionPolicy::SELF) {
+            $message = Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF');
+        } elseif ($reason === KunenaAccountActionPolicy::ADMIN) {
+            $message = Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', KunenaUserHelper::get($targetId)->getName());
+        } else {
+            $message = Text::_('JERROR_ALERTNOAUTHOR');
+        }
+
+        $this->app->enqueueMessage($message, 'error');
+
+        return false;
     }
 
     /**
@@ -340,6 +393,12 @@ class UsersController extends KunenaController
             return;
         }
 
+        if (!$this->accountActionAllowed(KunenaAccountActionPolicy::BAN, (int) $userid)) {
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $ban = KunenaBan::getInstanceByUserid($userid, true);
 
         if (!$ban->id) {
@@ -388,6 +447,12 @@ class UsersController extends KunenaController
 
         if ($userid <= 0) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        if (!$this->accountActionAllowed(KunenaAccountActionPolicy::UNBAN, (int) $userid)) {
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
@@ -567,6 +632,12 @@ class UsersController extends KunenaController
             return;
         }
 
+        if (!$this->accountActionAllowed(KunenaAccountActionPolicy::BLOCK, (int) $userid)) {
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $ban = KunenaBan::getInstanceByUserid($userid, true);
 
         if (!$ban->id) {
@@ -618,6 +689,12 @@ class UsersController extends KunenaController
 
         if ($userid <= 0) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        if (!$this->accountActionAllowed(KunenaAccountActionPolicy::UNBLOCK, (int) $userid)) {
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;

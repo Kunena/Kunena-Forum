@@ -93,6 +93,11 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
         $this->profile  = KunenaUserHelper::get($userid);
         $this->moreUri  = null;
 
+        // Before anything is read, and thrown: a returned exception does not stop the page.
+        if (!$this->config->showImgFilesManageProfile || !$this->me->exists() && !$this->config->pubProfile) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $this->me->exists() ? 403 : 401);
+        }
+
         $embedded = $this->getOptions()->get('embedded', false);
 
         if ($embedded) {
@@ -105,10 +110,6 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
 
         $this->total      = $finder->count();
         $this->pagination = new KunenaPagination($this->total, $start, $limit);
-
-        if (!$this->config->showImgFilesManageProfile || !$this->me->exists() && !$this->config->pubProfile) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
-        }
 
         if ($this->moreUri) {
             $this->pagination->setUri($this->moreUri);

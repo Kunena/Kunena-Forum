@@ -2050,9 +2050,34 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return '@' . $content;
         }
 
-        $urlUserProfile = $user->getURL();
+        return self::renderMention($user->getURL(), (string) $content);
+    }
 
-        return '<a href="' . $urlUserProfile . '" data-bs-toggle="tooltip" title="' . $content . '">@' . $content . '</a>';
+    /**
+     * The html of a mention. The content of the tag is html of the parser already: a tag inside it ([url] for example) is real
+     * markup with quotes, which closed the title attribute and made the rest attributes of the link (onmouseover...). Only the
+     * text of the content is used, encoded once, for the title and for the link.
+     *
+     * @param   mixed   $url      The address of the profile (xhtml), or false when there is none to show.
+     * @param   string  $content  The parsed content of the tag.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function renderMention($url, string $content): string
+    {
+        $name = trim(html_entity_decode(strip_tags($content), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        $name = htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        if (!\is_string($url) || $url === '') {
+            return '@' . $name;
+        }
+
+        // The address comes from the router with &amp; already: it is not encoded twice.
+        $url = htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
+
+        return '<a href="' . $url . '" data-bs-toggle="tooltip" title="' . $name . '">@' . $name . '</a>';
     }
 
     /**

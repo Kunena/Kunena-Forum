@@ -88,6 +88,12 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 
         $this->user = KunenaUserHelper::get($this->state->get('user'));
 
+        // The subscriptions of a user are for him and for the moderators (the id of the user comes from the request), as the
+        // subscribed topics in TopicListingUserDisplay.
+        if ($this->user->userid != $me->userid && !$me->isModerator()) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+        }
+
         $limit = $this->input->getInt('limit', 0);
 
         if ($limit < 1 || $limit > 100) {

@@ -53,6 +53,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateStars;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
@@ -668,8 +669,14 @@ class TopicController extends KunenaController
         if (!Session::checkToken('request')) {
             throw new RuntimeException(Text::_('JINVALID_TOKEN'), 403);
         }
-        $starid  = $this->app->getInput()->get('starid', 0, 'int');
+        // One to five stars: the rating of the topic is the average of what is stored, so any other number of one member
+        // (a million, a negative one) would decide the rating of the topic alone.
+        $starid  = KunenaRateStars::clean($this->app->getInput()->get('starid', 0, 'int'));
         $topicid = $this->app->getInput()->get('topic_id', 0, 'int');
+
+        if ($starid === null) {
+            throw new RuntimeException(Text::_('Bad Request'), 400);
+        }
 
         // Use the category of the topic, not the one sent by the client.
         $ratedTopic = KunenaTopicHelper::get($topicid);

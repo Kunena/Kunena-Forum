@@ -1913,12 +1913,11 @@ class KunenaTopic extends KunenaDatabaseObject
             $app->enqueueMessage($e->getMessage(), 'error');
         }
 
-        $query = $this->_db->getQuery(true)
-            ->update($this->_db->quoteName('#__kunena_messages'))
-            ->set($this->_db->quoteName('time') . ' = IF(time <= @ktime, @ktime:=@ktime+1, @ktime:=time)')
-            ->where($this->_db->quoteName('thread') . ' = :thread')
-            ->bind(':thread', $target->id, \Joomla\Database\ParameterType::INTEGER)
-            ->order($this->_db->quoteName('time') . ' ASC, ' . $this->_db->quoteName('id') . ' ASC');
+        // Plain SQL: the query builder drops ORDER BY from UPDATE queries, but the row order is essential here
+        $query = 'UPDATE ' . $this->_db->quoteName('#__kunena_messages')
+            . ' SET ' . $this->_db->quoteName('time') . ' = IF(' . $this->_db->quoteName('time') . ' <= @ktime, @ktime:=@ktime+1, @ktime:=' . $this->_db->quoteName('time') . ')'
+            . ' WHERE ' . $this->_db->quoteName('thread') . ' = ' . (int) $target->id
+            . ' ORDER BY ' . $this->_db->quoteName('time') . ' ASC, ' . $this->_db->quoteName('id') . ' ASC';
         $this->_db->setQuery($query);
 
         try {

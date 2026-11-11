@@ -50,9 +50,9 @@ $this->addScript('assets/js/search.js');
     <div class="accordion" id="main-search">
         <div class="accordion-item">
             <h2 class="accordion-header" id="searchHeader">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#search"><?php echo Text::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?></button>
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#search" aria-expanded="true" aria-controls="search"><?php echo Text::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?></button>
             </h2>
-            <div class="accordion-collapse collapse show" id="search">
+            <div class="accordion-collapse collapse show" id="search" aria-labelledby="searchHeader">
                 <div class="accordion-body">
                     <div class="row g-3">
                         <fieldset class="col-md-6">
@@ -94,9 +94,9 @@ $this->addScript('assets/js/search.js');
                 <div class="accordion accordion-flush" id="detail-searchoptions">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="searchoptionsHeader">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#searchoptions"><?php echo Text::_('COM_KUNENA_SEARCH_OPTIONS'); ?></button>
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#searchoptions" aria-expanded="true" aria-controls="searchoptions"><?php echo Text::_('COM_KUNENA_SEARCH_OPTIONS'); ?></button>
                         </h2>
-                        <div class="accordion-collapse collapse show" id="searchoptions">
+                        <div class="accordion-collapse collapse show" id="searchoptions" aria-labelledby="searchoptionsHeader">
                             <div class="accordion-body">
                                 <div class="row g-3">
                                     <fieldset class="col-md-4">

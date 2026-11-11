@@ -74,11 +74,22 @@ def bash():
     die("can't find Git Bash; set CLAUDE_CODE_GIT_BASH_PATH to its bash.exe")
 
 
-def run_checks(worktree):
+def run_checks(worktree, cypress=False):
+    """`cypress` adds the Cypress specs on the site of the tests (checks.sh, FACTORY_CYPRESS):
+    the gate asks for them, the builder's hook doesn't, as they take long."""
     start = time.monotonic()
-    res = subprocess.run([bash(), CHECKS.as_posix()], cwd=worktree, capture_output=True,
+    env = dict(os.environ, FACTORY_CYPRESS="1" if cypress else "0")
+    res = subprocess.run([bash(), CHECKS.as_posix()], cwd=worktree, capture_output=True, env=env,
                          text=True, encoding="utf-8", errors="replace")
     return res.returncode, res.stdout + res.stderr, int(time.monotonic() - start)
+
+
+def passed_on(checks, commit):
+    """True when the verdict in `checks` (a checks.md) is a PASS for this commit."""
+    if not checks.is_file():
+        return False
+    lines = checks.read_text().splitlines()[:2]
+    return lines == ["GATE: PASS", f"COMMIT: {commit}"]
 
 
 def gate(job_id, merge):
@@ -89,7 +100,11 @@ def gate(job_id, merge):
     round_dir = FACTORY / "jobs" / job_id / f"round-{job['round']}"
     commit = git(worktree, "rev-parse", "HEAD").strip()
     protected = protected_changes(worktree)
-    code, log, seconds = run_checks(worktree)
+    # Cypress takes most of an hour, so it runs once for a commit: the gate before the merge
+    # leaves it out when this round's gate already passed on the very same commit (the sync
+    # with the base branch brought nothing new).
+    cypress = not (merge and passed_on(round_dir / "checks.md", commit))
+    code, log, seconds = run_checks(worktree, cypress=cypress)
     verdict = "PASS" if code == 0 and not protected else "FAIL"
     name = "merge-checks" if merge else "checks"
     (round_dir / f"{name}.log").write_text(log)
@@ -98,6 +113,7 @@ def gate(job_id, merge):
         f"checks.sh {'passed' if code == 0 else f'failed with exit {code}'} in {seconds}s",
         f"Protected paths: {'changed: ' + ', '.join(protected) if protected else 'none changed'}",
         f"Commit {commit[:7]}" + (", synced with the latest main before merging" if merge else ""),
+        "Cypress: " + ("run" if cypress else "not run again, this round's gate passed with it on this commit"),
     ]
     (round_dir / f"{name}.md").write_text(
         f"GATE: {verdict}\nCOMMIT: {commit}\n\n"

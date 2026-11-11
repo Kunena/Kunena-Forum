@@ -129,6 +129,17 @@ gate's `round-<N-1>/checks.md`, the reviews in `round-<N-1>/`, or
 - `STATUS: BLOCKED`: `factory/bin/job advance <id> needs-human`.
 
 **gate.** Run `factory/bin/gate <id>`. It prints `GATE: PASS` or `GATE: FAIL`.
+It also runs the Integration suite and every Cypress spec except `install/`
+on the site of the tests (`factory/bin/site-cypress`), so it takes long: run
+it in the background and advance the job when it finishes. While it runs the
+site serves the job's worktree. A Cypress test which fails on the main
+checkout too is listed in the log and ignored, so keep the main checkout on
+the base branch. If a run was killed,
+`python3 factory/bin/site-cypress --restore` points the site back at the main
+checkout. Don't stop a gate while Cypress runs unless you must: the spec which
+is running leaves its rows in the database of the site (a category, topics),
+and `tools-diagnostics.cy.js` then fails on every later run until they are
+removed.
 
 - PASS: `factory/bin/job advance <id> review` and go to **review**.
 - FAIL: `factory/bin/job advance <id> build`. If it refuses because this was the
@@ -153,7 +164,10 @@ finished:
 **approve.** When the approver returns, read `decision.md`'s first line:
 
 - `APPROVE`: `factory/bin/job merge <id>`. It syncs the branch with the base,
-  runs the gate again, pushes, and merges the PR, ending in `merged`. If any
+  runs the gate again, pushes, and merges the PR, ending in `merged`. That
+  gate leaves Cypress out when the sync brought nothing new (the round's gate
+  already passed on the same commit), so it is quick; otherwise it runs
+  Cypress again: run the merge in the background. If any
   of that fails it moves the job to `needs-human` and says why.
 - `ESCALATE`: `factory/bin/job advance <id> needs-human`. It marks the PR ready,
   posts the decision on it and labels the issue `factory:needs-human`.

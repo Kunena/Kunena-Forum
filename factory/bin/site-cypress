@@ -1,0 +1,315 @@
+#!/usr/bin/env python3
+"""Run the Cypress specs of the checkout in the current folder on the Joomla site of the tests.
+
+Usage:
+  site-cypress                 all specs except install/ (checks.sh runs this for the gate)
+  site-cypress --spec <glob>   only these specs (a comma separated list of globs, as `cypress run --spec`)
+  site-cypress --restore       point the links of the site back at the main checkout, nothing else
+
+The site of the tests is linked to `src/` of the main checkout (tests/README.md, "Cypress against
+the checkout"). To test another checkout (a job's worktree) this script points those links at
+that checkout, waits until PHP serves it, runs Cypress with the specs of that checkout, and
+points the links back, also when Cypress fails or is interrupted. The links it changed are kept
+in factory/jobs/.site-links.json until they are back: a run after a crash restores them first.
+
+A test which fails is run again on the main checkout (the base branch, as the site normally
+serves it). When it fails there too it is listed and ignored: only a test which fails in the
+tested checkout and passes in the main checkout fails the run. Keep the main checkout on the
+base branch, or the comparison is with something else.
+
+Only one run at a time: the site is shared, so `concurrency` in config.json must stay 1.
+
+The install specs never run here: uninstall.cy.js removes Kunena from the site, and through the
+links it would delete the files of the checkout.
+
+Settings, in the environment or in factory/checks.env:
+  KUNENA_TEST_SITE       the folder of the Joomla site of the tests (required)
+  KUNENA_TEST_SITE_URL   its address (default: http://localhost/tests/, as in cypress.config.js)
+"""
+
+import json
+import os
+import shutil
+import subprocess
+import sys
+import time
+import urllib.request
+from pathlib import Path
+
+# Windows: read git and the journal as UTF-8, whatever the console's code page.
+if os.name == "nt" and not sys.flags.utf8_mode:
+    sys.exit(subprocess.call([sys.executable, "-X", "utf8", *sys.argv]))
+
+REPO = Path(__file__).resolve().parents[2]
+FACTORY = REPO / "factory"
+JOURNAL = FACTORY / "jobs" / ".site-links.json"
+RUNNER = Path(__file__).resolve().parent / "cypress-run.cjs"
+BASE = json.loads((FACTORY / "config.json").read_text())["base_branch"]
+SPECS = "tests/System/integration/administrator/**/*.cy.js,tests/System/integration/site/**/*.cy.js"
+FORBIDDEN = "tests/System/integration/install"
+SCAN_DEPTH = 4
+FLUSH = "factory-flush.php"
+FLUSH_PHP = """<?php
+// Written and removed by factory/bin/site-cypress: forget the old targets of the links.
+clearstatcache(true);
+if (function_exists('opcache_reset')) {
+    opcache_reset();
+}
+header('Content-Type: application/json');
+echo json_encode([
+    'ttl'  => (int) ini_get('realpath_cache_ttl'),
+    'real' => str_replace('\\\\', '/', (string) realpath(__DIR__ . '/' . ($_GET['link'] ?? ''))),
+]);
+"""
+
+
+def die(msg):
+    print(f"site-cypress: {msg}", file=sys.stderr)
+    sys.exit(2)
+
+
+def say(msg):
+    print(f"site-cypress: {msg}", flush=True)
+
+
+def norm(path):
+    """A path to compare with: no \\\\?\\ prefix, forward slashes, lower case on Windows."""
+    text = str(path)
+    if text.startswith("\\\\?\\"):
+        text = text[4:]
+    text = os.path.normpath(text).replace("\\", "/")
+    return text.lower() if os.name == "nt" else text
+
+
+def under(path, root):
+    path, root = norm(path), norm(root)
+    return path == root or path.startswith(root + "/")
+
+
+def settings():
+    env = dict(os.environ)
+    env_file = FACTORY / "checks.env"
+    if env_file.is_file():
+        for line in env_file.read_text().splitlines():
+            key, sep, value = line.strip().partition("=")
+            if sep and key and not key.startswith("#"):
+                env.setdefault(key, value.strip().strip("'\""))
+    site = env.get("KUNENA_TEST_SITE", "")
+    if not site or not (Path(site) / "configuration.php").is_file():
+        die("set KUNENA_TEST_SITE to the folder of the Joomla site of the tests "
+            "(in the environment or in factory/checks.env).")
+    url = env.get("KUNENA_TEST_SITE_URL", "http://localhost/tests/").rstrip("/") + "/"
+    return Path(site), url
+
+
+def site_links(site, root):
+    """Every link of the site which points into `root`: {link: target}, both as text."""
+    links = {}
+    top = str(site)
+    for folder, dirs, files in os.walk(top):
+        depth = 0 if folder == top else folder[len(top):].count(os.sep)
+        for name in dirs + files:
+            path = os.path.join(folder, name)
+            if os.path.islink(path):
+                target = os.readlink(path)
+                target = target[4:] if target.startswith("\\\\?\\") else target
+                # A link to a file which is not in the main checkout either is left as it is.
+                if under(target, root) and os.path.exists(target):
+                    links[path] = target
+        # Never walk into a link (that is the checkout), and not deeper than the links are.
+        dirs[:] = [] if depth >= SCAN_DEPTH - 1 else [d for d in dirs if not os.path.islink(os.path.join(folder, d))]
+    return links
+
+
+def point(link, target):
+    """Make `link` point at `target`. Only the link is removed, never what it points at."""
+    if not os.path.islink(link):
+        die(f"{link} is not a link any more: it is left alone. Check the site by hand.")
+    directory = os.path.isdir(target)
+    if os.name == "nt" and os.path.isdir(link):
+        os.rmdir(link)  # a link to a folder is removed like a folder on Windows
+    else:
+        os.unlink(link)
+    os.symlink(target, link, target_is_directory=directory)
+
+
+def restore():
+    """Point the links of the journal back. True when there was something to restore."""
+    if not JOURNAL.is_file():
+        return False
+    journal = json.loads(JOURNAL.read_text())
+    for link, target in journal["links"].items():
+        if norm(os.readlink(link)) != norm(target):
+            point(link, target)
+    JOURNAL.unlink()
+    say(f"the {len(journal['links'])} links of the site point at {REPO.as_posix()}/src again")
+    return True
+
+
+def flush(site, url, probe, expect, wait):
+    """Make PHP forget the old targets of the links. PHP keeps the target of a link per thread
+    of the web server for `realpath_cache_ttl` seconds, and OPcache keeps the compiled files:
+    with `wait` this returns only when the site serves `expect` through the link `probe`."""
+    script = site / FLUSH
+    script.write_text(FLUSH_PHP)
+    address = f"{url}{FLUSH}?link={probe}"
+
+    def ask():
+        with urllib.request.urlopen(address, timeout=30) as response:
+            return json.loads(response.read().decode())
+
+    try:
+        first = ask()
+        if not wait:
+            return
+        ttl = first["ttl"] or 120
+        say(f"waiting {ttl + 5}s: PHP keeps the old target of a link for realpath_cache_ttl={ttl}s")
+        deadline = time.monotonic() + ttl + 5
+        while time.monotonic() < deadline:
+            time.sleep(5)
+            ask()
+        answers = [ask()["real"] for _ in range(20)]
+        wrong = [a for a in answers if norm(a) != norm(expect)]
+        if wrong:
+            die(f"the site still serves {wrong[0]} and not {expect}: is {url} the site in {site}?")
+    except OSError as error:
+        die(f"can't reach {address}: {error}")
+    finally:
+        script.unlink(missing_ok=True)
+
+
+def copy_site_files(checkout):
+    """The site keeps files of its own inside the linked folders, which git ignores: the options
+    of the templates (config/params.ini), attachments, avatars. A fresh worktree has none of them
+    and the forum does not work the same without (no editor, for one). Copy the ones the checkout
+    misses from the main checkout; they are ignored there too, so its tree stays clean."""
+    files = subprocess.run(["git", "ls-files", "--others", "--ignored", "--exclude-standard", "-z", "src"],
+                           cwd=REPO, capture_output=True, text=True, check=True).stdout.split("\0")
+    copied = 0
+    for name in filter(None, files):
+        target = checkout / name
+        if not target.exists():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(REPO / name, target)
+            copied += 1
+    if copied:
+        say(f"copied {copied} files of the site (ignored by git) from the main checkout")
+
+
+def cypress_package(site):
+    """The Cypress to run: the one of the main checkout, or else the one of the site, whichever
+    has its application downloaded. Nothing is downloaded here."""
+    for folder in (REPO, site):
+        package = folder / "node_modules" / "cypress"
+        cli = package / "bin" / "cypress"
+        if cli.is_file() and subprocess.run(["node", str(cli), "verify"], capture_output=True).returncode == 0:
+            return package
+    die(f"no Cypress which can run in {REPO.as_posix()} or {site.as_posix()}: "
+        "run `npm ci` and `npx cypress install` in the main checkout once.")
+
+
+def cypress(checkout, site, specs, package):
+    """Run the specs of `checkout`. Returns the tests which failed, as `<spec> :: <test>`."""
+    result = FACTORY / "jobs" / ".cypress-result.json"
+    result.unlink(missing_ok=True)
+    env = dict(os.environ, KUNENA_CMS_PATH=site.as_posix())
+    # A worktree is inside the main checkout, so Node finds the packages of the main checkout.
+    code = subprocess.call(["node", str(RUNNER), str(package), str(result), specs], cwd=checkout, env=env)
+    if code != 0 or not result.is_file():
+        die(f"Cypress could not run in {checkout.as_posix()} (exit {code}).")
+    failed = json.loads(result.read_text())["failed"]
+    result.unlink()
+    return failed
+
+
+def listing(title, tests):
+    say(f"{title} ({len(tests)}):")
+    for test in tests:
+        print(f"  - {test}", flush=True)
+
+
+def main(argv):
+    specs = SPECS
+    if argv == ["--restore"]:
+        site, url = settings()
+        if restore():
+            flush(site, url, "", "", wait=False)
+        else:
+            say("nothing to restore")
+        return 0
+    if len(argv) == 2 and argv[0] == "--spec":
+        specs = argv[1]
+    elif argv:
+        die(__doc__.strip())
+    if FORBIDDEN in specs.replace("\\", "/"):
+        die("the install specs never run here: uninstall.cy.js deletes the checkout through the links of the site.")
+
+    site, url = settings()
+    top = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+    if top.returncode != 0:
+        die("run this in a checkout of Kunena.")
+    checkout = Path(top.stdout.strip())
+
+    package = cypress_package(site)  # before the links move: without Cypress there is nothing to do
+    if restore():  # a run which was killed left the site on another checkout
+        flush(site, url, "", "", wait=False)
+    links = site_links(site, REPO / "src")
+    if not links:
+        die(f"no link in {site} points into {REPO.as_posix()}/src: is it the site of this checkout?")
+    probe = next(link for link in links if os.path.isdir(link))
+    probe_url = Path(probe).relative_to(site).as_posix()
+
+    moved = norm(checkout) != norm(REPO)
+    restored = False
+    try:
+        if moved:
+            targets = {}
+            for link, target in links.items():
+                new = str(checkout / "src" / os.path.relpath(target, REPO / "src"))
+                if not os.path.exists(new):
+                    die(f"{new} is not in this checkout, but the site links to it ({link}).")
+                targets[link] = new
+            copy_site_files(checkout)
+            JOURNAL.write_text(json.dumps({"checkout": checkout.as_posix(), "links": links}, indent=1))
+            for link, new in targets.items():
+                point(link, new)
+            say(f"{len(links)} links of the site point at {checkout.as_posix()}/src")
+            flush(site, url, probe_url, targets[probe], wait=True)
+        failed = cypress(checkout, site, specs, package)
+    finally:
+        if moved:
+            restored = restore()
+
+    if not failed:
+        if restored:
+            flush(site, url, "", "", wait=False)
+        say("all specs passed")
+        return 0
+    if not moved:
+        listing("failed in the main checkout", failed)
+        return 1
+
+    # The same specs on the main checkout: a test which fails there too is not the fault of this
+    # branch, and does not fail the checks. A spec which the main checkout does not have can't be
+    # compared: its failures count.
+    listing("failed in this checkout", failed)
+    again = sorted({test.split(" :: ", 1)[0] for test in failed})
+    again = [spec for spec in again if (REPO / spec).is_file()]
+    known = []
+    if again:
+        say(f"running {len(again)} of these specs on the main checkout ({BASE}) to compare")
+        flush(site, url, probe_url, links[probe], wait=True)
+        known = cypress(REPO, site, ",".join(again), package)
+    new = [test for test in failed if test not in known]
+    ignored = [test for test in failed if test in known]
+    if ignored:
+        listing(f"ignored, as they fail in the main checkout ({BASE}) too", ignored)
+    if new:
+        listing("FAILED only in this checkout", new)
+        return 1
+    say(f"no test fails which passes in the main checkout ({BASE})")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

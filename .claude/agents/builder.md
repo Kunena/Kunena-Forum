@@ -88,7 +88,8 @@ command you ran and its result, or what the page showed.
 - Push with `git push -u origin <branch>`. Push only the job branch, never
   anything else.
 - If the branch has no PR yet (`gh pr view <branch>` fails), open it as a draft:
-  `gh pr create --draft --base <base> --head <branch> --title "<spec title>" --body "Closes #<issue>"`
+  `gh pr create --draft --base <base> --head <branch> --title "<spec title>" --body "Closes #<issue>" --label "AI Generated"`
+  (the label is `labels.pr` in `factory/config.json`; `factory/bin/job` adds it again when it is missing)
   followed by a blank line and your Summary. Once it exists, just push; the PR
   updates itself. Never mark the PR ready and never merge it.
 

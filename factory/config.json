@@ -6,7 +6,8 @@
   "labels": {
     "queue": "factory",
     "needs_info": "factory:needs-info",
-    "needs_human": "factory:needs-human"
+    "needs_human": "factory:needs-human",
+    "pr": "AI Generated"
   },
   "routing": {
     "low":    { "code": "haiku" },

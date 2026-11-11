@@ -21,6 +21,7 @@ Usage:
 """
 
 import json
+import shutil
 import os
 import re
 import subprocess
@@ -260,6 +261,20 @@ def comment(kind, number, body):
     gh(kind, "comment", str(number), "--body", f"{MARKER}\n{body}")
 
 
+def remove_worktree(job):
+    """Remove the job's worktree. On Windows git gives up on a path over 260 characters (the
+    screenshots of Cypress have the name of the test in their path), and leaves the folder
+    behind after it forgot the worktree: remove what is left with long paths switched on."""
+    res = run(["git", "worktree", "remove", "--force", job["worktree"]], check=False)
+    left = Path(job["worktree"])
+    if left.exists():
+        target = "\\\\?\\" + str(left.resolve()) if os.name == "nt" else str(left)
+        shutil.rmtree(target, ignore_errors=True)
+        run(["git", "worktree", "prune"], check=False)
+    if left.exists():
+        raise Refused(f"can't remove {job['worktree']}: {(res.stderr or res.stdout).strip()}")
+
+
 def label(kind, number, add=None, remove=None):
     args = [kind, "edit", str(number)]
     if add:
@@ -459,6 +474,9 @@ def advance(job, stage):
             prs = gh_json("pr", "list", "--head", job["branch"], "--state", "open", "--json", "number,url")
             require(len(prs) == 1, f"expected one open PR from {job['branch']}, found {len(prs)}")
             job["pr"], job["pr_url"] = prs[0]["number"], prs[0]["url"]
+        # Every PR of the factory carries this label, whether or not the builder set it.
+        if LABELS.get("pr"):
+            label("pr", job["pr"], add=LABELS["pr"])
 
     elif old == "build":  # → needs-human
         status = first_line(d / "build.md")
@@ -525,7 +543,7 @@ def advance(job, stage):
         label("issue", job["issue"], add=LABELS["needs_human"])
 
     if stage in TERMINAL and Path(job["worktree"]).exists():
-        run(["git", "worktree", "remove", "--force", job["worktree"]])
+        remove_worktree(job)
         run(["git", "branch", "-D", job["branch"]], check=False)
 
     job["stage"] = stage

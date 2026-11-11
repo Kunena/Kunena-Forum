@@ -37,10 +37,15 @@ vendor/bin/php-cs-fixer fix --dry-run --diff path/to/changed/File.php
 
 - The unit tests need the framework of a Joomla installation in `KUNENA_TEST_JOOMLA`; without it some tests fail.
 - `bash factory/checks.sh` runs these checks the way the software factory does (it reads `KUNENA_TEST_JOOMLA` from the
-  environment or from `factory/checks.env`), plus `php -l` on the PHP files the branch changed. The code style is reported
-  but does not fail the checks, as in the CI.
-- The `Integration` suite needs a MySQL database and the Cypress tests need a Joomla site: neither is part of the checks.
-  Run them only when asked.
+  environment or from `factory/checks.env`), plus `php -l` on the PHP files the branch changed and the `Integration` suite
+  on the database `<database of that Joomla>_phpunit` (a skipped integration test fails the checks). The code style is
+  reported but does not fail the checks, as in the CI.
+- The Cypress tests need a Joomla site. `bash factory/checks.sh` does not run them; the gate of the software factory does
+  (`FACTORY_CYPRESS=1`): all specs except `install/`, through `python3 factory/bin/site-cypress`, which points the links of
+  the site in `KUNENA_TEST_SITE` (`factory/checks.env`) at the job's worktree for the run and back afterwards. A test which also fails on the main checkout (the base branch) is listed and
+  ignored: only a test the branch breaks fails the gate. The gate before the merge runs Cypress again only when the sync with
+  the base branch changed the branch. Outside the
+  gate, run Cypress only when asked, and never the install specs.
 - Never run `php-cs-fixer fix` without `--dry-run` on files you did not change.
 
 ## Conventions

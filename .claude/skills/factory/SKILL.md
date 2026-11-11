@@ -123,9 +123,11 @@ decision:
 gate's `round-<N-1>/checks.md`, the reviews in `round-<N-1>/`, or
 `feedback-<k>.md`. When it returns, read `build.md`'s first line:
 
-- `STATUS: READY`: `factory/bin/job advance <id> gate`, then go to **gate**. If
-  `advance` refuses (nothing pushed, no PR, a dirty tree), resume the builder
-  once with the refusal. If it refuses again, stop this job and tell the user.
+- `STATUS: READY`: `factory/bin/job advance <id> gate`, then go to **gate**.
+  The script first merges the base branch into the job's branch and pushes
+  it, so the gate and the reviewers see what will be merged and the merge
+  step is quick. If `advance` refuses (nothing pushed, no PR, a dirty tree, a
+  conflict with the base), resume the builder once with the refusal. If it refuses again, stop this job and tell the user.
 - `STATUS: BLOCKED`: `factory/bin/job advance <id> needs-human`.
 
 **gate.** Run `factory/bin/gate <id>`. It prints `GATE: PASS` or `GATE: FAIL`.

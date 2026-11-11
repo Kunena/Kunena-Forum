@@ -259,7 +259,8 @@ def cypress_package(site):
 
 
 def cypress(checkout, site, specs, package):
-    """Run the specs of `checkout`. Returns the tests which failed, as `<spec> :: <test>`."""
+    """Run the specs of `checkout`. Returns the tests which failed, as `<spec> :: <test>`, and
+    the specs of which tests ran."""
     result = FACTORY / "jobs" / ".cypress-result.json"
     result.unlink(missing_ok=True)
     env = dict(os.environ, KUNENA_CMS_PATH=site.as_posix())
@@ -267,9 +268,9 @@ def cypress(checkout, site, specs, package):
     code = subprocess.call(["node", str(RUNNER), str(package), str(result), specs], cwd=checkout, env=env)
     if code != 0 or not result.is_file():
         die(f"Cypress could not run in {checkout.as_posix()} (exit {code}).")
-    failed = json.loads(result.read_text())["failed"]
+    data = json.loads(result.read_text())
     result.unlink()
-    return failed
+    return data["failed"], data.get("specs", [])
 
 
 def listing(title, tests):
@@ -355,7 +356,7 @@ def run(checkout, site, url, specs):
                 point(link, new)
             say(f"{len(links)} links of the site point at {checkout.as_posix()}/src")
             flush(site, url, probe_url, targets[probe], wait=True)
-        failed = cypress(checkout, site, specs, package)
+        failed, _ = cypress(checkout, site, specs, package)
     finally:
         if moved:
             restored = restore()
@@ -379,7 +380,15 @@ def run(checkout, site, url, specs):
     if again:
         say(f"running {len(again)} of these specs on the main checkout ({BASE}) to compare")
         flush(site, url, probe_url, links[probe], wait=True)
-        known = cypress(REPO, site, ",".join(again), package)
+        known, compared = cypress(REPO, site, ",".join(again), package)
+        # A comparison which did not run says nothing: Cypress can stop before the tests (its
+        # mail server finds port 1025 taken when another Cypress is open on this machine), and
+        # then every failure would look like one which only this checkout has.
+        missing = [spec for spec in again if spec not in compared]
+        if missing:
+            die("the comparison on the main checkout did not run " + ", ".join(missing)
+                + ": can't tell whether the failures above are of this branch. Close any other "
+                "Cypress on this machine and run the gate again.")
     new = [test for test in failed if test not in known]
     ignored = [test for test in failed if test in known]
     if ignored:

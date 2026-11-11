@@ -470,6 +470,17 @@ def advance(job, stage):
         res = git(job, "rev-parse", f"origin/{job['branch']}", check=False)
         remote = res.stdout.strip() if res.returncode == 0 else ""
         require(head == remote, f"{job['branch']} isn't pushed: local {head[:7]}, origin {remote[:7] or 'missing'}")
+        # Bring the branch up to date with the base now: the gate and the reviewers then see
+        # what will be merged, and the merge step has nothing new to check unless the base
+        # moves again in between.
+        git(job, "fetch", "origin", BASE)
+        if git(job, "merge-base", "--is-ancestor", f"origin/{BASE}", "HEAD", check=False).returncode != 0:
+            merged = git(job, "merge", "--no-edit", f"origin/{BASE}", check=False)
+            if merged.returncode != 0:
+                git(job, "merge", "--abort", check=False)
+                raise Refused(f"{job['branch']} conflicts with origin/{BASE}: merge origin/{BASE} into the "
+                              "branch, resolve the conflicts, push, and try again")
+            git(job, "push", "origin", job["branch"])
         if not job["pr"]:
             prs = gh_json("pr", "list", "--head", job["branch"], "--state", "open", "--json", "number,url")
             require(len(prs) == 1, f"expected one open PR from {job['branch']}, found {len(prs)}")

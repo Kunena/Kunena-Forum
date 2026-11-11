@@ -698,9 +698,10 @@ class KunenaMessage extends KunenaDatabaseObject
             KunenaUserHelper::getMyself()->userid
         );
         
+        $sentusers = [];
+        
         if ($emailToList) {
-            // Make a list from all receivers; split the receivers into two distinct groups.
-            $sentusers = [];
+            // Make a list from all receivers; split the receivers into two distinct groups.            
             $receivers = [0 => [], 1 => []];
             
             foreach ($emailToList as $emailTo) {

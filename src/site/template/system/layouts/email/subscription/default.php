@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -23,7 +24,14 @@ $config            = KunenaConfig::getInstance();
 $author            = $this->message->getAuthor();
 $subject           = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
 $this->messageLink = ($this->messageUrl ?? '') ?: Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
-$headerBase = ($this->messageUrl ?? '') ? (new Uri($this->messageUrl))->toString(array('scheme', 'host', 'port')) : rtrim(Uri::root(), '/');
+if (PHP_SAPI === 'cli') {
+    $liveSite   = trim((string) Factory::getApplication()->get('live_site', ''));
+    $headerBase = $liveSite !== ''
+        ? rtrim($liveSite, '/')
+        : ((($this->messageUrl ?? '') !== '') ? (new Uri($this->messageUrl))->toString(array('scheme', 'host', 'port')) : rtrim(Uri::root(), '/'));
+} else {
+    $headerBase = rtrim(Uri::root(), '/');
+}
 
 $msg1 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
 $msg2 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
@@ -154,7 +162,7 @@ if (!$config->plainEmail) :
                                 style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;"
                                 class="hero"><a target="_blank" style="text-decoration: none;"
                                                 href="#"><img border="0" vspace="0" hspace="0"
-                                                              src="<?php echo Uri::base() . KunenaConfig::getInstance()->emailheader; ?>"
+                                                              src="<?php echo htmlspecialchars($headerBase . '/' . ltrim(KunenaConfig::getInstance()->emailheader, '/'), ENT_QUOTES, 'UTF-8'); ?>"
                                                               alt="Please enable images to view this content"
                                                               title="Forum"
                                                               width="560" style="

@@ -132,7 +132,9 @@ class BBCodeLexer {
             // Tags may not contain newlines.
             ."{$b}"
             ."(?! -- | ' | !-- | {$b}{$b} )"
-            ."(?: [^\\n\\r{$b}{$e}] | \\\" [^\\\"\\n\\r]* \\\" | \\' [^\\'\\n\\r]* \\' )*"
+            // Change made by Kunena    
+            ."(?: [^\\n\\r{$b}{$e}] | \\\" [^\\\"\\n\\r]* \\\" | \\' [^\\'\\n\\r]* \\' )*+"
+            // End of change made by Kunena  
             ."{$e}"
 
             // Match wiki-links, which are of the form [[...]] or [[...|...]].  Unlike

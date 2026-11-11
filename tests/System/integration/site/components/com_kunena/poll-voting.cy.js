@@ -152,7 +152,9 @@ describe('Kunena polls: the votes', () => {
     cy.document().then((doc) => {
       const token = /name="([0-9a-f]{32})" value="1"/.exec(doc.documentElement.innerHTML)[1];
 
-      return cy.window().then((win) => Promise.all(Array.from({ length: 8 }, () => {
+      // The requests share the session of the user, which PHP gives to one request at a time: they run one after the other, and
+      // on a busy machine the eight take longer than the 4 seconds a command gets by default.
+      return cy.window().then({ timeout: 60000 }, (win) => Promise.all(Array.from({ length: 8 }, () => {
         const body = new win.FormData();
 
         body.append('id', ids.open.topic);

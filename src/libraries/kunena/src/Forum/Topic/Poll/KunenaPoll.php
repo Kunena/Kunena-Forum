@@ -639,28 +639,28 @@ class KunenaPoll
             }
         }
 
-        // Go though new and changed options
-        ksort($this->newOptions);
+        // Create the new options in the order they were entered: the options are shown in the order of their id
+        foreach ($this->getOptionsToCreate($this->newOptions, $options) as $value) {
+            $query = $this->_db->createQuery();
+            $query->insert($this->_db->quoteName('#__kunena_polls_options') . '(text, pollid, votes)')
+                ->values($this->_db->quote($value) . ', ' . $this->_db->quote($this->id) . ' , 0');
+            $this->_db->setQuery($query);
 
+            try {
+                $this->_db->execute();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+        }
+
+        // Go though changed options
         foreach ($this->newOptions as $key => $value) {
             if (!$value) {
                 // Ignore empty options
                 continue;
             }
 
-            if (!isset($options[$key])) {
-                // Option doesn't exist: create it
-                $query = $this->_db->createQuery();
-                $query->insert($this->_db->quoteName('#__kunena_polls_options') . '(text, pollid, votes)')
-                    ->values($this->_db->quote($value) . ', ' . $this->_db->quote($this->id) . ' , 0');
-                $this->_db->setQuery($query);
-
-                try {
-                    $this->_db->execute();
-                } catch (ExecutionFailureException $e) {
-                    KunenaError::displayDatabaseError($e);
-                }
-            } elseif ($options[$key]->text != $value) {
+            if (isset($options[$key]) && $options[$key]->text != $value) {
                 // Option exists and has changed: update text
                 $query = $this->_db->createQuery();
                 $query->update($this->_db->quoteName('#__kunena_polls_options'))
@@ -680,6 +680,29 @@ class KunenaPoll
         $this->options = false;
 
         return true;
+    }
+
+    /**
+     * The texts of the options to create, in the order they were entered: no sort of the keys, which put new10 before new2.
+     *
+     * @param   array  $newOptions  The submitted options, keyed by the id of an existing option or by a new key.
+     * @param   array  $existing    The existing options of the poll, keyed by their id.
+     *
+     * @return  array  The non-empty texts whose key is not an existing option.
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getOptionsToCreate(array $newOptions, array $existing): array
+    {
+        $create = [];
+
+        foreach ($newOptions as $key => $value) {
+            if ($value && !isset($existing[$key])) {
+                $create[] = $value;
+            }
+        }
+
+        return $create;
     }
 
     /**

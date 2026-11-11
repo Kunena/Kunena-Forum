@@ -22,7 +22,8 @@ use Throwable;
 
 /**
  * Every PHP file of the source (one test case for each file): it can be parsed, a file which Joomla loads refuses to run on its
- * own, and a class is in the file and the folder which its namespace says (the case of the names matters on Linux).
+ * own, a class is in the file and the folder which its namespace says (the case of the names matters on Linux), and no method
+ * is called with -> on a class name (ToolbarHelper->help() parses but fails when it runs).
  */
 class AllPhpFilesTest extends UnitTestCase
 {
@@ -194,6 +195,37 @@ class AllPhpFilesTest extends UnitTestCase
         }
 
         $this->assertSame($expected[1], $file, "The class {$expected[0]} must be in {$expected[1]}.");
+    }
+
+    /**
+     * A name directly followed by -> or ?-> (Foo->bar()) parses, but PHP reads the name as a constant and fails when the line runs:
+     * a static call needs ::. A name which follows ->, ?-> or :: is a property or a constant ($a->b->c, Foo::BAR->c) and is allowed.
+     */
+    #[DataProvider('firstParty')]
+    public function testNoMethodIsCalledWithAnArrowOnAClassName(string $file): void
+    {
+        $tokens   = array_values(array_filter(token_get_all(Files::read($file)), static fn ($token) => !\is_array($token) || !\in_array($token[0], [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT], true)));
+        $names    = [T_STRING, T_NAME_QUALIFIED, T_NAME_FULLY_QUALIFIED];
+        $accesses = [T_OBJECT_OPERATOR, T_NULLSAFE_OBJECT_OPERATOR, T_DOUBLE_COLON];
+        $found    = [];
+
+        foreach ($tokens as $i => $token) {
+            if (!\is_array($token) || !\in_array($token[0], $names, true) || !isset($tokens[$i + 1]) || !\is_array($tokens[$i + 1])) {
+                continue;
+            }
+
+            if (!\in_array($tokens[$i + 1][0], [T_OBJECT_OPERATOR, T_NULLSAFE_OBJECT_OPERATOR], true)) {
+                continue;
+            }
+
+            if ($i > 0 && \is_array($tokens[$i - 1]) && \in_array($tokens[$i - 1][0], $accesses, true)) {
+                continue;
+            }
+
+            $found[] = "$file:{$token[2]} calls {$token[1]}{$tokens[$i + 1][1]} on a class name (use ::).";
+        }
+
+        $this->assertSame([], $found, implode("\n", $found));
     }
 
     public function testNoClassIsDeclaredInTwoFiles(): void

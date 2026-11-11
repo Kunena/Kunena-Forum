@@ -286,6 +286,11 @@ abstract class KunenaTopicHelper
         } else {
             $post_time_field = $db->quoteName('tt.last_post_time');
         }
+        
+        // No category asked means all the readable ones (the RSS feed with no category set), not none.
+        if (!$exclude && !$reverse && !array_filter((array) $categories)) {
+            $categories = false;
+        }
 
         if (!$exclude) {
             $categories = KunenaCategoryHelper::getCategories($categories, $reverse);

@@ -2,7 +2,9 @@
 """Run the Cypress specs of the checkout in the current folder on the Joomla site of the tests.
 
 Usage:
-  site-cypress                 all specs except install/ (checks.sh runs this for the gate)
+  site-cypress                 the specs which the branch adds or changes (checks.sh runs this for
+                               the gate); no spec changed: nothing runs, and that is a pass
+  site-cypress --all           all specs except install/ (about 40 minutes)
   site-cypress --spec <glob>   only these specs (a comma separated list of globs, as `cypress run --spec`)
   site-cypress --restore       point the links of the site back at the main checkout, nothing else
 
@@ -276,8 +278,20 @@ def listing(title, tests):
         print(f"  - {test}", flush=True)
 
 
+def changed_specs(checkout):
+    """The specs which the branch of this checkout adds or changes, compared with the base
+    branch: the gate runs these, not the whole suite. The install specs are never among them."""
+    out = subprocess.run(
+        ["git", "diff", "--name-only", "--diff-filter=ACMR", f"origin/{BASE}...HEAD", "--",
+         "tests/System/integration/administrator", "tests/System/integration/site"],
+        cwd=checkout, capture_output=True, text=True)
+    if out.returncode != 0:
+        die(f"can't list the changed specs: {out.stderr.strip()}")
+    return [name for name in out.stdout.splitlines() if name.endswith(".cy.js")]
+
+
 def main(argv):
-    specs = SPECS
+    specs = None
     if argv == ["--restore"]:
         site, url = settings()
         if restore():
@@ -287,9 +301,11 @@ def main(argv):
         return 0
     if len(argv) == 2 and argv[0] == "--spec":
         specs = argv[1]
+    elif argv == ["--all"]:
+        specs = SPECS
     elif argv:
         die(__doc__.strip())
-    if FORBIDDEN in specs.replace("\\", "/"):
+    if specs and FORBIDDEN in specs.replace("\\", "/"):
         die("the install specs never run here: uninstall.cy.js deletes the checkout through the links of the site.")
 
     site, url = settings()
@@ -297,6 +313,14 @@ def main(argv):
     if top.returncode != 0:
         die("run this in a checkout of Kunena.")
     checkout = Path(top.stdout.strip())
+
+    if specs is None:
+        changed = changed_specs(checkout)
+        if not changed:
+            say(f"the branch changes no Cypress spec (compared with origin/{BASE}): nothing to run")
+            return 0
+        say(f"the branch changes {len(changed)} Cypress spec(s): " + ", ".join(Path(c).name for c in changed))
+        specs = ",".join(changed)
 
     lock()
     try:

@@ -17,7 +17,8 @@ serves it). When it fails there too it is listed and ignored: only a test which 
 tested checkout and passes in the main checkout fails the run. Keep the main checkout on the
 base branch, or the comparison is with something else.
 
-Only one run at a time: the site is shared, so `concurrency` in config.json must stay 1.
+Only one run at a time: the site and its database are shared. A second run waits until the
+first is done (factory/jobs/.site-cypress.lock holds the process id of the run which has it).
 
 The install specs never run here: uninstall.cy.js removes Kunena from the site, and through the
 links it would delete the files of the checkout.
@@ -43,6 +44,7 @@ if os.name == "nt" and not sys.flags.utf8_mode:
 REPO = Path(__file__).resolve().parents[2]
 FACTORY = REPO / "factory"
 JOURNAL = FACTORY / "jobs" / ".site-links.json"
+LOCK = FACTORY / "jobs" / ".site-cypress.lock"
 RUNNER = Path(__file__).resolve().parent / "cypress-run.cjs"
 BASE = json.loads((FACTORY / "config.json").read_text())["base_branch"]
 SPECS = "tests/System/integration/administrator/**/*.cy.js,tests/System/integration/site/**/*.cy.js"
@@ -178,6 +180,52 @@ def flush(site, url, probe, expect, wait):
         script.unlink(missing_ok=True)
 
 
+def alive(pid):
+    """Is a process with this id running?"""
+    if os.name == "nt":
+        out = subprocess.run(["tasklist", "/FI", f"PID eq {pid}", "/NH"], capture_output=True, text=True).stdout
+        return str(pid) in out.split()
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        pass
+    return True
+
+
+def lock():
+    """One run at a time: the site and its database are shared by all jobs. A second run waits
+    here until the first is done. The lock of a run which died is taken over."""
+    told = False
+    while True:
+        try:
+            handle = os.open(LOCK, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            os.write(handle, str(os.getpid()).encode())
+            os.close(handle)
+            return
+        except FileExistsError:
+            try:
+                owner = int(LOCK.read_text().strip() or 0)
+            except (OSError, ValueError):
+                owner = 0
+            if owner and not alive(owner):
+                LOCK.unlink(missing_ok=True)
+                continue
+            if not told:
+                say(f"another run uses the site (process {owner}): waiting for it")
+                told = True
+            time.sleep(15)
+
+
+def unlock():
+    try:
+        if LOCK.read_text().strip() == str(os.getpid()):
+            LOCK.unlink()
+    except OSError:
+        pass
+
+
 def copy_site_files(checkout):
     """The site keeps files of its own inside the linked folders, which git ignores: the options
     of the templates (config/params.ini), attachments, avatars. A fresh worktree has none of them
@@ -250,6 +298,14 @@ def main(argv):
         die("run this in a checkout of Kunena.")
     checkout = Path(top.stdout.strip())
 
+    lock()
+    try:
+        return run(checkout, site, url, specs)
+    finally:
+        unlock()
+
+
+def run(checkout, site, url, specs):
     package = cypress_package(site)  # before the links move: without Cypress there is nothing to do
     if restore():  # a run which was killed left the site on another checkout
         flush(site, url, "", "", wait=False)

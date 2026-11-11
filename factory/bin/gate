@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+"""The deterministic gate: does the job's branch pass the repo's checks?
+
+Usage:
+  gate <job-id>            write round-N/checks.md; exit 0 on PASS, 1 on FAIL
+  gate <job-id> --merge    same, as round-N/merge-checks.md (job merge runs it)
+  gate --hook              builder SubagentStop hook: run the checks once, exit 2 on failure
+
+The gate runs the main checkout's factory/checks.sh inside the job's worktree,
+so a branch can't change the checks it is judged by. It also fails when the
+branch modifies or deletes a file matching config.json `protected_paths`
+(fnmatch patterns, where `*` also matches `/`). Adding new files is fine.
+"""
+
+import fnmatch
+import json
+import os
+import shutil
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+# Windows: read gh, git and the job files as UTF-8, whatever the console's code page.
+if os.name == "nt" and not sys.flags.utf8_mode:
+    sys.exit(subprocess.call([sys.executable, "-X", "utf8", *sys.argv]))
+
+REPO = Path(__file__).resolve().parents[2]
+FACTORY = REPO / "factory"
+CONFIG = json.loads((FACTORY / "config.json").read_text())
+CHECKS = FACTORY / "checks.sh"
+TAIL = 80
+
+
+def die(msg):
+    print(f"gate: {msg}", file=sys.stderr)
+    sys.exit(2)
+
+
+def git(worktree, *args):
+    res = subprocess.run(["git", *args], cwd=worktree, capture_output=True, text=True)
+    if res.returncode != 0:
+        die(f"`git {' '.join(args)}` failed: {res.stderr.strip()}")
+    return res.stdout
+
+
+def protected_changes(worktree):
+    """Existing files under protected_paths that the branch modified or deleted."""
+    diff = git(worktree, "diff", "--name-status", f"origin/{CONFIG['base_branch']}...HEAD")
+    hits = []
+    for line in diff.splitlines():
+        status, *paths = line.split("\t")
+        if status.startswith("A"):
+            continue
+        old = paths[0]  # for renames and copies, the original path
+        if any(fnmatch.fnmatch(old, pattern) for pattern in CONFIG["protected_paths"]):
+            hits.append(f"{status[0]} {old}")
+    return hits
+
+
+def bash():
+    """The bash that runs checks.sh. On Windows a bare `bash` is the WSL launcher in
+    System32, so find Git Bash next to git instead."""
+    if os.name != "nt":
+        return "bash"
+    candidates = [os.environ.get("CLAUDE_CODE_GIT_BASH_PATH")]
+    git = shutil.which("git")
+    if git:
+        root = Path(git).resolve().parent.parent  # <Git>/cmd/git.exe or <Git>/<arch>/bin/git.exe
+        candidates += [root / "bin" / "bash.exe", root.parent / "bin" / "bash.exe"]
+    for candidate in candidates:
+        if candidate and Path(candidate).is_file():
+            return str(candidate)
+    die("can't find Git Bash; set CLAUDE_CODE_GIT_BASH_PATH to its bash.exe")
+
+
+def run_checks(worktree):
+    start = time.monotonic()
+    res = subprocess.run([bash(), CHECKS.as_posix()], cwd=worktree, capture_output=True,
+                         text=True, encoding="utf-8", errors="replace")
+    return res.returncode, res.stdout + res.stderr, int(time.monotonic() - start)
+
+
+def gate(job_id, merge):
+    job = json.loads((FACTORY / "jobs" / job_id / "job.json").read_text())
+    worktree = job["worktree"]
+    if job["round"] < 1:
+        die(f"{job_id} hasn't started a build round")
+    round_dir = FACTORY / "jobs" / job_id / f"round-{job['round']}"
+    commit = git(worktree, "rev-parse", "HEAD").strip()
+    protected = protected_changes(worktree)
+    code, log, seconds = run_checks(worktree)
+    verdict = "PASS" if code == 0 and not protected else "FAIL"
+    name = "merge-checks" if merge else "checks"
+    (round_dir / f"{name}.log").write_text(log)
+    tail = "\n".join(log.rstrip().splitlines()[-TAIL:])
+    summary = [
+        f"checks.sh {'passed' if code == 0 else f'failed with exit {code}'} in {seconds}s",
+        f"Protected paths: {'changed: ' + ', '.join(protected) if protected else 'none changed'}",
+        f"Commit {commit[:7]}" + (", synced with the latest main before merging" if merge else ""),
+    ]
+    (round_dir / f"{name}.md").write_text(
+        f"GATE: {verdict}\nCOMMIT: {commit}\n\n"
+        "## Summary\n" + "\n".join(f"- {s}" for s in summary) + "\n\n"
+        "## Protected paths\n"
+        + ("\n".join(f"- {p}" for p in protected) if protected else "None changed.")
+        + f"\n\n## checks.sh\nExit {code} in {seconds}s. Last {TAIL} lines of {name}.log:\n\n```\n{tail}\n```\n"
+    )
+    print(f"GATE: {verdict} ({job_id} round {job['round']}, checks.sh exit {code} in {seconds}s"
+          + (f", protected paths changed: {', '.join(protected)}" if protected else "") + ")")
+    sys.exit(0 if verdict == "PASS" else 1)
+
+
+def hook():
+    event = json.load(sys.stdin)
+    if event.get("stop_hook_active"):
+        sys.exit(0)  # one nudge per stop; the gate decides
+    with open(Path(event["agent_transcript_path"]).expanduser()) as f:
+        content = json.loads(f.readline())["message"]["content"]
+    prompt = content if isinstance(content, str) else " ".join(b.get("text", "") for b in content)
+    job_id = prompt.split("Job: ", 1)[1].split(".", 1)[0]
+    job = json.loads((FACTORY / "jobs" / job_id / "job.json").read_text())
+    code, log, _ = run_checks(job["worktree"])
+    if code != 0:
+        tail = "\n".join(log.rstrip().splitlines()[-40:])
+        print(f"factory/checks.sh fails in your worktree (exit {code}). The gate will reject this "
+              f"build. Fix it, or write STATUS: BLOCKED in build.md if you can't.\n\n{tail}",
+              file=sys.stderr)
+        sys.exit(2)
+
+
+def main(argv):
+    if argv == ["--hook"]:
+        hook()
+    elif len(argv) == 1 and not argv[0].startswith("-"):
+        gate(argv[0], merge=False)
+    elif len(argv) == 2 and argv[1] == "--merge":
+        gate(argv[0], merge=True)
+    else:
+        die(__doc__.strip())
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

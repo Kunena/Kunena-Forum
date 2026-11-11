@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+"""Map intake's risk and surfaces to the job's agent set.
+
+Usage: route <job-id>
+
+Reads `risk` and `surfaces` from intake.md (through job.json), looks them up in
+config.json's `routing` and `surface_reviewers` tables, and records the result
+in job.json with `job agents`. Prints the agent set.
+"""
+
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+# Windows: read gh, git and the job files as UTF-8, whatever the console's code page.
+if os.name == "nt" and not sys.flags.utf8_mode:
+    sys.exit(subprocess.call([sys.executable, "-X", "utf8", *sys.argv]))
+
+FACTORY = Path(__file__).resolve().parents[1]
+CONFIG = json.loads((FACTORY / "config.json").read_text())
+
+
+def die(msg):
+    print(f"route: {msg}", file=sys.stderr)
+    sys.exit(1)
+
+
+def main(argv):
+    if len(argv) != 1:
+        die("usage: route <job-id>")
+    job_id = argv[0]
+    job_bin = [sys.executable, str(FACTORY / "bin" / "job")]  # Windows can't execute a shebang script
+    res = subprocess.run([*job_bin, "sync", job_id], capture_output=True, text=True)
+    if res.returncode != 0:
+        die(res.stderr.strip())
+    job = json.loads((FACTORY / "jobs" / job_id / "job.json").read_text())
+    intake = job["intake"] or die(f"{job_id} has no intake.md")
+    risk = CONFIG["routing"].get(intake["risk"]) or die(
+        f"risk {intake['risk']!r} isn't in config.json routing ({', '.join(CONFIG['routing'])})")
+    reviewers = dict(risk)
+    for surface in intake["surfaces"]:
+        extra = CONFIG["surface_reviewers"].get(surface)
+        if extra is None:
+            die(f"surface {surface!r} isn't in config.json surface_reviewers ({', '.join(CONFIG['surface_reviewers'])})")
+        reviewers.update(extra)
+    agents = {"reviewers": reviewers}
+    res = subprocess.run([*job_bin, "agents", job_id, json.dumps(agents)], capture_output=True, text=True)
+    if res.returncode != 0:
+        die(res.stderr.strip())
+    print(f"{job_id}: reviewers " + ", ".join(f"{k} {v}" for k, v in reviewers.items()))
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

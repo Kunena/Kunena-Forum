@@ -1,0 +1,32 @@
+{
+  "concurrency": 3,
+  "max_rounds": 3,
+  "base_branch": "K8.0",
+  "merge_method": "merge",
+  "labels": {
+    "queue": "factory",
+    "needs_info": "factory:needs-info",
+    "needs_human": "factory:needs-human"
+  },
+  "routing": {
+    "low":    { "code": "haiku" },
+    "medium": { "code": "sonnet" },
+    "high":   { "code": "sonnet" }
+  },
+  "surface_reviewers": {
+    "ui": { "ux": "sonnet", "ui": "haiku" },
+    "security": { "security": "opus" }
+  },
+  "protected_paths": [
+    "factory/checks.sh",
+    "factory/config.json"
+  ],
+  "ports": { "base": 5100, "step": 10 },
+  "prices_usd_per_mtok": {
+    "claude-fable-5-1":  { "input": 10.0, "output": 50.0, "cache_write_5m": 12.5, "cache_write_1h": 20.0, "cache_read": 0.25 },
+    "claude-fable-5-2":  { "input": 10.0, "output": 50.0, "cache_write_5m": 12.5, "cache_write_1h": 20.0, "cache_read": 0.25 },
+    "claude-opus-5-5":   { "input": 4.0,  "output": 20.0, "cache_write_5m": 5.0,  "cache_write_1h": 8.0,  "cache_read": 0.20 },
+    "claude-sonnet-5-5": { "input": 2.0,  "output": 10.0, "cache_write_5m": 2.5,  "cache_write_1h": 4.0,  "cache_read": 0.20 },
+    "claude-haiku-5-5":  { "input": 0.10, "output": 0.50, "cache_write_5m": 0.125, "cache_write_1h": 0.20, "cache_read": 0.01 }
+  }
+}

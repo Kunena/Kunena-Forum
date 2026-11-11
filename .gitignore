@@ -86,3 +86,8 @@ src/input
 # Cypress screenshots and videos
 tests/System/output/
 phpunit.xml
+
+# Software factory: runtime state, job worktrees and machine-local settings
+/factory/jobs/
+/.worktrees/
+/factory/checks.env

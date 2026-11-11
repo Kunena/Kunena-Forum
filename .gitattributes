@@ -98,3 +98,6 @@
 *.yml     text eol=lf
 CHANGELOG text eol=lf
 LICENSE   text eol=lf
+
+# Software factory scripts: run by Git Bash, so the shebang line must end in LF
+factory/bin/* text eol=lf

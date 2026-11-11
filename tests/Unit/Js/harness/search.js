@@ -1,5 +1,5 @@
 // Loads assets/js/search.js with a stand-in for jQuery (the code of the page is never run) and reports what the helpers do.
-// stdin: {"base": "/7.1" | null, "terms": [...], "items": [...]}
+// stdin: {"base": "<routed URL>", "terms": [...], "items": [...]}
 const fs = require('fs');
 
 const input = JSON.parse(fs.readFileSync(0, 'utf8'));
@@ -12,16 +12,12 @@ global.jQuery = function () {
 };
 global.jQuery.fn = {};
 global.document = { getElementById: () => null };
-global.Joomla = {
-	getOptions: (name) => (name === 'system.paths' && input.base !== null ? { base: input.base, root: input.base } : undefined),
-};
-
 eval(fs.readFileSync(path, 'utf8'));
 
 const h = global.KunenaUserSearch;
 const out = {
 	hasHelpers: !!h,
-	urls: input.terms.map((t) => h.url(t)),
+	urls: input.terms.map((t) => h.url(input.base, t)),
 	lines: input.items.map((i) => h.menuItem(i)),
 	escaped: input.terms.map((t) => h.escape(t)),
 	readyRegistered: typeof ready === 'function',
@@ -39,5 +35,24 @@ try {
 	noTribute = 'threw: ' + e.message;
 }
 out.noTribute = noTribute;
+
+if (input.exerciseRequest) {
+	const field = { dataset: { searchUrl: input.base } };
+	let options;
+	global.document.getElementById = () => field;
+	global.Tribute = function (config) {
+		options = config;
+		this.attach = () => {};
+	};
+	global.XMLHttpRequest = function () {
+		this.open = (method, url) => { out.request = { method, url }; };
+		this.send = () => {};
+	};
+	ready(global.jQuery);
+	if (options) {
+		options.values(input.terms[0], () => {});
+	}
+	out.autocompleteAttached = !!options;
+}
 
 console.log(JSON.stringify(out));

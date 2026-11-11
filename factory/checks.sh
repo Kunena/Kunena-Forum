@@ -74,8 +74,26 @@ vendor/bin/phpunit --testsuite Unit --no-progress --colors=never
 
 # Without a database the integration tests are skipped, not failed: a skipped
 # test fails the checks here, so a missing database cannot pass as green.
+#
+# The jobs share that one database, so one run of this suite at a time: a
+# second run waits for the lock (a folder; one left by a run which died is
+# taken over after four minutes, the suite takes seconds).
 echo "== phpunit (Integration)"
+mkdir -p "$FACTORY/jobs"
+lock="$FACTORY/jobs/.integration.lock"
+tries=0
+until mkdir "$lock" 2>/dev/null; do
+  tries=$((tries + 1))
+  if [ "$tries" -gt 120 ]; then
+    rmdir "$lock" 2>/dev/null || true
+    tries=0
+  fi
+  sleep 2
+done
+trap 'rmdir "$lock" 2>/dev/null || true' EXIT
 vendor/bin/phpunit --testsuite Integration --no-progress --colors=never --fail-on-skipped
+rmdir "$lock" 2>/dev/null || true
+trap - EXIT
 
 # The code style is reported, not enforced: the CI does the same
 # (continue-on-error), and files on the base branch do not all pass yet.

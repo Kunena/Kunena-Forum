@@ -129,9 +129,10 @@ gate's `round-<N-1>/checks.md`, the reviews in `round-<N-1>/`, or
 - `STATUS: BLOCKED`: `factory/bin/job advance <id> needs-human`.
 
 **gate.** Run `factory/bin/gate <id>`. It prints `GATE: PASS` or `GATE: FAIL`.
-It also runs the Integration suite and every Cypress spec except `install/`
-on the site of the tests (`factory/bin/site-cypress`), so it takes long: run
-it in the background and advance the job when it finishes. While it runs the
+It also runs the Integration suite and the Cypress specs which the branch
+adds or changes on the site of the tests (`factory/bin/site-cypress`; a branch
+which changes no spec runs no Cypress). That can take minutes: run it in the
+background and advance the job when it finishes. While it runs the
 site serves the job's worktree. A Cypress test which fails on the main
 checkout too is listed in the log and ignored, so keep the main checkout on
 the base branch. If a run was killed,

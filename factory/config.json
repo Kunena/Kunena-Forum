@@ -7,7 +7,7 @@
     "queue": "factory",
     "needs_info": "factory:needs-info",
     "needs_human": "factory:needs-human",
-    "pr": "AI Generated"
+    "pr": "AI Generated,8.0"
   },
   "routing": {
     "low":    { "code": "haiku" },

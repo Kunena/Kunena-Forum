@@ -96,7 +96,9 @@ if ($joomlaRoot !== '' && is_file($joomlaRoot . '/libraries/loader.php')) {
 
     \defined('JVERSION') or \define('JVERSION', (new \Joomla\CMS\Version())->getShortVersion());
 
-    // The classes of Kunena are those of this checkout, also when the Joomla installation has its own copy.
+    // The classes of Kunena are those of this checkout, also when the Joomla installation has its own copy. The loader is taken
+    // out first: registering a loader which is already registered does not move it to the front.
+    $kunenaLoader->unregister();
     $kunenaLoader->register(true);
 } else {
     // No Joomla: a small stand-in for the class of the parameters of a category.

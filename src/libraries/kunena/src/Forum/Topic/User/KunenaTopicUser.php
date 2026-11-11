@@ -325,7 +325,7 @@ class KunenaTopicUser
             $this->_db->setQuery($query);
 
             try {
-                $info = $this->_db->loadAssocList();
+                $info = $this->_db->loadAssoc();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
 

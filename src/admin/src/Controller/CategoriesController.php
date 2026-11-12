@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Administrator\Model\CategoriesModel;
 use Kunena\Forum\Libraries\Controller\KunenaController;
@@ -738,7 +739,7 @@ class CategoriesController extends KunenaController
     }
 
     /**
-     * Method to do batch process on selected categories, to move or copy them.
+     * Method to do batch process on selected categories: move them, set their access level, or both.
      *
      * @return bool
      *
@@ -756,21 +757,15 @@ class CategoriesController extends KunenaController
 
         $cid       = $this->input->get('cid', '', 'array');
         $catParent = $this->input->getInt('batch_catid_target', 0);
-        // Move is the only action of the batch: a form without the radio checked did nothing, without a message.
+        $batch     = $this->input->get('batch', [], 'array');
+        $level     = $batch['assetgroup_id'] ?? '';
+        $level     = $level === '' ? null : (int) $level;
+        // The batch moves the categories (to a chosen target) and/or sets their access level (to a chosen level).
+        // A form without the radio "move" checked still moves to the chosen target, the only move action.
         $task      = $this->input->getString('move_copy', 'move') ?: 'move';
 
-        if ($catParent == 0 || empty($cid)) {
+        if (empty($cid) || ($catParent == 0 && $level === null)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_NOT_SELECTED'), 'notice');
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-            return false;
-        }
-
-        // User needs to be admin in the target category and in the current parent of every moved category
-        $target = KunenaCategoryHelper::get($catParent);
-
-        if (!$this->me->isAdmin($target)) {
-            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($target->name)), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return false;
@@ -778,18 +773,99 @@ class CategoriesController extends KunenaController
 
         $cid = ArrayHelper::toInteger($cid);
 
-        foreach ($cid as $cat) {
-            $category = KunenaCategoryHelper::get($cat);
+        // Only a global admin can change the access, and only to an existing Joomla access level
+        if ($level !== null) {
+            if (!$this->me->isAdmin()) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_ACCESS_NO_ADMIN'), 'error');
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-            if (!$category->exists() || !$this->me->isAdmin($category->getParent())) {
-                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'error');
+                return false;
+            }
+
+            $query = $this->db->createQuery()
+                ->select('COUNT(*)')
+                ->from($this->db->quoteName('#__viewlevels'))
+                ->where($this->db->quoteName('id') . ' = :level')
+                ->bind(':level', $level, ParameterType::INTEGER);
+            $this->db->setQuery($query);
+
+            if (!(int) $this->db->loadResult()) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_ACCESS_INVALID'), 'error');
                 $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
                 return false;
             }
         }
 
-        if ($task == 'move') {
+        if ($catParent) {
+            // User needs to be admin in the target category and in the current parent of every moved category
+            $target = KunenaCategoryHelper::get($catParent);
+
+            if (!$this->me->isAdmin($target)) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($target->name)), 'error');
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+                return false;
+            }
+
+            foreach ($cid as $cat) {
+                $category = KunenaCategoryHelper::get($cat);
+
+                if (!$category->exists() || !$this->me->isAdmin($category->getParent())) {
+                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'error');
+                    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+                    return false;
+                }
+            }
+        }
+
+        // The access level is saved before the move: save() writes the whole category, and the move does not update its parentid
+        if ($level !== null) {
+            $count = 0;
+
+            foreach (KunenaCategoryHelper::getCategories($cid) as $category) {
+                if ($category->accesstype == 'joomla.level' && (int) $category->access == $level) {
+                    continue;
+                }
+
+                if ($category->isCheckedOut($this->me->userid)) {
+                    $this->app->enqueueMessage(
+                        Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
+                        'notice'
+                    );
+
+                    continue;
+                }
+
+                $category->accesstype = 'joomla.level';
+                $category->access     = $level;
+
+                try {
+                    $category->save();
+                } catch (Exception $e) {
+                    if (!empty($e->getMessage())) {
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
+                            'error'
+                        );
+                    } else {
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
+                            'error'
+                        );
+                    }
+
+                    continue;
+                }
+
+                $count++;
+            }
+
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORIES_LABEL_BATCH_ACCESS_SUCCESS', $count), 'success');
+        }
+
+        if ($catParent && $task == 'move') {
             foreach ($cid as $cat) {
                 // A category cannot become a child of itself or of one of its own descendants.
                 $isLoop = false;

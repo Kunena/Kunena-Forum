@@ -86,10 +86,7 @@ class MessageListingRecentDisplay extends ListDisplay
         $this->embedded = $this->getOptions()->get('embedded', false);
 
         if ($this->embedded) {
-            $this->moreUri = new Uri(
-                'index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
-                . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
-            );
+            $this->moreUri = $this->getMoreUri();
             $this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
         }
 
@@ -280,6 +277,22 @@ class MessageListingRecentDisplay extends ListDisplay
         }
 
         $this->actions = $this->getMessageActions($this->messages, $actions);
+    }
+
+    /**
+     * The URI of the page links of an embedded list, with the time selection of the list.
+     *
+     * @return  Uri
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getMoreUri(): Uri
+    {
+        return new Uri(
+            'index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
+            . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
+            . '&sel=' . $this->state->get('list.time')
+        );
     }
 
     /**

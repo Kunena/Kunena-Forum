@@ -96,21 +96,28 @@ if ($this->show_title && $this->poll->polltimetolive != '1000-01-01 00:00:00') {
                 endif; ?>
             </td>
         </tr>
-        <?php if (!$this->me->exists()) :
+        <?php
+        $guest     = !$this->me->exists();
+        $voteLink  = !$guest && $this->show_title && $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply');
+        $voteLater = !$voteLink && $this->show_title && $this->waitToChangeVote;
+        $moderator = $this->me->isModerator($this->category);
+
+        if ($guest || $voteLink || $voteLater || $moderator) :
             ?>
         <tr>
             <td colspan="4">
-                <?php echo Text::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
-
-        <?php elseif ($this->topic->isAuthorised('poll.vote') && $this->show_title && $this->topic->isAuthorised('reply')) :
-            ?>
-
-                    <a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>>">
-                        <?php echo Text::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
+                <?php if ($guest) : ?>
+                    <?php echo Text::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
+                <?php elseif ($voteLink) : ?>
+                    <a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>"
+                       class="kpoll-vote-link">
+                        <?php echo $this->canChangeVote ? Text::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE') : Text::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
                     </a>
-        <?php endif; ?>
+                <?php elseif ($voteLater) : ?>
+                    <span class="kpoll-change-vote-later"><?php echo Text::_('COM_KUNENA_POLL_CHANGE_VOTE_LATER'); ?></span>
+                <?php endif; ?>
 
-                <?php if ($this->me->isModerator($this->category)) :
+                <?php if ($moderator) :
                     ?>
                 <a href="#resetVotes" role="button" class="btn btn-outline-primary border" data-bs-toggle="modal">
                     <?php echo Text::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?>
@@ -140,9 +147,10 @@ if ($this->show_title && $this->poll->polltimetolive != '1000-01-01 00:00:00') {
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
             </td>
         </tr>
-                <?php endif; ?>
+        <?php endif; ?>
         </tfoot>
     </table>
 </div>

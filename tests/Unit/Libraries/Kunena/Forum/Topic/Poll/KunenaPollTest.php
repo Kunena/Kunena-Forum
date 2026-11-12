@@ -12,9 +12,12 @@
 
 namespace Kunena\Tests\Unit\Libraries\Kunena\Forum\Topic\Poll;
 
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseQuery;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
 use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use ReflectionProperty;
 
 /**
  * The new options of a poll are created in the order they were entered (issue #1041).
@@ -75,5 +78,32 @@ class KunenaPollTest extends UnitTestCase
         $created = self::invoke(self::bare(KunenaPoll::class), 'getOptionsToCreate', self::numbered('new', 12), []);
 
         $this->assertLessThan(array_search('Option 10', $created, true), array_search('Option 2', $created, true));
+    }
+
+    /**
+     * The list of the voters filled the votes of the users with their rows: getMyVotes() returned an object, not a number
+     * (issue #5089).
+     */
+    public function testGetUsersLeavesTheVotesOfTheUsersToGetMyVotes(): void
+    {
+        $this->requireJoomla();
+
+        $query = $this->createStub(DatabaseQuery::class);
+
+        foreach (['select', 'from', 'where', 'andWhere', 'order', 'setLimit'] as $method) {
+            $query->method($method)->willReturnSelf();
+        }
+
+        $row = (object) ['pollid' => 3, 'userid' => 798, 'votes' => 1, 'lasttime' => '2026-01-01 10:00:00', 'lastvote' => 7];
+        $db  = $this->createStub(DatabaseDriver::class);
+        $db->method('createQuery')->willReturn($query);
+        $db->method('loadObjectList')->willReturn([798 => $row]);
+
+        $poll = self::bare(KunenaPoll::class, ['_db' => $db, 'id' => 3]);
+
+        $this->assertSame([798 => $row], $poll->getUsers());
+
+        // getMyVotes() loads the number of votes of a user who is not in its cache (KunenaUserHelper needs a running site).
+        $this->assertSame([], (new ReflectionProperty(KunenaPoll::class, 'myvotes'))->getValue($poll));
     }
 }

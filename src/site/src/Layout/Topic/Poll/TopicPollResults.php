@@ -27,4 +27,6 @@ class TopicPollResults extends KunenaLayout
     public mixed $intervalTimeToLive   = null;
     public mixed $users_voted_morelist = null;
     public mixed $users_voted_list     = null;
+    public mixed $canChangeVote        = null;
+    public mixed $waitToChangeVote     = null;
 }

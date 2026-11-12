@@ -22,6 +22,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
@@ -473,6 +474,16 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         // Prefetch attachments.
         KunenaAttachmentHelper::getByMessage($batch);
+
+        // Prefetch the other users of the IP addresses, for the viewers who see the addresses.
+        $category = $this->topic->getCategory();
+
+        if ($category->isAuthorised('admin') || ($category->isAuthorised('moderate') && !$this->config->hideIp)) {
+            KunenaMessageHelper::getUsersByIp(
+                Factory::getContainer()->get(DatabaseInterface::class),
+                array_map(static fn ($message) => (string) $message->ip, $batch)
+            );
+        }
 
         $this->stickyFirst = $first;
     }

@@ -16,7 +16,9 @@ namespace Kunena\Forum\Site\Controller\Topic\Poll;
 \defined('_JEXEC') or die();
 
 use DateTimeImmutable;
+use DateTimeZone;
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -27,6 +29,7 @@ use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use stdClass;
 
 /**
  * Class ComponentTopicControllerPollDisplay
@@ -71,6 +74,8 @@ class TopicPollDisplay extends KunenaControllerDisplay
     public mixed $intervalTimeToLive   = null;
     public mixed $users_voted_list     = null;
     public mixed $users_voted_morelist = null;
+    public mixed $canChangeVote        = null;
+    public mixed $waitToChangeVote     = null;
 
     /**
      * Prepare poll display.
@@ -96,8 +101,10 @@ class TopicPollDisplay extends KunenaControllerDisplay
         $this->usercount = $this->poll->getUserCount();
         $usersvoted      = $this->poll->getUsers();
 
-        if (\is_object($this->poll->getMyVotes())) {
-            $this->userhasvoted = $this->poll->getMyVotes();
+        // The votes of the user are a number (the sum of his votes), not an object.
+        if ((int) $this->poll->getMyVotes() > 0) {
+            $this->userhasvoted           = new stdClass();
+            $this->userhasvoted->lastvote = $this->poll->getLastVoteId();
         } else {
             $this->userhasvoted = 0;
         }
@@ -107,6 +114,27 @@ class TopicPollDisplay extends KunenaControllerDisplay
             $origin                   = new DateTimeImmutable('now');
             $target                   = new DateTimeImmutable($this->poll->polltimetolive);
             $this->intervalTimeToLive = $origin->diff($target);
+        }
+
+        // A voter may change his vote when not only one vote is allowed: now, or once the time between votes has passed.
+        $this->canChangeVote    = false;
+        $this->waitToChangeVote = false;
+
+        if ($this->me->exists() && $this->userhasvoted && !$this->config->pollAllowVoteOne) {
+            $this->canChangeVote = $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply');
+
+            $ended = $this->poll->polltimetolive != '1000-01-01 00:00:00' && $this->poll->getTimeToLive() < Factory::getDate()->toUnix();
+
+            if (!$this->canChangeVote && !$this->topic->locked && !$ended) {
+                // The time between two votes, "HH:MM:SS", compared in seconds as in KunenaTopic::authoriseVote().
+                $parts = array_reverse(array_map('intval', explode(':', (string) $this->config->pollTimeBtVotes)));
+                $wait  = ($parts[0] ?? 0) + 60 * ($parts[1] ?? 0) + 3600 * ($parts[2] ?? 0);
+
+                // The vote time is stored in UTC
+                $lastVote = new DateTimeImmutable((string) $this->poll->getMyTime(), new DateTimeZone('UTC'));
+
+                $this->waitToChangeVote = $wait > 0 && time() - $lastVote->getTimestamp() < $wait;
+            }
         }
 
         if (!empty($this->alwaysVote)) {

@@ -35,5 +35,5 @@ class MyTest extends IntegrationTestCase implements DBTestInterface
 ```
 
 `getSchemasToLoad()` says which datasets a test needs: `kunena` (default, the tables of Kunena) and files of
-`datasets/mysqli/` for tables of Joomla itself (`joomla` has `#__users` and `#__mail_templates`). Add a table of Joomla there when
+`datasets/mysqli/` for tables of Joomla itself (`joomla` has `#__users`, `#__mail_templates`, `#__usergroups` and `#__user_usergroup_map`). Add a table of Joomla there when
 a test needs it.

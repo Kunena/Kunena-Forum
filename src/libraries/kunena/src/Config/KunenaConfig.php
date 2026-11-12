@@ -255,6 +255,8 @@ use SimpleXMLElement;
  * @property int    $enableTags                   Tag topics with the tags of the Joomla component Tags
  * @property int    $redirectDeletedTopics        Make a redirect with the status 410 Gone for a deleted topic
  * @property int    $inactiveLockDays             Days without a new message after which a topic gets closed for replies (0 is never)
+ * @property string $lockReasons                  The reasons of a locked topic, one per line (plain text or a language key, empty is no reasons)
+ * @property int    $lockByAuthor                 The author of a topic may lock it with a reason
  * @property string $enableHtml                   Enable safe HTML in messages
  * @property string $trimLongUrls                 Trim Long URLs
  * @property string $trimLongUrlsBack             Back Portion of Trimmed URLs

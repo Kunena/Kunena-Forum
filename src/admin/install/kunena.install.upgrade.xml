@@ -685,6 +685,8 @@
             <!-- The smilies get a manual order: the current order (by id) stays the same, a second run keeps an order set since -->
             <query mode="silenterror">ALTER TABLE `#__kunena_smileys` ADD `ordering` int(11) NOT NULL default '0' AFTER `emoticonbar`</query>
             <query mode="silenterror">UPDATE `#__kunena_smileys` SET `ordering` = `id` WHERE `ordering` = 0</query>
+            <!-- A locked topic can have a reason (closed, solved, sold...): the topics which are already locked have none -->
+            <query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD `lock_reason` varchar(255) NOT NULL default '' AFTER `locked`</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

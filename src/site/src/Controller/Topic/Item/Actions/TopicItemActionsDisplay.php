@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicLockReason;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -146,6 +147,14 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
             );
         }
 
+        // The reasons of a lock: the author of the topic locks it with one of them when the setting allows it.
+        $reasons      = KunenaTopicLockReason::parse(isset($this->config->lockReasons) ? (string) $this->config->lockReasons : '');
+        $lockByAuthor = isset($this->config->lockByAuthor) && (bool) $this->config->lockByAuthor;
+
+        if (!$moderator && KunenaTopicLockReason::authorMayLock($this->topic, KunenaUserHelper::getMyself(), $lockByAuthor, $reasons)) {
+            $this->topicButtons->set('lock_author', $this->getLockReasonButtons($task, $reasons, 'user'));
+        }
+
         if ($userTopic->favorite) {
             // User can always remove existing favorite.
             $this->topicButtons->set(
@@ -196,6 +205,11 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
                 'lock_dropdown',
                 $this->getButton(\sprintf($task, $lock), $lock, 'topic', 'moderation', false, true, KunenaIcons::lock())
             );
+
+            // One more item per reason of the list, after the lock without a reason.
+            if (!$this->topic->locked && $reasons) {
+                $this->topicButtons->set('lock_reasons_dropdown', $this->getLockReasonButtons($task, $reasons, 'moderation'));
+            }
 
             $this->topicButtons->set(
                 'moderate',
@@ -329,5 +343,31 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
                     'icon'    => $icon,
                 ]
             );
+    }
+
+    /**
+     * The dropdown items which lock the topic with a reason, one per reason of the list.
+     *
+     * @param   string    $task     Target link of the tasks (do not route it), with %s for the task.
+     * @param   string[]  $reasons  The reasons of the list (see KunenaTopicLockReason::parse).
+     * @param   string    $type     Type of the buttons.
+     *
+     * @return  KunenaLayout[]
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected function getLockReasonButtons(string $task, array $reasons, string $type): array
+    {
+        $buttons = [];
+
+        foreach ($reasons as $reason) {
+            $label = Text::sprintf('COM_KUNENA_BUTTON_TOPIC_LOCK_REASON', Text::_($reason));
+
+            $buttons[] = $this->getButton(\sprintf($task, 'lock') . '&reason=' . urlencode($reason), 'lock', 'topic', $type, false, true, KunenaIcons::lock())
+                ->set('label', htmlspecialchars($label, ENT_QUOTES, 'UTF-8'));
+        }
+
+        return $buttons;
     }
 }

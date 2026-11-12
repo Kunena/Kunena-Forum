@@ -90,6 +90,21 @@ class KunenaUpload
     }
 
     /**
+     * Allow SVG for this upload: only for an avatar, whose file is cleaned before it is stored (see KunenaSvgSanitizer).
+     * addExtensions() keeps refusing svg for every other upload.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 8.0
+     */
+    public function allowSvgAvatar(): KunenaUpload
+    {
+        $this->validExtensions['.svg'] = '.svg';
+
+        return $this;
+    }
+
+    /**
      * Upload a file via AJAX, supports chunks and fallback to regular file upload.
      *
      * @param   array  $options  Upload options.

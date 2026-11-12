@@ -51,6 +51,7 @@ use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicLockReason;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateStars;
@@ -2618,6 +2619,9 @@ class TopicController extends KunenaController
     }
 
     /**
+     * Lock the topic, with a reason of the list or without one: for the moderators, and for the author of the topic with a
+     * reason when the setting lockByAuthor is on.
+     *
      * @return  void
      *
      * @throws  Exception
@@ -2632,25 +2636,69 @@ class TopicController extends KunenaController
             return;
         }
 
-        $topic = KunenaTopicHelper::get($this->id);
+        $topic   = KunenaTopicHelper::get($this->id);
+        $value   = $this->input->getRaw('reason', '');
+        $reasons = KunenaTopicLockReason::parse(isset($this->config->lockReasons) ? (string) $this->config->lockReasons : '');
+        $reason  = '';
 
         try {
             $topic->tryAuthorise('lock');
+            $moderator = true;
         } catch (Exception $e) {
-            $this->app->enqueueMessage($e->getMessage(), 'error');
-            $this->setRedirectBack();
-
-            return; // -- abort
+            $moderator = false;
+            $denied    = $e->getMessage();
         }
 
-        if ($topic->lock(1)) {
+        if ($moderator) {
+            // A moderator locks without a reason, or with one of the list.
+            if (!\is_string($value) || trim($value) !== '') {
+                $reason = KunenaTopicLockReason::clean($value, $reasons);
+
+                if ($reason === null) {
+                    $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_LOCK_REASON_INVALID'), 'error');
+                    $this->setRedirectBack();
+
+                    return;
+                }
+            }
+        } else {
+            // The author of the topic locks it only with a reason of the list.
+            try {
+                $topic->tryAuthorise('read');
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirectBack();
+
+                return; // -- abort
+            }
+
+            $lockByAuthor = isset($this->config->lockByAuthor) && (bool) $this->config->lockByAuthor;
+
+            if (!KunenaTopicLockReason::authorMayLock($topic, $this->me, $lockByAuthor, $reasons)) {
+                $this->app->enqueueMessage($denied, 'error');
+                $this->setRedirectBack();
+
+                return; // -- abort
+            }
+
+            $reason = KunenaTopicLockReason::clean($value, $reasons);
+
+            if ($reason === null) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+                $this->setRedirectBack();
+
+                return;
+            }
+        }
+
+        if ($topic->lock(1, $reason)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_SET'), 'success');
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    KunenaLog::TYPE_MODERATION,
+                    $moderator ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
                     KunenaLog::LOG_TOPIC_LOCK,
-                    [],
+                    ['reason' => $reason],
                     $topic->getCategory(),
                     $topic
                 );

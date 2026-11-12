@@ -36,6 +36,22 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
             <?php echo $this->topicButtons->get('solved') ?>
         <?php endif ?>
 
+        <?php if ($this->topicButtons->get('lock_author')) : ?>
+            <div class="btn-group">
+                <a class="btn border" data-bs-toggle="dropdown">
+                    <?php echo KunenaIcons::lock(); ?><?php echo Text::_('COM_KUNENA_BUTTON_TOPIC_LOCK') ?>
+                </a>
+                <a class="btn border dropdown-toggle" data-bs-toggle="dropdown">
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <?php foreach ($this->topicButtons->get('lock_author') as $lockButton) : ?>
+                        <li><?php echo $lockButton ?></li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+        <?php endif ?>
+
         <?php if (
         $this->topicButtons->get('delete')
             || $this->topicButtons->get('permdelete')
@@ -58,6 +74,9 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                     <li><?php echo $this->topicButtons->get('moderate_dropdown') ?></li>
                     <li><?php echo $this->topicButtons->get('sticky_dropdown') ?></li>
                     <li><?php echo $this->topicButtons->get('lock_dropdown') ?></li>
+                    <?php foreach ((array) $this->topicButtons->get('lock_reasons_dropdown') as $lockButton) : ?>
+                        <li><?php echo $lockButton ?></li>
+                    <?php endforeach ?>
                 </ul>
             </div>
         <?php endif ?>
@@ -90,6 +109,22 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                 </div>
             <?php endif ?>
 
+            <?php if ($this->topicButtons->get('lock_author')) : ?>
+                <div class="btn-group">
+                    <a class="btn border" data-bs-toggle="dropdown">
+                        <?php echo KunenaIcons::lock(); ?><?php echo Text::_('COM_KUNENA_BUTTON_TOPIC_LOCK') ?>
+                    </a>
+                    <a class="btn border dropdown-toggle" data-bs-toggle="dropdown">
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <?php foreach ($this->topicButtons->get('lock_author') as $lockButton) : ?>
+                            <li><?php echo $lockButton ?></li>
+                        <?php endforeach ?>
+                    </ul>
+                </div>
+            <?php endif ?>
+
             <?php if (
             $this->topicButtons->get('delete')
                 || $this->topicButtons->get('permdelete')
@@ -112,6 +147,9 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                         <li><?php echo $this->topicButtons->get('moderate_dropdown') ?></li>
                         <li><?php echo $this->topicButtons->get('sticky_dropdown') ?></li>
                         <li><?php echo $this->topicButtons->get('lock_dropdown') ?></li>
+                        <?php foreach ((array) $this->topicButtons->get('lock_reasons_dropdown') as $lockButton) : ?>
+                            <li><?php echo $lockButton ?></li>
+                        <?php endforeach ?>
                     </ul>
                 </div>
             <?php endif ?>

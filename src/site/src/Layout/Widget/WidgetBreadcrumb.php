@@ -29,7 +29,8 @@ class WidgetBreadcrumb extends KunenaLayout
 
     /**
      * Leave out the crumb of the default page of a Kunena home menu item when it directly follows the home crumb: both
-     * crumbs open the same page.
+     * crumbs open the same page. Only the menu item crumb of the default page itself (its link as SitePathway builds it,
+     * or an alias to it) is left out, not another page which is routed to the same Itemid.
      *
      * @param   array         $pathway  The items of the pathway (each with a name and a link).
      * @param   AbstractMenu  $menu     The menu of the site.
@@ -53,7 +54,7 @@ class WidgetBreadcrumb extends KunenaLayout
             $default = self::getDefaultItem($menu, $home);
             $next    = $pathway[$index + 1] ?? null;
 
-            if ($default && $next && self::getItemid($next) == $default->id) {
+            if ($default && $next && self::isMenuItemCrumb($next, $default)) {
                 unset($pathway[$index + 1]);
 
                 return array_values($pathway);
@@ -61,6 +62,21 @@ class WidgetBreadcrumb extends KunenaLayout
         }
 
         return $pathway;
+    }
+
+    /**
+     * Is the crumb the one SitePathway adds for the menu item (its link with the Itemid), or for an alias to it?
+     *
+     * @param   object  $crumb  The item of the pathway.
+     * @param   object  $item   The menu item.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    private static function isMenuItemCrumb(object $crumb, object $item): bool
+    {
+        return $crumb->link === $item->link . '&Itemid=' . $item->id || $crumb->link === 'index.php?Itemid=' . $item->id;
     }
 
     /**
@@ -99,6 +115,7 @@ class WidgetBreadcrumb extends KunenaLayout
 
     /**
      * The default page of a Kunena home menu item, by the rules of HomeDisplay::getDefaultMenuItem(), without warnings.
+     * Keep both in step when one of them changes.
      *
      * @param   AbstractMenu  $menu     The menu of the site.
      * @param   object        $active   The home menu item.

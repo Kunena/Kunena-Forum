@@ -40,7 +40,8 @@ class WidgetBreadcrumbTest extends UnitTestCase
         $objects = [];
 
         foreach ($items as $id => [$component, $query]) {
-            $objects[$id] = new MenuItem(['id' => $id, 'component' => $component, 'query' => $query, 'type' => 'component']);
+            $link         = 'index.php?' . http_build_query($query);
+            $objects[$id] = new MenuItem(['id' => $id, 'component' => $component, 'query' => $query, 'link' => $link, 'type' => 'component']);
         }
 
         $menu = $this->createStub(AbstractMenu::class);
@@ -121,6 +122,20 @@ class WidgetBreadcrumbTest extends UnitTestCase
         $this->assertSame(['Forum', 'Category'], $this->names($result));
         $this->assertSame($forum->link, $result[0]->link);
         $this->assertSame($category->link, $result[1]->link);
+    }
+
+    public function testAPageRoutedToTheDefaultItemIsKept(): void
+    {
+        $result = WidgetBreadcrumb::withoutDefaultPageCrumb([self::forum(), self::category()], $this->standardMenu());
+
+        $this->assertSame(['Forum', 'Category'], $this->names($result));
+    }
+
+    public function testTheDefaultPageNotDirectlyAfterTheHomeIsKept(): void
+    {
+        $result = WidgetBreadcrumb::withoutDefaultPageCrumb([self::forum(), self::recent(), self::index()], $this->standardMenu());
+
+        $this->assertSame(['Forum', 'Recent Topics', 'Index'], $this->names($result));
     }
 
     public function testAnotherPageAfterTheHomeIsKept(): void

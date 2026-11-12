@@ -524,7 +524,8 @@ class KunenaPoll
             $this->_db->setQuery($query);
 
             try {
-                $this->myvotes = $this->users = (array) $this->_db->loadObjectList('userid');
+                // Not in the votes of the users: getMyVotes() is the number of votes, not the row of the voter.
+                $this->users = (array) $this->_db->loadObjectList('userid');
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
             }

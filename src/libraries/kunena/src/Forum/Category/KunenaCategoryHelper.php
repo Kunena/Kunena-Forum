@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Forum\Category;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\UserGroupsHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Language\Transliterate;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -128,7 +129,7 @@ abstract class KunenaCategoryHelper
                     $filtered |= isset($params['filterTitle']) && (StringHelper::stristr($instance->name, (string) $params['filterTitle']) === false
                             && StringHelper::stristr($instance->alias, (string) $params['filterTitle']) === false);
                     $filtered |= isset($params['filterType']);
-                    $filtered |= isset($params['filterAccess']) && ($instance->accesstype != 'joomla.level' || $instance->access != $params['filterAccess']);
+                    $filtered |= isset($params['filterAccess']) && !self::matchesAccessFilter($instance, (string) $params['filterAccess'], $params['filterAccessGroupPath'] ?? []);
                     $filtered |= isset($params['filterLocked']) && $instance->locked != (int) $params['filterLocked'];
                     $filtered |= isset($params['filterAllowPolls']) && $instance->allowPolls != (int) $params['filterAllowPolls'];
                     $filtered |= isset($params['filterReview']) && $instance->review != (int) $params['filterReview'];
@@ -541,6 +542,10 @@ abstract class KunenaCategoryHelper
         $params += $defaults;
         $params['published'] = isset($params['published']) ? (int) $params['published'] : (empty($params['unpublished']) ? 1 : null);
 
+        if (isset($params['filterAccess']) && !isset($params['filterAccessGroupPath'])) {
+            $params['filterAccessGroupPath'] = self::getAccessFilterGroupPath((string) $params['filterAccess']);
+        }
+
         $authoriseCache = [];
         $list           = self::_getChildren($parents, $levels, $params, $optimize, $authoriseCache);
 
@@ -797,6 +802,11 @@ abstract class KunenaCategoryHelper
     {
         $list = [];
 
+        // Look up the user group of the access filter once, not for every orphaned parent.
+        if (isset($params['filterAccess'])) {
+            $params['filterAccessGroupPath'] = self::getAccessFilterGroupPath((string) $params['filterAccess']);
+        }
+
         foreach (self::getCategoryTree(false) as $catid => $children) {
             if ($catid && !self::get($catid)->exists()) {
                 foreach (self::getChildren($catid, $levels, $params) as $category) {
@@ -810,6 +820,70 @@ abstract class KunenaCategoryHelper
         }
 
         return $list;
+    }
+
+    /**
+     * Check whether a category matches the access filter of the backend category manager.
+     *
+     * The filter is `joomla.level.<id>` (an access level; a bare id means the same) or `joomla.group.<id>` (a user group,
+     * matched by the primary or the secondary group of the category as KunenaAccessJoomla::authoriseCategories() does).
+     * Any other value and any other access type match nothing.
+     *
+     * @param   KunenaCategory  $category   The category.
+     * @param   string          $filter     The filter value.
+     * @param   int[]           $groupPath  The ids from the root user group down to the group of the filter, empty when none.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function matchesAccessFilter(KunenaCategory $category, string $filter, array $groupPath): bool
+    {
+        if (ctype_digit($filter)) {
+            $filter = 'joomla.level.' . $filter;
+        }
+
+        if (!preg_match('/^(joomla\.level|joomla\.group)\.(\d+)$/', $filter, $matches) || $category->accesstype !== $matches[1]) {
+            return false;
+        }
+
+        $id = (int) $matches[2];
+
+        if ($matches[1] === 'joomla.level') {
+            return (int) $category->access === $id;
+        }
+
+        $groupPath = array_map('intval', $groupPath);
+
+        foreach ([[$category->pubAccess, $category->pubRecurse], [$category->adminAccess, $category->adminRecurse]] as [$group, $recurse]) {
+            $group = (int) $group;
+
+            if ($group > 0 && ($group === $id || ($recurse && \in_array($group, $groupPath, true)))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the ids from the root user group down to the user group of an access filter value.
+     *
+     * @param   string  $filter  The filter value.
+     *
+     * @return  int[]  Empty when the filter is not a user group or the group does not exist.
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function getAccessFilterGroupPath(string $filter): array
+    {
+        if (!preg_match('/^joomla\.group\.(\d+)$/', $filter, $matches)) {
+            return [];
+        }
+
+        $group = UserGroupsHelper::getInstance()->get((int) $matches[1]);
+
+        return \is_object($group) && !empty($group->path) ? array_map('intval', $group->path) : [];
     }
 
     /**

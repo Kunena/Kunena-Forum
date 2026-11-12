@@ -788,9 +788,8 @@ abstract class KunenaUserHelper
                 );
             }
 
-            return $response;
         }
 
-        return false;
+        return $response;
     }
 }

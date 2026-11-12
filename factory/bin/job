@@ -556,6 +556,10 @@ def advance(job, stage):
     if stage in TERMINAL and Path(job["worktree"]).exists():
         remove_worktree(job)
         run(["git", "branch", "-D", job["branch"]], check=False)
+    # A merged job leaves no branch on GitHub either, also when a person merged its PR by hand
+    # (GitHub may already have deleted it, so a failure here is fine).
+    if stage == "merged":
+        run(["git", "push", "origin", "--delete", job["branch"]], check=False)
 
     job["stage"] = stage
     job["ended"] = now() if stage in TERMINAL | WAITING else None

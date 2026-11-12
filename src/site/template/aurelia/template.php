@@ -148,8 +148,9 @@ class KunenaTemplateAurelia extends KunenaTemplate
             $this->addScript('assets/js/notifications.js');
         }
 
-        // Recompile here SCSS and create cache dir only if doesnt exist
-        if (!file_exists(JPATH_SITE . '/media/kunena/cache/')) {
+        // Compile the SCSS when the style sheet of this template is not in the cache: the folder of the cache can exist already
+        // with the style sheet of another template only (Agora), and the forum was shown without its style sheet.
+        if (!is_file(KPATH_MEDIA . "/cache/{$this->name}/css/kunena.css")) {
             $this->createCacheDir();
         }
 

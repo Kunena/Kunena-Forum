@@ -76,6 +76,7 @@ class TopicPollDisplay extends KunenaControllerDisplay
     public mixed $users_voted_morelist = null;
     public mixed $canChangeVote        = null;
     public mixed $waitToChangeVote     = null;
+    public mixed $alwaysVote           = null;
 
     /**
      * Prepare poll display.

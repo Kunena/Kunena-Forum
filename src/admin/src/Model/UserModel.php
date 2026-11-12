@@ -25,6 +25,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserRankPolicy;
 use RuntimeException;
 
 /**
@@ -215,18 +216,11 @@ class UserModel extends KunenaModel
      */
     public function getListUserRanks(): string
     {
-        $db   = $this->getDatabase();
         $user = $this->getUser();
 
-        // Grab all special ranks
-        $query = $db->createQuery();
-        $query->select('*')
-            ->from($db->quoteName('#__kunena_ranks'))
-            ->where('rankSpecial = \'1\'');
-        $db->setQuery($query);
-
+        // Grab all special ranks: the same list as on the profile page of the forum
         try {
-            $specialRanks = (array) $db->loadObjectList();
+            $specialRanks = KunenaUserRankPolicy::getAssignableRanks();
         } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
@@ -235,8 +229,8 @@ class UserModel extends KunenaModel
 
         $yesnoRank[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RANK_NO_ASSIGNED'));
 
-        foreach ($specialRanks as $ranks) {
-            $yesnoRank[] = HTMLHelper::_('select.option', $ranks->rankId, Text::_($ranks->rankTitle));
+        foreach ($specialRanks as $rankId => $rankTitle) {
+            $yesnoRank[] = HTMLHelper::_('select.option', (string) $rankId, Text::_($rankTitle));
         }
 
         // Build special ranks select list

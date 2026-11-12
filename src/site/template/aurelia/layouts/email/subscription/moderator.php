@@ -191,7 +191,7 @@ if (!$config->plainEmail) :
                             <?php if ($config->mailFull == 1) :
                                 echo Text::_('COM_KUNENA_MESSAGE'); ?>:
                                 <div>
-                                    <p><?php echo $this->message->displayField('message'); ?></p>
+                                    <p><?php echo $this->message->displayField('message', true, 'subscription'); ?></p>
                                 </div>
                             <?php endif; ?>
 

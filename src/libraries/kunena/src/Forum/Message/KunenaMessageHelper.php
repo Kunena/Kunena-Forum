@@ -18,6 +18,7 @@ namespace Kunena\Forum\Libraries\Forum\Message;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\User\User;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -49,6 +50,12 @@ abstract class KunenaMessageHelper
     protected static array $_location = [];
 
     /**
+     * @var     array  ip => [userid => number of messages].
+     * @since   Kunena 8.0
+     */
+    protected static array $_usersByIp = [];
+
+    /**
      * Free up memory by cleaning up all cached items.
      *
      * @return  void
@@ -59,6 +66,7 @@ abstract class KunenaMessageHelper
     {
         self::$_instances = [];
         self::$_location  = [];
+        self::$_usersByIp = [];
     }
 
     /**
@@ -135,6 +143,52 @@ abstract class KunenaMessageHelper
         }
 
         return $ip ?: false;
+    }
+
+    /**
+     * The registered users who posted messages from these IP addresses, whatever the state of the messages. The addresses
+     * which are not in the cache of the request are looked up in one query.
+     *
+     * @param   DatabaseInterface  $db   The database.
+     * @param   string[]           $ips  The IP addresses (the empty ones are ignored).
+     *
+     * @return  array  ip => [userid => number of messages], the most messages first, then by user id.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function getUsersByIp(DatabaseInterface $db, array $ips): array
+    {
+        $ips     = array_unique(array_filter(array_map('strval', $ips), static fn ($ip) => $ip !== ''));
+        $missing = array_diff($ips, array_keys(self::$_usersByIp));
+
+        if ($missing) {
+            foreach ($missing as $ip) {
+                self::$_usersByIp[$ip] = [];
+            }
+
+            $query = $db->createQuery()
+                ->select([$db->quoteName('m.ip'), $db->quoteName('m.userid'), 'COUNT(*) AS ' . $db->quoteName('posts')])
+                ->from($db->quoteName('#__kunena_messages', 'm'))
+                ->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('m.userid'))
+                ->where($db->quoteName('m.userid') . ' > 0')
+                ->where($db->quoteName('m.ip') . ' IN (' . implode(',', array_map([$db, 'quote'], $missing)) . ')')
+                ->group([$db->quoteName('m.ip'), $db->quoteName('m.userid')])
+                ->order([$db->quoteName('posts') . ' DESC', $db->quoteName('m.userid') . ' ASC']);
+
+            foreach ((array) $db->setQuery($query)->loadObjectList() as $row) {
+                if (isset(self::$_usersByIp[$row->ip])) {
+                    self::$_usersByIp[$row->ip][(int) $row->userid] = (int) $row->posts;
+                }
+            }
+        }
+
+        $result = [];
+
+        foreach ($ips as $ip) {
+            $result[$ip] = self::$_usersByIp[$ip];
+        }
+
+        return $result;
     }
 
     /**

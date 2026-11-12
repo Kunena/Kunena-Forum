@@ -33,6 +33,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [Three names for a user: username, real name and nickname](features/user-names.md) | Administrators, users |  | Show the username, the real name or a nickname, and let users choose. |
 | [Badges for user groups and ranks](features/badges.md) | Administrators |  | Coloured labels next to the name of a user, for a Joomla user group or a Kunena rank. |
 | [Ranks linked to a Joomla user group](features/ranks-user-groups.md) | Administrators | [#8339](https://github.com/Kunena/Kunena-Forum/issues/8339) | A rank can be given to every member of a Joomla user group. |
+| [Change the rank of a user from his profile page](features/profile-rank-change.md) | Moderators, administrators | [#5380](https://github.com/Kunena/Kunena-Forum/issues/5380) | Give a special rank, or no rank, to a user from the rank entry of his profile. |
 | [Social websites: edit the providers, retire the dead ones](features/social-websites.md) | Administrators |  | A view to add and remove the social websites of the profile; Skype, Yahoo Messenger and Google+ are gone. |
 | [Delete a user in Joomla and request the deletion of an account](features/account-deletion.md) | Administrators, users |  | Links to delete a user in Joomla, and a button to ask for the removal of the own account. |
 
@@ -45,11 +46,13 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [Moderator groups for a category](features/moderator-groups.md) | Administrators | [#3400](https://github.com/Kunena/Kunena-Forum/issues/3400) | Every member of the selected Joomla user groups (and of their child groups) moderates the category. |
 | [Frontend moderation log](features/moderation-log.md) | Moderators, administrators |  | A page with the actions of the moderators, in the forum itself. |
 | [Deleted topics answer with 410 Gone](features/deleted-topics-410.md) | Administrators |  | A deleted topic tells the search engines it is gone (410), instead of a 404 error. |
+| [The author reads his own topic while it waits for approval](features/own-unapproved-topics.md) | Users | [#5381](https://github.com/Kunena/Kunena-Forum/issues/5381) | The author of a topic in a category with review can open it before a moderator approves it; nobody can reply yet. |
 | [Report the author of a message to StopForumSpam](features/stopforumspam-report.md) | Moderators, administrators |  | A button in the Moderate menu reports a spammer to StopForumSpam. |
 | [Reports: handled by plugins, and the plugin Reports in a category](features/reports.md) | Moderators, administrators | [#1077](https://github.com/Kunena/Kunena-Forum/issues/1077) | A report of a post can become a topic for the moderators, and the e-mail to the moderators is an option. |
 | [Access by rank: the plugin Kunena - ACL](features/category-access-rank.md) | Administrators |  | Restrict a category to users with a minimum rank (by post count). |
 | [Choose the default announcement](features/default-announcement.md) | Administrators | [#1612](https://github.com/Kunena/Kunena-Forum/issues/1612) | The administrator chooses which announcement is the banner, with a star on the list of announcements. |
 | [GeoIP plugin: the place next to the IP address](features/geoip.md) | Moderators, administrators | [#6771](https://github.com/Kunena/Kunena-Forum/issues/6771) | The IP address of a message gets its place (city, region and country) for the people who see the IP address. |
+| [Other users of the same IP address in the topic](features/ip-matches.md) | Moderators, administrators | [#5626](https://github.com/Kunena/Kunena-Forum/issues/5626) | A badge next to the IP address of a message names the other registered users who posted from it. |
 
 ## Categories and menus
 

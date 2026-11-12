@@ -634,6 +634,21 @@ class KunenaTopic extends KunenaDatabaseObject
     }
 
     /**
+     * Is the topic unapproved (hold 1) and started by this logged-in user? A topic started by a guest belongs to nobody.
+     *
+     * @param   KunenaUser  $user  user
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public function isUnapprovedOf(KunenaUser $user): bool
+    {
+        return (int) $this->hold === 1 && $user->exists() && (int) $user->userid > 0
+            && (int) $this->first_post_userid === (int) $user->userid;
+    }
+
+    /**
      * @param   KunenaUser  $user  user
      *
      * @return  KunenaExceptionAuthorise|void
@@ -654,14 +669,18 @@ class KunenaTopic extends KunenaDatabaseObject
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $user->exists() ? 403 : 401);
         }
 
-        // TODO: Allow owner to see his posts.
+        // The author reads his own topic while it waits for approval.
+        if ($this->hold == 1 && $this->isUnapprovedOf($user)) {
+            return;
+        }
+
         if ($this->hold) {
             if (!$user->exists()) {
                 return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
             }
 
             $access = KunenaAccess::getInstance();
-            $hold   = $access->getAllowedHold($user->userid, $this->category_id, false);
+            $hold   = $access->getAllowedHold($user, $this->category_id, false);
 
             if (!\in_array($this->hold, $hold)) {
                 return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);

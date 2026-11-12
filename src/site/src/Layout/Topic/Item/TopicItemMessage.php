@@ -46,6 +46,10 @@ class TopicItemMessage extends KunenaLayout
 
     public mixed $ipLink = null;
 
+    public mixed $ipMatchesCount = 0;
+
+    public mixed $ipMatchesText = '';
+
     public mixed $location = null;
 
     public mixed $detail = null;

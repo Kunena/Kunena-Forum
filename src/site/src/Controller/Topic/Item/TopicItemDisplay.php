@@ -22,6 +22,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
@@ -236,9 +237,14 @@ class TopicItemDisplay extends KunenaControllerDisplay
         // Load messages from the current page and set the pagination.
         $hold   = KunenaAccess::getInstance()->getAllowedHold($this->me, $this->category->id, false);
         $finder = new KunenaMessageFinder();
-        $finder
-            ->where('thread', '=', $this->topic->id)
-            ->filterByHold($hold);
+        $finder->where('thread', '=', $this->topic->id);
+
+        // The author of a topic which waits for approval sees his own unapproved messages in it.
+        if ($this->topic->isUnapprovedOf($this->me) && !$this->me->isModerator($this->category)) {
+            $finder->filterByHoldOrOwnUnapproved($hold, $this->me);
+        } else {
+            $finder->filterByHold($hold);
+        }
 
         $start            = $mesid ? $this->topic->getPostLocation($mesid) : $start;
         $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
@@ -473,6 +479,16 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         // Prefetch attachments.
         KunenaAttachmentHelper::getByMessage($batch);
+
+        // Prefetch the other users of the IP addresses, for the viewers who see the addresses.
+        $category = $this->topic->getCategory();
+
+        if ($category->isAuthorised('admin') || ($category->isAuthorised('moderate') && !$this->config->hideIp)) {
+            KunenaMessageHelper::getUsersByIp(
+                Factory::getContainer()->get(DatabaseInterface::class),
+                array_map(static fn ($message) => (string) $message->ip, $batch)
+            );
+        }
 
         $this->stickyFirst = $first;
     }

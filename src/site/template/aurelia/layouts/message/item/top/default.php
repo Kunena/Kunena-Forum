@@ -55,6 +55,9 @@ if ($this->config->orderingSystem == 'mesid') {
     ?>
         <?php echo KunenaIcons::ip(); ?>
         <span class="ip"> <?php echo $this->ipLink; ?> </span>
+        <?php if ($this->ipMatchesCount > 0) : ?>
+            <span class="badge bg-warning text-dark ms-1" data-bs-toggle="tooltip" title="<?php echo $this->escape($this->ipMatchesText); ?>"><?php echo (int) $this->ipMatchesCount; ?><span class="visually-hidden"> <?php echo $this->escape($this->ipMatchesText); ?></span></span>
+        <?php endif; ?>
     <?php endif; ?>
     <?php echo KunenaIcons::clock(); ?>
     <?php echo $message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>

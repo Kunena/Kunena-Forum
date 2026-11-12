@@ -995,7 +995,7 @@ class UserController extends KunenaController
                 return false;
             }
 
-            if ($result instanceof Response && $result->code == '200') {
+            if ($result instanceof Response && $result->getStatusCode() === 200) {
                 // Report accepted. There is no need to display the reason
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'), 'success');
 
@@ -1005,12 +1005,12 @@ class UserController extends KunenaController
                 $reason = '';
 
                 if ($result instanceof Response) {
-                    if (preg_match('/<p\b[^>]*>(.*?)<\/p>/is', $result->body, $reasons)) {
+                    if (preg_match('/<p\b[^>]*>(.*?)<\/p>/is', (string) $result->getBody(), $reasons)) {
                         $reason = trim(strip_tags($reasons[1]));
                     }
 
                     if ($reason === '') {
-                        $reason = 'HTTP ' . $result->code;
+                        $reason = 'HTTP ' . $result->getStatusCode();
                     }
                 } else {
                     $reason = 'No response received';

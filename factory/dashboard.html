@@ -3,241 +3,404 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Software Factory</title>
+<title>Kunena Software Factory</title>
+<!-- The Kunena logo (src/admin/media/icons/large/kunena-logo-48-black.png), inline: the server
+     of the dashboard serves only the factory folder. -->
+<link rel="icon" type="image/png" sizes="48x48" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAExUlEQVR42u1ZDyj0Zxz/3B/unONlxCIybFBZIrWWpnlLRWprWUQSwZpSeiMqy5vWqpSqpFTTimIqUlOlSUbToHsTL0irBRsXnHN37m6/z5Pf9buwt2q9u1+7b316nt/3+/ye7//n7rnTVFVV4Z4+kfBCQp6EdxGYtCdhRUKvhNdk6L1eL8dvJXQi8Cn9Hp9J+ErC93SgSiXGKylMwpCEVTrQAnVSqIQWvcfjKYB6qYAZCFWxA6HMANRM8imkXgdUn4GgA0EHgg4EHQg68K850NLSAgAYHBxUjwNut9v3kJKSIkYlT1UZcLlcYpR58fHxAicnJ76RUMosFgtycnL8+NfX1zg4OPBTlJqaCrPZLNYreSS+m5aWJuZKOYl7y2tkHU864HQ6fQ6Eh4ejv79fPHd3d6O3txdjY2MCpKKiIlRWVqK8vFzITk9PERcX59trenoaw8PDwsiuri6xn81mEyP5c3NzqKur8zlBPomOt7W1obi4GA0NDT4+aWBgQLynJC3LRQYdIIxGI3p6euBwONDR0YHd3V0xZ4bktZyTxznH8/NzYVBFRQVWV1dRUlIiZO3t7T4ZsbCwgObmZsTExAhdfJcBKC0txeTkJBITE5GVlYW7uzvMzs6K/eQ9a2pqoLSX0DLaMriZXq8XEY+MjBSR29/fFzK73S4Uyms5J0+WLS4u4vj4GFdXV1hfXxe8pKQkRERECBnnmZmZWFpaErLc3Fyhb3t7W5QN95FlNJ5z2sJsNDY2wmq1QqvVQmkv8aCE5JTe3NwID2X57e2tiLr8zDl5fH5KZjAYxMg6Tk9P9+nZ2NjA5eWlX8mSaDjXc2xtbUVycjJGR0eFjL+eyPqePIVYo6zlkZER1NbWor6+Hn19fSIqjCwjIK/nnDw+c+Tmsoxz8ljPckYmJiYeNCCzoDz16DjXc2QpTU1NYX5+3tcjZWVlD05Ivwzw9Nja2hIKGaGmpiZUV1djaGgIh4eHyM7OFs0VHR2NvLw8XFxciIhwVEaHc/IYkJmZGRQWFoIXp83NTeTn54sss8eoT5kBGs73OK6trYm1R0dHQsa5rE9JOqmZvuHmBBuLtcamPTs7E9kgjxlgTZpMJkRFRQnFrFuWAJ1NSEjA3t6eUMZ9eFwyQ5SxxrlPbGys6AOuGR8fF3sq9fG9kJAQ0Xt0dHl5WeiT+2hnZ0eUNfeU7ZVwqsnIyFDznfKVXwlla82PrnLBg13PzaMys0aHZE3YW7d812ODC17/Jh4P+/DRxedeFz62LT/gF+rewUvD+4jXGN66A5/afsWR1+HfxBmX8w9/OdJFodOY5tc8JinqnYY0FOij8PXNJizuy8D9Op2iN+JPj9PnAI3+zpSFxTsryq9WcOv9b7+O69/0zTNJY8QfbjsMHqDb9AFKQuPwwraJn51/qeNC857OBB00+OnZRzhw2/Dc+gvOPU713MhStCYk6cLw8mobP9h/V9eVkpE/9TjQYP0N+3e2gPwg0Eifhv/4QRai0cLlDdh786s3lpADgX3pD/6sEnTgf+9A8B+aAMjANQCzSu2/YAZmAXyhUgdmNdLdNRmARcIzlRn/GkCujmkAsALguYRItdyFJXwu4VijYDIDXwLIAxCoZL8P9o8AnGT8DQUmVYx8zdugAAAAAElFTkSuQmCC">
 <style>
+  /* Colours and type. Dark is the default; a light set follows the system setting. */
   :root {
-    --bg: #14151b;
-    --panel: #1a1c24;
-    --card: #20222c;
-    --card-hover: #252835;
-    --line: #2b2e3b;
-    --text: #e4e5ea;
-    --muted: #868ba0;
-    --faint: #5b6075;
-    --active: #8be9fd;
-    --pass: #50fa7b;
-    --changes: #ffb86c;
-    --human: #ff5555;
-    --merged: #bd93f9;
-    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color-scheme: dark;
+    --bg: #0e1117;
+    --panel: #151a23;
+    --col: #131821;
+    --card: #1b212c;
+    --card-hover: #222938;
+    --code: #10141b;
+    --line: #262d3a;
+    --line-strong: #3a4455;
+    --text: #eef1f6;
+    --muted: #aab2c2;
+    --faint: #7f899b;
+    --active: #56b6f7;
+    --pass: #3fcf8e;
+    --changes: #f5b544;
+    --human: #ff6b6b;
+    --merged: #b197fc;
+    --brand: #ff2e74;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 10px 24px -18px rgba(0, 0, 0, .7);
+    --logo-filter: brightness(1.55);
+    --sans: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: ui-monospace, "Cascadia Code", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      color-scheme: light;
+      --bg: #f3f5f9;
+      --panel: #ffffff;
+      --col: #e9edf3;
+      --card: #ffffff;
+      --card-hover: #f7f9fc;
+      --code: #f1f3f7;
+      --line: #dce1e9;
+      --line-strong: #bfc8d5;
+      --text: #151a24;
+      --muted: #4d586b;
+      --faint: #6f7b8f;
+      --active: #0b68c4;
+      --pass: #0f7a55;
+      --changes: #9a5600;
+      --human: #c42b2b;
+      --merged: #6238d1;
+      --brand: #e0185c;
+      --shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 10px 24px -18px rgba(16, 24, 40, .3);
+      --logo-filter: none;
+    }
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body {
     background: var(--bg);
     color: var(--text);
-    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    font: 15px/1.5 var(--sans);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   button { font: inherit; color: inherit; }
+  a { color: var(--active); }
 
-  /* Header */
+  /* Header: stays in view while the page scrolls. */
   header {
-    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
-    flex-wrap: wrap; padding: 28px 32px 8px;
+    position: sticky; top: 0; z-index: 5;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px 24px;
+    flex-wrap: wrap; padding: 12px 28px;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
   }
-  h1 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
-  .status { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-  .status .dot {
-    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-    background: var(--pass); margin-right: 6px; vertical-align: 1px;
+  h1 { margin: 0; line-height: 0; }
+  /* The logo is grey on transparent, made for a light page: lifted a little on the dark one. */
+  h1 .logo { height: 38px; width: auto; display: block; filter: var(--logo-filter); }
+  .head-right { display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap; justify-content: flex-end; min-width: 0; }
+  .repo {
+    font-size: 13px; color: var(--muted); min-width: 0; max-width: min(760px, 62vw);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .status.error { color: var(--human); }
+  .repo b { color: var(--text); font-weight: 650; }
+  .repo a { font-family: var(--mono); font-size: 12.5px; color: var(--active); text-decoration: none; }
+  .repo a:hover { text-decoration: underline; }
+  .repo .subject { color: var(--faint); }
+  .status {
+    display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+    font-size: 12.5px; color: var(--muted);
+    padding: 4px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel);
+  }
+  .status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pass); flex: none; }
+  .status.error { color: var(--human); border-color: color-mix(in srgb, var(--human) 50%, var(--line)); }
   .status.error .dot { background: var(--human); }
   .banner {
-    margin: 12px 32px 0; padding: 10px 14px; border: 1px solid var(--human);
-    border-radius: 8px; color: var(--human); font-family: var(--mono); font-size: 12px;
+    margin: 14px 28px 0; padding: 11px 15px; border-radius: 10px; font-size: 13.5px;
+    color: var(--human); border: 1px solid color-mix(in srgb, var(--human) 45%, var(--line));
+    background: color-mix(in srgb, var(--human) 9%, var(--panel));
   }
 
-  /* Board */
-  .board {
-    display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px;
-    padding: 20px 32px 40px; align-items: start;
+  /* Page: an overview, top to bottom. Numbers first, then what waits for you, then what
+     runs, then what is finished. */
+  .page { max-width: 1480px; margin: 0 auto; padding: 22px 28px 28px; display: grid; gap: 28px; }
+  .page > section { min-width: 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 12px; flex-wrap: wrap; }
+  .sec-head h2 { margin: 0; font-size: 18px; font-weight: 650; letter-spacing: -0.01em; }
+  .sec-head .count {
+    font-size: 12.5px; font-weight: 650; padding: 1px 9px; border-radius: 999px; color: var(--muted);
+    background: color-mix(in srgb, var(--muted) 16%, transparent);
   }
-  .col { min-width: 0; }
-  .col-head {
-    display: flex; align-items: center; gap: 8px; padding: 0 2px 10px;
-    border-bottom: 1px solid var(--line); margin-bottom: 12px; position: relative;
+  .sec-head .sub { color: var(--faint); font-size: 13.5px; }
+  .sec-head code, .none code { font-family: var(--mono); font-size: .92em; color: var(--muted); }
+  .none {
+    color: var(--faint); font-size: 14px; padding: 16px 18px;
+    border: 1px dashed var(--line-strong); border-radius: 12px;
   }
-  .col-head h2 { margin: 0; font-size: 13px; font-weight: 600; }
-  .col-head .who { font-size: 11px; color: var(--faint); font-family: var(--mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .col-head .count {
-    margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--muted);
-  }
-  .col:not(:last-child):not(:nth-last-child(2)) .col-head::after {
-    content: "›"; position: absolute; right: -10px; top: -2px; color: var(--faint); font-size: 16px;
-  }
-  .col.human .col-head { border-bottom-color: color-mix(in srgb, var(--human) 55%, transparent); }
-  .col.human h2 { color: var(--human); }
-  .col.merged-col h2 { color: var(--merged); }
-  .empty { color: var(--faint); font-size: 12px; padding: 4px 2px; }
 
-  /* Cards */
-  .card {
-    display: block; width: 100%; text-align: left; cursor: pointer; color: inherit;
-    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-    padding: 12px 12px 10px; margin-bottom: 10px;
-    transition: background .15s, border-color .15s, transform .15s;
+  /* Numbers */
+  .tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+  .tile {
+    background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--tone, var(--line-strong));
+    border-radius: 14px; padding: 14px 16px 13px; box-shadow: var(--shadow); min-width: 0;
   }
-  .card:hover { background: var(--card-hover); transform: translateY(-1px); }
-  .card:focus-visible { outline: 2px solid var(--active); outline-offset: 2px; }
-  .card.live { border-color: color-mix(in srgb, var(--active) 35%, var(--line)); }
-  .card.human {
-    border-color: var(--human);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--human) 40%, transparent),
-                0 8px 24px -12px color-mix(in srgb, var(--human) 60%, transparent);
+  .tile .k { font-size: 13px; color: var(--muted); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile .v {
+    font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2;
+    font-variant-numeric: tabular-nums; color: var(--tone, var(--text));
   }
-  .card.done { opacity: .72; }
-  .card.rejected .feature { text-decoration: line-through; text-decoration-color: var(--faint); }
-  .flag.wait { color: var(--changes); }
-  .card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-  .num { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-  .card-top .num { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile .s { font-size: 12.5px; color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile.zero .v { color: var(--faint); }
+
+  /* The pipeline, with who does each step and how many jobs are there now. */
+  .pipe { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+  .pipe li {
+    position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 9px 12px 9px 14px; min-width: 0;
+  }
+  .pipe .name { font-size: 13.5px; font-weight: 650; display: flex; align-items: center; gap: 7px; }
+  .pipe .who { font-size: 12px; color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pipe .here {
+    margin-left: auto; font-size: 12px; font-weight: 700; min-width: 20px; text-align: center;
+    padding: 0 7px; border-radius: 999px; color: var(--active);
+    background: color-mix(in srgb, var(--active) 16%, transparent);
+  }
+  .pipe li.busy { border-color: color-mix(in srgb, var(--active) 55%, var(--line)); }
+  .pipe li.busy .name { color: var(--active); }
+
+  /* Shared pieces of a job */
+  .num { font-family: var(--mono); font-size: 12px; color: var(--faint); white-space: nowrap; }
   .pulse {
-    width: 7px; height: 7px; border-radius: 50%; background: var(--active);
+    width: 8px; height: 8px; border-radius: 50%; background: var(--active); flex: none;
     animation: pulse 1.6s ease-in-out infinite;
   }
   .flag {
-    margin-left: auto; font-size: 10px; font-weight: 600; letter-spacing: .06em;
-    text-transform: uppercase; color: var(--human); white-space: nowrap;
+    flex: none; font-size: 10.5px; font-weight: 700; letter-spacing: .05em;
+    text-transform: uppercase; white-space: nowrap; padding: 2px 9px; border-radius: 999px;
+    color: var(--human); background: color-mix(in srgb, var(--human) 15%, transparent);
   }
-  .feature { font-size: 13px; line-height: 1.4; margin: 0 0 6px; }
-  .links { display: flex; gap: 10px; font-family: var(--mono); font-size: 11px; }
-  .links a { color: var(--active); text-decoration: none; }
-  .links a:hover { text-decoration: underline; }
-  .meta { display: flex; gap: 10px; margin-top: 8px; font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
-  .meta .risk-high { color: var(--human); } .meta .risk-medium { color: var(--changes); }
-  .chip.gate { flex: 0 0 38px; }
+  .flag.wait { color: var(--changes); background: color-mix(in srgb, var(--changes) 16%, transparent); }
+  .flag.ok { color: var(--merged); background: color-mix(in srgb, var(--merged) 16%, transparent); }
+  .flag.off { color: var(--muted); background: color-mix(in srgb, var(--muted) 16%, transparent); }
+  .links { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12.5px; font-weight: 600; }
+  .links a, .links span {
+    padding: 2px 9px; border-radius: 6px; text-decoration: none; white-space: nowrap;
+    color: var(--active); background: color-mix(in srgb, var(--active) 12%, transparent);
+  }
+  .links a:hover { background: color-mix(in srgb, var(--active) 22%, transparent); }
+  .meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px;
+    font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  [class^="risk-"] { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; }
+  [class^="risk-"]::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .risk-high { color: var(--human); }
+  .risk-medium { color: var(--changes); }
+  .risk-low { color: var(--pass); }
+  .rounds { display: grid; gap: 5px; }
+  .round { display: flex; align-items: center; gap: 4px; }
+  .round .r { font-family: var(--mono); font-size: 11px; color: var(--faint); width: 22px; flex: none; }
+  .chip {
+    flex: 1; text-align: center; font-size: 11.5px; font-weight: 600;
+    padding: 3px 0; border-radius: 6px; border: 1px dashed var(--line-strong); color: var(--faint);
+  }
+  .chip.gate { flex: 0 0 44px; }
+  .chip.wait { animation: breathe 1.6s ease-in-out infinite; border-color: var(--active); color: var(--active); }
+  .chip.PASS { border: 1px solid transparent; color: var(--pass); background: color-mix(in srgb, var(--pass) 15%, transparent); }
+  .chip.CHANGES { border: 1px solid transparent; color: var(--changes); background: color-mix(in srgb, var(--changes) 17%, transparent); }
   .chip.FAIL { border: 1px solid transparent; color: var(--human); background: color-mix(in srgb, var(--human) 16%, transparent); }
-  .branch {
-    font-family: var(--mono); font-size: 11px; color: var(--faint);
+  .chip.bad { border: 1px solid var(--human); color: var(--human); }
+  .state { display: flex; align-items: center; gap: 7px; font-weight: 650; font-size: 13.5px; }
+  .state::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
+  .state.ok { color: var(--pass); }
+  .state.stop { color: var(--human); }
+  .todo-title { margin-top: 8px; color: var(--muted); }
+  .todo { margin: 4px 0 0; padding-left: 1.25em; color: var(--text); }
+  .todo li { margin: 2px 0; }
+  .todo li.more { list-style: none; margin-left: -1.25em; color: var(--faint); }
+
+  /* Waiting for you: one card per pull request, with what is asked of you. */
+  .attention { display: grid; grid-template-columns: repeat(auto-fill, minmax(370px, 1fr)); gap: 14px; }
+  .acard {
+    display: flex; flex-direction: column; gap: 11px; min-width: 0; cursor: pointer;
+    background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--pass);
+    border-radius: 14px; padding: 15px 18px 16px; box-shadow: var(--shadow);
+    transition: border-color .15s, transform .15s;
+  }
+  .acard.stop { border-top-color: var(--human); }
+  .acard:hover { transform: translateY(-1px); border-color: var(--line-strong); border-top-color: var(--pass); }
+  .acard.stop:hover { border-top-color: var(--human); }
+  .acard:focus-visible, .wrow:focus-visible { outline: 2px solid var(--active); outline-offset: 2px; }
+  .a-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .a-top .num { min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; }
+  .a-top .meta { margin-left: auto; flex: none; flex-wrap: nowrap; }
+  .a-title { margin: 0; font-size: 16.5px; font-weight: 650; line-height: 1.35; overflow-wrap: anywhere; }
+  .hint {
+    padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--col);
+    font-size: 13.5px; line-height: 1.55; overflow-wrap: anywhere;
+  }
+  .a-foot { display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap; margin-top: auto; }
+  .a-foot .rounds { flex: 1; min-width: 210px; }
+
+  /* Running: one row per job, with the step it is at. */
+  .work { display: grid; gap: 10px; }
+  .wrow {
+    display: grid; grid-template-columns: minmax(240px, 1.1fr) minmax(340px, 1.7fr) auto;
+    gap: 12px 26px; align-items: center; cursor: pointer; min-width: 0;
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--active);
+    border-radius: 12px; padding: 14px 18px; box-shadow: var(--shadow);
+  }
+  .wrow:hover { border-color: var(--line-strong); border-left-color: var(--active); }
+  .wrow.waiting { border-left-color: var(--changes); }
+  .wrow.waiting:hover { border-left-color: var(--changes); }
+  .w-top { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; min-width: 0; }
+  .w-top .num { overflow: hidden; text-overflow: ellipsis; }
+  .wrow h3 { margin: 0 0 8px; font-size: 15.5px; font-weight: 650; line-height: 1.35; overflow-wrap: anywhere; }
+  .w-steps { min-width: 0; display: grid; gap: 9px; }
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; }
+  .steps li {
+    flex: 1; min-width: 0; text-align: center; font-size: 12px; font-weight: 600; color: var(--faint);
+    padding-top: 8px; border-top: 3px solid var(--line-strong);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .rounds { margin-top: 10px; display: grid; gap: 5px; }
-  .round { display: flex; align-items: center; gap: 4px; }
-  .round .r { font-family: var(--mono); font-size: 10px; color: var(--faint); width: 20px; }
-  .chip {
-    flex: 1; text-align: center; font-family: var(--mono); font-size: 10px;
-    padding: 2px 0; border-radius: 4px; border: 1px dashed var(--faint); color: var(--faint);
+  .steps li.was { border-top-color: var(--pass); color: var(--muted); }
+  .steps li.now { border-top-color: var(--active); color: var(--active); }
+  .wrow.waiting .steps li.now { border-top-color: var(--changes); color: var(--changes); }
+
+  /* Finished: a table. */
+  .tablewrap { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow-x: auto; box-shadow: var(--shadow); }
+  table.jobs { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .jobs th {
+    text-align: left; font-size: 12px; font-weight: 650; color: var(--faint); text-transform: uppercase;
+    letter-spacing: .05em; padding: 11px 14px; border-bottom: 1px solid var(--line); white-space: nowrap;
   }
-  .chip.wait { animation: breathe 1.6s ease-in-out infinite; }
-  .chip.PASS {
-    border: 1px solid transparent; color: var(--pass);
-    background: color-mix(in srgb, var(--pass) 14%, transparent);
+  .jobs td { padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  .jobs tbody tr:last-child td { border-bottom: 0; }
+  .jobs tbody tr { cursor: pointer; }
+  .jobs tbody tr:hover { background: var(--card-hover); }
+  .jobs tbody tr:focus-visible { outline: 2px solid var(--active); outline-offset: -2px; }
+  .jobs .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--muted); }
+  .jobs .t { font-weight: 600; }
+  .jobs tr.rejected .t { color: var(--muted); font-weight: 500; }
+  .jobs td.job { min-width: 280px; }
+  .jobs td.job .num { margin-right: 10px; }
+  .jobs .links { flex-wrap: nowrap; }
+
+  @media (max-width: 1180px) {
+    .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .pipe { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .wrow { grid-template-columns: 1fr; }
   }
-  .chip.CHANGES {
-    border: 1px solid transparent; color: var(--changes);
-    background: color-mix(in srgb, var(--changes) 16%, transparent);
-  }
-  .chip.bad { border: 1px solid var(--human); color: var(--human); }
-  .hint {
-    margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line);
-    font-family: var(--mono); font-size: 10.5px; color: var(--muted); line-height: 1.6;
-    overflow-wrap: anywhere;
-  }
+  .acard.info { border-top-color: var(--changes); }
+  .acard.info:hover { border-top-color: var(--changes); }
+  .state.ask { color: var(--changes); }
 
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
   @keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
-  @media (prefers-reduced-motion: reduce) { .pulse, .chip.wait { animation: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .pulse, .chip.wait { animation: none; }
+    .acard, .drawer, .scrim { transition: none; }
+  }
 
   /* Drawer */
   .scrim {
-    position: fixed; inset: 0; background: rgba(5, 6, 10, .55);
+    position: fixed; inset: 0; z-index: 20; background: rgba(5, 8, 14, .6);
     opacity: 0; pointer-events: none; transition: opacity .2s;
   }
   .drawer {
-    position: fixed; top: 0; right: 0; bottom: 0; width: min(920px, 100vw);
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 21; width: min(980px, 100vw);
     background: var(--panel); border-left: 1px solid var(--line);
     display: grid; grid-template-rows: auto 1fr; transform: translateX(100%);
     transition: transform .25s ease;
   }
   .open .scrim { opacity: 1; pointer-events: auto; }
-  .open .drawer { transform: none; }
-  .d-head { padding: 20px 24px 16px; border-bottom: 1px solid var(--line); position: relative; }
-  .d-head .num { font-size: 12px; }
-  .d-head h3 { margin: 4px 40px 6px 0; font-size: 16px; font-weight: 600; line-height: 1.35; }
+  .open .drawer { transform: none; box-shadow: -24px 0 48px -24px rgba(0, 0, 0, .5); }
+  .d-head { padding: 22px 28px 18px; border-bottom: 1px solid var(--line); position: relative; }
+  .d-head .num { font-size: 12.5px; }
+  .d-head h3 { margin: 6px 48px 10px 0; font-size: 19px; font-weight: 650; line-height: 1.3; letter-spacing: -0.01em; }
   .close {
-    position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
-    border-radius: 8px; border: 1px solid var(--line); background: none; cursor: pointer;
-    color: var(--muted); font-size: 18px; line-height: 1;
+    position: absolute; top: 18px; right: 18px; width: 34px; height: 34px;
+    border-radius: 9px; border: 1px solid var(--line); background: none; cursor: pointer;
+    color: var(--muted); font-size: 20px; line-height: 1;
   }
-  .close:hover { color: var(--text); border-color: var(--muted); }
-  .d-body { display: grid; grid-template-columns: 200px 1fr; min-height: 0; }
-  .files { border-right: 1px solid var(--line); padding: 14px 10px; overflow-y: auto; }
+  .close:hover { color: var(--text); border-color: var(--line-strong); background: var(--card-hover); }
+  .d-body { display: grid; grid-template-columns: 220px 1fr; min-height: 0; }
+  .files { border-right: 1px solid var(--line); padding: 16px 10px; overflow-y: auto; }
   .files .group {
-    font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
-    color: var(--faint); margin: 12px 8px 4px;
+    font-size: 11px; font-weight: 650; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--faint); margin: 14px 10px 5px;
   }
   .files .group:first-child { margin-top: 0; }
   .file {
-    display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
-    background: none; border: 0; border-radius: 6px; padding: 5px 8px; cursor: pointer;
-    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    display: flex; align-items: center; gap: 9px; width: 100%; text-align: left;
+    background: none; border: 0; border-radius: 7px; padding: 6px 10px; cursor: pointer;
+    font-family: var(--mono); font-size: 12.5px; color: var(--muted);
   }
-  .file:hover { background: var(--card); color: var(--text); }
-  .file.on { background: var(--card-hover); color: var(--text); }
+  .file:hover { background: var(--card-hover); color: var(--text); }
+  .file.on { background: color-mix(in srgb, var(--active) 14%, transparent); color: var(--text); }
   .file .rn { display: none; }
-  .file .v { width: 6px; height: 6px; border-radius: 50%; background: var(--faint); flex: none; }
+  .file .v { width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); flex: none; }
   .v.good { background: var(--pass); } .v.warn { background: var(--changes); } .v.stop { background: var(--human); }
-  .doc { overflow-y: auto; padding: 22px 28px 60px; min-width: 0; }
+  .doc { overflow-y: auto; padding: 26px 32px 64px; min-width: 0; }
 
   /* Rendered markdown */
-  .md { max-width: 680px; line-height: 1.65; }
-  .md h1, .md h2, .md h3, .md h4 { line-height: 1.3; margin: 1.6em 0 .5em; }
-  .md h1 { font-size: 20px; } .md h2 { font-size: 15px; } .md h3 { font-size: 14px; color: var(--muted); }
+  .md { max-width: 720px; font-size: 15px; line-height: 1.7; }
+  .md h1, .md h2, .md h3, .md h4 { line-height: 1.3; margin: 1.7em 0 .5em; letter-spacing: -0.005em; }
+  .md h1 { font-size: 22px; } .md h2 { font-size: 17px; } .md h3 { font-size: 15px; color: var(--muted); }
   .md > :first-child { margin-top: 0; }
-  .md p, .md ul, .md ol, .md blockquote, .md pre, .md table { margin: 0 0 .9em; }
-  .md ul, .md ol { padding-left: 1.3em; }
-  .md li { margin: .2em 0; }
-  .md li.task { list-style: none; margin-left: -1.3em; }
+  .md p, .md ul, .md ol, .md blockquote, .md pre, .md table { margin: 0 0 1em; }
+  .md ul, .md ol { padding-left: 1.4em; }
+  .md li { margin: .25em 0; }
+  .md li.task { list-style: none; margin-left: -1.4em; }
   .md li.task::before { content: "☐"; margin-right: .5em; color: var(--faint); }
   .md li.task.done::before { content: "☑"; color: var(--pass); }
   .md code {
-    font-family: var(--mono); font-size: 12px; background: var(--card);
-    padding: 1px 5px; border-radius: 4px;
+    font-family: var(--mono); font-size: 13px; background: var(--code);
+    border: 1px solid var(--line); padding: 1px 5px; border-radius: 5px;
   }
   .md pre {
-    background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
-    padding: 12px 14px; overflow-x: auto;
+    background: var(--code); border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 15px; overflow-x: auto; line-height: 1.55;
   }
-  .md pre code { background: none; padding: 0; }
-  .md blockquote { border-left: 2px solid var(--line); padding-left: 12px; color: var(--muted); }
+  .md pre code { background: none; border: 0; padding: 0; }
+  .md blockquote { border-left: 3px solid var(--line-strong); padding-left: 14px; color: var(--muted); }
   .md a { color: var(--active); }
-  .md table { border-collapse: collapse; font-size: 13px; display: block; overflow-x: auto; }
-  .md th, .md td { border: 1px solid var(--line); padding: 5px 9px; text-align: left; }
+  .md table { border-collapse: collapse; font-size: 14px; display: block; overflow-x: auto; }
+  .md th, .md td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; }
+  .md th { background: var(--code); font-weight: 650; }
   .verdict {
-    display: inline-block; font-family: var(--mono); font-size: 12px; font-weight: 600;
-    padding: 4px 10px; border-radius: 6px; margin-bottom: 14px;
+    display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .02em;
+    padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
   }
   .verdict + * { margin-top: .4em; }
-  .md .head { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: -6px 0 14px; white-space: pre-line; }
-  .verdict.good { color: var(--pass); background: color-mix(in srgb, var(--pass) 14%, transparent); }
-  .verdict.warn { color: var(--changes); background: color-mix(in srgb, var(--changes) 16%, transparent); }
+  .md .head { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin: -6px 0 16px; white-space: pre-line; }
+  .verdict.good { color: var(--pass); background: color-mix(in srgb, var(--pass) 15%, transparent); }
+  .verdict.warn { color: var(--changes); background: color-mix(in srgb, var(--changes) 17%, transparent); }
   .verdict.stop { color: var(--human); background: color-mix(in srgb, var(--human) 16%, transparent); }
-  .note { color: var(--faint); font-size: 13px; }
+  .note { color: var(--faint); font-size: 14px; }
   .md .summary {
-    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
-    padding: 12px 16px 4px; margin: 0 0 22px;
+    background: var(--code); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 18px 6px; margin: 0 0 24px;
   }
   .md .summary h2 {
-    margin: 0 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase;
-    letter-spacing: .08em; color: var(--muted);
+    margin: 0 0 8px; font-size: 11.5px; font-weight: 650; text-transform: uppercase;
+    letter-spacing: .07em; color: var(--muted);
   }
   .md .summary ul { margin: 0 0 .6em; }
 
   footer {
-    padding: 0 32px 32px; font-family: var(--mono); font-size: 11px; color: var(--faint);
-    display: flex; gap: 20px; flex-wrap: wrap;
+    padding: 0 28px 32px; font-size: 12.5px; color: var(--faint);
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  }
+  footer span {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    padding: 3px 9px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel);
   }
 
-  @media (max-width: 1100px) {
-    .board { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 28px; }
-    .col-head::after { display: none; }
-  }
-  @media (max-width: 640px) {
-    header { padding: 20px 16px 4px; }
+  @media (max-width: 760px) {
+    header { padding: 12px 16px; }
+    h1 .logo { height: 32px; }
+    .head-right { justify-content: flex-start; }
+    .repo { max-width: 100%; white-space: normal; }
+    .repo .subject { display: none; }
     .banner { margin: 12px 16px 0; }
-    .board { grid-template-columns: 1fr; padding: 16px 16px 32px; }
+    .page { padding: 16px 16px 24px; gap: 24px; }
+    .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .tile .v { font-size: 27px; }
+    .pipe { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .pipe li { padding: 8px 10px; }
+    .pipe .who { display: none; }
+    .attention { grid-template-columns: minmax(0, 1fr); }
+    .a-top { flex-wrap: wrap; }
+    .a-top .meta { margin-left: 0; flex: 1 0 100%; }
+    .wrow { padding: 13px 14px; }
+    .jobs .opt { display: none; }
+    .jobs td.job { min-width: 0; }
+    .jobs td.job .num { display: block; }
+    .jobs th, .jobs td { padding: 10px 10px; }
     footer { padding: 0 16px 24px; }
     .d-head { padding: 16px; }
     .d-body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
@@ -254,16 +417,20 @@
 </head>
 <body>
 <header>
-  <h1>Software factory</h1>
-  <div class="status" id="status">connecting…</div>
+  <!-- The Kunena logo (src/admin/media/icons/kunena_logo.png), inline: the server of the
+       dashboard serves only the factory folder. -->
+  <h1><img class="logo" alt="Kunena software factory" title="Software factory" src="data:image/png;base64,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"></h1>
+  <div class="head-right">
+    <div class="repo" id="repo"></div>
+    <div class="status" id="status">connecting…</div>
+  </div>
 </header>
 <div id="banner"></div>
-<main class="board" id="board"></main>
+<main class="page" id="board"></main>
 <footer>
   <span>/factory run</span>
   <span>/factory run &lt;n&gt;</span>
   <span>/factory &lt;anything&gt;</span>
-  <span id="totals"></span>
 </footer>
 
 <div id="overlay">
@@ -284,16 +451,17 @@
 
 <script>
 const POLL_MS = 2000
-const COLUMNS = [
-  { label: 'Intake', who: 'intake · fable', stages: ['intake', 'needs-info'] },
-  { label: 'Spec', who: 'spec-writer · opus', stages: ['spec'] },
-  { label: 'Build', who: 'builder · gate', stages: ['build', 'gate'] },
-  { label: 'Review', who: 'routed reviewers', stages: ['review'] },
-  { label: 'Approve', who: 'approver · merge', stages: ['approve', 'merging'] },
-  { label: 'Needs human', who: 'you', stages: ['needs-human'], cls: 'human' },
-  { label: 'Done', who: 'merged · rejected', stages: ['merged', 'rejected'], cls: 'merged-col' },
+// The steps of a job, in order, and who does each.
+const STEPS = [
+  { label: 'Intake', who: 'intake · {fable}', stage: 'intake' },
+  { label: 'Spec', who: 'spec-writer · {opus}', stage: 'spec' },
+  { label: 'Build', who: 'builder · {opus}', stage: 'build' },
+  { label: 'Gate', who: 'checks.sh', stage: 'gate' },
+  { label: 'Review', who: 'routed reviewers', stage: 'review' },
+  { label: 'Approve', who: 'approver · {opus}', stage: 'approve' },
+  { label: 'Merge', who: 'sync · gate · merge', stage: 'merging' },
 ]
-const STAGES = new Set(COLUMNS.flatMap((c) => c.stages))
+const STAGES = new Set([...STEPS.map((s) => s.stage), 'needs-info', 'needs-human', 'merged', 'rejected'])
 const LIVE = new Set(['intake', 'spec', 'build', 'gate', 'review', 'approve', 'merging'])
 const SHORT = { code: 'code', ux: 'ux', ui: 'ui', security: 'sec' }
 
@@ -314,11 +482,53 @@ async function fetchText(url) {
   return res.text()
 }
 
+// The versions of the models, from the price list in config.json: { fable: '5.2', opus: '5.5' }.
+// A family which is listed with several versions shows the newest one.
+const VERSIONS = {}
+
+async function loadVersions() {
+  try {
+    const prices = JSON.parse(await fetchText('config.json')).prices_usd_per_mtok || {}
+    for (const id of Object.keys(prices)) {
+      const m = id.match(/^claude-([a-z]+)-(\d+)-(\d+)$/)
+      if (!m) continue
+      const [family, major, minor] = [m[1], Number(m[2]), Number(m[3])]
+      const old = VERSIONS[family]
+      if (!old || major > old.major || (major === old.major && minor > old.minor)) VERSIONS[family] = { major, minor }
+    }
+  } catch { /* without config.json the names stay as they are */ }
+}
+
+// The header: the version of Kunena, and the date and the subject of the last commit of the
+// main checkout. factory/bin/job writes jobs/repo.json each time it runs.
+async function loadRepo() {
+  let repo
+  try { repo = JSON.parse(await fetchText('jobs/repo.json')) } catch { return }
+  const day = new Date(repo.date)
+  const date = isNaN(day) ? '' : day.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+  const short = String(repo.commit || '').slice(0, 7)
+  const commit = repo.url && short
+    ? `<a href="${esc(repo.url)}/commit/${esc(repo.commit)}" target="_blank" rel="noopener">${esc(short)}</a>`
+    : esc(short)
+  $('repo').innerHTML = [
+    repo.version ? `<b>Kunena ${esc(repo.version)}</b>` : '',
+    esc(date),
+    short ? `${commit} <span class="subject">${esc(repo.subject || '')}</span>` : '',
+  ].filter(Boolean).join(' · ')
+  $('repo').title = `Branch ${repo.branch || '?'}, last commit ${repo.date || '?'}`
+}
+
+// 'opus' → 'opus 5.5'; a name without a known version stays as it is.
+function model(name) {
+  const v = VERSIONS[name]
+  return v ? `${name} ${v.major}.${v.minor}` : name
+}
+
 async function fetchFirst(url) {
   try { return (await fetchText(url)).split('\n')[0].trim() } catch { return null }
 }
 
-// ---- Board ---------------------------------------------------------------
+// ---- Overview ---------------------------------------------------------------
 
 function verdictOf(line) {
   if (line === null) return 'pending'
@@ -352,7 +562,7 @@ function roundRow(job, n, v) {
   const cells = [chip('gate', v.gate, current && job.stage === 'gate', 'gate', 'gate')]
   if (v.gate === 'PASS') {
     for (const r of Object.keys(job.agents.reviewers)) {
-      cells.push(chip(SHORT[r] || r, v.reviews[r], current && job.stage === 'review', r))
+      cells.push(chip(SHORT[r] || r, v.reviews[r], current && job.stage === 'review', `${r} · ${model(job.agents.reviewers[r])}`))
     }
   }
   return `<div class="round"><span class="r">R${n}</span>${cells.join('')}</div>`
@@ -374,63 +584,226 @@ function links(job) {
   return out.join('')
 }
 
-function card(job, rounds) {
-  const live = LIVE.has(job.stage)
-  const human = job.stage === 'needs-human'
-  const done = job.stage === 'merged' || job.stage === 'rejected'
+// What a job in "Needs human" still needs: is the work itself done (the gate and every review
+// passed, and the approver only wants a person to look), or is something left to fix? The
+// points for the person come from the "For the human" section of decision.md.
+async function humanState(job, last) {
+  const read = async (name) => { try { return await fetchText(`jobs/${job.id}/${name}`) } catch { return '' } }
+  const decision = await read('decision.md')
+  const built = (await read('build.md')).split('\n')[0].trim()
+  const reviews = last ? Object.values(last.reviews) : []
+  const passed = !!last && last.gate === 'PASS' && reviews.length > 0 && reviews.every((v) => v === 'PASS')
+  const section = decision.split(/^## For the human\s*$/m)[1] || ''
+  const todo = section.split(/^## /m)[0].split('\n')
+    .map((line) => line.match(/^(?:\d+\.|[-*])\s+(.*)$/))
+    .filter(Boolean)
+    .map((m) => {
+      const bold = m[1].match(/^\*\*(.+?)\*\*/)
+      const text = (bold ? bold[1] : m[1]).replace(/[`*]/g, '').replace(/[.:]\s*$/, '')
+      return text.length > 110 ? `${text.slice(0, 107).trimEnd()}…` : text
+    })
+  if (decision.startsWith('ESCALATE') && passed) return { done: true, todo }
+  const why = built === 'STATUS: BLOCKED' ? 'the builder is blocked'
+    : last && last.gate === 'FAIL' ? 'the checks fail'
+    : reviews.includes('CHANGES') ? 'a reviewer asked for changes'
+    : decision.startsWith('APPROVE') ? 'the merge did not go through'
+    : 'it stopped before the approval'
+  return { done: false, why, todo }
+}
+
+function humanHint(job, state) {
+  if (!state) return ''
+  const pr = job.pr ? `PR #${job.pr}` : 'the job'
+  const head = state.done
+    ? `<div class="state ok">Built, checked and reviewed</div>`
+    : `<div class="state stop">Not finished: ${esc(state.why)}</div>`
+  const list = state.todo.length
+    ? `<div class="todo-title">${state.done ? `Your part before merging ${esc(pr)}` : 'Asked of you'}</div>
+       <ul class="todo">${state.todo.slice(0, 4).map((t) => `<li>${esc(t)}</li>`).join('')}${
+         state.todo.length > 4 ? `<li class="more">and ${state.todo.length - 4} more: open the card</li>` : ''}</ul>`
+    : `<div class="todo-title">${state.done ? `Waiting for you to merge ${esc(pr)}` : `Open the card to see what ${esc(pr)} needs`}</div>`
+  return `<div class="hint">${head}${list}</div>`
+}
+
+// The questions which intake asked the author of the issue (the "Questions" section of intake.md).
+async function infoState(job) {
+  let intake = ''
+  try { intake = await fetchText(`jobs/${job.id}/intake.md`) } catch { /* no file: no questions */ }
+  const section = (intake.split(/^## Questions\s*$/m)[1] || '').split(/^## /m)[0]
+  const todo = section.split('\n')
+    .map((line) => line.match(/^(?:\d+\.|[-*])\s+(.*)$/))
+    .filter(Boolean)
+    .map((m) => {
+      const text = m[1].replace(/[`*]/g, '')
+      const first = text.match(/^.*?\?/)
+      const short = first ? first[0] : text
+      return short.length > 90 ? `${short.slice(0, 87).trimEnd()}…` : short
+    })
+  return { todo }
+}
+
+function infoHint(job, state) {
+  const list = state.todo.length
+    ? `<div class="todo-title">Asked on issue #${esc(job.issue)}</div>
+       <ol class="todo">${state.todo.slice(0, 4).map((t) => `<li>${esc(t)}</li>`).join('')}${
+         state.todo.length > 4 ? `<li class="more">and ${state.todo.length - 4} more: open the card</li>` : ''}</ol>`
+    : `<div class="todo-title">Open the card to read the questions</div>`
+  return `<div class="hint"><div class="state ask">Waiting for an answer on the issue</div>${list}</div>`
+}
+
+function jobName(job) {
   const [num, ...slug] = job.id.split('-')
-  const flag = human ? '<span class="flag">your call</span>'
-    : job.stage === 'needs-info' ? '<span class="flag wait">asked author</span>'
-    : job.stage === 'rejected' ? '<span class="flag wait">rejected</span>' : ''
+  return { num, slug: slug.join('-') }
+}
+
+function metaOf(job) {
   const risk = job.intake?.risk
-  const meta = [
+  return [
     risk ? `<span class="risk-${esc(risk)}">${esc(risk)}</span>` : '',
     `<span>$${Number(job.cost_usd).toFixed(2)}</span>`,
     `<span>${elapsed(job)}</span>`,
   ].join('')
+}
+
+// A job which waits: on you (a pull request to look at) or on the author of the issue.
+function attentionCard(job, rounds, state) {
+  const human = job.stage === 'needs-human'
+  const { num, slug } = jobName(job)
+  const cls = human ? (state.done ? '' : 'stop') : 'info'
+  const flag = human ? '<span class="flag">your call</span>' : '<span class="flag wait">asked author</span>'
   return `
-    <article class="card ${live ? 'live' : ''} ${human ? 'human' : ''} ${done ? 'done' : ''} ${job.stage}"
-             data-job="${esc(job.id)}" tabindex="0">
-      <div class="card-top">
-        ${live ? '<span class="pulse" aria-label="running"></span>' : ''}
-        <span class="num">${esc(num)} · ${esc(slug.join('-'))}</span>
+    <article class="acard ${cls}" data-job="${esc(job.id)}" tabindex="0">
+      <div class="a-top">
+        <span class="num">${esc(num)} · ${esc(slug)}</span>
         ${flag}
+        <div class="meta">${metaOf(job)}</div>
       </div>
-      <p class="feature">${esc(job.title)}</p>
-      <div class="links">${links(job)}</div>
-      ${rounds.length ? `<div class="rounds">${rounds.join('')}</div>` : ''}
-      <div class="meta">${meta}</div>
-      ${human ? `<div class="hint">${job.pr ? `merge PR #${job.pr} to approve<br>` : ''}or give feedback: /factory &lt;anything&gt;</div>` : ''}
+      <h3 class="a-title">${esc(job.title)}</h3>
+      ${human ? humanHint(job, state) : infoHint(job, state)}
+      <div class="a-foot">
+        <div class="links">${links(job)}</div>
+        ${rounds.length ? `<div class="rounds">${rounds.join('')}</div>` : ''}
+      </div>
     </article>`
 }
 
+// A job which runs: its place in the pipeline and the verdicts of its rounds.
+function workRow(job, rounds) {
+  const { num, slug } = jobName(job)
+  const at = STEPS.findIndex((s) => s.stage === job.stage)
+  const steps = STEPS.map((s, i) =>
+    `<li class="${i < at ? 'was' : i === at ? 'now' : ''}"${i === at ? ' aria-current="step"' : ''}>${esc(s.label)}</li>`).join('')
+  return `
+    <article class="wrow" data-job="${esc(job.id)}" tabindex="0">
+      <div>
+        <div class="w-top"><span class="pulse" aria-label="running"></span><span class="num">${esc(num)} · ${esc(slug)}</span></div>
+        <h3>${esc(job.title)}</h3>
+        <div class="links">${links(job)}</div>
+      </div>
+      <div class="w-steps">
+        <ol class="steps">${steps}</ol>
+        ${rounds.length ? `<div class="rounds">${rounds.join('')}</div>` : ''}
+      </div>
+      <div class="meta">${metaOf(job)}</div>
+    </article>`
+}
+
+// A finished job: one row of the table.
+function doneRow(job) {
+  const { num } = jobName(job)
+  const merged = job.stage === 'merged'
+  const risk = job.intake?.risk
+  const ended = job.ended ? new Date(job.ended) : null
+  const day = ended && !isNaN(ended) ? ended.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : ''
+  return `
+    <tr class="${esc(job.stage)}" data-job="${esc(job.id)}" tabindex="0">
+      <td class="job"><span class="num">${esc(num)}</span><span class="t">${esc(job.title)}</span></td>
+      <td><span class="flag ${merged ? 'ok' : 'off'}">${merged ? 'merged' : 'rejected'}</span></td>
+      <td><div class="links">${links(job)}</div></td>
+      <td class="opt">${risk ? `<span class="risk-${esc(risk)}">${esc(risk)}</span>` : ''}</td>
+      <td class="n opt">${job.round || '–'}</td>
+      <td class="n">$${Number(job.cost_usd).toFixed(2)}</td>
+      <td class="n opt">${elapsed(job)}</td>
+      <td class="n opt">${esc(day)}</td>
+    </tr>`
+}
+
+function tile(label, value, sub, tone) {
+  const zero = value === 0 ? 'zero' : ''
+  return `
+    <div class="tile ${zero}"${tone ? ` style="--tone: var(--${tone})"` : ''}>
+      <div class="k">${esc(label)}</div><div class="v">${esc(value)}</div><div class="s">${esc(sub)}</div>
+    </div>`
+}
+
+const section = (title, count, sub, body) => `
+  <section>
+    <div class="sec-head"><h2>${esc(title)}</h2><span class="count">${count}</span><span class="sub">${sub}</span></div>
+    ${body}
+  </section>`
+
 async function render() {
   const problems = []
-  const cards = new Map(COLUMNS.map((c) => [c, []]))
+  const attention = []
+  const work = []
+  const done = []
   for (const job of jobs) {
     if (!STAGES.has(job.stage)) { problems.push(`Job ${job.id} has unknown stage "${job.stage}"`); continue }
+    if (job.stage === 'merged' || job.stage === 'rejected') { done.push(job); continue }
     const rounds = []
-    for (let n = 1; n <= job.round; n++) rounds.push(roundRow(job, n, await roundVerdicts(job, n)))
-    cards.get(COLUMNS.find((c) => c.stages.includes(job.stage))).push(card(job, rounds))
+    let last = null
+    for (let n = 1; n <= job.round; n++) {
+      last = await roundVerdicts(job, n)
+      rounds.push(roundRow(job, n, last))
+    }
+    if (job.stage === 'needs-human') attention.push([job, attentionCard(job, rounds, await humanState(job, last))])
+    else if (job.stage === 'needs-info') attention.push([job, attentionCard(job, rounds, await infoState(job))])
+    else work.push(workRow(job, rounds))
   }
-  // Newest first within a column.
-  const html = COLUMNS.map((c) => `
-    <section class="col ${c.cls || ''}">
-      <div class="col-head">
-        <h2>${c.label}</h2><span class="who">${c.who}</span>
-        <span class="count">${cards.get(c).length || ''}</span>
-      </div>
-      ${cards.get(c).reverse().join('') || '<div class="empty">—</div>'}
-    </section>`).join('')
+  // Your pull requests first, then the questions to authors; the newest job first in each.
+  attention.sort(([a], [b]) =>
+    (a.stage === 'needs-human' ? 0 : 1) - (b.stage === 'needs-human' ? 0 : 1) || b.id.localeCompare(a.id))
+  done.sort((a, b) => String(b.ended || '').localeCompare(String(a.ended || '')) || b.id.localeCompare(a.id))
+
+  const count = (stage) => jobs.filter((j) => j.stage === stage).length
+  const merged = count('merged')
+  const cost = jobs.reduce((sum, j) => sum + Number(j.cost_usd), 0)
+  const tiles = `
+    <section class="tiles" aria-label="Numbers">
+      ${tile('Running', work.length, work.length ? 'agents at work' : 'nothing runs now', 'active')}
+      ${tile('Waiting for you', count('needs-human'), 'pull requests to look at', 'human')}
+      ${tile('Asked the author', count('needs-info'), 'questions on the issue', 'changes')}
+      ${tile('Merged', merged, `of ${jobs.length} jobs`, 'merged')}
+      ${tile('Rejected', count('rejected'), 'not built', 'muted')}
+      ${tile('Cost', `$${cost.toFixed(2)}`, merged ? `API-equivalent · $${(cost / merged).toFixed(2)} per merge` : 'API-equivalent')}
+    </section>`
+
+  const pipe = `<ol class="pipe">${STEPS.map((s) => {
+    const here = count(s.stage)
+    return `<li class="${here ? 'busy' : ''}">
+      <div class="name">${esc(s.label)}${here ? `<span class="here">${here}</span>` : ''}</div>
+      <div class="who">${esc(s.who.replace(/\{(\w+)\}/g, (_, name) => model(name)))}</div></li>`
+  }).join('')}</ol>`
+
+  const html = tiles
+    + section('Waiting', attention.length, 'merge the pull request to approve it, or answer with <code>/factory &lt;feedback&gt;</code>',
+      attention.length ? `<div class="attention">${attention.map(([, c]) => c).join('')}</div>`
+        : '<div class="none">Nothing waits for you or for an author.</div>')
+    + section('In progress', work.length, 'the pipeline, and the jobs which are in it now',
+      `${pipe}<div class="work" style="margin-top: 10px">${work.reverse().join('')
+        || '<div class="none">Nothing is running. Start with <code>/factory run</code>.</div>'}</div>`)
+    + section('Finished', done.length, 'merged and rejected jobs, the newest first',
+      done.length ? `<div class="tablewrap"><table class="jobs">
+        <thead><tr><th>Job</th><th>Result</th><th>Links</th><th class="opt">Risk</th><th class="n opt">Rounds</th>
+          <th class="n">Cost</th><th class="n opt">Time</th><th class="n opt">Ended</th></tr></thead>
+        <tbody>${done.map(doneRow).join('')}</tbody></table></div>`
+        : '<div class="none">No job is finished yet.</div>')
   const banner = problems.map((p) => `<div class="banner">${esc(p)}</div>`).join('')
   if (html + banner !== lastRender) {
     lastRender = html + banner
     $('board').innerHTML = html
     $('banner').innerHTML = banner
   }
-  const running = jobs.filter((j) => LIVE.has(j.stage)).length
-  const cost = jobs.reduce((sum, j) => sum + Number(j.cost_usd), 0)
-  $('totals').textContent = `${running} running · $${cost.toFixed(2)} API-equivalent`
 }
 
 async function poll() {
@@ -675,6 +1048,9 @@ function markdown(src) {
 }
 
 poll()
+loadVersions()
+loadRepo()
+setInterval(loadRepo, 15000)
 setInterval(poll, POLL_MS)
 </script>
 </body>

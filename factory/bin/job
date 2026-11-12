@@ -741,10 +741,33 @@ def cmd_summary(args):
     print(f"total ${sum(j['cost_usd'] for j in jobs):.2f} (API-equivalent, factory agents only)")
 
 
+def write_repo_info():
+    """What the dashboard shows in its header: the version of Kunena and the last commit of the
+    main checkout. The dashboard is a static page which can only read files below factory/, so
+    every run of this script refreshes jobs/repo.json. It never stops a command."""
+    try:
+        manifest = (REPO / "src" / "pkg_kunena.xml").read_text(encoding="utf-8")
+        version = re.search("<version>([^<]+)</version>", manifest)
+        commit, date, subject = run(["git", "log", "-1", "--format=%H%n%cI%n%s"]).stdout.splitlines()[:3]
+        branch = run(["git", "rev-parse", "--abbrev-ref", "HEAD"]).stdout.strip()
+        web = run(["git", "remote", "get-url", "origin"], check=False).stdout.strip()
+        if web.startswith("git@github.com:"):
+            web = "https://github.com/" + web[len("git@github.com:"):]
+        web = web.removesuffix(".git") if web.startswith("https://") else ""
+        JOBS.mkdir(parents=True, exist_ok=True)
+        (JOBS / "repo.json").write_text(json.dumps({
+            "version": version.group(1) if version else "",
+            "branch": branch, "commit": commit, "date": date, "subject": subject, "url": web,
+        }, indent=1), encoding="utf-8")
+    except Exception:  # noqa: BLE001 - the header of the dashboard is never worth a failed command
+        pass
+
+
 def main(argv):
     if not argv or argv[0] in {"-h", "--help"}:
         print(__doc__.strip())
         return
+    write_repo_info()
     cmd, args = argv[0], argv[1:]
     try:
         if cmd == "queue" and not args:

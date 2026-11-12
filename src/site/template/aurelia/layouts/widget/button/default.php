@@ -17,7 +17,8 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\Language\Text;
 
-$label = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
+// A ready-made label (already escaped) replaces the one of the language key.
+$label = isset($this->label) ? $this->label : Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
 $title = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG");
 
 if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG") {

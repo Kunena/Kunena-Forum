@@ -113,9 +113,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
                  * </span>    */ ?>
                 <?php if ($topic->locked != 0) :
                 ?>
-                    <span class="badge bg-warning">
-                        <span data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_LOCKED'); ?>"><?php echo KunenaIcons::lock(); ?></span>
-                    </span>
+                    <?php echo $this->subLayout('Widget/Lock')->set('topic', $topic); ?>
                 <?php endif; ?>
             </div>
         </div>

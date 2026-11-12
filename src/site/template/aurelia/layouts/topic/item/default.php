@@ -64,6 +64,9 @@ if ($this->topic->locked) {
             echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
         }
         ?>
+        <?php if ($this->topic->locked && (string) $this->topic->lock_reason !== '') : ?>
+            <?php echo $this->subLayout('Widget/Lock')->set('topic', $this->topic); ?>
+        <?php endif; ?>
         <?php echo $this->topic->displayField('subject'); ?>
 
         <?php if (KunenaConfig::getInstance()->ratingEnabled) {

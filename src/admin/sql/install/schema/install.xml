@@ -321,6 +321,10 @@
                type="tinyint(4)"
                null="0"
                default="0"/>
+        <field name="lock_reason"
+               type="varchar(255)"
+               null="0"
+               default=""/>
         <field name="hold"
                type="tinyint(4)"
                null="0"

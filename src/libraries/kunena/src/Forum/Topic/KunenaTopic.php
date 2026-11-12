@@ -61,6 +61,7 @@ use RuntimeException;
  * @property string $subject
  * @property int    $icon_id
  * @property int    $locked
+ * @property string $lock_reason
  * @property int    $hold
  * @property int    $ordering
  * @property int    $posts
@@ -195,6 +196,12 @@ class KunenaTopic extends KunenaDatabaseObject
      * @since   Kunena 6.4
      */
     public mixed $locked = null;
+
+    /**
+     * @var     string
+     * @since   Kunena 8.0
+     */
+    public mixed $lock_reason = null;
 
     /**
      * @var     string
@@ -1287,6 +1294,7 @@ class KunenaTopic extends KunenaDatabaseObject
             'icon_id'               => $this->icon_id,
             'label_id'              => $this->label_id,
             'locked'                => $this->locked,
+            'lock_reason'           => $this->lock_reason,
             'hold'                  => $this->hold,
             'ordering'              => $this->ordering,
             'posts'                 => $this->posts,
@@ -1589,16 +1597,18 @@ class KunenaTopic extends KunenaDatabaseObject
     }
 
     /**
-     * @param   int  $value  value
+     * @param   int     $value   value
+     * @param   string  $reason  The reason of the lock, cleared when the topic is unlocked
      *
      * @return  boolean
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function lock($value = 1): bool
+    public function lock($value = 1, string $reason = ''): bool
     {
-        $this->locked = (int) $value;
+        $this->locked      = (int) $value;
+        $this->lock_reason = $this->locked ? $reason : '';
 
         return $this->save();
     }

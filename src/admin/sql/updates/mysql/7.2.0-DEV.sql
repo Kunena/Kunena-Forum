@@ -74,3 +74,5 @@ ALTER TABLE `#__kunena_rate` ADD UNIQUE KEY `topic_user` (`topic_id`, `userid`);
 -- The smilies get a manual order: the current order (by id) stays the same, a second run keeps an order set since.
 ALTER TABLE `#__kunena_smileys` ADD `ordering` int(11) NOT NULL default '0' AFTER `emoticonbar`;
 UPDATE `#__kunena_smileys` SET `ordering` = `id` WHERE `ordering` = 0;
+-- A locked topic can have a reason (closed, solved, sold...): the topics which are already locked have none.
+ALTER TABLE `#__kunena_topics` ADD `lock_reason` varchar(255) NOT NULL default '' AFTER `locked`;

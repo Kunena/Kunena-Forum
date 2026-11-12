@@ -44,6 +44,10 @@ class MessageItemBottom extends KunenaLayout
 
     public mixed $ipLink = null;
 
+    public mixed $ipMatchesCount = 0;
+
+    public mixed $ipMatchesText = '';
+
     public mixed $reportMessageLink = null;
 
     public mixed $profile = null;

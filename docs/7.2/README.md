@@ -51,6 +51,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [Access by rank: the plugin Kunena - ACL](features/category-access-rank.md) | Administrators |  | Restrict a category to users with a minimum rank (by post count). |
 | [Choose the default announcement](features/default-announcement.md) | Administrators | [#1612](https://github.com/Kunena/Kunena-Forum/issues/1612) | The administrator chooses which announcement is the banner, with a star on the list of announcements. |
 | [GeoIP plugin: the place next to the IP address](features/geoip.md) | Moderators, administrators | [#6771](https://github.com/Kunena/Kunena-Forum/issues/6771) | The IP address of a message gets its place (city, region and country) for the people who see the IP address. |
+| [Other users of the same IP address in the topic](features/ip-matches.md) | Moderators, administrators | [#5626](https://github.com/Kunena/Kunena-Forum/issues/5626) | A badge next to the IP address of a message names the other registered users who posted from it. |
 
 ## Categories and menus
 

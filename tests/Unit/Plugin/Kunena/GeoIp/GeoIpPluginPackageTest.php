@@ -109,7 +109,14 @@ class GeoIpPluginPackageTest extends UnitTestCase
     {
         $script = Files::read('scripts/kunena_sym_links.ps1');
 
-        $this->assertStringContainsString('plg_kunena_geoip', $script);
-        $this->assertStringContainsString('\\plugins\\kunena\\geoip', $script);
+        // The script does not list the plugins: it links every src/plugins/plg_<group>_<name> folder to plugins\<group>\<name>.
+        $this->assertStringContainsString("-Filter 'plg_*'", $script);
+        $this->assertStringContainsString("'^plg_([^_]+)_(.+)$'", $script);
+        $this->assertStringContainsString('plugins\\{0}\\{1}', $script);
+
+        // So the plugin is linked when its folder has a name which that pattern turns into plugins\kunena\geoip.
+        $this->assertDirectoryExists(Files::path(self::FOLDER));
+        $this->assertSame(1, preg_match('/^plg_([^_]+)_(.+)$/', basename(self::FOLDER), $match));
+        $this->assertSame(['kunena', 'geoip'], [$match[1], $match[2]]);
     }
 }

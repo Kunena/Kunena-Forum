@@ -192,6 +192,7 @@ use SimpleXMLElement;
  * @property string $sef                          Search Engine Friendly URLs
  * @property string $sefRedirect                  SEF Redirect
  * @property int    $categoryAliasId              Start the automatic alias of a category with its id (id-name)
+ * @property int    $uniqueTopicSubject           Refuse a new topic whose subject is that of an existing topic
  * @property string $sendEmails                   Send E-mails to Users
  * @property string $sendMailUserBanned           Send a mail to the user when he is banned and unbanned
  * @property string $sessionTimeOut               Session Lifetime

@@ -12,9 +12,13 @@ describe('Kunena templates: the modified files of a template', () => {
   const rightHash = 'c5e0af4684fba26f807394409a0bc54b47515ba1994bfe745cdc8ef43bee3cf8';
 
   before(() => {
-    // A template of its own: a copy of the description of Aurelia with its own name.
+    // A template of its own: a copy of the description of Aurelia with its own name, and of its settings (the edit screen
+    // needs config/config.xml: without it the form of the template can't be loaded).
     cy.readFile(`${root}/components/com_kunena/template/aurelia/config/template.xml`).then((xml) => {
       cy.writeFile(`${folder}/config/template.xml`, xml.replace(/<name>[^<]*<\/name>/, `<name>${dummy}</name>`));
+    });
+    cy.readFile(`${root}/components/com_kunena/template/aurelia/config/config.xml`).then((xml) => {
+      cy.writeFile(`${folder}/config/config.xml`, xml);
     });
     cy.writeFile(`${folder}/${right}`, 'the right content');
     cy.writeFile(`${folder}/${wrong}`, 'the content on the site');

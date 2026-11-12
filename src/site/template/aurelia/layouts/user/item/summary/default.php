@@ -83,7 +83,7 @@ if ($this->config->showUserStats) {
                                     <option value="<?php echo (int) $rankId; ?>"<?php echo (int) $rankId === (int) $this->profile->rank ? ' selected="selected"' : ''; ?>><?php echo $this->escape($rankText); ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <button type="submit" class="btn btn-sm btn-outline-primary"><?php echo Text::_('COM_KUNENA_USER_RANK_CHANGE_SUBMIT'); ?></button>
+                            <button type="submit" class="btn btn-outline-primary border btn-sm"><?php echo Text::_('COM_KUNENA_USER_RANK_CHANGE_SUBMIT'); ?></button>
                             <?php echo HTMLHelper::_('form.token'); ?>
                         </form>
                     <?php endif; ?>

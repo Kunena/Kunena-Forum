@@ -21,6 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
+use Joomla\Database\ParameterType;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -144,15 +145,22 @@ class SmiliesController extends FormController
         }
 
         if (!$smileyId) {
-            $query = $db->createQuery()
-                ->insert("{$db->quoteName('#__kunena_smileys')}")
-                ->set("code={$db->quote($smileyCode)}")
-                ->set("location={$db->quote($smileyLocation)}")
-                ->set("emoticonbar={$db->quote($smileyEmoticonBar)}");
-
-            $db->setQuery($query);
-
             try {
+                // A new smiley comes last: MySQL does not allow a subquery on the same table in the insert
+                $query = $db->createQuery()
+                    ->select('MAX(' . $db->quoteName('ordering') . ')')
+                    ->from($db->quoteName('#__kunena_smileys'));
+
+                $ordering = (int) $db->setQuery($query)->loadResult() + 1;
+
+                $query = $db->createQuery()
+                    ->insert("{$db->quoteName('#__kunena_smileys')}")
+                    ->set("code={$db->quote($smileyCode)}")
+                    ->set("location={$db->quote($smileyLocation)}")
+                    ->set("emoticonbar={$db->quote($smileyEmoticonBar)}")
+                    ->set("ordering={$ordering}");
+
+                $db->setQuery($query);
                 $db->execute();
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -275,6 +283,97 @@ class SmiliesController extends FormController
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_DELETED'), 'success');
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
+
+    /**
+     * Save the order of the smilies which the list sends over AJAX after a drag
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function saveorderajax(): void
+    {
+        if (!Session::checkToken('post') || !$this->app->getIdentity()->authorise('core.manage', 'com_kunena')) {
+            $this->app->close();
+        }
+
+        // Get the arrays from the Request
+        $pks   = ArrayHelper::toInteger($this->input->post->get('cid', [], 'array'));
+        $order = ArrayHelper::toInteger($this->input->post->get('order', [], 'array'));
+
+        $posted = [];
+
+        foreach ($pks as $i => $pk) {
+            if ($pk > 0 && isset($order[$i])) {
+                $posted[$pk] = $order[$i];
+            }
+        }
+
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        try {
+            $query = $db->createQuery()
+                ->select([$db->quoteName('id'), $db->quoteName('ordering')])
+                ->from($db->quoteName('#__kunena_smileys'));
+
+            $current = array_map('intval', $db->setQuery($query)->loadAssocList('id', 'ordering'));
+
+            foreach (static::orderPositions($current, $posted) as $id => $position) {
+                if ($current[$id] === $position) {
+                    continue;
+                }
+
+                $query = $db->createQuery()
+                    ->update($db->quoteName('#__kunena_smileys'))
+                    ->set($db->quoteName('ordering') . ' = :ordering')
+                    ->where($db->quoteName('id') . ' = :id')
+                    ->bind(':ordering', $position, ParameterType::INTEGER)
+                    ->bind(':id', $id, ParameterType::INTEGER);
+
+                $db->setQuery($query)->execute();
+            }
+        } catch (RuntimeException $e) {
+            $this->app->close();
+        }
+
+        echo '1';
+
+        // Close the application
+        $this->app->close();
+    }
+
+    /**
+     * The positions of all the smilies after a drag: the posted orderings replace the stored ones of the smilies which exist,
+     * then every smiley is numbered from 1 by (ordering, id), so that the gaps of a deletion and the duplicates go away.
+     *
+     * @param   array  $current  The stored orderings, [id => ordering].
+     * @param   array  $posted   The posted orderings, [id => ordering].
+     *
+     * @return  array  [id => position]
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function orderPositions(array $current, array $posted): array
+    {
+        $orderings = $current;
+
+        foreach ($posted as $id => $ordering) {
+            if (\array_key_exists($id, $orderings)) {
+                $orderings[$id] = (int) $ordering;
+            }
+        }
+
+        if (!$orderings) {
+            return [];
+        }
+
+        $ids = array_keys($orderings);
+
+        usort($ids, static fn ($a, $b) => [$orderings[$a], $a] <=> [$orderings[$b], $b]);
+
+        return array_combine($ids, range(1, \count($ids)));
     }
 
     /**

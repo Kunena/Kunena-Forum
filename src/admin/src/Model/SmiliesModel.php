@@ -41,6 +41,7 @@ class SmiliesModel extends ListModel
                 'code',
                 'location',
                 'emoticonbar',
+                'ordering',
             ];
         }
 
@@ -73,7 +74,7 @@ class SmiliesModel extends ListModel
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    protected function populateState($ordering = 'id', $direction = 'asc')
+    protected function populateState($ordering = 'ordering', $direction = 'asc')
     {
         $app = Factory::getApplication();
 
@@ -120,7 +121,7 @@ class SmiliesModel extends ListModel
         $query->select(
             $this->getState(
                 'list.select',
-                'a.id, a.code, a.location, a.emoticonbar'
+                'a.id, a.code, a.location, a.emoticonbar, a.ordering'
             )
         );
 
@@ -164,6 +165,9 @@ class SmiliesModel extends ListModel
                 break;
             case 'emoticonbar':
                 $query->order('a.emoticonbar ' . $direction);
+                break;
+            case 'ordering':
+                $query->order('a.ordering ' . $direction . ', a.id ' . $direction);
                 break;
             default:
                 $query->order('a.id ' . $direction);

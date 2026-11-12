@@ -45,6 +45,14 @@ class KunenaMessageFinder extends KunenaFinder
     protected mixed $hold = [0];
 
     /**
+     * The user whose own unapproved messages are found besides the holds of $hold, or 0 for nobody.
+     *
+     * @var     integer
+     * @since   Kunena 8.0
+     */
+    protected int $unapprovedOf = 0;
+
+    /**
      * @var     null
      * @since   Kunena 6.0
      */
@@ -75,7 +83,14 @@ class KunenaMessageFinder extends KunenaFinder
         if (!empty($this->hold)) {
             $this->hold = ArrayHelper::toInteger($this->hold, 0);
             $hold       = implode(',', $this->hold);
-            $query->where($this->db->quoteName('a.hold') . ' IN (' . $hold . ')');
+            $where      = $this->db->quoteName('a.hold') . ' IN (' . $hold . ')';
+
+            if ($this->unapprovedOf > 0) {
+                $where = '(' . $where . ' OR (' . $this->db->quoteName('a.hold') . ' = 1 AND '
+                    . $this->db->quoteName('a.userid') . ' = ' . $this->unapprovedOf . '))';
+            }
+
+            $query->where($where);
         }
     }
 
@@ -127,6 +142,25 @@ class KunenaMessageFinder extends KunenaFinder
     public function filterByHold(array $hold = [0]): KunenaMessageFinder
     {
         $this->hold = $hold;
+
+        return $this;
+    }
+
+    /**
+     * Filter by hold, and find also the unapproved messages (hold 1) of one user: the author of a topic which waits for
+     * approval reads his own messages in it, not the unapproved messages of the others.
+     *
+     * @param   array       $hold  List of hold states to display.
+     * @param   KunenaUser  $user  The user whose unapproved messages are found too (a guest has none).
+     *
+     * @return  $this
+     *
+     * @since   Kunena 8.0
+     */
+    public function filterByHoldOrOwnUnapproved(array $hold, KunenaUser $user): KunenaMessageFinder
+    {
+        $this->hold         = $hold;
+        $this->unapprovedOf = $user->exists() ? max(0, (int) $user->userid) : 0;
 
         return $this;
     }

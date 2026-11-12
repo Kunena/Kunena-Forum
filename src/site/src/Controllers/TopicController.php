@@ -2006,8 +2006,11 @@ class TopicController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_MODERATED'), 'success');
         }
 
-        // Redirect edit first message when category is under review
-        if ($message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id && !$this->me->isModerator()) {
+        // Redirect edit first message when category is under review and the editor cannot read the topic (its author can)
+        if (
+            $message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id && !$this->me->isModerator()
+            && !$topic->isAuthorised('read', null, false)
+        ) {
             $this->setRedirect($message->getCategory()->getUrl($this->return, false));
         } else {
             $this->setRedirect($message->getUrl($this->return, false));

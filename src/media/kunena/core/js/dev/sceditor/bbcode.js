@@ -29,6 +29,18 @@
 
 	var getEditorCommand = sceditor.command.get;
 
+	/**
+	 * Encodes the square brackets of a URL, so they cannot end the
+	 * [url=...] tag or open another tag.
+	 *
+	 * @param {string} url
+	 * @return {string}
+	 * @private
+	 */
+	var encodeUrlBrackets = function (url) {
+		return url.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
+	};
+
 	var QuoteType = {
 		/** @lends BBCodeParser.QuoteType */
 		/**
@@ -215,6 +227,8 @@
 					editor,
 					caller,
 					function (url, text) {
+						url = encodeUrlBrackets(url);
+
 						editor.insertText(
 							'[url=' + url + ']' +
 								(text || selected || url) +
@@ -654,7 +668,13 @@
 						content + '[/email]';
 				}
 
-				return '[url=' + url + ']' + content + '[/url]';
+				var encodedUrl = encodeUrlBrackets(url);
+
+				if (content === url) {
+					content = encodedUrl;
+				}
+
+				return '[url=' + encodedUrl + ']' + content + '[/url]';
 			},
 			html: function (token, attrs, content) {
 				attrs.defaultattr =

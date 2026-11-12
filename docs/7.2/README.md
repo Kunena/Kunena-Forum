@@ -41,6 +41,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | Feature | For | Issue | What it does |
 | --- | --- | --- | --- |
 | [Ban button on messages](features/quick-ban.md) | Moderators, administrators | [#4158](https://github.com/Kunena/Kunena-Forum/issues/4158) | Ban a user from the Moderate menu of a message, with the duration and the reason in one box. |
+| [A reason for locked topics](features/lock-reasons.md) | Users, moderators, administrators | [#48](https://github.com/Kunena/Kunena-Forum/issues/48) | A locked topic shows why it is locked (Closed, Solved, Sold...), and the author can lock his own topic with a reason. |
 | [Frontend moderation log](features/moderation-log.md) | Moderators, administrators |  | A page with the actions of the moderators, in the forum itself. |
 | [Deleted topics answer with 410 Gone](features/deleted-topics-410.md) | Administrators |  | A deleted topic tells the search engines it is gone (410), instead of a 404 error. |
 | [Report the author of a message to StopForumSpam](features/stopforumspam-report.md) | Moderators, administrators |  | A button in the Moderate menu reports a spammer to StopForumSpam. |

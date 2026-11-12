@@ -16,9 +16,11 @@ namespace Kunena\Forum\Site\Controller\Topic\Item\Message;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -78,6 +80,18 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
      * @since   Kunena 6.0
      */
     public mixed $ipLink = null;
+
+    /**
+     * @var     integer  The number of other registered users who posted from the IP address of the message.
+     * @since   Kunena 8.0
+     */
+    public mixed $ipMatchesCount = 0;
+
+    /**
+     * @var     string  Their names and number of messages (plain text).
+     * @since   Kunena 8.0
+     */
+    public mixed $ipMatchesText = '';
 
     /**
      * @var     string
@@ -216,6 +230,29 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
             if (!empty($this->message->ip)) {
                 // The address with its place (when a plugin gives it).
                 $this->ipLink = KunenaIpLocation::html((string) $this->message->ip);
+
+                // The other registered users who posted from the same address.
+                $ip     = (string) $this->message->ip;
+                $others = KunenaMessageHelper::getUsersByIp(Factory::getContainer()->get(DatabaseInterface::class), [$ip])[$ip];
+                unset($others[(int) $this->message->userid]);
+
+                if ($others) {
+                    $shown = \array_slice($others, 0, 5, true);
+                    $names = [];
+
+                    KunenaUserHelper::loadUsers(array_keys($shown));
+
+                    foreach ($shown as $userid => $count) {
+                        $names[] = KunenaUserHelper::get($userid)->getName('', false) . ' (' . $count . ')';
+                    }
+
+                    $this->ipMatchesCount = \count($others);
+                    $this->ipMatchesText  = Text::sprintf('COM_KUNENA_IP_MATCHES_USERS', implode(', ', $names));
+
+                    if ($this->ipMatchesCount > 5) {
+                        $this->ipMatchesText .= ' ' . Text::sprintf('COM_KUNENA_IP_MATCHES_MORE', $this->ipMatchesCount - 5);
+                    }
+                }
             } else {
                 $this->ipLink = '&nbsp;';
             }

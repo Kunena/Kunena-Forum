@@ -57,6 +57,8 @@ jQuery(function ($) {
 		// send Blob objects via XHR requests:
 		disableImageResize: /Android(?!.*Chrome)|Opera/
 			.test(window.navigator.userAgent),
+		// Never draw an SVG on a canvas: the original file is sent and cleaned on the server.
+		loadImageFileTypes: /^image\/(gif|jpeg|png)$/,
 		previewMaxWidth: 100,
 		previewMaxHeight: 100,
 		previewCrop: true

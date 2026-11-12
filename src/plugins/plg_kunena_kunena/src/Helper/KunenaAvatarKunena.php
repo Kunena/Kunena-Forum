@@ -96,6 +96,11 @@ class KunenaAvatarKunena extends KunenaAvatar
                 $template = KunenaFactory::getTemplate();
                 $origPath = JPATH_SITE . '/' . $template->getAvatarPath($avatar);
                 $avatar   = $template->name . '/' . $avatar;
+            } elseif (str_starts_with($avatar, 'users/') && strtolower(substr($avatar, -4)) === '.svg') {
+                // An uploaded SVG avatar (cleaned on upload) is shown from its own file: GD cannot resize it.
+                $timestamp = $user->timestamp ? '?' . $user->timestamp : '';
+
+                return KURL_MEDIA . "avatars/{$avatar}{$timestamp}";
             }
 
             $dir  = \dirname($avatar);

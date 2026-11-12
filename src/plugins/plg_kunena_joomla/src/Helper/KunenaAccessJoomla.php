@@ -286,9 +286,16 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
             }
         }
 
+        // The moderator groups of the categories are loaded in the same query.
+        $moderatorGroups = $this->getModeratorGroups();
+
+        foreach ($moderatorGroups as $ids) {
+            $groups = array_merge($groups, $ids);
+        }
+
         $this->loadGroupUsers($groups, true);
 
-        // Currently we have only global administrators in Joomla
+        // Global administrators
         $admins = array_merge($this->getAuthorisedUsers('core.admin', 'com_kunena'), $this->getAuthorisedUsers('core.manage', 'com_kunena'));
 
         foreach ($admins as $userid) {
@@ -297,6 +304,56 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
             $item->category_id = 0;
             $item->role        = KunenaForum::ADMINISTRATOR;
             $list[]            = $item;
+        }
+
+        // The members of the moderator groups (and of their child groups) moderate the category.
+        foreach ($moderatorGroups as $catid => $ids) {
+            $users = [];
+
+            foreach ($ids as $id) {
+                $users = array_merge($users, $this->groupUsers['1|' . $id] ?? []);
+            }
+
+            foreach (array_unique($users) as $userid) {
+                $item              = new StdClass();
+                $item->user_id     = (int) $userid;
+                $item->category_id = (int) $catid;
+                $item->role        = KunenaForum::MODERATOR;
+                $list[]            = $item;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * The moderator groups of all categories (the category parameter moderatorGroups), read with one query.
+     *
+     * The access of Kunena is not asked here: this runs while KunenaAccess is made.
+     *
+     * @return  array  Group ids by category id (category id => int[]), only for the categories which have groups.
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getModeratorGroups(): array
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select($db->quoteName(['id', 'params']))
+            ->from($db->quoteName('#__kunena_categories'))
+            ->where($db->quoteName('params') . ' LIKE ' . $db->quote('%moderatorGroups%'));
+        $db->setQuery($query);
+
+        $list = [];
+
+        foreach ((array) $db->loadObjectList() as $row) {
+            $params = json_decode((string) $row->params, true);
+            $ids    = \is_array($params) && \is_array($params['moderatorGroups'] ?? null) ? $params['moderatorGroups'] : [];
+            $ids    = array_values(array_unique(array_filter(array_map('intval', array_filter($ids, 'is_numeric')), static fn ($id) => $id > 0)));
+
+            if ($ids) {
+                $list[(int) $row->id] = $ids;
+            }
         }
 
         return $list;

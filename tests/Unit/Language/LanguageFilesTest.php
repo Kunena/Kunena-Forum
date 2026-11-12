@@ -110,6 +110,15 @@ class LanguageFilesTest extends UnitTestCase
         $this->assertStringContainsString('%d', $strings['COM_KUNENA_POPUP_MORE']);
     }
 
+    public function testTheHeadingsOfTheNotificationEmailsTakeTheForumName(): void
+    {
+        $strings = Files::language('src/admin/language/en-GB/com_kunena.libraries.ini');
+
+        foreach (['COM_KUNENA_POST_EMAIL_MOD1', 'COM_KUNENA_POST_EMAIL_MOD3', 'COM_KUNENA_POST_EMAIL_NOTIFICATION1', 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT'] as $key) {
+            $this->assertStringContainsString('%1$s', $strings[$key], $key . ' has no place for the forum name.');
+        }
+    }
+
     /**
      * The strings of the template settings have one definition: the frontend file, which the template also loads in the backend.
      */

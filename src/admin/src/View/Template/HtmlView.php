@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Filesystem\Folder;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\Template\KunenaTemplateChecksums;
 
 /**
  * Template view for Kunena backend
@@ -31,6 +32,12 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 class HtmlView extends BaseHtmlView
 {
     public mixed $templatename = null;
+
+    /**
+     * @var    array|null  The modified and the missing files of the template, or null when it has no list of checksums.
+     * @since  Kunena 8.0
+     */
+    public ?array $modifiedFiles = null;
 
     /**
      * @param   null  $tpl  tpl
@@ -113,6 +120,11 @@ class HtmlView extends BaseHtmlView
         if (!$this->details || empty($this->templatename)) {
             Factory::getApplication()->redirect('index.php?option=com_kunena&view=templates');
         }
+
+        // The files of the template which differ from its list of checksums; the name of the user state is not trusted as a path.
+        $this->modifiedFiles = preg_match('/^[\w\-]+$/', (string) $this->templatename)
+            ? KunenaTemplateChecksums::compare(KPATH_SITE . '/template', $this->templatename)
+            : null;
 
         $template           = KunenaTemplate::getInstance($this->templatename);
         $template->initializeBackend();

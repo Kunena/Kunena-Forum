@@ -332,6 +332,15 @@
 			</fileset>
 		</copy>
 
+		<!-- The SHA-256 of every file of each template, after the replacement of the tokens: the backend lists the modified files -->
+		<exec
+			executable="${php.interpreter}"
+			checkreturn="true"
+			passthru="true">
+			<arg file="scripts/template-checksums.php" />
+			<arg file="${tmp_dir}/packages/com_kunena/site/template" />
+		</exec>
+
 		<echo message="Building Components...DONE!" />
 	</target>
 

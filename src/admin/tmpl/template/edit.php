@@ -52,6 +52,12 @@ $wa->useScript('multiselect');
                                                         aria-controls="tab_info"
                                                         aria-selected="true"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INFO'); ?></button>
                                             </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="tab_modifiedfiles-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#tab_modifiedfiles" type="button" role="tab"
+                                                        aria-controls="tab_modifiedfiles"
+                                                        aria-selected="false"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_MODIFIED_FILES'); ?></button>
+                                            </li>
                                             <?php foreach ($this->form->getFieldsets() as $fieldset) :
                                                 ?>
                                                 <?php if ($fieldset->name != 'template') :
@@ -110,6 +116,38 @@ $wa->useScript('multiselect');
                                                         </td>
                                                     </tr>
                                                 </table>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="tab_modifiedfiles" role="tabpanel"
+                                                 aria-labelledby="tab_modifiedfiles-tab">
+                                                <?php if ($this->modifiedFiles === null) : ?>
+                                                    <p><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_MODIFIED_FILES_NO_LIST'); ?></p>
+                                                <?php elseif (!$this->modifiedFiles['modified'] && !$this->modifiedFiles['missing']) : ?>
+                                                    <p><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_MODIFIED_FILES_NONE'); ?></p>
+                                                <?php else : ?>
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_MODIFIED_FILES_FILE'); ?></th>
+                                                                <th scope="col"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_MODIFIED_FILES_STATE'); ?></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($this->modifiedFiles['modified'] as $file) : ?>
+                                                                <tr>
+                                                                    <td><?php echo $this->escape($file); ?></td>
+                                                                    <td><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_MODIFIED_FILES_MODIFIED'); ?></td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                            <?php foreach ($this->modifiedFiles['missing'] as $file) : ?>
+                                                                <tr>
+                                                                    <td><?php echo $this->escape($file); ?></td>
+                                                                    <td><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_MODIFIED_FILES_MISSING'); ?></td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                <?php endif; ?>
                                             </div>
 
                                             <?php foreach ($this->form->getFieldsets() as $fieldset) :

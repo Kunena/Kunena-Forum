@@ -275,9 +275,22 @@ class DBTestHelper
         $statements = [];
 
         if ($dataset === 'kunena') {
-            foreach (SchemaGenerator::tables() as $table) {
+            // The database is shared by the checkouts: a table of an earlier run can have the columns of another schema. The tables
+            // are made again from the schema of the code which is tested, and dropped at the end so the next run makes its own.
+            foreach (SchemaGenerator::tables() as $name => $table) {
+                $statements[] = 'DROP TABLE IF EXISTS `#__' . $name . '`';
                 $statements[] = SchemaGenerator::createStatement($table);
             }
+
+            register_shutdown_function(static function () use ($driver): void {
+                try {
+                    foreach (array_keys(SchemaGenerator::tables()) as $name) {
+                        $driver->setQuery('DROP TABLE IF EXISTS `#__' . $name . '`')->execute();
+                    }
+                } catch (Throwable) {
+                    // The next run drops them before it makes them.
+                }
+            });
         } else {
             $file = __DIR__ . '/datasets/mysqli/' . (str_ends_with($dataset, '.sql') ? $dataset : $dataset . '.sql');
 

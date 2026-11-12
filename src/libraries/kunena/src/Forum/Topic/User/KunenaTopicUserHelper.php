@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Forum\Topic\User;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -379,8 +380,32 @@ abstract class KunenaTopicUserHelper
      */
     public static function recount($topicids = false, $start = 0, $end = 0)
     {
-        $db = Factory::getContainer()->get('DatabaseDriver');
+        try {
+            return self::recountRows(Factory::getContainer()->get('DatabaseDriver'), $topicids, (int) $start, (int) $end);
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
 
+            return false;
+        }
+    }
+
+    /**
+     * Recount the user topics of the topics: the posts, the last post and the owner of every user in them. A user topic whose last
+     * post is no longer a visible post of the user in that topic (a message which was deleted, made anonymous or moved into another
+     * topic by a split) is reset, and deleted when it has nothing else to keep.
+     *
+     * @param   DatabaseInterface  $db        The database.
+     * @param   bool|array|int     $topicids  The topics (false: all of them).
+     * @param   int                $start     The first topic id of a range (with $end).
+     * @param   int                $end       The last topic id of a range (0: no range).
+     *
+     * @return  integer  The number of affected rows.
+     *
+     * @since   Kunena 8.0
+     * @throws  ExecutionFailureException
+     */
+    public static function recountRows(DatabaseInterface $db, $topicids = false, int $start = 0, int $end = 0): int
+    {
         if (\is_array($topicids)) {
             // An empty list means that there is nothing to recount (not "everything", and not an empty IN () clause).
             $topicids = array_values(array_filter(array_map('intval', $topicids)));
@@ -433,38 +458,26 @@ abstract class KunenaTopicUserHelper
                   $db->quoteName('last_post_id') . ' = VALUES(' . $db->quoteName('last_post_id') . '), ' .
                   $db->quoteName('owner') . ' = VALUES(' . $db->quoteName('owner') . ')';
         $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
+        $db->execute();
 
         $rows = $db->getAffectedRows();
 
-        // Find user topics where last post doesn't exist (or is no longer a post of the user: a message which was made anonymous) and
-        // reset values in it: the user has no post in the topic, so he did not start it either.
+        // Find user topics where last post doesn't exist (or is no longer a post of the user: a message which was made anonymous, or
+        // no longer in the topic: a message which a split moved into another topic) and reset values in it: the user has no post in
+        // the topic, so he did not start it either.
         $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_user_topics', 'ut'))
             ->leftJoin(
                 $db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('ut.last_post_id') . ' = ' . $db->quoteName('m.id')
                 . ' AND ' . $db->quoteName('m.hold') . ' = 0 AND ' . $db->quoteName('m.userid') . ' = ' . $db->quoteName('ut.user_id')
+                . ' AND ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('ut.topic_id')
             )
             ->set($db->quoteName('posts') . ' = 0')
             ->set($db->quoteName('last_post_id') . ' = 0')
             ->set($db->quoteName('owner') . ' = 0')
             ->where($db->quoteName('m.id') . ' IS NULL ' . $where2);
         $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
+        $db->execute();
 
         $rows += $db->getAffectedRows();
 
@@ -472,14 +485,7 @@ abstract class KunenaTopicUserHelper
         $query = "DELETE ut FROM #__kunena_user_topics AS ut WHERE ut.posts=0 AND ut.owner=0 AND ut.favorite=0 AND ut.subscribed=0 AND ut.params='' {$where2}";
 
         $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
+        $db->execute();
 
         $rows += $db->getAffectedRows();
 

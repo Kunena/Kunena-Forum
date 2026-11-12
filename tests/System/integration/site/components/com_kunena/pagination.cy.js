@@ -92,6 +92,37 @@ describe('Kunena pagination: a topic with many messages', () => {
     });
   });
 
+  it('leaves the message out of the page links of a topic opened with the link to a message', () => {
+    const mesid = ids.messages[1];
+
+    cy.request({ url: `${base}&view=topic&catid=3&id=${ids.topic}&mesid=${mesid}`, failOnStatusCode: false }).then((response) => {
+      expect(response.status).to.be.lessThan(500);
+
+      const links = Cypress.$('<div>').append(Cypress.$.parseHTML(response.body)).find('ul.pagination a.page-link').toArray();
+      const hrefs = links.map((link) => link.getAttribute('href') || '');
+
+      expect(hrefs.length, 'the page links').to.be.greaterThan(0);
+      hrefs.forEach((href) => {
+        expect(href, 'a page link').not.to.contain('mesid=');
+        expect(href, 'a page link').not.to.match(new RegExp(`/${mesid}([.?#/]|$)`));
+      });
+
+      // The href as a string: Cypress handles an element given to expect() as a query of the page under test.
+      const second = hrefs[links.findIndex((link) => link.textContent.trim() === '2')];
+
+      expect(second, 'the link of page 2').to.be.a('string').and.not.to.be.empty;
+
+      // The href starts with the folder of the site, which the base address already has: resolve it as the browser does.
+      cy.request({ url: new URL(second, Cypress.config('baseUrl')).href, failOnStatusCode: false }).then((page2) => {
+        expect(page2.status).to.be.lessThan(500);
+
+        const numbers = numbersOf(page2.body).filter((number) => number !== 1);
+
+        expect(numbers[0], 'the first message of page 2').to.eq(perPage + 1);
+      });
+    });
+  });
+
   it('shows every message once on the pages one after the other', () => {
     const seen = [];
 

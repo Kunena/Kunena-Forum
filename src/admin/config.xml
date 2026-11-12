@@ -456,6 +456,22 @@
                 label="COM_KUNENA_A_INACTIVE_LOCK_DAYS"
                 description="COM_KUNENA_A_INACTIVE_LOCK_DAYS_DESC"/>
             <field
+                name="lockReasons"
+                type="textarea"
+                default="COM_KUNENA_TOPIC_LOCK_REASON_CLOSED&#10;COM_KUNENA_TOPIC_LOCK_REASON_SOLVED&#10;COM_KUNENA_TOPIC_LOCK_REASON_SOLD"
+                label="COM_KUNENA_A_LOCK_REASONS"
+                description="COM_KUNENA_A_LOCK_REASONS_DESC"/>
+            <field
+                name="lockByAuthor"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_LOCK_BY_AUTHOR"
+                description="COM_KUNENA_A_LOCK_BY_AUTHOR_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
                 name="enableFollow"
                 type="radio"
                 default="1"

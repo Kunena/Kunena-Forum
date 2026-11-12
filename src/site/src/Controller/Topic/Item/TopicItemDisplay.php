@@ -242,6 +242,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         $start            = $mesid ? $this->topic->getPostLocation($mesid) : $start;
         $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+        $this->pagination->setUri($this->getPaginationUri());
 
         $this->messages = $finder
             ->order('time', $this->me->getMessageOrdering() == 'asc' ? 1 : -1)
@@ -495,6 +496,21 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $first = KunenaMessageHelper::get($firstId);
 
         return $first->exists() && $first->isAuthorised('read') ? $first : null;
+    }
+
+    /**
+     * The address of the page links: the current address without the message, which would open the page of that message again.
+     *
+     * @return  Uri
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getPaginationUri(): Uri
+    {
+        $uri = clone KunenaRoute::$current;
+        $uri->delVar('mesid');
+
+        return $uri;
     }
 
     /**

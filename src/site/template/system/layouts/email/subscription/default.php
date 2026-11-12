@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 
 $config            = KunenaConfig::getInstance();
 $author            = $this->message->getAuthor();
@@ -33,7 +34,7 @@ if (PHP_SAPI === 'cli') {
     $headerBase = rtrim(Uri::root(), '/');
 }
 
-$msg1 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
+$msg1 = KunenaMessage::formatEmailHeading($this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT'), $config->boardTitle, $author->getName('???', false));
 $msg2 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
 $more = ($this->once ?
     Text::_(
@@ -111,7 +112,7 @@ if (!$config->plainEmail) :
 
         </style>
 
-        <title><?php echo $msg1 . " " . $config->boardTitle; ?></title>
+        <title><?php echo $msg1; ?></title>
 
     </head>
 
@@ -152,7 +153,7 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 16px; font-weight: bold; line-height: 130%;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;" class="header">
-                            <?php echo $msg1 . " " . $config->boardTitle; ?>
+                            <?php echo $msg1; ?>
                         </td>
                     </tr>
 
@@ -257,7 +258,7 @@ if (!$config->plainEmail) :
     }
 
     $alt = <<<EOS
-{$msg1} {$config->boardTitle}
+{$msg1}
 
 {$this->text('COM_KUNENA_MESSAGE_SUBJECT')} : {$subject}
 

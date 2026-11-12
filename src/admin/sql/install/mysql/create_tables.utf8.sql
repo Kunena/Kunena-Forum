@@ -365,6 +365,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_smileys`
     `code`         varchar(12) NOT NULL default '',
     `location`     varchar(50) NOT NULL default '',
     `emoticonbar`  tinyint(4)  NOT NULL default '0',
+    `ordering`     int(11)     NOT NULL default '0',
     PRIMARY KEY (id)
 )
     ENGINE = InnoDB

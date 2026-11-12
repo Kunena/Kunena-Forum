@@ -354,12 +354,6 @@ class Router extends RouterView
             return [];
         }
 
-        $total = \count($segments);
-
-        for ($i = 0; $i < $total; $i++) {
-            $segments[$i] = preg_replace('/-/', ':', $segments[$i], 1);
-        }
-
         $profiler = Profiler::getInstance('Application');
         KUNENA_PROFILER ? $profiler->mark('kunenaRoute') : null;
         $starttime = microtime(true);
@@ -372,23 +366,68 @@ class Router extends RouterView
             $vars['view'] = '';
         }
 
+        $vars = $this->parseSegments($segments, $vars);
+
+        if (empty($vars['layout'])) {
+            $vars['layout'] = 'default';
+        }
+
+        KunenaRoute::$time = microtime(true) - $starttime;
+
+        foreach ($vars as $var => $value) {
+            KunenaRoute::$current->setVar($var, $value);
+        }
+
+        return $vars;
+    }
+
+    /**
+     * Turn the segments of a SEF URL into the query variables.
+     *
+     * @param   array  $segments  segments
+     * @param   array  $vars      variables of the active menu item
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected function parseSegments(array &$segments, array $vars): array
+    {
+        $total = \count($segments);
+
+        for ($i = 0; $i < $total; $i++) {
+            $segments[$i] = preg_replace('/-/', ':', $segments[$i], 1);
+        }
+
         // Use category SEF feature?
-        $sefcats = isset(KunenaRoute::$sefviews[$vars['view']]) && empty($vars['id']);
+        $sefcats = isset($this->getSefViews()[$vars['view']]) && empty($vars['id']);
+
+        // Category of the chain of category aliases (forum/parent/child): the next alias may name one of its descendants
+        $chain = 0;
 
         // Handle all segments
         while (($segment = array_shift($segments)) !== null) {
             // Skip //
             if (!$segment) {
+                $chain = 0;
                 continue;
             }
 
-            if ($sefcats && class_exists('Kunena\Forum\Libraries\Route\KunenaRoute') && method_exists('Kunena\Forum\Libraries\Route\KunenaRoute', 'resolveAlias')) {
+            if ($sefcats || $chain) {
                 // Find out if we have SEF alias (category, view or layout)
                 $alias     = strtr($segment, ':', '-');
-                $variables = KunenaRoute::resolveAlias($alias);
+                $variables = $this->resolveAlias($alias);
+
+                if ($chain && !(isset($variables['catid']) && $this->isDescendantCategory((int) $variables['catid'], $chain))) {
+                    // The chain ends: this segment is handled as any segment after the category
+                    $variables = [];
+                }
+
+                $chain = 0;
 
                 if ($variables) {
                     $sefcats = false;
+                    $chain   = (int) ($variables['catid'] ?? 0);
 
                     // A category alias identifies a category, it does not decide which view
                     // renders it. resolveAlias() reports view=category alongside the catid,
@@ -479,16 +518,70 @@ class Router extends RouterView
             }
         }
 
-        if (empty($vars['layout'])) {
-            $vars['layout'] = 'default';
-        }
-
-        KunenaRoute::$time = microtime(true) - $starttime;
-
-        foreach ($vars as $var => $value) {
-            KunenaRoute::$current->setVar($var, $value);
-        }
-
         return $vars;
+    }
+
+    /**
+     * The views whose URLs may start with the alias of a category.
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getSefViews(): array
+    {
+        return KunenaRoute::$sefviews;
+    }
+
+    /**
+     * Find the variables of a SEF alias (category, view or layout).
+     *
+     * @param   string  $alias  alias
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected function resolveAlias(string $alias): array
+    {
+        if (!class_exists('Kunena\Forum\Libraries\Route\KunenaRoute') || !method_exists('Kunena\Forum\Libraries\Route\KunenaRoute', 'resolveAlias')) {
+            return [];
+        }
+
+        return KunenaRoute::resolveAlias($alias);
+    }
+
+    /**
+     * Whether a category is below another one (child, grandchild, ...). Access and the published state are not checked.
+     *
+     * @param   int  $catid     category
+     * @param   int  $ancestor  category above it
+     *
+     * @return  boolean  False also when the parents of the category form a cycle.
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    protected function isDescendantCategory(int $catid, int $ancestor): bool
+    {
+        $parents = [];
+        $id      = $catid;
+
+        for ($depth = 0; $depth < 100; $depth++) {
+            $id = (int) KunenaCategoryHelper::get($id)->parentid;
+
+            if (!$id) {
+                return isset($parents[$ancestor]);
+            }
+
+            if ($id === $catid || isset($parents[$id])) {
+                return false;
+            }
+
+            $parents[$id] = true;
+        }
+
+        return false;
     }
 }

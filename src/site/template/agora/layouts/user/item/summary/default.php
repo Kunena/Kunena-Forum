@@ -15,10 +15,12 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Html\KunenaMap;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserBadges;
 
@@ -71,6 +73,22 @@ $type       = $this->profile->getType(0, true);
                     <?php echo $this->escape($rankTitle); ?>
                     <?php echo $rankImage; ?>
                 </span>
+
+                <?php $rankChoices = $this->rankChoices(); ?>
+                <?php if ($rankChoices) : ?>
+                    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=changerank'); ?>"
+                          method="post" class="d-inline-flex gap-1 align-items-center">
+                        <input type="hidden" name="userid" value="<?php echo (int) $this->profile->userid; ?>"/>
+                        <select name="rank" class="form-select form-select-sm w-auto"
+                                aria-label="<?php echo Text::_('COM_KUNENA_USER_RANK_CHANGE_LABEL'); ?>">
+                            <?php foreach ($rankChoices as $rankId => $rankText) : ?>
+                                <option value="<?php echo (int) $rankId; ?>"<?php echo (int) $rankId === (int) $this->profile->rank ? ' selected="selected"' : ''; ?>><?php echo $this->escape($rankText); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="submit" class="btn btn-outline-primary border btn-sm"><?php echo Text::_('COM_KUNENA_USER_RANK_CHANGE_SUBMIT'); ?></button>
+                        <?php echo HTMLHelper::_('form.token'); ?>
+                    </form>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
 

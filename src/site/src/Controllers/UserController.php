@@ -58,6 +58,7 @@ use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Libraries\User\KunenaUserName;
+use Kunena\Forum\Libraries\User\KunenaUserRankPolicy;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
 use Kunena\Forum\Plugin\Kunena\Kunena\Helper\KunenaProfileKunena;
 use RuntimeException;
@@ -737,6 +738,58 @@ class UserController extends KunenaController
             $choice = $this->app->getInput()->getInt('namechoice', -1);
 
             KunenaUserName::setChoice((int) $this->user->userid, \in_array($choice, [0, 1, 2], true) ? $choice : null);
+        }
+    }
+
+    /**
+     * Give a special rank (or no rank) to a user, from the profile page.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function changeRank()
+    {
+        $user = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
+        $url  = $user->exists() ? $user->getUrl(false) : KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list', false);
+
+        if (!Session::checkToken('post')) {
+            $this->setRedirect($url, Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+
+            return;
+        }
+
+        $rank    = $this->app->getInput()->getInt('rank', 0);
+        $allowed = [0, ...array_keys(KunenaUserRankPolicy::getAssignableRanks())];
+        $refusal = KunenaUserRankPolicy::refusal(
+            (int) $this->me->userid,
+            (int) $user->userid,
+            $this->me->isAdmin(),
+            $this->me->isModerator(),
+            $user->exists(),
+            $user->isAdmin(),
+            $rank,
+            $allowed
+        );
+
+        if ($refusal !== null) {
+            $messages = [
+                KunenaUserRankPolicy::USER => 'COM_KUNENA_USER_RANK_ERROR_USER',
+                KunenaUserRankPolicy::RANK => 'COM_KUNENA_USER_RANK_ERROR_RANK',
+            ];
+
+            $this->setRedirect($url, Text::_($messages[$refusal] ?? 'COM_KUNENA_USER_RANK_ERROR_NOT_ALLOWED'), 'error');
+
+            return;
+        }
+
+        $user->rank = $rank;
+
+        if ($user->save()) {
+            $this->setRedirect($url, Text::_('COM_KUNENA_USER_RANK_SAVED'), 'success');
+        } else {
+            $this->setRedirect($url, Text::_('COM_KUNENA_USER_RANK_SAVE_FAILED'), 'error');
         }
     }
 

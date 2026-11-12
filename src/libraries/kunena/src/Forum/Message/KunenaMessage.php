@@ -1214,7 +1214,7 @@ class KunenaMessage extends KunenaDatabaseObject
             $mailsubs,
             $mailmods,
             $mailadmins,
-            KunenaUserHelper::getMyself()->userid
+            self::notificationExcludeList((int) KunenaUserHelper::getMyself()->userid, (int) $this->userid)
         );
 
         // The followers of the author get an e-mail about a new topic of him (if they may read the category and do not
@@ -1493,6 +1493,21 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         return array_values(array_unique(array_map('intval', $matches[1])));
+    }
+
+    /**
+     * The users who get no notification of a message: the current user and the author of the message.
+     *
+     * @param   int  $currentUserId  The id of the current user (the poster or the approving moderator).
+     * @param   int  $authorId       The id of the author of the message.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 8.0
+     */
+    public static function notificationExcludeList(int $currentUserId, int $authorId): array
+    {
+        return array_values(array_unique(array_filter([$currentUserId, $authorId], static fn (int $id) => $id > 0)));
     }
 
     /**

@@ -19,7 +19,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -165,7 +164,16 @@ class UserModel extends KunenaModel
     {
         $user = $this->getUser();
 
-        $modCatList = array_keys(KunenaAccess::getInstance()->getModeratorStatus($user));
+        // Only the categories which are assigned by hand: a save must not turn the right of a moderator group into an assignment.
+        $db    = $this->getDatabase();
+        $query = $db->createQuery()
+            ->select($db->quoteName('category_id'))
+            ->from($db->quoteName('#__kunena_user_categories'))
+            ->where($db->quoteName('role') . ' = 1')
+            ->where($db->quoteName('user_id') . ' = ' . (int) $user->userid);
+        $db->setQuery($query);
+
+        $modCatList = array_map('intval', (array) $db->loadColumn());
 
         if (empty($modCatList)) {
             $modCatList[] = 0;

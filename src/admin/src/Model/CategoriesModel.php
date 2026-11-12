@@ -35,6 +35,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use stdClass;
 
@@ -325,7 +326,22 @@ class CategoriesModel extends KunenaModel
             return false;
         }
 
-        return $category->getModerators(false);
+        if (!$category->id) {
+            return [];
+        }
+
+        // Only the moderators assigned by hand: the members of the moderator groups are not listed one by one.
+        $db    = $this->getDatabase();
+        $query = $db->createQuery()
+            ->select($db->quoteName('user_id'))
+            ->from($db->quoteName('#__kunena_user_categories'))
+            ->where($db->quoteName('role') . ' = 1')
+            ->where($db->quoteName('category_id') . ' = ' . (int) $category->id);
+        $db->setQuery($query);
+
+        $userids = array_map('intval', (array) $db->loadColumn());
+
+        return $userids ? KunenaUserHelper::loadUsers($userids) : [];
     }
 
     /**

@@ -167,6 +167,15 @@ class CategoryController extends KunenaController
         $category = KunenaCategoryHelper::get(\intval($post['catid'] ?? 0));
         $parent   = KunenaCategoryHelper::get(\intval($post['parentid'] ?? 0));
 
+        // The moderator groups are a list of group ids. A form without them (the frontend manage form) keeps those of the category.
+        if (\array_key_exists('moderatorGroups', $post['params'])) {
+            $groups = array_filter((array) $post['params']['moderatorGroups'], static fn ($id) => \is_scalar($id) && ctype_digit((string) $id));
+
+            $post['params']['moderatorGroups'] = array_values(array_unique(array_filter(array_map('intval', $groups))));
+        } elseif ($category->exists() && $category->params->get('moderatorGroups') !== null) {
+            $post['params']['moderatorGroups'] = $category->params->get('moderatorGroups');
+        }
+
         // A request without an access level keeps the level of the category (a new category is for everybody).
         $post['access'] = $this->input->getInt("access-{$accesstype}", $this->input->getInt('access', $category->exists() ? (int) $category->access : 1));
 

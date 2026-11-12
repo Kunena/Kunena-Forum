@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Forum\Topic;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -820,6 +821,50 @@ abstract class KunenaTopicHelper
         }
 
         return $count;
+    }
+
+    /**
+     * Whether a published topic with this subject exists in the categories (upper and lower case and the spaces at the
+     * ends ignored). The collation of the subject also ignores the accents, so the candidates are compared again in PHP.
+     *
+     * @param   DatabaseInterface  $db              The database.
+     * @param   string             $subject         The subject.
+     * @param   int[]              $categoryIds     The categories the user may read.
+     * @param   string             $ownTopicsWhere  The condition of the categories where the user only sees his own topics
+     *                                              (on a.category_id and a.first_post_userid), or ''.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function subjectExists(DatabaseInterface $db, string $subject, array $categoryIds, string $ownTopicsWhere = ''): bool
+    {
+        $subject     = mb_strtolower(trim($subject));
+        $categoryIds = array_map('intval', $categoryIds);
+
+        if ($subject === '' || !$categoryIds) {
+            return false;
+        }
+
+        $query = $db->createQuery()
+            ->select($db->quoteName('a.subject'))
+            ->from($db->quoteName('#__kunena_topics', 'a'))
+            ->where($db->quoteName('a.hold') . ' = 0')
+            ->where($db->quoteName('a.moved_id') . ' = 0')
+            ->where($db->quoteName('a.category_id') . ' IN (' . implode(',', $categoryIds) . ')')
+            ->where('TRIM(' . $db->quoteName('a.subject') . ') = ' . $db->quote($subject));
+
+        if ($ownTopicsWhere !== '') {
+            $query->where($ownTopicsWhere);
+        }
+
+        foreach ((array) $db->setQuery($query)->loadColumn() as $candidate) {
+            if (mb_strtolower(trim((string) $candidate)) === $subject) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

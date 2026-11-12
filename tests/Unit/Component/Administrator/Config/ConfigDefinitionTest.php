@@ -48,6 +48,7 @@ class ConfigDefinitionTest extends UnitTestCase
             'google maps key'            => ['googleMapApiKey', 'text', ''],
             'default announcement'       => ['bannerAnnouncement', 'hidden', '0'],
             'category id in the alias'   => ['categoryAliasId', 'radio', '0'],
+            'unique topic subject'       => ['uniqueTopicSubject', 'radio', '0'],
             'joomla mail templates'      => ['useMailTemplates', 'radio', '0'],
             'popup notifications'        => ['popupNotifications', 'radio', '1'],
             'popup interval'             => ['popupNotificationsInterval', 'number', '30'],

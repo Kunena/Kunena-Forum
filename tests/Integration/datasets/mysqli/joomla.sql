@@ -21,3 +21,18 @@ CREATE TABLE IF NOT EXISTS `#__mail_templates` (
   `params` text NOT NULL,
   PRIMARY KEY (`template_id`, `language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__usergroups` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `lft` int(11) NOT NULL DEFAULT 0,
+  `rgt` int(11) NOT NULL DEFAULT 0,
+  `title` varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__user_usergroup_map` (
+  `user_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `group_id` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`user_id`, `group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

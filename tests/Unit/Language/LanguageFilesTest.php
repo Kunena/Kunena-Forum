@@ -111,6 +111,66 @@ class LanguageFilesTest extends UnitTestCase
     }
 
     /**
+     * The strings of the template settings have one definition: the frontend file, which the template also loads in the backend.
+     */
+    public function testNoTemplateSettingIsInTheBackendAndTheFrontendFile(): void
+    {
+        $admin = Files::language('src/admin/language/en-GB/com_kunena.views.ini');
+        $site  = Files::language('src/site/language/en-GB/com_kunena.templates.ini');
+
+        $shared = array_filter(
+            array_keys(array_intersect_key($admin, $site)),
+            static fn (string $key): bool => str_starts_with($key, 'COM_KUNENA_TEMPLATE_')
+        );
+
+        $this->assertSame([], array_values($shared), 'Template settings which are in both com_kunena.views.ini and com_kunena.templates.ini.');
+    }
+
+    /**
+     * Every COM_KUNENA_TEMPLATE_ text of the settings of a template is in a language file which the settings screen loads.
+     */
+    public function testEveryTemplateSettingOfAConfigHasAText(): void
+    {
+        // The backend dispatcher and the frontend also load the site com_kunena.ini, which has COM_KUNENA_TEMPLATE_ICON_SET.
+        $strings = Files::language('src/site/language/en-GB/com_kunena.templates.ini')
+            + Files::language('src/site/language/en-GB/com_kunena.ini')
+            + Files::language('src/admin/language/en-GB/com_kunena.views.ini');
+
+        foreach (glob(Files::path('src/site/language/en-GB') . '/kunena_tmpl_*.ini') ?: [] as $file) {
+            $strings += Files::language('src/site/language/en-GB/' . basename($file));
+        }
+
+        $missing = [];
+
+        foreach (glob(Files::path('src/site/template') . '/*/config/config.xml') ?: [] as $file) {
+            preg_match_all(
+                '#(?:label|description)="(COM_KUNENA_TEMPLATE_[A-Z0-9_]+)"|<option[^>]*>\s*(COM_KUNENA_TEMPLATE_[A-Z0-9_]+)\s*</option>#',
+                (string) file_get_contents($file),
+                $matches
+            );
+
+            foreach (array_filter(array_merge($matches[1], $matches[2])) as $key) {
+                if (!isset($strings[$key])) {
+                    $missing[] = $key . ' (' . basename(\dirname($file, 2)) . ')';
+                }
+            }
+        }
+
+        $this->assertSame([], array_values(array_unique($missing)), 'Template settings which no English language file has.');
+    }
+
+    public function testTheDefaultCategoryIconTextSaysWhatToEnter(): void
+    {
+        $text = Files::language('src/site/language/en-GB/com_kunena.templates.ini')['COM_KUNENA_TEMPLATE_DEFAULT_ICON_DESC'];
+
+        foreach (['fa-folder', 'icon-folder', 'glyphicon-folder-open'] as $example) {
+            $this->assertStringContainsString($example, $text);
+        }
+
+        $this->assertStringNotContainsString('*-folder', $text);
+    }
+
+    /**
      * Every text which the code asks for (Text::_('COM_KUNENA_...'), Text::sprintf(...)) is in an English language file of the
      * package: a missing one is shown as its key (for example the messages of the steps of an update in the installer).
      * Keys which the code puts together (a prefix which ends with "_") and code in comments are left out.

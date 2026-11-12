@@ -64,6 +64,12 @@ class TableKunenaTopics extends KunenaTable
 
     /**
      * @var     null
+     * @since   Kunena 8.0
+     */
+    public mixed $lock_reason = null;
+
+    /**
+     * @var     null
      * @since   Kunena 6.0
      */
     public mixed $hold = null;

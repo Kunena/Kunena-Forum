@@ -32,6 +32,7 @@ use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Event\DispatcherInterface;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
+use Joomla\Http\Response;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
@@ -994,18 +995,28 @@ class UserController extends KunenaController
                 return false;
             }
 
-            if ($result != false) {
+            if ($result instanceof Response && $result->code == '200') {
                 // Report accepted. There is no need to display the reason
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'), 'success');
 
                 return true;
             } else {
                 // Report failed or refused
-                $reasons = [];
-                preg_match('/<p>.*<\/p>/', $result->body, $reasons);
+                $reason = '';
 
-                // Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
+                if ($result instanceof Response) {
+                    if (preg_match('/<p\b[^>]*>(.*?)<\/p>/is', $result->body, $reasons)) {
+                        $reason = trim(strip_tags($reasons[1]));
+                    }
+
+                    if ($reason === '') {
+                        $reason = 'HTTP ' . $result->code;
+                    }
+                } else {
+                    $reason = 'No response received';
+                }
+
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', $reason), 'error');
 
                 return false;
             }

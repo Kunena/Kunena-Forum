@@ -397,17 +397,20 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                             <div class="tab-pane fade" id="tab-mods" role="tabpanel"
                                                  aria-labelledby="tab-mods-tab">
                                                 <fieldset>
-                                                    <legend><?php echo Text::_('COM_KUNENA_CATEGORY_MODERATOR_GROUPS'); ?></legend>
                                                     <table class="table table-striped">
                                                         <tr>
-                                                            <td class="w-25">
+                                                            <td><label for="moderatorGroups"><?php echo Text::_('COM_KUNENA_CATEGORY_MODERATOR_GROUPS'); ?></label>
+                                                                :
+                                                            </td>
+                                                            <td>
                                                                 <input type="hidden" name="params[moderatorGroups][]" value=""/>
                                                                 <?php echo HTMLHelper::_(
                                                                     'access.usergroup',
                                                                     'params[moderatorGroups][]',
                                                                     $this->category->id ? (array) $this->category->params->get('moderatorGroups', []) : [],
                                                                     'multiple="multiple" class="form-select" size="10"',
-                                                                    false
+                                                                    false,
+                                                                    'moderatorGroups'
                                                                 ); ?>
                                                             </td>
                                                             <td><?php echo Text::_('COM_KUNENA_CATEGORY_MODERATOR_GROUPS_DESC'); ?></td>

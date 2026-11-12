@@ -176,6 +176,16 @@
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>
+            <field
+                name="uniqueTopicSubject"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SEF_UNIQUE_TOPIC_SUBJECT"
+                description="COM_KUNENA_SEF_UNIQUE_TOPIC_SUBJECT_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
         </fieldset>
         <fieldset
             name="cache"

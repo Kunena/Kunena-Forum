@@ -107,11 +107,13 @@ describe('Kunena pagination: a topic with many messages', () => {
         expect(href, 'a page link').not.to.match(new RegExp(`/${mesid}([.?#/]|$)`));
       });
 
-      const second = links.find((link) => link.textContent.trim() === '2');
+      // The href as a string: Cypress handles an element given to expect() as a query of the page under test.
+      const second = hrefs[links.findIndex((link) => link.textContent.trim() === '2')];
 
-      expect(second, 'the link of page 2').to.exist;
+      expect(second, 'the link of page 2').to.be.a('string').and.not.to.be.empty;
 
-      cy.request({ url: second.getAttribute('href'), failOnStatusCode: false }).then((page2) => {
+      // The href starts with the folder of the site, which the base address already has: resolve it as the browser does.
+      cy.request({ url: new URL(second, Cypress.config('baseUrl')).href, failOnStatusCode: false }).then((page2) => {
         expect(page2.status).to.be.lessThan(500);
 
         const numbers = numbersOf(page2.body).filter((number) => number !== 1);

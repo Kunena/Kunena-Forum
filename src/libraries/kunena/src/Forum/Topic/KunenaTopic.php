@@ -2215,6 +2215,8 @@ class KunenaTopic extends KunenaDatabaseObject
             return false;
         }
 
+        // The saved state is the one a next save compares with: a second save in the same request does not count the change again.
+        $this->_hold  = $this->hold;
         $this->_posts = $this->posts;
 
         // Clear authentication cache

@@ -1095,6 +1095,18 @@ class TopicController extends KunenaController
             }
         }
 
+        // A new topic may not take the subject of an existing topic (SEO): only the topics the user can see count.
+        if ($this->config->uniqueTopicSubject && !$this->id) {
+            $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere($this->me, 'a.category_id', 'a.first_post_userid');
+
+            if (KunenaTopicHelper::subjectExists($this->db, trim((string) $fields['subject']), (array) $this->me->getAllowedCategories(), $own)) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_ERROR_SUBJECT_EXISTS'), 'error');
+                $this->setRedirectBack();
+
+                return;
+            }
+        }
+
         // Ignore identical for 5 minutes
         $duplicatetimewindow = $dateNowUnix - 1 * 60;
         $lastTopic           = $topic->getCategory()->getLastTopic();

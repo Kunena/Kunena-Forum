@@ -44,7 +44,7 @@ class KunenaViewCategory extends KunenaView
     public function displayDefault($tpl = null)
     {
         if (!$this->config->enableRss) {
-            throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 500);
+            throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 404);
         }
 
         KunenaParser::$relative = false;

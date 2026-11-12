@@ -46,11 +46,11 @@
         </field>
         <field
             name="access"
-            type="accesslevel"
+            type="kunenaaccessfilter"
             label="JGRID_HEADING_ACCESS"
             default=""
             class="js-select-submit-on-change"
-            filter="UINT"
+            filter="CMD"
             validate="options">
             <option value="">JOPTION_SELECT_ACCESS</option>
         </field>

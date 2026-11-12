@@ -15,6 +15,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 
 ?>
 <div class="p-3">
@@ -39,6 +40,9 @@ use Joomla\CMS\Language\Text;
                     </div>
                 </fieldset>
             </div>
+        </div>
+        <div class="mb-3">
+            <?php echo LayoutHelper::render('joomla.html.batch.access', []); ?>
         </div>
     </div>
 </div>

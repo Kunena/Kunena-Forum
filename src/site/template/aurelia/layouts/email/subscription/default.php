@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 
 $config            = KunenaConfig::getInstance();
 $author            = $this->message->getAuthor();
@@ -36,8 +37,7 @@ if (PHP_SAPI === 'cli') {
 if ($this->approved) {
     $msg1 = Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION_APPROVED_MESSAGE');
 } else {
-    $msg1 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
-    $msg1 .= " " . $config->boardTitle;
+    $msg1 = KunenaMessage::formatEmailHeading($this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT'), $config->boardTitle, $author->getName('???', false));
 }
 
 $msg2 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');

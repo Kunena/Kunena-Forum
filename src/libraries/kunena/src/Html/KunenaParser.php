@@ -93,6 +93,9 @@ abstract class KunenaParser
             $query->where($db->quoteName('emoticonbar') . ' = 1');
         }
 
+        // The order of the backend, which the emoticon bar keeps
+        $query->order([$db->quoteName('ordering') . ' ASC', $db->quoteName('id') . ' ASC']);
+
         $db->setQuery($query);
 
         $smilies = [];

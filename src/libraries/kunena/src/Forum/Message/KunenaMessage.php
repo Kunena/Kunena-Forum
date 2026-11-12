@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Forum\Message;
 
 \defined('_JEXEC') or die();
 
+use ArgumentCountError;
 use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
@@ -60,6 +61,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Libraries\User\KunenaUserName;
 use StdClass;
+use ValueError;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\Message
@@ -1404,13 +1406,15 @@ class KunenaMessage extends KunenaDatabaseObject
         $topic   = $this->getTopic();
         $subject = $this->subject ?: $topic->subject;
 
+        $authorName = $this->getAuthor()->getName('???', false);
+
         if ($subscription) {
             $heading = $this->_approved
                 ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION_APPROVED_MESSAGE')
-                : Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT') . ' ' . $this->_config->boardTitle;
+                : self::formatEmailHeading(Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT'), $this->_config->boardTitle, $authorName);
             $note    = Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
         } else {
-            $heading = Text::_(empty($this->modified_time) ? 'COM_KUNENA_POST_EMAIL_MOD1' : 'COM_KUNENA_POST_EMAIL_MOD3') . ' ' . $this->_config->boardTitle;
+            $heading = self::formatEmailHeading(Text::_(empty($this->modified_time) ? 'COM_KUNENA_POST_EMAIL_MOD1' : 'COM_KUNENA_POST_EMAIL_MOD3'), $this->_config->boardTitle, $authorName);
             $note    = Text::_('COM_KUNENA_POST_EMAIL_MOD2');
         }
 
@@ -1425,7 +1429,7 @@ class KunenaMessage extends KunenaDatabaseObject
             'subject'    => $subject,
             'topic'      => $topic->subject,
             'category'   => $this->getCategory()->name,
-            'author'     => $this->getAuthor()->getName('???', false),
+            'author'     => $authorName,
             'url'        => $url,
         ];
 
@@ -1446,6 +1450,31 @@ class KunenaMessage extends KunenaDatabaseObject
         ];
 
         return ['html' => $html, 'plain' => $plain];
+    }
+
+    /**
+     * The heading of a notification email: the translated text with the forum name (%1$s) and the name of the author (%2$s).
+     * A text without a placeholder, or with a placeholder which cannot be filled, gets the forum name appended.
+     *
+     * @param   string  $text        The translated text.
+     * @param   string  $boardTitle  The name of the forum.
+     * @param   string  $author      The name of the author of the message.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function formatEmailHeading(string $text, string $boardTitle, string $author): string
+    {
+        if (preg_match('/%(\d+\$)?s/', $text)) {
+            try {
+                return \sprintf($text, $boardTitle, $author);
+            } catch (ValueError | ArgumentCountError) {
+                // A broken translation must not stop the notification.
+            }
+        }
+
+        return $text . ' ' . $boardTitle;
     }
 
     /**

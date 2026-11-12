@@ -28,6 +28,12 @@ $wa->useScript('table.columns')
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
+$saveOrder = ($listOrder == 'ordering' && strtolower($listDirn) == 'asc');
+
+if ($saveOrder) {
+    $saveOrderingUrl = 'index.php?option=com_kunena&view=smilies&task=smilies.saveorderajax';
+    HTMLHelper::_('draggablelist.draggable');
+}
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -45,6 +51,9 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             <td class="w-1 text-center">
                                 <?php echo HTMLHelper::_('grid.checkall'); ?>
                             </td>
+                            <td scope="col" class="w-1 text-center d-none d-md-table-cell">
+                                <?php echo HTMLHelper::_('searchtools.sort', '', 'ordering', $listDirn, $listOrder); ?>
+                            </td>
                             <th scope="col" class="w-5 text-center">
                                 <?php echo Text::_('COM_KUNENA_EMOTICON'); ?>
                             </th>
@@ -59,14 +68,30 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody <?php if ($saveOrder) : ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="false" <?php endif; ?>>
                         <?php
                         $i = 0;
                         foreach ($this->items as $id => $row) :
                         ?>
-                            <tr>
+                            <tr data-draggable-group="0" data-item-id="<?php echo (int) $row->id; ?>">
                                 <td class="text-center">
                                     <?php echo HTMLHelper::_('grid.id', $i, intval($row->id)) ?>
+                                </td>
+                                <td class="text-center d-none d-md-table-cell">
+                                    <?php
+                                    $iconClass = '';
+                                    if (!$saveOrder) {
+                                        $iconClass = ' inactive" title="' . Text::_('JORDERINGDISABLED');
+                                    }
+                                    ?>
+                                    <span class="sortable-handler<?php echo $iconClass ?>">
+                                        <span class="icon-ellipsis-v"></span>
+                                    </span>
+                                    <?php if ($saveOrder) : ?>
+                                        <label>
+                                            <input type="text" class="hidden" name="order[]" size="5" value="<?php echo (int) $row->ordering; ?>">
+                                        </label>
+                                    <?php endif; ?>
                                 </td>
                                 <td class="d-none d-md-table-cell center">
                                     <a href="<?php echo Route::_('index.php?option=com_kunena&view=smiley&layout=edit&id=' . (int) $row->id); ?>">

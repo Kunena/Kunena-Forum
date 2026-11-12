@@ -71,3 +71,6 @@ VALUES ('com_kunena.reportmessage', 'com_kunena', '', 'COM_KUNENA_MAILTPL_REPORT
 -- One rating of a user for a topic: the duplicates of a race of two requests are removed, the key keeps it so.
 DELETE r1 FROM `#__kunena_rate` AS r1 INNER JOIN `#__kunena_rate` AS r2 ON r1.`topic_id` = r2.`topic_id` AND r1.`userid` = r2.`userid` AND r1.`id` > r2.`id`;
 ALTER TABLE `#__kunena_rate` ADD UNIQUE KEY `topic_user` (`topic_id`, `userid`);
+-- The smilies get a manual order: the current order (by id) stays the same, a second run keeps an order set since.
+ALTER TABLE `#__kunena_smileys` ADD `ordering` int(11) NOT NULL default '0' AFTER `emoticonbar`;
+UPDATE `#__kunena_smileys` SET `ordering` = `id` WHERE `ordering` = 0;

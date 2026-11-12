@@ -13,9 +13,11 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Site\Layout\Widget\WidgetBreadcrumb;
 
-$pathway  = $this->breadcrumb->getPathway();
+$pathway  = WidgetBreadcrumb::withoutDefaultPageCrumb($this->breadcrumb->getPathway(), Factory::getApplication()->getMenu());
 $item     = array_shift($pathway);
 $position = 2;
 

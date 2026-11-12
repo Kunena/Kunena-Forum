@@ -1546,6 +1546,31 @@ class KunenaCategory extends KunenaDatabaseObject
     }
 
     /**
+     * Returns the published subcategories of this category, at any depth, which the user may subscribe to.
+     *
+     * @param   KunenaUser|null  $user  The user, the current user when null.
+     *
+     * @return  KunenaCategory[]  Keyed by category id.
+     *
+     * @since   Kunena 8.0
+     * @throws  Exception
+     */
+    public function getSubscribableChildren(?KunenaUser $user = null): array
+    {
+        $user     = $user ?? KunenaUserHelper::getMyself();
+        $children = [];
+
+        // Every descendant is checked on its own rights: a category which fails the check does not hide its subcategories.
+        foreach (KunenaCategoryHelper::getChildren($this->id, -1, ['action' => 'none']) as $id => $child) {
+            if (!$child->tryAuthorise('subscribe', $user, false)) {
+                $children[$id] = $child;
+            }
+        }
+
+        return $children;
+    }
+
+    /**
      * @return  string
      *
      * @since   Kunena 6.0

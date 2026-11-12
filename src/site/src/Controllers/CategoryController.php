@@ -282,7 +282,14 @@ class CategoryController extends CategoriesController
             $success = $category->subscribe(1);
 
             if ($success) {
-                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_USER_SUBCRIBED', $category->name), 'success');
+                // The subcategories are included, each one only when the user may subscribe to it.
+                $count = KunenaCategoryHelper::subscribe(array_keys($category->getSubscribableChildren($this->me)), 1, $this->me);
+
+                if ($count > 0) {
+                    $this->app->enqueueMessage(Text::plural('COM_KUNENA_CATEGORY_USER_SUBCRIBED_WITH_CHILDREN', $count, $category->name), 'success');
+                } else {
+                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_USER_SUBCRIBED', $category->name), 'success');
+                }
             }
         }
 

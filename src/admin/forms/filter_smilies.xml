@@ -15,9 +15,11 @@
 			type="list"
 			label="JGLOBAL_SORT_BY"
 			class="js-select-submit-on-change"
-			default="filename ASC"
+			default="ordering ASC"
 			validate="options">
 			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="ordering ASC">COM_KUNENA_FILTER_FIELD_ORDERING_ASC</option>
+			<option value="ordering DESC">COM_KUNENA_FILTER_FIELD_ORDERING_DESC</option>
 			<option value="code ASC">COM_KUNENA_FILTER_FIELD_CODE_ASC</option>
 			<option value="code DESC">COM_KUNENA_FILTER_FIELD_CODE_DESC</option>
 			<option value="location ASC">COM_KUNENA_FILTER_FIELD_URL_ASC</option>

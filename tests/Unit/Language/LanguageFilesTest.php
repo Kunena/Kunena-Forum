@@ -110,6 +110,15 @@ class LanguageFilesTest extends UnitTestCase
         $this->assertStringContainsString('%d', $strings['COM_KUNENA_POPUP_MORE']);
     }
 
+    public function testTheHeadingsOfTheNotificationEmailsTakeTheForumName(): void
+    {
+        $strings = Files::language('src/admin/language/en-GB/com_kunena.libraries.ini');
+
+        foreach (['COM_KUNENA_POST_EMAIL_MOD1', 'COM_KUNENA_POST_EMAIL_MOD3', 'COM_KUNENA_POST_EMAIL_NOTIFICATION1', 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT'] as $key) {
+            $this->assertStringContainsString('%1$s', $strings[$key], $key . ' has no place for the forum name.');
+        }
+    }
+
     /**
      * The strings of the template settings have one definition: the frontend file, which the template also loads in the backend.
      */
@@ -171,8 +180,9 @@ class LanguageFilesTest extends UnitTestCase
     }
 
     /**
-     * Every text which the code asks for (Text::_('COM_KUNENA_...'), Text::sprintf(...)) is in an English language file of the
-     * package: a missing one is shown as its key (for example the messages of the steps of an update in the installer).
+     * Every text which the code asks for (Text::_('COM_KUNENA_...'), Text::sprintf(...), the _1 and _MORE forms of Text::plural(...))
+     * is in an English language file of the package: a missing one is shown as its key (for example the messages of the steps of an
+     * update in the installer).
      * Keys which the code puts together (a prefix which ends with "_") and code in comments are left out.
      */
     public function testEveryTextOfTheCodeIsInALanguageFile(): void
@@ -202,12 +212,15 @@ class LanguageFilesTest extends UnitTestCase
                 // Code in a comment does not ask for a text.
                 $code = preg_replace('#(//|^\s*\*|^\s*/\*).*$#', '', $line);
 
-                if (!preg_match_all("/Text::(?:_|sprintf|plural|script)\(\s*'((?:COM|PLG)_KUNENA[A-Z0-9_]*)'/", (string) $code, $matches)) {
+                if (!preg_match_all("/Text::(_|sprintf|plural|script)\(\s*'((?:COM|PLG)_KUNENA[A-Z0-9_]*)'/", (string) $code, $matches)) {
                     continue;
                 }
 
-                foreach ($matches[1] as $key) {
-                    if (!str_ends_with($key, '_') && !isset($keys[$key])) {
+                foreach ($matches[2] as $i => $key) {
+                    // Text::plural() asks for the key with the suffix of the number (_1, _MORE) before the key itself.
+                    $plural = $matches[1][$i] === 'plural' && isset($keys[$key . '_1'], $keys[$key . '_MORE']);
+
+                    if (!str_ends_with($key, '_') && !isset($keys[$key]) && !$plural) {
                         $missing[] = $key . ' (' . substr($name, \strlen(str_replace('\\', '/', Files::path('src'))) + 1) . ':' . ($number + 1) . ')';
                     }
                 }

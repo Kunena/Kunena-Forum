@@ -45,7 +45,8 @@ $this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.c
     ->registerAndUseScript('jquery.fileupload-video', 'media/kunena/core/js/jquery.fileupload-video.js')
     ->registerAndUseScript('jquery.fileupload-validate', 'media/kunena/core/js/jquery.fileupload-validate.js')
     ->registerAndUseScript('upload.main', 'media/kunena/core/js/upload.main.js')
-    ->registerAndUseScript('edit', 'components/com_kunena/template/aurelia/assets/js/edit.js');
+    ->registerAndUseScript('edit', 'components/com_kunena/template/aurelia/assets/js/edit.js')
+    ->registerAndUseScript('submitonce', 'components/com_kunena/template/aurelia/assets/js/submitonce.js');
 
 // If polls are enabled, load also poll JavaScript.
 if ($this->config->pollEnabled) {
@@ -205,7 +206,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
     <?php echo $this->escape($this->headerText) ?>
 </h1>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-validate" role="form" id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-validate" role="form" id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1" data-kunena-submit-once>
     <input type="hidden" name="view" value="topic" />
     <?php $draftId = Factory::getApplication()->getInput()->getInt('draftid', 0); ?>
     <?php if ($draftId) : ?>

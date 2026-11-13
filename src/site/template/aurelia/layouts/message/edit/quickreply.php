@@ -42,6 +42,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 $this->addScriptOptions('com_kunena.kunena_topicicontype', '');
 
 $this->addScript('assets/js/quickreply.js');
+$this->addScript('assets/js/submitonce.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover')) {
     $this->addScript('sisyphus.js');
@@ -70,7 +71,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                 </div>
 
                 <div class="card-body">
-                    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform-<?php echo $message->id; ?>" class="form-horizontal">
+                    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform-<?php echo $message->id; ?>" class="form-horizontal" data-kunena-submit-once>
                         <input type="hidden" name="task" value="post" />
                         <input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
                         <input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
@@ -191,7 +192,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform-<?php echo $message->id; ?>" class="form-horizontal">
+                    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform-<?php echo $message->id; ?>" class="form-horizontal" data-kunena-submit-once>
                         <input type="hidden" name="task" value="post" />
                         <input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
                         <input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />

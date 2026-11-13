@@ -349,6 +349,30 @@ class KunenaBBCode extends BBCode
     }
 
     /**
+     * Which address of the site a link of the URL tag points to: only a non-SEF address (index.php?...) goes through the router;
+     * a SEF address (/index.php/forum/...) is kept as written, and index.php/... is resolved against the base path of the site.
+     *
+     * @param   string  $url   The address of the link.
+     * @param   string  $base  The base path of the site, without a trailing slash ('' at the root of the domain).
+     *
+     * @return  array  ['url' => string, 'route' => bool]
+     *
+     * @since   Kunena 8.0
+     */
+    public static function siteLink(string $url, string $base): array
+    {
+        if (preg_match('#^/?index\.php\?#i', $url)) {
+            return ['url' => $url[0] === '/' ? substr($url, 1) : $url, 'route' => true];
+        }
+
+        if (preg_match('#^index\.php(?=[/\#]|\z)#i', $url)) {
+            return ['url' => $base . '/' . $url, 'route' => false];
+        }
+
+        return ['url' => $url, 'route' => false];
+    }
+
+    /**
      * Get global instance from BBCode parser.
      *
      * @param   bool  $relative  relative
@@ -2601,13 +2625,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $url      = preg_replace('# #u', '%20', $url);
         $internal = false;
 
-        if (preg_match('#^(index.php?)#uim', $url)) {
-            $url = Route::_($url, false);
-        }
+        // Only a non-SEF address of the site goes through the router: a SEF address got the alias of the menu added at its end.
+        $link = KunenaBBCode::siteLink($url, Uri::base(true));
+        $url  = $link['url'];
 
-        if (preg_match('#^(/index.php?)#uim', $url)) {
-            $str = substr($url, 1);
-            $url = Route::_($str, false);
+        if ($link['route']) {
+            $url = Route::_($url, false);
         }
 
         if (!preg_match('#^(/|https?:|ftp:)#uim', $url)) {

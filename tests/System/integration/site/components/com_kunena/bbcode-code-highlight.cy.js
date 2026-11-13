@@ -14,12 +14,15 @@ describe('Kunena BBCode: code blocks coloured by highlight.js', () => {
     '[code type=x"onmouseover="alert(1)]text[/code]',
     '[code=nolanguage]plain[/code]',
   ];
+  // A member with a code block in the signature: the signature is shown under the message, outside .kmsg.
+  const signature = '[code=php]$sig = 1;[/code]';
   let highlightCode;
+  let signatures;
 
   const sql = (text) => text.replace(/\\/g, '\\\\').replace(/'/g, "''");
-  const addMessage = (parent, text) => cy.task(
+  const addMessage = (parent, text, userid = 797, name = 'ci-admin') => cy.task(
     'queryDB',
-    `INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon, locked, hold, ordering, hits, moved, modified_by, modified_time, modified_reason) VALUES (${parent}, ${ids.topic}, ${ids.category}, 'ci-admin', 797, '', 'Cypress code highlight ${stamp}', UNIX_TIMESTAMP(), '127.0.0.1', 0, 0, 0, 0, 0, 0, 0, 0, '')`,
+    `INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon, locked, hold, ordering, hits, moved, modified_by, modified_time, modified_reason) VALUES (${parent}, ${ids.topic}, ${ids.category}, '${name}', ${userid}, '', 'Cypress code highlight ${stamp}', UNIX_TIMESTAMP(), '127.0.0.1', 0, 0, 0, 0, 0, 0, 0, 0, '')`,
   ).then((message) => cy.task('queryDB', `INSERT INTO #__kunena_messages_text (mesid, message) VALUES (${message.insertId}, '${sql(text)}')`).then(() => {
     ids.messages.push(message.insertId);
 
@@ -39,6 +42,17 @@ describe('Kunena BBCode: code blocks coloured by highlight.js', () => {
     cy.kunena_getOption('highlightCode').then((value) => {
       highlightCode = value;
     });
+    cy.kunena_getOption('signature').then((value) => {
+      signatures = value;
+    });
+    cy.task(
+      'queryDB',
+      `INSERT INTO #__users (name, username, email, password, block, sendEmail, registerDate, lastvisitDate, activation, params, lastResetTime, resetCount, otpKey, otep, requireReset, authProvider) SELECT 'CI Signature', 'ci-signature-${stamp}', 'ci-signature-${stamp}@example.com', password, 0, 0, NOW(), NULL, '', '{}', NULL, 0, '', '', 0, '' FROM #__users WHERE id = 798`,
+    ).then((user) => {
+      ids.user = user.insertId;
+      cy.task('queryDB', `INSERT INTO #__user_usergroup_map (user_id, group_id) VALUES (${user.insertId}, 2)`);
+      cy.task('queryDB', `INSERT INTO #__kunena_users (userid, posts, signature) VALUES (${user.insertId}, 1, '${sql(signature)}')`);
+    });
 
     cy.task(
       'queryDB',
@@ -49,7 +63,7 @@ describe('Kunena BBCode: code blocks coloured by highlight.js', () => {
 
       return cy.task(
         'queryDB',
-        `INSERT INTO #__kunena_topics (category_id, subject, icon_id, label_id, locked, hold, ordering, posts, hits, attachments, poll_id, moved_id, first_post_id, first_post_time, first_post_userid, first_post_message, first_post_guest_name, last_post_id, last_post_time, last_post_userid, last_post_message, last_post_guest_name, rating, params) VALUES (${category.insertId}, 'Cypress code highlight ${stamp}', 0, 0, 0, 0, 0, ${texts.length}, 0, 0, 0, 0, 0, UNIX_TIMESTAMP(), 797, 'x', '', 0, UNIX_TIMESTAMP(), 797, 'x', '', 0, '')`,
+        `INSERT INTO #__kunena_topics (category_id, subject, icon_id, label_id, locked, hold, ordering, posts, hits, attachments, poll_id, moved_id, first_post_id, first_post_time, first_post_userid, first_post_message, first_post_guest_name, last_post_id, last_post_time, last_post_userid, last_post_message, last_post_guest_name, rating, params) VALUES (${category.insertId}, 'Cypress code highlight ${stamp}', 0, 0, 0, 0, 0, ${texts.length + 1}, 0, 0, 0, 0, 0, UNIX_TIMESTAMP(), 797, 'x', '', 0, UNIX_TIMESTAMP(), 797, 'x', '', 0, '')`,
       );
     }).then((topic) => {
       ids.topic = topic.insertId;
@@ -57,11 +71,12 @@ describe('Kunena BBCode: code blocks coloured by highlight.js', () => {
       return addMessage(0, texts[0]);
     }).then((first) => {
       texts.slice(1).forEach((text) => addMessage(first, text));
+      cy.then(() => addMessage(first, 'A reply with a signature.', ids.user, `ci-signature-${stamp}`));
       cy.then(() => {
         const last = ids.messages[ids.messages.length - 1];
 
         cy.task('queryDB', `UPDATE #__kunena_topics SET first_post_id = ${first}, last_post_id = ${last} WHERE id = ${ids.topic}`);
-        cy.task('queryDB', `UPDATE #__kunena_categories SET numTopics = 1, numPosts = ${texts.length} WHERE id = ${ids.category}`);
+        cy.task('queryDB', `UPDATE #__kunena_categories SET numTopics = 1, numPosts = ${texts.length + 1} WHERE id = ${ids.category}`);
       });
     });
 
@@ -72,6 +87,7 @@ describe('Kunena BBCode: code blocks coloured by highlight.js', () => {
   afterEach(() => {
     cy.clearCookie('kunena_template');
     cy.then(() => cy.kunena_setOption('highlightCode', highlightCode === undefined ? null : highlightCode));
+    cy.then(() => cy.kunena_setOption('signature', signatures === undefined ? null : signatures));
     cy.then(() => {
       const messages = ids.messages.join(', ');
 
@@ -84,6 +100,9 @@ describe('Kunena BBCode: code blocks coloured by highlight.js', () => {
     cy.task('queryDB', `DELETE FROM #__kunena_aliases WHERE alias = 'cypress-code-highlight-${stamp}'`);
     cy.task('queryDB', `DELETE FROM #__kunena_user_categories WHERE category_id = ${ids.category}`);
     cy.task('queryDB', `DELETE FROM #__kunena_categories WHERE id = ${ids.category}`);
+    cy.task('queryDB', `DELETE FROM #__kunena_users WHERE userid = ${ids.user}`);
+    cy.task('queryDB', `DELETE FROM #__user_usergroup_map WHERE user_id = ${ids.user}`);
+    cy.task('queryDB', `DELETE FROM #__users WHERE id = ${ids.user}`);
     cy.kunena_fixUserCounters();
   });
 
@@ -179,6 +198,37 @@ describe('Kunena BBCode: code blocks coloured by highlight.js', () => {
         expect(style($dark).color).to.equal(colours.color);
         expect(style($dark.parent('pre')).backgroundColor).to.equal(colours.background);
       });
+    });
+  });
+
+  it('gives a code block in a signature the same box as in a message (Agora)', () => {
+    const box = ($pre) => {
+      const pre = style($pre);
+
+      return { border: pre.borderTopWidth, radius: pre.borderTopLeftRadius, whiteSpace: pre.whiteSpace, background: pre.backgroundColor };
+    };
+
+    cy.kunena_setOption('signature', '1');
+    cy.kunena_setOption('highlightCode', '0');
+    openTopic('agora');
+    cy.get('#kunena.layout.agora').should('exist');
+
+    // Not highlighted: the box of Agora (surface, border, radius, no wrapping), outside .kmsg as inside it.
+    cy.contains('.ksignature pre.bbcode_code_body > code', '$sig = 1;').parent('pre').then(($signature) => {
+      block('<?php echo 1; ?>').parent('pre').then(($message) => {
+        expect($signature.closest('.kmsg').length, 'the signature is outside .kmsg').to.equal(0);
+        expect(box($signature)).to.deep.equal(box($message));
+        expect(box($signature).border).to.equal('1px');
+        expect(box($signature).whiteSpace).to.equal('pre');
+      });
+    });
+
+    // Highlighted: the dark theme inside the same frame.
+    cy.kunena_setOption('highlightCode', '1');
+    cy.reload();
+    cy.contains('.ksignature pre.bbcode_code_body > code', '$sig = 1;').should('have.class', 'hljs').parent('pre').should(($pre) => {
+      expect(style($pre).backgroundColor).to.equal('rgb(13, 17, 23)');
+      expect(style($pre).borderTopWidth).to.equal('1px');
     });
   });
 });

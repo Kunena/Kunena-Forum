@@ -96,6 +96,14 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                         aria-selected="true"><?php echo Text::_('COM_KUNENA_MODHEADER'); ?></button>
                                             </li>
                                         <?php endif; ?>
+                                        <?php if ($this->category->id && !$this->category->isSection()) : ?>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="tab-subscribers-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#tab-subscribers" type="button" role="tab"
+                                                        aria-controls="tab-subscribers"
+                                                        aria-selected="false"><?php echo Text::sprintf('COM_KUNENA_CATEGORY_SUBSCRIBERS_TAB', \count($this->subscribers)); ?></button>
+                                            </li>
+                                        <?php endif; ?>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="tab-general" role="tabpanel"
@@ -450,6 +458,36 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                         endif; ?>
                                                         </tbody>
                                                     </table>
+                                                </fieldset>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if ($this->category->id && !$this->category->isSection()) : ?>
+                                            <div class="tab-pane fade" id="tab-subscribers" role="tabpanel"
+                                                 aria-labelledby="tab-subscribers-tab">
+                                                <fieldset>
+                                                    <legend><?php echo Text::_('COM_KUNENA_CATEGORY_SUBSCRIBERS'); ?></legend>
+                                                    <?php if (empty($this->subscribers)) : ?>
+                                                        <p><?php echo Text::_('COM_KUNENA_CATEGORY_NO_SUBSCRIBERS'); ?></p>
+                                                    <?php else : ?>
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <th><?php echo Text::_('COM_KUNENA_USERNAME'); ?></th>
+                                                                <th><?php echo Text::_('COM_KUNENA_USRL_REALNAME'); ?></th>
+                                                                <th class="col-md-1"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <?php foreach ($this->subscribers as $subscriber) : ?>
+                                                                <tr>
+                                                                    <td><?php echo $this->escape($subscriber->username); ?></td>
+                                                                    <td><?php echo $this->escape($subscriber->name); ?></td>
+                                                                    <td><?php echo $this->escape($subscriber->userid); ?></td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                            </tbody>
+                                                        </table>
+                                                    <?php endif; ?>
                                                 </fieldset>
                                             </div>
                                         <?php endif; ?>

@@ -178,6 +178,11 @@ jQuery(document).ready(function ($) {
             label.append($('<span>', {'class': 'd-block small text-center'}).text(value.label));
         }
 
+        // A space between the icons, as between the lines of the layout
+        if (index > 0) {
+            div_object.append(document.createTextNode(' '));
+        }
+
         div_object.append($('<label>', {'for': 'radio' + value.id}), input, label);
     });
 

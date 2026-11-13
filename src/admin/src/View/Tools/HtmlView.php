@@ -22,6 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -106,6 +107,38 @@ class HtmlView extends BaseHtmlView
     protected mixed $catTopicSubscribers = [];
 
     /**
+     * The diagnostics check whose rows are shown ('' for the list of the checks).
+     *
+     * @var     string
+     * @since   Kunena 8.0
+     */
+    protected string $check = '';
+
+    /**
+     * The rows the check found, at most KunenaDiagnostics::ITEMS_LIMIT of them.
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected array $items = [];
+
+    /**
+     * The number of rows the check found.
+     *
+     * @var     integer
+     * @since   Kunena 8.0
+     */
+    protected int $itemsTotal = 0;
+
+    /**
+     * The markers of the fields of the check (for example 'invalid').
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected array $fieldInfo = [];
+
+    /**
      * @param   null  $tpl  tpl
      *
      * @return  mixed
@@ -124,6 +157,15 @@ class HtmlView extends BaseHtmlView
         } elseif ($layout == 'cleanupip') {
             $this->setToolBarCleanupIP();
         } elseif ($layout == 'diagnostics') {
+            $check = Factory::getApplication()->getInput()->getCmd('check', '');
+
+            if (KunenaDiagnostics::isCheck($check)) {
+                $this->check      = $check;
+                $this->items      = KunenaDiagnostics::getItems($check, KunenaDiagnostics::ITEMS_LIMIT);
+                $this->itemsTotal = KunenaDiagnostics::count($check);
+                $this->fieldInfo  = KunenaDiagnostics::getFieldInfo($check);
+            }
+
             $this->setToolBarDiagnostics();
         } elseif ($layout == 'menu') {
             $this->legacy    = KunenaMenuFix::getLegacy();

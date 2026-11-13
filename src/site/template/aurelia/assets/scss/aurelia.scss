@@ -8,8 +8,8 @@
 **/
 
 /*
- * All url()'s should be relative paths from media folder inside the template or 'JROOT/media/kunena'.
- * Scss parser will automatically search for all the files from the lookup paths and use the first match.
+ * All url()'s are written unchanged into 'media/kunena/cache/<template>/css/kunena.css', so they must be relative to that
+ * folder: use '../../../core/images/...' for 'media/kunena/core/images/...'.
  */
 #kunena.layout {
   @import "variables";

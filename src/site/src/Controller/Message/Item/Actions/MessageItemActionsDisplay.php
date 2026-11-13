@@ -434,7 +434,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                     'delete',
                     $button,
                     KunenaIcons::delete()
-                )
+                )->set('confirm', Text::_('COM_KUNENA_MESSAGE_DELETE_CONFIRM'))
             );
 
             // Dropdown Item version
@@ -448,7 +448,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                     'delete',
                     true,
                     KunenaIcons::delete()
-                )
+                )->set('confirm', Text::_('COM_KUNENA_MESSAGE_DELETE_CONFIRM'))
             );
         } elseif ($this->message->hold == 2 || $this->message->hold == 3) {
             if ($this->message->isAuthorised('undelete')) {
@@ -491,7 +491,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                         'permdelete',
                         $button,
                         KunenaIcons::delete()
-                    )
+                    )->set('confirm', Text::_('COM_KUNENA_MESSAGE_PERMDELETE_CONFIRM'))
                 );
 
                 // Dropdown Item version
@@ -505,7 +505,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                         'permdelete',
                         true,
                         KunenaIcons::delete()
-                    )
+                    )->set('confirm', Text::_('COM_KUNENA_MESSAGE_PERMDELETE_CONFIRM'))
                 );
             }
         } elseif ($this->message->isAuthorised('delete')) {
@@ -519,7 +519,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                     'delete',
                     $button,
                     KunenaIcons::delete()
-                )
+                )->set('confirm', Text::_('COM_KUNENA_MESSAGE_DELETE_CONFIRM'))
             );
 
             // Dropdown Item version
@@ -533,7 +533,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                     'delete',
                     true,
                     KunenaIcons::delete()
-                )
+                )->set('confirm', Text::_('COM_KUNENA_MESSAGE_DELETE_CONFIRM'))
             );
         }
 

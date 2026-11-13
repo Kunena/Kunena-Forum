@@ -87,6 +87,10 @@ class LanguageFilesTest extends UnitTestCase
             'link cards option'        => [$admin, 'COM_KUNENA_CONFIGURATION_LINKPREVIEW'],
             'spotify option'           => [$admin, 'COM_KUNENA_CONFIGURATION_AUTOEMBEDSPOTIFY'],
             'deezer option'            => [$admin, 'COM_KUNENA_CONFIGURATION_AUTOEMBEDDEEZER'],
+            'topic delete confirm'     => [$site, 'COM_KUNENA_TOPIC_DELETE_CONFIRM'],
+            'topic permdelete confirm' => [$site, 'COM_KUNENA_TOPIC_PERMDELETE_CONFIRM'],
+            'message delete confirm'   => [$site, 'COM_KUNENA_MESSAGE_DELETE_CONFIRM'],
+            'message permdel confirm'  => [$site, 'COM_KUNENA_MESSAGE_PERMDELETE_CONFIRM'],
         ];
     }
 

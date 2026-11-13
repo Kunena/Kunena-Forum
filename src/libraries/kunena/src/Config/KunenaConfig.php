@@ -129,6 +129,7 @@ use SimpleXMLElement;
  * @property string $lightbox                     Enable Lightbox for Images
  * @property string $listCatShowModerators        Show Moderators in Category Index
  * @property string $logModeration                Define if you want to log action or moderation
+ * @property string $logModerationActionlog       Also write the moderation actions to the User Actions Log of Joomla
  * @property string $mailAdministrators           E-mail Administrators
  * @property string $mailBodyUserBanned           Set the body of the mail when the user is banned
  * @property string $mailBodyUserUnBanned         Set the body of the mail when the user is unbanned

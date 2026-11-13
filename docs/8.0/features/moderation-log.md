@@ -20,6 +20,8 @@ The new page **Moderation log** (`view=topic&layout=modlog`) lists the moderatio
 - It is reached from a link in the profile box (moderators and administrators only).
 - The log is only filled when the option *Define if you want to log action or moderation* of the configuration is on. An
   administrator sees a warning on the page when it is off.
+- The moderation actions can also be copied to the User Actions Log of Joomla: see [Moderation log in the User Actions Log of
+  Joomla](joomla-action-log.md).
 
 ---
 

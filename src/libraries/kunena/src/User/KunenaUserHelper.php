@@ -334,6 +334,7 @@ abstract class KunenaUserHelper
 
     /**
      * Get the list of users online by giving list of userid
+     * The current user is always included: they are on the forum right now, whatever their session says.
      *
      * @return array|null
      *
@@ -372,6 +373,13 @@ abstract class KunenaUserHelper
                 self::$_online = (array) $db->loadObjectList('userid');
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
+            }
+
+            $me = self::getMyself();
+
+            // The current user is on the forum right now, even when their session row is older than the limit.
+            if ($me && $me->userid > 0 && !isset(self::$_online[$me->userid])) {
+                self::$_online = [$me->userid => (object) ['userid' => $me->userid, 'time' => Factory::getDate()->toUnix()]] + self::$_online;
             }
         }
 

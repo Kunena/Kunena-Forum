@@ -319,6 +319,12 @@ class KunenaBBCode extends BBCode
      */
     public static function isOwnDomain(string $url, string $list): bool
     {
+        // PHP and the browsers read a backslash or a user before the host differently (http://evil.org\@example.com/ opens
+        // evil.org): such a link is never an own domain.
+        if (str_contains($url, '\\') || parse_url($url, PHP_URL_USER) !== null || parse_url($url, PHP_URL_PASS) !== null) {
+            return false;
+        }
+
         $host = strtolower((string) parse_url($url, PHP_URL_HOST));
 
         if ($host === '') {

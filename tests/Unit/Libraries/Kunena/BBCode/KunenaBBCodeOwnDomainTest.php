@@ -131,6 +131,10 @@ class KunenaBBCodeOwnDomainTest extends UnitTestCase
             'an entry with an empty label'     => ['https://example..com/', 'example..com'],
             'a url without a host'             => ['/index.php?option=com_kunena', 'example.com'],
             'a url of mail'                    => ['mailto:info@example.com', 'example.com'],
+            'a backslash before the user'      => ['http://evil.org\\@example.com/', 'example.com'],
+            'two backslashes before the user'  => ['http://evil.org\\\\@example.com/', 'example.com'],
+            'a user on the domain'             => ['http://user@example.com/', 'example.com'],
+            'a user and a password'            => ['http://user:pass@example.com/', 'example.com'],
         ];
     }
 

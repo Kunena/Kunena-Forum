@@ -238,25 +238,25 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
             if ($this->topic->hold == 1 || $this->topic->hold == 0) {
                 $this->topicButtons->set(
                     'delete',
-                    $this->getButton(\sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, $button, KunenaIcons::delete())
+                    $this->getButton(\sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, $button, KunenaIcons::delete())->set('confirm', Text::_('COM_KUNENA_TOPIC_DELETE_CONFIRM'))
                 );
 
                 // Dropdown Item version
                 $this->topicButtons->set(
                     'delete_dropdown',
-                    $this->getButton(\sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, true, KunenaIcons::delete())
+                    $this->getButton(\sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, true, KunenaIcons::delete())->set('confirm', Text::_('COM_KUNENA_TOPIC_DELETE_CONFIRM'))
                 );
             } elseif ($this->topic->hold == 2 || $this->topic->hold == 3) {
                 if ($this->topic->isAuthorised('permdelete')) {
                     $this->topicButtons->set(
                         'permdelete',
-                        $this->getButton(\sprintf($task, 'permdelete'), 'permdelete', 'topic', 'moderation', false, $button)
+                        $this->getButton(\sprintf($task, 'permdelete'), 'permdelete', 'topic', 'moderation', false, $button)->set('confirm', Text::_('COM_KUNENA_TOPIC_PERMDELETE_CONFIRM'))
                     );
 
                     // Dropdown Item version
                     $this->topicButtons->set(
                         'permdelete_dropdown',
-                        $this->getButton(\sprintf($task, 'permdelete'), 'permdelete', 'topic', 'moderation', false, true)
+                        $this->getButton(\sprintf($task, 'permdelete'), 'permdelete', 'topic', 'moderation', false, true)->set('confirm', Text::_('COM_KUNENA_TOPIC_PERMDELETE_CONFIRM'))
                     );
                 }
 

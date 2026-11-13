@@ -297,21 +297,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $doc->setMetaData('robots', 'noindex, follow');
         }
 
-        if (!$start) {
-            foreach ($doc->_links as $key => $value) {
-                if (\is_array($value)) {
-                    if (\array_key_exists('relation', $value)) {
-                        if ($value['relation'] == 'canonical') {
-                            $canonicalUrl               = $this->topic->getUrl();
-                            $doc->_links[$canonicalUrl] = $value;
-                            unset($doc->_links[$key]);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
         // Run events.
         $params = new Registry();
         $params->set('ksource', 'kunena');
@@ -766,21 +751,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
         }
 
         if ($page > 1) {
-            foreach ($doc->_links as $key => $value) {
-                if (\is_array($value)) {
-                    if (\array_key_exists('relation', $value)) {
-                        if ($value['relation'] == 'canonical') {
-                            $canonicalUrl               = KunenaRoute::_();
-                            $doc->_links[$canonicalUrl] = $value;
-                            unset($doc->_links[$key]);
-                            break;
-                        }
-                    }
-                }
-            }
+            $canonicalUri = $this->getCanonicalUri(['option', 'view', 'catid', 'id', 'Itemid'], ($page - 1) * $this->pagination->limit);
+            $this->setCanonicalLink($doc, KunenaRoute::_($canonicalUri));
         } else {
-            $uri = trim(strtok($this->topic->getUrl(), '?'));
-            $doc->addHeadLink($uri, 'canonical');
+            $this->setCanonicalLink($doc, trim(strtok($this->topic->getUrl(), '?')));
         }
 
         $menu_item = $this->app->getMenu()->getActive();

@@ -142,9 +142,11 @@ describe('Kunena writing: a posting form is sent only once', () => {
     cy.visit(`${base}&view=topic&layout=create&catid=3`);
     typeInEditor('A topic without a subject at first.');
     cy.get('#postform input[name="subject"]').should('have.value', '');
-    cy.get('#form_submit_button').should('not.be.disabled').click();
-
-    cy.location('search').should('include', 'layout=create');
+    // The page of the form, as the site shows it (with SEF URLs it is not the address of the visit).
+    cy.location('href').then((href) => {
+      cy.get('#form_submit_button').should('not.be.disabled').click();
+      cy.location('href').should('eq', href);
+    });
     cy.get('#postform').should('not.have.attr', 'aria-busy');
     cy.get('#postform button[type="submit"], #postform input[type="submit"]').each(($button) => {
       expect($button.attr('aria-disabled'), 'not busy').to.not.eq('true');

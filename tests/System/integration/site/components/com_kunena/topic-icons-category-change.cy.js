@@ -22,11 +22,12 @@ describe('Kunena new topic: the topic icons after a change of the category', () 
       old.topicIcons = value ?? null;
     });
 
+    // The form of a category lists that category and its children (a category alone has no list): the second is a child of the first.
     aliases.forEach((alias, index) => {
-      cy.task(
+      cy.then(() => cy.task(
         'queryDB',
-        `INSERT INTO #__kunena_categories (parentid, name, alias, icon, class_sfx, description, headerdesc, topictemplate, accesstype, access, pubAccess, pubRecurse, adminAccess, adminRecurse, ordering, published, allowAnonymous, postAnonymous, params, iconset) VALUES (1, 'Cypress icons ${index} ${stamp}', '${alias}', '', '', '', '', '', 'joomla.level', 1, 1, 1, 8, 1, 99, 1, 0, 0, '{}', 'default')`,
-      ).then((result) => {
+        `INSERT INTO #__kunena_categories (parentid, name, alias, icon, class_sfx, description, headerdesc, topictemplate, accesstype, access, pubAccess, pubRecurse, adminAccess, adminRecurse, ordering, published, allowAnonymous, postAnonymous, params, iconset) VALUES (${index ? ids[0] : 1}, 'Cypress icons ${index} ${stamp}', '${alias}', '', '', '', '', '', 'joomla.level', 1, 1, 1, 8, 1, 99, 1, 0, 0, '{}', 'default')`,
+      )).then((result) => {
         ids.push(result.insertId);
         cy.task('queryDB', `INSERT INTO #__kunena_aliases (alias, type, item, state) VALUES ('${alias}', 'catid', ${result.insertId}, 0)`);
       });

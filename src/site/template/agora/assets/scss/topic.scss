@@ -297,6 +297,13 @@ pre.bbcode_code,
   overflow-wrap: normal;
 }
 
+/* A block coloured by highlight.js shows the background and the text colour of its theme (github-dark), in both schemes. */
+pre.bbcode_code_body:has(> code.hljs) {
+  padding: 0 !important;
+  color: #c9d1d9 !important;
+  background: #0d1117 !important;
+}
+
 .kmsg :not(pre) > code {
   padding: 0.1em 0.35em;
   background: var(--agora-surface-hover);

@@ -85,6 +85,8 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 
     public mixed $poll = null;
 
+    public mixed $unsentFields = null;
+
     /**
      * Prepare topic edit form.
      *
@@ -218,6 +220,10 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
         }
 
         $this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
+
+        // Fields restored after a failed post exist only in this form; a draft keeps its own copy.
+        $this->unsentFields = !empty($saved) && $this->input->getInt('draftid', 0) === 0;
+
         $this->app->setUserState('com_kunena.postfields', null);
 
         $this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;

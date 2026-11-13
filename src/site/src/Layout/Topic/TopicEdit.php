@@ -83,4 +83,6 @@ class TopicEdit extends KunenaLayout
     public mixed $attachments = null;
 
     public mixed $catid = null;
+
+    public mixed $unsentFields = null;
 }

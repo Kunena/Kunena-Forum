@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -304,11 +305,21 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
             $this->setCanonicalLink($doc, KunenaRoute::_($canonicalUri));
         }
 
+        $this->setDescription(
+            static::getMetaDescription(
+                $menu_item ? (array) $menu_item->query : [],
+                $menu_item ? (string) $menu_item->getParams()->get('menu-meta_description', '') : '',
+                (int) $this->category->id,
+                !empty($categorydesc) ? (string) KunenaParser::stripBBCode((string) $categorydesc, 0, false) : '',
+                "{$parentText} - {$categoryText}{$pagesText} - {$this->config->boardTitle}",
+                $pagesText
+            )
+        );
+
         if ($menu_item) {
-            $params             = $menu_item->getParams();
-            $params_description = $params->get('menu-meta_description');
-            $params_title       = $params->get('page_title');
-            $params_robots      = $params->get('robots');
+            $params        = $menu_item->getParams();
+            $params_title  = $params->get('page_title');
+            $params_robots = $params->get('robots');
 
             if (!empty($params_title)) {
                 $title = $params->get('page_title') . $pagesText;
@@ -318,23 +329,55 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
                 $this->setTitle($title);
             }
 
-            if (!empty($params_description)) {
-                $description = $params->get('menu-meta_description');
-                $description = substr($description, 0, 140) . '... ' . $pagesText;
-                $this->setDescription($description);
-            } elseif (!empty($categorydesc)) {
-                $categorydesc = substr($categorydesc, 0, 140) . '... ' . $pagesText;
-                $this->setDescription($categorydesc);
-            } else {
-                $description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->boardTitle}";
-                $description = substr($description, 0, 140) . '...';
-                $this->setDescription($description);
-            }
-
             if (!empty($params_robots)) {
                 $robots = $params->get('robots');
                 $this->setMetaData('robots', $robots);
             }
         }
+    }
+
+    /**
+     * The meta description of the category page: the description of a menu item for this category, then the description of
+     * the category, then the description of the active menu item, then the generated text (issue #7475).
+     *
+     * @param   array   $menuQuery            The link variables of the active menu item.
+     * @param   string  $menuDescription      The meta description of the active menu item.
+     * @param   int     $categoryId           The id of the category.
+     * @param   string  $categoryDescription  The description of the category as plain text.
+     * @param   string  $generatedText        The generated text, which already holds the page number.
+     * @param   string  $pagesText            The page number text, added after a description.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function getMetaDescription(array $menuQuery, string $menuDescription, int $categoryId, string $categoryDescription, string $generatedText, string $pagesText): string
+    {
+        $clean = static fn (string $text): string => trim(preg_replace('/[ \t\n\r\f\x0B]+/', ' ', $text));
+        $short = static fn (string $text): string => mb_strlen($text) > 140 ? rtrim(mb_substr($text, 0, 140)) . '...' : $text;
+
+        $menuDescription     = $clean($menuDescription);
+        $categoryDescription = $clean(strip_tags($categoryDescription));
+
+        $layout          = $menuQuery['layout'] ?? '';
+        $menuForCategory = ($menuQuery['option'] ?? '') === 'com_kunena'
+            && ($menuQuery['view'] ?? '') === 'category'
+            && ($layout === '' || $layout === 'default')
+            && $categoryId > 0
+            && (int) ($menuQuery['catid'] ?? 0) === $categoryId;
+
+        if ($menuForCategory && $menuDescription !== '') {
+            return $short($menuDescription) . $pagesText;
+        }
+
+        if ($categoryDescription !== '') {
+            return $short($categoryDescription) . $pagesText;
+        }
+
+        if ($menuDescription !== '') {
+            return $short($menuDescription) . $pagesText;
+        }
+
+        return $short($clean($generatedText));
     }
 }

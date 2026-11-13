@@ -141,53 +141,52 @@ jQuery(document).ready(function ($) {
     data: {catid: catid}
 })
 .done(function (data) {
+    // Keep the chosen icon when the icons of the new category have it
+    const checked = $('input[name="topic_emoticon"]:checked').val();
+
     $('#iconset_topicList').remove();
 
     const div_object = $('<div>', {'id': 'iconset_topicList'});
     $('#iconset_inject').append(div_object);
 
+    const icontype = Joomla.getOptions('com_kunena.kunena_topicicontype');
+    const iconLabels = Joomla.getOptions('com_kunena.topicIconLabels');
+
+    // The same markup as the layout of the form
     $.each(data, function (index, value) {
-        if (value.type !== 'system') {
-            // Create input consistently for all icons
-            const input = $('<input>', {
-                type: 'radio',
-                id: 'radio' + value.id,
-                name: 'topic_emoticon',
-                value: value.id,
-                // Set first icon as checked by default
-                ...(index === 0 ? { checked: true } : {})
-            });
+        const input = $('<input>', {
+            type: 'radio',
+            id: 'radio' + value.id,
+            name: 'topic_emoticon',
+            value: value.id
+        });
 
-            // Create span with consistent class
-            const span_object = $('<span>', {'class': 'kiconsel'}).append(input);
+        const label = $('<label>', {
+            'class': 'radio inline',
+            'for': 'radio' + value.id
+        });
 
-            // Create label consistently based on icon type
-            let label;
-            if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'fa') {
-                label = $('<label>', {
-                    'class': 'radio inline',
-                    'for': 'radio' + value.id
-                }).append($('<i>', {
-                    'class': 'fa glyphicon-topic fa-2x fa-' + value.fa,
-                    'border': '0',
-                    'alt': ''
-                }));
-            } else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'svg') {
-                label = $('<label>', {
-                    'class': 'radio inline',
-                    'for': 'radio' + value.id
-                }).append($(value.svg));
-            } else {
-                label = $('<label>', {
-                    'class': 'radio inline',
-                    'for': 'radio' + value.id
-                }).append($('<img>', {'src': value.path, 'border': '0', 'alt': ''}));
-            }
-
-            span_object.append(label);
-            $('#iconset_topicList').append(span_object);
+        if (icontype === 'svg') {
+            label.append($(value.svg));
+        } else if (icontype === 'fa') {
+            label.append($('<i>', {'class': 'fa fa-' + value.fa + ' glyphicon-topic fa-2x'}));
+        } else {
+            label.append($('<img>', {'loading': 'lazy', 'src': value.path, 'alt': value.name, 'style': 'border:0;'}));
         }
+
+        if (iconLabels) {
+            label.append($('<span>', {'class': 'd-block small text-center'}).text(value.label));
+        }
+
+        div_object.append($('<label>', {'for': 'radio' + value.id}), input, label);
     });
+
+    const radios = div_object.find('input[name="topic_emoticon"]');
+    const previous = radios.filter(function () {
+        return this.value === checked;
+    });
+
+    (previous.length ? previous : radios.first()).prop('checked', true);
 })
 .fail(function () {
     //TODO: handle the error of ajax request

@@ -3568,6 +3568,9 @@ class TopicController extends KunenaController
 
         $template = KunenaFactory::getTemplate();
 
+        // The titles of the icons are in the language files of the templates, which a task does not load.
+        $template->loadLanguage();
+
         $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/topicicons.xml';
 
         if (is_file($xmlfile)) {
@@ -3585,15 +3588,18 @@ class TopicController extends KunenaController
                     $icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
                     $icon->name = (string) $attributes->name;
 
-                    if ($icon->type != 'user') {
-                        $icon->id = $icon->type . '_' . $icon->name;
+                    $icon->published = (int) $attributes->published;
+
+                    // The same icons as on the loading of the form: the published icons of the users.
+                    if (!$icon->published || $icon->type !== 'user') {
+                        continue;
                     }
 
                     $icon->iconset   = $categoryIconset;
-                    $icon->published = (int) $attributes->published;
                     $icon->title     = (string) $attributes->title;
+                    $icon->label     = Text::_($icon->title);
                     $icon->fa        = (string) $attributes->fa;
-                    $icon->svg       = (string) KunenaSvgIcons::loadsvg($attributes->svg);
+                    $icon->svg       = (string) KunenaSvgIcons::loadsvg((string) $attributes->svg, 'usertopicIcons', $categoryIconset);
                     $icon->filename  = (string) $attributes->src;
                     $icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;
                     $icon->height    = (int) $attributes->height ? (int) $attributes->height : $height;

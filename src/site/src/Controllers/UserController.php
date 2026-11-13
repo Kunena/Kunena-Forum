@@ -45,6 +45,7 @@ use Kunena\Forum\Libraries\Forum\Message\Karma\KunenaKarmaHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
+use Kunena\Forum\Libraries\Image\KunenaSvgSanitizer;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Notification\KunenaPopupNotification;
@@ -1316,18 +1317,47 @@ class UserController extends KunenaController
             // Upload!
             $this->config->avatarTypes = strtolower($this->config->avatarTypes);
             $upload->addExtensions(explode(',', $this->config->avatarTypes));
+
+            // addExtensions() refuses svg: an SVG avatar is allowed only when it is configured, and it is cleaned below.
+            $avatarTypes = array_map(static fn ($type) => strtolower(ltrim(trim($type), '.')), explode(',', $this->config->avatarTypes));
+
+            if (\in_array('svg', $avatarTypes, true)) {
+                $upload->allowSvgAvatar();
+            }
+
             $response = (object) $upload->ajaxUpload($options);
 
             if (!empty($response->completed)) {
-                $this->deleteOldAvatars($user);
-
                 // We have it all, lets update the avatar in user table
                 $uploadFile                 = $upload->getProtectedFile();
                 list($basename, $extension) = $upload->splitFilename();
 
-                File::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
+                if (strtolower($extension) === 'svg') {
+                    // Only the cleaned markup is stored; a file which cannot be cleaned is refused and the old avatar stays.
+                    $svg = KunenaSvgSanitizer::clean((string) file_get_contents($uploadFile));
 
-                KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
+                    if ($svg === null) {
+                        File::delete($uploadFile);
+
+                        throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_SVG_INVALID'), 400);
+                    }
+
+                    $this->deleteOldAvatars($user);
+
+                    $extension = 'svg';
+
+                    File::write(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.svg', $svg);
+
+                    KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.svg');
+
+                    File::delete($uploadFile);
+                } else {
+                    $this->deleteOldAvatars($user);
+
+                    File::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
+
+                    KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
+                }
 
                 // Save in the table \Kunena\Forum\Libraries\User\KunenaUser
                 $kuser            = $user;

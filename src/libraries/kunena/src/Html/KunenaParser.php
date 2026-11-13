@@ -51,6 +51,27 @@ abstract class KunenaParser
     public static mixed $relative = true;
 
     /**
+     * Put the host in front of the root-relative URLs (one leading slash) of the double-quoted href and src attributes of
+     * an HTML text. A reader outside the site (a feed) needs them absolute: Joomla puts the base URL with the folder of
+     * the site in front of them, which already contain that folder.
+     *
+     * @param   string  $html  The HTML text.
+     * @param   string  $host  The scheme, the host and the port, without a trailing slash, e.g. https://example.com.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function absoluteUrls(string $html, string $host): string
+    {
+        return (string) preg_replace_callback(
+            '/(\s(?:href|src)=")(\/(?!\/))/i',
+            static fn ($matches) => $matches[1] . $host . $matches[2],
+            $html
+        );
+    }
+
+    /**
      * @param   string  $string  string
      *
      * @return  string

@@ -21,6 +21,7 @@ use Joomla\CMS\Document\Feed\FeedImage;
 use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\UserFactoryInterface;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaException;
@@ -78,7 +79,7 @@ class CategoryDisplay extends KunenaControllerDisplay
         $this->document = $this->app->getDocument();
 
         if (!$this->config->enableRss) {
-            throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 500);
+            throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 404);
         }
 
         KunenaParser::$relative = false;
@@ -176,6 +177,11 @@ class CategoryDisplay extends KunenaControllerDisplay
 
             if ((bool) $this->config->rssAllowHtml) {
                 $description = KunenaParser::parseBBCode($description, null, (int) $this->config->rssWordCount);
+
+                // Joomla puts the base URL (with the folder of the site) in front of the root-relative URLs of the feed
+                if (\is_string($description) && $description !== '') {
+                    $description = KunenaParser::absoluteUrls($description, Uri::getInstance()->toString(['scheme', 'host', 'port']));
+                }
             } else {
                 $description = KunenaParser::parseText($description, (int) $this->config->rssWordCount);
             }

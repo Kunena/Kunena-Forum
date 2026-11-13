@@ -55,6 +55,7 @@ class ConfigDefinitionTest extends UnitTestCase
             'link cards'                 => ['linkPreview', 'radio', '1'],
             'link cards in a message'    => ['linkPreviewMax', 'number', '3'],
             'sites without link cards'   => ['linkPreviewBlock', 'textarea', ''],
+            'own domains'                => ['ownDomains', 'textarea', ''],
             'spotify player'             => ['autoEmbedSpotify', 'radio', '1'],
             'deezer player'              => ['autoEmbedDeezer', 'radio', '1'],
         ];

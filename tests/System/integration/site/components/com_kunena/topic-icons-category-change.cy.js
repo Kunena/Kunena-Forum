@@ -56,10 +56,16 @@ describe('Kunena new topic: the topic icons after a change of the category', () 
       expect(expected.values, 'the icons on the loading of the page').to.include('2');
 
       cy.get('#radio2').check({ force: true });
+
+      // The list of the page: the script replaces it with a new element.
+      let oldList;
+      cy.get('#iconset_topicList').then(($list) => {
+        oldList = $list[0];
+      });
       cy.then(() => cy.get('#postcatid').select(String(ids[1])));
       cy.wait('@topicicons');
 
-      // The new list is in the page once the request is done.
+      cy.get('#iconset_topicList').should(($list) => expect($list[0], 'the list after the change of the category').to.not.equal(oldList));
       cy.get('#iconset_topicList input[name="topic_emoticon"]').should('have.length', expected.values.length);
       readList().then((actual) => {
         expect(actual.values, 'the values of the radios').to.deep.eq(expected.values);

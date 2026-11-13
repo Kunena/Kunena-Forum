@@ -86,6 +86,8 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
     public mixed $captchaDisplay = null;
 
+    public mixed $unsentFields = null;
+
     /**
      * @var     string
      * @since   Kunena 6.0
@@ -240,6 +242,9 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
         $this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
         $this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
+
+        // Fields restored after a failed post exist only in this form; a draft keeps its own copy.
+        $this->unsentFields = !empty($saved) && $this->input->getInt('draftid', 0) === 0;
 
         $this->app->setUserState('com_kunena.postfields', null);
 

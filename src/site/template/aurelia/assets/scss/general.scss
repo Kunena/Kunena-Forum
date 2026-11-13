@@ -1005,11 +1005,18 @@ textarea {
 }
 
 .moved,
-.message-unapproved .badger-left,
 .unapproved,
 .category-stickymsg,
 .deleted {
     background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+// A post awaiting approval: the post box in the left/right and in the top/bottom profile positions, and the search result row.
+.col-md-10.message-unapproved,
+.message-unapproved > .col-md-12,
+.badger-left.message-unapproved {
+    color: var(--bs-body-color);
+    background-color: var(--bs-warning-bg-subtle);
 }
 
 .badger-solved {

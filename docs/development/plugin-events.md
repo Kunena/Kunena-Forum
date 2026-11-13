@@ -398,8 +398,10 @@ These events let a plugin see or change what Kunena shows.
   (the stored name), `filename_real`, `filetype`, `size` and `hash`. The file is at
   `JPATH_ROOT . '/' . $attachment->folder . '/' . $attachment->filename` (`$attachment->getPath()`).
 - Context: none.
-- Result: nothing is read back. Kunena keeps the local file and serves it as before. An exception or error thrown by a
-  listener is caught and logged (category `kunena`): the upload succeeds, and the file stays.
+- Result: nothing is read back from the event. Kunena keeps the local file and serves it as before. An exception or error
+  thrown by a listener is caught and logged (category `kunena`): the upload succeeds, and the file stays. Kunena builds the
+  JSON response of the upload from the attachment after the listeners ran, so a listener should not change its fields
+  (`id`, `hash`, `size`, `filetype`, `filename_real`, `inline`).
 - Dispatched in: `src/libraries/kunena/src/Attachment/KunenaAttachment.php` (`dispatchAfterUpload()`), called from
   `src/site/src/Controllers/TopicController.php`, on the dispatcher of the application, after `importPlugin('kunena')`.
 - Event class: `Kunena\Forum\Libraries\Event\KunenaAfterAttachmentUploadEvent` (immutable, needs `subject`).

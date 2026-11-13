@@ -144,13 +144,15 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 $profile->save(\true);
 
                 // Mark the expired ban as handled without requiring moderator permissions.
+                $banId     = (int) $ban->id;
+                $handledAt = $now->toSql();
                 $db->setQuery(
                     $db->createQuery()
                         ->update($db->quoteName('#__kunena_users_banned'))
                         ->set($db->quoteName('modified_time') . ' = :handled')
                         ->where($db->quoteName('id') . ' = :id')
-                        ->bind(':handled', $now->toSql())
-                        ->bind(':id', (int) $ban->id, ParameterType::INTEGER)
+                        ->bind(':handled', $handledAt)
+                        ->bind(':id', $banId, ParameterType::INTEGER)
                 )->execute();
             }
 

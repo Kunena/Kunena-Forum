@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\Application\Display;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
@@ -98,10 +99,71 @@ class MiscDisplay extends Display
             }
         }
 
+        $pageTitle       = $menu_item ? (string) $menu_item->getParams()->get('page_title') : '';
+        $metaDescription = $menu_item ? (string) $menu_item->getParams()->get('menu-meta_description') : '';
+        $image           = '';
+
+        if (is_file(JPATH_SITE . '/' . $this->config->emailHeader)) {
+            $image = Uri::base() . $this->config->emailHeader;
+        }
+
+        foreach (static::getSocialMetaData($pageTitle, $metaDescription, (string) $this->config->boardTitle, Uri::current(), $image) as [$name, $content, $attribute]) {
+            $this->setMetaData($name, $content, $attribute);
+        }
+
         // Display layout with given parameters.
         return KunenaPage::factory('Misc/Default')
             ->set('header', $this->header)
             ->set('body', $this->body);
+    }
+
+    /**
+     * The Open Graph and Twitter Card tags of the page, in plain text: Joomla escapes them when it renders the head.
+     * The title and the description fall back to the board title, and a tag without a value is left out.
+     *
+     * @param   string  $pageTitle        The page title of the menu item.
+     * @param   string  $metaDescription  The meta description of the menu item.
+     * @param   string  $boardTitle       The title of the board.
+     * @param   string  $url              The URL of the page.
+     * @param   string  $image            The URL of the image, or an empty string.
+     *
+     * @return  array  A list of [name, content, attribute].
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function getSocialMetaData(string $pageTitle, string $metaDescription, string $boardTitle, string $url, string $image): array
+    {
+        $clean = static function (string $text): string {
+            $text = html_entity_decode(strip_tags($text), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+            return trim(preg_replace('/\s+/u', ' ', $text));
+        };
+
+        $board       = $clean($boardTitle);
+        $title       = $clean($pageTitle);
+        $description = $clean($metaDescription);
+
+        if ($title === '') {
+            $title = $board;
+        }
+
+        if ($description === '') {
+            $description = $board;
+        }
+
+        $tags = [
+            ['og:url', $url, 'property'],
+            ['og:type', 'website', 'property'],
+            ['og:title', $title, 'property'],
+            ['og:description', $description, 'property'],
+            ['og:image', $image, 'property'],
+            ['twitter:card', 'summary', 'name'],
+            ['twitter:title', $title, 'name'],
+            ['twitter:description', $description, 'name'],
+            ['twitter:image', $image, 'name'],
+        ];
+
+        return array_values(array_filter($tags, static fn (array $tag): bool => $tag[1] !== ''));
     }
 
     /**

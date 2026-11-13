@@ -20,6 +20,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [The first post of a topic on every page](features/first-post-on-every-page.md) | Users |  | The first message of a topic is shown on top of every page of a long topic. |
 | [Topic status: Mark as solved](features/topic-status-solved.md) | Users, moderators | [#5146](https://github.com/Kunena/Kunena-Forum/issues/5146) | A Mark as solved button, the name under the topic icons and a batch status for moderators. |
 | [Filter bar on the lists of topics](features/topic-list-filter.md) | Users |  | Filter a list of topics on category, status, tag, words in the subject and author, without leaving the page. |
+| [The Unread list shows only the unread topics](features/unread-list.md) | Users | [#6036](https://github.com/Kunena/Kunena-Forum/issues/6036) | The Unread menu item pages over the unread topics only: full pages and the right number of pages. |
 | [Topic lists and index reload in the background](features/background-reload.md) | Users |  | The lists of topics and the forum index update by themselves, and new items blink. |
 | [Order of the attachments of a message](features/attachments-order.md) | Administrators |  | Choose how the attachments of a message are sorted. |
 | [Members box: filter the online users by role](features/members-box.md) | Users |  | Click a chip of the legend to show only the online users with that role. |

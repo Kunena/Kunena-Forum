@@ -92,6 +92,7 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                             foreach ($this->users as $user) :
                                 $userBlockTask    = $user->isBlocked() ? 'users.unblock' : 'users.block';
                                 $userBannedTask   = $user->isBanned() ? 'users.unban' : 'users.ban';
+                                $userModerateTask = $user->moderator ? 'users.unmoderate' : 'users.moderate';
                             ?>
                                 <tr>
                                     <td class="text-center">
@@ -138,9 +139,8 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                         <div role="tooltip" id="cbban<?php echo $i; ?>-desc"><?php echo $user->isBanned() ? Text::_('COM_KUNENA_TASK_UNBAN_USER') : Text::_('COM_KUNENA_TASK_BAN_USER'); ?></div>
                                     </td>
                                     <td class="d-none d-md-table-cell text-center">
-                                        <div class="tbody-icon <?php echo $user->moderator ? 'active' : ''; ?>">
-                                            <?php echo $user->moderator ? $img_yes : $img_no; ?>
-                                        </div>
+                                        <a href="#" class="js-grid-item-action tbody-icon <?php echo $user->moderator ? 'active' : ''; ?>" data-item-id="cb<?php echo $i; ?>" data-item-task="<?php echo $userModerateTask ?>" data-item-form-id="" aria-labelledby="cbmod<?php echo $i; ?>-desc"><?php echo $user->moderator ? $img_yes : $img_no; ?></a>
+                                        <div role="tooltip" id="cbmod<?php echo $i; ?>-desc"><?php echo $user->moderator ? Text::_('COM_KUNENA_TASK_UNMODERATE_USER') : Text::_('COM_KUNENA_TASK_MODERATE_USER'); ?></div>
                                     </td>
                                     <td class="d-none d-md-table-cell">
                                         <?php echo (int) $this->escape($user->userid); ?>

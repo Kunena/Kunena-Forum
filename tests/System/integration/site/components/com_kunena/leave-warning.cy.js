@@ -159,12 +159,13 @@ describe('Kunena writing: a warning before leaving the posting form', () => {
   it('sends the form without a warning, and still warns when the validation of the browser blocks the submit', () => {
     const subject = `Leave warning sent ${stamp}`;
 
-    // Nothing is written: the POST of the form is answered by Cypress.
+    // Nothing is written: the POST of the form is answered by Cypress with a redirect to a page of the site, as a real post is.
+    // (An empty page as the answer has no @view-transition of the site template, and the browser rejects the skipped transition.)
     cy.intercept('POST', '**', (req) => {
       const body = typeof req.body === 'string' ? req.body : new TextDecoder().decode(req.body);
 
       if (body.includes('Leave warning')) {
-        req.reply({ statusCode: 200, body: '' });
+        req.reply({ statusCode: 303, headers: { location: new URL(`${base.slice(1)}&view=category&catid=${ids.category}`, Cypress.config('baseUrl')).href } });
       }
     }).as('post');
 

@@ -232,23 +232,6 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 
         $this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
         $this->pagination->setDisplayedPages(5);
-        $doc  = $this->app->getDocument();
-        $page = $this->pagination->pagesCurrent;
-
-        if ($page > 1) {
-            foreach ($doc->_links as $key => $value) {
-                if (\is_array($value)) {
-                    if (\array_key_exists('relation', $value)) {
-                        if ($value['relation'] == 'canonical') {
-                            $canonicalUrl               = $this->category->getUrl();
-                            $doc->_links[$canonicalUrl] = $value;
-                            unset($doc->_links[$key]);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -317,18 +300,8 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         }
 
         if ($page > 1) {
-            foreach ($doc->_links as $key => $value) {
-                if (\is_array($value)) {
-                    if (\array_key_exists('relation', $value)) {
-                        if ($value['relation'] == 'canonical') {
-                            $canonicalUrl               = KunenaRoute::_();
-                            $doc->_links[$canonicalUrl] = $value;
-                            unset($doc->_links[$key]);
-                            break;
-                        }
-                    }
-                }
-            }
+            $canonicalUri = $this->getCanonicalUri(['option', 'view', 'catid', 'Itemid'], ($page - 1) * $this->pagination->limit);
+            $this->setCanonicalLink($doc, KunenaRoute::_($canonicalUri));
         }
 
         if ($menu_item) {

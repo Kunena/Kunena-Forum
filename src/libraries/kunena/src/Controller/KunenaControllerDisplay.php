@@ -18,14 +18,17 @@ namespace Kunena\Forum\Libraries\Controller;
 use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Document\Document;
+use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicRedirect;
 use Kunena\Forum\Libraries\Layout\KunenaBase;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -176,6 +179,57 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
         if ($config->regOnly && !$me->exists()) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
         }
+    }
+
+    /**
+     * The address of the canonical link: only the named variables of the current address, and the first item of the page.
+     * Tracking parameters and the other variables of the request are left out.
+     *
+     * @param   array  $names       The variables to keep.
+     * @param   int    $limitstart  The first item of the page (0 for the first page).
+     *
+     * @return  Uri
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getCanonicalUri(array $names, int $limitstart): Uri
+    {
+        $uri = new Uri('index.php');
+
+        foreach ($names as $name) {
+            $value = KunenaRoute::$current->getVar($name);
+
+            if ($value !== null) {
+                $uri->setVar($name, $value);
+            }
+        }
+
+        if ($limitstart > 0) {
+            $uri->setVar('limitstart', $limitstart);
+        }
+
+        return $uri;
+    }
+
+    /**
+     * Set the canonical link of the page: the canonical links added before are removed, so that only one is left.
+     *
+     * @param   HtmlDocument  $doc  The document.
+     * @param   string        $url  The address of the canonical link.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    protected function setCanonicalLink(HtmlDocument $doc, string $url): void
+    {
+        foreach ($doc->_links as $key => $value) {
+            if (\is_array($value) && ($value['relation'] ?? null) === 'canonical') {
+                unset($doc->_links[$key]);
+            }
+        }
+
+        $doc->addHeadLink($url, 'canonical');
     }
 
     /**

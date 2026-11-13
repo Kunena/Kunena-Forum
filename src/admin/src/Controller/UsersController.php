@@ -511,8 +511,10 @@ class UsersController extends KunenaController
             return;
         }
 
-        if ($userid <= 0) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+        // Without categories (the icon of the user list) only the global moderator role is granted. Category 0 is that role,
+        // which only a forum administrator may grant.
+        if ((!$modCatids || \in_array(0, $modCatids, true)) && !$this->me->isAdmin()) {
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
@@ -520,9 +522,17 @@ class UsersController extends KunenaController
 
         $user = KunenaUserHelper::get($userid);
 
-        $this->setModerate($user, $modCatids);
+        if ($modCatids) {
+            $success = $this->setModerate($user, $modCatids);
+        } else {
+            $success = KunenaAccess::getInstance()->setModerator(null, $user, true);
+        }
 
-        $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_MODERATE_DONE'), 'success');
+        if ($success) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_MODERATE_DONE'), 'success');
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_MODERATE_FAILED'), 'error');
+        }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
     }
@@ -590,15 +600,23 @@ class UsersController extends KunenaController
         // Collect the categories first: every change clears the role cache. Category 0 is the global moderator role.
         $catids = array_keys($access->getModeratorStatus($user));
 
+        // Only a forum administrator may take the global moderator role away.
+        if (\in_array(0, $catids, true) && !$this->me->isAdmin()) {
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         foreach ($catids as $catid) {
             $category = $catid ? KunenaCategoryHelper::get($catid) : null;
             $success  = $access->setModerator($category, $user, false) && $success;
         }
 
-        $message = Text::_('COM_KUNENA_USER_UNMODERATE_DONE');
-
         if ($success) {
-            $this->app->enqueueMessage($message, 'success');
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_UNMODERATE_DONE'), 'success');
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_MODERATE_FAILED'), 'error');
         }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));

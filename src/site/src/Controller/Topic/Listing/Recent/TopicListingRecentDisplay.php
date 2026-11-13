@@ -126,7 +126,11 @@ class TopicListingRecentDisplay extends ListDisplay
         }
 
         $finder = new KunenaTopicFinder();
-        $finder->filterByMoved(false);
+
+        // The deleted list includes the shadow topics, so that the moderators can restore them or delete them for good (issue #6258).
+        if ($this->state->get('list.mode') !== 'deleted') {
+            $finder->filterByMoved(false);
+        }
 
         switch ($this->state->get('list.mode')) {
             case 'topics':

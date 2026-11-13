@@ -886,7 +886,9 @@ class TopicController extends KunenaController
                     }
                 }
 
-                $attachment->saveFile($uploadFile, $basename, $extension, true);
+                if ($attachment->saveFile($uploadFile, $basename, $extension, true)) {
+                    $attachment->dispatchAfterUpload();
+                }
 
                 // Set id and override response variables just in case if attachment was modified.
                 $response->id       = $attachment->id;

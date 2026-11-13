@@ -388,6 +388,30 @@ These events let a plugin see or change what Kunena shows.
   container. The dispatch does not load a plugin group itself.
 - Event class: `Kunena\Forum\Libraries\Event\KunenaGetUserTopicsEvent`.
 
+## Attachments
+
+### onKunenaAfterAttachmentUpload
+
+- When: after a file uploaded through the editor's uploader (`TopicController::upload()`) is complete, copied to its final
+  place and its row saved. Once per file, not per chunk, and not when the upload or the save fails.
+- Arguments: `subject`, the saved `KunenaAttachment` (`$event->getAttachment()`), with `id`, `userid`, `folder`, `filename`
+  (the stored name), `filename_real`, `filetype`, `size` and `hash`. The file is at
+  `JPATH_ROOT . '/' . $attachment->folder . '/' . $attachment->filename` (`$attachment->getPath()`).
+- Context: none.
+- Result: nothing is read back from the event. Kunena keeps the local file and serves it as before. An exception or error
+  thrown by a listener is caught and logged (category `kunena`): the upload succeeds, and the file stays. Kunena builds the
+  JSON response of the upload from the attachment after the listeners ran, so a listener should not change its fields
+  (`id`, `hash`, `size`, `filetype`, `filename_real`, `inline`).
+- Dispatched in: `src/libraries/kunena/src/Attachment/KunenaAttachment.php` (`dispatchAfterUpload()`), called from
+  `src/site/src/Controllers/TopicController.php`, on the dispatcher of the application, after `importPlugin('kunena')`.
+- Event class: `Kunena\Forum\Libraries\Event\KunenaAfterAttachmentUploadEvent` (immutable, needs `subject`).
+- Note: at this moment the attachment belongs to no message (`mesid` 0, `status` 0). It is linked to a message later, when
+  the message is posted or edited: from the attachments list of the form, or because the text names it with
+  `[attachment=ID]`. That linking is a plain save, which fires `onKunenaAfterSave`, not this event. The file of a private or
+  anonymous message is renamed to a random name at that later save, so the `filename` a listener saw changes. An upload
+  that is never posted is deleted by the scheduled clean-up (`onKunenaBeforeDelete`/`onKunenaAfterDelete`). The old
+  multipart form upload (`KunenaAttachment::upload()`) does not dispatch this event.
+
 ## Others
 
 ### onKunenaReportMessage

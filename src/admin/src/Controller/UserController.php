@@ -223,6 +223,101 @@ class UserController extends FormController
     }
 
     /**
+     * Remove the category subscriptions checked on the edit page of the user
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function removecategorysubscriptions(): void
+    {
+        $this->removeSubscriptions('#__kunena_user_categories', 'category_id', 'catsubs', 'COM_KUNENA_USER_SELECTED_CAT_SUBSCRIPTIONS_REMOVED');
+    }
+
+    /**
+     * Remove the topic subscriptions checked on the edit page of the user
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function removetopicsubscriptions(): void
+    {
+        $this->removeSubscriptions('#__kunena_user_topics', 'topic_id', 'topicsubs', 'COM_KUNENA_USER_SELECTED_TOPIC_SUBSCRIPTIONS_REMOVED');
+    }
+
+    /**
+     * End the checked subscriptions of the user: only the rows of this user which are subscribed and have one of the checked
+     * ids change, the other fields of the form are not saved.
+     *
+     * @param   string  $table   The table of the subscriptions
+     * @param   string  $column  The column of the subscribed category or topic
+     * @param   string  $field   The form field with the checked ids
+     * @param   string  $done    The language key of the success message
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected function removeSubscriptions(string $table, string $column, string $field, string $done): void
+    {
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+
+        $uid = $this->app->getInput()->getInt('uid');
+
+        if ($uid <= 0) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger($this->app->getInput()->get($field, [], 'array'));
+        $ids = array_values(array_filter($ids, static fn (int $id): bool => $id > 0));
+
+        $this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
+
+        $changed = 0;
+
+        if ($ids) {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery()
+                ->update($db->quoteName($table))
+                ->set($db->quoteName('subscribed') . ' = 0')
+                ->where($db->quoteName('user_id') . ' = ' . $uid)
+                ->where($db->quoteName('subscribed') . ' = 1')
+                ->whereIn($db->quoteName($column), $ids);
+            $db->setQuery($query);
+
+            try {
+                $db->execute();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                return;
+            }
+
+            $changed = $db->getAffectedRows();
+        }
+
+        if ($changed > 0) {
+            $this->app->enqueueMessage(Text::_($done), 'success');
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_NO_SUBSCRIPTIONS_SELECTED'), 'warning');
+        }
+    }
+
+    /**
      * Move Messages
      *
      * @return  void

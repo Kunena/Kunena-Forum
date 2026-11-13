@@ -29,6 +29,13 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 abstract class KunenaDiagnostics
 {
     /**
+     * The most rows the backend shows of one check.
+     *
+     * @since   Kunena 8.0
+     */
+    public const int ITEMS_LIMIT = 100;
+
+    /**
      * @param   string  $function  function
      *
      * @return  boolean
@@ -970,6 +977,7 @@ abstract class KunenaDiagnostics
 
     /**
      * @param   string  $function  function
+     * @param   int     $limit     The most rows to load (0: all of them)
      *
      * @return  array
      *
@@ -977,7 +985,7 @@ abstract class KunenaDiagnostics
      *
      * @throws Exception
      */
-    public static function getItems(string $function): array
+    public static function getItems(string $function, int $limit = 0): array
     {
         $queryFunction = 'query_' . $function;
 
@@ -991,7 +999,7 @@ abstract class KunenaDiagnostics
 
             self::$fieldsFunction($query);
             $db = Factory::getContainer()->get('DatabaseDriver');
-            $db->setQuery($query);
+            $db->setQuery($query, 0, $limit);
 
             try {
                 return (array) $db->loadAssocList();
@@ -1064,6 +1072,20 @@ abstract class KunenaDiagnostics
         }
 
         return false;
+    }
+
+    /**
+     * Whether the name is one of the checks of getList() (a name from the request is checked with it first).
+     *
+     * @param   string  $name  The name of the check
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isCheck(string $name): bool
+    {
+        return \in_array($name, self::getList(), true);
     }
 
     /**

@@ -1817,6 +1817,9 @@ class KunenaTopic extends KunenaDatabaseObject
             // would take posts from the category which were never added.
             if ($newTarget && $ids) {
                 $target->posts = 0;
+
+                // The votes stay with the old topic, so the new topic has no rating.
+                $target->rating = 0;
             }
 
             try {

@@ -69,6 +69,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [Users see only their own topics (helpdesk)](features/own-topics-only.md) | Administrators | [#6758](https://github.com/Kunena/Kunena-Forum/issues/6758) | A category can work as a helpdesk: a user only sees the topics he started. |
 | [Close inactive topics for replies](features/close-inactive-topics.md) | Administrators |  | After a number of days without a message, a topic can not get a reply any more. |
 | [Multilanguage support](features/multilanguage.md) | Administrators, users |  | A language for each category and topic, a language filter, and translated categories. |
+| [The subscribers of a category in the backend](features/category-subscribers.md) | Administrators | [#6549](https://github.com/Kunena/Kunena-Forum/issues/6549) | A Subscribers tab in the category form lists the users subscribed to the category. |
 
 ## Mail and notifications
 

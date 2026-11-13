@@ -380,6 +380,7 @@ abstract class KunenaUserHelper
 
     /**
      * Returns the status of a user. If as session exists, we can return the type of status the user set.
+     * The current user always gets the status they set: they are on the forum right now, whatever their session says.
      *
      * @param   mixed  $user  The user object to get the status
      *
@@ -400,6 +401,11 @@ abstract class KunenaUserHelper
 
         $user   = self::get($user);
         $online = false;
+        $me     = self::getMyself();
+
+        if (\intval($user->userid) > 0 && $me && $user->userid == $me->userid) {
+            return (int) $user->status;
+        }
 
         if (\intval($user->userid) > 0) {
             // First check if the user is actually has an active session regardless of the status the user set

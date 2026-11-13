@@ -1,7 +1,9 @@
 // Two clean-ups of the backend tools on the messages:
 // - tools.purgeReStatements removes a reply prefix ("AW:" here, the messages of the test site start with "Re:") from the
 //   start of the subjects, and leaves a subject that has it elsewhere;
-// - tools.cleanupIP removes the IP of the messages older than N days, and keeps that of the newer ones.
+// - tools.cleanupIP removes the IP of the messages older than N days, and keeps that of the newer ones; 0 days removes
+//   all of them, and the switch also removes the IP of the user accounts. These two tests clear the IPs of the messages
+//   and of the accounts of the test site too: they save them first and write them back after the test.
 describe('Kunena backend tools: clean up subjects and IP addresses', () => {
   const admin = '/administrator/index.php?option=com_kunena';
   const stamp = Date.now();
@@ -19,9 +21,24 @@ describe('Kunena backend tools: clean up subjects and IP addresses', () => {
 
     return cy.request({ method: 'POST', url: `${admin}&task=tools.${task}`, form: true, body: { ...body, [token]: '1' }, followRedirect: false });
   });
+  const quote = (value) => (value === null ? 'NULL' : `'${String(value).replaceAll('\\', '\\\\').replaceAll("'", "\\'")}'`);
+  // Saves the IPs of the messages and of the accounts of the site (and the IP of the given account, even when it has none).
+  const saveIps = (account = 0) => cy.task('queryDB', 'SELECT id, ip FROM #__kunena_messages WHERE ip IS NOT NULL').then((messages) => {
+    ids.siteIps = { messages, users: [] };
+
+    return cy.task('queryDB', `SELECT userid AS id, ip FROM #__kunena_users WHERE ip IS NOT NULL OR userid = ${account}`);
+  }).then((users) => {
+    ids.siteIps.users = users;
+  });
+  const restoreIps = (table, key, rows) => {
+    if (rows.length) {
+      cy.task('queryDB', `UPDATE ${table} SET ip = CASE ${key} ${rows.map((r) => `WHEN ${r.id} THEN ${quote(r.ip)}`).join(' ')} ELSE ip END WHERE ${key} IN (${rows.map((r) => r.id).join(', ')})`);
+    }
+  };
 
   beforeEach(() => {
     ids.messages = {};
+    ids.siteIps = null;
     cy.task(
       'queryDB',
       `INSERT INTO #__kunena_categories (parentid, name, alias, icon, class_sfx, description, headerdesc, topictemplate, accesstype, access, pubAccess, pubRecurse, adminAccess, adminRecurse, ordering, published, params, iconset) VALUES (1, 'Cypress cleanup ${stamp}', 'cypress-cleanup-${stamp}', '', '', '', '', '', 'joomla.level', 1, 1, 1, 8, 1, 99, 1, '{}', 'default')`,
@@ -42,6 +59,12 @@ describe('Kunena backend tools: clean up subjects and IP addresses', () => {
   });
 
   afterEach(() => {
+    // Also runs when the test failed.
+    if (ids.siteIps) {
+      restoreIps('#__kunena_messages', 'id', ids.siteIps.messages);
+      restoreIps('#__kunena_users', 'userid', ids.siteIps.users);
+    }
+
     cy.task('queryDB', `DELETE FROM #__kunena_messages_text WHERE mesid IN (SELECT id FROM #__kunena_messages WHERE thread = ${ids.topic})`);
     cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE thread = ${ids.topic}`);
     cy.task('queryDB', `DELETE FROM #__kunena_topics WHERE id = ${ids.topic}`);
@@ -74,5 +97,30 @@ describe('Kunena backend tools: clean up subjects and IP addresses', () => {
     cy.then(() => row('recent')).its('ip').should('eq', '192.0.2.10');
     // Only the old message lost its IP.
     cy.task('queryDB', 'SELECT COUNT(*) AS n FROM #__kunena_messages WHERE ip IS NULL').then((rows) => expect(Number(rows[0].n)).to.eq(ids.withoutIp + 1));
+  });
+
+  it('0 days removes the IP of a recent message', () => {
+    saveIps();
+    cy.doAdministratorLogin();
+    // An empty number of days removes nothing.
+    cy.then(() => send('cleanupIP', { cleanup_ip_days: '' }));
+    cy.then(() => row('old')).its('ip').should('eq', '192.0.2.2000');
+    cy.then(() => row('recent')).its('ip').should('eq', '192.0.2.10');
+    cy.then(() => send('cleanupIP', { cleanup_ip_days: 0 }));
+    cy.then(() => row('old')).its('ip').should('eq', null);
+    cy.then(() => row('recent')).its('ip').should('eq', null);
+  });
+
+  it("the switch removes the IP of a user account and keeps the newer messages' IPs", () => {
+    cy.task('queryDB', 'SELECT userid FROM #__kunena_users ORDER BY userid LIMIT 1').then((rows) => {
+      ids.account = rows[0].userid;
+    });
+    cy.then(() => saveIps(ids.account));
+    cy.then(() => cy.task('queryDB', `UPDATE #__kunena_users SET ip = '192.0.2.99' WHERE userid = ${ids.account}`));
+    cy.doAdministratorLogin();
+    cy.then(() => send('cleanupIP', { cleanup_ip_days: 1000, deleteIpUsers: 1 }));
+    cy.then(() => cy.task('queryDB', `SELECT ip FROM #__kunena_users WHERE userid = ${ids.account}`)).then((rows) => expect(rows[0].ip).to.eq(null));
+    cy.then(() => row('recent')).its('ip').should('eq', '192.0.2.10');
+    cy.then(() => row('old')).its('ip').should('eq', null);
   });
 });

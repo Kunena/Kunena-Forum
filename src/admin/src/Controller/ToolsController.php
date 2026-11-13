@@ -848,22 +848,27 @@ class ToolsController extends FormController
             return;
         }
 
-        $cleanupDays = $this->input->getInt('cleanup_ip_days', 365);
-        $where       = '';
+        $cleanupDays = trim($this->input->getString('cleanup_ip_days', ''));
+
+        // An empty or invalid value would otherwise remove the IP of every message.
+        if (!ctype_digit($cleanupDays)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_CLEANUP_IP_DAYS_REQUIRED'), 'notice');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        $cleanupDays = (int) $cleanupDays;
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->update($db->quoteName('#__kunena_messages'))
+            ->set('ip=NULL')
+            ->where($db->quoteName('ip') . ' IS NOT NULL');
 
         if ($cleanupDays) {
             $cleanDate = Factory::getDate()->toUnix() - ($cleanupDays * 86400);
-            $where     = 'time < ' . $cleanDate;
-        }
-
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
-        if (!empty($where)) {
-            $query = $db->createQuery()
-                ->update($db->quoteName('#__kunena_messages'))->set('ip=NULL')->where($where);
-        } else {
-            $query = $db->createQuery()
-                ->update($db->quoteName('#__kunena_messages'))->set('ip=NULL');
+            $query->where($db->quoteName('time') . ' < ' . $cleanDate);
         }
 
         $db->setQuery($query);
@@ -880,13 +885,19 @@ class ToolsController extends FormController
 
         $count = $db->getAffectedRows();
 
+        if ($count > 0) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_DONE', $count), 'success');
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_CLEANUP_IP_FAILED'), 'notice');
+        }
+
         $deleteIpUsers = $this->input->getBool('deleteIpUsers', 0);
 
         if ($deleteIpUsers) {
-            $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery()
                 ->update($db->quoteName('#__kunena_users'))
-                ->set('ip=NULL');
+                ->set('ip=NULL')
+                ->where($db->quoteName('ip') . ' IS NOT NULL');
             $db->setQuery($query);
 
             try {
@@ -899,16 +910,16 @@ class ToolsController extends FormController
                 return;
             }
 
-            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_USERS_DONE', $count), 'success');
+            $usersCount = $db->getAffectedRows();
+
+            if ($usersCount > 0) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_USERS_DONE', $usersCount), 'success');
+            } else {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_CLEANUP_IP_USERS_NONE'), 'notice');
+            }
         }
 
-        if ($count > 0) {
-            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_DONE', $count), 'success');
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-        } else {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_CLEANUP_IP_FAILED'), 'error');
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-        }
+        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
     }
 
     /**

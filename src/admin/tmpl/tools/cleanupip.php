@@ -40,9 +40,10 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group" style="max-width: 16rem">
-                                    <input class="form-control" type="number" min="0" id="cleanup_ip_days" name="cleanup_ip_days" value="30"/>
+                                    <input class="form-control" type="number" min="0" id="cleanup_ip_days" name="cleanup_ip_days" value="30" aria-describedby="cleanup_ip_days_desc"/>
                                     <span class="input-group-text"><?php echo Text::_('COM_KUNENA_CLEANUP_IP_LEGEND_DAYS') ?></span>
                                 </div>
+                                <div id="cleanup_ip_days_desc" class="form-text"><?php echo Text::_('COM_KUNENA_CLEANUP_IP_LEGEND_FROMDAYS_DESC') ?></div>
                             </div>
                         </div>
                         <div class="row">

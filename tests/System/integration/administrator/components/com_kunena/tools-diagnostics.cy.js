@@ -70,6 +70,33 @@ describe('Kunena backend tools: diagnostics', () => {
     page().then((body) => expect(body, 'a failed check').to.not.match(/TEST FAILED/i));
   });
 
+  it('shows the rows a failed check found', () => {
+    // The row of a check in the list (from its <tr> to the next one).
+    const row = (body, check) => body.split('<tr').find((tr) => tr.includes(`<td>${check}</td>`)) || '';
+
+    cy.task('queryDB', `INSERT INTO #__kunena_attachments (mesid, userid, protected, hash, size, folder, filetype, filename, filename_real, caption, inline, status) VALUES (${none + 1}, 798, 0, '', 10, 'media/kunena/attachments/cypress-${stamp}', 'text/plain', 'diagnostics-${stamp}.txt', 'diagnostics.txt', '', 0, 0)`);
+    page().then((body) => {
+      expect(result(body, 'attachmentOrphaned')).to.match(/^ attachmentOrphaned TEST FAILED/);
+      expect(row(body, 'attachmentOrphaned'), 'the link of the failed check').to.match(/href="[^"]*check=attachmentOrphaned"/);
+      expect(row(body, 'categoryOrphaned'), 'a passed check').to.not.include('check=');
+    });
+    cy.request(`${admin}&view=tools&layout=diagnostics&check=attachmentOrphaned`).its('body').then((body) => {
+      expect(body).to.include('Diagnostics on attachmentOrphaned');
+      expect(body).to.include(`diagnostics-${stamp}.txt`);
+      expect(body, 'the columns').to.match(/<th[^>]*>id<\/th>\s*<th[^>]*>mesid<\/th>\s*<th[^>]*>userid<\/th>\s*<th[^>]*>folder<\/th>\s*<th[^>]*>filename<\/th>/);
+      expect(body, 'the mesid cell').to.match(new RegExp(`<td class="[^"]*table-danger[^"]*">${none + 1}</td>`));
+      expect(body, 'the back link').to.match(/href="[^"]*layout=diagnostics">Back to the diagnostics</);
+      expect(body, 'the delete link').to.match(/delete=attachmentOrphaned[^"]*">DELETE BROKEN ITEMS</);
+      expect(body).to.match(/\d+ of \d+ items shown/);
+    });
+    ['nonsense', 'query_attachmentOrphaned'].forEach((check) => {
+      cy.request(`${admin}&view=tools&layout=diagnostics&check=${check}`).its('body').then((body) => {
+        expect(body, check).to.include('TEST PASSED');
+        expect(body, check).to.not.include('Diagnostics on');
+      });
+    });
+  });
+
   it('fixes the category of a message and of a user topic to that of their topic', () => {
     const fix = (check) => cy.request(`${admin}&view=users`).then((users) => {
       const token = /name="([0-9a-f]{32})" value="1"/.exec(users.body)[1];

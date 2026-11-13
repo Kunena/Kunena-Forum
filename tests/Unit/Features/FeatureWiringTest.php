@@ -148,6 +148,16 @@ class FeatureWiringTest extends UnitTestCase
         $this->assertFileHas('src/libraries/kunena/src/Forum/Category/KunenaCategory.php', 'categoryAliasId', 'protected function withId(', 'autoAlias');
     }
 
+    public function testThePostingFormsAreSentOnlyOnce(): void
+    {
+        $this->assertFileExists(Files::path(self::AURELIA . '/assets/js/submitonce.js'));
+        $this->assertFileHas(self::AURELIA . '/assets/js/submitonce.js', 'data-kunena-submit-once', 'pageshow');
+
+        foreach (['topic/edit/default.php', 'message/edit/quickreply.php', 'message/edit/full.php'] as $layout) {
+            $this->assertFileHas(self::AURELIA . '/layouts/' . $layout, 'data-kunena-submit-once', 'submitonce.js');
+        }
+    }
+
     public function testTheReportsPluginHasItsParts(): void
     {
         $this->assertFileExists(Files::path('src/plugins/plg_kunena_reports/reports.xml'));

@@ -158,6 +158,27 @@ class FeatureWiringTest extends UnitTestCase
         }
     }
 
+    public function testThePostingFormWarnsBeforeLeaving(): void
+    {
+        $script = self::AURELIA . '/assets/js/leavewarning.js';
+        $layout = self::AURELIA . '/layouts/topic/edit/default.php';
+
+        $this->assertFileExists(Files::path($script));
+        $this->assertFileHas($script, 'beforeunload', 'data-kunena-leave-warning', 'data-kunena-unsent', 'pageshow', 'defaultPrevented', 'COM_KUNENA_POST_CANCEL_CONFIRM');
+        $this->assertFileHas($layout, 'data-kunena-leave-warning', 'leavewarning.js', 'id="form_cancel_button"', "Text::script('COM_KUNENA_POST_CANCEL_CONFIRM')");
+
+        // Cancel is no reset button which leaves by itself: the script asks first.
+        $content = Files::read($layout);
+        $this->assertStringNotContainsString('type="reset"', $content);
+        $this->assertStringNotContainsString('window.history.back()', $content);
+
+        foreach (['Create/TopicFormCreateDisplay.php', 'Reply/TopicFormReplyDisplay.php', 'Edit/TopicFormEditDisplay.php'] as $controller) {
+            $this->assertFileHas('src/site/src/Controller/Topic/Form/' . $controller, 'unsentFields');
+        }
+
+        $this->assertFileHas('src/site/language/en-GB/com_kunena.ini', 'COM_KUNENA_POST_CANCEL_CONFIRM = ');
+    }
+
     public function testTheReportsPluginHasItsParts(): void
     {
         $this->assertFileExists(Files::path('src/plugins/plg_kunena_reports/reports.xml'));

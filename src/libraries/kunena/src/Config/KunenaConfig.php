@@ -57,6 +57,7 @@ use SimpleXMLElement;
  * @property int    $linkPreview                  Show a card (title, description, picture) for the links in messages
  * @property int    $linkPreviewMax               Most cards in one message
  * @property string $linkPreviewBlock             Sites (domains) which get no card
+ * @property string $ownDomains                   Own domains: their links in messages get no rel="nofollow ..."
  * @property string $autoEmbedYoutube             Auto Embed YouTube Videos
  * @property string $autoLink                     Auto-Link URLs
  * @property string $avatarCrop                   Avatar Cropping

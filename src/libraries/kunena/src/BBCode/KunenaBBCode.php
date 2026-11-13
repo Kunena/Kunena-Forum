@@ -307,6 +307,48 @@ class KunenaBBCode extends BBCode
     }
 
     /**
+     * Is the host of the link one of the domains of the list (or a subdomain of one): the own domains of the site, whose links
+     * get no rel="nofollow noopener noreferrer".
+     *
+     * @param   string  $url   The address of the link.
+     * @param   string  $list  The domains, one on each line (blanks, commas and semicolons also separate them).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isOwnDomain(string $url, string $list): bool
+    {
+        // PHP and the browsers read a backslash or a user before the host differently (http://evil.org\@example.com/ opens
+        // evil.org): such a link is never an own domain.
+        if (str_contains($url, '\\') || parse_url($url, PHP_URL_USER) !== null || parse_url($url, PHP_URL_PASS) !== null) {
+            return false;
+        }
+
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+
+        if ($host === '') {
+            return false;
+        }
+
+        foreach (preg_split('/[\s,;]+/', strtolower($list), -1, PREG_SPLIT_NO_EMPTY) as $domain) {
+            // An entry may be written as an address: only its host counts.
+            $domain = preg_replace('#^[a-z][a-z0-9+.-]*://#', '', $domain);
+            $domain = ltrim(preg_split('#[/?\#:]#', $domain, 2)[0], '.');
+
+            if (!preg_match('/^[a-z0-9-]+(\.[a-z0-9-]+)*$/', $domain)) {
+                continue;
+            }
+
+            if ($host === $domain || str_ends_with($host, '.' . $domain)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Get global instance from BBCode parser.
      *
      * @param   bool  $relative  relative
@@ -581,18 +623,24 @@ class KunenaBBCode extends BBCode
                 $internal = true;
             }
 
+            // The links to the own domains of the site (configuration) get no rel="nofollow noopener noreferrer".
+            $own = !$internal && KunenaBBCode::isOwnDomain($url, (string) $this->config->ownDomains);
+
             if ($layout->getPath()) {
                 return (string) $layout
                     ->set('content', $text)
                     ->set('url', $url)
                     ->set('target', $this->url_target)
-                    ->set('internal', $internal);
+                    ->set('internal', $internal)
+                    ->set('ownDomain', $own);
             }
 
             $url = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');
 
             if (strpos($url, '/index.php') !== 0) {
-                return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">{$text}</a>";
+                $rel = $own ? '' : ' rel="nofollow noopener noreferrer"';
+
+                return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\"{$rel}>{$text}</a>";
             }
 
             return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\">{$text}</a>";
@@ -2589,6 +2637,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             $internal = true;
         }
 
+        // The links to the own domains of the site (configuration) get no rel="nofollow noopener noreferrer".
+        $own = !$internal && KunenaBBCode::isOwnDomain($url, (string) $this->config->ownDomains);
+
         $smart = $this->config->smartLinking;
 
         if ($smart) {
@@ -2607,7 +2658,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 ->set('content', $content)
                 ->set('url', $url)
                 ->set('target', $target)
-                ->set('internal', $internal);
+                ->set('internal', $internal)
+                ->set('ownDomain', $own);
         }
 
         return false;

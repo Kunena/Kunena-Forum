@@ -12,6 +12,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [Drafts](features/drafts.md) | Users |  | Save a topic, a reply or an edit as a draft and finish it later. |
 | [Markdown and safe HTML in messages](features/markdown-and-html.md) | Administrators, users |  | Messages can use Markdown, and a safe set of HTML tags, next to BBCode. |
 | [Link cards for pasted links](features/link-cards.md) | Administrators, users | [#3769](https://github.com/Kunena/Kunena-Forum/issues/3769) | A link in a message becomes a card with the title, a short text and the picture of the page. |
+| [Own domains: links without nofollow](features/own-domains.md) | Administrators | [#6073](https://github.com/Kunena/Kunena-Forum/issues/6073) | The links in messages to the domains of a list get no rel="nofollow noopener noreferrer". |
 | [Spotify and Deezer players](features/spotify-and-deezer.md) | Administrators, users | [#3769](https://github.com/Kunena/Kunena-Forum/issues/3769) | A link to a Spotify or Deezer track, album, playlist, show or episode is shown as the player of that service. |
 | [Maps with OpenStreetMap](features/maps-openstreetmap.md) | Administrators, users | [#6088](https://github.com/Kunena/Kunena-Forum/issues/6088) | The [map] BBCode and the location links can use OpenStreetMap, without a key. |
 | [Mentions: search while typing, e-mail and SCEditor](features/mentions.md) | Users |  | Typing @ and some letters finds the users, also on a new topic and in the SCEditor, and a mentioned user can get an e-mail. |

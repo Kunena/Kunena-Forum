@@ -21,7 +21,11 @@ namespace Kunena\Forum\Site;
 $rel = '';
 $target = '';
 if (!$this->internal) {
-    $rel = 'rel="nofollow noopener noreferrer"';
+    // The own domains of the site (configuration) get no rel.
+    if (empty($this->ownDomain)) {
+        $rel = 'rel="nofollow noopener noreferrer"';
+    }
+
     $target = ' target="' . $this->escape($this->target) . '"';
 }
 ?>

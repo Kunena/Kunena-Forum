@@ -167,5 +167,7 @@ if ($this->topic->locked) {
         echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
     } ?>
     <div class="clearfix"></div>
+<?php if ($this->config->topicShowModerators) : ?>
     <div class="float-end"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
+<?php endif; ?>
 </div>

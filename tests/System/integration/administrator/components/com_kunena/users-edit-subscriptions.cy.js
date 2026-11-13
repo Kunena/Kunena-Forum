@@ -36,10 +36,11 @@ describe('Kunena backend user edit: remove chosen subscriptions', () => {
     cy.task('queryDB', `INSERT INTO #__user_usergroup_map (user_id, group_id) VALUES (${result.insertId}, 2)`);
     cy.task('queryDB', `INSERT INTO #__kunena_users (userid, posts, signature) VALUES (${result.insertId}, 0, 'ci-signature')`);
 
-    return result.insertId;
+    return cy.wrap(result.insertId);
   });
 
   beforeEach(() => {
+    Object.keys(ids).forEach((key) => delete ids[key]);
     // Two existing topics: the temporary users subscribe to them, the topics themselves do not change.
     cy.task('queryDB', 'SELECT id, category_id FROM #__kunena_topics WHERE moved_id = 0 AND hold = 0 ORDER BY id LIMIT 2').then((rows) => {
       ids.topics = rows.map((row) => ({ id: Number(row.id), category: Number(row.category_id) }));
@@ -63,7 +64,8 @@ describe('Kunena backend user edit: remove chosen subscriptions', () => {
   });
 
   afterEach(() => {
-    [ids.user, ids.other, ids.none].forEach((id) => {
+    // A user which a failed beforeEach did not create has no id.
+    [ids.user, ids.other, ids.none].filter(Boolean).forEach((id) => {
       cy.task('queryDB', `DELETE FROM #__kunena_user_categories WHERE user_id = ${id}`);
       cy.task('queryDB', `DELETE FROM #__kunena_user_topics WHERE user_id = ${id}`);
       cy.task('queryDB', `DELETE FROM #__kunena_users WHERE userid = ${id}`);

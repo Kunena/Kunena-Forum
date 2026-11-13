@@ -276,16 +276,14 @@ blockquote {
 
 .kmsg pre,
 .kmsg code,
-pre.bbcode_code,
-.highlight pre,
+pre.bbcode_code_body,
 .kmsgtext-code {
   font-family: var(--agora-font-mono);
   font-size: 0.875rem;
 }
 
 .kmsg pre,
-pre.bbcode_code,
-.highlight pre {
+pre.bbcode_code_body {
   max-width: 100%;
   padding: 0.85rem 1rem;
   overflow-x: auto;

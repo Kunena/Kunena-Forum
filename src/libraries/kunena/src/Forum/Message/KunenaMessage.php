@@ -401,6 +401,85 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
+     * Add the own uploads of the user which the text of the message names ([attachment=ID]) but the form did not list, for
+     * example because the browser restored only the text after going back and forward.
+     *
+     * @param   array  $skip  The ids which the form lists (checked or not): the form decides about them.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function addAttachmentsFromText(array $skip = []): void
+    {
+        $userid = (int) KunenaUserHelper::getMyself()->userid;
+
+        if (!$userid) {
+            return;
+        }
+
+        $skip = array_map('intval', $skip);
+        $ids  = array_diff(self::getAttachmentIdsInText((string) $this->message), $skip, array_keys($this->_attachments_add));
+
+        if (!$ids) {
+            return;
+        }
+
+        $this->_attachments_add += self::selectOwnPendingAttachments($this->getAttachments(array_values($ids), 'none'), $userid, $skip);
+    }
+
+    /**
+     * The ids of the attachments which are inserted in a text: [attachment=ID]name[/attachment].
+     *
+     * @param   string  $text  The text of a message.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 8.0
+     */
+    public static function getAttachmentIdsInText(string $text): array
+    {
+        if (!preg_match_all('/\[attachment=(\d+)\]/i', $text, $matches)) {
+            return [];
+        }
+
+        return array_values(array_filter(array_unique(array_map('intval', $matches[1]))));
+    }
+
+    /**
+     * The uploads of a user which are in no message yet, keyed by id.
+     *
+     * @param   KunenaAttachment[]  $attachments  The loaded attachments.
+     * @param   int                 $userid       The id of the user (0 for a guest: no upload is his).
+     * @param   int[]               $skip         The ids to leave out.
+     *
+     * @return  KunenaAttachment[]
+     *
+     * @since   Kunena 8.0
+     */
+    public static function selectOwnPendingAttachments(array $attachments, int $userid, array $skip): array
+    {
+        if (!$userid) {
+            return [];
+        }
+
+        $skip     = array_map('intval', $skip);
+        $selected = [];
+
+        foreach ($attachments as $attachment) {
+            if (
+                $attachment->exists() && !(int) $attachment->mesid && (int) $attachment->userid === $userid
+                && !\in_array((int) $attachment->id, $skip, true)
+            ) {
+                $selected[(int) $attachment->id] = $attachment;
+            }
+        }
+
+        return $selected;
+    }
+
+    /**
      * Add the headers which describe the message (X-Forum-*) and the ones which let the mail program thread the e-mails
      * of a topic (Message-ID, In-Reply-To and References), so filters and threads can be made.
      *

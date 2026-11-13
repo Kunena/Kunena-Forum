@@ -1166,6 +1166,9 @@ class TopicController extends KunenaController
         $message->addAttachments(array_keys(array_intersect_key($attachments, $attachment)));
         $message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
 
+        // The browser may give back the text without the list of the uploads (back and forward): take the own uploads it names.
+        $message->addAttachmentsFromText(ArrayHelper::toInteger(array_keys($attachments)));
+
         // Upload new attachments
         foreach ($_FILES as $key => $file) {
             $intkey = 0;
@@ -1774,6 +1777,9 @@ class TopicController extends KunenaController
 
         $message->addAttachments($addList);
         $message->removeAttachments($removeList);
+
+        // The browser may give back the text without the list of the uploads (back and forward): take the own uploads it names.
+        $message->addAttachmentsFromText(ArrayHelper::toInteger(array_keys($attachments)));
 
         // Upload new attachments
         foreach ($_FILES as $key => $file) {

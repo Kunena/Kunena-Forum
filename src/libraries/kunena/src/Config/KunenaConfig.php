@@ -238,6 +238,7 @@ use SimpleXMLElement;
  * @property string $topicIcons                   Selectable Topic Icons
  * @property string $topicLayout                  Default topic layout
  * @property string $topicListId                  Topiclist ID
+ * @property string $topicShowModerators          Show Moderators in Topic View
  * @property string $topicSubscriptions           Topic Subscriptions
  * @property string $enableMarkdown               Enable Markdown in messages
  * @property string $enableDrafts                 Enable saving messages as draft

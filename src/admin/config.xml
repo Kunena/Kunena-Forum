@@ -388,6 +388,16 @@
                 <option value="1">JYES</option>
             </field>
             <field
+                name="topicShowModerators"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_TOPIC_SHOW_MODERATORS"
+                description="COM_KUNENA_TOPIC_SHOW_MODERATORS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
                 name="showChildCatIcon"
                 type="radio"
                 default="1"

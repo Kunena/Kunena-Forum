@@ -17,6 +17,10 @@ describe('Kunena BBCode: nested quotes on a small screen', () => {
   const deepest = (marker) => cy.get('.kmsg blockquote').then(($all) => $all.filter((i, el) => el.textContent.includes(marker)
     && !Array.from(el.querySelectorAll('blockquote')).some((inner) => inner.textContent.includes(marker)))).should('have.length', 1);
   const style = (el) => el.ownerDocument.defaultView.getComputedStyle(el);
+  const visit = () => {
+    cy.visit(`${base}&view=topic&catid=3&id=${ids.topic}`);
+    cy.get('#kunena.layout', { log: false }).should('not.have.class', 'agora');
+  };
 
   beforeEach(() => {
     const text = `${nest('[quote]', `${plainMarker} ${longWord}`)} ${nest('[quote="ci-user post=11 userid=798"]', linkMarker)}`;
@@ -34,9 +38,13 @@ describe('Kunena BBCode: nested quotes on a small screen', () => {
     }));
 
     cy.task('deleteRelativePath', stylesheet);
+    // The test site may use another template (Agora): the cookie shows this visitor the forum in Aurelia.
+    cy.setCookie('kunena_template', 'aurelia');
   });
 
   afterEach(() => {
+    cy.clearCookie('kunena_template');
+
     if (ids) {
       cy.task('queryDB', `DELETE FROM #__kunena_messages_text WHERE mesid = ${ids.message}`);
       cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE id = ${ids.message}`);
@@ -53,7 +61,7 @@ describe('Kunena BBCode: nested quotes on a small screen', () => {
 
   it('keeps the deepest quotes readable on a phone', () => {
     cy.viewport(320, 800);
-    cy.visit(`${base}&view=topic&catid=3&id=${ids.topic}`);
+    visit();
 
     deepest(plainMarker).then(($quote) => {
       expect($quote.parents('blockquote'), 'the quotes around the deepest plain quote').to.have.length(4);
@@ -74,7 +82,7 @@ describe('Kunena BBCode: nested quotes on a small screen', () => {
 
   it('keeps the indent of the quotes on a wide screen', () => {
     cy.viewport(1200, 800);
-    cy.visit(`${base}&view=topic&catid=3&id=${ids.topic}`);
+    visit();
 
     deepest(plainMarker).then(($quote) => {
       const outer = $quote.parents('blockquote').last()[0];

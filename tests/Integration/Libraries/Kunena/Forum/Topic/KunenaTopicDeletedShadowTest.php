@@ -55,6 +55,11 @@ class KunenaTopicDeletedShadowTest extends IntegrationTestCase implements DBTest
      */
     private array $saved = [];
 
+    /**
+     * The column deleted_time was added to the table of the messages for the test.
+     */
+    private bool $deletedTime = false;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -100,10 +105,10 @@ class KunenaTopicDeletedShadowTest extends IntegrationTestCase implements DBTest
         Factory::$language    = $language;
 
         // KunenaTopic::publish() sets the deleted time of the messages: the column is in the tables of an installation
-        // (create_tables.utf8.sql and the upgrade), not yet in the schema which makes the tables of the tests.
-        if (!$this->fetchAll("SHOW COLUMNS FROM #__kunena_messages LIKE 'deleted_time'")) {
-            $driver->setQuery("ALTER TABLE #__kunena_messages ADD deleted_time int(11) NOT NULL default '0' AFTER moved")->execute();
-        }
+        // (create_tables.utf8.sql and the upgrade), not in the schema which makes the tables of the tests. It is there for the
+        // test only: the other tests compare the tables with that schema.
+        $driver->setQuery("ALTER TABLE #__kunena_messages ADD deleted_time int(11) NOT NULL default '0' AFTER moved")->execute();
+        $this->deletedTime = true;
 
         $this->insertRows('#__kunena_categories', [
             ['id' => self::CATEGORY, 'parentid' => 0, 'name' => 'Category', 'alias' => '2-category', 'published' => 1, 'numTopics' => 1, 'numPosts' => 2],
@@ -135,6 +140,10 @@ class KunenaTopicDeletedShadowTest extends IntegrationTestCase implements DBTest
 
             // The helpers keep the topics and the categories for the request: the next test has rows of its own.
             $this->replace(KunenaTopicHelper::class, '_instances', []);
+        }
+
+        if ($this->deletedTime) {
+            $this->getDBDriver()->setQuery('ALTER TABLE #__kunena_messages DROP deleted_time')->execute();
         }
 
         parent::tearDown();

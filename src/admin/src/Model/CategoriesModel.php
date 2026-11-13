@@ -32,6 +32,7 @@ use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -340,6 +341,31 @@ class CategoriesModel extends KunenaModel
         $db->setQuery($query);
 
         $userids = array_map('intval', (array) $db->loadColumn());
+
+        return $userids ? KunenaUserHelper::loadUsers($userids) : [];
+    }
+
+    /**
+     * The users subscribed to the category, ordered by username. A section has no subscribers.
+     *
+     * @return  array|boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function getAdminSubscribers()
+    {
+        $category = $this->getAdminCategory();
+
+        if (!$category) {
+            return false;
+        }
+
+        if (!$category->id || $category->isSection()) {
+            return [];
+        }
+
+        $userids = KunenaCategoryUserHelper::getSubscriberIds($this->getDatabase(), (int) $category->id);
 
         return $userids ? KunenaUserHelper::loadUsers($userids) : [];
     }

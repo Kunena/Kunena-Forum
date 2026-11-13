@@ -39,6 +39,14 @@ class HtmlView extends BaseHtmlView
     public mixed $options = null;
 
     /**
+     * The users subscribed to the category.
+     *
+     * @var     array|boolean
+     * @since   Kunena 8.0
+     */
+    public mixed $subscribers = [];
+
+    /**
      * The model state
      *
      * @since  6.0
@@ -74,8 +82,9 @@ class HtmlView extends BaseHtmlView
             return;
         }
 
-        $this->options    = $model->getAdminOptions();
-        $this->moderators = $model->getAdminModerators();
+        $this->options     = $model->getAdminOptions();
+        $this->moderators  = $model->getAdminModerators();
+        $this->subscribers = $model->getAdminSubscribers();
         $this->setToolBarEdit();
         $this->display();
     }
@@ -130,8 +139,9 @@ class HtmlView extends BaseHtmlView
             return;
         }
 
-        $this->options    = $model->getAdminOptions();
-        $this->moderators = $model->getAdminModerators();
+        $this->options     = $model->getAdminOptions();
+        $this->moderators  = $model->getAdminModerators();
+        $this->subscribers = $model->getAdminSubscribers();
 
         $this->addToolbar();
 

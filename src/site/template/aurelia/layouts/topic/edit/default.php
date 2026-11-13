@@ -66,6 +66,7 @@ if ($this->ktemplate->params->get('formRecover')) {
 
 $this->doc->addScriptOptions('com_kunena.editor_type', $this->editorType);
 $this->doc->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
+$this->doc->addScriptOptions('com_kunena.topicIconLabels', (int) $this->ktemplate->params->get('topicIconLabels', 1));
 $this->doc->addScriptOptions('com_kunena.allowUserEditPoll', $this->config->allowUserEditPoll);
 $this->doc->addScriptOptions('com_kunena.privateMessage', $this->config->privateMessage);
 $this->doc->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);

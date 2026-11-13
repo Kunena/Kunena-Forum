@@ -301,11 +301,7 @@ $template = KunenaTemplate::getInstance();
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <?php /*
-                                                            <th class="d-none d-md-table-cell" style="width: 1%">
-                                                                <input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
-                                                            </th>
-                                                            */ ?>
+                                                            <th style="width: 1%"><span class="visually-hidden"><?php echo Text::_('JSELECT'); ?></span></th>
                                                             <th><?php echo Text::_('JGLOBAL_TITLE'); ?></th>
                                                             <th style="width: 1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
                                                         </tr>
@@ -315,6 +311,10 @@ $template = KunenaTemplate::getInstance();
                                                         foreach ($this->subsCatsList as $cat) :
                                                     ?>
                                                             <tr>
+                                                                <td>
+                                                                    <input type="checkbox" class="form-check-input" name="catsubs[]" id="catsubs<?php echo (int) $cat->id; ?>" value="<?php echo (int) $cat->id; ?>" />
+                                                                    <label class="visually-hidden" for="catsubs<?php echo (int) $cat->id; ?>"><?php echo $this->escape($cat->name); ?></label>
+                                                                </td>
                                                                 <td><?php echo $this->escape($cat->name); ?>
                                                                     <small><?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($cat->alias)); ?></small>
                                                                 </td>
@@ -324,10 +324,15 @@ $template = KunenaTemplate::getInstance();
                                                     else :
                                                         ?>
                                                         <tr>
-                                                            <td><?php echo Text::_('COM_KUNENA_NOCATSUBS'); ?></td>
+                                                            <td colspan="3"><?php echo Text::_('COM_KUNENA_NOCATSUBS'); ?></td>
                                                         </tr>
                                                     <?php endif; ?>
                                                 </table>
+                                                <?php if (!empty($this->subsCatsList)) : ?>
+                                                    <button type="button" class="btn btn-danger" onclick="Joomla.submitbutton('user.removecategorysubscriptions');return false;">
+                                                        <?php echo Text::_('COM_KUNENA_USER_REMOVE_SELECTED_CAT_SUBSCRIPTIONS'); ?>
+                                                    </button>
+                                                <?php endif; ?>
                                             </fieldset>
                                         </div>
 
@@ -338,11 +343,7 @@ $template = KunenaTemplate::getInstance();
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <?php /*
-                                                            <th class="d-none d-md-table-cell" style="width: 1%">
-                                                                <input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
-                                                            </th>
-                                                            */ ?>
+                                                            <th style="width: 1%"><span class="visually-hidden"><?php echo Text::_('JSELECT'); ?></span></th>
                                                             <th><?php echo Text::_('JGLOBAL_TITLE'); ?></th>
                                                             <th style="width: 1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
                                                         </tr>
@@ -353,6 +354,10 @@ $template = KunenaTemplate::getInstance();
                                                         foreach ($this->sub as $topic) :
                                                     ?>
                                                             <tr>
+                                                                <td>
+                                                                    <input type="checkbox" class="form-check-input" name="topicsubs[]" id="topicsubs<?php echo (int) $topic->id; ?>" value="<?php echo (int) $topic->id; ?>" />
+                                                                    <label class="visually-hidden" for="topicsubs<?php echo (int) $topic->id; ?>"><?php echo $this->escape($topic->subject); ?></label>
+                                                                </td>
                                                                 <td><?php echo $this->escape($topic->subject); ?></td>
                                                                 <td><?php echo $this->escape($topic->id); ?></td>
                                                             </tr>
@@ -360,10 +365,15 @@ $template = KunenaTemplate::getInstance();
                                                     else :
                                                         ?>
                                                         <tr>
-                                                            <td><?php echo Text::_('COM_KUNENA_NOSUBS'); ?></td>
+                                                            <td colspan="3"><?php echo Text::_('COM_KUNENA_NOSUBS'); ?></td>
                                                         </tr>
                                                     <?php endif; ?>
                                                 </table>
+                                                <?php if ($this->sub) : ?>
+                                                    <button type="button" class="btn btn-danger" onclick="Joomla.submitbutton('user.removetopicsubscriptions');return false;">
+                                                        <?php echo Text::_('COM_KUNENA_USER_REMOVE_SELECTED_TOPIC_SUBSCRIPTIONS'); ?>
+                                                    </button>
+                                                <?php endif; ?>
                                             </fieldset>
                                         </div>
 

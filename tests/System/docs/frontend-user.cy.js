@@ -1,4 +1,4 @@
-// Screenshots for docs/7.2: the forum as a registered user (the user ci-user, which the specs of the tests make). Run it with
+// Screenshots for docs/8.0: the forum as a registered user (the user ci-user, which the specs of the tests make). Run it with
 // cypress.docs.config.js. What a test needs in the database is made by the test and removed again after it.
 import { addMessage, forum, hideToolbar, lightScheme, open } from './helpers.mjs';
 

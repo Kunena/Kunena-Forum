@@ -1,4 +1,4 @@
-// Helpers of the screenshots for docs/7.2.
+// Helpers of the screenshots for docs/8.0.
 
 // A light page (the administrator template of Joomla follows the colour scheme of the browser).
 export const lightScheme = () => cy.then(() => Cypress.automation('remote:debugger:protocol', {

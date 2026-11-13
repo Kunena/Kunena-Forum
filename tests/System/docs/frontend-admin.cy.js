@@ -1,4 +1,4 @@
-// Screenshots for docs/7.2: the forum as the administrator of the test site sees it. Run it with cypress.docs.config.js.
+// Screenshots for docs/8.0: the forum as the administrator of the test site sees it. Run it with cypress.docs.config.js.
 import { forum, lightScheme, open } from './helpers.mjs';
 
 describe('Documentation: the forum as an administrator', () => {

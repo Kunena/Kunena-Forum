@@ -1,4 +1,4 @@
-// Screenshots for docs/7.2: a topic, its messages and the tools of the moderators. Run it with cypress.docs.config.js.
+// Screenshots for docs/8.0: a topic, its messages and the tools of the moderators. Run it with cypress.docs.config.js.
 import { addMessage, forum, lightScheme, open } from './helpers.mjs';
 
 describe('Documentation: topics and messages', () => {

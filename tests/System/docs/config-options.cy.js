@@ -1,4 +1,4 @@
-// Screenshots for docs/7.2: the new options of the configuration of Kunena, one picture of the row of each option. It needs the login
+// Screenshots for docs/8.0: the new options of the configuration of Kunena, one picture of the row of each option. It needs the login
 // of the administrator of the test site. Run it with cypress.docs.config.js (see the comment of that file).
 import { hideToolbar, lightScheme } from './helpers.mjs';
 

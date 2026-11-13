@@ -29,6 +29,7 @@ use Joomla\Component\Scheduler\Administrator\Traits\TaskPluginTrait;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\ParameterType;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Administrator\Model\TrashsModel;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
@@ -36,7 +37,6 @@ use Kunena\Forum\Libraries\Attachment\KunenaPendingAttachment;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 
 /**
@@ -143,13 +143,15 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 $profile->banned = \null;
                 $profile->save(\true);
 
-                // Update ban record
-                $banInstance = KunenaBan::getInstance($ban->id);
-                if ($banInstance->exists()) {
-                    $banInstance->addComment(Text::_('PLG_TASK_KUNENA_REMOVEEXPIREDBANSCOMMENT'));
-                    $banInstance->modified_time = $now->toSql();
-                    $banInstance->save(\true);
-                }
+                // Mark the expired ban as handled without requiring moderator permissions.
+                $db->setQuery(
+                    $db->createQuery()
+                        ->update($db->quoteName('#__kunena_users_banned'))
+                        ->set($db->quoteName('modified_time') . ' = :handled')
+                        ->where($db->quoteName('id') . ' = :id')
+                        ->bind(':handled', $now->toSql())
+                        ->bind(':id', (int) $ban->id, ParameterType::INTEGER)
+                )->execute();
             }
 
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVEEXPIREDBANSSUCCESS', $countExpiredbans));

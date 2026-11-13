@@ -88,6 +88,8 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
     public mixed $captchaDisplay = null;
 
+    public mixed $unsentFields = null;
+
     /**
      * Prepare topic reply form.
      *
@@ -193,6 +195,9 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
         } else {
             $this->subscriptionsChecked = $this->me->canSubscribe;
         }
+
+        // Fields restored after a failed post exist only in this form; a draft keeps its own copy.
+        $this->unsentFields = !empty($saved) && $this->input->getInt('draftid', 0) === 0;
 
         $this->app->setUserState('com_kunena.postfields', null);
 

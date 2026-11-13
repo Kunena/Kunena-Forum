@@ -46,7 +46,8 @@ $this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.c
     ->registerAndUseScript('jquery.fileupload-validate', 'media/kunena/core/js/jquery.fileupload-validate.js')
     ->registerAndUseScript('upload.main', 'media/kunena/core/js/upload.main.js')
     ->registerAndUseScript('edit', 'components/com_kunena/template/aurelia/assets/js/edit.js')
-    ->registerAndUseScript('submitonce', 'components/com_kunena/template/aurelia/assets/js/submitonce.js');
+    ->registerAndUseScript('submitonce', 'components/com_kunena/template/aurelia/assets/js/submitonce.js')
+    ->registerAndUseScript('leavewarning', 'components/com_kunena/template/aurelia/assets/js/leavewarning.js');
 
 // If polls are enabled, load also poll JavaScript.
 if ($this->config->pollEnabled) {
@@ -183,6 +184,7 @@ Text::script('COM_KUNENA_EDITOR_DIALOG_VIDEO_PROPERTIES');
 Text::script('COM_KUNENA_EDITOR_DIALOG_MAPS_PROPERTIES');
 Text::script('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS');
 Text::script('COM_KUNENA_POLL_TITLE');
+Text::script('COM_KUNENA_POST_CANCEL_CONFIRM');
 ?>
 <div id="modal_confirm_template_category" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -207,7 +209,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
     <?php echo $this->escape($this->headerText) ?>
 </h1>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-validate" role="form" id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1" data-kunena-submit-once>
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-validate" role="form" id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1" data-kunena-submit-once data-kunena-leave-warning<?php echo $this->unsentFields ? ' data-kunena-unsent="1"' : ''; ?>>
     <input type="hidden" name="view" value="topic" />
     <?php $draftId = Factory::getApplication()->getInput()->getInt('draftid', 0); ?>
     <?php if ($draftId) : ?>
@@ -553,7 +555,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
                 </button>
             <?php endif; ?>
 
-            <button type="reset" class="btn btn-outline-primary btn-md" onclick="window.history.back();" tabindex="10">
+            <button id="form_cancel_button" type="button" class="btn btn-outline-primary btn-md" tabindex="10">
                 <?php echo KunenaIcons::delete(); ?>
                 <?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
             </button>

@@ -9,7 +9,8 @@ loads the `system` group, the two socials events load the `modifysocials` group,
 
 In Kunena 8.0 a plugin is a Joomla 6 plugin: its class extends `Joomla\CMS\Plugin\CMSPlugin`, implements
 `Joomla\Event\SubscriberInterface`, maps the event names to its methods in `getSubscribedEvents()`, and each method gets the
-event object as its only argument. The smallest example to read is `src/plugins/plg_kunena_gravatar/src/Extension/Gravatar.php`:
+event object as its only argument. The smallest example to read is `src/plugins/plg_kunena_gravatar/src/Extension/Gravatar.php`. Abbreviated (the
+real plugin subscribes only on the site and in the administrator, and returns early when its `avatar` parameter is off):
 
 ```php
 class Gravatar extends CMSPlugin implements SubscriberInterface
@@ -132,10 +133,20 @@ activity, the login and the access control. Each is dispatched when the integrat
 
 These events fire when a Kunena database object is saved or deleted.
 
+The four save and delete events use Kunena classes that extend Joomla's `Joomla\CMS\Event\Model\DeleteEvent` (or, for
+`onKunenaAfterDelete`, `Joomla\CMS\Event\Content\ContentPrepareEvent`). They are not instances of Joomla's
+`Model\BeforeSaveEvent`, `Model\AfterSaveEvent`, `Model\BeforeDeleteEvent` or `Model\AfterDeleteEvent`: type the argument of
+a listener with the Kunena class. Known bug, not changed here: `plg_kunena_finder` types its four listeners with those Joomla
+classes (`src/plugins/plg_kunena_finder/src/Extension/Finder.php`), so each of them would get a `TypeError` when the event
+reaches it. A `TypeError` is an `Error`, not an `Exception`, so the `catch (Exception $e)` around the dispatch in
+`KunenaDatabaseObject` does not catch it.
+
 ### onKunenaBeforeSave
 
 - When: in `KunenaDatabaseObject::save()`, after the checks and before the table is stored. It fires for every object that
-  extends `KunenaDatabaseObject`: categories, topics, messages, attachments, announcements and the private messages.
+  extends `KunenaDatabaseObject`: `KunenaCategory`, `KunenaTopic`, `KunenaMessage`, `KunenaAttachment`, `KunenaAnnouncement`,
+  and the private message classes `KunenaPrivateMessage`, `KunenaPost` and `KunenaUser` (namespaces
+  `Kunena\Forum\Libraries\KunenaPrivate` and `Kunena\Forum\Libraries\KunenaPrivate\Message`).
 - Arguments: Kunena passes `['com_kunena.' . $this->_name, &$table, $isNew]`. The event class keeps two of them: `context`
   (string, `$event->getContext()`) and `subject` (the `KunenaTable` object that is stored next, `$event->getItem()`). A listener
   may change the fields of the table before it is stored. The third value, `$isNew`, is dropped: the event class only knows
@@ -148,8 +159,8 @@ These events fire when a Kunena database object is saved or deleted.
   of the application.
 - Event class: `Kunena\Forum\Libraries\Event\KunenaBeforeSaveEvent`. Mind that it extends Joomla's
   `Joomla\CMS\Event\Model\DeleteEvent`, not `Joomla\CMS\Event\Model\BeforeSaveEvent`: type the argument of the listener with the
-  Kunena class. A listener typed with Joomla's `BeforeSaveEvent`, as in `plg_kunena_finder`, does not accept it.
-- Listeners: `plg_kunena_finder`.
+  Kunena class.
+- Listeners: `plg_kunena_finder`, whose listener has the wrong type (see the start of this section).
 
 ### onKunenaAfterSave
 
@@ -160,7 +171,7 @@ These events fire when a Kunena database object is saved or deleted.
 - Result: nothing.
 - Dispatched in: `src/libraries/kunena/src/Database/KunenaDatabaseObject.php`, on the dispatcher from the container.
 - Event class: `Kunena\Forum\Libraries\Event\KunenaAfterSaveEvent` (extends Joomla's `Model\DeleteEvent`, as above).
-- Listeners: `plg_kunena_finder`.
+- Listeners: `plg_kunena_finder`, whose listener has the wrong type (see the start of this section).
 
 ### onKunenaBeforeDelete
 
@@ -171,7 +182,7 @@ These events fire when a Kunena database object is saved or deleted.
 - Result: nothing is read back. An exception of a listener is thrown again, and the row is not deleted.
 - Dispatched in: `src/libraries/kunena/src/Database/KunenaDatabaseObject.php`, on the dispatcher from the container.
 - Event class: `Kunena\Forum\Libraries\Event\KunenaBeforeDeleteEvent` (extends Joomla's `Model\DeleteEvent`).
-- Listeners: `plg_kunena_finder`.
+- Listeners: `plg_kunena_finder`, whose listener has the wrong type (see the start of this section).
 
 ### onKunenaAfterDelete
 
@@ -181,9 +192,10 @@ These events fire when a Kunena database object is saved or deleted.
 - Result: nothing.
 - Dispatched in: `src/libraries/kunena/src/Database/KunenaDatabaseObject.php`, on the dispatcher from the container.
 - Event class: `Kunena\Forum\Libraries\Event\KunenaAfterDeleteEvent`. It extends Joomla's
-  `Joomla\CMS\Event\Content\ContentPrepareEvent`, so it also has the `params` argument (an empty `Registry`) and the
-  `page` argument (`null`).
-- Listeners: `plg_kunena_finder`.
+  `Joomla\CMS\Event\Content\ContentPrepareEvent`, so it also has the `params` and `page` arguments. Kunena does not
+  pass them: Joomla's `ContentPrepareEvent` turns the missing `params` into an empty `Joomla\Registry\Registry`, and `page`
+  is `null`.
+- Listeners: `plg_kunena_finder`, whose listener has the wrong type (see the start of this section).
 
 ### onDeleteKunenaPost
 

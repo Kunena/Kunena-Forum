@@ -395,16 +395,16 @@ class KunenaUserSocials
     },
     "qzone": {
         "value": "",
-        "url": "##VALUE##",
+        "url": "https://user.qzone.qq.com/##VALUE##",
         "title": "COM_KUNENA_MYPROFILE_QZONE",
-        "nourl": 1,
+        "nourl": 0,
         "fa": "fa-solid fa-square-share-nodes"
     },
     "weibo": {
         "value": "",
-        "url": "##VALUE##",
+        "url": "https://weibo.com/##VALUE##",
         "title": "COM_KUNENA_MYPROFILE_WEIBO",
-        "nourl": 1,
+        "nourl": 0,
         "fa": "fa-brands fa-weibo"
     },
     "wechat": {

@@ -10,6 +10,15 @@
 	top: 4px;
 }
 
+/* Small screens: the stars of a topic on their own line, a button high away from its actions. */
+@media (max-width: 767.98px) {
+	.kunena-topic-item #krating {
+		display: block;
+		margin-bottom: 40px;
+		top: 0;
+	}
+}
+
 #ktopicsform [class*='category'] #krating-top {
 	float: right;
 }

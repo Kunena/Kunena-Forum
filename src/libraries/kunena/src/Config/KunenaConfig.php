@@ -418,14 +418,16 @@ class KunenaConfig
     /**
      * Function to build the configuration values with default values from config.xml
      *
+     * @param   string  $path  Path to config.xml
+     *
      * @return  array
      * @since   7.0.0
      */
-    private static function buildConfig(): array
+    private static function buildConfig(string $path = JPATH_ADMINISTRATOR . '/components/' . self::COMPONENT . '/config.xml'): array
     {
         $config   = [];
         $params   = ComponentHelper::getParams(self::COMPONENT);
-        $defaults = self::getXmlDefaults(JPATH_ADMINISTRATOR . '/components/' . self::COMPONENT . '/config.xml');
+        $defaults = self::getXmlDefaults($path);
 
         foreach ($defaults as $name => $default) {
             $config[$name] = $params->get($name, $default);
@@ -437,20 +439,57 @@ class KunenaConfig
     /**
      * Function to get the cached (or create when not existing) configuration settings
      *
+     * @param   string                $path   Path to config.xml
+     * @param   CacheController|null  $cache  The cache controller (default: the configuration cache controller)
+     *
      * @return  array
      * @since   7.0.0
      */
-    private static function getCachedConfig(): array
-    {
+    private static function getCachedConfig(
+        string $path = JPATH_ADMINISTRATOR . '/components/' . self::COMPONENT . '/config.xml',
+        ?CacheController $cache = \null
+    ): array {
+        // The id carries the mark of config.xml, so a list built from another config.xml is never read. It is taken before the build.
+        $id = self::configCacheId($path);
+
+        // Never cache the list of a config.xml which cannot be read.
+        if ($id === \null) {
+            return self::buildConfig($path);
+        }
+
         /** @var CallbackController $cache */
-        $cache  = self::getConfigCacheController();
-        $config = $cache->get(
-            fn () => self::buildConfig(),
+        $cache ??= self::getConfigCacheController();
+        $config  = $cache->get(
+            fn () => self::buildConfig($path),
             [],
-            'config'
+            $id
         );
 
         return $config;
+    }
+
+    /**
+     * The cache id of the configuration: a mark of config.xml from its modification time and size
+     *
+     * @param   string  $path  Path to config.xml
+     *
+     * @return  string|null  Null when the file is missing or cannot be stat'ed
+     * @since   8.0.0
+     */
+    private static function configCacheId(string $path): ?string
+    {
+        if (!is_file($path)) {
+            return \null;
+        }
+
+        $time = filemtime($path);
+        $size = filesize($path);
+
+        if ($time === \false || $size === \false) {
+            return \null;
+        }
+
+        return 'config-' . $time . '-' . $size;
     }
 
     /**

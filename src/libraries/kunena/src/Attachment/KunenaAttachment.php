@@ -22,12 +22,15 @@ use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
+use Kunena\Forum\Libraries\Event\KunenaAfterAttachmentUploadEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
@@ -42,6 +45,7 @@ use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
+use Throwable;
 
 /**
  * Class KunenaAttachment
@@ -1044,6 +1048,31 @@ class KunenaAttachment extends KunenaDatabaseObject
         }
 
         return $this->save();
+    }
+
+    /**
+     * Tell the plugins of the kunena group that this attachment was uploaded and saved (onKunenaAfterAttachmentUpload).
+     *
+     * Nothing is read back, and an exception or error of a listener is logged, never thrown: a listener cannot fail the upload.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public function dispatchAfterUpload(): void
+    {
+        if (!$this->exists() || !$this->id) {
+            return;
+        }
+
+        try {
+            PluginHelper::importPlugin('kunena');
+
+            $event = new KunenaAfterAttachmentUploadEvent('onKunenaAfterAttachmentUpload', ['subject' => $this]);
+            Factory::getApplication()->getDispatcher()->dispatch('onKunenaAfterAttachmentUpload', $event);
+        } catch (Throwable $e) {
+            Log::add($e->getMessage(), Log::WARNING, 'kunena');
+        }
     }
 
     /**

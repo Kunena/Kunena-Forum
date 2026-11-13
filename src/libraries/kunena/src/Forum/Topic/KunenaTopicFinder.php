@@ -464,18 +464,50 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
-     * Get unread topics
+     * Keep only the topics which are unread for the user, by the rule of the "new" indicator
+     * (KunenaTopicHelper::fetchNewStatus()): the last post is not older than the "mark all read" time of the session nor
+     * than the "mark all read" time of the user in the category, and the topic has a published message newer than that
+     * time and than the last visit of the user in the topic. A user who does not exist gets no topic.
      *
-     * @param   KunenaUser  $user  user
+     * @param   KunenaUser  $user         The user.
+     * @param   int         $allReadTime  The "mark all read" time of the session of the user.
      *
      * @return  $this
      *
      * @since   Kunena 6.0
      */
-    public function filterByUserUnread(KunenaUser $user): KunenaTopicFinder
+    public function filterByUserUnread(KunenaUser $user, int $allReadTime): KunenaTopicFinder
     {
-        $this->query->innerJoin($this->db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $this->db->quoteName('a.id') . ' = ' . $this->db->quoteName('ur.topic_id'));
-        $this->query->where($this->db->quoteName('ur.user_id') . ' != ' . (int) $user->userid);
+        if (!$user->exists()) {
+            $this->query->where('0');
+
+            return $this;
+        }
+
+        $userid = (int) $user->userid;
+
+        $this->query->where($this->db->quoteName('a.last_post_time') . ' >= ' . $allReadTime);
+
+        // The user marked the category as read after the last post of the topic.
+        $this->query->where(
+            'NOT EXISTS (SELECT 1 FROM ' . $this->db->quoteName('#__kunena_user_categories', 'uc')
+            . ' WHERE ' . $this->db->quoteName('uc.user_id') . ' = ' . $userid
+            . ' AND ' . $this->db->quoteName('uc.category_id') . ' = ' . $this->db->quoteName('a.category_id')
+            . ' AND ' . $this->db->quoteName('uc.allreadtime') . ' > ' . $this->db->quoteName('a.last_post_time') . ')'
+        );
+
+        // A published message which the user has not seen yet.
+        $this->query->where(
+            'EXISTS (SELECT 1 FROM ' . $this->db->quoteName('#__kunena_messages', 'm')
+            . ' WHERE ' . $this->db->quoteName('m.thread') . ' = ' . $this->db->quoteName('a.id')
+            . ' AND ' . $this->db->quoteName('m.hold') . ' = 0'
+            . ' AND ' . $this->db->quoteName('m.moved') . ' = 0'
+            . ' AND ' . $this->db->quoteName('m.time') . ' > ' . $allReadTime
+            . ' AND NOT EXISTS (SELECT 1 FROM ' . $this->db->quoteName('#__kunena_user_read', 'ur')
+            . ' WHERE ' . $this->db->quoteName('ur.user_id') . ' = ' . $userid
+            . ' AND ' . $this->db->quoteName('ur.topic_id') . ' = ' . $this->db->quoteName('a.id')
+            . ' AND ' . $this->db->quoteName('ur.time') . ' >= ' . $this->db->quoteName('m.time') . '))'
+        );
 
         return $this;
     }

@@ -41,6 +41,7 @@ $this->addScriptOptions('com_kunena.kunena_topicicontype', '');
 $this->addScriptOptions('com_kunena.kunena_quickreplymesid', $message->displayField('id'));
 
 $this->addScript('assets/js/edit.js');
+$this->addScript('assets/js/submitonce.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover')) {
     $this->addScript('sisyphus.js');
@@ -55,7 +56,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
 ?>
 
 <div class="kreply col-md-12 card" id="kreply<?php echo $message->displayField('id'); ?>_form" style="display: inline-block;">
-    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform" class="form-horizontal">
+    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform" class="form-horizontal" data-kunena-submit-once>
         <input type="hidden" name="task" value="post" />
         <input type="hidden" name="parentid" value="<?php echo $topic->last_post_id; ?>" />
         <input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />

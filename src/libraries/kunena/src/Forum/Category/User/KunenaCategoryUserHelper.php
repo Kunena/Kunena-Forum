@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Forum\Category\User;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -200,6 +201,34 @@ abstract class KunenaCategoryUserHelper
         self::$_allLoaded [$user->userid] = true;
 
         unset($results);
+    }
+
+    /**
+     * The users subscribed to a category, ordered by username: the list of the category form in the backend. Banned users
+     * stay in the list, the rows of users who are no longer in the Joomla users are left out.
+     *
+     * @param   DatabaseInterface  $db     The database.
+     * @param   int                $catid  The category.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 8.0
+     */
+    public static function getSubscriberIds(DatabaseInterface $db, int $catid): array
+    {
+        if ($catid <= 0) {
+            return [];
+        }
+
+        $query = $db->createQuery()
+            ->select($db->quoteName('uc.user_id'))
+            ->from($db->quoteName('#__kunena_user_categories', 'uc'))
+            ->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('uc.user_id'))
+            ->where($db->quoteName('uc.category_id') . ' = ' . $catid)
+            ->where($db->quoteName('uc.subscribed') . ' = 1')
+            ->order($db->quoteName('u.username') . ' ASC');
+
+        return array_map('intval', (array) $db->setQuery($query)->loadColumn());
     }
 
     /**

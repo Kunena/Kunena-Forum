@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { defineConfig } from 'cypress';
 import base from './cypress.config.js';
 
-// The configuration of the Cypress run which makes the screenshots of the documentation (docs/7.2). The screenshots are made on the
+// The configuration of the Cypress run which makes the screenshots of the documentation (docs/8.0). The screenshots are made on the
 // Joomla site of the tests, as the administrator and as a user, so every picture shows the real pages of the checkout:
 //
 //   KUNENA_CMS_PATH=E:/www/apache/htdocs/tests npx cypress run --config-file cypress.docs.config.js
@@ -31,7 +31,7 @@ const readParams = () => {
 
 export default defineConfig({
   ...base,
-  screenshotsFolder: 'docs/7.2/images',
+  screenshotsFolder: 'docs/8.0/images',
   videosFolder: 'tests/System/output/videos',
   video: false,
   viewportWidth: 1200,
@@ -52,13 +52,13 @@ export default defineConfig({
         return launchOptions;
       });
 
-      // The pictures are kept as docs/7.2/images/<name>.png, not in a folder for each spec.
+      // The pictures are kept as docs/8.0/images/<name>.png, not in a folder for each spec.
       on('after:screenshot', (details) => {
         if (!details.name || details.testFailure) {
           return undefined;
         }
 
-        const target = join('docs/7.2/images', `${details.name}.png`);
+        const target = join('docs/8.0/images', `${details.name}.png`);
 
         mkdirSync(dirname(target), { recursive: true });
         copyFileSync(details.path, target);

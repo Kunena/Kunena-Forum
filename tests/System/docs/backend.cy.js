@@ -1,4 +1,4 @@
-// Screenshots for docs/7.2: the administration of Kunena and its plugins, as the administrator of the test site. Run it with
+// Screenshots for docs/8.0: the administration of Kunena and its plugins, as the administrator of the test site. Run it with
 // cypress.docs.config.js.
 import { forum, lightScheme, open } from './helpers.mjs';
 

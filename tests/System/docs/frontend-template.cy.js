@@ -1,4 +1,4 @@
-// Screenshots for docs/7.2: options of the Aurelia template, as the administrator of the test site sees them on the forum. The options
+// Screenshots for docs/8.0: options of the Aurelia template, as the administrator of the test site sees them on the forum. The options
 // of the template are in a file of the template: the task kunenaTemplateParams of cypress.docs.config.js changes them, and the file is
 // put back after the tests. Run it with cypress.docs.config.js.
 import { addMessage, forum, lightScheme, open, restoreTemplateOptions, templateOptions } from './helpers.mjs';

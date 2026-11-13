@@ -47,8 +47,10 @@ site `localhost/tests`, database `tests`, the administrator `ci-admin`). Keep th
 - Upgrade the database of the site after a new version of the schema (new tables and columns); a site on an older version fails in
   places which have nothing to do with the test.
 - Opcache can keep an old compiled copy of a file which is reached through a link: reset it when a change seems to have no effect.
-- Kunena keeps its options in its own cache (`cache/com_kunena_configuration`). The commands `cy.kunena_setOption()` and
-  `cy.kunena_getOption()` change options in the database and clear that cache; Cypress must know the folder of the site:
+- Kunena keeps its options in its own cache (`administrator/cache/com_kunena_configuration`, shared by the site and the
+  administrator). A change of `config.xml` (a new option) rebuilds the cached list by itself, but a direct change of the options
+  in the database needs that cache cleared. The commands `cy.kunena_setOption()` and `cy.kunena_getOption()` change options in
+  the database and clear that cache; Cypress must know the folder of the site:
 
 ```bash
 KUNENA_CMS_PATH=E:/www/apache/htdocs/tests npx cypress run --config-file cypress.config.js --spec "tests/System/integration/**/com_kunena/**"

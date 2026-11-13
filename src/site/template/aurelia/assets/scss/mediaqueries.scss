@@ -101,6 +101,22 @@
   }
 }
 
+/* Phones: nested quotes keep a usable width, a small indent and a left border mark each level. A long word wraps in the quote. */
+@media (max-width: 575.98px) {
+  blockquote {
+    margin-right: 0;
+    margin-left: 0.25rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid rgba(0, 0, 0, 0.1);
+    overflow-wrap: anywhere;
+  }
+
+  // The quote with a link to the message has its border inline: its text stays flush with its header.
+  blockquote[style] {
+    padding-left: 0;
+  }
+}
+
 /* Smartphones to Tablets */
 @media (max-width: 959px) {
   select {

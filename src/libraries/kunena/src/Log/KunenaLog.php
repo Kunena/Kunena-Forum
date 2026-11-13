@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Throwable;
 
 /**
  * implements \Kunena Log.
@@ -414,6 +415,13 @@ class KunenaLog
 
             $db->setQuery($query);
             $db->execute();
+
+            // The copy in the action log of Joomla must never break the request or the log of Kunena.
+            try {
+                KunenaActionLog::write(static::$entries);
+            } catch (Throwable) {
+            }
+
             static::clear();
         }
     }

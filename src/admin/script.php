@@ -179,6 +179,74 @@ class Com_KunenaInstallerScript extends InstallerScript
                 Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
             }
         }
+
+        if (\in_array($type, ['install', 'discover_install', 'update'], true)) {
+            $this->addActionLogExtension();
+        }
+    }
+
+    /**
+     * Method to run when the component is uninstalled: removes Kunena from the extensions of the User Actions Log of Joomla.
+     * The entries which were already written to the action log stay.
+     *
+     * @param   ComponentAdapter  $parent  Installer object
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public function uninstall($parent): bool
+    {
+        try {
+            /** @var DatabaseDriver  $db */
+            $db        = Factory::getContainer()->get('DatabaseDriver');
+            $extension = $this->extension;
+
+            $query = $db->createQuery()
+                ->delete($db->quoteName('#__action_logs_extensions'))
+                ->where($db->quoteName('extension') . ' = :extension')
+                ->bind(':extension', $extension);
+            $db->setQuery($query)->execute();
+        } catch (Throwable $e) {
+            // Do nothing: the uninstall goes on.
+        }
+
+        return true;
+    }
+
+    /**
+     * Add Kunena to the extensions of the User Actions Log of Joomla (the choices of its option "Events To Log"), once.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    private function addActionLogExtension(): void
+    {
+        try {
+            /** @var DatabaseDriver  $db */
+            $db        = Factory::getContainer()->get('DatabaseDriver');
+            $extension = $this->extension;
+
+            $query = $db->createQuery()
+                ->select('COUNT(*)')
+                ->from($db->quoteName('#__action_logs_extensions'))
+                ->where($db->quoteName('extension') . ' = :extension')
+                ->bind(':extension', $extension);
+
+            if ((int) $db->setQuery($query)->loadResult() > 0) {
+                return;
+            }
+
+            $query = $db->createQuery()
+                ->insert($db->quoteName('#__action_logs_extensions'))
+                ->columns($db->quoteName('extension'))
+                ->values(':extension')
+                ->bind(':extension', $extension);
+            $db->setQuery($query)->execute();
+        } catch (Throwable $e) {
+            // Do nothing: the install goes on without the action log.
+        }
     }
 
     /**

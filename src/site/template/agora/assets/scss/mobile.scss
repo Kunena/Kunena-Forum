@@ -127,6 +127,15 @@
     min-width: 0;
   }
 
+  /* The stars of a topic on their own line under the title (the title is a flex row), away from its actions. */
+  .kunena-topic-item > h1 {
+    flex-wrap: wrap;
+
+    > #krating {
+      flex-basis: 100%;
+    }
+  }
+
   #categoryactions ul.inline > li > .btn,
   ul.inline > li > .btn {
     flex: 1 1 auto;

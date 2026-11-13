@@ -1733,39 +1733,7 @@ HTML;
             $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/systemicons.xml';
         }
 
-        $iconid = 0;
-
-        if ($topic->posts < 2) {
-            $iconid = 6;
-        }
-
-        if ($topic->ordering) {
-            $iconid = 3;
-        }
-
-        if ($topic->locked) {
-            $iconid = 4;
-        }
-
-        if ($topic->ordering && $topic->locked) {
-            $iconid = 7;
-        }
-
-        if ($topic->moved_id) {
-            $iconid = 5;
-        }
-
-        if ($topic->hold == 1) {
-            $iconid = 1;
-        }
-
-        if ($topic->hold == 2) {
-            $iconid = 2;
-        }
-
-        if ($topic->hold == 3) {
-            $iconid = 2;
-        }
+        $iconid = $this->getSystemTopicIconId($topic);
 
         $xml  = $this->loadXmlFileCached($xmlfile);
         $icon = $this->get_xml_systemicon($xml, $iconid, $topicicontype);
@@ -1793,6 +1761,49 @@ HTML;
 
         return '<img loading=lazy src="' . $iconurl . '" alt="' . $icon->name . '" />';
 
+    }
+
+    /**
+     * Get the id of the system icon of a topic (systemicons.xml): deleted over moved (a shadow topic) over unapproved over
+     * sticky and locked, locked, sticky, unanswered and normal.
+     *
+     * @param   KunenaTopic  $topic  topic
+     *
+     * @return  int
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getSystemTopicIconId(KunenaTopic $topic): int
+    {
+        if ($topic->hold == 2 || $topic->hold == 3) {
+            return 2;
+        }
+
+        if ($topic->moved_id) {
+            return 5;
+        }
+
+        if ($topic->hold == 1) {
+            return 1;
+        }
+
+        if ($topic->ordering && $topic->locked) {
+            return 7;
+        }
+
+        if ($topic->locked) {
+            return 4;
+        }
+
+        if ($topic->ordering) {
+            return 3;
+        }
+
+        if ($topic->posts < 2) {
+            return 6;
+        }
+
+        return 0;
     }
 
     /**

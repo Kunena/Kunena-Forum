@@ -267,6 +267,16 @@
   }
 }
 
+/* Phones: nested quotes keep a usable width, each level costs less padding. */
+@media (max-width: 575.98px) {
+  .kmsg blockquote,
+  .kmsgtext-quote,
+  blockquote {
+    padding-inline: 0.5rem 0.25rem;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* Very small screens (360px): less padding, the buttons with only their icon when they are in groups. */
 @media (max-width: 400px) {
   & {

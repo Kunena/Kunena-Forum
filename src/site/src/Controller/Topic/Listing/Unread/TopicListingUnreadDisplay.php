@@ -116,37 +116,34 @@ class TopicListingUnreadDisplay extends ListDisplay
             }
         }
 
-        $finder = new KunenaTopicFinder();
+        // Without the "new" indicator, or for a guest, no topic is unread.
+        if (!$this->config->showNew || !$this->me->exists()) {
+            $this->topics     = [];
+            $this->mesIds     = [];
+            $this->pagination = new KunenaPagination(0, $start, $limit);
+        } else {
+            $finder = new KunenaTopicFinder();
 
-        // Filters of the filter bar (the list has no category of its own).
-        $this->applyFilters($finder, true);
+            // Filters of the filter bar (the list has no category of its own).
+            $this->applyFilters($finder, true);
 
-        $this->topics = $finder
-            ->start($start)
-            ->limit($limit)
-            ->filterByTime($time)
-            ->order('id', 0)
-            ->filterByUserAccess($this->me)
-            ->find();
+            // The unread topics are selected in the query, so the page and the count are on the unread topics only.
+            $this->topics = $finder
+                ->start($start)
+                ->limit($limit)
+                ->filterByTime($time)
+                ->order('id', 0)
+                ->filterByUserAccess($this->me)
+                ->filterByUserUnread($this->me, (int) KunenaFactory::getSession()->getAllReadTime())
+                ->find();
 
-        $this->mesIds = [];
+            // The number of unread messages and the first unread message of each topic.
+            $this->mesIds = [];
 
-        $this->mesIds += KunenaTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
+            $this->mesIds += KunenaTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
 
-        $list = [];
-
-        $count = 0;
-
-        foreach ($this->topics as $topic) {
-            if ($topic->unread) {
-                $list[] = $topic;
-                $count++;
-            }
+            $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
         }
-
-        $this->topics = $list;
-
-        $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
         if ($this->moreUri) {
             $this->pagination->setUri($this->moreUri);

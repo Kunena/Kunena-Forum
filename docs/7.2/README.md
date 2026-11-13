@@ -34,6 +34,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [Badges for user groups and ranks](features/badges.md) | Administrators |  | Coloured labels next to the name of a user, for a Joomla user group or a Kunena rank. |
 | [Ranks linked to a Joomla user group](features/ranks-user-groups.md) | Administrators | [#8339](https://github.com/Kunena/Kunena-Forum/issues/8339) | A rank can be given to every member of a Joomla user group. |
 | [Change the rank of a user from his profile page](features/profile-rank-change.md) | Moderators, administrators | [#5380](https://github.com/Kunena/Kunena-Forum/issues/5380) | Give a special rank, or no rank, to a user from the rank entry of his profile. |
+| [SVG avatars, cleaned on upload](features/svg-avatars.md) | Administrators, users | [#10381](https://github.com/Kunena/Kunena-Forum/issues/10381) | Allow SVG files as avatars: scripts and remote references are removed on upload, and a file which cannot be cleaned is refused. |
 | [Social websites: edit the providers, retire the dead ones](features/social-websites.md) | Administrators |  | A view to add and remove the social websites of the profile; Skype, Yahoo Messenger and Google+ are gone. |
 | [Delete a user in Joomla and request the deletion of an account](features/account-deletion.md) | Administrators, users |  | Links to delete a user in Joomla, and a button to ask for the removal of the own account. |
 

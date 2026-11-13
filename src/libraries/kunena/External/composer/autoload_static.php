@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit6b7e8d3091d7c0760780d4fb1aa23391
 {
     public static $prefixLengthsPsr4 = array (
+        'e' => 
+        array (
+            'enshrined\\svgSanitize\\' => 22,
+        ),
         'P' => 
         array (
             'Pedrollo\\GravatarLib\\' => 21,
@@ -23,6 +27,10 @@ class ComposerStaticInit6b7e8d3091d7c0760780d4fb1aa23391
     );
 
     public static $prefixDirsPsr4 = array (
+        'enshrined\\svgSanitize\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/enshrined/svg-sanitize/src',
+        ),
         'Pedrollo\\GravatarLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/Emberlabs',

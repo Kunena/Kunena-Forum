@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'enshrined\\svgSanitize\\' => array($vendorDir . '/enshrined/svg-sanitize/src'),
     'Pedrollo\\GravatarLib\\' => array($vendorDir . '/Emberlabs'),
     'Nbbc\\' => array($vendorDir . '/Nbbc/src'),
     'Kunena\\Forum\\' => array($baseDir . '/src'),

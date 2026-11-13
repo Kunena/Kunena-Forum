@@ -10,6 +10,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | Feature | For | Issue | What it does |
 | --- | --- | --- | --- |
 | [Drafts](features/drafts.md) | Users |  | Save a topic, a reply or an edit as a draft and finish it later. |
+| [Warning before leaving the posting form](features/leave-warning.md) | Users | [#6856](https://github.com/Kunena/Kunena-Forum/issues/6856) | The form of a topic, a reply or an edit asks before it is left with text which was not sent. |
 | [Markdown and safe HTML in messages](features/markdown-and-html.md) | Administrators, users |  | Messages can use Markdown, and a safe set of HTML tags, next to BBCode. |
 | [Link cards for pasted links](features/link-cards.md) | Administrators, users | [#3769](https://github.com/Kunena/Kunena-Forum/issues/3769) | A link in a message becomes a card with the title, a short text and the picture of the page. |
 | [Own domains: links without nofollow](features/own-domains.md) | Administrators | [#6073](https://github.com/Kunena/Kunena-Forum/issues/6073) | The links in messages to the domains of a list get no rel="nofollow noopener noreferrer". |

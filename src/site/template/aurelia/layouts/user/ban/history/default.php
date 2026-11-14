@@ -26,24 +26,25 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 </h3>
 
 <table class="table table-bordered table-striped table-hover">
+    <caption class="visually-hidden"><?php echo $this->headerText; ?></caption>
     <thead>
     <tr>
-        <th class="col-md-1 center">
+        <th scope="col" class="col-md-1 center">
             #
         </th>
-        <th class="col-md-3">
+        <th scope="col" class="col-md-3">
             <?php echo Text::_('COM_KUNENA_BAN_BANNEDFROM'); ?>
         </th>
-        <th class="col-md-2">
+        <th scope="col" class="col-md-2">
             <?php echo Text::_('COM_KUNENA_BAN_STARTTIME'); ?>
         </th>
-        <th class="col-md-2">
+        <th scope="col" class="col-md-2">
             <?php echo Text::_('COM_KUNENA_BAN_EXPIRETIME'); ?>
         </th>
-        <th class="col-md-2">
+        <th scope="col" class="col-md-2">
             <?php echo Text::_('COM_KUNENA_BAN_CREATEDBY'); ?>
         </th>
-        <th class="col-md-2">
+        <th scope="col" class="col-md-2">
             <?php echo Text::_('COM_KUNENA_BAN_MODIFIEDBY'); ?>
         </th>
     </tr>

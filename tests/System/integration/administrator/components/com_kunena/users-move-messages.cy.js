@@ -54,9 +54,10 @@ describe('Kunena backend users: move the messages of a user', () => {
 
   afterEach(() => {
     const topics = ids.topics.join(',') || '0';
-    cy.task('queryDB', `DELETE x FROM #__kunena_messages_text AS x INNER JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.thread IN (${topics})`);
-    cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE thread IN (${topics})`);
-    cy.task('queryDB', `DELETE FROM #__kunena_user_topics WHERE topic_id IN (${topics})`);
+    // A split creates a new topic in the target category: clean it up through the categories too.
+    cy.task('queryDB', `DELETE x FROM #__kunena_messages_text AS x INNER JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.thread IN (${topics}) OR m.catid IN (${ids.source}, ${ids.target})`);
+    cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE thread IN (${topics}) OR catid IN (${ids.source}, ${ids.target})`);
+    cy.task('queryDB', `DELETE FROM #__kunena_user_topics WHERE topic_id IN (${topics}) OR category_id IN (${ids.source}, ${ids.target})`);
     cy.task('queryDB', `DELETE FROM #__kunena_topics WHERE id IN (${topics}) OR category_id IN (${ids.source}, ${ids.target})`);
     cy.task('queryDB', `DELETE FROM #__kunena_logs WHERE category_id IN (${ids.source}, ${ids.target})`);
     cy.task('queryDB', `DELETE FROM #__kunena_aliases WHERE alias IN ('cypress-source-${stamp}', 'cypress-target-${stamp}')`);
@@ -75,5 +76,54 @@ describe('Kunena backend users: move the messages of a user', () => {
     cy.then(() => token(`${admin}&view=user&layout=move`)).then((t) => cy.request({ method: 'POST', url: `${admin}&task=user.moveMessages`, form: true, body: { catid: ids.target, [t]: '1' }, followRedirect: false }));
     cy.then(() => inCategory(ids.target)).should('eq', total);
     cy.then(() => inCategory(ids.source)).should('eq', 0);
+  });
+
+  it('moves only the messages of the user out of a topic with messages of another user', () => {
+    const mixed = {};
+    cy.task(
+      'queryDB',
+      `INSERT INTO #__kunena_topics (category_id, subject, icon_id, label_id, locked, hold, ordering, posts, hits, attachments, poll_id, moved_id, first_post_id, first_post_time, first_post_userid, first_post_message, first_post_guest_name, last_post_id, last_post_time, last_post_userid, last_post_message, last_post_guest_name, rating, params) VALUES (${ids.source}, 'Mixed ${stamp}', 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, UNIX_TIMESTAMP() - 900, 798, 'x', '', 0, UNIX_TIMESTAMP() - 800, ${ids.user}, 'x', '', 0, '')`,
+    ).then((topic) => {
+      mixed.topic = topic.insertId;
+      ids.topics.push(topic.insertId);
+      cy.task(
+        'queryDB',
+        `INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon, locked, hold, ordering, hits, moved, modified_by, modified_time, modified_reason) VALUES (0, ${topic.insertId}, ${ids.source}, 'other', 798, '', 'Mixed ${stamp}', UNIX_TIMESTAMP() - 900, '', 0, 0, 0, 0, 0, 0, 0, 0, '')`,
+      ).then((first) => {
+        mixed.first = first.insertId;
+        cy.task('queryDB', `INSERT INTO #__kunena_messages_text (mesid, message) VALUES (${first.insertId}, 'Question.')`);
+
+        return cy.task(
+          'queryDB',
+          `INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon, locked, hold, ordering, hits, moved, modified_by, modified_time, modified_reason) VALUES (${first.insertId}, ${topic.insertId}, ${ids.source}, 'ci-mover', ${ids.user}, '', 'Re: Mixed ${stamp}', UNIX_TIMESTAMP() - 800, '', 0, 0, 0, 0, 0, 0, 0, 0, '')`,
+        );
+      }).then((reply) => {
+        mixed.reply = reply.insertId;
+        cy.task('queryDB', `INSERT INTO #__kunena_messages_text (mesid, message) VALUES (${reply.insertId}, 'Answer.')`);
+        cy.task('queryDB', `UPDATE #__kunena_topics SET first_post_id = ${mixed.first}, last_post_id = ${reply.insertId} WHERE id = ${topic.insertId}`);
+      });
+    });
+
+    cy.doAdministratorLogin();
+    cy.then(() => token(`${admin}&view=users`)).then((t) => cy.request({ method: 'POST', url: `${admin}&task=users.move`, form: true, body: { 'cid[]': ids.user, [t]: '1' }, followRedirect: false }));
+    cy.then(() => token(`${admin}&view=user&layout=move`)).then((t) => cy.request({ method: 'POST', url: `${admin}&task=user.moveMessages`, form: true, body: { catid: ids.target, [t]: '1' }, followRedirect: false }));
+
+    // The 10 topics of the user move whole, the mixed topic splits once: its original stays in the source.
+    cy.then(() => inCategory(ids.target)).should('eq', total + 1);
+    cy.then(() => inCategory(ids.source)).should('eq', 1);
+    cy.then(() => cy.task('queryDB', `SELECT category_id, posts FROM #__kunena_topics WHERE id = ${mixed.topic}`)).then((rows) => {
+      expect(rows).to.have.length(1);
+      expect(Number(rows[0].category_id)).to.eq(ids.source);
+      expect(Number(rows[0].posts)).to.eq(1);
+    });
+    cy.then(() => cy.task('queryDB', `SELECT thread, catid FROM #__kunena_messages WHERE id = ${mixed.first}`)).then((rows) => {
+      expect(Number(rows[0].thread)).to.eq(mixed.topic);
+      expect(Number(rows[0].catid)).to.eq(ids.source);
+    });
+    cy.then(() => cy.task('queryDB', `SELECT m.thread, m.catid, t.category_id FROM #__kunena_messages AS m INNER JOIN #__kunena_topics AS t ON t.id = m.thread WHERE m.id = ${mixed.reply}`)).then((rows) => {
+      expect(Number(rows[0].thread)).not.to.eq(mixed.topic);
+      expect(Number(rows[0].catid)).to.eq(ids.target);
+      expect(Number(rows[0].category_id)).to.eq(ids.target);
+    });
   });
 });

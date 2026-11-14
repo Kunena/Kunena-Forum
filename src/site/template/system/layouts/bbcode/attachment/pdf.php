@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Text;
 
 $attachment = $this->attachment;
 $location   = $attachment->getUrl();
+$download   = $attachment->getUrl(false, false);
 
 if (!$attachment->isPdf()) {
     return;
@@ -56,13 +57,13 @@ if (!$attachment->isPdf()) {
         type="application/pdf">
     <p>
         <?php echo Text::_('COM_KUNENA_BBCODE_PDF_BROWSER_NOT_SUPPORT_EMBEDDED_PDF') ?>  
-        <a href="<?php echo $location; ?>" download><?php echo Text::_('COM_KUNENA_BBCODE_PDF_DOWNLOAD_PDF') ?></a>.
+        <a href="<?php echo $download; ?>" download><?php echo Text::_('COM_KUNENA_BBCODE_PDF_DOWNLOAD_PDF') ?></a>.
     </p>
 </object>
 
 <div class="d-flex justify-content-center justify-content-md-end mt-2">
   <a class="btn btn-secondary"
-     href="<?php echo $location; ?>"
+     href="<?php echo $download; ?>"
      download>
     <i class="fas fa-download"></i> <?php echo Text::_('COM_KUNENA_BBCODE_PDF_DOWNLOAD_PDF') ?>
   </a>

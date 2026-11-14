@@ -1091,8 +1091,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
         ],
         'code' => [
-            'mode'          => BBCode::BBCODE_MODE_ENHANCED,
-            'template'      => "\n<div class=\"bbcode_code\">\n<div class=\"bbcode_code_head\">Code:</div>\n<div class=\"bbcode_code_body\" style=\"white-space:pre\">{\$_content/v}</div>\n</div>\n",
+            'mode'          => BBCode::BBCODE_MODE_LIBRARY,
+            'method'        => 'DoCode',
             'class'         => 'code',
             'allow_in'      => ['listitem', 'block', 'columns'],
             'content'       => BBCode::BBCODE_VERBATIM,
@@ -1537,26 +1537,49 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return true;
         }
 
-        $type = isset($params["type"]) ? $params["type"] : (isset($default) ? $default : "php");
+        $language = self::codeLanguage(isset($params['type']) && $params['type'] !== '' ? $params['type'] : $default);
+        $class    = $language !== '' ? ' class="language-' . htmlspecialchars($language, ENT_QUOTES, 'UTF-8') . '"' : '';
 
-        if ($type == 'js') {
-            $type = 'javascript';
-        } elseif ($type == 'html') {
-            $type = 'html4strict';
+        // With the setting off no Joomla call is made; e-mails (a context) and JSON, raw or feed output get no assets.
+        if (!empty($bbcode->config->highlightCode) && empty($bbcode->context)) {
+            $document = Factory::getApplication()->getDocument();
+
+            if ($document instanceof HtmlDocument) {
+                // The full address of the site, as KunenaTemplate::addScript() gives it: the asset manager does not find a path
+                // which starts with the folder of a site in a subfolder (/forum/media/...), and drops the asset.
+                $media = Uri::root() . 'media/kunena/core/';
+                $wa    = $document->getWebAssetManager();
+                $wa->registerAndUseStyle('kunena.highlightjs', $media . 'highlightjs/styles/github-dark.min.css');
+                $wa->registerAndUseScript('kunena.highlightjs', $media . 'highlightjs/highlight.min.js', [], ['defer' => true]);
+                $wa->registerAndUseScript('kunena.highlight-code', $media . 'js/highlight-code.js', [], ['defer' => true], ['kunena.highlightjs']);
+            }
         }
 
-        if ($type == 'less' || $type == 'scss' || $type == 'sass') {
-            $type = 'css';
+        // The content of a verbatim tag is already encoded by the parser: htmlspecialchars(..., ENT_QUOTES) in
+        // BBCode::processVerbatimTag(). It is inserted as it is, neither decoded nor encoded a second time.
+        return "\n<div class=\"bbcode_code\">\n<div class=\"bbcode_code_head\">Code:</div>\n<pre class=\"bbcode_code_body\"><code"
+            . $class . '>' . $content . "</code></pre>\n</div>\n";
+    }
+
+    /**
+     * The language of a code block, as highlight.js reads it from a class "language-...": lowercase letters, digits, "_"
+     * and "-", at most 32 characters. Any other value is rejected whole, and the block gets no language.
+     *
+     * @param   mixed  $value  The language the member typed ([code=x] or [code type=x]), not encoded.
+     *
+     * @return  string  The language, or an empty string.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function codeLanguage($value): string
+    {
+        if (!\is_string($value)) {
+            return '';
         }
 
-        $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-        if ($type) {
-            $code = '<pre xml:' . $type . '>' . $content . '</pre>';
-        } else {
-            $code = '<pre>' . $content . '</pre>';
-        }
+        $value = strtolower(trim($value));
 
-        return '<div class="highlight">' . $code . '</div>';
+        return preg_match('/^[a-z0-9_-]{1,32}$/D', $value) ? $value : '';
     }
 
     /**

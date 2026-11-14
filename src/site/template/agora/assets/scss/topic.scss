@@ -276,16 +276,14 @@ blockquote {
 
 .kmsg pre,
 .kmsg code,
-pre.bbcode_code,
-.highlight pre,
+pre.bbcode_code_body,
 .kmsgtext-code {
   font-family: var(--agora-font-mono);
   font-size: 0.875rem;
 }
 
 .kmsg pre,
-pre.bbcode_code,
-.highlight pre {
+pre.bbcode_code_body {
   max-width: 100%;
   padding: 0.85rem 1rem;
   overflow-x: auto;
@@ -295,6 +293,13 @@ pre.bbcode_code,
   border: 1px solid var(--agora-border);
   border-radius: var(--agora-radius-sm);
   overflow-wrap: normal;
+}
+
+/* A block coloured by highlight.js shows the background and the text colour of its theme (github-dark), in both schemes. */
+pre.bbcode_code_body:has(> code.hljs) {
+  padding: 0 !important;
+  color: #c9d1d9 !important;
+  background: #0d1117 !important;
 }
 
 .kmsg :not(pre) > code {

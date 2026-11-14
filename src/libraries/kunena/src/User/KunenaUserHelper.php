@@ -864,11 +864,21 @@ abstract class KunenaUserHelper
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
 
-        // Update banned state
+        // Update banned state of the users who have bans: the latest expiration of their bans, a subquery of each user (an update
+        // joined to a derived table failed with a syntax error on MariaDB 10.11, issue #10344)
+        $latest = $db->createQuery();
+        $latest->select('MAX(' . $db->quoteName('b.expiration') . ')')
+            ->from($db->quoteName('#__kunena_users_banned', 'b'))
+            ->where($db->quoteName('b.userid') . ' = ' . $db->quoteName('u.userid'));
+
+        $banned = $db->createQuery();
+        $banned->select($db->quoteName('userid'))
+            ->from($db->quoteName('#__kunena_users_banned'));
+
         $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_users', 'u'))
-            ->join('INNER', '(SELECT ' . $db->quoteName('userid') . ', MAX(' . $db->quoteName('expiration') . ') AS ' . $db->quoteName('banned') . ' FROM ' . $db->quoteName('#__kunena_users_banned') . ' GROUP BY ' . $db->quoteName('userid') . ') AS b ON ' . $db->quoteName('u.userid') . '=' . $db->quoteName('b.userid'))
-            ->set($db->quoteName('u.banned') . '=' . $db->quoteName('b.banned'));
+            ->set($db->quoteName('u.banned') . ' = (' . $latest . ')')
+            ->where($db->quoteName('u.userid') . ' IN (' . $banned . ')');
         $db->setQuery($query);
 
         try {

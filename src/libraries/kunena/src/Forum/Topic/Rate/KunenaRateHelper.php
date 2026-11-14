@@ -38,6 +38,34 @@ abstract class KunenaRateHelper
     protected static array $_counts = [];
 
     /**
+     * @var     array  The topics whose number of ratings is loaded when a number is first asked for: all of them with one query
+     *                 (the topics of several lists of a page are loaded one list after the other).
+     * @since   Kunena 8.0
+     */
+    protected static array $_pending = [];
+
+    /**
+     * Load the number of ratings of these topics when a number is first asked for, with the ones of the other topics which
+     * were loaded by then (one query instead of one for each list of topics).
+     *
+     * @param   int[]  $ids  Topic ids.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public static function deferCounts(array $ids): void
+    {
+        foreach ($ids as $id) {
+            $id = (int) $id;
+
+            if ($id > 0 && !isset(self::$_counts[$id])) {
+                self::$_pending[$id] = $id;
+            }
+        }
+    }
+
+    /**
      * Forget the loaded number of ratings of a topic (after a new rating).
      *
      * @param   int  $id  Topic id.
@@ -100,6 +128,17 @@ abstract class KunenaRateHelper
     {
         if (isset(self::$_counts[$id])) {
             return self::$_counts[$id];
+        }
+
+        // The topics which wait for their number: loaded together, this one with them.
+        if (self::$_pending) {
+            $pending        = self::$_pending + [$id => $id];
+            self::$_pending = [];
+            self::loadCounts($pending);
+
+            if (isset(self::$_counts[$id])) {
+                return self::$_counts[$id];
+            }
         }
 
         $db    = Factory::getContainer()->get('DatabaseDriver');

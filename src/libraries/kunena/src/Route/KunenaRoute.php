@@ -180,6 +180,72 @@ abstract class KunenaRoute
     protected static array $filtered = [];
 
     /**
+     * The rows of the aliases which were read for the segments of the address (preloadAliases), and the segments, in lower
+     * case, which they answer.
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected static array $aliasRows = [];
+
+    /**
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected static array $aliasesRead = [];
+
+    /**
+     * Read the aliases of all the segments of an address with one query: the router asks for them one segment after the other
+     * (resolveAlias), each of them would read its own.
+     *
+     * @param   string[]  $aliases  The segments.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public static function preloadAliases(array $aliases): void
+    {
+        $wanted = [];
+
+        foreach ($aliases as $alias) {
+            $alias = trim((string) $alias);
+            $key   = StringHelper::strtolower($alias);
+
+            if ($alias !== '' && !isset(self::$aliasesRead[$key])) {
+                $wanted[$key] = $alias;
+            }
+        }
+
+        if (!$wanted) {
+            return;
+        }
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $likes = array_map(static fn ($alias) => $db->quoteName('alias') . ' LIKE ' . $db->quote($alias . '%'), array_values($wanted));
+        $query = $db->createQuery()
+            ->select('*')
+            ->from($db->quoteName('#__kunena_aliases'))
+            ->where('(' . implode(' OR ', $likes) . ')');
+        $db->setQuery($query);
+
+        try {
+            $rows = (array) $db->loadObjectList();
+        } catch (RuntimeException $e) {
+            // The segments are read one by one, as before.
+            return;
+        }
+
+        foreach ($rows as $row) {
+            self::$aliasRows[] = $row;
+        }
+
+        foreach (array_keys($wanted) as $key) {
+            self::$aliasesRead[$key] = true;
+        }
+    }
+
+    /**
      * @param   string|Uri|null  $uri    uri
      * @param   bool  $xhtml  xhtml
      * @param   int   $ssl    ssl
@@ -955,21 +1021,26 @@ abstract class KunenaRoute
     {
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-        $app   = Factory::getApplication();
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select('*')
-            ->from($db->quoteName('#__kunena_aliases'))
-            ->where($db->quoteName('alias') . ' LIKE ' . $db->quote($alias . '%'));
-
-        $db->setQuery($query);
-
         $aliases = [];
 
-        try {
-            $aliases = (array) $db->loadObjectList();
-        } catch (RuntimeException $e) {
-            $app->enqueueMessage($e->getMessage(), 'error');
+        // The aliases of the segments of the address were read together (preloadAliases): only the one which is equal counts.
+        if (isset(self::$aliasesRead[StringHelper::strtolower(trim($alias))])) {
+            $aliases = self::$aliasRows;
+        } else {
+            $app   = Factory::getApplication();
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery();
+            $query->select('*')
+                ->from($db->quoteName('#__kunena_aliases'))
+                ->where($db->quoteName('alias') . ' LIKE ' . $db->quote($alias . '%'));
+
+            $db->setQuery($query);
+
+            try {
+                $aliases = (array) $db->loadObjectList();
+            } catch (RuntimeException $e) {
+                $app->enqueueMessage($e->getMessage(), 'error');
+            }
         }
 
         $vars = [];

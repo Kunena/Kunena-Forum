@@ -650,20 +650,51 @@ abstract class KunenaAttachmentHelper
             KunenaError::displayDatabaseError($e);
         }
 
-        foreach ($ids as $id) {
-            if (isset($results[$id])) {
-                // Use the row which was just loaded, get() would read the same attachment again.
-                $instance = new KunenaAttachment((array) $results[$id]);
-                $instance->exists(true);
+        self::getFromRows($results);
 
-                self::$_instances[$id]                  = $instance;
-                self::$_messages[$instance->mesid][$id] = $instance;
-            } else {
+        foreach ($ids as $id) {
+            if (!isset($results[$id])) {
                 self::$_instances[$id] = null;
             }
         }
 
         unset($results);
+    }
+
+    /**
+     * The attachments of rows which were already read from the database (a finder selects them): the rows become the
+     * attachments, get() would read each of them again with a query of its own. An attachment which is already loaded is kept.
+     *
+     * @param   array  $rows  The rows of #__kunena_attachments (objects or arrays), by id or not.
+     *
+     * @return  KunenaAttachment[]  The attachments, by id, in the order of the rows.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function getFromRows(array $rows): array
+    {
+        $list = [];
+
+        foreach ($rows as $row) {
+            $row = (array) $row;
+            $id  = (int) ($row['id'] ?? 0);
+
+            if ($id < 1) {
+                continue;
+            }
+
+            if (empty(self::$_instances[$id])) {
+                $instance = new KunenaAttachment($row);
+                $instance->exists(true);
+
+                self::$_instances[$id]                  = $instance;
+                self::$_messages[$instance->mesid][$id] = $instance;
+            }
+
+            $list[$id] = self::$_instances[$id];
+        }
+
+        return $list;
     }
 
     /**
@@ -723,13 +754,8 @@ abstract class KunenaAttachmentHelper
             }
         }
 
-        if (!empty($results)) {
-            foreach ($results as $id => $instance) {
-                $instance                                = self::get($id);
-                self::$_instances [$id]                  = $instance;
-                self::$_messages [$instance->mesid][$id] = $instance;
-            }
-        }
+        // The rows have every column of the attachments: they become the attachments (get() would read each one again).
+        self::getFromRows($results);
 
         unset($results);
     }

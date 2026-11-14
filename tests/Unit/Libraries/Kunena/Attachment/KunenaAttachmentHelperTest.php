@@ -12,9 +12,11 @@
 
 namespace Kunena\Tests\Unit\Libraries\Kunena\Attachment;
 
+use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use ReflectionProperty;
 
 /**
  * The parts of the attachment helper which need no Joomla and no database.
@@ -143,5 +145,42 @@ class KunenaAttachmentHelperTest extends UnitTestCase
         $one = [5 => $this->attachment(5, 'a', 1, 'x')];
 
         $this->assertSame($one, KunenaAttachmentHelper::sort($one, 'name', 'desc'));
+    }
+
+    /**
+     * A finder reads whole rows: they become the attachments (with one query for the list, not one more per attachment). An
+     * attachment which is already loaded is kept, a row without id is no attachment.
+     */
+    public function testTheRowsOfAFinderBecomeTheAttachments(): void
+    {
+        $instances = new ReflectionProperty(KunenaAttachmentHelper::class, '_instances');
+        $messages  = new ReflectionProperty(KunenaAttachmentHelper::class, '_messages');
+        $saved     = [$instances->getValue(), $messages->getValue()];
+
+        try {
+            $loaded = static::bare(KunenaAttachment::class, ['id' => 7, 'mesid' => 3, 'filename' => 'kept.png']);
+            $instances->setValue(null, [7 => $loaded]);
+            $messages->setValue(null, []);
+
+            $list = KunenaAttachmentHelper::getFromRows([
+                12 => (object) ['id' => 12, 'mesid' => 5, 'userid' => 46, 'filename' => 'photo.jpg'],
+                7  => ['id' => 7, 'mesid' => 3, 'filename' => 'read again.png'],
+                0  => ['id' => 0, 'filename' => 'no id'],
+            ]);
+
+            $this->assertSame([12, 7], array_keys($list));
+            $this->assertInstanceOf(KunenaAttachment::class, $list[12]);
+            $this->assertSame('photo.jpg', $list[12]->filename);
+            $this->assertSame(46, (int) $list[12]->userid);
+            $this->assertTrue($list[12]->exists());
+            $this->assertSame($loaded, $list[7]);
+
+            // The helper knows the new attachment: by its id and by its message.
+            $this->assertSame($list[12], $instances->getValue()[12]);
+            $this->assertSame($list[12], $messages->getValue()[5][12]);
+        } finally {
+            $instances->setValue(null, $saved[0]);
+            $messages->setValue(null, $saved[1]);
+        }
     }
 }

@@ -262,6 +262,15 @@ class KunenaAttachment extends KunenaDatabaseObject
     protected mixed $_table = 'KunenaAttachments';
 
     /**
+     * The answers of the check of a private attachment, by user: a page asks it more than once for one file (may he delete it,
+     * may he read it), the answer is the same for every action (but creating) and does not change while the page is made.
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected array $_privateAuthorised = [];
+
+    /**
      * @var     string
      * @since   Kunena 6.0
      */
@@ -394,6 +403,27 @@ class KunenaAttachment extends KunenaDatabaseObject
             return false;
         }
 
+        $key = (int) $user->userid;
+
+        if (!\array_key_exists($key, $this->_privateAuthorised)) {
+            $this->_privateAuthorised[$key] = $this->loadPrivateAuthorisation($user);
+        }
+
+        return $this->_privateAuthorised[$key];
+    }
+
+    /**
+     * May the user read the private attachment: a user of its private message, or a moderator of a message of it.
+     *
+     * @param   KunenaUser  $user  The user.
+     *
+     * @return  KunenaExceptionAuthorise|null  Null when the user may.
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected function loadPrivateAuthorisation(KunenaUser $user): ?KunenaExceptionAuthorise
+    {
         // Need to load private message (for now allow only one private message per KunenaAttachment).
         $db  = Factory::getContainer()->get(DatabaseInterface::class);
         $map = new TableKunenaPrivateAttachmentMap($db);
@@ -408,14 +438,15 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         if (\in_array($user->userid, $private->users()->getMapped())) {
             // Yes, I have access..
-            return;
+            return null;
         }
+
         $messages = KunenaMessageHelper::getMessages($private->posts()->getMapped());
 
         foreach ($messages as $message) {
             if ($user->isModerator($message->getCategory())) {
                 // Yes, I have access..
-                return;
+                return null;
             }
         }
 

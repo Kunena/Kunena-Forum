@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS `#__users` (
   `email` varchar(100) NOT NULL DEFAULT '',
   `password` varchar(100) NOT NULL DEFAULT '',
   `block` tinyint(4) NOT NULL DEFAULT 0,
+  `registerDate` datetime NULL DEFAULT NULL,
+  `lastvisitDate` datetime NULL DEFAULT NULL,
   `params` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

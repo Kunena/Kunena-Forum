@@ -67,6 +67,14 @@ abstract class KunenaUserName
     protected static array $displayNames = [];
 
     /**
+     * The id of the custom field with the nickname, once known (0: none).
+     *
+     * @var     integer|null
+     * @since   Kunena 8.0
+     */
+    protected static ?int $displayNameField = null;
+
+    /**
      * The name which is shown of a user: the choice of the user, else the one of the configuration; a name which is empty
      * is replaced by the next one (nickname, real name, username).
      *
@@ -153,10 +161,8 @@ abstract class KunenaUserName
      */
     public static function getDisplayNameField(): int
     {
-        static $field = null;
-
-        if ($field !== null) {
-            return $field;
+        if (self::$displayNameField !== null) {
+            return self::$displayNameField;
         }
 
         $config = KunenaConfig::getInstance();
@@ -178,7 +184,7 @@ abstract class KunenaUserName
             }
         }
 
-        return $field;
+        return self::$displayNameField = $field;
     }
 
     /**

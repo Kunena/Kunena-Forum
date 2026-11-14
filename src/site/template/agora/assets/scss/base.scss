@@ -362,6 +362,13 @@ hr {
   background-color: var(--agora-success) !important;
 }
 
+/* The warning badges (a locked topic): a tint of the colour, as the alerts, not Bootstrap's strong orange. */
+.badge.bg-warning {
+  color: var(--agora-warning) !important;
+  background-color: color-mix(in srgb, var(--agora-warning) 14%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--agora-warning) 35%, transparent);
+}
+
 /* Forms. */
 .form-control,
 .form-select,

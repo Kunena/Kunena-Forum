@@ -43,6 +43,33 @@ abstract class KunenaTopicHelper
     protected static mixed $_instances = [];
 
     /**
+     * @var     integer[]  The topics to load with the next topics which are loaded (by id).
+     * @since   Kunena 8.0
+     */
+    protected static array $_also = [];
+
+    /**
+     * Load these topics with the next topics which are loaded, with one query (a page which loads messages, and with them their
+     * topics, and other topics too: the tabs of a profile).
+     *
+     * @param   int[]  $ids  Topic ids.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public static function loadAlso(array $ids): void
+    {
+        foreach ($ids as $id) {
+            $id = (int) $id;
+
+            if ($id > 0 && empty(self::$_instances[$id])) {
+                self::$_also[$id] = $id;
+            }
+        }
+    }
+
+    /**
      * Free up memory by cleaning up all cached items.
      *
      * @return  void
@@ -595,6 +622,12 @@ abstract class KunenaTopicHelper
      */
     protected static function loadTopics(array $ids): void
     {
+        // The topics which a page asked to load with the next ones (loadAlso): with this query, not with one of their own.
+        if (self::$_also) {
+            $ids         = array_values(array_unique(array_map('intval', array_merge($ids, array_values(self::$_also)))));
+            self::$_also = [];
+        }
+
         foreach ($ids as $i => $id) {
             $id = \intval($id);
 
@@ -635,8 +668,9 @@ abstract class KunenaTopicHelper
 
         unset($results);
 
+        // The numbers of ratings are loaded when the first one is shown, with the ones of the topics of the other lists of the page.
         if (KunenaFactory::getConfig()->ratingEnabled) {
-            KunenaRateHelper::loadCounts($ids);
+            KunenaRateHelper::deferCounts($ids);
         }
     }
 

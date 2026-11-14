@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicListPreload;
 use Kunena\Forum\Libraries\User\KunenaUser;
 
 /**
@@ -285,6 +286,13 @@ class KunenaMessageFinder extends KunenaFinder
     public function find($access = 'read'): array
     {
         $results = parent::find();
+
+        // A page which surveys its lists (the tabs of a profile) loads the messages of all of them together, later.
+        if (KunenaTopicListPreload::isSurveying()) {
+            KunenaTopicListPreload::noteFound('messages', $results);
+
+            return [];
+        }
 
         return KunenaMessageHelper::getMessages($results, $access);
     }

@@ -67,23 +67,24 @@ class KunenaAttachmentFinder extends KunenaFinder
         $this->build($query);
         $query->select('a.*');
         $query->setLimit($this->limit, $this->start);
-        $this->db->setQuery($query);
 
-        $results = [];
+        // A page which prepares its lists twice (the tabs of a profile) searches once.
+        $results = self::rememberedAnswer('attachments:' . $query . '|' . (int) $this->limit . '|' . (int) $this->start, function () use ($query) {
+            $this->db->setQuery($query);
 
-        try {
-            $results = (array) $this->db->loadObjectList('id');
-        } catch (RuntimeException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
+            $results = [];
 
-        $instances = [];
-
-        if (!empty($results)) {
-            foreach ($results as $id => $result) {
-                $instances[$id] = KunenaAttachmentHelper::get($id);
+            try {
+                $results = (array) $this->db->loadObjectList('id');
+            } catch (RuntimeException $e) {
+                KunenaError::displayDatabaseError($e);
             }
-        }
+
+            return $results;
+        });
+
+        // The rows have every column of the attachments: they become the attachments (get() would read each one again).
+        $instances = KunenaAttachmentHelper::getFromRows($results);
 
         unset($results);
 

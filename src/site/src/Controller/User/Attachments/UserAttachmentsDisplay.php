@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicListPreload;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -128,6 +129,14 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
                 $messageIds[] = (int) $attachment->mesid;
             }
 
+            // A page which surveys its lists (the tabs of a profile) loads the messages of all of them together: this list is
+            // prepared again after that.
+            if (KunenaTopicListPreload::isSurveying()) {
+                KunenaTopicListPreload::noteFound('messages', $messageIds);
+
+                return;
+            }
+
             $messages = KunenaMessageHelper::getMessages($messageIds, 'none');
 
             // Pre-load topics.
@@ -138,6 +147,16 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
             }
 
             KunenaTopicHelper::getTopics($topicIds, 'none');
+
+            // Each file links to its message in the topic: the places of the messages come with one query, not one per link (with
+            // the places which the other lists of the page need, when the page prepares several lists: the tabs of a profile).
+            if ($messages) {
+                if (KunenaTopicListPreload::isCollecting()) {
+                    KunenaTopicListPreload::add([], [], [], array_keys($messages));
+                } else {
+                    KunenaMessageHelper::loadLocation(array_keys($messages));
+                }
+            }
         }
 
         $this->headerText = Text::_('COM_KUNENA_MANAGE_ATTACHMENTS');

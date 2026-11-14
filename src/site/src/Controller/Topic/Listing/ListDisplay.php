@@ -26,10 +26,12 @@ use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicListPreload;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
@@ -198,29 +200,47 @@ abstract class ListDisplay extends KunenaControllerDisplay
             $lastIds[(int) $topic->last_post_id]      = (int) $topic->last_post_id;
         }
 
-        // Prefetch all users/avatars to avoid user by user queries during template iterations.
-        if (!empty($userIds)) {
-            KunenaUserHelper::loadUsers($userIds);
+        // The statistics widget of the page links to the latest member: load that user with the authors, not with an own query.
+        if ($this->config->showStats) {
+            $statistics = KunenaStatistics::getInstance();
+            $statistics->loadLastUserId();
+
+            if ($statistics->lastUserId) {
+                $userIds[(int) $statistics->lastUserId] = (int) $statistics->lastUserId;
+            }
         }
-
-        $topicIds = array_values(array_map(static fn ($topic) => (int) $topic->id, (array) $this->topics));
-        KunenaTopicHelper::getUserTopics($topicIds);
-        KunenaTopicTags::preload($topicIds);
-
-        // The last posts are needed one by one below: load them with one query.
-        KunenaMessageHelper::getMessages($lastIds);
-
-        $mesIds += KunenaTopicHelper::fetchNewStatus((array) $this->topics);
 
         // Fetch also last post positions when user can see unapproved or deleted posts.
         // TODO: Optimize? Take account of configuration option...
-        if ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()) {
-            $mesIds += $lastIds;
-        }
+        $moderator = $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus();
 
-        // Load position information for all selected messages.
-        if ($mesIds) {
-            KunenaMessageHelper::loadLocation($mesIds);
+        // A page with several lists (the tabs of a profile) prepares all of them first: the list adds what it needs, and it is
+        // loaded with what the other lists need (one query per kind for all the lists).
+        if (KunenaTopicListPreload::isCollecting()) {
+            KunenaTopicListPreload::add((array) $this->topics, $userIds, $lastIds, $moderator ? $mesIds + $lastIds : $mesIds);
+        } else {
+            // Prefetch all users/avatars to avoid user by user queries during template iterations.
+            if (!empty($userIds)) {
+                KunenaUserHelper::loadUsers($userIds);
+            }
+
+            $topicIds = array_values(array_map(static fn ($topic) => (int) $topic->id, (array) $this->topics));
+            KunenaTopicHelper::getUserTopics($topicIds);
+            KunenaTopicTags::preload($topicIds);
+
+            // The last posts are needed one by one below: load them with one query.
+            KunenaMessageHelper::getMessages($lastIds);
+
+            $mesIds += KunenaTopicHelper::fetchNewStatus((array) $this->topics);
+
+            if ($moderator) {
+                $mesIds += $lastIds;
+            }
+
+            // Load position information for all selected messages.
+            if ($mesIds) {
+                KunenaMessageHelper::loadLocation($mesIds);
+            }
         }
 
         $this->allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));

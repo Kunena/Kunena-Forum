@@ -25,6 +25,7 @@ use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Model\KunenaModel;
@@ -140,6 +141,11 @@ class SearchModel extends KunenaModel
         foreach ($this->messages as $message) {
             $topicids[$message->thread] = $message->thread;
             $userids[$message->userid]  = $message->userid;
+
+            // The users mentioned in the text are shown as links: loaded with the authors, not one by one.
+            foreach (KunenaMessage::getMentionedUserIds((string) $message->message) as $mentioned) {
+                $userids[$mentioned] = $mentioned;
+            }
         }
 
         if ($topicids) {

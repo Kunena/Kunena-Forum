@@ -23,7 +23,6 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -137,11 +136,7 @@ class TopicListingUnreadDisplay extends ListDisplay
                 ->filterByUserUnread($this->me, (int) KunenaFactory::getSession()->getAllReadTime())
                 ->find();
 
-            // The number of unread messages and the first unread message of each topic.
-            $this->mesIds = [];
-
-            $this->mesIds += KunenaTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
-
+            $this->mesIds     = [];
             $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
         }
 
@@ -150,7 +145,13 @@ class TopicListingUnreadDisplay extends ListDisplay
         }
 
         if ($this->topics) {
+            // The number of unread messages and the first unread message of each topic come with the preparation of the topics
+            // (fetchNewStatus), not with a query of their own before it.
             $this->prepareTopics();
+
+            foreach ($this->topics as $topic) {
+                $this->mesIds[$topic->id] = $topic->lastread;
+            }
         }
 
         $actions          = ['delete', 'approve', 'undelete', 'move', 'status', 'permdelete'];

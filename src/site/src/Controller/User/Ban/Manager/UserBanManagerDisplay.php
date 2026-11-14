@@ -97,11 +97,12 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $this->me->exists() ? 403 : 401);
         }
 
+        // The list counts at most 100 bans: the page is cut from them, not read again.
         $userBanspre = KunenaBan::getBannedUsers(0, 100);
         $count       = \count($userBanspre);
 
         $this->pagination = new KunenaPagination($count, $start, $limit);
-        $this->userBans   = KunenaBan::getBannedUsers($this->pagination->limitstart, $this->pagination->limit);
+        $this->userBans   = \array_slice($userBanspre, $this->pagination->limitstart, $this->pagination->limit ?: null, true);
 
         if ($this->moreUri) {
             $this->pagination->setUri($this->moreUri);

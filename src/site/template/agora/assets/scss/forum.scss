@@ -105,7 +105,7 @@
   background: var(--agora-surface);
 }
 
-tr.category {
+tr[class^="category"] {
   /* The icon, the name, the numbers and the last post start at the same top. */
   > td,
   > th {
@@ -335,7 +335,7 @@ tr.category {
 
 /* Topic icons of the lists. */
 .category-item > tr > th:first-child a,
-tr.category > th[scope="row"] a {
+tr[class^="category"] > th[scope="row"] a {
   color: var(--agora-text-muted);
 }
 

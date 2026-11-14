@@ -296,8 +296,11 @@
   border-radius: var(--agora-radius);
   box-shadow: var(--agora-shadow);
 
+  /* All the tabs in sight: on rows when they do not fit on one (a tab behind a scrollbar is easily missed). */
   > .nav-tabs {
+    flex-wrap: wrap;
     padding: 0.25rem 0.5rem 0;
+    overflow: visible;
     background: var(--agora-surface-2);
   }
 

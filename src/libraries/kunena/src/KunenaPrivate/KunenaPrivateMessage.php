@@ -21,6 +21,7 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\Table\KunenaTableMap;
 
 /**
@@ -189,6 +190,9 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
      */
     public function delete(): bool
     {
+        // The finder keeps the messages which it found on this page: a deleted one is found no more.
+        KunenaPrivateMessageFinder::forget();
+
         return parent::delete();
     }
 
@@ -264,6 +268,9 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
      */
     protected function saveInternal()
     {
+        // The finder keeps the messages which it found on this page: a changed one is read again.
+        KunenaPrivateMessageFinder::forget();
+
         if (!\is_null($this->_attachments)) {
             $this->_attachments->setKey($this->id)->save();
             $ids         = $this->_attachments->getMapped();

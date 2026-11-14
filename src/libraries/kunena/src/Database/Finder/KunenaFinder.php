@@ -77,6 +77,52 @@ abstract class KunenaFinder
     protected mixed $skip = false;
 
     /**
+     * The answers of the searches (find and count) by their SQL, while a page remembers them: a page which prepares its lists
+     * twice (the tabs of a profile: once to find what they show, then for real) searches once.
+     *
+     * @var     array|null  Null when the searches are not remembered.
+     * @since   Kunena 8.0
+     */
+    protected static ?array $remembered = null;
+
+    /**
+     * Remember the answers of the searches (true) or forget them and stop (false).
+     *
+     * @param   bool  $remember  Remember or not.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public static function remember(bool $remember): void
+    {
+        self::$remembered = $remember ? (self::$remembered ?? []) : null;
+    }
+
+    /**
+     * The answer of a search: the one which is remembered, else the one of the database (remembered when the page remembers).
+     *
+     * @param   string    $key     The SQL of the search, with what changes its answer.
+     * @param   callable  $search  The search.
+     *
+     * @return  mixed
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function rememberedAnswer(string $key, callable $search): mixed
+    {
+        if (self::$remembered === null) {
+            return $search();
+        }
+
+        if (!\array_key_exists($key, self::$remembered)) {
+            self::$remembered[$key] = $search();
+        }
+
+        return self::$remembered[$key];
+    }
+
+    /**
      * Constructor.
      *
      * @since   Kunena 6.0
@@ -121,21 +167,23 @@ abstract class KunenaFinder
 
         if ($query->group) {
             $query->select('COUNT(*)')->from($this->db->quoteName($query, 's'));
-            $this->db->setQuery($query);
         } else {
             $query->clear('select')->select('COUNT(*)');
+        }
+
+        return (int) self::rememberedAnswer('count:' . $query, function () use ($query) {
             $this->db->setQuery($query);
-        }
 
-        $count = 0;
+            $count = 0;
 
-        try {
-            $count = (int) $this->db->loadResult();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
+            try {
+                $count = (int) $this->db->loadResult();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
 
-        return $count;
+            return $count;
+        });
     }
 
     /**
@@ -159,17 +207,20 @@ abstract class KunenaFinder
         $this->build($query);
         $query->select('a.' . $this->primaryKey);
         $query->setLimit($this->limit, $this->start);
-        $this->db->setQuery($query);
 
-        $results = [];
+        return self::rememberedAnswer('find:' . $query . '|' . (int) $this->limit . '|' . (int) $this->start, function () use ($query) {
+            $this->db->setQuery($query);
 
-        try {
-            $results = (array) $this->db->loadColumn();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-        }
+            $results = [];
 
-        return $results;
+            try {
+                $results = (array) $this->db->loadColumn();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+
+            return $results;
+        });
     }
 
     /**

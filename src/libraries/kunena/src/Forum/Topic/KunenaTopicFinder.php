@@ -568,6 +568,13 @@ class KunenaTopicFinder extends KunenaFinder
     {
         $results = parent::find();
 
+        // A page which surveys its lists (the tabs of a profile) loads the topics of all of them together, later.
+        if (KunenaTopicListPreload::isSurveying()) {
+            KunenaTopicListPreload::noteFound('topics', $results);
+
+            return [];
+        }
+
         return KunenaTopicHelper::getTopics($results, $access);
     }
 

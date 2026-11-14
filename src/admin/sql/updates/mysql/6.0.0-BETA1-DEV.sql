@@ -23,6 +23,8 @@ ALTER TABLE `#__kunena_polls_users` CHANGE `lasttime` `lasttime` datetime NOT NU
 ALTER TABLE `#__kunena_rate` CHANGE `time` `time` datetime NOT NULL;
 ALTER TABLE `#__kunena_thankyou` CHANGE `time` `time` datetime NOT NULL;
 ALTER TABLE `#__kunena_users` CHANGE `banned` `banned` datetime DEFAULT '1000-01-01 00:00:00';
+-- These two columns do not exist any more (the social websites are in the socials column since 7.x). They are written without the
+-- word COLUMN on purpose: the Database page of Joomla then skips them, else it would report columns of the past as missing.
 ALTER TABLE `#__kunena_users` ADD `pinterest` VARCHAR(75) NULL AFTER `yim`;
 ALTER TABLE `#__kunena_users` ADD `reddit` VARCHAR(75) NULL AFTER `pinterest`;
 ALTER TABLE `#__kunena_users_banned` CHANGE `expiration` `expiration` datetime NULL DEFAULT NULL;

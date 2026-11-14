@@ -69,6 +69,26 @@ class UpdateSqlFilesTest extends UnitTestCase
     }
 
     /**
+     * The Database page of Joomla only checks (and its Fix button only adds) a column when the statement says ADD COLUMN: with
+     * "ADD `column`" it skips the statement, and a column which is missing stays unnoticed.
+     */
+    public function testAColumnIsAddedWithTheWordColumn(): void
+    {
+        $wrong = [];
+
+        foreach (glob(Files::path(self::UPDATES) . '*.sql') ?: [] as $file) {
+            foreach (explode("\n", str_replace("\r\n", "\n", (string) file_get_contents($file))) as $line) {
+                // The columns of the social websites which are gone again are left as they were (see the comment in that file).
+                if (preg_match('/^ALTER TABLE `#__\w+` ADD `/', $line) && !preg_match('/`(?:pinterest|reddit)`/', $line)) {
+                    $wrong[] = basename($file) . ': ' . substr($line, 0, 80);
+                }
+            }
+        }
+
+        $this->assertSame([], $wrong, "These statements add a column without the word COLUMN:\n" . implode("\n", $wrong));
+    }
+
+    /**
      * The install file of the first versions of 6.x made the title and the image of a rank 250 characters, the schema and the
      * upgrade of 5.x say 255. The sites with 250 are widened by the upgrade of the installer; the update file has the same
      * statements, so that the Database page of Joomla can repair them with its Fix button (its check of 6.0.0-BETA1 renames a

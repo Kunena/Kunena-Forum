@@ -412,6 +412,67 @@ These events let a plugin see or change what Kunena shows.
   that is never posted is deleted by the scheduled clean-up (`onKunenaBeforeDelete`/`onKunenaAfterDelete`). The old
   multipart form upload (`KunenaAttachment::upload()`) does not dispatch this event.
 
+## Posting
+
+### onKunenaCheckSpam
+
+- When: when a new topic or a reply is posted from the frontend (`TopicController::post()`), after all of Kunena's own
+  checks (captcha, flood, duplicate, StopForumSpam, maximum links) and the hold rules for guests and new users, and before
+  the activity integration and the save. It runs for every poster, guests, moderators and administrators included: a
+  plugin that wants to skip some users, for example the moderators or a whitelist, checks `$event->getUser()` or
+  `$event->getIp()` itself. Edited posts are not checked.
+- Arguments: `message`, the `KunenaMessage` about to be saved (`$event->getMessage()`), with `subject`, `message` (the
+  text), `name`, `email`, `userid` and `parent`. When the user posts as anonymous, the message is already anonymised at
+  this point. `topic`, the `KunenaTopic` (`$event->getTopic()`), the new and unsaved topic for a new topic. `category`, the
+  `KunenaCategory` (`$event->getCategory()`). `user`, the posting `KunenaUser` (`$event->getUser()`), a guest user object
+  for a guest. `isNewTopic`, true for a new topic and false for a reply (`$event->isNewTopic()`). `ip`, the address of the
+  visitor (`$event->getIp()`), also when the Kunena option `ipTracking` is off: the plugin decides whether it sends it to a
+  service.
+- Context: none.
+- Result: a listener answers with `$event->reject($reason)` (the post is not saved, `$reason` is an optional text for the
+  user) or `$event->hold()` (the post waits for a moderator). Kunena reads `$event->getVerdict()`, one of
+  `KunenaCheckSpamEvent::NONE`, `HOLD` and `REJECT`, and `$event->getReason()`. The strictest answer wins: `hold()` never
+  lowers a rejection, and the reason is the first non-empty one given with `reject()`. On `REJECT`, Kunena shows the
+  reason (escaped as HTML) or "Your message was rejected by the spam check of this site." and brings the user back to the
+  form with the text. On `HOLD`, the post is saved unapproved, as a held post of a new user is. Without an answer the post
+  goes on as before. An exception or error thrown by a listener is caught and logged (category `kunena`) and the post goes
+  on, with the answers that the listeners before it gave.
+- Dispatched in: `src/libraries/kunena/src/Forum/Message/KunenaMessage.php` (`dispatchSpamCheck()`), called from
+  `src/site/src/Controllers/TopicController.php`, on the dispatcher of the application, after `importPlugin('kunena')`.
+- Event class: `Kunena\Forum\Libraries\Event\KunenaCheckSpamEvent` (immutable, needs all six arguments).
+- Listeners: none.
+
+An example plugin which holds the posts of guests that contain a link and rejects the posts which name a blocked word:
+
+```php
+class Spamwords extends CMSPlugin implements SubscriberInterface
+{
+    public static function getSubscribedEvents(): array
+    {
+        return ['onKunenaCheckSpam' => 'onKunenaCheckSpam'];
+    }
+
+    public function onKunenaCheckSpam(KunenaCheckSpamEvent $event): void
+    {
+        $message = $event->getMessage();
+
+        if ($event->getUser()->isModerator()) {
+            return;
+        }
+
+        if (stripos($message->subject . ' ' . $message->message, 'casino') !== false) {
+            $event->reject('Your message names a word which is not allowed here.');
+
+            return;
+        }
+
+        if (!$event->getUser()->exists() && str_contains($message->message, '[url')) {
+            $event->hold();
+        }
+    }
+}
+```
+
 ## Others
 
 ### onKunenaReportMessage

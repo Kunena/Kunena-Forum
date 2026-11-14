@@ -51,4 +51,33 @@ describe('Kunena search', () => {
     cy.contains(topic.subject).should('not.exist');
     cy.get('body').should('contain.html', 'kunena');
   });
+
+  // The test site runs Agora: the template is switched to Aurelia for these tests, and its compiled stylesheet is made again from
+  // the SCSS of the checkout.
+  describe('in Aurelia', () => {
+    let oldTemplate;
+
+    before(() => {
+      cy.kunena_setOption('template', 'aurelia').then((value) => {
+        oldTemplate = value;
+      });
+      cy.task('deleteRelativePath', 'cache/com_kunena_template');
+    });
+
+    after(() => {
+      cy.task('deleteRelativePath', 'cache/com_kunena_template');
+      cy.then(() => cy.kunena_setOption('template', oldTemplate ?? null));
+    });
+
+    // The stylesheet hides every radio and shows those of the search panel again through its class kunena-search-panel.
+    it('shows the radios of what to show to a moderator', () => {
+      cy.doFrontendLogin(Cypress.expose('username'), Cypress.expose('password'), false);
+      cy.visit(form);
+
+      cy.get('#search').should('have.class', 'kunena-search-panel');
+      cy.get('#search input[name="show"]').should('have.length', 3).each((radio) => {
+        cy.wrap(radio).should('be.visible');
+      });
+    });
+  });
 });

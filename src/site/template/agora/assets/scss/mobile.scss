@@ -114,8 +114,8 @@
 
   /* The search, the pagination and the buttons over the lists stack. */
   .kunena-topic-item > .float-start,
-  .kunena-topic-item > h2.float-end,
-  .row > .col-md-12 > h2.float-end,
+  .kunena-topic-item > .kunena-search-widget,
+  .row > .col-md-12 > .kunena-search-widget,
   .row > .col-md-12 > .float-start,
   #categoryactions + .float-start,
   h2.float-end {

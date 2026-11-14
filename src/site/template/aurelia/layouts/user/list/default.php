@@ -34,11 +34,11 @@ $this->addScript('assets/js/search.js');
     <?php echo Text::_('COM_KUNENA_MEMBERS'); ?>
 </h1>
 
-<h2 class="float-end">
+<div class="float-end kunena-search-widget">
     <?php echo $this->subLayout('Widget/Search')
     ->set('state', $this->state->get('list.search'))
     ->setLayout('user'); ?>
-</h2>
+</div>
 
 <div class="float-start">
     <?php echo $this->subLayout('Widget/Pagination/List')

@@ -505,6 +505,29 @@ label {
   border-color: var(--agora-border);
 }
 
+/* The other alerts: a tint of their colour, the text of the scheme (Bootstrap's light colours are unreadable in the dark scheme). */
+.alert-warning,
+.alert-danger,
+.alert-success {
+  --agora-alert: var(--agora-warning);
+  color: var(--agora-text);
+  background: color-mix(in srgb, var(--agora-alert) 12%, var(--agora-surface));
+  border-color: color-mix(in srgb, var(--agora-alert) 35%, transparent);
+
+  .alert-link {
+    font-weight: 600;
+    color: inherit;
+  }
+}
+
+.alert-danger {
+  --agora-alert: var(--agora-danger);
+}
+
+.alert-success {
+  --agora-alert: var(--agora-success);
+}
+
 /* Dropdowns, modals, offcanvas and tooltips. */
 .dropdown-menu {
   --bs-dropdown-bg: var(--agora-surface);
@@ -745,15 +768,20 @@ label {
 }
 
 /* The spinner, the "new" marks and the user colours of Kunena. */
+/* A soft green pill, readable in both schemes (white on the light green of the dark scheme was not). */
 .knewchar,
 sup.knewchar {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.7em;
+  position: static;
+  padding: 0 0.5rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  color: #fff !important;
+  line-height: 1.25rem;
+  color: var(--agora-success) !important;
   text-transform: uppercase;
+  white-space: nowrap;
   vertical-align: middle;
-  background: var(--agora-success);
+  background: color-mix(in srgb, var(--agora-success) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--agora-success) 35%, transparent);
   border-radius: var(--agora-radius);
 }
 
@@ -762,10 +790,12 @@ sup.knewchar {
   padding: 0;
   font-size: inherit;
   font-weight: inherit;
+  line-height: inherit;
   color: inherit !important;
   text-transform: none;
   vertical-align: baseline;
   background: none;
+  border: 0;
   border-radius: 0;
 }
 

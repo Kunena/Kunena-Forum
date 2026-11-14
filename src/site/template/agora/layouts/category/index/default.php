@@ -140,8 +140,7 @@ foreach ($this->sections as $section) :
                                             <span id="kcatcount"><?php echo KunenaCategory::getInstance()->totalCount($category->getTopics()); ?></span>
                                             <span>
                                                 <?php if (($new = $category->getNewCount()) > 0) : ?>
-                                                    <sup class="knewchar"> (<?php echo $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') ?>
-                                                        )</sup>
+                                                    <sup class="knewchar"><?php echo $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') ?></sup>
                                                 <?php endif; ?>
                                                 <?php if ($category->locked) : ?>
                                                     <span <?php echo $this->ktemplate->tooltips(true); ?> data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_LOCKED_CATEGORY') ?>"><?php echo KunenaIcons::lock(); ?></span>
@@ -184,7 +183,7 @@ foreach ($this->sections as $section) :
                                                     endif;
 
                                                     if (($new = $subcategory->getNewCount()) > 0) {
-                                                        echo '<sup class="knewchar">(' . $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
+                                                        echo '<sup class="knewchar">' . $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') . '</sup>';
                                                     }
 
                                                     if ($isAdmin) {

@@ -120,7 +120,8 @@ describe('Kunena attachments: the text of the message after removing an upload',
           original = view.read(win);
           expect(lines(original), 'the lines of the text').to.include('').and.include('Last line.');
         });
-        cy.intercept({ method: 'POST', url: /task=removeattachments/ }).as('remove');
+        // With SEF links the URL has task-removeattachments instead of task=removeattachments.
+        cy.intercept({ method: 'POST', url: /removeattachments/ }).as('remove');
         cy.get('#fileupload').selectFile({
           contents: Cypress.Buffer.from('A small file.'),
           fileName: `cypress-keeps-text-${stamp}.txt`,

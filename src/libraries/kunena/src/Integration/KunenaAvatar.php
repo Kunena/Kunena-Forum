@@ -175,24 +175,28 @@ class KunenaAvatar
         $title = Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName());
         $span  = '<span' . ($classes !== '' ? ' class="' . $classes . '"' : '');
 
+        // The box of the icon has the size of the avatar (line-height 1: no taller line box), and the icon fills that box, so
+        // that a stylesheet which makes the avatar smaller makes the icon smaller too.
+        $style = 'display: inline-block; width: ' . $size->x . 'px; height: ' . $size->y . 'px; line-height: 1';
+
         if ($topicicontype == 'fa') {
-            return $span . ' style="font-size: ' . $size->y . 'px" data-bs-toggle="tooltip" title="' . $title . '" role="img" aria-label="' . $title . '">'
-                . '<i class="fas fa-user-circle" aria-hidden="true"></i></span>';
+            return $span . ' style="' . $style . '; font-size: ' . $size->y . 'px" data-bs-toggle="tooltip" title="' . $title . '" role="img" aria-label="' . $title . '">'
+                . '<i class="fas fa-user-circle" style="display: block; width: 100%; height: 100%" aria-hidden="true"></i></span>';
         }
 
         // The SVG is 1em wide and high: give it the size of the avatar.
         $svg = preg_replace_callback(
             '/<svg\b[^>]*>/',
             function ($tag) use ($size) {
-                $tag = preg_replace('/\s(width|height)="[^"]*"/', '', $tag[0]);
+                $tag = preg_replace('/\s(width|height|style)="[^"]*"/', '', $tag[0]);
 
-                return '<svg width="' . $size->x . '" height="' . $size->y . '"' . substr($tag, 4);
+                return '<svg width="' . $size->x . '" height="' . $size->y . '" style="display: block; width: 100%; height: 100%"' . substr($tag, 4);
             },
             KunenaSvgIcons::loadsvg('person'),
             1
         );
 
-        return $span . ' data-bs-toggle="tooltip" title="' . $title . '" role="img" aria-label="' . $title . '">' . $svg . '</span>';
+        return $span . ' style="' . $style . '" data-bs-toggle="tooltip" title="' . $title . '" role="img" aria-label="' . $title . '">' . $svg . '</span>';
     }
 
     /**

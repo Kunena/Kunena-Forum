@@ -44,8 +44,9 @@ use ReflectionProperty;
 
 /**
  * A scheduled reply (issue #9830) is published by the scheduler task when its time has come, as if its author posted it then: it is
- * counted once and becomes the last post of the topic. A reply held for review, in a locked topic or by a banned author is not
- * published: its schedule is cleared, it waits for a moderator.
+ * counted once and becomes the last post of the topic. A reply held for review, in a category which now requires review (unless
+ * its author is a moderator of it), in a locked topic or by a banned author is not published: its schedule is cleared, it waits
+ * for a moderator.
  */
 class KunenaMessageScheduleTest extends IntegrationTestCase implements DBTestInterface
 {
@@ -122,6 +123,7 @@ class KunenaMessageScheduleTest extends IntegrationTestCase implements DBTestInt
         $language = $this->createStub(Language::class);
         $language->method('transliterate')->willReturnArgument(0);
         $language->method('getTag')->willReturn('en-GB');
+        $language->method('_')->willReturnArgument(0);
 
         // askEmail is on: nobody is logged in on the command line, the publication must not ask for the e-mail address.
         $config = (new ReflectionClass(KunenaConfig::class))->newInstanceWithoutConstructor();
@@ -243,9 +245,9 @@ class KunenaMessageScheduleTest extends IntegrationTestCase implements DBTestInt
 
     /**
      * A published topic (in a category, not a section) with its published first post (time 1000) by the author, and his scheduled
-     * reply (posted at 1100).
+     * reply (posted at 1100). The category requires review when $review is 1.
      */
-    private function seed(int $scheduledTime, int $scheduledReview = 0, int $locked = 0, ?string $banned = null): void
+    private function seed(int $scheduledTime, int $scheduledReview = 0, int $locked = 0, ?string $banned = null, int $review = 0): void
     {
         $this->insertRow('#__kunena_users', ['userid' => self::AUTHOR, 'posts' => 1, 'banned' => $banned]);
         $this->insertRow('#__kunena_categories', ['id' => 1, 'parentid' => 0, 'name' => 'Section', 'alias' => '1-section', 'published' => 1]);
@@ -257,6 +259,7 @@ class KunenaMessageScheduleTest extends IntegrationTestCase implements DBTestInt
             'published' => 1,
             'numTopics' => 1,
             'numPosts'  => 1,
+            'review'    => $review,
         ]);
         $this->insertRow('#__kunena_aliases', ['alias' => '2-category', 'type' => 'catid', 'item' => self::CATEGORY]);
         $this->insertRow('#__kunena_topics', [
@@ -374,6 +377,40 @@ class KunenaMessageScheduleTest extends IntegrationTestCase implements DBTestInt
         $this->assertSame(['published' => 0, 'skipped' => 1], KunenaMessageSchedule::publishDue(self::NOW));
 
         $this->assertEquals($this->unpublished(0, 0), $this->state());
+    }
+
+    public function testAReplyInACategoryWhichNowRequiresReviewStaysForTheModerators(): void
+    {
+        // The review of the category was turned on after the reply was posted (scheduled_review 0).
+        $this->seed(self::NOW - 60, 0, 0, null, 1);
+
+        $this->assertSame(['published' => 0, 'skipped' => 1], KunenaMessageSchedule::publishDue(self::NOW));
+
+        $this->assertEquals($this->unpublished(0, 0), $this->state());
+    }
+
+    public function testAReplyOfAModeratorInACategoryWhichRequiresReviewIsPublished(): void
+    {
+        $scheduled = self::NOW - 60;
+        $this->seed($scheduled, 0, 0, null, 1);
+
+        // The author is a moderator of the category.
+        $access = $this->createStub(KunenaAccess::class);
+        $access->method('getAllowedCategories')->willReturn([self::CATEGORY => self::CATEGORY]);
+        $access->method('getAllowedHold')->willReturn([0]);
+        $access->method('getSubscribers')->willReturn([]);
+        $access->method('isModerator')->willReturn(true);
+        $this->replace(KunenaAccess::class, 'instance', $access);
+
+        $this->assertSame(['published' => 1, 'skipped' => 0], KunenaMessageSchedule::publishDue(self::NOW));
+
+        $this->assertEquals([
+            'reply'     => [['hold' => 0, 'time' => $scheduled, 'scheduled_time' => 0, 'scheduled_review' => 0]],
+            'topic'     => [['posts' => 2, 'last_post_id' => self::REPLY, 'last_post_time' => $scheduled]],
+            'category'  => [['numPosts' => 2]],
+            'usertopic' => [['posts' => 2]],
+            'user'      => [['posts' => 2]],
+        ], $this->state());
     }
 
     public function testApprovingAScheduledReplyEarlyClearsItsSchedule(): void

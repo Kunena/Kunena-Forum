@@ -31,7 +31,7 @@ use Throwable;
  *
  * The reply is saved as an unapproved message (hold 1) with its time in scheduled_time: until then only its author and the
  * moderators see it. The scheduler task publishes it when its time has come, unless it was held for review when it was posted
- * (scheduled_review 1): that one stays for a moderator.
+ * (scheduled_review 1) or its category requires review then and its author is no moderator of it: that one stays for a moderator.
  *
  * @since   Kunena 8.0
  */
@@ -93,8 +93,8 @@ abstract class KunenaMessageSchedule
      * Publish the scheduled replies whose time has come, the oldest first.
      *
      * A reply held for review, or which may not be published any more (its topic is deleted, unapproved or locked, its author is
-     * removed, banned or blocked, or may not reply to the topic), is not published: its schedule is cleared, it stays an unapproved
-     * message for the moderators.
+     * removed, banned or blocked, or may not reply to the topic, or its category now requires review and its author is not a moderator
+     * of it), is not published: its schedule is cleared, it stays an unapproved message for the moderators.
      *
      * @param   integer  $now    The current time.
      * @param   integer  $limit  The most replies in one run.
@@ -154,6 +154,7 @@ abstract class KunenaMessageSchedule
             || !$topic->exists() || $topic->hold != 0 || $topic->locked
             || !$author->exists() || $author->isBanned() || $author->isBlocked()
             || !$topic->isAuthorised('reply', $author)
+            || ($topic->getCategory()->review && !$topic->getCategory()->isAuthorised('moderate', $author))
         ) {
             self::clear((int) $message->id);
 

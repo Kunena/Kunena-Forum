@@ -366,7 +366,7 @@
                null="0"
                default="0"/>
         <field name="first_post_message"
-               type="text"
+               type="mediumtext"
                null="1"/>
         <field name="first_post_guest_name"
                type="tinytext"
@@ -384,7 +384,7 @@
                null="0"
                default="0"/>
         <field name="last_post_message"
-               type="text"
+               type="mediumtext"
                null="1"/>
         <field name="last_post_guest_name"
                type="tinytext"
@@ -523,7 +523,7 @@
                null="0"
                default="0"/>
         <field name="message"
-               type="text"
+               type="mediumtext"
                null="0"/>
         <key name="PRIMARY"
              unique="1"

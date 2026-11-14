@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaCheckSpamEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -1248,6 +1249,21 @@ class TopicController extends KunenaController
             $this->setRedirectBack();
 
             return;
+        }
+
+        // Spam check of the plugins: the post is rejected or held for a moderator
+        $spamCheck = $message->dispatchSpamCheck($topic, $category, $this->me, $isNew, KunenaUserHelper::getUserIp());
+
+        if ($spamCheck->getVerdict() === KunenaCheckSpamEvent::REJECT) {
+            $reason = $spamCheck->getReason();
+            $this->app->enqueueMessage($reason !== '' ? htmlspecialchars($reason, ENT_QUOTES, 'UTF-8') : Text::_('COM_KUNENA_POST_ERROR_SPAM_REJECTED'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if ($spamCheck->getVerdict() === KunenaCheckSpamEvent::HOLD) {
+            $message->hold = 1;
         }
 
         // Activity integration

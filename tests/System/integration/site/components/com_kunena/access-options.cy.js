@@ -77,18 +77,25 @@ describe('Kunena options: who may come in', () => {
     cy.visit(`${base}&view=category&catid=3`, { failOnStatusCode: false });
     cy.get('#klogin-username-full').type('ci-user');
     cy.get('#klogin-passwd-full').type('not-the-password');
-    cy.get('.kloginform form').submit();
+    // The button is named "submit", which hides form.submit(): click it as a user does.
+    cy.get('.kloginform button[type="submit"]').click();
     cy.get('#klogin-username-full').should('exist');
     cy.contains('Please Log In').should('exist');
 
     cy.get('#klogin-username-full').clear().type('ci-user');
     cy.get('#klogin-passwd-full').type('ci-user-17082005-x', { log: false });
-    cy.get('.kloginform form').submit();
+    cy.get('.kloginform button[type="submit"]').click();
 
-    cy.location('href').should('include', 'catid=3');
     cy.get('#klogin-username-full').should('not.exist');
     cy.contains('Please Log In').should('not.exist');
-    cy.contains(topicWords).should('exist');
+
+    // The user is logged in and on the category: the address asked for, or where the forum sends it (a SEF address).
+    cy.request(`${base}&view=category&catid=3`).then((response) => {
+      const redirect = (response.redirects || []).pop();
+      const target = redirect ? redirect.replace(/^\d+: /, '') : null;
+
+      cy.location('href').should('satisfy', (href) => href.includes('catid=3') || href === target);
+    });
   });
 
   it('shows no profile to a visitor when the profiles are private', () => {

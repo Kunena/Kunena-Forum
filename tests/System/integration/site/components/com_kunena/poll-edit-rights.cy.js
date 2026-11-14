@@ -1,5 +1,7 @@
 // The poll of a topic is changed with the edit form of the topic. Only the owner of the topic (and a moderator) may change it:
-// a user who edits his own reply in the topic of another user must not change the poll of that topic with the same form.
+// a user who edits his own reply in the topic of another user must not change the poll of that topic with the same form. Once
+// somebody has voted, the poll may only be changed or removed when allowUserEditPoll is on: otherwise the message is saved, the
+// poll is kept and the notice of the refusal is shown, whatever the request sends.
 describe('Kunena polls: who may change the poll of a topic', () => {
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
@@ -15,8 +17,19 @@ describe('Kunena polls: who may change the poll of a topic', () => {
 
   const pollOf = () => cy.task('queryDB', `SELECT p.title, GROUP_CONCAT(o.text ORDER BY o.id) AS options FROM #__kunena_polls AS p LEFT JOIN #__kunena_polls_options AS o ON o.pollid = p.id WHERE p.id = ${ids.poll} GROUP BY p.id`).then((rows) => rows[0]);
 
-  // The edit form of a message sends the poll fields with it.
-  const edit = (mesid) => cy.request(`${base}&view=topic&catid=3&id=${ids.topic}`).then((page) => {
+  const notice = 'Poll cannot be edited once someone has voted in it!';
+  const edited = 'The message has been successfully edited.';
+
+  // The edit form of a message sends the poll fields with it (a crafted request may send others). The key option is the
+  // first option of the poll.
+  const poll = {
+    poll_title: 'A poll of somebody else',
+    option: 'Changed option',
+    'polloptionsID[new1]': 'An option of somebody else',
+  };
+  const pollFields = (fields) => Object.fromEntries(Object.entries(fields)
+    .map(([name, value]) => [name === 'option' ? `polloptionsID[${ids.option}]` : name, value]));
+  const edit = (mesid, fields = poll) => cy.request(`${base}&view=topic&catid=3&id=${ids.topic}`).then((page) => {
     const token = /name="([0-9a-f]{32})" value="1"/.exec(page.body)[1];
 
     return cy.request({
@@ -29,9 +42,7 @@ describe('Kunena polls: who may change the poll of a topic', () => {
         mesid,
         subject: 'Re: a poll',
         message: 'The text of the reply, changed.',
-        poll_title: 'A poll of somebody else',
-        [`polloptionsID[${ids.option}]`]: 'Changed option',
-        'polloptionsID[new1]': 'An option of somebody else',
+        ...pollFields(fields),
         [token]: '1',
       },
       failOnStatusCode: false,
@@ -39,9 +50,25 @@ describe('Kunena polls: who may change the poll of a topic', () => {
     });
   });
 
+  // The notices of the edit, on the page the edit redirects to.
+  const pageAfter = (response) => cy.request(response.headers.location).its('body');
+
+  // The user is the owner of the topic.
+  const ownTopic = () => {
+    cy.task('queryDB', `UPDATE #__kunena_messages SET userid = ${user.id} WHERE id = ${ids.first}`);
+    cy.task('queryDB', `UPDATE #__kunena_topics SET first_post_userid = ${user.id} WHERE id = ${ids.topic}`);
+    cy.task('queryDB', `UPDATE #__kunena_user_topics SET owner = (user_id = ${user.id}) WHERE topic_id = ${ids.topic}`);
+  };
+
+  // The administrator has voted in the poll.
+  const vote = () => cy.task('queryDB', `INSERT INTO #__kunena_polls_users (pollid, userid, votes, lasttime, lastvote) VALUES (${ids.poll}, ${admin}, 1, UTC_TIMESTAMP(), ${ids.option})`);
+
   before(() => {
     cy.kunena_setOption('pollEnabled', '1').then((value) => {
       old.pollEnabled = value;
+    });
+    cy.kunena_setOption('allowUserEditPoll', '0').then((value) => {
+      old.allowUserEditPoll = value;
     });
     cy.task('queryDB', 'SELECT allowPolls FROM #__kunena_categories WHERE id = 3').then((rows) => {
       old.allowPolls = rows[0].allowPolls;
@@ -51,6 +78,7 @@ describe('Kunena polls: who may change the poll of a topic', () => {
 
   after(() => {
     cy.kunena_setOption('pollEnabled', old.pollEnabled ?? '1');
+    cy.then(() => cy.kunena_setOption('allowUserEditPoll', old.allowUserEditPoll ?? null));
     cy.then(() => cy.task('queryDB', `UPDATE #__kunena_categories SET allowPolls = ${Number(old.allowPolls)} WHERE id = 3`));
   });
 
@@ -87,6 +115,7 @@ describe('Kunena polls: who may change the poll of a topic', () => {
     cy.task('queryDB', `DELETE x FROM #__kunena_messages_text AS x INNER JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.thread = ${ids.topic}`);
     cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE thread = ${ids.topic}`);
     cy.task('queryDB', `DELETE FROM #__kunena_user_topics WHERE topic_id = ${ids.topic}`);
+    cy.task('queryDB', `DELETE FROM #__kunena_polls_users WHERE pollid = ${ids.poll}`);
     cy.task('queryDB', `DELETE FROM #__kunena_polls_options WHERE pollid = ${ids.poll}`);
     cy.task('queryDB', `DELETE FROM #__kunena_polls WHERE id = ${ids.poll}`);
     cy.task('queryDB', `DELETE FROM #__kunena_topics WHERE id = ${ids.topic}`);
@@ -106,9 +135,7 @@ describe('Kunena polls: who may change the poll of a topic', () => {
 
   it('lets the owner of the topic change his poll, also its title', () => {
     // The user is the owner of the topic now.
-    cy.task('queryDB', `UPDATE #__kunena_messages SET userid = ${user.id} WHERE id = ${ids.first}`);
-    cy.task('queryDB', `UPDATE #__kunena_topics SET first_post_userid = ${user.id} WHERE id = ${ids.topic}`);
-    cy.task('queryDB', `UPDATE #__kunena_user_topics SET owner = (user_id = ${user.id}) WHERE topic_id = ${ids.topic}`);
+    ownTopic();
     cy.doFrontendLogin(user.name, user.password, false);
     edit(ids.first);
     pollOf().then((poll) => {
@@ -122,5 +149,62 @@ describe('Kunena polls: who may change the poll of a topic', () => {
     cy.doFrontendLogin(Cypress.expose('username'), Cypress.expose('password'), false);
     edit(ids.first);
     pollOf().then((poll) => expect(poll.title, 'the title of the poll').to.eq('A poll of somebody else'));
+  });
+
+  it('keeps a poll with votes when allowUserEditPoll is off, saves the message and shows why', () => {
+    ownTopic();
+    vote();
+    cy.kunena_setOption('allowUserEditPoll', '0');
+    cy.doFrontendLogin(user.name, user.password, false);
+    edit(ids.first).then((response) => pageAfter(response)).then((body) => {
+      expect(body, 'the notice of the refusal').to.contain(notice);
+      expect(body, 'the success of the edit').to.contain(edited);
+    });
+    cy.task('queryDB', `SELECT message FROM #__kunena_messages_text WHERE mesid = ${ids.first}`).then((rows) => {
+      expect(rows[0].message, 'the message itself is saved').to.eq('The text of the reply, changed.');
+    });
+    pollOf().then((poll) => {
+      expect(poll.title, 'the title of the poll').to.eq('The poll of the owner');
+      expect(poll.options, 'the options of the poll').to.eq('Yes,No');
+    });
+  });
+
+  it('lets the owner change a poll with votes when allowUserEditPoll is on', () => {
+    ownTopic();
+    vote();
+    cy.kunena_setOption('allowUserEditPoll', '1');
+    cy.doFrontendLogin(user.name, user.password, false);
+    edit(ids.first);
+    pollOf().then((poll) => {
+      expect(poll.title, 'the title of the poll').to.eq('A poll of somebody else');
+      expect(poll.options, 'the options of the poll').to.eq('Changed option,An option of somebody else');
+    });
+  });
+
+  it('lets the owner change a poll without votes when allowUserEditPoll is off', () => {
+    ownTopic();
+    cy.kunena_setOption('allowUserEditPoll', '0');
+    cy.doFrontendLogin(user.name, user.password, false);
+    edit(ids.first);
+    pollOf().then((poll) => {
+      expect(poll.title, 'the title of the poll').to.eq('A poll of somebody else');
+      expect(poll.options, 'the options of the poll').to.eq('Changed option,An option of somebody else');
+    });
+  });
+
+  it('keeps a poll with votes when a crafted request removes it and allowUserEditPoll is off', () => {
+    ownTopic();
+    vote();
+    cy.kunena_setOption('allowUserEditPoll', '0');
+    cy.doFrontendLogin(user.name, user.password, false);
+    // An empty title and no options: the request asks to remove the poll.
+    edit(ids.first, { poll_title: '' }).then((response) => pageAfter(response)).then((body) => {
+      expect(body, 'the notice of the refusal').to.contain(notice);
+    });
+    pollOf().then((poll) => {
+      expect(poll, 'the poll').to.not.eq(undefined);
+      expect(poll.title, 'the title of the poll').to.eq('The poll of the owner');
+      expect(poll.options, 'the options of the poll').to.eq('Yes,No');
+    });
   });
 });

@@ -1967,20 +1967,19 @@ class TopicController extends KunenaController
                         $this->app->enqueueMessage($e->getMessage(), 'error');
                     }
                 } else {
-                    if ($this->config->allowUserEditPoll || (!$this->config->allowUserEditPoll && !$poll->getUserCount())) {
-                        // Edit existing poll
-                        try {
-                            $topic->tryAuthorise('poll.edit');
-                            $poll->save();
-                            $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_EDITED'), 'success');
-                        } catch (Exception $e) {
-                            $this->app->enqueueMessage($e->getMessage(), 'error');
-                        }
+                    // Edit existing poll, the right poll.edit also refuses a poll with votes when allowUserEditPoll is off
+                    try {
+                        $topic->tryAuthorise('poll.edit');
+                        $poll->save();
+                        $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_EDITED'), 'success');
+                    } catch (Exception $e) {
+                        $this->app->enqueueMessage($e->getMessage(), 'error');
                     }
                 }
-            } elseif ($poll->exists() && $topic->isAuthorised('poll.edit')) {
+            } elseif ($poll->exists()) {
                 // Delete poll
                 try {
+                    $topic->tryAuthorise('poll.edit');
                     $topic->tryAuthorise('poll.delete');
                     $poll->delete();
                     $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_DELETED'), 'success');

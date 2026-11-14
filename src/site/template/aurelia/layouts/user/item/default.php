@@ -36,7 +36,7 @@ $tabs = $this->getTabs();
     <?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName())); ?>
 </h1>
 
-<h2 class="float-end">
+<div class="float-end kunena-profile-actions">
     <?php if (KunenaUserFollow::isEnabled() && $this->profile->exists()) :
         $followers = KunenaUserFollow::countFollowers($this->profile->userid);
         ?>
@@ -68,7 +68,7 @@ $tabs = $this->getTabs();
             'btn'
         ); ?>
     <?php endif; ?>
-</h2>
+</div>
 
 <?php
 echo $this->subLayout('User/Item/Summary')

@@ -35,6 +35,7 @@ echo $this->subLayout('Widget/Datepicker');
 $this->addScript('tribute.js');
 $this->addStyleSheet('tribute.css');
 $this->addScript('assets/js/search.js');
+KunenaFactory::getTemplate()->addScriptOptions('com_kunena.usersearch_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json', false));
 
 $select = 'class="form-select"';
 

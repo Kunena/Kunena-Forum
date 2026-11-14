@@ -127,8 +127,9 @@ describe('Kunena date fields: the format of the date picker', () => {
         expect(title, 'the hint of the field').not.to.contain('Year (YYYY) / Month (MM) / Day (DD)');
       });
       cy.visit(`${base}&view=user&layout=edit`);
-      cy.get('input[name="birthdate"]').should('have.value', shown);
-      cy.get('#birthdate .input-group.date .btn').click({ force: true });
+      cy.get('a[href="#editprofile"]').click();
+      cy.get('input[name="birthdate"]').should('be.visible').and('have.value', shown);
+      cy.get('#birthdate .input-group.date .btn').click();
       cy.get('.datepicker-days td.day.active').filter(':visible').should('have.length', 1).and('have.text', '5');
       cy.get('.datepicker-days th.datepicker-switch').filter(':visible').should('contain', '1990');
       cy.get('input[name="birthdate"]').should('have.value', shown);
@@ -138,6 +139,8 @@ describe('Kunena date fields: the format of the date picker', () => {
   });
 
   it('keeps the birthdate with a save without a change of the user form of the backend', () => {
+    // The tests of the calendar leave another format.
+    cy.kunena_setOption('datePickerFormat', 'dd/mm/yyyy');
     cy.task('queryDB', `UPDATE #__kunena_users SET birthdate = '1990-06-05' WHERE userid = ${user.id}`);
     // The cookies of the logins of the site go first: with them the backend lost its session after the save.
     cy.clearAllCookies();

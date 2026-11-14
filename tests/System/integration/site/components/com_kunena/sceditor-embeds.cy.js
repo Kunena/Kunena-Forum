@@ -169,9 +169,15 @@ describe('Kunena SCEditor: the [instagram], [tweet], [ebay] and [soundcloud] BBC
     });
   });
 
+  // The four tags are inserted in the source mode: in the WYSIWYG mode the caret stays inside the placeholder just inserted (as after
+  // [map] or a quote), so the next insert would go inside it.
   it('keeps the four tags through a save and the edit form', () => {
     openCreateForm();
+    cy.get('#postform .sceditor-button-source').first().click();
+    editor().then((instance) => expect(instance.sourceMode(), 'the source mode').to.equal(true));
     embeds.forEach((embed) => insertEmbed(embed));
+    cy.get('#postform .sceditor-button-source').first().click();
+    editor().then((instance) => expect(instance.sourceMode(), 'the WYSIWYG mode').to.equal(false));
 
     value().then((inserted) => {
       embeds.forEach((embed) => expect(inserted, `the editor value with [${embed.tag}]`).to.include(bbcode(embed)));

@@ -38,7 +38,7 @@ $tabs = $this->getTabs();
             <?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName())); ?>
         </h1>
 
-<h2 class="agora-profile-actions">
+<div class="agora-profile-actions">
     <?php if (KunenaUserFollow::isEnabled() && $this->profile->exists()) :
         $followers = KunenaUserFollow::countFollowers($this->profile->userid);
         ?>
@@ -70,7 +70,7 @@ $tabs = $this->getTabs();
             'btn'
         ); ?>
     <?php endif; ?>
-</h2>
+</div>
     </header>
 
     <div class="agora-profile-summary">

@@ -136,6 +136,14 @@ class KunenaBBCode extends BBCode
     protected $linkCards = 0;
 
     /**
+     * The open [url] tags without a definition: their text is the address, so it is not auto-linked.
+     *
+     * @var     integer
+     * @since   Kunena 8.0
+     */
+    public $urlWithoutDefinition = 0;
+
+    /**
      * Use KunenaBbcode::getInstance() instead.
      *
      * @internal
@@ -195,6 +203,11 @@ class KunenaBBCode extends BBCode
      */
     protected function autoDetectURLs($string): array
     {
+        // The text of [url]address[/url] is the address as written: one address chunk, encoded, without links or smileys.
+        if ($this->urlWithoutDefinition > 0) {
+            return ['', htmlspecialchars((string) $string, ENT_QUOTES, 'UTF-8')];
+        }
+
         $search = preg_split('/(?xi)
 		\b
 		(
@@ -456,7 +469,8 @@ class KunenaBBCode extends BBCode
      */
     public function parse($string)
     {
-        $this->linkCards = 0;
+        $this->linkCards            = 0;
+        $this->urlWithoutDefinition = 0;
 
         $markdown = isset($this->config->enableMarkdown) && $this->config->enableMarkdown;
         $html     = isset($this->config->enableHtml) && $this->config->enableHtml;
@@ -2640,11 +2654,20 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if ($action == BBCode::BBCODE_CHECK) {
             $bbcode->autoLink_disable++;
 
+            if (!$default) {
+                $bbcode->urlWithoutDefinition++;
+            }
+
             return true;
         }
 
         $bbcode->autoLink_disable--;
-        $url      = $default ? $default : strip_tags($bbcode->UnHTMLEncode($content));
+
+        if (!$default) {
+            $bbcode->urlWithoutDefinition--;
+        }
+
+        $url      = $default ? $default : trim(strip_tags($bbcode->UnHTMLEncode($content)));
         $url      = preg_replace('# #u', '%20', $url);
         $internal = false;
 

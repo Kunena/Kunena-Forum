@@ -44,6 +44,10 @@ if ($userLanguage != 'default' && $userLanguage != 'active') {
 
 $this->doc->addScriptOptions('com_kunena.ckeditor_joomladefaultlanguage', substr($joomlaLanguage[2], 0, 2));
 
+Text::script('COM_KUNENA_EDITOR_LINK_TARGET');
+Text::script('COM_KUNENA_EDITOR_LINK_TARGET_SAME');
+Text::script('COM_KUNENA_EDITOR_LINK_TARGET_NEW');
+
 HTMLHelper::_('bootstrap.tab');
 
 // $this->getAllowedtoUseLinksImages();

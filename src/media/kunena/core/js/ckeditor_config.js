@@ -99,6 +99,90 @@ CKEDITOR.editorConfig = function( config ) {
 	}
 
 	config.extraPlugins += ',kunenaemoticons';
+
+	// A link which opens in a new window is stored as [url=<address> target=_blank]. The
+	// BBCode plugin keeps that parameter inside the address, so move it to the target
+	// attribute when a message is loaded and back into the address when it is saved, and
+	// let the link dialog choose between the same window and a new window.
+	if (!CKEDITOR.plugins.get('kunenalinktarget')) {
+		var linkTargetParam = /\s+target=(?:"[^"]*"|'[^']*'|\S*)/gi;
+		var linkAddressAttributes = ['href', 'data-cke-saved-href'];
+
+		CKEDITOR.plugins.add('kunenalinktarget', {
+			init: function (editor) {
+				editor.dataProcessor.dataFilter.addRules({
+					elements: {
+						a: function (element) {
+							var hasTarget = false;
+
+							linkAddressAttributes.forEach(function (name) {
+								var address = element.attributes[name];
+
+								if (address !== undefined && address.search(linkTargetParam) !== -1) {
+									element.attributes[name] = address.replace(linkTargetParam, '');
+									hasTarget = true;
+								}
+							});
+
+							if (hasTarget) {
+								element.attributes.target = '_blank';
+							}
+						}
+					}
+				});
+
+				editor.dataProcessor.htmlFilter.addRules({
+					elements: {
+						a: function (element) {
+							if (element.attributes.target === undefined) {
+								return;
+							}
+
+							linkAddressAttributes.forEach(function (name) {
+								if (element.attributes[name] !== undefined) {
+									element.attributes[name] += ' target=_blank';
+								}
+							});
+
+							delete element.attributes.target;
+						}
+					}
+				});
+			}
+		});
+
+		CKEDITOR.on('dialogDefinition', function (event) {
+			if (event.data.name != 'link') {
+				return;
+			}
+
+			// Inside the URL options, so the choice is hidden for e-mail links.
+			event.data.definition.getContents('info').get('urlOptions').children.push({
+				type: 'select',
+				id: 'kunenaLinkTarget',
+				label: Joomla.Text._('COM_KUNENA_EDITOR_LINK_TARGET'),
+				'default': '',
+				items: [
+					[Joomla.Text._('COM_KUNENA_EDITOR_LINK_TARGET_SAME'), ''],
+					[Joomla.Text._('COM_KUNENA_EDITOR_LINK_TARGET_NEW'), '_blank']
+				],
+				setup: function (data) {
+					this.setValue(data.target && data.target.name ? '_blank' : '');
+				},
+				commit: function (data) {
+					var linkType = this.getDialog().getContentElement('info', 'linkType');
+
+					if (this.getValue() == '_blank' && (!linkType || linkType.getValue() == 'url')) {
+						data.target = {type: '_blank', name: '_blank'};
+					} else {
+						data.target = {type: 'notSet'};
+					}
+				}
+			});
+		});
+	}
+
+	config.extraPlugins += ',kunenalinktarget';
 	config.linkDefaultProtocol= 'https://'
 
 	// Define font sizes in percent values.

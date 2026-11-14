@@ -25,6 +25,9 @@ class RouterTest extends UnitTestCase
 {
     public const SEF_VIEWS = ['' => 1, 'home' => 1, 'category' => 1, 'topic' => 1];
 
+    // The stock "Category list" menu item
+    private const MENU_LIST = ['view' => 'category', 'layout' => 'list', 'catid' => 0];
+
     private mixed $saved = null;
 
     private Router $router;
@@ -163,6 +166,50 @@ class RouterTest extends UnitTestCase
         $vars = $this->parse(['main-forum', 'subcategory2'], ['view' => 'topic', 'layout' => 'create']);
 
         $this->assertSame(['catid' => 3, 'view' => 'topic', 'layout' => 'create'], $vars);
+    }
+
+    public function testAReplyUnderTheCategoryListMenuItemKeepsItsLayout(): void
+    {
+        $expected = ['catid' => 3, 'view' => 'topic', 'id' => 123, 'layout' => 'reply', 'mesid' => 124];
+
+        $this->assertEquals($expected, $this->parse(['subcategory2', '123-topicname', 'reply', '124'], self::MENU_LIST));
+        $this->assertEquals($expected, $this->parse(['3', '123-topicname', 'reply', '124'], self::MENU_LIST));
+    }
+
+    public function testATopicUnderTheCategoryListMenuItemDropsTheListLayout(): void
+    {
+        $expected = ['catid' => 3, 'view' => 'topic', 'id' => 123];
+
+        $this->assertEquals($expected, $this->parse(['subcategory2', '123-topicname'], self::MENU_LIST));
+        $this->assertEquals($expected, $this->parse(['3', '123-topicname'], self::MENU_LIST));
+    }
+
+    public function testACategoryUnderTheCategoryListMenuItemKeepsTheListLayout(): void
+    {
+        $expected = ['catid' => 3, 'view' => 'category', 'layout' => 'list'];
+
+        $this->assertEquals($expected, $this->parse(['subcategory2'], self::MENU_LIST));
+        $this->assertEquals($expected, $this->parse(['3'], self::MENU_LIST));
+    }
+
+    public function testALayoutInTheUrlReplacesTheLayoutOfTheMenuItem(): void
+    {
+        $this->assertEquals(['catid' => 3, 'view' => 'category', 'layout' => 'create'], $this->parse(['subcategory2', 'create'], self::MENU_LIST));
+        $this->assertEquals(['catid' => 3, 'view' => 'category', 'layout' => 'create'], $this->parse(['3', 'create'], self::MENU_LIST));
+    }
+
+    public function testOnlyTheFirstWordUnderTheCategoryListMenuItemIsTheLayout(): void
+    {
+        $expected = ['catid' => 3, 'view' => 'topic', 'id' => 123, 'layout' => 'reply', 'mesid' => 124];
+
+        $this->assertEquals($expected, $this->parse(['subcategory2', '123-topicname', 'reply', 'extra', '124'], self::MENU_LIST));
+        $this->assertEquals($expected, $this->parse(['3', '123-topicname', 'reply', 'extra', '124'], self::MENU_LIST));
+    }
+
+    public function testAViewInTheUrlDropsTheLayoutOfTheMenuItem(): void
+    {
+        $this->assertEquals(['catid' => 3, 'view' => 'topic'], $this->parse(['subcategory2', 'topic'], self::MENU_LIST));
+        $this->assertEquals(['catid' => 3, 'view' => 'topic'], $this->parse(['3', 'topic'], self::MENU_LIST));
     }
 
     public function testAMenuItemWithAnIdResolvesNoAlias(): void

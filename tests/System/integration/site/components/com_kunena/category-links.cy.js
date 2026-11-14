@@ -5,7 +5,8 @@ describe('Kunena category links', () => {
   it('gives the header of each section an id with the id of the category', () => {
     cy.visit(list);
 
-    cy.get('h1[id^="category-header"]')
+    // A heading of any level: h1 in Aurelia, h2 in Agora (under the title of the page).
+    cy.get(':is(h1, h2)[id^="category-header"]')
       .should('have.length.greaterThan', 0)
       .each(($header) => {
         expect($header.attr('id')).to.match(/^category-header\d+$/);

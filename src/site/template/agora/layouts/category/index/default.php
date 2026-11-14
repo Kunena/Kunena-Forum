@@ -81,12 +81,12 @@ foreach ($this->sections as $section) :
     <div class="kfrontend section agora-section">
         <div class="agora-section-head">
             <div class="agora-section-title">
-                <h1 id="category-header<?php echo (int) $section->id; ?>">
+                <h2 id="category-header<?php echo (int) $section->id; ?>">
                     <?php echo $this->getCategoryLink($section, $this->escape($section->name), null, $this->ktemplate->tooltips(), true, false); ?>
                     <small class="nowrap" id="ksection-count<?php echo $section->id; ?>">
                         <?php echo KunenaCategory::getInstance()->totalCount($section->getTopics()); ?>
                     </small>
-                </h1>
+                </h2>
                 <?php if (!empty($section->description)) : ?>
                     <div class="agora-section-desc"><?php echo $section->displayField('description'); ?></div>
                 <?php endif; ?>
@@ -126,7 +126,7 @@ foreach ($this->sections as $section) :
                             data-category-id="<?php echo (int) $category->id; ?>"
                             data-last-post="<?php echo (int) $lastTopic->last_post_id; ?>"
                             data-sig="<?php echo (int) $lastTopic->last_post_id . '-' . (int) $category->numTopics . '-' . (int) $category->numPosts . '-' . (int) $category->getNewCount(); ?>">
-                            <td id="kcat-icon" class="d-none d-md-table-cell">
+                            <td class="kcat-icon d-none d-md-table-cell">
                                 <?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '', null, true, false); ?>
                             </td>
                             <td>
@@ -137,7 +137,7 @@ foreach ($this->sections as $section) :
                                             <a class="btn btn-link btn-sm p-0" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $category->name)); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $category->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
                                         <?php endif; ?>
                                         <small class="nowrap">
-                                            <span id="kcatcount"><?php echo KunenaCategory::getInstance()->totalCount($category->getTopics()); ?></span>
+                                            <span class="kcatcount"><?php echo KunenaCategory::getInstance()->totalCount($category->getTopics()); ?></span>
                                             <span>
                                                 <?php if (($new = $category->getNewCount()) > 0) : ?>
                                                     <sup class="knewchar"><?php echo $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') ?></sup>
@@ -254,11 +254,11 @@ foreach ($this->sections as $section) :
                                 <td>
                                     <div class="d-flex align-items-start">
                                         <?php if ($avatar) : ?>
-                                            <div class="flex-shrink-0 me-3 klast-avatar" id="kcat-avatar">
+                                            <div class="flex-shrink-0 me-3 klast-avatar kcat-avatar">
                                                 <?php echo $author->getLink($avatar, null, '', '', $this->ktemplate->tooltips(), $category->id, $this->config->avatarEdit); ?>
                                             </div>
                                         <?php endif; ?>
-                                        <div class="flex-grow-1" style="min-width: 0" id="kcat-last">
+                                        <div class="flex-grow-1 kcat-last" style="min-width: 0">
                                             <div class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, $this->ktemplate->tooltips(), 30, false, true) ?></div>
                                             <div class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', $this->ktemplate->tooltips(), $category->id)); ?></div>
                                             <div class="datepost"><?php echo $time->toKunena('config_postDateFormat'); ?></div>

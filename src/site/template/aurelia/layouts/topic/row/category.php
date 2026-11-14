@@ -52,7 +52,7 @@ if ($this->topic->moved_id > 0) {
 
 if (!empty($this->spacing)) : ?>
     <tr class="kcontenttablespacer">
-        <td colspan="6" class="p-0" style="height: .75rem"></td>
+        <td colspan="<?php echo empty($this->checkbox) ? 4 : 5; ?>" class="p-0" style="height: .75rem"></td>
     </tr>
 <?php endif; ?>
 
@@ -124,7 +124,7 @@ if (!empty($this->spacing)) : ?>
             </div>
         </div>
 
-        <div id="klastpostphone" class="d-block d-sm-none">
+        <div class="klastpostphone d-block d-sm-none">
             <?php echo $this->getTopicLink($this->topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, null, $category, false, true); ?>
             <?php if ($config->postDateFormat != 'none') : ?>
                 <?php echo $topic->getLastPostTime()->toKunena('config_postDateFormat'); ?> <br>

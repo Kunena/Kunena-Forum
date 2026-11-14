@@ -46,6 +46,21 @@ if ($this->ktemplate->params->get('ajaxTopicList', 1)) {
     );
     $this->addScript('assets/js/topiclist.js');
 }
+
+// A page can show this list more than once (in the tabs of a profile): the ids of its elements stay unique on the page.
+$ids = [
+    'filter'     => $this->uniqueId('ktopicsfilter'),
+    'form'       => $this->uniqueId('ktopicsform'),
+    'bottom'     => $this->uniqueId('forumbottom'),
+    'time'       => $this->uniqueId('filter-time'),
+    'timeselect' => $this->uniqueId('timeselect'),
+    'top'        => $this->uniqueId('forumtop'),
+    'task'       => $this->uniqueId('kchecktask'),
+    'target'     => $this->uniqueId('kchecktarget'),
+    'status'     => $this->uniqueId('kcheckstatus'),
+    'sel'        => $this->uniqueId('sel'),
+];
+
 ?>
 <div class="row">
     <div class="col-md-12">        
@@ -63,13 +78,13 @@ if ($this->ktemplate->params->get('ajaxTopicList', 1)) {
         </div>
 
         <?php if ($view != 'user') : ?>
-            <div class="float-end" id="filter-time">
+            <div class="float-end" id="<?php echo $ids['time']; ?>">
                 <h2 class="filter-sel float-end"></h2>
                 <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
-                      id="timeselect" name="timeselect"
+                      id="<?php echo $ids['timeselect']; ?>" name="timeselect"
                       method="post" target="_self" class="form-inline d-none d-sm-block">
                     <div class="d-flex gap-2 align-items-center">
-                        <?php $this->displayTimeFilter('sel'); ?>
+                        <?php $this->displayTimeFilter($ids['sel']); ?>
                         <button type="submit" class="btn btn-sm btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILTER_APPLY'); ?></button>
                     </div>
                     <?php echo HTMLHelper::_('form.token'); ?>
@@ -115,7 +130,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
     ];
     ?>
     <form action="<?php echo $this->escape($filterBase); ?>" method="get"
-          id="ktopicsfilter" class="row g-2 align-items-center mt-2 mb-3" role="search">
+          id="<?php echo $ids['filter']; ?>" class="row g-2 align-items-center mt-2 mb-3" role="search">
         <?php foreach ($filterKeep as $keepKey => $keepValue) : ?>
             <input type="hidden" name="<?php echo $this->escape($keepKey); ?>" value="<?php echo $this->escape($keepValue); ?>"/>
         <?php endforeach; ?>
@@ -180,7 +195,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
 <div class="kfrontend shadow-lg rounded mt-4 border">
     <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
           name="ktopicsform"
-          id="ktopicsform">
+          id="<?php echo $ids['form']; ?>">
         <?php echo HTMLHelper::_('form.token'); ?>
         <?php if ($view == 'user') : ?>
             <input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>"/>
@@ -189,8 +204,8 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
             <thead>
             <tr>
                 <th scope="col" class="center d-none d-md-table-cell">
-                    <a id="forumtop"> </a>
-                    <a href="#forumbottom" rel="nofollow" aria-label="<?php echo Text::_('COM_KUNENA_GEN_GOTOBOTTOM'); ?>">
+                    <a id="<?php echo $ids['top']; ?>"> </a>
+                    <a href="#<?php echo $ids['bottom']; ?>" rel="nofollow" aria-label="<?php echo Text::_('COM_KUNENA_GEN_GOTOBOTTOM'); ?>">
                         <?php echo KunenaIcons::arrowdown(); ?>
                     </a>
                 </th>
@@ -210,8 +225,8 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
             <tfoot>
             <tr>
                 <th scope="col" class="center d-none d-md-table-cell">
-                    <a id="forumbottom"> </a>
-                    <a href="#forumtop" rel="nofollow" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_GEN_GOTOTOP')); ?>">
+                    <a id="<?php echo $ids['bottom']; ?>"> </a>
+                    <a href="#<?php echo $ids['top']; ?>" rel="nofollow" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_GEN_GOTOTOP')); ?>">
                         <span class="dropdown-divider"></span>
                         <?php echo KunenaIcons::arrowup(); ?>
                     </a>
@@ -224,10 +239,10 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
                                     echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-start', 'follow');
                                 } ?>
                                 <?php if (!empty($this->actions)) : ?>
-                                    <?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-select kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+                                    <?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-select kchecktask" ', 'value', 'text', 0, $ids['task']); ?>
                                     <?php if (isset($this->actions['move'])) :
                                         $options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
-                                        echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-select fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+                                        echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-select fbs" disabled="disabled"', 'value', 'text', 0, $ids['target']);
                                     endif; ?>
 <?php if (isset($this->actions['status'])) :
     $statusOptions = [HTMLHelper::_('select.option', '-1', Text::_('COM_KUNENA_BULK_CHOOSE_STATUS'))];
@@ -236,7 +251,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
         $statusOptions[] = HTMLHelper::_('select.option', (string) $statusIcon->id, Text::_($statusIcon->title));
     }
 
-    echo HTMLHelper::_('select.genericlist', $statusOptions, 'status_icon', 'class="form-select" disabled="disabled"', 'value', 'text', '-1', 'kcheckstatus');
+    echo HTMLHelper::_('select.genericlist', $statusOptions, 'status_icon', 'class="form-select" disabled="disabled"', 'value', 'text', '-1', $ids['status']);
 endif; ?>
                                     <button type="submit" name="kcheckgo"
                                             class="btn btn-outline-primary border"><?php echo Text::_('COM_KUNENA_GO') ?>

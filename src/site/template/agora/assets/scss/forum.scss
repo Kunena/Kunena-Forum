@@ -117,12 +117,12 @@ tr[class^="category"] {
     display: none;
   }
 
-  #kcat-icon,
+  .kcat-icon,
   > th:first-child {
     width: 64px;
   }
 
-  #kcat-icon > a,
+  .kcat-icon > a,
   > th:first-child > a {
     display: inline-grid;
     place-items: center;
@@ -504,29 +504,32 @@ h2.float-end,
     margin: 0 0 1rem;
     border-top: 1px solid var(--agora-border);
 
-    > dt,
-    > dd {
+    /* A person: the name and the role, a line under it (not under the last one). */
+    > .kcredits-member {
+      --bs-gutter-x: 0;
+      --gutter-x: 0;
+      margin: 0;
+      border-bottom: 1px solid var(--agora-border) !important;
+
+      &:last-child {
+        border-bottom: 0 !important;
+      }
+    }
+
+    > .kcredits-member > dt,
+    > .kcredits-member > dd {
       padding: 0.5rem 0 0;
       margin: 0;
       background: transparent;
     }
 
-    > dd {
+    > .kcredits-member > dd {
       padding: 0 0 0.5rem;
       color: var(--agora-text-muted);
     }
 
-    > dd form {
+    > .kcredits-member > dd form {
       display: inline-block;
-    }
-
-    > hr {
-      padding: 0;
-      margin: 0;
-    }
-
-    > hr:last-child {
-      display: none;
     }
   }
 
@@ -545,8 +548,8 @@ h2.float-end,
 }
 
 @media (min-width: 768px) {
-  #credits .credits > dl.row > dt,
-  #credits .credits > dl.row > dd {
+  #credits .credits > dl.row > .kcredits-member > dt,
+  #credits .credits > dl.row > .kcredits-member > dd {
     padding: 0.5rem 0;
   }
 }

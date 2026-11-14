@@ -44,7 +44,7 @@ jQuery(document).ready(function ($) {
             const ratingElement = ratingItem.querySelector('.c-rating');
             const currentRating = rate;
             const maxRating = 5;
-			const catid = $("#catid").val();
+			const catid = $("#krating-catid").val();
 			
             const callback = function (rating) {
                 $.ajax({

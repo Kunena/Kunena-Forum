@@ -41,7 +41,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                 <a class="btn border" data-bs-toggle="dropdown">
                     <?php echo KunenaIcons::lock(); ?><?php echo Text::_('COM_KUNENA_BUTTON_TOPIC_LOCK') ?>
                 </a>
-                <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" role="button" class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -64,7 +64,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                 <a class="btn border" data-bs-toggle="dropdown">
                     <?php echo KunenaIcons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?>
                 </a>
-                <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" role="button" class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -86,7 +86,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                 <a class="btn border" data-bs-toggle="dropdown">
                     <?php echo KunenaIcons::grid(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_LAYOUT') ?>
                 </a>
-                <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" role="button" class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -103,7 +103,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 
 <?php if ($fullactions) : ?>
     <div class="clearfix"></div>
-    <div class="btn-toolbar btn-marging kmessagepadding" id="topic-actions-toolbar">
+    <div class="btn-toolbar btn-marging kmessagepadding ktopic-actions-toolbar" id="<?php echo $this->uniqueId('topic-actions-toolbar'); ?>">
         <div>
             <?php if (
             $this->topicButtons->get('reply')
@@ -115,7 +115,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                     <a class="btn border" data-bs-toggle="dropdown">
                         <?php echo KunenaIcons::pencil(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?>
                     </a>
-                    <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="#" role="button" class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -132,7 +132,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                     <a class="btn border" data-bs-toggle="dropdown">
                         <?php echo KunenaIcons::lock(); ?><?php echo Text::_('COM_KUNENA_BUTTON_TOPIC_LOCK') ?>
                     </a>
-                    <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="#" role="button" class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -155,7 +155,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                     <a class="btn border" data-bs-toggle="dropdown">
                         <?php echo KunenaIcons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?>
                     </a>
-                    <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="#" role="button" class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -177,7 +177,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                     <a class="btn border" data-bs-toggle="dropdown">
                         <?php echo KunenaIcons::grid(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_LAYOUT') ?>
                     </a>
-                    <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="#" role="button" class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                     </a>
                     <ul class="dropdown-menu">

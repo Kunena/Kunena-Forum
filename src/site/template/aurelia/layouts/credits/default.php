@@ -38,28 +38,30 @@ use Joomla\CMS\Language\Text;
             <dl class="row">
                 <?php foreach ($this->memberList as $member) :
                     ?>
-                    <dt class="col-md-3">
-                        <a href="<?php echo $member['url']; ?>" target="_blank"
-                           rel="noopener noreferrer"><?php echo $this->escape($member['name']); ?></a>
-                    </dt>
-                    <dd class="col-md-9">
-                        <?php echo $member['title']; ?>
-                    </dd>
-                    <hr class="hr-condensed">
+                    <div class="row kcredits-member border-bottom">
+                        <dt class="col-md-3">
+                            <a href="<?php echo $member['url']; ?>" target="_blank"
+                               rel="noopener noreferrer"><?php echo $this->escape($member['name']); ?></a>
+                        </dt>
+                        <dd class="col-md-9">
+                            <?php echo $member['title']; ?>
+                        </dd>
+                    </div>
                 <?php endforeach ?>
-                <dt class="col-md-3"><a><?php echo Text::_('COM_KUNENA_DONATE'); ?></a></dt>
-                <dd class="col-md-9">
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                        <input name="cmd" type="hidden" value="_s-xclick">
-                        <input name="hosted_button_id" type="hidden" value="TPKVQFBQPFSLU">
-                        <input name="submit" type="image" alt="PayPal - The safer, easier way to pay online!"
-                               src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
-                        <img loading=lazy width="1" height="1" alt=""
-                             src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
-                             style="border:0;">
-                    </form>
-                </dd>
-                <hr class="hr-condensed">
+                <div class="row kcredits-member border-bottom">
+                    <dt class="col-md-3"><a><?php echo Text::_('COM_KUNENA_DONATE'); ?></a></dt>
+                    <dd class="col-md-9">
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <input name="cmd" type="hidden" value="_s-xclick">
+                            <input name="hosted_button_id" type="hidden" value="TPKVQFBQPFSLU">
+                            <input name="submit" type="image" alt="PayPal - The safer, easier way to pay online!"
+                                   src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
+                            <img loading=lazy width="1" height="1" alt=""
+                                 src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
+                                 style="border:0;">
+                        </form>
+                    </dd>
+                </div>
             </dl>
 
             <p>

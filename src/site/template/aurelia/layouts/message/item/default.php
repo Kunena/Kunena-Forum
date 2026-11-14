@@ -121,9 +121,9 @@ $list = [];
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="reportModalLabel<?php echo $this->message->id; ?>">
+                        <h2 class="modal-title fs-5" id="reportModalLabel<?php echo $this->message->id; ?>">
                             <?php echo Text::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
-                        </h5>
+                        </h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

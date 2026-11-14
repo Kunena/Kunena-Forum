@@ -20,7 +20,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 <div class="alert alert-info shadow-lg rounded alert-dismissible fade show" id="announcement<?php echo $this->announcement->id; ?>">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    <h5>
+    <h2 class="kannouncement-title h5">
         <a class="btn-link"
             href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=listing'); ?>"
             data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>">
@@ -31,7 +31,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
             ?>
             <small>(<?php echo $this->announcement->displayField('created', 'date_today'); ?>)</small>
         <?php endif; ?>
-    </h5>
+    </h2>
 
     <div>
         <p><?php echo $this->announcement->displayField('sdescription'); ?></p>

@@ -99,7 +99,7 @@ echo $this->subLayout('User/Item/Summary')
                 <button <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
                         id="<?php echo $name; ?>-tab" data-bs-toggle="tab" data-bs-target="#<?php echo $name; ?>"
                         type="button" role="tab"
-                        aria-controls="home" aria-selected="true"><?php echo $tab->title; ?></button>
+                        aria-controls="<?php echo $name; ?>" aria-selected="<?php echo $tab->active ? 'true' : 'false'; ?>"><?php echo $tab->title; ?></button>
             </li>
         <?php endforeach; ?>
     </ul>

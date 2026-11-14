@@ -128,7 +128,7 @@ if (!empty($this->spacing)) : ?>
             </div>
         </div>
 
-        <div id="klastpostphone" class="d-block d-sm-none">
+        <div class="klastpostphone d-block d-sm-none">
             <?php echo $this->getTopicLink($this->topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, null, $category, false, true); ?>
             <?php if ($config->postDateFormat != 'none') : ?>
                 <?php echo $topic->getLastPostTime()->toKunena('config_postDateFormat'); ?> <br>

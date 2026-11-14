@@ -56,6 +56,11 @@ h3 {
   font-size: 1.05rem;
 }
 
+/* A heading of the second level which looks like a third (a list of the profile under its title). */
+h2.h3 {
+  font-size: 1.05rem;
+}
+
 a {
   color: var(--agora-link);
   text-decoration: none;

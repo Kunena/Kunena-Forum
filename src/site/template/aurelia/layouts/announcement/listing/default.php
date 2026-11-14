@@ -97,6 +97,17 @@ HTMLHelper::_('behavior.core');
             </tr>
             </thead>
 
+            <tbody>
+            <?php foreach ($this->announcements as $row => $announcement) {
+                echo $this->subLayout('Announcement/Listing/Row')
+                    ->set('announcement', $announcement)
+                    ->set('row', $row)
+                    ->set('checkbox', !empty($options))
+                    ->set('config', $this->config);
+            }
+            ?>
+            </tbody>
+
             <?php if ($this->pagination->pagesTotal > 1) :
                 ?>
                 <tfoot>
@@ -109,17 +120,6 @@ HTMLHelper::_('behavior.core');
                 </tr>
                 </tfoot>
             <?php endif; ?>
-
-            <tbody>
-            <?php foreach ($this->announcements as $row => $announcement) {
-                echo $this->subLayout('Announcement/Listing/Row')
-                    ->set('announcement', $announcement)
-                    ->set('row', $row)
-                    ->set('checkbox', !empty($options))
-                    ->set('config', $this->config);
-            }
-            ?>
-            </tbody>
         </table>
     </div>
 </form>

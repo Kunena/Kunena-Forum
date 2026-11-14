@@ -149,7 +149,7 @@ $attachments = $this->attachments;
                                                     <div class="modal-header">
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         <h4 class="modal-title"
-                                                            id="myModalLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL') ?></h4>
+                                                            id="modaldelete<?php echo $i ?>Label"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL') ?></h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <p><?php echo Text::sprintf('COM_KUNENA_FILES_DELETE_MODAL_DESCRIPTION', $attachment->getFilename(), HTMLHelper::_('kunenaforum.formatfilesize', $attachment->size, 2)); ?></p>
@@ -183,7 +183,7 @@ $attachments = $this->attachments;
                         <div class="modal-header">
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"></button>
                             <h4 class="modal-title"
-                                id="myModalLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL') ?></h4>
+                                id="modaldeleteallLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL') ?></h4>
                         </div>
                         <div class="modal-body">
                             <p><?php echo Text::_('COM_KUNENA_FILES_DELETE_SELECTED_MODAL_DESCRIPTION'); ?></p>

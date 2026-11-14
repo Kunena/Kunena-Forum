@@ -25,7 +25,7 @@
 .agora-section-title {
   min-width: 0;
 
-  h1 {
+  h2 {
     display: flex;
     flex-wrap: wrap;
     gap: 0.25rem 0.5rem;
@@ -131,9 +131,8 @@
 
 /* The avatar of the last author, on the index and in the lists of topics (their rows start with the class category too, or with a suffix: category-stickymsg): a circle of the size
  * of the icon of the row and at the same top, without the line box under an inline picture. A picture which is not square is
- * cropped, not stretched. Aurelia gives the box (#kcat-avatar) a size of its own. */
+ * cropped, not stretched. */
 tr[class^="category"] {
-  #kcat-avatar.klast-avatar,
   .klast-avatar {
     width: 44px;
     height: 44px;

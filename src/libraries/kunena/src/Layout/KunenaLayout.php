@@ -230,6 +230,32 @@ class KunenaLayout extends KunenaBase
     }
 
     /**
+     * The ids given out by uniqueId() on this page, with the number of times.
+     *
+     * @var    array<string, int>
+     * @since  Kunena 8.0
+     */
+    protected static array $uniqueIds = [];
+
+    /**
+     * An id for an element which a page can show more than once (a list of topics in each tab of a profile, the actions above
+     * and under the messages): the first one keeps the id, so the scripts and the styles which look for it still find it; the
+     * next ones get a number (ktopicsform, ktopicsform-2, ktopicsform-3).
+     *
+     * @param   string  $id  The id of the element.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public function uniqueId(string $id): string
+    {
+        $count = self::$uniqueIds[$id] = (self::$uniqueIds[$id] ?? 0) + 1;
+
+        return $count === 1 ? $id : $id . '-' . $count;
+    }
+
+    /**
      * This function formats a number to n significant digits when above
      * 10,000. Starting at 10,0000 the out put changes to 10k, starting
      * at 1,000,000 the output switches to 1m. Both k and m are defined

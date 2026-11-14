@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 // $this->feed: the latest topics of these users (already rendered), empty when nobody is followed.
 $users = KunenaUserHelper::loadUsers(array_map(static fn ($row) => (int) $row->followed_id, (array) $this->following));
 ?>
-<h3><?php echo Text::_('COM_KUNENA_FOLLOWING_LIST'); ?></h3>
+<h2 class="h3"><?php echo Text::_('COM_KUNENA_FOLLOWING_LIST'); ?></h2>
 <p class="text-muted"><?php echo Text::_('COM_KUNENA_FOLLOWING_LIST_DESC'); ?></p>
 
 <?php if (empty($this->following)) : ?>
@@ -57,6 +57,6 @@ $users = KunenaUserHelper::loadUsers(array_map(static fn ($row) => (int) $row->f
         </tbody>
     </table>
 
-    <h3><?php echo Text::_('COM_KUNENA_FOLLOWING_LATEST'); ?></h3>
+    <h2 class="h3"><?php echo Text::_('COM_KUNENA_FOLLOWING_LATEST'); ?></h2>
     <?php echo $this->feed; ?>
 <?php endif; ?>

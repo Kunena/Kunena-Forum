@@ -22,6 +22,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 class IconOnlyControlsTest extends UnitTestCase
 {
+    /** The link to the top of a list whose ids come from uniqueId(). */
+    private const TOP_OF_LIST = 'href="#<?php echo $ids[\'top\']; ?>"';
+
     private const AURELIA = 'src/site/template/aurelia/layouts/';
 
     private const AGORA = 'src/site/template/agora/layouts/';
@@ -37,8 +40,8 @@ class IconOnlyControlsTest extends UnitTestCase
             'aurelia user e-mail'    => [self::AURELIA . 'user/item/summary/default.php', 'href="mailto:', "Text::_('COM_KUNENA_MYPROFILE_EMAIL')"],
             'aurelia user delete'    => [self::AURELIA . 'user/attachments/default.php', 'href="#modaldelete<?php echo $i ?>"', "\$this->escape(Text::sprintf('COM_KUNENA_FILES_DELETE_NAMED', \$attachment->getFilename(false)))"],
             'aurelia category top'   => [self::AURELIA . 'category/item/default.php', 'href="#forumtop"', "Text::_('COM_KUNENA_GEN_GOTOTOP')"],
-            'aurelia message top'    => [self::AURELIA . 'message/list/default.php', 'href="#forumtop"', "Text::_('COM_KUNENA_GEN_GOTOTOP')"],
-            'aurelia topic top'      => [self::AURELIA . 'topic/list/default.php', 'href="#forumtop"', "Text::_('COM_KUNENA_GEN_GOTOTOP')"],
+            'aurelia message top'    => [self::AURELIA . 'message/list/default.php', self::TOP_OF_LIST, "Text::_('COM_KUNENA_GEN_GOTOTOP')"],
+            'aurelia topic top'      => [self::AURELIA . 'topic/list/default.php', self::TOP_OF_LIST, "Text::_('COM_KUNENA_GEN_GOTOTOP')"],
             'aurelia writeaccess'    => [self::AURELIA . 'widget/writeaccess/default.php', 'data-bs-toggle="collapse"', "Text::sprintf('COM_KUNENA_TOGGLE_NAMED', Text::_('COM_KUNENA_WRITEACCESS'))"],
             'aurelia statistics'     => [self::AURELIA . 'widget/statistics/default.php', 'data-bs-toggle="collapse"', "Text::sprintf('COM_KUNENA_TOGGLE_NAMED', Text::_('COM_KUNENA_STATISTICS'))"],
             'aurelia whoisonline'    => [self::AURELIA . 'widget/whoisonline/default.php', 'data-bs-toggle="collapse"', "Text::sprintf('COM_KUNENA_TOGGLE_NAMED', Text::_('COM_KUNENA_MEMBERS'))"],
@@ -96,8 +99,11 @@ class IconOnlyControlsTest extends UnitTestCase
         foreach (['category/item', 'message/list', 'topic/list', 'user/list'] as $layout) {
             $content = Files::read(self::AURELIA . $layout . '/default.php');
 
-            $this->assertSame(1, substr_count($content, 'href="#forumtop"'), $layout . ': one go to top link expected.');
-            $this->assertStringContainsString('COM_KUNENA_GEN_GOTOTOP', $this->control($content, 'href="#forumtop"', $layout));
+            // A list which a page can show more than once (the tabs of a profile) links to its own top: forumtop-2, ...
+            $needle = str_contains($content, self::TOP_OF_LIST) ? self::TOP_OF_LIST : 'href="#forumtop"';
+
+            $this->assertSame(1, substr_count($content, $needle), $layout . ': one go to top link expected.');
+            $this->assertStringContainsString('COM_KUNENA_GEN_GOTOTOP', $this->control($content, $needle, $layout));
         }
     }
 

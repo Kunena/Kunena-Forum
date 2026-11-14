@@ -46,9 +46,9 @@ if (!isset($durations[$days])) {
                 <input type="hidden" name="return" value="<?php echo $this->escape(Uri::getInstance()->toString(['scheme', 'host', 'port', 'path', 'query'])); ?>"/>
                 <?php echo HTMLHelper::_('form.token'); ?>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="banModalLabel<?php echo $id; ?>">
+                    <h2 class="modal-title fs-5" id="banModalLabel<?php echo $id; ?>">
                         <?php echo Text::sprintf('COM_KUNENA_BAN_QUICK_TITLE', $this->escape($author->getName())); ?>
-                    </h5>
+                    </h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

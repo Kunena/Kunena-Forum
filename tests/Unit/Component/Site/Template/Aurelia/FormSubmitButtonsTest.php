@@ -106,6 +106,11 @@ class FormSubmitButtonsTest extends UnitTestCase
     {
         $position = strpos($content, 'id="' . $id . '"');
 
+        // A list which a page can show more than once takes its ids from uniqueId(), through $ids.
+        if ($position === false && preg_match('/\'(\w+)\'\s*=>\s*\$this->uniqueId\(\'' . preg_quote($id, '/') . '\'\)/', $content, $match)) {
+            $position = strpos($content, 'id="<?php echo $ids[\'' . $match[1] . '\']; ?>"');
+        }
+
         $this->assertNotFalse($position, $layout . ' has no form #' . $id);
 
         $start = strrpos(substr($content, 0, $position), '<form');

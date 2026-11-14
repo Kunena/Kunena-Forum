@@ -83,7 +83,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         <?php
                         if ($me->exists()) :
                         ?>
-                            <input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
+                            <input type="hidden" id="kurl_users<?php echo (int) $message->id; ?>" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
                         <?php endif; ?>
                         <?php echo HTMLHelper::_('form.token'); ?>
 
@@ -103,7 +103,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         ?>
                             <div class="form-group">
                                 <?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-                                <label for="email"></label><input type="text" id="email" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
+                                <label for="email<?php echo (int) $message->id; ?>"></label><input type="text" id="email<?php echo (int) $message->id; ?>" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
                             </div>
                         <?php endif; ?>
 
@@ -124,7 +124,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             <?php if ($editor == 1) {
                                 echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $config);
                             } else {
-                                echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+                                echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
                             } ?>
                         </div>
 
@@ -175,8 +175,8 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             ?>
                             <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />
                         </div>
-                        <input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
-                        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
+                        <input type="hidden" id="kurl_emojis<?php echo (int) $message->id; ?>" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
+                        <input type="hidden" id="kemojis_allowed<?php echo (int) $message->id; ?>" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
                     </form>
                 </div>
             </div>
@@ -184,11 +184,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
     </div>
 <?php elseif ($quick == 0) :
 ?>
-    <div class="modal fade" style="position: relative; top: 10px; right: -10px; z-index: 1; width: 100%;display: none;" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" data-bs-focus="false" tabindex="-1" aria-labelledby="staticBackdropLabel<?php echo $message->displayField('id'); ?>" aria-hidden="true">
+    <div class="modal fade" style="position: relative; top: 10px; right: -10px; z-index: 1; width: 100%;display: none;" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" data-bs-focus="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel<?php echo $message->displayField('id'); ?>" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel<?php echo $message->displayField('id'); ?>"><?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?></h5>
+                    <h3 class="modal-title fs-5" id="staticBackdropLabel<?php echo $message->displayField('id'); ?>"><?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?></h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -204,7 +204,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         <?php
                         if ($me->exists()) :
                         ?>
-                            <input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
+                            <input type="hidden" id="kurl_users<?php echo (int) $message->id; ?>" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
                         <?php endif; ?>
                         <?php echo HTMLHelper::_('form.token'); ?>
 
@@ -225,7 +225,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             ?>
                                 <div class="form-group">
                                     <?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-                                    <label for="email"></label><input type="text" id="email" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
+                                    <label for="email<?php echo (int) $message->id; ?>"></label><input type="text" id="email<?php echo (int) $message->id; ?>" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
                                 </div>
                             <?php endif; ?>
 
@@ -245,7 +245,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                 <?php if ($editor == 1) {
                                     echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $config);
                                 } else {
-                                    echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+                                    echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
                                 } ?>
                             </div>
 
@@ -295,8 +295,8 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             ?>
                             <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />
                         </div>
-                        <input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
-                        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
+                        <input type="hidden" id="kurl_emojis<?php echo (int) $message->id; ?>" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
+                        <input type="hidden" id="kemojis_allowed<?php echo (int) $message->id; ?>" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
                     </form>
                 </div>
             </div>

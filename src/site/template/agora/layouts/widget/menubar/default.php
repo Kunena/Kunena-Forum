@@ -23,7 +23,7 @@ use Joomla\CMS\Language\Text;
                 type="button" data-bs-target="#offcanvasKunena" data-bs-toggle="offcanvas">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="knav-offcanvas offcanvas offcanvas-start" id="offcanvasKunena" data-bs-scroll="false" tabindex="-1"
+        <div class="knav-offcanvas offcanvas offcanvas-start" id="offcanvasKunena" data-bs-scroll="false" tabindex="-1" role="dialog"
              aria-labelledby="offcanvasKunenaLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasKunenaLabel"><?php echo Text::_('COM_KUNENA_TEMPLATE_AGORA_KUNENA_MENU'); ?></h5>

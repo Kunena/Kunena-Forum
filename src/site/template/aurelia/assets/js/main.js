@@ -16,28 +16,38 @@ function kunenatableOrdering(order, dir, task, form) {
 }
 
 jQuery(document).ready(function ($) {
-	/* To check or uncheck boxes to select items */
+	/* To check or uncheck boxes to select items: the boxes of the same list (a page can show several lists, as the tabs of a
+	 * profile), or of the page when the box is not in a form. */
 	$('input.kcheckall').click(function () {
-		$('.kcheck').prop('checked', $(this).prop("checked"));
+		const form = $(this).closest('form');
+
+		(form.length ? form : $(document)).find('.kcheck').prop('checked', $(this).prop("checked"));
 	});
 
-	/* Allow to make working drop-down choose destination */
-	const bulkOptions = function () {
-		const task = $("#kchecktask").val();
+	/* Allow to make working drop-down choose destination. Each list has its own actions: their ids get a number after the
+	 * first list (kchecktask-2, kchecktarget-2), so they are looked for in the form of the list. */
+	const bulkOptions = function (select) {
+		const form = $(select).closest('form');
+		const scope = form.length ? form : $(document);
+		const task = $(select).val();
 		const move = task === 'move';
+		const target = scope.find('[id^="kchecktarget"]');
+		const status = scope.find('[id^="kcheckstatus"]');
 
 		/* The destination and the status (topic icon) are only shown for their action */
-		$("#kchecktarget").attr('disabled', !move).toggleClass('d-none', !move);
+		target.attr('disabled', !move).toggleClass('d-none', !move);
 
 		if (move) {
-			$("#kchecktarget").trigger("list:updated");
+			target.trigger("list:updated");
 		}
 
-		$("#kcheckstatus").attr('disabled', task !== 'status').toggleClass('d-none', task !== 'status');
+		status.attr('disabled', task !== 'status').toggleClass('d-none', task !== 'status');
 	};
 
-	$('#kchecktask').change(bulkOptions);
-	bulkOptions();
+	$('select.kchecktask, select[id^="kchecktask"]').each(function () {
+		$(this).change(() => bulkOptions(this));
+		bulkOptions(this);
+	});
 
 	$("input.kcatcheckall").click(function () {
 		$("input.kcatcheckall:checkbox").not(this).prop('checked', this.checked);

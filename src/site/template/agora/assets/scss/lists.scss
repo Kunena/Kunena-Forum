@@ -50,11 +50,13 @@
   min-width: 11rem;
 }
 
-/* The button which opens the panel of the filters: pressed while it is open. */
+/* The button which opens the panel of the filters (a funnel, named by its aria-label): pressed while it is open. */
 .agora-filter-toggle {
-  display: inline-flex;
-  gap: 0.5rem;
-  align-items: center;
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  min-height: 40px;
+  padding: 0;
 
   &:not(.collapsed) {
     color: var(--agora-text);

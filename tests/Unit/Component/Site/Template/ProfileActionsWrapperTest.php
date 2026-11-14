@@ -62,7 +62,8 @@ class ProfileActionsWrapperTest extends UnitTestCase
     {
         $content = Files::read('src/site/template/aurelia/layouts/widget/search/topic.php');
 
-        $this->assertMatchesRegularExpression('/<input name="query"[^>]*id="kunena-search-topic-query"/', $content);
+        // The id is unique on the page: a second copy (under the messages of a topic) gets a number.
+        $this->assertMatchesRegularExpression('/<input name="query"[^>]*id="<\?php echo \$this->uniqueId\(\'kunena-search-topic-query\'\); \?>"/', $content);
         $this->assertStringNotContainsString(self::OLD_ID, $content);
     }
 }

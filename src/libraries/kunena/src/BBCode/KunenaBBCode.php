@@ -191,7 +191,7 @@ class KunenaBBCode extends BBCode
         ]));
 
         // Load Kunena Library Language file as this method can also be used outside Kunena (e.g. EasySocial)
-        Factory::getApplication()->getLanguage()->load('com_kunena.libraries', JPATH_ADMINISTRATOR . '/components/com_kunena');
+        KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
     }
 
     /**

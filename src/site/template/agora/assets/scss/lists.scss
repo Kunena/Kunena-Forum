@@ -60,14 +60,30 @@
   border-radius: var(--agora-radius);
   box-shadow: var(--agora-shadow);
 
+  /* The columns of Bootstrap are too narrow for some fields and for the two buttons (they ran over the field before them):
+   * every field takes a share of the row and wraps when there is no room, the category and the search take more, the buttons
+   * take the room they need. */
+  > [class*="col-"] {
+    flex: 1 1 10rem;
+    width: auto;
+    max-width: 100%;
+  }
+
+  > .col-12,
+  > [class*="col-"]:has(input[name="fq"]) {
+    flex-basis: 14rem;
+  }
+
   .form-select-sm,
-  .form-control-sm {
-    min-height: 38px;
+  .form-control-sm,
+  .btn {
+    min-height: 40px;
     font-size: 0.9rem;
   }
 
   .text-end {
     display: flex;
+    flex: 0 0 auto;
     gap: 0.5rem;
     justify-content: flex-end;
   }

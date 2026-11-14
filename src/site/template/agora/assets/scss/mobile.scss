@@ -79,7 +79,7 @@
   }
 
   /* The last post of a category, under its name. */
-  tr.category > td:last-child:not(:first-child) {
+  tr[class^="category"] > td:last-child:not(:first-child) {
     padding-top: 0.5rem !important;
     border-top: 1px dashed var(--agora-border) !important;
 
@@ -88,8 +88,8 @@
     }
   }
 
-  tr.category > td > .float-end,
-  tr.category > td > .float-start {
+  tr[class^="category"] > td > .float-end,
+  tr[class^="category"] > td > .float-start {
     float: none !important;
   }
 

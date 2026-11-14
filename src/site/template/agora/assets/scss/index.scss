@@ -125,12 +125,14 @@
 }
 
 /* The last post of a category: a little card. */
-.agora-section tr.category > td:last-child {
+.agora-section tr[class^="category"] > td:last-child {
   width: 34%;
+}
 
-  /* The avatar of the last author: the size of the icon of the category and at the same top, without the line box under an
-   * inline picture. */
-  /* Aurelia gives the box (#kcat-avatar) a size of its own. */
+/* The avatar of the last author, on the index and in the lists of topics (their rows start with the class category too, or with a suffix: category-stickymsg): a circle of the size
+ * of the icon of the row and at the same top, without the line box under an inline picture. A picture which is not square is
+ * cropped, not stretched. Aurelia gives the box (#kcat-avatar) a size of its own. */
+tr[class^="category"] {
   #kcat-avatar.klast-avatar,
   .klast-avatar {
     width: 44px;
@@ -149,14 +151,62 @@
     place-items: center;
     width: 44px !important;
     height: 44px !important;
+    overflow: hidden;
     object-fit: cover;
-    border-radius: 50%;
+    /* Bootstrap's .rounded sets its radius with !important. */
+    border-radius: 50% !important;
   }
 
   .klast-avatar .rounded > svg,
   .klast-avatar .kavatar > svg {
-    width: 22px;
-    height: 22px;
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  /* The lists of messages (the posts of a profile) put the avatar in a column of a quarter of the cell: the same layout as the
+   * other lists, the circle and the text beside it. */
+  td > .row:has(> .col-md-3 + .col-md-9) {
+    flex-wrap: nowrap;
+    gap: 1rem;
+    align-items: flex-start;
+    margin: 0;
+
+    > .col-md-3 {
+      flex: 0 0 44px;
+      width: 44px;
+      max-width: 44px;
+      padding: 0;
+      line-height: 0;
+
+      > a {
+        display: block;
+      }
+
+      img,
+      .rounded,
+      .kavatar {
+        display: grid !important;
+        place-items: center;
+        width: 44px !important;
+        height: 44px !important;
+        overflow: hidden;
+        object-fit: cover;
+        border-radius: 50% !important;
+      }
+
+      .rounded > svg,
+      .kavatar > svg {
+        width: 22px !important;
+        height: 22px !important;
+      }
+    }
+
+    > .col-md-9 {
+      flex: 1 1 auto;
+      width: auto;
+      min-width: 0;
+      padding: 0;
+    }
   }
 }
 
@@ -222,7 +272,7 @@
     padding: 1rem;
   }
 
-  .agora-section tr.category > td:last-child {
+  .agora-section tr[class^="category"] > td:last-child {
     width: auto;
   }
 }

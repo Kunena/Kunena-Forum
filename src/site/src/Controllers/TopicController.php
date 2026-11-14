@@ -35,6 +35,7 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaPendingAttachment;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
@@ -402,6 +403,61 @@ class TopicController extends KunenaController
         }
 
         echo json_encode($success);
+
+        jexit();
+    }
+
+    /**
+     * Remove with AJAX the files uploaded in a posting form which is cancelled: only the pending uploads of the user himself.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function removependingattachments()
+    {
+        // Only support JSON requests.
+        if ($this->input->getWord('format', 'html') != 'json') {
+            throw new RuntimeException(Text::_('Bad Request'), 400);
+        }
+
+        if (!Session::checkToken('request')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
+        $removed = 0;
+
+        // A guest cannot prove that an upload is his: his uploads are left to the scheduled clean-up.
+        if ($this->me->exists() && !$this->me->isBanned()) {
+            $ids = array_map('intval', (array) $this->input->post->get('ids', [], 'array'));
+            $ids = \array_slice(array_values(array_unique(array_filter($ids, fn ($id) => $id > 0))), 0, 100);
+
+            foreach ($ids as $id) {
+                $attachment = KunenaAttachmentHelper::get($id);
+
+                if (
+                    $attachment->exists()
+                    && KunenaPendingAttachment::mayRemoveOnCancel((int) $attachment->mesid, (int) $attachment->userid, (int) $this->me->userid)
+                    && $attachment->isAuthorised('delete')
+                    && $attachment->delete()
+                ) {
+                    $removed++;
+                }
+            }
+        }
+
+        header('Content-type: application/json');
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+
+        while (@ob_end_clean()) {
+        }
+
+        echo json_encode(['removed' => $removed]);
 
         jexit();
     }

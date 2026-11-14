@@ -40,11 +40,11 @@ $this->addStyleSheet('rating.css');
     <?php if (!empty($this->topics)) : ?>
         <div class="row">
             <div class="col-md-12">
-                <h2 class="float-end">
+                <div class="float-end kunena-search-widget">
                     <?php echo $this->subLayout('Widget/Search')
                         ->set('catid', $this->category->id)
                         ->setLayout('topic'); ?>
-                </h2>
+                </div>
 
                 <div class="float-start">
                     <?php echo $this->subLayout('Widget/Pagination/List')

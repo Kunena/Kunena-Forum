@@ -82,12 +82,12 @@ if ($this->topic->locked) {
             ->set('pagination', $this->pagination)
             ->set('display', true); ?>
     </div>
-    <h2 class="float-end">
+    <div class="float-end kunena-search-widget">
         <?php echo $this->subLayout('Widget/Search')
             ->set('id', $this->topic->id)
             ->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
             ->setLayout('topic'); ?>
-    </h2>
+    </div>
 
     <div class="clearfix"></div>
 

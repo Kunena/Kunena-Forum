@@ -34,18 +34,22 @@ if (PHP_SAPI === 'cli') {
     $headerBase = rtrim(Uri::root(), '/');
 }
 
-if ($this->approved) {
-    $msg1 = Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION_APPROVED_MESSAGE');
-} else {
-    $msg1 = KunenaMessage::formatEmailHeading($this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT'), $config->boardTitle, $author->getName('???', false));
-}
+// The author of an approved message gets the approved heading, without the subscription texts and the unsubscribe part.
+$approved = !empty($this->approved);
 
-$msg2 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
-$more = ($this->once ?
-    Text::_(
-        $this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
-            'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE'
-    ) . "\n" : '');
+if ($approved) {
+    $msg1 = Text::_(KunenaMessage::subscriptionHeadingKey((bool) $this->message->parent, true));
+    $msg2 = '';
+    $more = '';
+} else {
+    $msg1 = KunenaMessage::formatEmailHeading(Text::_(KunenaMessage::subscriptionHeadingKey((bool) $this->message->parent, false)), $config->boardTitle, $author->getName('???', false));
+    $msg2 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
+    $more = ($this->once ?
+        Text::_(
+            $this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
+                'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE'
+        ) . "\n" : '');
+}
 
 if (!$config->plainEmail) :
 // New post email for subscribers (HTML)
@@ -240,9 +244,12 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 13px; font-weight: 400; line-height: 150%;
             padding: 20px 6.25%;color: #999999;font-family: sans-serif;" class="footer">
-                            <?php echo Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?><br/>
-                            <?php echo $msg2; ?>
-                            <?php if (!empty($this->unsubscribeUrl)) : ?>
+                            <?php echo Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?>
+                            <?php if (!$approved) : ?>
+                                <br/>
+                                <?php echo $msg2; ?>
+                            <?php endif; ?>
+                            <?php if (!$approved && !empty($this->unsubscribeUrl)) : ?>
                                 <br/><br/>
                                 <?php echo Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC'); ?>
                                 <a href="<?php echo htmlspecialchars($this->unsubscribeUrl, ENT_QUOTES, 'UTF-8'); ?>" style="color: #999999;"><?php echo Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE'); ?></a>
@@ -270,7 +277,7 @@ if (!$config->plainEmail) :
 
     $unsubscribe = '';
 
-    if (!empty($this->unsubscribeUrl)) {
+    if (!$approved && !empty($this->unsubscribeUrl)) {
         $unsubscribe = "
 
 " . Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC') . "

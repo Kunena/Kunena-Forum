@@ -3018,6 +3018,9 @@ class TopicController extends KunenaController
             return; // -- abort
         }
 
+        // Only an unapproved message tells its author that it was approved.
+        $wasUnapproved = $target->hold == 1;
+
         try {
             $target->publish(KunenaForum::PUBLISHED);
         } catch (Exception $e) {
@@ -3049,9 +3052,9 @@ class TopicController extends KunenaController
             // A topic sends the notification of its first post; a message (a reply) sends its own (KunenaMessage has no
             // sendNotification() anymore).
             if ($target instanceof KunenaMessage) {
-                $target->processNotification(null, true, true);
+                $target->processNotification(null, $wasUnapproved, true);
             } else {
-                $target->sendNotification(null, true, true);
+                $target->sendNotification(null, $wasUnapproved, true);
             }
         }
 

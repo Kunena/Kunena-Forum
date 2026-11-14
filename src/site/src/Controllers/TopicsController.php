@@ -296,10 +296,11 @@ class TopicsController extends KunenaController
             foreach ($topics as $topic) {
                 try {
                     $topic->tryAuthorise('approve');
+                    $wasUnapproved = $topic->hold == 1;
                     $topic->publish(KunenaForum::PUBLISHED);
 
                     $message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
-                    $topic->sendNotification();
+                    $topic->sendNotification(null, $wasUnapproved);
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
@@ -611,9 +612,10 @@ class TopicsController extends KunenaController
             foreach ($messages as $message) {
                 try {
                     $message->tryAuthorise('approve');
+                    $wasUnapproved = $message->hold == 1;
                     $message->publish(KunenaForum::PUBLISHED);
 
-                    $message->processNotification();
+                    $message->processNotification(null, $wasUnapproved);
                     $success++;
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');

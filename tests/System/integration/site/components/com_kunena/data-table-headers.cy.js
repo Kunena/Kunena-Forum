@@ -5,7 +5,10 @@ describe('Kunena data tables: captions and column headers', () => {
   const base = '/index.php?option=com_kunena';
   const admin = { id: 797 };
   const user = { id: 798 };
-  let draftsBefore;
+  // The template Aurelia (the site may run another one), the drafts, and the top lists of the statistics (posters, profiles and
+  // topics), which are only shown when their options are on.
+  const options = { template: 'aurelia', enableDrafts: '1', showPopUserStats: '1', showPopSubjectStats: '1' };
+  const old = {};
 
   const page = (query) => cy.request(`${base}&${query}`).then((response) => {
     expect(response.status, `the status of ${query}`).to.eq(200);
@@ -45,8 +48,10 @@ describe('Kunena data tables: captions and column headers', () => {
   });
 
   before(() => {
-    cy.kunena_setOption('enableDrafts', '1').then((old) => {
-      draftsBefore = old;
+    Object.entries(options).forEach(([name, value]) => {
+      cy.kunena_setOption(name, value).then((before) => {
+        old[name] = before;
+      });
     });
   });
 
@@ -69,7 +74,9 @@ describe('Kunena data tables: captions and column headers', () => {
   });
 
   after(() => {
-    cy.kunena_setOption('enableDrafts', draftsBefore ?? '0');
+    Object.keys(options).forEach((name) => {
+      cy.then(() => cy.kunena_setOption(name, old[name] ?? null));
+    });
     cy.task('queryDB', `DELETE FROM #__kunena_drafts WHERE user_id = ${admin.id} AND subject = 'A draft of the data tables test'`);
   });
 

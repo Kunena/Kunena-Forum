@@ -2474,7 +2474,7 @@ class KunenaModelInstall extends BaseDatabaseModel
                     $success = false;
                 }
 
-                if ($action['mode'] == 'silenterror' || !$this->db->getAffectedRows() || $success) {
+                if ($action['mode'] == 'silenterror' || $success) {
                     $result = null;
                 } else {
                     $result = ['action' => 'SQL Query: ' . $query, 'name' => '', 'success' => $success];

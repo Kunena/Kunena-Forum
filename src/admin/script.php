@@ -403,6 +403,65 @@ class Com_KunenaInstallerScript extends InstallerScript
     }
 
     /**
+     * Does the block of this version of the upgrade file run for the installed version?
+     *
+     * @param   string  $blockVersion  The version of the block in the upgrade file.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    private function runsUpgradeBlock(string $blockVersion): bool
+    {
+        return $blockVersion == '@' . 'kunenaversion' . '@'
+            || version_compare(strtolower($blockVersion), strtolower($this->installedVersion), '>')
+            || $this->isOpenDevelopmentBlock($blockVersion);
+    }
+
+    /**
+     * Run the actions of one block of the upgrade file. A failing action does not stop the actions after it.
+     *
+     * @param   iterable            $actions      The actions (SimpleXMLElement) of the block.
+     * @param   KunenaModelInstall  $modelInstall  The model which runs an action.
+     *
+     * @return  array<array{step:string,reason:string}>  One entry per failed action.
+     *
+     * @since   Kunena 8.0
+     */
+    private function runUpgradeActions(iterable $actions, KunenaModelInstall $modelInstall): array
+    {
+        $failures = [];
+
+        foreach ($actions as $action) {
+            $reason = null;
+
+            try {
+                $result = $modelInstall->processUpgradeXMLNode($action);
+
+                if (\is_array($result) && empty($result['success'])) {
+                    $reason = trim(($result['action'] ?? '') . ' ' . ($result['name'] ?? ''));
+                }
+            } catch (Throwable $e) {
+                $reason = $e->getMessage();
+            }
+
+            if ($reason === null) {
+                continue;
+            }
+
+            $step = match ($action->getName()) {
+                'phpfile' => $action['name'] . '.php',
+                'query'   => (string) $action,
+                default   => $action->getName(),
+            };
+
+            $failures[] = ['step' => $step, 'reason' => $reason];
+        }
+
+        return $failures;
+    }
+
+    /**
      * Method to upgrade the database at the end of installation.
      *
      * @return  boolean
@@ -440,13 +499,12 @@ class Com_KunenaInstallerScript extends InstallerScript
             $status[$vernum] = 1;
 
             if ($version['version'] == '@' . 'kunenaversion' . '@') {
-                $git    = 1;
                 $vernum = KunenaForum::version();
             }
 
-            if (isset($git) || version_compare(strtolower($version['version']), strtolower($this->installedVersion), '>') || $this->isOpenDevelopmentBlock((string) $version['version'])) {
-                foreach ($version as $action) {
-                    $modelInstall->processUpgradeXMLNode($action);
+            if ($this->runsUpgradeBlock((string) $version['version'])) {
+                foreach ($this->runUpgradeActions($version, $modelInstall) as $failure) {
+                    $app->enqueueMessage(Text::sprintf('COM_KUNENA_INSTALL_UPGRADE_STEP_FAILED', $vernum, $failure['step'], $failure['reason']), 'error');
                 }
 
                 // Once per version, not once per action of the version.

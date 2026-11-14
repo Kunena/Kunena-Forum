@@ -12,6 +12,7 @@
 
 namespace Kunena\Tests\Unit\Codebase;
 
+use Com_KunenaInstallerScript;
 use Kunena\Tests\Unit\Support\Files;
 use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -39,6 +40,32 @@ class InstallerScriptVersionTest extends UnitTestCase
     {
         $this->assertTrue(version_compare($installed, '7.0.0', '<'));
         $this->assertTrue(version_compare('5.2.0-alpha1', strtolower($installed), '>'));
+    }
+
+    /**
+     * @return  array<string,array{0:string,1:string,2:bool}>
+     */
+    public static function developmentBlocks(): array
+    {
+        return [
+            'an earlier pre-release of the version in development'   => ['8.0.0-ALPHA1-DEV', '8.0.0-DEV', true],
+            'a pre-release with a beta'                              => ['8.0.0-BETA2', '8.0.0-DEV', true],
+            'the released version does not run it again'             => ['8.0.0', '8.0.0-DEV', false],
+            'a later version does not run it again'                  => ['8.1.0', '8.0.0-DEV', false],
+            'a release candidate of the version before'              => ['7.1.0-RC1', '7.0.0-DEV', false],
+            'the block of a version which is not in development'     => ['8.0.0-ALPHA1-DEV', '5.2.0-ALPHA1', false],
+            'the placeholder block of a git checkout is not matched' => ['7.99.0', '@kunenaversion@', false],
+        ];
+    }
+
+    #[DataProvider('developmentBlocks')]
+    public function testTheBlockOfAVersionInDevelopmentRunsAgainUntilThatVersionIsReleased(string $installed, string $block, bool $runs): void
+    {
+        require_once Files::path('src/admin/script.php');
+
+        $script = self::bare(Com_KunenaInstallerScript::class, ['installedVersion' => $installed]);
+
+        $this->assertSame($runs, self::invoke($script, 'isOpenDevelopmentBlock', $block));
     }
 
     public function testTheInstallerScriptDoesNotTrustAnUnreadableVersion(): void

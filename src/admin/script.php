@@ -379,6 +379,30 @@ class Com_KunenaInstallerScript extends InstallerScript
     }
 
     /**
+     * Is this the block of a version which is still in development, for a site which has a pre-release of that version?
+     *
+     * The block of a version in development (8.0.0-DEV) gets new statements while that version is developed. For
+     * version_compare() 8.0.0-DEV is older than 8.0.0-ALPHA1-DEV, so a site which has installed an earlier pre-release would
+     * never run the statements which were added to the block since. The block is run again as long as the installed version is
+     * older than the version itself (8.0.0): its statements can be run twice, and the installed version of a released
+     * version never runs it again.
+     *
+     * @param   string  $blockVersion  The version of the block in the upgrade file.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    private function isOpenDevelopmentBlock(string $blockVersion): bool
+    {
+        if (!preg_match('/^(\d+\.\d+\.\d+)-DEV$/i', $blockVersion, $match)) {
+            return false;
+        }
+
+        return version_compare($this->installedVersion, $match[1], '<');
+    }
+
+    /**
      * Method to upgrade the database at the end of installation.
      *
      * @return  boolean
@@ -420,7 +444,7 @@ class Com_KunenaInstallerScript extends InstallerScript
                 $vernum = KunenaForum::version();
             }
 
-            if (isset($git) || version_compare(strtolower($version['version']), strtolower($this->installedVersion), '>')) {
+            if (isset($git) || version_compare(strtolower($version['version']), strtolower($this->installedVersion), '>') || $this->isOpenDevelopmentBlock((string) $version['version'])) {
                 foreach ($version as $action) {
                     $modelInstall->processUpgradeXMLNode($action);
                 }

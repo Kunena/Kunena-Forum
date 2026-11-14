@@ -115,6 +115,11 @@ describe('Kunena attachments: the text of the message after removing an upload',
         cy.window().should((win) => {
           expect(view.ready(win), name).to.equal(true);
         });
+        // SCEditor sets its value back to the one of the textarea on pageshow, which comes right after the load event that cy.visit
+        // waits for: the text is set one task later.
+        cy.window().then((win) => new Cypress.Promise((resolve) => {
+          win.setTimeout(resolve, 0);
+        }));
         cy.window().then((win) => view.set(win));
         cy.window().then((win) => {
           original = view.read(win);
@@ -128,6 +133,9 @@ describe('Kunena attachments: the text of the message after removing an upload',
           mimeType: 'text/plain',
         }, { force: true });
         cy.contains('#files button', 'Remove File').should('be.visible');
+        cy.window().then((win) => {
+          expect(lines(view.read(win)), 'the lines of the text after the upload').to.deep.equal(lines(original));
+        });
       });
 
       // Removes the file with the button, after the server confirmed the removal.

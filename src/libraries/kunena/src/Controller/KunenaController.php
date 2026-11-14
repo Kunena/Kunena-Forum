@@ -180,7 +180,8 @@ class KunenaController extends BaseController
                 throw $e;
             }
 
-            throw new RouteNotFoundException(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404, $e);
+            // No previous exception: the error page of a site in debug mode would show its "View not found" text.
+            throw new RouteNotFoundException(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404);
         }
 
         // The view cannot show a layout without its display method (see KunenaView::displayLayout()).

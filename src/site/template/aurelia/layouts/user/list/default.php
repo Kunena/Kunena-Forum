@@ -53,9 +53,10 @@ $this->addScript('assets/js/search.js');
     <?php echo HTMLHelper::_('form.token'); ?>
 
     <table class="table table-bordered table-striped">
+        <caption class="visually-hidden"><?php echo Text::_('COM_KUNENA_MEMBERS'); ?></caption>
         <thead>
         <tr>
-            <th class="col-md-1 center d-none d-md-table-cell">
+            <th scope="col" class="col-md-1 center d-none d-md-table-cell">
                 <a id="forumtop"> </a>
                 <a href="#forumbottom" rel="nofollow" aria-label="<?php echo Text::_('COM_KUNENA_GEN_GOTOBOTTOM'); ?>">
                     <?php echo KunenaIcons::arrowdown(); ?>
@@ -64,14 +65,14 @@ $this->addScript('assets/js/search.js');
 
             <?php if ($config->userlistOnline && $config->userStatus) :
                 $cols++; ?>
-                <th class="col-md-1 center d-none d-md-table-cell">
+                <th scope="col" class="col-md-1 center d-none d-md-table-cell">
                     <?php echo Text::_('COM_KUNENA_USRL_ONLINE'); ?>
                 </th>
             <?php endif; ?>
 
             <?php if ($config->userlistAvatar) :
                 $cols++; ?>
-                <th class="col-md-1 center d-none d-md-table-cell">
+                <th scope="col" class="col-md-1 center d-none d-md-table-cell">
                     <?php echo Text::_('COM_KUNENA_USRL_AVATAR'); ?>
                 </th>
             <?php endif; ?>
@@ -79,7 +80,7 @@ $this->addScript('assets/js/search.js');
             <?php if ($config->username) :
                 $cols++;
                 ?>
-                <th class="col-md-2">
+                <th scope="col" class="col-md-2">
                     <?php echo HTMLHelper::_(
                     'kunenagrid.sort',
                     'COM_KUNENA_USERNAME',
@@ -95,7 +96,7 @@ $this->addScript('assets/js/search.js');
             <?php else :
                 $cols++;
                 ?>
-                <th class="col-md-3">-->
+                <th scope="col" class="col-md-3">-->
                     <?php echo HTMLHelper::_(
                     'kunenagrid.sort',
                     'COM_KUNENA_REALNAME',
@@ -114,7 +115,7 @@ $this->addScript('assets/js/search.js');
             <?php if ($config->userlistPosts) :
                 $cols++;
                 ?>
-                <th class="col-md-1 center d-none d-md-table-cell">
+                <th scope="col" class="col-md-1 center d-none d-md-table-cell">
                     <?php echo HTMLHelper::_(
                     'kunenagrid.sort',
                     'COM_KUNENA_USRL_POSTS',
@@ -133,7 +134,7 @@ $this->addScript('assets/js/search.js');
             <?php if ($config->userlistKarma) :
                 $cols++;
                 ?>
-                <th class="col-md-1 center d-none d-md-table-cell">
+                <th scope="col" class="col-md-1 center d-none d-md-table-cell">
                     <?php echo HTMLHelper::_(
                     'kunenagrid.sort',
                     'COM_KUNENA_USRL_KARMA',
@@ -152,7 +153,7 @@ $this->addScript('assets/js/search.js');
             <?php if ($config->userListUserType) :
                 $cols++;
                 ?>
-                <th class="col-md-1 center d-none d-md-table-cell">
+                <th scope="col" class="col-md-1 center d-none d-md-table-cell">
                     <?php echo Text::_('COM_KUNENA_USRL_USERTYPE'
                     );
                     ?>
@@ -163,7 +164,7 @@ $this->addScript('assets/js/search.js');
             <?php if ($config->userlistEmail) :
                 $cols++;
                 ?>
-            <th class="col-md-1 d-none d-md-table-cell">
+            <th scope="col" class="col-md-1 d-none d-md-table-cell">
                 <?php echo HTMLHelper::_(
                     'kunenagrid.sort',
                     'COM_KUNENA_USRL_EMAIL',
@@ -181,7 +182,7 @@ $this->addScript('assets/js/search.js');
                 <?php if ($config->userlistJoinDate) :
                     $cols++;
                     ?>
-            <th class="col-md-2 d-none d-md-table-cell">
+            <th scope="col" class="col-md-2 d-none d-md-table-cell">
                     <?php echo HTMLHelper::_(
                         'kunenagrid.sort',
                         'COM_KUNENA_USRL_JOIN_DATE',
@@ -200,7 +201,7 @@ $this->addScript('assets/js/search.js');
             <?php if ($config->userlistLastVisitDate) :
                 $cols++;
                 ?>
-                <th class="col-md-2 d-none d-md-table-cell">
+                <th scope="col" class="col-md-2 d-none d-md-table-cell">
                     <?php echo HTMLHelper::_(
                     'kunenagrid.sort',
                     'COM_KUNENA_USRL_LAST_LOGIN',
@@ -218,7 +219,7 @@ $this->addScript('assets/js/search.js');
 
             <?php if ($config->userlistUserHits) :
                 ?>
-                <th class="col-md-1 center d-none d-md-table-cell">
+                <th scope="col" class="col-md-1 center d-none d-md-table-cell">
                     <?php echo HTMLHelper::_(
                     'kunenagrid.sort',
                     'COM_KUNENA_USRL_HITS',

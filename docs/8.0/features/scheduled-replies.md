@@ -43,7 +43,8 @@ A reply is not published, and stays a message waiting for approval which the mod
 
 - it was held for review (see above);
 - its topic was deleted, is waiting for approval or is locked;
-- its author was removed, is banned or blocked, or may no longer reply in the topic.
+- its author was removed, is banned or blocked, or may no longer reply in the topic;
+- its category now requires review and its author is not a moderator of it.
 
 ## The scheduler task
 

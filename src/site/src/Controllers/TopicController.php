@@ -1651,7 +1651,6 @@ class TopicController extends KunenaController
 
         $attachIds          = isset($attachIds[0]) && $attachIds[0] !== '' ? explode(',', $attachIds[0]) : [];
         $attachIds          = $this->ownPrivateAttachments($attachIds, $message);
-        $moderator          = $this->me->isModerator($message->getCategory());
         $parent             = $message->getParent();
         $author             = $message->getAuthor();
         $pAuthor            = $parent->getAuthor();
@@ -1673,11 +1672,9 @@ class TopicController extends KunenaController
             $private->users()->add($author->userid);
         }
 
-        if ($pAuthor->exists() && ($moderator || $pAuthor->isModerator($message->getCategory()))) {
-            // Attach receiver (but only if moderator either posted or replied parent post).
-            if ($pAuthor->exists()) {
-                $private->users()->add($pAuthor->userid);
-            }
+        // Attach receiver: the author of the post replied to (none for the first post of a topic or a guest post).
+        if ($pAuthor->exists()) {
+            $private->users()->add($pAuthor->userid);
         }
 
         $private->attachments()->setMapped($attachIds);

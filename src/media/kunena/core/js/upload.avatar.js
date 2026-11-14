@@ -179,11 +179,7 @@ jQuery(function ($) {
 				if ($.isEmptyObject(data) === false) {
 					fileCount = 1;
 
-					if (data.name != undefined) {
-						const name = data.name;
-					} else {
-						const name = '';
-					}
+					const name = data.name !== undefined ? data.name : '';
 
 					const object = $('<div><p><img alt="" src="' + data.path + '" width="100" height="100" /><br /><span>' + name + '</span><br /></p></div>');
 					data.uploaded = true;

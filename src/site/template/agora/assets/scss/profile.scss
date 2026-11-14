@@ -352,6 +352,126 @@ form[id^="kform-user"],
   }
 }
 
+/* The avatar tab of the edit form: Aurelia puts it in a striped table with the labels in a wide column. Here each part (upload,
+ * gallery) is a block with its label above it; the current avatar is a row (the picture, its name, a small button to remove it). */
+#kavatars-message-container + .table {
+  display: block;
+  margin: 0;
+
+  > tbody,
+  > tbody > tr,
+  > tr {
+    display: block;
+  }
+
+  > tbody > tr > td,
+  > tr > td {
+    display: block;
+    width: auto !important;
+    max-width: none;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  > tbody > tr + tr,
+  > tr + tr {
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--agora-border);
+  }
+
+  > tbody > tr > td:first-child,
+  > tr > td:first-child {
+    margin-bottom: 0.5rem;
+
+    label {
+      margin: 0;
+      font-weight: 650;
+    }
+  }
+
+  .fileinput-button {
+    margin-bottom: 1rem;
+  }
+
+  #files {
+    display: block;
+    padding: 0;
+
+    &:empty {
+      display: none;
+    }
+
+    > div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      align-items: center;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      display: flex;
+      flex: 1 1 auto;
+      gap: 1rem;
+      align-items: center;
+      min-width: 0;
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    br {
+      display: none;
+    }
+
+    img {
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border: 1px solid var(--agora-border);
+      border-radius: 50%;
+    }
+
+    span {
+      font-size: 0.85rem;
+      color: var(--agora-text-muted);
+    }
+
+    .text-danger {
+      color: var(--agora-danger) !important;
+    }
+
+    .btn-danger {
+      --bs-btn-color: var(--agora-danger);
+      --bs-btn-bg: var(--agora-surface);
+      --bs-btn-border-color: var(--agora-border-strong);
+      --bs-btn-hover-color: var(--agora-danger);
+      --bs-btn-hover-bg: var(--agora-surface-hover);
+      --bs-btn-hover-border-color: var(--agora-danger);
+      --bs-btn-active-color: var(--agora-danger);
+      --bs-btn-active-bg: var(--agora-surface-hover);
+      --bs-btn-active-border-color: var(--agora-danger);
+      gap: 0.5rem;
+      min-height: 32px;
+      padding: 0.25rem 1rem;
+      font-size: 0.85rem;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .dropzone {
+    max-width: 100%;
+  }
+}
+
 /* The gallery of the avatars. */
 #gallery_list,
 .kavatar-gallery {

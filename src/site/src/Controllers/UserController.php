@@ -1510,13 +1510,13 @@ class UserController extends KunenaController
         $userid = $this->input->getInt('userid');
         $kuser  = KunenaFactory::getUser($userid);
 
-        $avatar       = new stdClass();
-        $avatar->name = $kuser->avatar;
+        $avatar = new stdClass();
 
-        if (!empty($kuser->avatar)) {
+        // A user without an avatar, or whose file is gone: nothing to show and nothing to remove (the option of a default avatar is
+        // gone since Kunena 6.4).
+        if (!empty($kuser->avatar) && is_file(KPATH_MEDIA . '/avatars/' . $kuser->avatar)) {
+            $avatar->name = $kuser->avatar;
             $avatar->path = Uri::root() . 'media/kunena/avatars/' . $kuser->avatar;
-        } else {
-            $avatar->path = Uri::root() . 'media/kunena/avatars/' . $this->config->defaultAvatar;
         }
 
         header('Content-type: application/json');

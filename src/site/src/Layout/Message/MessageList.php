@@ -74,17 +74,19 @@ class MessageList extends KunenaLayout
      * Method to display the time filter
      *
      * @param   int|string  $id      The HTML id for the select list
-     * @param   string      $attrib  The extras attributes for the select list
+     * @param   ?string     $attrib  The extras attributes for the select list
      *
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public function displayTimeFilter($id = 'filter-time', $attrib = 'class="form-select filter" onchange="this.form.submit()"')
+    public function displayTimeFilter($id = 'filter-time', $attrib = null)
     {
         if (!isset($this->state)) {
             return;
         }
+
+        $attrib ??= 'class="form-select filter" aria-label="' . Text::_('COM_KUNENA_FILTER_TIME') . '"';
 
         // Make the select list for time selection
         $timesel[] = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_SHOW_ALL'));

@@ -138,7 +138,7 @@ $attachments = $this->attachments;
                                 ?>
                                     <td class="center">
                                         <a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
-                                            data-bs-toggle="modal"><?php echo KunenaIcons::delete(); ?></a>
+                                            data-bs-toggle="modal" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_FILES_DELETE_NAMED', $attachment->getFilename())); ?>"><?php echo KunenaIcons::delete(); ?></a>
 
                                         <div class="modal fade" id="modaldelete<?php echo $i ?>" tabindex="-1" role="dialog"
                                             aria-labelledby="modaldelete<?php echo $i ?>Label">

@@ -21,8 +21,9 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 <div class="kfrontend shadow-lg rounded mt-4 border">
     <div class="btn-toolbar float-end">
         <div class="btn-group">
-            <div class="btn btn-outline-primary border btn-sm" data-bs-toggle="collapse"
-                data-bs-target="#kstats"><?php echo KunenaIcons::collapse(); ?></div>
+            <button type="button" class="btn btn-outline-primary border btn-sm" data-bs-toggle="collapse"
+                data-bs-target="#kstats" aria-controls="kstats" aria-expanded="true"
+                aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', Text::_('COM_KUNENA_STATISTICS'))); ?>"><?php echo KunenaIcons::collapse(); ?></button>
         </div>
     </div>
     <h2 class="card-header">

@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 ?>
@@ -23,5 +24,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
       target="_self">
     <input type="hidden" name="view" value="category"/>
     <input type="hidden" name="task" value="jump"/>
-    <div class="selector col-12 col-sm-6 col-lg-4 mb-3"><?php echo $this->categorylist; ?></div>
+    <div class="selector col-12 col-sm-6 col-lg-4 mb-3 d-flex gap-2">
+        <?php echo $this->categorylist; ?>
+        <button type="submit" class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_GO'); ?></button>
+    </div>
 </form>

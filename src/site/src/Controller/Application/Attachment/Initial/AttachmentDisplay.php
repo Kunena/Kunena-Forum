@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site\Controller\Application\Attachment\Initial;
 
 use Exception;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -154,38 +155,14 @@ class AttachmentDisplay extends KunenaControllerDisplay
         header('ETag: ' . $attachment->hash);
         header('Pragma: public');
         header('X-Content-Type-Options: nosniff');
-        // A file opened by itself runs no script and reaches no other address (a picture with a script, an SVG): it is shown,
-        // and a picture in a page is not changed by it.
-        header("Content-Security-Policy: default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; sandbox");
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
 
-        if (!$download && $attachment->isImage()) {
-            // By default display images inline.
-            $guest = new KunenaUser();
+        // If guests can access an inline picture or PDF, we allow it to be cached for an hour.
+        $guestMayRead = !$download && ($attachment->isImage() || $attachment->isPdf())
+            && $attachment->isAuthorised('read', new KunenaUser());
 
-            // If guests can access the image, we allow it to be cached for an hour.
-            if ($attachment->isAuthorised('read', $guest)) {
-                $maxage = 60 * 60;
-                header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxage) . ' GMT');
-                header('Cache-Control: public, max-age=' . $maxage);
-            }
-            // No guest access -- force re-validate.
-            else {
-                header('Expires: 0');
-                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            }
-
-            header('Content-type: ' . $attachment->filetype);
-            header('Content-Disposition: inline; ' . self::dispositionName($attachment->getFilename(false)));
-        } else {
-            // Otherwise force file download.
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/force-download');
-            header('Content-Type: application/octet-stream');
-            header('Content-Type: application/download');
-            header('Content-Disposition: attachment; ' . self::dispositionName($attachment->getFilename(false)));
+        foreach (self::fileHeaders($attachment, $download, $guestMayRead) as $line) {
+            header($line);
         }
 
         header('Content-Transfer-Encoding: binary');
@@ -216,6 +193,70 @@ class AttachmentDisplay extends KunenaControllerDisplay
         $this->me       = KunenaUserHelper::getMyself();
         $this->config   = KunenaConfig::getInstance();
         $this->document = $this->app->getDocument();
+    }
+
+    /**
+     * The headers which depend on the kind of answer: an inline picture, an inline PDF or a download.
+     *
+     * @param   KunenaAttachment  $attachment    The attachment.
+     * @param   bool              $download      True when the file is asked as a download.
+     * @param   bool              $guestMayRead  True when a guest may read the file: an inline file is then cached for an hour.
+     *
+     * @return  string[]  The header lines.
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fileHeaders(KunenaAttachment $attachment, bool $download, bool $guestMayRead): array
+    {
+        // A file opened by itself runs no script and reaches no other address (a picture with a script, an SVG): it is shown,
+        // and a picture in a page is not changed by it.
+        $sandbox = "Content-Security-Policy: default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; sandbox";
+        $name    = self::dispositionName($attachment->getFilename(false));
+
+        $pdf = !$download && $attachment->isPdf();
+
+        if (!$pdf && ($download || !$attachment->isImage())) {
+            // Otherwise force file download.
+            return [
+                $sandbox,
+                'Expires: 0',
+                'Cache-Control: must-revalidate, post-check=0, pre-check=0',
+                'Content-Description: File Transfer',
+                'Content-Type: application/force-download',
+                'Content-Type: application/octet-stream',
+                'Content-Type: application/download',
+                'Content-Disposition: attachment; ' . $name,
+            ];
+        }
+
+        if ($guestMayRead) {
+            $maxage  = 60 * 60;
+            $headers = [
+                'Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxage) . ' GMT',
+                'Cache-Control: public, max-age=' . $maxage,
+            ];
+        }
+        // No guest access -- force re-validate.
+        else {
+            $headers = [
+                'Expires: 0',
+                'Cache-Control: must-revalidate, post-check=0, pre-check=0',
+            ];
+        }
+
+        if ($pdf) {
+            // The viewer of PDF files of Chromium does not open in a sandbox, and it is an object which default-src 'none'
+            // blocks. The fixed type and nosniff let only the viewer of the browser show the file; no other site frames it.
+            $headers[] = "Content-Security-Policy: frame-ancestors 'self'";
+            $headers[] = 'Content-Type: application/pdf';
+        } else {
+            $headers[] = $sandbox;
+            $headers[] = 'Content-type: ' . $attachment->filetype;
+        }
+
+        $headers[] = 'Content-Disposition: inline; ' . $name;
+
+        return $headers;
     }
 
     /**

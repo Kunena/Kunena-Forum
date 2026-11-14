@@ -888,8 +888,15 @@ jQuery(document).ready(function ($) {
 		// ---- The features of the CKEditor which the SCEditor did not have: mentions, the poll button only where a poll is
 		// ---- allowed and no images pasted into the editor.
 
+		// The poll of the edited topic may not be edited: the button only shows it, the save checks it again.
+		var kunenaPollEditRefused = Joomla.getOptions('com_kunena.pollEditRefused');
+
 		// Is a poll allowed: in a category which allows polls (when the topic has no poll yet) or when the topic has a poll.
 		var kunenaPollAllowed = function () {
+			if (kunenaPollEditRefused !== undefined) {
+				return false;
+			}
+
 			var pollcategoriesidOption = Joomla.getOptions('com_kunena.pollcategoriesid');
 			var pollcategoriesid = pollcategoriesidOption !== undefined ? jQuery.parseJSON(pollcategoriesidOption) : undefined;
 			var pollexist = jQuery('#poll_exist_edit');
@@ -904,10 +911,14 @@ jQuery(document).ready(function ($) {
 
 		var kunenaPollButtonUpdate = function () {
 			jQuery('.sceditor-button-poll').toggleClass('disabled', !kunenaPollAllowed());
+
+			if (kunenaPollEditRefused !== undefined) {
+				jQuery('.sceditor-button-poll').attr({'title': kunenaPollEditRefused, 'aria-describedby': 'poll-edit-refused'});
+			}
 		};
 
-		// The poll command works only where a poll is allowed.
-		var kunenaPollCommand = sceditor.command.get('poll');
+		// The poll command works only where a poll is allowed. The editor has its own copy of the commands.
+		var kunenaPollCommand = sceditor.instance(textarea).commands.poll;
 		var kunenaPollExec = kunenaPollCommand.exec;
 		var kunenaPollTxtExec = kunenaPollCommand.txtExec;
 
@@ -920,6 +931,20 @@ jQuery(document).ready(function ($) {
 			if (kunenaPollAllowed()) {
 				kunenaPollTxtExec.call(this, caller);
 			}
+		};
+
+		// A switch between source and WYSIWYG mode enables the buttons again: the state of the poll button is set after it.
+		var kunenaSourceCommand = sceditor.instance(textarea).commands.source;
+		var kunenaSourceExec = kunenaSourceCommand.exec;
+		var kunenaSourceTxtExec = kunenaSourceCommand.txtExec;
+
+		kunenaSourceCommand.exec = function (caller) {
+			kunenaSourceExec.call(this, caller);
+			kunenaPollButtonUpdate();
+		};
+		kunenaSourceCommand.txtExec = function (caller) {
+			kunenaSourceTxtExec.call(this, caller);
+			kunenaPollButtonUpdate();
 		};
 
 		kunenaPollButtonUpdate();

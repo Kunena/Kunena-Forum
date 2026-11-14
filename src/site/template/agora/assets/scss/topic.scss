@@ -35,7 +35,7 @@
   }
 
   > .float-start,
-  > h2.float-end {
+  > .kunena-search-widget {
     margin-bottom: 0.5rem;
   }
 }
@@ -253,6 +253,16 @@
     display: block;
     max-width: 100%;
     overflow-x: auto;
+  }
+
+  /* A table written with [table]: the cells take the colours of Agora. The layout table of [columns] stays without borders. */
+  table:not(.bbcode_columns) > tbody > tr > th,
+  table:not(.bbcode_columns) > tbody > tr > td {
+    border: 1px solid var(--agora-border);
+  }
+
+  table:not(.bbcode_columns) > tbody > tr > th {
+    background-color: var(--agora-surface-2);
   }
 }
 

@@ -357,19 +357,22 @@ class KunenaIcons
         }
 
         if ($topicicontype == 'svg') {
+            // The class kcaticon (and knewchar) lets the colours of the template reach the svg, which uses currentColor.
+            $svgclass = trim('kcaticon ' . $newchar);
+
             if (!$categoryicon) {
                 if ($newchar) {
-                    return KunenaSvgIcons::loadsvg('folder-fill');
+                    return '<span class="' . $svgclass . '">' . KunenaSvgIcons::loadsvg('folder-fill') . '</span>';
                 }
 
-                return KunenaSvgIcons::loadsvg('folder');
+                return '<span class="' . $svgclass . '">' . KunenaSvgIcons::loadsvg('folder') . '</span>';
 
             }
             if (is_file(JPATH_SITE . '/media/kunena/core/svg/' . $categoryicon . '.svg')) {
-                return KunenaSvgIcons::loadsvg($categoryicon);
+                return '<span class="' . $svgclass . '">' . KunenaSvgIcons::loadsvg($categoryicon) . '</span>';
             }
 
-            return '<span class="icon ' . $categoryicon . $bigicon . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"></span>';
+            return '<span class="icon ' . $categoryicon . $bigicon . $svgclass . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"></span>';
 
         }
 

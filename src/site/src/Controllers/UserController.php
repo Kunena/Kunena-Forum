@@ -53,6 +53,7 @@ use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
+use Kunena\Forum\Libraries\User\KunenaAvatarGalleryName;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
@@ -636,6 +637,11 @@ class UserController extends KunenaController
         $socials = KunenaUserSocials::getInstance($user->userid);
 
         foreach ($socials as $key => $social) {
+            // A website which the admin switched off keeps its value.
+            if (!$socials->isEnabled($key)) {
+                continue;
+            }
+
             if ($input->$method->get('social' . $key, '', 'string') !== null) {
                 $socials->$key->value = $input->$method->get('social' . $key, '', 'string');
             }
@@ -688,7 +694,7 @@ class UserController extends KunenaController
         // Only an existing picture of the avatar gallery may be used: no other folders, no parent folder segments.
         if (
             !empty($avatar_gallery)
-            && preg_match('#^gallery(?:/(?!\.)[\w .\-]+)?/(?!\.)[\w .\-]+\.(?:png|jpe?g|gif|webp)$#i', $avatar_gallery)
+            && KunenaAvatarGalleryName::isAvatar($avatar_gallery)
             && is_file(KPATH_MEDIA . '/avatars/' . $avatar_gallery)
         ) {
             $user->avatar = $avatar_gallery;
@@ -1516,6 +1522,48 @@ class UserController extends KunenaController
         }
 
         echo json_encode($avatar);
+
+        jexit();
+    }
+
+    /**
+     * The pictures of one gallery of avatars (gallery_name, '' for the pictures directly in the folder of the galleries), for a
+     * member: the value to save and the URL of each picture.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public function galleryimages()
+    {
+        if (!Session::checkToken('get')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
+        $name = $this->input->getString('gallery_name', '');
+        $list = [];
+
+        if ($this->me->exists()) {
+            foreach (KunenaAvatarGalleryName::pictures(JPATH_ROOT . '/media/kunena/avatars/gallery', $name) as $picture) {
+                $list[] = [
+                    'value' => 'gallery/' . $picture,
+                    'url'   => Uri::root() . 'media/kunena/avatars/gallery/' . implode('/', array_map('rawurlencode', explode('/', $picture))),
+                ];
+            }
+        }
+
+        header('Content-type: application/json');
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
+
+        echo json_encode($list);
 
         jexit();
     }

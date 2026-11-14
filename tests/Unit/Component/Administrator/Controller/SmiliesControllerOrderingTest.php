@@ -116,9 +116,9 @@ class SmiliesControllerOrderingTest extends UnitTestCase
 
     public function testTheUpdateFileOfJoomlaAddsAndFillsTheColumn(): void
     {
-        $sql = (string) file_get_contents($this->root() . 'admin/sql/updates/mysql/7.2.0-DEV.sql');
+        $sql = (string) file_get_contents($this->root() . 'admin/sql/updates/mysql/8.0.0-DEV.sql');
 
-        $add  = strpos($sql, "ALTER TABLE `#__kunena_smileys` ADD `ordering` int(11) NOT NULL default '0' AFTER `emoticonbar`;");
+        $add  = strpos($sql, "ALTER TABLE `#__kunena_smileys` ADD COLUMN `ordering` int(11) NOT NULL default '0' AFTER `emoticonbar`;");
         $fill = strpos($sql, 'UPDATE `#__kunena_smileys` SET `ordering` = `id` WHERE `ordering` = 0;');
 
         $this->assertNotFalse($add, 'The update file does not add the ordering of the smilies.');

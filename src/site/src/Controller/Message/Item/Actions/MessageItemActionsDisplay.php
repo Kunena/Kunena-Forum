@@ -99,7 +99,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
         $id     = $this->message->thread;
         $catid  = $this->message->catid;
         $token  = Session::getFormToken();
-        $Itemid = KunenaRoute::fixMissingItemID();
+        $Itemid = (int) KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}");
 
         $task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}&{$token}=1";
         $layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}";

@@ -63,6 +63,18 @@ h2 {
     font-size: 20px;
 }
 
+.kunena-search-widget {
+    margin-bottom: 0.5rem;
+}
+
+.kunena-profile-actions {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
 h3 {
     font-size: 18px;
 }
@@ -423,6 +435,22 @@ form {
     margin: 20px 0;
     font-family: Helvetica, Arial, sans-serif;
     word-wrap: break-word;
+}
+
+// A table written with [table] in a message: bordered cells. The layout table of [columns] stays without borders.
+.kmsg table:not(.bbcode_columns) {
+    border-collapse: collapse;
+}
+
+.kmsg table:not(.bbcode_columns) > tbody > tr > th,
+.kmsg table:not(.bbcode_columns) > tbody > tr > td {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--bs-border-color, #dee2e6);
+}
+
+.kmsg table:not(.bbcode_columns) > tbody > tr > th {
+    font-weight: bold;
+    background-color: var(--bs-tertiary-bg, #f8f9fa);
 }
 
 .input-xxlarge {
@@ -807,7 +835,7 @@ input[type="radio"] {
 
 #editavatar input[type="radio"],
 #poll-vote input[type="radio"],
-#search input[type="radio"] {
+.kunena-search-panel input[type="radio"] {
     display: inline-block;
 }
 
@@ -831,10 +859,6 @@ ul.list-inline i {
     margin-top: 12px;
 }
 
-#search [class*="span"] {
-    margin-left: 6px;
-}
-
 div.pagination a.disabled,
 div.pagination a.disabled:hover {
     color: #999;
@@ -848,10 +872,6 @@ div.pagination a.disabled:hover {
 //   padding: 0;
 // }
 
-.btn .caret {
-    margin-bottom: 0 !important;
-}
-
 .knav-collapse.collapse {
     height: auto;
 }
@@ -864,40 +884,34 @@ div.pagination a.disabled:hover {
     display: inline-block;
 }
 
-.btn-toolbar .btn.fa:before,
-#search .btn.fa:before {
+.btn-toolbar .btn.fa:before {
     font-size: 14px;
     content: "\f106";
 }
 
-.btn-toolbar .btn.fa.collapsed:before,
-#search .btn.fa.collapsed:before {
+.btn-toolbar .btn.fa.collapsed:before {
     font-size: 14px;
     content: "\f107";
 }
 
-.btn-toolbar .btn.b3:before,
-#search .btn.b3:before {
+.btn-toolbar .btn.b3:before {
     font-family: "Glyphicons Halflings", serif;
     font-size: 14px;
     content: "\e260";
 }
 
-.btn-toolbar .btn.b3.collapsed:before,
-#search .btn.b3.collapsed:before {
+.btn-toolbar .btn.b3.collapsed:before {
     font-family: "Glyphicons Halflings", serif;
     font-size: 14px;
     content: "\e259";
 }
 
-.btn-toolbar .btn.b2:before,
-#search .btn.b2:before {
+.btn-toolbar .btn.b2:before {
     font-size: 14px;
     background-position: -288px -120px;
 }
 
-.btn-toolbar .btn.b2.collapsed:before,
-#search .btn.b2.collapsed:before {
+.btn-toolbar .btn.b2.collapsed:before {
     font-size: 14px;
     background-position: -313px -119px;
 }
@@ -1205,10 +1219,6 @@ a.dropdown-toggle {
     box-shadow: 0 0 0 1px #d4d4d4, 0 0 0 0 #fff, 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-// #search select#mode {
-//   margin-left: 0;
-// }
-
 #ann-showdate select,
 #ann-publish select,
 #kuserform .form-inline input {
@@ -1255,8 +1265,7 @@ a.dropdown-toggle {
 
 #ann-date .date,
 #ann-date2 .date,
-#ann-date3 .date,
-#searchatdate .date {
+#ann-date3 .date {
     display: inline-block !important;
 }
 
@@ -1384,6 +1393,17 @@ a .rounded,
     border-radius: 50%;
 }
 
+/* With the SVG icon set the avatar picture is wrapped in a span which carries the shape class */
+span.rounded > img {
+    border-radius: var(--bs-border-radius);
+}
+
+span.img-thumbnail > img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
 .kfrontend {
     margin: 3rem 0;
 }
@@ -1424,6 +1444,8 @@ a .rounded,
     word-wrap: break-word;
     white-space: pre-wrap;
     margin: 0;
+    padding: 1em;
+    background: var(--bs-tertiary-bg, #f1f1f1);
 }
 
 // A block coloured by highlight.js shows the background and the text colour of its theme (github-dark) all over.
@@ -1438,3 +1460,87 @@ pre.bbcode_code_body:has(> code.hljs) {
 }
 
 .table th, .table td { background-color: inherit; }
+
+/* The tree of the threaded topic layout: the edges of each message (layouts/topic/item/message/row.php). */
+.kunena-topic-tree .ktree {
+  display: inline-block;
+  position: relative;
+  width: 1.25rem;
+  height: 1.5rem;
+  vertical-align: middle;
+}
+
+.kunena-topic-tree .ktree-edge::before,
+.kunena-topic-tree .ktree-crossedge::before,
+.kunena-topic-tree .ktree-lastedge::before,
+.kunena-topic-tree .ktree-gap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 50%;
+  border-inline-start: 1px solid var(--bs-border-color);
+}
+
+.kunena-topic-tree .ktree-lastedge::before {
+  bottom: 50%;
+}
+
+.kunena-topic-tree .ktree-gap::before {
+  border-inline-start-style: dotted;
+}
+
+.kunena-topic-tree .ktree-crossedge::after,
+.kunena-topic-tree .ktree-lastedge::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 50%;
+  inset-inline-end: 0;
+  border-top: 1px solid var(--bs-border-color);
+}
+
+.kunena-topic-tree .ktree-root::after,
+.kunena-topic-tree .ktree-node::after,
+.kunena-topic-tree .ktree-leaf::after,
+.kunena-topic-tree .ktree-single::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: -0.25rem;
+  border-radius: 50%;
+  background-color: var(--bs-secondary-color);
+}
+
+/* The cell of the message itself is narrower than the cells of its parents: its dot ends the line of the last edge. */
+.kunena-topic-tree .ktree-root,
+.kunena-topic-tree .ktree-node,
+.kunena-topic-tree .ktree-leaf,
+.kunena-topic-tree .ktree-single {
+  width: 0.75rem;
+}
+
+/* The indented topic layout: 1.5rem per level of the tree, at most 5 levels (layouts/topic/item/default.php), so that a message
+   keeps its room on a phone. */
+.kunena-topic-indent-1 {
+  padding-inline-start: 1.5rem;
+}
+
+.kunena-topic-indent-2 {
+  padding-inline-start: 3rem;
+}
+
+.kunena-topic-indent-3 {
+  padding-inline-start: 4.5rem;
+}
+
+.kunena-topic-indent-4 {
+  padding-inline-start: 6rem;
+}
+
+.kunena-topic-indent-5 {
+  padding-inline-start: 7.5rem;
+}

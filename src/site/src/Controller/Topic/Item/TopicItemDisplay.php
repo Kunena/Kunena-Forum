@@ -27,6 +27,7 @@ use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -37,7 +38,6 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
@@ -192,7 +192,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
             0,
             $options,
             $this->catParams,
-            'class="form-select" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_FORUM_TOP') . '" size="1" onchange = "this.form.submit()"',
+            'class="form-select" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_FORUM_TOP') . '" size="1" aria-label="' . Text::_('COM_KUNENA_CATEGORY') . '"',
             'value',
             'text'
         );
@@ -327,57 +327,86 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         $this->headerText = KunenaParser::parseText($this->topic->displayField('subject'));
 
-        $data                           = new stdClass();
-        $data->{'@context'}             = "https://schema.org";
-        $data->{'@type'}                = "DiscussionForumPosting";
-        $data->{'url'}                  = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
-        $data->{'discussionUrl'}        = $this->topic->getPermaUrl();
-        $data->{'headline'}             = $this->headerText;
-        $data->{'image'}                = $this->docImage();
-        $data->{'datePublished'}        = $this->topic->getFirstPostTime()->toISO8601();
-
-        if ($this->message->modified_time !== null) {
-            $data->{'dateModified'}         = Factory::getDate($this->message->modified_time)->toISO8601();
-        }
-
-        $data->{'author'}               = [];
-        $tmp                            = new stdClass();
-        $tmp->{'@type'}                 = "Person";
-        // The name which the forum shows: the username is the name with which the user logs in, and the forum may keep it for itself.
-        $tmp->{'name'}                  = $this->topic->getLastPostAuthor()->getName('', false);
-        $tmp->{'url'}                   = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getLastPostAuthor()->getURL();
-        $data->{'author'}               = $tmp;
-        $data->interactionStatistic     = [];
-        $tmp2                           = new stdClass();
-        $tmp2->{'@type'}                = "InteractionCounter";
-        $tmp2->{'interactionType'}      = "InteractionCounter";
-        $tmp2->{'userInteractionCount'} = $this->topic->getReplies();
-        $data->interactionStatistic     = $tmp2;
-        $tmp3                           = new stdClass();
-        $tmp3->{'@type'}                = "ImageObject";
-        $tmp3->{'url'}                  = $this->docImage();
-        $tmp4                           = new stdClass();
-        $tmp4->{'@type'}                = "Organization";
-        $tmp4->{'name'}                 = $this->config->boardTitle;
-        $tmp4->{'logo'}                 = $tmp3;
-        $data->publisher                = (array) $tmp4;
-        $data->mainEntityOfPage         = [];
-        $tmp5                           = new stdClass();
-        $tmp5->{'@type'}                = "WebPage";
-        $tmp5->{'name'}                 = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
-        $data->mainEntityOfPage         = $tmp5;
-
-        if ($this->category->allowRatings && $this->config->ratingEnabled && KunenaRateHelper::getCount($this->topic->id) > 0) {
-            $data->aggregateRating  = [];
-            $tmp3                   = new stdClass();
-            $tmp3->{'@type'}        = "AggregateRating";
-            $tmp3->{'itemReviewed'} = $this->headerText;
-            $tmp3->{'ratingValue'}  = KunenaRateHelper::getSelected($this->topic->id) > 0 ? KunenaRateHelper::getSelected($this->topic->id) : 5;
-            $tmp3->{'reviewCount'}  = KunenaRateHelper::getCount($this->topic->id);
-            $data->aggregateRating  = $tmp3;
-        }
+        $data = $this->getStructuredData(KunenaMessageHelper::get($this->topic->first_post_id));
 
         KunenaTemplate::getInstance()->addScriptDeclaration(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP), 'application/ld+json');
+    }
+
+    /**
+     * The structured data (schema.org DiscussionForumPosting) of the topic, for the JSON-LD block in the head of the page.
+     * The values are plain text: json_encode() with JSON_HEX_TAG and JSON_HEX_AMP keeps them from closing the script element.
+     *
+     * @param   KunenaMessage  $first  The first message of the topic.
+     *
+     * @return  array
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected function getStructuredData(KunenaMessage $first): array
+    {
+        $host = Uri::getInstance()->toString(['scheme', 'host', 'port']);
+        $url  = $host . $this->topic->getPermaUrl(null, false);
+
+        $data = [
+            '@context'      => 'https://schema.org',
+            '@type'         => 'DiscussionForumPosting',
+            'url'           => $url,
+            'discussionUrl' => $url,
+            'headline'      => (string) $this->topic->subject,
+        ];
+
+        // The text of [hide], [confidential] and [private] is taken out by stripBBCode() for every viewer.
+        $text = trim(preg_replace('/\s+/', ' ', (string) KunenaParser::stripBBCode((string) $first->message, 500, false)));
+
+        if ($text !== '') {
+            $data['text'] = $text;
+        }
+
+        $data['datePublished'] = $this->topic->getFirstPostTime()->toISO8601();
+
+        if (!empty($first->modified_time)) {
+            $data['dateModified'] = (new KunenaDate($first->modified_time))->toISO8601();
+        }
+
+        $author = $this->topic->getFirstPostAuthor();
+        // The name which the forum shows: the username is the name with which the user logs in, and the forum may keep it for itself.
+        $data['author'] = ['@type' => 'Person', 'name' => $author->getName('', false)];
+        // No address for a guest, nor for a profile which the viewer may not see.
+        $profile = $author->getURL(false);
+
+        if ($profile) {
+            $data['author']['url'] = preg_match('#^https?://#i', $profile) ? $profile : $host . $profile;
+        }
+
+        $data['interactionStatistic'] = [
+            '@type'                => 'InteractionCounter',
+            'interactionType'      => 'https://schema.org/CommentAction',
+            'userInteractionCount' => (int) $this->topic->getReplies(),
+        ];
+
+        $category         = $this->topic->getCategory();
+        $data['isPartOf'] = [
+            '@type' => 'CollectionPage',
+            'name'  => (string) $category->name,
+            'url'   => $host . $category->getUrl(null, false),
+        ];
+
+        $data['publisher'] = [
+            '@type' => 'Organization',
+            'name'  => $this->config->boardTitle,
+            'url'   => Uri::root(),
+        ];
+
+        $data['mainEntityOfPage'] = ['@type' => 'WebPage', '@id' => $url];
+
+        $image = $this->docImage();
+
+        if ($image) {
+            $data['image'] = $image;
+        }
+
+        return $data;
     }
 
     /**
@@ -400,7 +429,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $thankyous = KunenaMessageThankyouHelper::getByMessage($batch);
 
         // First collect ids and users.
-        $threaded       = ($this->layout == 'indented' || $this->layout == 'threaded');
+        $layout         = $this->me->getTopicLayout($this->layout);
+        $threaded       = ($layout == 'indented' || $layout == 'threaded');
         $userlist       = [];
         $this->threaded = [];
         $location       = $this->pagination->limitstart;
@@ -443,7 +473,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $this->message = reset($this->messages);
         }
 
-        if ($threaded) {
+        // A page without a message which the user may see has no tree.
+        if ($threaded && $this->messages) {
             if (!isset($this->messages[$this->topic->first_post_id])) {
                 $this->messages = $this->getThreadedOrdering(0, ['edge']);
             } else {
@@ -528,6 +559,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
     protected function getThreadedOrdering($parent = 0, $indent = [])
     {
         $list = [];
+
+        if (empty($this->threaded[$parent])) {
+            return $list;
+        }
 
         if (\count($indent) == 1 && $this->topic->getTotal() > $this->pagination->limitstart + $this->pagination->limit) {
             $last = -1;

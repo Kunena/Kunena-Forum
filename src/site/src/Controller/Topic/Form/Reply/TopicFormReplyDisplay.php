@@ -91,6 +91,30 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
     public mixed $unsentFields = null;
 
     /**
+     * The field to publish the reply later: for a logged-in user only.
+     *
+     * @var     boolean
+     * @since   Kunena 8.0
+     */
+    public mixed $scheduleField = false;
+
+    /**
+     * The value of that field after a post which was refused.
+     *
+     * @var     string
+     * @since   Kunena 8.0
+     */
+    public mixed $scheduledTime = '';
+
+    /**
+     * The time zone in which the date of that field is read.
+     *
+     * @var     string
+     * @since   Kunena 8.0
+     */
+    public mixed $scheduleTimezone = '';
+
+    /**
      * Prepare topic reply form.
      *
      * @return  void
@@ -198,6 +222,14 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
         // Fields restored after a failed post exist only in this form; a draft keeps its own copy.
         $this->unsentFields = !empty($saved) && $this->input->getInt('draftid', 0) === 0;
+
+        // A logged-in user can publish the reply later. The date is read in his time zone, as the dates are shown to him.
+        $this->scheduleField = $this->me->exists();
+
+        if ($this->scheduleField) {
+            $this->scheduledTime    = (string) ($saved['scheduled_time'] ?? '');
+            $this->scheduleTimezone = (string) $this->app->getIdentity()->getParam('timezone', $this->app->get('offset', 'UTC'));
+        }
 
         $this->app->setUserState('com_kunena.postfields', null);
 

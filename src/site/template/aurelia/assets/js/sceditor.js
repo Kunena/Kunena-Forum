@@ -57,6 +57,41 @@ jQuery(document).ready(function ($) {
 			}
 		};
 		
+		// Shared by the [soundcloud], [ebay], [instagram] and [tweet] placeholders below: the default attribute is kept in
+		// data-kunena-<tag>-defaultattr and each named attribute (only names of letters, digits, _ and -) in data-kunena-<tag>-<name>.
+		var kunenaEmbedHtml = function (tag, tooltip, attrs, content) {
+			var data = '';
+
+			if (attrs.defaultattr !== undefined)
+				data += ' data-kunena-' + tag + '-defaultattr="' + sceditor.escapeEntities(attrs.defaultattr, true) + '"';
+
+			Object.keys(attrs).forEach(function (name) {
+				if (name !== 'defaultattr' && /^[a-z0-9_-]+$/i.test(name))
+					data += ' data-kunena-' + tag + '-' + name + '="' + sceditor.escapeEntities(attrs[name], true) + '"';
+			});
+
+			// The content is the text of the tag, already escaped by the parser.
+			return '<div data-kunena-' + tag + '="1"' + data +
+				' title="' + sceditor.escapeEntities(Joomla.Text._(tooltip), true) + '"' +
+				' style="border: 1px dashed #888; padding: 4px 8px;">' + content + '</div>';
+		};
+
+		// Gives back [tag=default name=value ...]content[/tag] from a placeholder made by kunenaEmbedHtml.
+		var kunenaEmbedFormat = function (tag, element, content) {
+			var prefix = 'data-kunena-' + tag + '-',
+				attrs = '';
+
+			if (element.hasAttribute(prefix + 'defaultattr'))
+				attrs += '=' + element.getAttribute(prefix + 'defaultattr');
+
+			Array.prototype.forEach.call(element.attributes, function (attr) {
+				if (attr.name.indexOf(prefix) === 0 && attr.name !== prefix + 'defaultattr')
+					attrs += ' ' + attr.name.substr(prefix.length) + '=' + attr.value;
+			});
+
+			return '[' + tag + attrs + ']' + content + '[/' + tag + ']';
+		};
+
 		// Add Hidetext
 		sceditor.command.set('hidetext', {
 			exec: function () {
@@ -86,53 +121,22 @@ jQuery(document).ready(function ($) {
 		}),
 		// End spoiler
 
-		// Add bbcode soundcloud
+		// Add bbcode soundcloud: [soundcloud]url[/soundcloud] is shown as a placeholder with the url, as [map] is.
 		sceditor.formats.bbcode.set('soundcloud', {
+			tags: {
+				div: {
+					'data-kunena-soundcloud': null
+				}
+			},
+			isInline: false,
+			allowedChildren: ['#', '#newline'],
 			format: function (element, content) {
-				if (jQuery(element).data('sceditor-emoticon'))
-					return content;
-	
-				var url = jQuery(element).attr('src'),
-					width = jQuery(element).attr('width'),
-					height = jQuery(element).attr('height'),
-					align = jQuery(element).data('scealign');
-	
-				var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
-					? '=' + width + 'x' + height
-					: ''
-				;
-	
-				if (align === 'left' || align === 'right')
-					attrs += ' align='+align
-	
-				return '[soundcloud' + attrs + ']' + url + '[/soundcloud]';
+				return kunenaEmbedFormat('soundcloud', element, content);
 			},
 			html: function (token, attrs, content) {
-				var	width, height, match,
-					align = attrs.align,
-					attribs = '';
-	
-				// handle [img=340x240]url[/img]
-				if (attrs.defaultattr) {
-					match = attrs.defaultattr.split(/x/i);
-	
-					width  = match[0];
-					height = (match.length === 2 ? match[1] : match[0]);
-	
-					if (width !== undefined && height !== undefined && width > 0 && height > 0) {
-						attribs +=
-							' width="' + sceditor.escapeEntities(width, true) + '"' +
-							' height="' + sceditor.escapeEntities(height, true) + '"';
-					}
-				}
-	
-				if (align === 'left' || align === 'right')
-					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
-	
-				return '<img alt="" ' + attribs +
-					' src="' + sceditor.escapeUriScheme(content) + '" />';
+				return kunenaEmbedHtml('soundcloud', 'COM_KUNENA_SCEDITOR_COMMAND_INSERT_SOUNDCLOUD', attrs, content);
 			}
-		})
+		});
 	
 		sceditor.command.set('soundcloud', {
 			_dropDown: function (editor, caller) {
@@ -171,53 +175,22 @@ jQuery(document).ready(function ($) {
 			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_SOUNDCLOUD'),
 		});
 	
-		// Add bbcode ebay
+		// Add bbcode ebay: [ebay]id[/ebay] is shown as a placeholder with the item id, as [map] is.
 		sceditor.formats.bbcode.set('ebay', {
+			tags: {
+				div: {
+					'data-kunena-ebay': null
+				}
+			},
+			isInline: false,
+			allowedChildren: ['#', '#newline'],
 			format: function (element, content) {
-				if (jQuery(element).data('sceditor-emoticon'))
-					return content;
-	
-				var url = jQuery(element).attr('src'),
-					width = jQuery(element).attr('width'),
-					height = jQuery(element).attr('height'),
-					align = jQuery(element).data('scealign');
-	
-				var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
-					? '=' + width + 'x' + height
-					: ''
-				;
-	
-				if (align === 'left' || align === 'right')
-					attrs += ' align='+align
-	
-				return '[ebay' + attrs + ']' + url + '[/ebay]';
+				return kunenaEmbedFormat('ebay', element, content);
 			},
 			html: function (token, attrs, content) {
-				var	width, height, match,
-					align = attrs.align,
-					attribs = '';
-	
-				// handle [img=340x240]url[/img]
-				if (attrs.defaultattr) {
-					match = attrs.defaultattr.split(/x/i);
-	
-					width  = match[0];
-					height = (match.length === 2 ? match[1] : match[0]);
-	
-					if (width !== undefined && height !== undefined && width > 0 && height > 0) {
-						attribs +=
-							' width="' + sceditor.escapeEntities(width, true) + '"' +
-							' height="' + sceditor.escapeEntities(height, true) + '"';
-					}
-				}
-	
-				if (align === 'left' || align === 'right')
-					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
-	
-				return '<img alt="" ' + attribs +
-					' src="' + sceditor.escapeUriScheme(content) + '" />';
+				return kunenaEmbedHtml('ebay', 'COM_KUNENA_SCEDITOR_COMMAND_INSERT_EBAY', attrs, content);
 			}
-		})
+		});
 	
 		sceditor.command.set('ebay', {
 			_dropDown: function (editor, caller) {
@@ -256,53 +229,22 @@ jQuery(document).ready(function ($) {
 			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_EBAY'),
 		});
 	
-		// Add bbcode instagram
+		// Add bbcode instagram: [instagram]url[/instagram] is shown as a placeholder with the url, as [map] is.
 		sceditor.formats.bbcode.set('instagram', {
+			tags: {
+				div: {
+					'data-kunena-instagram': null
+				}
+			},
+			isInline: false,
+			allowedChildren: ['#', '#newline'],
 			format: function (element, content) {
-				if (jQuery(element).data('sceditor-emoticon'))
-					return content;
-	
-				var url = jQuery(element).attr('src'),
-					width = jQuery(element).attr('width'),
-					height = jQuery(element).attr('height'),
-					align = jQuery(element).data('scealign');
-	
-				var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
-					? '=' + width + 'x' + height
-					: ''
-				;
-	
-				if (align === 'left' || align === 'right')
-					attrs += ' align='+align
-	
-				return '[instagram' + attrs + ']' + url + '[/instagram]';
+				return kunenaEmbedFormat('instagram', element, content);
 			},
 			html: function (token, attrs, content) {
-				var	width, height, match,
-					align = attrs.align,
-					attribs = '';
-	
-				// handle [img=340x240]url[/img]
-				if (attrs.defaultattr) {
-					match = attrs.defaultattr.split(/x/i);
-	
-					width  = match[0];
-					height = (match.length === 2 ? match[1] : match[0]);
-	
-					if (width !== undefined && height !== undefined && width > 0 && height > 0) {
-						attribs +=
-							' width="' + sceditor.escapeEntities(width, true) + '"' +
-							' height="' + sceditor.escapeEntities(height, true) + '"';
-					}
-				}
-	
-				if (align === 'left' || align === 'right')
-					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
-	
-				return '<img alt="" ' + attribs +
-					' src="' + sceditor.escapeUriScheme(content) + '" />';
+				return kunenaEmbedHtml('instagram', 'COM_KUNENA_SCEDITOR_COMMAND_INSERT_INSTAGRAM', attrs, content);
 			}
-		})
+		});
 	
 		sceditor.command.set('instagram', {
 			_dropDown: function (editor, caller) {
@@ -341,53 +283,22 @@ jQuery(document).ready(function ($) {
 			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_INSTAGRAM'),
 		});
 	
-		// Add bbcode X
-		sceditor.formats.bbcode.set('x_social', {
+		// Add bbcode X: [tweet]id[/tweet] (inserted by the x_social button) is shown as a placeholder with the id, as [map] is.
+		sceditor.formats.bbcode.set('tweet', {
+			tags: {
+				div: {
+					'data-kunena-tweet': null
+				}
+			},
+			isInline: false,
+			allowedChildren: ['#', '#newline'],
 			format: function (element, content) {
-				if (jQuery(element).data('sceditor-emoticon'))
-					return content;
-	
-				var url = jQuery(element).attr('src'),
-					width = jQuery(element).attr('width'),
-					height = jQuery(element).attr('height'),
-					align = jQuery(element).data('scealign');
-	
-				var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
-					? '=' + width + 'x' + height
-					: ''
-				;
-	
-				if (align === 'left' || align === 'right')
-					attrs += ' align='+align
-	
-				return '[tweet' + attrs + ']' + url + '[/tweet]';
+				return kunenaEmbedFormat('tweet', element, content);
 			},
 			html: function (token, attrs, content) {
-				var	width, height, match,
-					align = attrs.align,
-					attribs = '';
-	
-				// handle [img=340x240]url[/img]
-				if (attrs.defaultattr) {
-					match = attrs.defaultattr.split(/x/i);
-	
-					width  = match[0];
-					height = (match.length === 2 ? match[1] : match[0]);
-	
-					if (width !== undefined && height !== undefined && width > 0 && height > 0) {
-						attribs +=
-							' width="' + sceditor.escapeEntities(width, true) + '"' +
-							' height="' + sceditor.escapeEntities(height, true) + '"';
-					}
-				}
-	
-				if (align === 'left' || align === 'right')
-					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
-	
-				return '<img alt="" ' + attribs +
-					' src="' + sceditor.escapeUriScheme(content) + '" />';
+				return kunenaEmbedHtml('tweet', 'COM_KUNENA_SCEDITOR_COMMAND_INSERT_X_SOCIAL', attrs, content);
 			}
-		})
+		});
 	
 		sceditor.command.set('x_social', {
 			_dropDown: function (editor, caller) {
@@ -426,51 +337,40 @@ jQuery(document).ready(function ($) {
 			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_X_SOCIAL'),
 		});
 	
-		// Add bbcode maps
+		// Add bbcode maps: [map type=.. zoom=.. control=..]place[/map] is shown as a placeholder with the place name (no map in the
+		// editor), which keeps its attributes in data-kunena-map-* to give the same bbcode back.
 		sceditor.formats.bbcode.set('map', {
+			tags: {
+				div: {
+					'data-kunena-map': null
+				}
+			},
+			isInline: false,
+			allowedChildren: ['#', '#newline'],
 			format: function (element, content) {
-				if (jQuery(element).data('sceditor-emoticon'))
-					return content;
-	
-				var type = jQuery(element).attr('type'),
-					zoom = jQuery(element).attr('zoom');
-	
-				var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
-					? '=' + width + 'x' + height
-					: ''
-				;
-	
-				if (align === 'left' || align === 'right')
-					attrs += ' align='+align
-	
-				return '[map' + attrs + ']' + url + '[/map]';
+				var attrs = '';
+
+				['type', 'zoom', 'control'].forEach(function (name) {
+					if (element.hasAttribute('data-kunena-map-' + name))
+						attrs += ' ' + name + '=' + element.getAttribute('data-kunena-map-' + name);
+				});
+
+				return '[map' + attrs + ']' + content + '[/map]';
 			},
 			html: function (token, attrs, content) {
-				var	width, height, match,
-					align = attrs.align,
-					attribs = '';
-	
-				// handle [img=340x240]url[/img]
-				if (attrs.defaultattr) {
-					match = attrs.defaultattr.split(/x/i);
-	
-					width  = match[0];
-					height = (match.length === 2 ? match[1] : match[0]);
-	
-					if (width !== undefined && height !== undefined && width > 0 && height > 0) {
-						attribs +=
-							' width="' + sceditor.escapeEntities(width, true) + '"' +
-							' height="' + sceditor.escapeEntities(height, true) + '"';
-					}
-				}
-	
-				if (align === 'left' || align === 'right')
-					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
-	
-				return '<img alt="" ' + attribs +
-					' src="' + sceditor.escapeUriScheme(content) + '" />';
+				var data = '';
+
+				['type', 'zoom', 'control'].forEach(function (name) {
+					if (attrs[name] !== undefined)
+						data += ' data-kunena-map-' + name + '="' + sceditor.escapeEntities(attrs[name], true) + '"';
+				});
+
+				// The content is the text of the tag, already escaped by the parser.
+				return '<div data-kunena-map="1"' + data +
+					' title="' + sceditor.escapeEntities(Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP'), true) + '"' +
+					' style="border: 1px dashed #888; padding: 4px 8px;">' + content + '</div>';
 			}
-		})
+		});
 	
 		sceditor.command.set('map', {
 			_dropDown: function (editor, caller) {

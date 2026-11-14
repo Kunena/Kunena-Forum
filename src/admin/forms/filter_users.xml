@@ -52,6 +52,14 @@
 			<option value="1">COM_KUNENA_FIELD_LABEL_YES</option>
 			<option value="0">COM_KUNENA_FIELD_LABEL_NO</option>
 		</field>
+		<field
+			name="group_id"
+			type="usergrouplist"
+			label="COM_KUNENA_FILTER_USERGROUP"
+			class="js-select-submit-on-change"
+			default="">
+			<option value="">COM_KUNENA_FILTER_SELECT_USERGROUP</option>
+		</field>
 	</fields>
 	<fields name="list">
 		<field

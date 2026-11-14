@@ -9,6 +9,10 @@ A `[code]` block is shown as a standard `<pre><code>` block in the "Code:" box, 
 one, in the language highlight.js detects. Whatever is typed inside the block stays text: HTML, BBCode, smileys and links are shown as they
 were written.
 
+In the CKEditor (the default editor of Aurelia) a `[code]` block is shown as a plain-text code block. Its content stays as written:
+no smileys, no formatting, and its line breaks and indentation are kept, also when a message is opened again to be edited. The
+`[code]` and `[/code]` markers, with the language of the block, are visible in the source mode of the editor.
+
 ## How it works
 
 - The tag names the language in one of two ways: `[code=php]...[/code]` or `[code type=php]...[/code]`. `[code]...[/code]` names none,
@@ -21,7 +25,8 @@ were written.
   `media/kunena/core/highlightjs` and served by your own site: no CDN is used. The dark theme gives the block its own background, so it
   reads the same on a light and on a dark page.
 - The files are loaded only on a page which shows a code block, and only when the option is on. With the option off the block keeps the
-  look of the template, with its indentation, and no script is loaded.
+  look of the template, with its indentation, and no script is loaded. In Aurelia a block that is not coloured is shown on a light
+  background, with padding.
 - E-mails (the subscriptions) and feeds get the plain block, without colours and without a script. The plain text of an e-mail shows
   `Code:` and the code.
 

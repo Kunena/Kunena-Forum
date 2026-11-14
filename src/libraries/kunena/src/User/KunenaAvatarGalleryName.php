@@ -47,4 +47,77 @@ abstract class KunenaAvatarGalleryName
 
         return $name;
     }
+
+    /**
+     * Whether a name is the name of one picture of a gallery: a name which clean() keeps as it is, with the extension of an image.
+     *
+     * @param   mixed  $name  The name of a file.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isPicture($name): bool
+    {
+        return \is_string($name) && self::clean($name) === $name && preg_match('/\.(?:gif|png|jpe?g|webp)$/Di', $name) === 1;
+    }
+
+    /**
+     * Whether a value is an avatar of the galleries: "gallery/<picture>" or "gallery/<folder>/<picture>".
+     *
+     * @param   mixed  $value  The value of the avatar.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isAvatar($value): bool
+    {
+        if (!\is_string($value)) {
+            return false;
+        }
+
+        $parts = explode('/', $value);
+
+        if ($parts[0] !== 'gallery' || !self::isPicture(end($parts))) {
+            return false;
+        }
+
+        return \count($parts) === 2 || (\count($parts) === 3 && self::clean($parts[1]) === $parts[1]);
+    }
+
+    /**
+     * The pictures of one gallery, relative to the folder of the galleries and sorted by name.
+     *
+     * @param   string  $galleriesPath  The folder of the galleries.
+     * @param   string  $gallery        The name of the gallery: '' for the pictures directly in the folder of the galleries.
+     *
+     * @return  string[]  "<file>" for the pictures of '', "<folder>/<file>" for those of a folder.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function pictures(string $galleriesPath, string $gallery): array
+    {
+        if ($gallery !== '' && self::clean($gallery) !== $gallery) {
+            return [];
+        }
+
+        $folder = $gallery === '' ? $galleriesPath : $galleriesPath . '/' . $gallery;
+
+        if (!is_dir($folder)) {
+            return [];
+        }
+
+        $files = [];
+
+        foreach ((array) scandir($folder) as $file) {
+            if (self::isPicture($file) && is_file($folder . '/' . $file)) {
+                $files[] = $file;
+            }
+        }
+
+        sort($files, SORT_STRING);
+
+        return $gallery === '' ? $files : array_map(static fn ($file) => $gallery . '/' . $file, $files);
+    }
 }

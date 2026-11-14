@@ -136,6 +136,14 @@ class KunenaBBCode extends BBCode
     protected $linkCards = 0;
 
     /**
+     * The open [url] tags without a definition: their text is the address, so it is not auto-linked.
+     *
+     * @var     integer
+     * @since   Kunena 8.0
+     */
+    public $urlWithoutDefinition = 0;
+
+    /**
      * Use KunenaBbcode::getInstance() instead.
      *
      * @internal
@@ -183,7 +191,7 @@ class KunenaBBCode extends BBCode
         ]));
 
         // Load Kunena Library Language file as this method can also be used outside Kunena (e.g. EasySocial)
-        Factory::getApplication()->getLanguage()->load('com_kunena.libraries', JPATH_ADMINISTRATOR . '/components/com_kunena');
+        KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
     }
 
     /**
@@ -195,6 +203,11 @@ class KunenaBBCode extends BBCode
      */
     protected function autoDetectURLs($string): array
     {
+        // The text of [url]address[/url] is the address as written: one address chunk, encoded, without links or smileys.
+        if ($this->urlWithoutDefinition > 0) {
+            return ['', htmlspecialchars((string) $string, ENT_QUOTES, 'UTF-8')];
+        }
+
         $search = preg_split('/(?xi)
 		\b
 		(
@@ -349,6 +362,38 @@ class KunenaBBCode extends BBCode
     }
 
     /**
+     * The address of an emoticon of Kunena, rebuilt with the address of the current site: the editor stores emoticons as an image
+     * path in the message, which breaks when the site moves to or from a (sub)folder or to another domain.
+     *
+     * @param   string  $url        The address of the image tag.
+     * @param   string  $smileyUrl  The address of the site the emoticons are served from (without a trailing slash).
+     * @param   string  $smileyDir  The folder of the site the emoticons are in.
+     *
+     * @return  string|null  The rebuilt address, or null when the address is not an existing emoticon of Kunena.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function emoticonUrl(string $url, string $smileyUrl, string $smileyDir): ?string
+    {
+        if (!preg_match('#^(?:https?://[^/]+)?(?:/[^?\#]*)?/media/kunena/emoticons/([^/?\#]+)$#i', $url, $matches)) {
+            return null;
+        }
+
+        $file = $matches[1];
+
+        // On Windows is_file() follows ..\ out of the folder of the emoticons.
+        if (str_contains($file, '\\') || $file === '.' || $file === '..') {
+            return null;
+        }
+
+        if (!is_file($smileyDir . '/media/kunena/emoticons/' . $file)) {
+            return null;
+        }
+
+        return $smileyUrl . '/media/kunena/emoticons/' . $file;
+    }
+
+    /**
      * Which address of the site a link of the URL tag points to: only a non-SEF address (index.php?...) goes through the router;
      * a SEF address (/index.php/forum/...) is kept as written, and index.php/... is resolved against the base path of the site.
      *
@@ -456,7 +501,8 @@ class KunenaBBCode extends BBCode
      */
     public function parse($string)
     {
-        $this->linkCards = 0;
+        $this->linkCards            = 0;
+        $this->urlWithoutDefinition = 0;
 
         $markdown = isset($this->config->enableMarkdown) && $this->config->enableMarkdown;
         $html     = isset($this->config->enableHtml) && $this->config->enableHtml;
@@ -1904,6 +1950,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
         }
 
+        // Emoticons inserted by the editor are stored as an image path in the message: rebuild it with the address of the
+        // current site, so they keep working after the site moved to another (sub)folder or domain.
+        $emoticonUrl = KunenaBBCode::emoticonUrl($fileurl, $bbcode->getSmileyURL(), $bbcode->getSmileyDir());
+
+        if ($emoticonUrl !== null) {
+            $fileurl = $emoticonUrl;
+        }
+
         $filename = basename($fileurl);
 
         // Display tag in activity streams etc..
@@ -2640,11 +2694,20 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if ($action == BBCode::BBCODE_CHECK) {
             $bbcode->autoLink_disable++;
 
+            if (!$default) {
+                $bbcode->urlWithoutDefinition++;
+            }
+
             return true;
         }
 
         $bbcode->autoLink_disable--;
-        $url      = $default ? $default : strip_tags($bbcode->UnHTMLEncode($content));
+
+        if (!$default) {
+            $bbcode->urlWithoutDefinition--;
+        }
+
+        $url      = $default ? $default : trim(strip_tags($bbcode->UnHTMLEncode($content)));
         $url      = preg_replace('# #u', '%20', $url);
         $internal = false;
 
@@ -3031,17 +3094,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             $config->cacheTime = 60;
         }
 
-        // Emoticons inserted by the editor are stored as an image path in the message.
-        // Rebuild the URL at render time, so they keep working after the site moved to
-        // another (sub)folder or domain, and in absolute contexts (RSS, e-mail).
-        if (
-            preg_match('#^(?:https?://[^/]+)?(?:/[^?\#]*)?/media/kunena/emoticons/([^/?\#]+)$#i', $fileurl, $emoticon)
-            && is_file(JPATH_ROOT . '/media/kunena/emoticons/' . $emoticon[1])
-        ) {
-            $fileurl = $bbcode->getSmileyURL() . '/media/kunena/emoticons/' . $emoticon[1];
-        }
-
-        $filename = basename($fileurl);
         $cache->setLifeTime($config->cacheTime);
 
         /**

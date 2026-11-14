@@ -20,9 +20,11 @@ use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Mail\Mail;
 use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Database\DatabaseDriver;
@@ -39,6 +41,7 @@ use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaCheckSpamEvent;
 use Kunena\Forum\Libraries\Event\KunenaDeleteEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -61,6 +64,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Libraries\User\KunenaUserName;
 use StdClass;
+use Throwable;
 use ValueError;
 
 /**
@@ -85,6 +89,8 @@ use ValueError;
  * @property int    $modified_by
  * @property string $modified_time
  * @property string $modified_reason
+ * @property int    $scheduled_time
+ * @property int    $scheduled_review
  * @property string $message
  * @since   Kunena 6.0
  */
@@ -126,6 +132,14 @@ class KunenaMessage extends KunenaDatabaseObject
     public mixed $thankyou = [];
 
     public mixed $replynum = null;
+
+    /**
+     * The edges of the message in the tree of the threaded and indented topic layouts (set by the topic page).
+     *
+     * @var     array|null
+     * @since   Kunena 8.0
+     */
+    public mixed $indent = null;
 
     /**
      * @var     string
@@ -246,6 +260,22 @@ class KunenaMessage extends KunenaDatabaseObject
      * @since   Kunena 6.4
      */
     public mixed $modified_reason = null;
+
+    /**
+     * Unix time at which the scheduled reply is published, 0 when it is not scheduled.
+     *
+     * @var     integer
+     * @since   Kunena 8.0
+     */
+    public mixed $scheduled_time = null;
+
+    /**
+     * 1 when the scheduled reply was held for review: it is not published at its time.
+     *
+     * @var     integer
+     * @since   Kunena 8.0
+     */
+    public mixed $scheduled_review = null;
 
     /**
      * @var     string
@@ -1033,6 +1063,12 @@ class KunenaMessage extends KunenaDatabaseObject
             $this->deleted_time = Factory::getDate()->toUnix();
         } else {
             $this->deleted_time = 0;
+        }
+
+        // Only an unapproved message can wait for its scheduled time: publishing, deleting or restoring it clears the schedule
+        if ((int) $this->hold !== 1) {
+            $this->scheduled_time   = 0;
+            $this->scheduled_review = 0;
         }
 
         // Flood protection
@@ -1885,27 +1921,29 @@ class KunenaMessage extends KunenaDatabaseObject
     protected function getTableProperties(): array
     {
         $properties = [
-            'id'              => $this->id,
-            'parent'          => $this->parent,
-            'thread'          => $this->thread,
-            'catid'           => $this->catid,
-            'name'            => $this->name,
-            'userid'          => $this->userid,
-            'email'           => $this->email,
-            'subject'         => $this->subject,
-            'time'            => $this->time,
-            'ip'              => $this->ip,
-            'topic_emoticon'  => $this->topic_emoticon,
-            'locked'          => $this->locked,
-            'hold'            => $this->hold,
-            'ordering'        => $this->ordering,
-            'hits'            => $this->hits,
-            'moved'           => $this->moved,
-            'deleted_time'    => $this->deleted_time,
-            'modified_by'     => $this->modified_by,
-            'modified_time'   => $this->modified_time,
-            'modified_reason' => $this->modified_reason,
-            'message'         => $this->message,
+            'id'               => $this->id,
+            'parent'           => $this->parent,
+            'thread'           => $this->thread,
+            'catid'            => $this->catid,
+            'name'             => $this->name,
+            'userid'           => $this->userid,
+            'email'            => $this->email,
+            'subject'          => $this->subject,
+            'time'             => $this->time,
+            'ip'               => $this->ip,
+            'topic_emoticon'   => $this->topic_emoticon,
+            'locked'           => $this->locked,
+            'hold'             => $this->hold,
+            'ordering'         => $this->ordering,
+            'hits'             => $this->hits,
+            'moved'            => $this->moved,
+            'deleted_time'     => $this->deleted_time,
+            'modified_by'      => $this->modified_by,
+            'modified_time'    => $this->modified_time,
+            'modified_reason'  => $this->modified_reason,
+            'scheduled_time'   => $this->scheduled_time,
+            'scheduled_review' => $this->scheduled_review,
+            'message'          => $this->message,
         ];
 
         return $properties;
@@ -2743,15 +2781,16 @@ class KunenaMessage extends KunenaDatabaseObject
 
         // Update topic
         if (!$this->hold && $topic->hold && $topic->exists()) {
-            // We published message -> publish and recount topic
+            // We published message -> publish and recount topic. The recount counts this message already (in the topic, the
+            // category, the user topics and the users): adding the post delta again would count it twice.
             $topic->hold = 0;
             $topic->recount();
-        }
-
-        try {
-            $topic->update($this, $postDelta);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        } else {
+            try {
+                $topic->update($this, $postDelta);
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
+            }
         }
 
         // Activity integration
@@ -2892,5 +2931,37 @@ class KunenaMessage extends KunenaDatabaseObject
         $this->_attachments_add[$tmpid] = $attachment;
 
         return $success;
+    }
+
+    /**
+     * Ask the plugins of the kunena group whether this new post is spam (onKunenaCheckSpam), before it is saved.
+     * A listener that fails is logged and never stops the post; the answers given before it are kept.
+     *
+     * @param   KunenaTopic     $topic       The topic, the new and unsaved topic for a new topic.
+     * @param   KunenaCategory  $category    The category.
+     * @param   KunenaUser      $user        The poster, a guest user object for a guest.
+     * @param   bool            $isNewTopic  True for a new topic, false for a reply.
+     * @param   string          $ip          The address of the visitor.
+     *
+     * @return  KunenaCheckSpamEvent  The event, with the verdict and the reason of the listeners.
+     *
+     * @since   Kunena 8.0
+     */
+    public function dispatchSpamCheck(KunenaTopic $topic, KunenaCategory $category, KunenaUser $user, bool $isNewTopic, string $ip): KunenaCheckSpamEvent
+    {
+        $event = new KunenaCheckSpamEvent(
+            'onKunenaCheckSpam',
+            ['message' => $this, 'topic' => $topic, 'category' => $category, 'user' => $user, 'isNewTopic' => $isNewTopic, 'ip' => $ip]
+        );
+
+        try {
+            PluginHelper::importPlugin('kunena');
+
+            Factory::getApplication()->getDispatcher()->dispatch('onKunenaCheckSpam', $event);
+        } catch (Throwable $e) {
+            Log::add($e->getMessage(), Log::WARNING, 'kunena');
+        }
+
+        return $event;
     }
 }

@@ -37,38 +37,40 @@ $attachments = $this->attachments;
         <?php echo HTMLHelper::_('form.token'); ?>
 
         <table class="table table-bordered table-striped table-hover">
+            <caption class="visually-hidden"><?php echo $this->headerText; ?></caption>
             <thead>
                 <tr>
-                    <th class="col-md-1 center">
+                    <th scope="col" class="col-md-1 center">
                         #
                     </th>
                     <?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator()) :
                     ?>
-                        <th class="col-md-1 center">
+                        <th scope="col" class="col-md-1 center">
                             <label>
                                 <input type="checkbox" name="checkall-toggle" value="cid"
                                     data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
                             </label>
+                            <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?></span>
                         </th>
                     <?php endif; ?>
-                    <th class="col-md-1 center">
+                    <th scope="col" class="col-md-1 center">
                         <?php echo Text::_('COM_KUNENA_FILETYPE'); ?>
                     </th>
-                    <th class="col-md-2">
+                    <th scope="col" class="col-md-2">
                         <?php echo Text::_('COM_KUNENA_FILENAME'); ?>
                     </th>
-                    <th class="col-md-2">
+                    <th scope="col" class="col-md-2">
                         <?php echo Text::_('COM_KUNENA_FILESIZE'); ?>
                     </th>
-                    <th class="col-md-2">
+                    <th scope="col" class="col-md-2">
                         <?php echo Text::_('COM_KUNENA_ATTACHMENT_MANAGER_TOPIC'); ?>
                     </th>
-                    <th class="col-md-1 center">
+                    <th scope="col" class="col-md-1 center">
                         <?php echo Text::_('COM_KUNENA_PREVIEW'); ?>
                     </th>
                     <?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator()) :
                     ?>
-                        <th class="col-md-1 center">
+                        <th scope="col" class="col-md-1 center">
                             <?php echo Text::_('COM_KUNENA_DELETE'); ?>
                         </th>
                     <?php endif; ?>
@@ -138,7 +140,7 @@ $attachments = $this->attachments;
                                 ?>
                                     <td class="center">
                                         <a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
-                                            data-bs-toggle="modal"><?php echo KunenaIcons::delete(); ?></a>
+                                            data-bs-toggle="modal" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_FILES_DELETE_NAMED', $attachment->getFilename(false))); ?>"><?php echo KunenaIcons::delete(); ?></a>
 
                                         <div class="modal fade" id="modaldelete<?php echo $i ?>" tabindex="-1" role="dialog"
                                             aria-labelledby="modaldelete<?php echo $i ?>Label">

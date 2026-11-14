@@ -38,6 +38,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageSchedule;
 use Kunena\Forum\Libraries\User\KunenaBan;
 
 /**
@@ -76,6 +77,10 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             'langConstPrefix' => 'PLG_TASK_KUNENA_UNSUBSCRIBEINACTIVE',
             'form'            => 'unsubscribeinactive',
             'method'          => 'unsubscribeInactiveUsers',
+        ],
+        'publish.scheduledreplies' => [
+            'langConstPrefix' => 'PLG_TASK_KUNENA_PUBLISHSCHEDULED',
+            'method'          => 'publishScheduledReplies',
         ],
     ];
 
@@ -439,6 +444,39 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSSUCCESS', $countDeleted));
         } catch (Exception $e) {
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSERROR', $e->getMessage()));
+
+            return Status::KNOCKOUT;
+        }
+
+        return Status::OK;
+    }
+
+    /**
+     * Method to publish the scheduled replies whose time has come.
+     *
+     * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
+     *
+     * @return integer  The routine exit code.
+     *
+     * @since  8.0.0
+     * @throws Exception
+     */
+    private function publishScheduledReplies(ExecuteTaskEvent $event): int
+    {
+        if (
+            !ComponentHelper::isEnabled('com_kunena')
+            || !KunenaForum::isCompatible('7.1')
+            || !KunenaForum::installed()
+        ) {
+            return Status::NO_RUN;
+        }
+
+        try {
+            $result = KunenaMessageSchedule::publishDue(time());
+
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_PUBLISHSCHEDULEDSUCCESS', $result['published'], $result['skipped']));
+        } catch (Exception $e) {
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_PUBLISHSCHEDULEDERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
         }

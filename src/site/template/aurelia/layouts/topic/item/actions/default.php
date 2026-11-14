@@ -41,8 +41,8 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                 <a class="btn border" data-bs-toggle="dropdown">
                     <?php echo KunenaIcons::lock(); ?><?php echo Text::_('COM_KUNENA_BUTTON_TOPIC_LOCK') ?>
                 </a>
-                <a class="btn border dropdown-toggle" data-bs-toggle="dropdown">
-                    <span class="caret"></span>
+                <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                 </a>
                 <ul class="dropdown-menu">
                     <?php foreach ($this->topicButtons->get('lock_author') as $lockButton) : ?>
@@ -64,8 +64,8 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                 <a class="btn border" data-bs-toggle="dropdown">
                     <?php echo KunenaIcons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?>
                 </a>
-                <a class="btn border dropdown-toggle" data-bs-toggle="dropdown">
-                    <span class="caret"></span>
+                <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><?php echo $this->topicButtons->get('delete_dropdown') ?></li>
@@ -76,6 +76,24 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                     <li><?php echo $this->topicButtons->get('lock_dropdown') ?></li>
                     <?php foreach ((array) $this->topicButtons->get('lock_reasons_dropdown') as $lockButton) : ?>
                         <li><?php echo $lockButton ?></li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+        <?php endif ?>
+
+        <?php if ($this->topicButtons->get('flat') || $this->topicButtons->get('threaded') || $this->topicButtons->get('indented')) : ?>
+            <div class="btn-group">
+                <a class="btn border" data-bs-toggle="dropdown">
+                    <?php echo KunenaIcons::grid(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_LAYOUT') ?>
+                </a>
+                <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <?php foreach (['flat', 'threaded', 'indented'] as $topicLayout) : ?>
+                        <?php if ($this->topicButtons->get($topicLayout)) : ?>
+                            <li><?php echo $this->topicButtons->get($topicLayout) ?></li>
+                        <?php endif ?>
                     <?php endforeach ?>
                 </ul>
             </div>
@@ -97,8 +115,8 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                     <a class="btn border" data-bs-toggle="dropdown">
                         <?php echo KunenaIcons::pencil(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?>
                     </a>
-                    <a class="btn border dropdown-toggle" data-bs-toggle="dropdown">
-                        <span class="caret"></span>
+                    <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><?php echo $this->topicButtons->get('reply_dropdown') ?></li>
@@ -114,8 +132,8 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                     <a class="btn border" data-bs-toggle="dropdown">
                         <?php echo KunenaIcons::lock(); ?><?php echo Text::_('COM_KUNENA_BUTTON_TOPIC_LOCK') ?>
                     </a>
-                    <a class="btn border dropdown-toggle" data-bs-toggle="dropdown">
-                        <span class="caret"></span>
+                    <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <?php foreach ($this->topicButtons->get('lock_author') as $lockButton) : ?>
@@ -137,8 +155,8 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                     <a class="btn border" data-bs-toggle="dropdown">
                         <?php echo KunenaIcons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?>
                     </a>
-                    <a class="btn border dropdown-toggle" data-bs-toggle="dropdown">
-                        <span class="caret"></span>
+                    <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><?php echo $this->topicButtons->get('delete_dropdown') ?></li>
@@ -149,6 +167,24 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                         <li><?php echo $this->topicButtons->get('lock_dropdown') ?></li>
                         <?php foreach ((array) $this->topicButtons->get('lock_reasons_dropdown') as $lockButton) : ?>
                             <li><?php echo $lockButton ?></li>
+                        <?php endforeach ?>
+                    </ul>
+                </div>
+            <?php endif ?>
+
+            <?php if ($this->topicButtons->get('flat') || $this->topicButtons->get('threaded') || $this->topicButtons->get('indented')) : ?>
+                <div class="btn-group">
+                    <a class="btn border" data-bs-toggle="dropdown">
+                        <?php echo KunenaIcons::grid(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_LAYOUT') ?>
+                    </a>
+                    <a class="btn border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN') ?></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <?php foreach (['flat', 'threaded', 'indented'] as $topicLayout) : ?>
+                            <?php if ($this->topicButtons->get($topicLayout)) : ?>
+                                <li><?php echo $this->topicButtons->get($topicLayout) ?></li>
+                            <?php endif ?>
                         <?php endforeach ?>
                     </ul>
                 </div>

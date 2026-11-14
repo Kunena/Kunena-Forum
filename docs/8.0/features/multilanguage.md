@@ -11,7 +11,8 @@ Active only when the Joomla **Language Filter** plugin is on and more than one c
   never overwritten when the category is saved.
 - Categories and topics of other languages are hidden in the index, on the category page, in the lists of topics and in the search.
 - The lists of topics get a **language filter** (the language of the page by default, or all languages).
-- The menu items of the default menu are made for every installed content language.
+- The menu items of the default menu are made for every installed content language. On a site with one content language the
+  Forum item and its sub items are made once, for all languages (`*`).
 - Database: language columns on the categories and the topics, and the new table `#__kunena_categories_translations`.
 
 ## The language of a new topic (Aurelia template)

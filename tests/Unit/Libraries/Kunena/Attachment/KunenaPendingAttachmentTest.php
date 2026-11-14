@@ -73,4 +73,43 @@ class KunenaPendingAttachmentTest extends UnitTestCase
         $this->assertLessThan(strpos($m[1], '$attachment->delete()'), $ask, 'The age is asked before the delete.');
         $this->assertStringContainsString('filemtime($path)', $m[1]);
     }
+
+    public static function cancels(): array
+    {
+        return [
+            'own pending upload'                => [0, 42, 42, true],
+            'attachment of an own message'      => [5, 42, 42, false],
+            'pending upload of another user'    => [0, 43, 42, false],
+            'a guest and an upload of a guest'  => [0, 0, 0, false],
+            'a guest and an upload of a member' => [0, 42, 0, false],
+            'negative message'                  => [-1, 42, 42, false],
+            'negative user'                     => [0, -1, -1, false],
+        ];
+    }
+
+    #[DataProvider('cancels')]
+    public function testCancelRemovesOnlyTheOwnPendingUploadsOfAMember(int $mesid, int $uploaderId, int $userId, bool $expected): void
+    {
+        $this->assertSame($expected, Pending::mayRemoveOnCancel($mesid, $uploaderId, $userId));
+    }
+
+    public function testCancelTaskChecksTheTokenAndAsksBeforeItDeletes(): void
+    {
+        $source = Files::read('src/site/src/Controllers/TopicController.php');
+
+        $this->assertSame(1, preg_match('/public function removependingattachments\(\)[^{]*\{(.*?)
+    \}
+/s', $source, $m));
+
+        $this->assertStringContainsString("Session::checkToken('request')", $m[1]);
+        $this->assertStringContainsString('$this->me->exists() && !$this->me->isBanned()', $m[1], 'Nothing for a guest or a banned user.');
+        $this->assertStringContainsString(', 0, 100)', $m[1], 'At most 100 ids.');
+
+        $delete = strpos($m[1], '->delete()');
+
+        $this->assertIsInt($delete);
+        $this->assertLessThan($delete, strpos($m[1], 'Session::checkToken('), 'The token is checked before the delete.');
+        $this->assertLessThan($delete, strpos($m[1], 'KunenaPendingAttachment::mayRemoveOnCancel('), 'The rule is asked before the delete.');
+        $this->assertLessThan($delete, strpos($m[1], "isAuthorised('delete')"), 'The attachment is asked before the delete.');
+    }
 }

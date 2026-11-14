@@ -60,7 +60,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
 
 <?php if ($quick == 1) :
 ?>
-    <div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" data-bs-focus="false" aria-hidden="true">
+    <div class="modal fade" style="pointer-events: none;" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" data-bs-focus="false" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

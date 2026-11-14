@@ -77,6 +77,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         $this->addMailsQueueTask();
         $this->addCleanPendingAttachmentsTask();
         $this->addUnsubscribeInactiveUsersTask();
+        $this->addPublishScheduledRepliesTask();
     }
 
     /**
@@ -310,6 +311,47 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             ],
             'state'  => 1,
             'params' => ['years' => 1],
+        ];
+        $model->save($task);
+    }
+
+    /**
+     * Function to enable the task which publishes the scheduled replies
+     *
+     * @return  void
+     * @since   8.0.0
+     */
+    private function addPublishScheduledRepliesTask(): void
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__scheduler_tasks'))
+            ->where($db->quoteName('type') . ' = ' . $db->quote('publish.scheduledreplies'));
+        $db->setQuery($query);
+        $result = $db->loadResult();
+
+        if ($result) {
+            // We are already setup
+            return;
+        }
+
+        /** @var SchedulerComponent $component */
+        $component = Factory::getApplication()->bootComponent('com_scheduler');
+
+        /** @var TaskModel $model */
+        $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
+        $task  = [
+            'title'           => 'Kunena - Publish scheduled replies',
+            'type'            => 'publish.scheduledreplies',
+            'execution_rules' => [
+                'rule-type'        => 'interval-minutes',
+                'interval-minutes' => 5,
+                'exec-time'        => gmdate('H:i'),
+                'exec-day'         => gmdate('d'),
+            ],
+            'state'  => 1,
+            'params' => [],
         ];
         $model->save($task);
     }

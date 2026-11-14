@@ -62,7 +62,7 @@ echo $this->subLayout('Widget/Datepicker');
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="ann-date">
+            <label class="control-label" for="addcreated">
                 <?php echo Text::_('COM_KUNENA_ANN_DATE'); ?>
             </label>
             <div class="controls" id="ann-date">
@@ -73,7 +73,7 @@ echo $this->subLayout('Widget/Datepicker');
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="ann-date2">
+            <label class="control-label" for="publish_up">
                 <?php echo Text::_('COM_KUNENA_ANN_DATE_UP'); ?>
             </label>
             <div class="controls" id="ann-date2">
@@ -84,7 +84,7 @@ echo $this->subLayout('Widget/Datepicker');
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="ann-date3">
+            <label class="control-label" for="publish_down">
                 <?php echo Text::_('COM_KUNENA_ANN_DATE_DOWN'); ?>
             </label>
             <div class="controls" id="ann-date3">

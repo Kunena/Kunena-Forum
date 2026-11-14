@@ -41,12 +41,12 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
     if ($topic->unread) :
     ?>
         <th scope="row" class="d-none d-md-table-cell topic-item-unread">
-            <?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, true); ?>
+            <?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), $topic->subject, null, $category, true, true); ?>
         </th>
     <?php else :
     ?>
         <th scope="row" class="d-none d-md-table-cell">
-            <?php echo $this->getTopicLink($topic, $this->message, $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, false); ?>
+            <?php echo $this->getTopicLink($topic, $this->message, $topic->getIcon($topic->getCategory()->iconset), $topic->subject, null, $category, true, false); ?>
         </th>
     <?php endif; ?>
     <td>
@@ -163,7 +163,8 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
     ?>
         <td class="center">
             <label>
-                <input class="kcheck" type="checkbox" name="posts[<?php echo $message->id; ?>]" value="1" />
+                <input class="kcheck" type="checkbox" name="posts[<?php echo $message->id; ?>]" value="1"
+                       aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_SELECT_POST_NAMED', $topic->subject)); ?>" />
             </label>
         </td>
     <?php endif; ?>

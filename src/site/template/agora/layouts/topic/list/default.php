@@ -244,7 +244,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
 
                 <?php if (!empty($this->actions)) : ?>
                     <th scope="col" class="center"><label>
-                            <input class="kcheckall" type="checkbox" name="toggle" value=""/>
+                            <input class="kcheckall" type="checkbox" name="toggle" value="" aria-label="<?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?>"/>
                         </label>
                     </th>
                 <?php endif; ?>
@@ -287,7 +287,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
 
             <?php if (!empty($this->actions)) : ?>
                 <div class="agora-topics-bulk">
-                    <?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-select kchecktask" ', 'value', 'text', 0, $ids['task']); ?>
+                    <?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-select kchecktask" aria-label="' . Text::_('COM_KUNENA_BULK_ACTIONS_LABEL') . '"', 'value', 'text', 0, $ids['task']); ?>
                     <?php if (isset($this->actions['move'])) :
                         $options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
                         echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-select fbs" disabled="disabled"', 'value', 'text', 0, $ids['target']);

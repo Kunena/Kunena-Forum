@@ -310,8 +310,8 @@ hr {
 }
 
 .btn-outline-success {
-  --bs-btn-color: var(--agora-success);
-  --bs-btn-hover-color: var(--agora-success);
+  --bs-btn-color: var(--agora-success-text);
+  --bs-btn-hover-color: var(--agora-success-text);
 }
 
 .btn-danger {
@@ -369,7 +369,8 @@ hr {
 }
 
 .badge.bg-success {
-  background-color: var(--agora-success) !important;
+  color: var(--agora-on-success) !important;
+  background-color: var(--agora-success-fill) !important;
 }
 
 /* The warning badges (a locked topic): a tint of the colour, as the alerts, not Bootstrap's strong orange. */
@@ -798,7 +799,7 @@ sup.knewchar {
   font-size: 0.6875rem;
   font-weight: 700;
   line-height: 1.25rem;
-  color: var(--agora-success) !important;
+  color: var(--agora-success-text) !important;
   text-transform: uppercase;
   white-space: nowrap;
   vertical-align: middle;
@@ -821,13 +822,41 @@ sup.knewchar {
   border-radius: 0;
 }
 
+/* The colours of the users are text: the text variants of the colours (4.5:1 on the surfaces). */
 .kwho-admin {
-  color: var(--agora-danger) !important;
+  color: var(--agora-danger-text) !important;
 }
 
 .kwho-globalmoderator,
 .kwho-moderator {
-  color: var(--agora-success) !important;
+  color: var(--agora-success-text) !important;
+}
+
+/* A link inside a line of text (the author in "Topic started by", the line above a message, a link in a message, the
+   credits) is underlined: its colour alone does not set it apart from the text around it (WCAG 1.4.1). */
+.started a,
+.kmsg a,
+.mykmsg a,
+.mykmsg-header em a,
+#credits .kintro a,
+#credits .credits > p a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+/* The subject of the last post of a category is a short line of small text: its link is at least 24px high (WCAG 2.5.8). */
+.lastpostlink a {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 24px;
+}
+
+/* A role of the legend of who is online with nobody online: the count says 0; the chip keeps a readable text (Aurelia makes it
+   half transparent) and gets a dashed border. */
+#kwho .opacity-50 {
+  border-style: dashed !important;
+  opacity: 1 !important;
 }
 
 .kwho-guest {

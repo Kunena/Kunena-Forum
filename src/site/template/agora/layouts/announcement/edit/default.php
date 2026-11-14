@@ -60,8 +60,8 @@ $dates    = [
         <div class="row g-3 mb-3">
             <?php foreach ($dates as [$field, $label, $id]) : ?>
                 <div class="col-md-4">
-                    <span class="form-label d-block" id="<?php echo $id; ?>-label"><?php echo Text::_($label); ?></span>
-                    <div class="input-group date" role="group" aria-labelledby="<?php echo $id; ?>-label">
+                    <label class="form-label d-block" for="<?php echo $id; ?>"><?php echo Text::_($label); ?></label>
+                    <div class="input-group date">
                         <?php echo $this->displayInput($field, $calendar, $id); ?>
                     </div>
                 </div>

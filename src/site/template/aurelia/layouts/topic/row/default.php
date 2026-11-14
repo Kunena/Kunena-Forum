@@ -63,11 +63,11 @@ if (!empty($this->spacing)) : ?>
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>" data-topic-id="<?php echo (int) $topic->id; ?>" data-last-post="<?php echo (int) $topic->last_post_id; ?>">
     <?php if ($topic->unread) : ?>
         <th scope="row" class="d-none d-md-table-cell center topic-item-unread">
-            <?php echo $this->getTopicLink($topic, 'unread', KunenaTemplate::getInstance()->getTopicIcon($topic), '', null, $category, true, true); ?>
+            <?php echo $this->getTopicLink($topic, 'unread', KunenaTemplate::getInstance()->getTopicIcon($topic), $topic->subject, null, $category, true, true); ?>
         </th>
     <?php else : ?>
         <th scope="row" class="center d-none d-md-table-cell">
-            <?php echo $this->getTopicLink($topic, null, KunenaTemplate::getInstance()->getTopicIcon($topic), '', null, $category, true, false); ?>
+            <?php echo $this->getTopicLink($topic, null, KunenaTemplate::getInstance()->getTopicIcon($topic), $topic->subject, null, $category, true, false); ?>
         </th>
     <?php endif; ?>
 
@@ -166,7 +166,8 @@ if (!empty($this->spacing)) : ?>
     <?php if (!empty($this->checkbox)) : ?>
         <td class="center">
             <label>
-                <input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
+                <input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1"
+                       aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_SELECT_TOPIC_NAMED', $topic->subject)); ?>" />
             </label>
         </td>
     <?php endif; ?>

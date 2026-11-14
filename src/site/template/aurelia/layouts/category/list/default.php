@@ -40,7 +40,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
     'select.genericlist',
     $this->actions,
     'task',
-    'size="1"',
+    'size="1" aria-label="' . Text::_('COM_KUNENA_BULK_ACTIONS_LABEL') . '"',
     'value',
     'text',
     0,

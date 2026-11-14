@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site\Layout\Widget;
 use Exception;
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
@@ -73,7 +74,8 @@ class WidgetFooter extends KunenaLayout
             $doc = Factory::getApplication()->getDocument();
             $doc->addHeadLink($url, 'alternate', 'rel', ['type' => 'application/rss+xml']);
 
-            return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . KunenaIcons::rss(true) . '</a>';
+            return '<a rel="alternate" type="application/rss+xml" href="' . $url . '" aria-label="'
+                . htmlspecialchars(Text::_('COM_KUNENA_RSS_FEED_LABEL'), ENT_QUOTES, 'UTF-8') . '">' . KunenaIcons::rss(true) . '</a>';
         }
     }
 

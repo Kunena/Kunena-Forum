@@ -34,7 +34,8 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
     <?php if ($tmpParams->get('displayDropdownMenu')) :
         ?>
             <div class="btn-group">
-                <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                        aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_USER_MENU_LABEL')); ?>">
                     <?php
                     $showOnlineStatus = $this->me->showOnline == 1;
 

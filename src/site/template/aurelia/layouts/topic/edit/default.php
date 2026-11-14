@@ -486,7 +486,8 @@ Text::script('COM_KUNENA_POST_CANCEL_CONFIRM');
                             <?php echo KunenaIcons::plus(); ?>
                             <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
                             <!-- The file input field used as target for the file upload widget -->
-                            <input id="fileupload" type="file" name="file" multiple>
+                            <input id="fileupload" type="file" name="file" multiple
+                                   aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON')); ?>">
                         </span>
                         <button id="insert-all" class="btn btn-outline-primary" type="submit" style="display:none;">
                             <?php echo KunenaIcons::upload(); ?>

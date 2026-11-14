@@ -84,7 +84,7 @@ $this->addStyleSheet('rating.css');
 
                         <?php if (!empty($this->topicActions)) : ?>
                             <th scope="col" class="center"><label>
-                                    <input class="kcheckall" type="checkbox" name="toggle" value="" />
+                                    <input class="kcheckall" type="checkbox" name="toggle" value="" aria-label="<?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?>" />
                                 </label>
                             </th>
                         <?php endif; ?>
@@ -135,7 +135,7 @@ $this->addStyleSheet('rating.css');
                                                 'select.genericlist',
                                                 $this->topicActions,
                                                 'task',
-                                                'class="form-select kchecktask"',
+                                                'class="form-select kchecktask" aria-label="' . Text::_('COM_KUNENA_BULK_ACTIONS_LABEL') . '"',
                                                 'value',
                                                 'text',
                                                 0,

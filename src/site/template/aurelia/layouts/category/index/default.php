@@ -138,7 +138,7 @@ foreach ($this->sections as $section) :
                             data-last-post="<?php echo (int) $lastTopic->last_post_id; ?>"
                             data-sig="<?php echo (int) $lastTopic->last_post_id . '-' . (int) $category->numTopics . '-' . (int) $category->numPosts . '-' . (int) $category->getNewCount(); ?>">
                             <td id="kcat-icon" class="d-none d-md-table-cell">
-                                <?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '', null, true, false); ?>
+                                <?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), $category->name, null, true, false); ?>
                             </td>
                             <td>
                                 <div>

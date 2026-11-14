@@ -307,7 +307,7 @@ class Kunenagrid
 
             $html[] = '<a class="btn btn-outline-primary btn-xs ' . $active . '" ';
             $html[] = ' href="javascript:void(0);" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
-            $html[] = ' data-bs-toggle="tooltip" title="' . $title . '">';
+            $html[] = ' data-bs-toggle="tooltip" title="' . $title . '" aria-label="' . htmlspecialchars((string) $alt, ENT_QUOTES, 'UTF-8') . '">';
             $html[] = $icon;
             $html[] = '</a>';
         } elseif ($bootstrap && $topicicontype == 'fa') {
@@ -329,7 +329,7 @@ class Kunenagrid
 
             $html[] = '<a class="btn btn-outline-primary btn-xs ' . $active . '" ';
             $html[] = ' href="javascript:void(0);" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
-            $html[] = ' data-bs-toggle="tooltip" title="' . $title . '">';
+            $html[] = ' data-bs-toggle="tooltip" title="' . $title . '" aria-label="' . htmlspecialchars((string) $alt, ENT_QUOTES, 'UTF-8') . '">';
             $html[] = '<i class="fa fa-' . $class . '" aria-hidden="true">';
             $html[] = '</i>';
             $html[] = '</a>';

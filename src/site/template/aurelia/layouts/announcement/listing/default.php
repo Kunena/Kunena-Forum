@@ -36,7 +36,7 @@ HTMLHelper::_('behavior.core');
             <?php if (!empty($options)) : ?>
                 <div>
                     <div class="input-group flex-nowrap" role="group">
-                        <?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-select"', 'value', 'text', 0, 'kchecktask'); ?>
+                        <?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-select" aria-label="' . Text::_('COM_KUNENA_BULK_ACTIONS_LABEL') . '"', 'value', 'text', 0, 'kchecktask'); ?>
                         <input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
                                 value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
                         <a class="btn btn-outline-primary border"
@@ -88,7 +88,7 @@ HTMLHelper::_('behavior.core');
                     ?>
                     <th scope="col" class="col-md-1 center">
                         <label>
-                            <input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
+                            <input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" aria-label="<?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?>"/>
                         </label>
                         <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?></span>
                     </th>

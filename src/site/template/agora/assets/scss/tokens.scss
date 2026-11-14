@@ -41,6 +41,12 @@ body:has(#kunena.layout.agora) .datepicker.dropdown-menu {
   --agora-success: #1f9d61;
   --agora-danger: #d64545;
   --agora-warning: #c7811a;
+  /* The same colours for text (a name, a mark): dark enough on the surfaces for 4.5:1 (WCAG AA); a badge filled with the
+     colour and its text. */
+  --agora-success-text: #157a4a;
+  --agora-danger-text: #b42f2f;
+  --agora-success-fill: #157a4a;
+  --agora-on-success: #fff;
 
   --agora-radius: 8px;
   /* The old names, for the custom styles of the sites: the same radius. */
@@ -103,6 +109,10 @@ body:has(#kunena.layout.agora[data-bs-theme="dark"]) .datepicker.dropdown-menu {
   --agora-success: #4cc38a;
   --agora-danger: #f07171;
   --agora-warning: #e7a948;
+  --agora-success-text: #4cc38a;
+  --agora-danger-text: #f07171;
+  --agora-success-fill: #4cc38a;
+  --agora-on-success: #0b2016;
 
   --agora-shadow: 0 1px 2px rgb(0 0 0 / 0.24);
   --agora-shadow-raised: 0 4px 16px rgb(0 0 0 / 0.32);

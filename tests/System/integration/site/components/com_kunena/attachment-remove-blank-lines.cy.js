@@ -27,8 +27,9 @@ describe('Kunena attachments: the blank lines of a message after removing a file
   };
 
   // CRLF of the posted form becomes LF, the spaces at the end of a line go, and so do the line breaks before the first and after the
-  // last text of the message: every save trims the ends of a message (KunenaMessage::updateAttachments()), and CKEditor drops empty
-  // paragraphs at the end. The line breaks between the paragraphs are compared as they are.
+  // last text of the message: they are not part of the text, as every save trims the ends of a message
+  // (KunenaMessage::updateAttachments()) and the BBCode loader of CKEditor drops the line breaks at the end of any text it loads. The
+  // line breaks between the paragraphs are compared as they are.
   const normalise = (value) => value.replace(/\r\n/g, '\n').replace(/[ \t]+$/gm, '').replace(/^\n+|\n+$/g, '');
   const tag = (name) => `[attachment=${ids[name]}]${name}-${stamp}.txt[/attachment]`;
   const attach = (name) => cy.task(

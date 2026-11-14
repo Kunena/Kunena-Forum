@@ -405,6 +405,10 @@ class Router extends RouterView
         // Category of the chain of category aliases (forum/parent/child): the next alias may name one of its descendants
         $chain = 0;
 
+        // The layout of the menu item is only a default until the URL names one
+        $menuView  = $vars['view'];
+        $inherited = !empty($vars['layout']);
+
         // Handle all segments
         while (($segment = array_shift($segments)) !== null) {
             // Skip //
@@ -438,6 +442,10 @@ class Router extends RouterView
                     // layout=create resolves to no controller and returns a 404.
                     if (!empty($vars['view']) && isset($variables['catid'], $variables['view']) && $variables['view'] === 'category') {
                         unset($variables['view']);
+                    }
+
+                    if (isset($variables['layout'])) {
+                        $inherited = false;
                     }
 
                     $vars    = $variables + $vars;
@@ -481,6 +489,12 @@ class Router extends RouterView
                     // Invalid parameter, skip it
                     continue;
                 }
+
+                // The layout of the menu item belongs to its view: a topic of a category list has no list layout
+                if ($inherited && $vars['view'] !== $menuView && ($var === 'id' || $var === 'mesid')) {
+                    unset($vars['layout']);
+                    $inherited = false;
+                }
             } elseif ($value === null) {
                 // Simple variable without value is always either view or layout
                 $value = $var;
@@ -488,9 +502,16 @@ class Router extends RouterView
                 if (empty($vars['view']) || ($value == 'topic' && $vars['view'] == 'category')) {
                     // View
                     $var = 'view';
-                } elseif (empty($vars['layout'])) {
-                    // Layout
-                    $var = 'layout';
+
+                    // The layout of the menu item belongs to its view, not to the view named in the URL
+                    if ($inherited && $value !== $menuView) {
+                        unset($vars['layout']);
+                        $inherited = false;
+                    }
+                } elseif (empty($vars['layout']) || $inherited) {
+                    // Layout, which replaces the default layout of the menu item
+                    $var       = 'layout';
+                    $inherited = false;
                 } elseif (!empty($vars['view'])) {
                     // Unknown parameter: skip
                     if (!empty($vars['view'])) {

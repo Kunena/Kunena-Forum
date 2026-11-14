@@ -25,9 +25,9 @@ if ($this->message->id == $this->selected) {
     );
 }
 ?>
-<tr class="message-<?php echo $this->message->getState(); ?>">
+<tr class="message-<?php echo $this->message->getState(); ?><?php echo $this->message->id == $this->selected ? ' table-active" aria-current="true' : ''; ?>">
     <td class="message-<?php echo $this->message->isNew() ? 'new' : 'read'; ?>">
-        <span class="<?php echo implode('"></span><span class="ktree ktree-', $this->message->indent); ?>"></span>
+        <span class="ktree ktree-<?php echo implode('" aria-hidden="true"></span><span class="ktree ktree-', (array) $this->message->indent); ?>" aria-hidden="true"></span>
         <?php echo $link; ?>
     </td>
     <td>

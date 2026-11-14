@@ -120,13 +120,48 @@ if ($this->topic->locked) {
         echo '</div>';
     }
 
-    if ($this->messages) {
+    // The layout of the topic (flat, threaded or indented): there is no file of its own, it is chosen here.
+    $topicLayout = $this->getLayout();
+
+    if ($this->messages && $topicLayout == 'threaded') {
+        // Threaded: the selected message, then the tree of the messages of the page with a link to each of them.
+        echo '<div class="topic-item-messages">';
+        echo $this->subRequest('Topic/Item/Message')
+            ->set('mesid', $this->message->id)
+            ->set('location', $this->message->id);
+        echo '</div>';
+
+        echo '<table class="table table-sm kunena-topic-tree">';
+        echo '<caption class="visually-hidden">' . Text::sprintf('COM_KUNENA_TOPIC_REPLIES_TITLE', $this->topic->displayField('subject')) . '</caption>';
+        echo '<thead><tr><th scope="col">' . Text::_('COM_KUNENA_GEN_SUBJECT') . '</th><th scope="col">' . Text::_('COM_KUNENA_GEN_AUTHOR')
+            . '</th><th scope="col">' . Text::_('COM_KUNENA_POSTED_AT') . '</th></tr></thead><tbody>';
+
+        foreach ($this->messages as $message) {
+            echo $this->subLayout('Topic/Item/Message')
+                ->set('message', $message)
+                ->set('selected', $this->message->id)
+                ->setLayout('row');
+        }
+
+        echo '</tbody></table>';
+    } elseif ($this->messages) {
         echo '<div class="topic-item-messages">';
 
         foreach ($this->messages as $id => $message) {
+            // Indented: each reply moves in by its depth in the tree of the page (its edges, without the first two).
+            $depth = $topicLayout == 'indented' ? min(max(\count((array) $message->indent) - 2, 0), 10) : 0;
+
+            if ($depth) {
+                echo '<div class="kunena-topic-indent" style="padding-inline-start: ' . (3 * $depth) . '%">';
+            }
+
             echo $this->subRequest('Topic/Item/Message')
                 ->set('mesid', $message->id)
                 ->set('location', $id);
+
+            if ($depth) {
+                echo '</div>';
+            }
 
             if ($this->ktemplate->params->get('displayModule')) {
                 echo $this->subLayout('Widget/Module')

@@ -93,7 +93,12 @@
     border-radius: 50% !important;
   }
 
-  /* A user without a picture: the icon of a user. */
+  /* A user without a picture: the icon of a user, its box no larger than the circle so that the icon is centred. */
+  .rounded {
+    width: 112px !important;
+    height: 112px !important;
+  }
+
   .rounded > svg,
   a > svg {
     width: 48px;

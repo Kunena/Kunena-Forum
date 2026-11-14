@@ -39,4 +39,15 @@ describe('Kunena search', () => {
     cy.contains(topic.subject).should('not.exist');
     cy.get('body').should('contain.html', 'kunena');
   });
+
+  // The stylesheet hides every radio and shows those of the search panel again through its class kunena-search-panel.
+  it('shows the radios of what to show to a moderator', () => {
+    cy.doFrontendLogin(Cypress.expose('username'), Cypress.expose('password'), false);
+    cy.visit(form);
+
+    cy.get('#search').should('have.class', 'kunena-search-panel');
+    cy.get('#search input[name="show"]').should('have.length', 3).each((radio) => {
+      cy.wrap(radio).should('be.visible');
+    });
+  });
 });

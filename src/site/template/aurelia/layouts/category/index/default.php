@@ -97,7 +97,7 @@ foreach ($this->sections as $section) :
             </small>
         </h1>
 
-        <div class="<?php if (!empty($section->class)) :
+        <div class="<?php if (!empty($section->class_sfx)) :
                     ?>section<?php echo $this->escape($section->class_sfx); ?><?php
                                                                             endif; ?> collapse show shadow-lg rounded table-responsive" id="section<?php echo $section->id; ?>">
             <table class="table<?php echo $this->ktemplate->borderless(); ?> align-middle mb-0">

@@ -30,10 +30,10 @@ $this->addStyleSheet('rating.css');
 <?php if ($this->category->headerdesc) : ?>
     <div class="clearfix"></div>
     <br>
-    <h1 id="category-headerdesc<?php echo $this->category->id; ?>" class="alert alert-info shadow-lg rounded alert-dismissible fade show">
+    <div id="category-headerdesc<?php echo $this->category->id; ?>" class="alert alert-info shadow-lg rounded alert-dismissible fade show">
         <?php echo $this->category->displayField('headerdesc'); ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </h1>
+    </div>
 <?php endif; ?>
 
 <?php if (!$this->category->isSection()) : ?>

@@ -9,6 +9,10 @@ A `[code]` block is shown as a standard `<pre><code>` block in the "Code:" box, 
 one, in the language highlight.js detects. Whatever is typed inside the block stays text: HTML, BBCode, smileys and links are shown as they
 were written.
 
+In the CKEditor (the default editor of Aurelia) a `[code]` block is shown as a plain-text code block. Its content stays as written:
+no smileys, no formatting, and its line breaks and indentation are kept, also when a message is opened again to be edited. The
+`[code]` and `[/code]` markers, with the language of the block, are visible in the source mode of the editor.
+
 ## How it works
 
 - The tag names the language in one of two ways: `[code=php]...[/code]` or `[code type=php]...[/code]`. `[code]...[/code]` names none,

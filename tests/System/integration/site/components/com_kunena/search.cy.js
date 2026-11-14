@@ -30,6 +30,18 @@ describe('Kunena search', () => {
     cy.contains(topic.subject).should('exist');
   });
 
+  it('exposes the count of the results as a status, without the pagination', () => {
+    cy.visit(form);
+
+    cy.get('input[name="query"]').type(word, { parseSpecialCharSequences: false });
+    cy.get('input[name="query"]').closest('form').submit();
+
+    cy.get('.kunena-search-result').first().parent().find('[role="status"]').should('have.length', 1).then(($status) => {
+      expect($status.text()).to.match(/1 - \d+/);
+      expect($status.find('nav, .pagination')).to.have.length(0);
+    });
+  });
+
   it('says nothing is found for a word which is not there', () => {
     cy.visit(form);
 

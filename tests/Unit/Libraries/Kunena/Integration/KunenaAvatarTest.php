@@ -138,9 +138,9 @@ class KunenaAvatarTest extends UnitTestCase
         $html = $this->link('fa', self::PERSON, 'kavatar', 20, 20);
 
         $this->assertStringNotContainsString('<img', $html);
-        $this->assertStringContainsString('<i class="fas fa-user-circle" style="display: block; width: 100%; height: 100%" aria-hidden="true"></i>', $html);
-        $this->assertStringContainsString('style="display: inline-block; width: 20px; height: 20px; line-height: 1; font-size: 20px"', $html);
-        $this->assertStringStartsWith('<span class="kavatar"', $html);
+        $this->assertStringContainsString('<i class="fas fa-user-circle d-block mw-100 mh-100" aria-hidden="true"></i>', $html);
+        $this->assertStringContainsString('style="width: 20px; height: 20px; font-size: 20px"', $html);
+        $this->assertStringStartsWith('<span class="kavatar d-inline-block lh-1"', $html);
         $this->assertStringContainsString('title="Jane Doe\'s Avatar"', $html);
         $this->assertStringContainsString('role="img" aria-label="Jane Doe\'s Avatar"', $html);
     }
@@ -149,8 +149,8 @@ class KunenaAvatarTest extends UnitTestCase
     {
         $html = $this->link('fa', self::PERSON, 'none', 'thumb', 90);
 
-        $this->assertStringContainsString('style="display: inline-block; width: 36px; height: 48px; line-height: 1; font-size: 48px"', $html);
-        $this->assertStringStartsWith('<span class="kavatar"', $html);
+        $this->assertStringContainsString('style="width: 36px; height: 48px; font-size: 48px"', $html);
+        $this->assertStringStartsWith('<span class="kavatar d-inline-block lh-1"', $html);
     }
 
     public function testSvgGivesThePersonIconAtANumericSize(): void
@@ -160,10 +160,10 @@ class KunenaAvatarTest extends UnitTestCase
         $html = $this->link('svg', self::PERSON, 'rounded-circle', 20, 20);
 
         $this->assertStringNotContainsString('<img', $html);
-        $this->assertMatchesRegularExpression('/<svg width="20" height="20" style="display: block; width: 100%; height: 100%"[^>]*class="bi bi-person"/', $html);
-        $this->assertStringContainsString('style="display: inline-block; width: 20px; height: 20px; line-height: 1"', $html);
+        $this->assertMatchesRegularExpression('/<svg width="20" height="20"[^>]* class="bi bi-person d-block mw-100 mh-100"/', $html);
+        $this->assertStringContainsString('style="width: 20px; height: 20px"', $html);
         $this->assertStringNotContainsString('1em', $html);
-        $this->assertStringStartsWith('<span class="rounded-circle"', $html);
+        $this->assertStringStartsWith('<span class="rounded-circle d-inline-block lh-1"', $html);
         $this->assertStringContainsString('title="Jane Doe\'s Avatar"', $html);
         $this->assertStringContainsString('role="img" aria-label="Jane Doe\'s Avatar"', $html);
     }
@@ -175,14 +175,14 @@ class KunenaAvatarTest extends UnitTestCase
         $html = $this->link('svg', self::PERSON, 'kavatar', 'thumb', 90);
 
         $this->assertMatchesRegularExpression('/<svg width="36" height="48"[^>]*>/', $html);
-        $this->assertStringContainsString('style="display: inline-block; width: 36px; height: 48px; line-height: 1"', $html);
+        $this->assertStringContainsString('style="width: 36px; height: 48px"', $html);
         $this->assertStringNotContainsString('1em', $html);
     }
 
     public function testTheStatusIsAClassOfTheIcon(): void
     {
-        $this->assertStringStartsWith('<span class="rounded-circle green status-green"', $this->link('fa', self::PERSON, 'rounded-circle green', 20, 20, 'green'));
-        $this->assertStringStartsWith('<span class="rounded-circle status-grey"', $this->link('svg', self::PERSON, 'rounded-circle ', 20, 20, 'grey'));
+        $this->assertStringStartsWith('<span class="rounded-circle green d-inline-block lh-1 status-green"', $this->link('fa', self::PERSON, 'rounded-circle green', 20, 20, 'green'));
+        $this->assertStringStartsWith('<span class="rounded-circle d-inline-block lh-1 status-grey"', $this->link('svg', self::PERSON, 'rounded-circle ', 20, 20, 'grey'));
         $this->assertStringNotContainsString('status-', $this->link('fa', self::PERSON, 'rounded-circle', 20, 20));
         $this->assertStringNotContainsString('status-', $this->link('svg', self::PERSON, 'rounded-circle', 20, 20));
     }

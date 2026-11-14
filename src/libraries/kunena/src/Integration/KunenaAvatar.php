@@ -166,31 +166,37 @@ class KunenaAvatar
      */
     protected function getIcon(KunenaUser $user, $class, StdClass $size, string $topicicontype, string $online): string
     {
-        $classes = $class == 'none' ? 'kavatar' : trim((string) $class);
+        $classes = trim(($class == 'none' ? 'kavatar' : trim((string) $class)) . ' d-inline-block lh-1');
 
         if ($online !== '') {
-            $classes = trim($classes . ' status-' . $online);
+            $classes .= ' status-' . $online;
         }
 
         $title = Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName());
-        $span  = '<span' . ($classes !== '' ? ' class="' . $classes . '"' : '');
+        $span  = '<span class="' . $classes . '"';
 
-        // The box of the icon has the size of the avatar (line-height 1: no taller line box), and the icon fills that box, so
-        // that a stylesheet which makes the avatar smaller makes the icon smaller too.
-        $style = 'display: inline-block; width: ' . $size->x . 'px; height: ' . $size->y . 'px; line-height: 1';
+        // The box of the icon has the size of the avatar (lh-1: no taller line box). The icon has the size of the avatar too, but
+        // never more than its box: a stylesheet which makes the avatar or the icon smaller still wins.
+        $style = 'width: ' . $size->x . 'px; height: ' . $size->y . 'px';
 
         if ($topicicontype == 'fa') {
             return $span . ' style="' . $style . '; font-size: ' . $size->y . 'px" data-bs-toggle="tooltip" title="' . $title . '" role="img" aria-label="' . $title . '">'
-                . '<i class="fas fa-user-circle" style="display: block; width: 100%; height: 100%" aria-hidden="true"></i></span>';
+                . '<i class="fas fa-user-circle d-block mw-100 mh-100" aria-hidden="true"></i></span>';
         }
 
         // The SVG is 1em wide and high: give it the size of the avatar.
         $svg = preg_replace_callback(
             '/<svg\b[^>]*>/',
             function ($tag) use ($size) {
-                $tag = preg_replace('/\s(width|height|style)="[^"]*"/', '', $tag[0]);
+                $tag = preg_replace('/\s(width|height)="[^"]*"/', '', $tag[0]);
 
-                return '<svg width="' . $size->x . '" height="' . $size->y . '" style="display: block; width: 100%; height: 100%"' . substr($tag, 4);
+                if (preg_match('/\sclass="/', $tag)) {
+                    $tag = preg_replace('/\sclass="([^"]*)"/', ' class="$1 d-block mw-100 mh-100"', $tag, 1);
+                } else {
+                    $tag = '<svg class="d-block mw-100 mh-100"' . substr($tag, 4);
+                }
+
+                return '<svg width="' . $size->x . '" height="' . $size->y . '"' . substr($tag, 4);
             },
             KunenaSvgIcons::loadsvg('person'),
             1

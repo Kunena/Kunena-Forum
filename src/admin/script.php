@@ -33,6 +33,15 @@ use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 class Com_KunenaInstallerScript extends InstallerScript
 {
     /**
+     * The version which is assumed when the installed version can not be read: newer than every released version, older than
+     * the version in development (8.0.0-DEV), so that only the updates of the version in development run.
+     *
+     * @var    string
+     * @since  Kunena 8.0
+     */
+    private const DEVELOPMENT_VERSION = '7.99.0';
+
+    /**
      * The extension name. This should be set in the installer script.
      *
      * @var    string
@@ -63,8 +72,7 @@ class Com_KunenaInstallerScript extends InstallerScript
             return false;
         }
 
-        $manifest               = $this->getItemArray('manifest_cache', '#__extensions', 'name', $this->extension);
-        $this->installedVersion = $manifest['version'] ?? '';
+        $this->installedVersion = $this->readInstalledVersion();
 
         if ($type === 'update') {
             if (version_compare($this->installedVersion, '7.0.0', '<')) {
@@ -80,6 +88,55 @@ class Com_KunenaInstallerScript extends InstallerScript
         }
 
         return true;
+    }
+
+    /**
+     * The version of Kunena which is installed, to know which updates of the database to run.
+     *
+     * The version in the manifest cache of Joomla is not always a version: a site which runs Kunena from a git checkout has the
+     * placeholder of the source (@kunenaversion@) there once the Database page of Joomla has written the version of the manifest
+     * to it, and it is empty when the row is damaged. Both are older than every version for version_compare(), so the whole
+     * history of the upgrade ran again on a current database (the old steps use the columns which are renamed since, and the
+     * configuration was converted again). Then the version which Kunena recorded itself is used, and else it is assumed that
+     * only the updates of the version in development are needed.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    private function readInstalledVersion(): string
+    {
+        $manifest = $this->getItemArray('manifest_cache', '#__extensions', 'name', $this->extension);
+        $version  = (string) ($manifest['version'] ?? '');
+
+        if (preg_match('/^\d+\.\d+/', $version)) {
+            return $version;
+        }
+
+        // A development site (a git checkout) has the placeholder of the source: it says nothing about the history of its
+        // database, so it is ignored. Written in two parts so that the build does not replace it.
+        if ($version === '@' . 'kunenaversion' . '@') {
+            return self::DEVELOPMENT_VERSION;
+        }
+
+        try {
+            /** @var DatabaseDriver  $db */
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery()
+                ->select($db->quoteName('version'))
+                ->from($db->quoteName('#__kunena_version'))
+                ->order($db->quoteName('id') . ' DESC')
+                ->setLimit(1);
+            $recorded = (string) $db->setQuery($query)->loadResult();
+        } catch (Throwable $e) {
+            $recorded = '';
+        }
+
+        if (preg_match('/^\d+\.\d+/', $recorded)) {
+            return $recorded;
+        }
+
+        return self::DEVELOPMENT_VERSION;
     }
 
     /**

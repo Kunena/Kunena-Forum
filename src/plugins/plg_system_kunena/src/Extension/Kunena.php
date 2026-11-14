@@ -82,6 +82,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
                 // Only allowed in the backend
                 $mapping['onExtensionBeforeSave'] = 'onExtensionBeforeSave';
                 $mapping['onExtensionAfterSave']  = 'onExtensionAfterSave';
+                $mapping['onAfterRender']         = 'onAfterRender';
             }
         }
 
@@ -365,5 +366,117 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             // We need to clear the cache for com_kunena configuration
             KunenaConfig::getInstance()->reset();
         }
+    }
+
+    /**
+     * On the Database page of the Joomla installer a development site (a git checkout) shows a warning that the version of
+     * Kunena does not match the version of its manifest, because the manifest has the placeholder of the source. The placeholder
+     * is only in a development site, and Kunena ignores it, so that warning is taken out of the page.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public function onAfterRender(): void
+    {
+        $app   = Factory::getApplication();
+        $input = $app->getInput();
+
+        if ($input->getCmd('option') !== 'com_installer' || $input->getCmd('view') !== 'database') {
+            return;
+        }
+
+        $body = $app->getBody();
+
+        if ($body === '' || !str_contains($body, self::placeholder())) {
+            return;
+        }
+
+        $app->setBody($this->hidePlaceholderWarning(
+            $body,
+            static fn (int $count): string => Text::plural('COM_INSTALLER_MSG_DATABASE_ERRORS', $count),
+            Text::_('COM_INSTALLER_MSG_DATABASE_CORE_ERRORS'),
+            Text::_('COM_INSTALLER_MSG_DATABASE_CORE_OK')
+        ));
+    }
+
+    /**
+     * The placeholder of the version in the source, written in two parts so that the build does not replace it.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    private static function placeholder(): string
+    {
+        return '@' . 'kunenaversion' . '@';
+    }
+
+    /**
+     * Takes the warning about the placeholder out of the rows of the Database page: the line of the list, one problem less in the
+     * badge and in the list (no problems turns the badge green), and the message above the page when no problem is left.
+     *
+     * @param   string    $html       The page.
+     * @param   callable  $plural     Gives the text of the badge for a number of problems (the strings of Joomla).
+     * @param   string    $errorsText The message above the page when there are problems.
+     * @param   string    $okText     The message above the page when there are none.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public function hidePlaceholderWarning(string $html, callable $plural, string $errorsText, string $okText): string
+    {
+        $placeholder = preg_quote(self::placeholder(), '#');
+        $line        = '#<li>(?:(?!</li>).)*<strong>' . $placeholder . '</strong>(?:(?!</li>).)*</li>#s';
+        $changed     = false;
+
+        $html = preg_replace_callback(
+            '#<tr class="row\d+">.*?</tr>#s',
+            function (array $match) use ($line, $plural, &$changed): string {
+                $row = $match[0];
+
+                if (!preg_match($line, $row)) {
+                    return $row;
+                }
+
+                $changed = true;
+                $row     = (string) preg_replace($line, '', $row, 1);
+
+                // The text of the badge says how many problems there were: one less now.
+                if (preg_match('#(<span class="badge bg-)(warning|danger|success)(" tabindex="0">\s*)([^<]*?)(\s*</span>)#', $row, $badge)) {
+                    $old = trim($badge[4]);
+
+                    for ($count = 1; $count <= 20; $count++) {
+                        if ($plural($count) !== $old) {
+                            continue;
+                        }
+
+                        $new   = $plural($count - 1);
+                        $class = $count === 1 ? 'success' : $badge[2];
+                        $row   = str_replace($badge[0], $badge[1] . $class . $badge[3] . $new . $badge[5], $row);
+                        $row   = str_replace('<strong>' . $old . '</strong>', '<strong>' . $new . '</strong>', $row);
+
+                        break;
+                    }
+                }
+
+                return $row;
+            },
+            $html
+        ) ?? $html;
+
+        // The message above the page counts the problems of all extensions: when none is left it says so.
+        if ($changed && !preg_match('#<span class="badge bg-(?:warning|danger)"#', $html)) {
+            foreach ([0, JSON_UNESCAPED_SLASHES] as $flags) {
+                $html = str_replace(
+                    '{"warning":[' . json_encode($errorsText, $flags) . ']}',
+                    '{"info":[' . json_encode($okText, $flags) . ']}',
+                    $html
+                );
+            }
+        }
+
+        return $html;
     }
 }

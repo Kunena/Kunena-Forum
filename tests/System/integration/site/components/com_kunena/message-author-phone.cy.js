@@ -122,6 +122,9 @@ describe('Kunena Aurelia: the author of a message on a phone', () => {
         expect($message.find('small.float-end')[0].innerText, 'the text "by" before the name').to.not.match(new RegExp(`\\bby\\s+${Cypress._.escapeRegExp(name)}`, 'i'));
         expect($message.find('.mykmsg-header').filter(':visible'), 'the header of a message without a private message').to.have.length(0);
         expect($message.find('.col-md-2').filter(':visible'), 'the side profile').to.have.length(0);
+        // The text of the message starts below the floated date and author line, not beside it.
+        expect($message.find('.kmsg').last()[0].getBoundingClientRect().top, 'the top of the text of the message')
+          .to.be.at.least($message.find('small.float-end')[0].getBoundingClientRect().bottom);
         dateAndNumber($message);
       });
     });

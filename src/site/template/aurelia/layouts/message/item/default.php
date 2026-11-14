@@ -61,6 +61,7 @@ $list = [];
         </span>
     </span>
 </small>
+<div class="clearfix d-sm-none"></div>
 
 <div class="shadow-none p-4 mb-5 rounded">
     <div class="mykmsg-header<?php echo $showPm ? '' : ' d-none d-sm-block'; ?>">

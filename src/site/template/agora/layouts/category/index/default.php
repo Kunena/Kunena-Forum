@@ -104,7 +104,7 @@ foreach ($this->sections as $section) :
             <?php endif; ?>
         </div>
 
-        <div class="<?php if (!empty($section->class)) :
+        <div class="<?php if (!empty($section->class_sfx)) :
                     ?>section<?php echo $this->escape($section->class_sfx); ?><?php
                                                                             endif; ?> collapse show" id="section<?php echo $section->id; ?>">
             <table class="table<?php echo $this->ktemplate->borderless(); ?> align-middle mb-0">

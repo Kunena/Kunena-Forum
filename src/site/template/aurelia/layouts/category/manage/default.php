@@ -202,6 +202,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/
                                                           name="headerdesc"
                                                           id="headerdesc"
                                                           style="width: 500px;"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
+                                                    <p><?php echo Text::_('COM_KUNENA_HEADERADD_DESC'); ?></p>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -210,6 +211,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/
                                                 <textarea class="inputbox form-control" cols="50" rows="6"
                                                           name="topictemplate" id="topictemplate"
                                                           style="width: 500px;"><?php echo $this->escape($this->category->topictemplate); ?></textarea>
+                                                    <p><?php echo Text::_('COM_KUNENA_CATEGORY_TOPIC_TEMPLATE_DESC'); ?></p>
                                                 </td>
                                             </tr>
                                         </table>

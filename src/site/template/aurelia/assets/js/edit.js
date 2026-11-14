@@ -21,6 +21,8 @@ jQuery(document).ready(function ($) {
     const pollexist = $('#poll_exist_edit');
     const pollcatid = jQuery('#poll_catid').val();
     const polliconstatus = false;
+    // The poll of the edited topic may not be edited: the button only shows it, the save checks it again
+    const pollEditRefused = Joomla.getOptions('com_kunena.pollEditRefused');
 
     // Check is anynomous options can be displayed on newtopic page
     const catiddefault = $('#postcatid').val();
@@ -94,7 +96,11 @@ jQuery(document).ready(function ($) {
         const pollcatid = jQuery('#poll_catid').val();
         const polliconstatus = true;
 
-        if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
+        if (pollEditRefused !== undefined) {
+            if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+                CKEDITOR.instances.message.getCommand('polls').disable();
+            }
+        } else if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
             if (pollcatid !== undefined) {
                 const catid = jQuery('#kcategory_poll').val();
             }
@@ -301,7 +307,11 @@ jQuery(document).ready(function ($) {
                         localStorage.removeItem('copyKunenaeditor');
                     }
 
-                    if (polliconstatus === false) {
+                    if (pollEditRefused !== undefined) {
+                        // CKEditor enables the command again on every change of mode
+                        evt.editor.getCommand('polls').disable();
+                        $('#cke_' + evt.editor.name + ' .cke_button__polls').attr({'title': pollEditRefused, 'aria-describedby': 'poll-edit-refused'});
+                    } else if (polliconstatus === false) {
                         if (pollcatid !== undefined) {
                             if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
                                 const catid = $('#kcategory_poll').val();

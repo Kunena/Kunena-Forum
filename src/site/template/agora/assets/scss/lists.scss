@@ -15,15 +15,15 @@
 .agora-list-head {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem 1rem;
+  gap: 0.5rem 1rem;
   align-items: center;
   justify-content: space-between;
-  margin: 0.25rem 0 0.9rem;
+  margin: 0.25rem 0 1rem;
 }
 
 .agora-list-title {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   align-items: center;
   min-width: 0;
 
@@ -35,12 +35,12 @@
     margin: 0;
 
     small {
-      padding: 0.1rem 0.6rem;
+      padding: 0.25rem 0.5rem;
       font-size: 0.82rem;
       font-weight: 600;
-      color: var(--agora-accent-strong);
-      background: var(--agora-accent-soft);
-      border-radius: var(--agora-radius-pill);
+      color: var(--agora-text-muted);
+      background: var(--agora-surface-hover);
+      border-radius: var(--agora-radius);
     }
   }
 }
@@ -52,9 +52,9 @@
 
 /* The filters of the list. */
 .agora-list-filters {
-  --bs-gutter-x: 0.5rem;
-  padding: 0.75rem 0.5rem;
-  margin: 0 0 0.9rem !important;
+  --bs-gutter-x: 1rem;
+  padding: 1rem 0.5rem;
+  margin: 0 0 1rem !important;
   background: var(--agora-surface);
   border: 1px solid var(--agora-border);
   border-radius: var(--agora-radius);
@@ -68,7 +68,7 @@
 
   .text-end {
     display: flex;
-    gap: 0.4rem;
+    gap: 0.5rem;
     justify-content: flex-end;
   }
 }
@@ -80,7 +80,7 @@
   gap: 0.5rem 1rem;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 
   .pagination {
     margin: 0;
@@ -92,7 +92,7 @@
 }
 
 .agora-list-toolbar[data-ktopics-pagination] {
-  margin-top: 0.75rem;
+  margin-top: 1rem;
 }
 
 /* The list: the card is the frame, the table has no frame of its own. */
@@ -112,9 +112,9 @@
 .agora-topics-foot {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.5rem;
   align-items: center;
-  padding: 0.7rem 1rem;
+  padding: 0.5rem 1rem;
   background: var(--agora-surface-2);
   border-top: 1px solid var(--agora-border);
 
@@ -133,8 +133,9 @@
   border-radius: 50%;
 
   &:hover {
-    color: var(--agora-accent);
+    color: var(--agora-text);
     text-decoration: none;
+    background: var(--agora-surface-hover);
   }
 }
 
@@ -162,7 +163,7 @@
   width: 1.15rem;
   height: 1.15rem;
   cursor: pointer;
-  accent-color: var(--agora-accent);
+  accent-color: var(--agora-neutral-strong);
 }
 
 @media (max-width: 767.98px) {

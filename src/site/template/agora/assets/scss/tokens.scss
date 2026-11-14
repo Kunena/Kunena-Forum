@@ -10,6 +10,13 @@
 /*
  * The design tokens of Agora. The accent colour comes from the options of the template (--agora-accent, set on the page), every other
  * colour of the forum is taken from these variables, so the dark scheme only has to change them.
+ *
+ * - Colour: the accent is only on the main button and on the links. The neutrals (backgrounds, surfaces, borders, texts) are greys
+ *   with a little of the accent in them, so they follow the accent chosen in the options.
+ * - Space: every padding, margin and gap is on the 8px scale (0.5rem, 1rem, 1.5rem, 2rem, ...); 4px (0.25rem) is the only half step,
+ *   for the things which belong together (an icon and its text, a title and its date). A card has 1rem inside (--agora-pad), so the
+ *   texts of all the cards start at the same edge; cards are --agora-gap apart.
+ * - Shape: one radius for everything which is not round (cards, buttons, fields, menus, badges), 1px borders, soft shadows.
  */
 #kunena.layout.agora {
   --agora-accent: #3d5afe;
@@ -18,24 +25,31 @@
   --agora-accent-text: #fff;
   --agora-link: var(--agora-accent-strong);
 
-  --agora-bg: #f4f6fb;
-  --agora-surface: #fff;
-  --agora-surface-2: #f8f9fc;
-  --agora-surface-hover: #f2f4fa;
-  --agora-border: #e3e7f0;
-  --agora-border-strong: #cfd5e3;
-  --agora-text: #1c2230;
-  --agora-text-muted: #636b7e;
+  --agora-bg: color-mix(in oklab, var(--agora-accent) 4%, #f5f5f6);
+  --agora-surface: color-mix(in oklab, var(--agora-accent) 1%, #fff);
+  --agora-surface-2: color-mix(in oklab, var(--agora-accent) 3%, #f9f9fa);
+  --agora-surface-hover: color-mix(in oklab, var(--agora-accent) 5%, #f2f2f4);
+  --agora-border: color-mix(in oklab, var(--agora-accent) 7%, #e3e3e7);
+  --agora-border-strong: color-mix(in oklab, var(--agora-accent) 9%, #cfcfd5);
+  --agora-text: color-mix(in oklab, var(--agora-accent) 8%, #19191d);
+  --agora-text-muted: color-mix(in oklab, var(--agora-accent) 10%, #62626c);
+  /* A strong neutral for a selected state which is not a link: the current page, a checked box, the bar of a poll. */
+  --agora-neutral-strong: var(--agora-text);
+  --agora-neutral-strong-text: var(--agora-surface);
   --agora-success: #1f9d61;
   --agora-danger: #d64545;
   --agora-warning: #c7811a;
 
-  --agora-radius: 14px;
-  --agora-radius-sm: 9px;
-  --agora-radius-pill: 999px;
-  --agora-shadow: 0 1px 2px rgba(20, 28, 45, 0.05), 0 2px 8px rgba(20, 28, 45, 0.05);
-  --agora-shadow-raised: 0 4px 14px rgba(20, 28, 45, 0.1);
+  --agora-radius: 8px;
+  /* The old names, for the custom styles of the sites: the same radius. */
+  --agora-radius-sm: var(--agora-radius);
+  --agora-radius-pill: var(--agora-radius);
+  --agora-shadow: 0 1px 2px color-mix(in srgb, var(--agora-text) 5%, transparent);
+  --agora-shadow-raised: 0 4px 16px color-mix(in srgb, var(--agora-text) 8%, transparent);
+
+  --agora-pad: 1rem;
   --agora-gap: 1rem;
+  --agora-gap-section: 1.5rem;
   --agora-touch: 40px;
 
   --agora-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
@@ -47,9 +61,11 @@
   --bs-border-color: var(--agora-border);
   --bs-secondary-color: var(--agora-text-muted);
   --bs-tertiary-bg: var(--agora-surface-2);
-  --bs-border-radius: var(--agora-radius-sm);
+  --bs-border-radius: var(--agora-radius);
+  --bs-border-radius-sm: var(--agora-radius);
   --bs-border-radius-lg: var(--agora-radius);
-  --bs-focus-ring-color: color-mix(in srgb, var(--agora-accent) 30%, transparent);
+  --bs-border-width: 1px;
+  --bs-focus-ring-color: color-mix(in srgb, var(--agora-text) 18%, transparent);
 
   /* The site template Cassiopeia has its own build of Bootstrap, with variables without prefix: the same colours for them. */
   --body-bg: var(--agora-surface);
@@ -61,6 +77,9 @@
   --tertiary-color: var(--agora-text-muted);
   --tertiary-bg: var(--agora-surface-2);
   --border-color: var(--agora-border);
+  --border-radius: var(--agora-radius);
+  --border-radius-sm: var(--agora-radius);
+  --border-radius-lg: var(--agora-radius);
   --link-color: var(--agora-link);
   --link-hover-color: var(--agora-accent);
 }
@@ -70,20 +89,20 @@
   --agora-accent-soft: color-mix(in srgb, var(--agora-accent) 22%, transparent);
   --agora-link: var(--agora-accent-strong);
 
-  --agora-bg: #0f131b;
-  --agora-surface: #171c27;
-  --agora-surface-2: #1c2230;
-  --agora-surface-hover: #212838;
-  --agora-border: #2a3243;
-  --agora-border-strong: #3a4458;
-  --agora-text: #e5e9f2;
-  --agora-text-muted: #9aa4b8;
+  --agora-bg: color-mix(in oklab, var(--agora-accent) 5%, #0e0e11);
+  --agora-surface: color-mix(in oklab, var(--agora-accent) 5%, #16161a);
+  --agora-surface-2: color-mix(in oklab, var(--agora-accent) 6%, #1b1b20);
+  --agora-surface-hover: color-mix(in oklab, var(--agora-accent) 7%, #222228);
+  --agora-border: color-mix(in oklab, var(--agora-accent) 9%, #2b2b32);
+  --agora-border-strong: color-mix(in oklab, var(--agora-accent) 10%, #3b3b44);
+  --agora-text: color-mix(in oklab, var(--agora-accent) 5%, #ececf0);
+  --agora-text-muted: color-mix(in oklab, var(--agora-accent) 10%, #9d9da8);
   --agora-success: #4cc38a;
   --agora-danger: #f07171;
   --agora-warning: #e7a948;
 
-  --agora-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-  --agora-shadow-raised: 0 6px 20px rgba(0, 0, 0, 0.45);
+  --agora-shadow: 0 1px 2px rgb(0 0 0 / 0.24);
+  --agora-shadow-raised: 0 4px 16px rgb(0 0 0 / 0.32);
 
   color-scheme: dark;
 }

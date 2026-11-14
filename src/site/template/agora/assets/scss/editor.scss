@@ -14,7 +14,7 @@
 #postform {
   > .shadow-lg,
   > .p-3.rounded {
-    padding: 1.1rem 1.25rem !important;
+    padding: var(--agora-pad) !important;
     margin-bottom: var(--agora-gap) !important;
     background: var(--agora-surface);
     border: 1px solid var(--agora-border);
@@ -23,15 +23,15 @@
   }
 
   > h2 {
-    margin: 1.25rem 0 0.5rem;
+    margin: 1.5rem 0 0.5rem;
     font-size: 1rem;
     font-weight: 650;
   }
 
   .form-group.row {
     --bs-gutter-x: 1rem;
-    row-gap: 0.35rem;
-    margin-bottom: 0.9rem;
+    row-gap: 0.25rem;
+    margin-bottom: 1rem;
   }
 
   .col-form-label {
@@ -64,7 +64,7 @@
     --bs-btn-disabled-color: var(--agora-accent-text);
     --bs-btn-disabled-bg: var(--agora-accent);
     --bs-btn-disabled-border-color: var(--agora-accent);
-    padding-inline: 1.4rem;
+    padding-inline: 1.5rem;
   }
 
   /* The buttons of the form, in the middle of the whole form. */
@@ -83,7 +83,7 @@
 #iconset_topicList {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.25rem;
   align-items: center;
 
   > label[for]:empty {
@@ -108,17 +108,65 @@
     cursor: pointer;
     background: var(--agora-surface);
     border: 1px solid var(--agora-border);
-    border-radius: var(--agora-radius-sm);
+    border-radius: var(--agora-radius);
+  }
+
+  /* With the names of the icons (option of the template): the icon above its name, all the tiles of the same size. */
+  /* All the icons in one row, of the same width (on a phone as many in a row as keep the names whole). */
+  &:has(label.radio > span) {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: 0.25rem;
+    align-items: stretch;
+
+    @media (max-width: 575.98px) {
+      grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
+      grid-auto-flow: row;
+    }
+  }
+
+  label.radio:has(> span) {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: center;
+    justify-content: flex-start;
+    width: auto;
+    min-width: 0;
+    height: auto;
+    min-height: var(--agora-touch);
+    padding: 0.5rem 0.25rem;
+
+    > svg,
+    > img,
+    > i {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    > span {
+      max-width: 100%;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      line-height: 1.25;
+      color: var(--agora-text-muted);
+      overflow-wrap: anywhere;
+    }
   }
 
   input[type="radio"]:checked + label.radio {
-    background: var(--agora-accent-soft);
-    border-color: var(--agora-accent);
-    box-shadow: 0 0 0 1px var(--agora-accent);
+    background: var(--agora-surface-hover);
+    border-color: var(--agora-text);
+
+    > span {
+      color: var(--agora-text);
+    }
   }
 
   input[type="radio"]:focus-visible + label.radio {
-    outline: 2px solid var(--agora-accent);
+    outline: 2px solid var(--agora-text);
     outline-offset: 2px;
   }
 }
@@ -130,13 +178,13 @@ textarea.span12,
 .qreply textarea {
   width: 100%;
   min-height: 12rem;
-  padding: 0.75rem;
+  padding: 1rem;
   font-size: max(16px, 1rem);
   line-height: 1.6;
 }
 
 #myTabContent > .tab-pane {
-  padding-top: 0.75rem;
+  padding-top: 1rem;
 }
 
 .sceditor-container {
@@ -146,7 +194,7 @@ textarea.span12,
   color: var(--agora-text);
   background: var(--agora-surface) !important;
   border: 1px solid var(--agora-border-strong) !important;
-  border-radius: var(--agora-radius-sm) !important;
+  border-radius: var(--agora-radius) !important;
 
   iframe,
   textarea {
@@ -159,18 +207,18 @@ textarea.span12,
 .sceditor-toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.15rem;
-  padding: 0.35rem !important;
+  gap: 0.25rem;
+  padding: 0.25rem !important;
   background: var(--agora-surface-2) !important;
   border-bottom: 1px solid var(--agora-border) !important;
-  border-radius: var(--agora-radius-sm) var(--agora-radius-sm) 0 0;
+  border-radius: var(--agora-radius) var(--agora-radius) 0 0;
 }
 
 .sceditor-group {
   display: inline-flex !important;
   flex-wrap: wrap;
-  padding: 0.1rem !important;
-  margin: 0 0.15rem 0 0 !important;
+  padding: 0.25rem !important;
+  margin: 0 0.25rem 0 0 !important;
   background: transparent !important;
   border: 0 !important;
 }
@@ -179,8 +227,8 @@ textarea.span12,
   width: auto !important;
   min-width: 32px;
   height: 32px !important;
-  padding: 7px !important;
-  border-radius: 6px !important;
+  padding: 0.5rem !important;
+  border-radius: var(--agora-radius) !important;
 
   &:hover,
   &.active {
@@ -202,22 +250,166 @@ textarea.span12,
   color: var(--agora-text);
   background: var(--agora-surface) !important;
   border-color: var(--agora-border) !important;
-  border-radius: var(--agora-radius-sm);
+  border-radius: var(--agora-radius);
   box-shadow: var(--agora-shadow-raised);
 }
 
+/* CKEditor 4 (skin moonocolor): the surfaces, the borders and the radius of Agora instead of the grey gradients of the skin, in both
+ * schemes. Its text is in a frame, painted by agora.js. Its menus and dialogs are put at the end of the page, outside the forum: they
+ * keep the look of the skin. */
 .cke,
 .cke_chrome {
   max-width: 100%;
-  border-color: var(--agora-border-strong) !important;
-  border-radius: var(--agora-radius-sm);
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--agora-border-strong) !important;
+  border-radius: var(--agora-radius);
+  box-shadow: none;
+}
+
+.cke_inner,
+.cke_contents,
+.cke_wysiwyg_frame,
+.cke_wysiwyg_div {
+  background: var(--agora-surface);
+}
+
+/* The skin is drawn with the box model of the browser: the border-box of Agora (on every element of the forum) would squeeze the
+ * buttons into the height of their icon. */
+.cke,
+.cke *,
+.cke *::before,
+.cke *::after {
+  box-sizing: content-box;
+}
+
+.cke_top,
+.cke_bottom {
+  padding: 0.5rem 0.5rem 0;
+  color: var(--agora-text-muted);
+  background: var(--agora-surface-2);
+  box-shadow: none;
+}
+
+.cke_top {
+  border-bottom: 1px solid var(--agora-border);
+}
+
+.cke_bottom {
+  padding-bottom: 0.5rem;
+  border-top: 1px solid var(--agora-border);
+}
+
+.cke_toolgroup,
+a.cke_combo_button {
+  margin: 0 0.5rem 0.5rem 0;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: none;
+}
+
+/* The buttons: 32px high, the icon in the middle (as the small buttons of the forum). */
+a.cke_button,
+.cke_toolgroup a.cke_button:last-child,
+.cke_toolgroup a.cke_button:first-child {
+  height: 1rem;
+  padding: 0.5rem;
+  border-radius: calc(var(--agora-radius) - 1px);
+}
+
+.cke_button_icon {
+  margin: 0;
+}
+
+.cke_toolbar_separator {
+  height: 1rem;
+  margin: 0.5rem 0.25rem 0;
+}
+
+.cke_combo_text,
+.cke_combo_open {
+  height: 2rem;
+  line-height: 2rem;
+}
+
+.cke_combo_text {
+  padding: 0 0.25rem 0 0.5rem;
+}
+
+.cke_combo_open {
+  /* Inline, it would add a line of text under the arrow. */
+  display: block;
+  float: left;
+  margin: 0 0.5rem 0 0;
+}
+
+.cke_combo_arrow {
+  margin-top: 0.875rem;
+}
+
+a.cke_button_off:hover,
+a.cke_button_off:focus,
+a.cke_button_off:active,
+a.cke_button_on,
+.cke_combo_off a.cke_combo_button:hover,
+.cke_combo_off a.cke_combo_button:focus,
+.cke_combo_on a.cke_combo_button {
+  background: var(--agora-surface-hover);
+  border-color: var(--agora-border-strong);
+  box-shadow: none;
+}
+
+a.cke_button_on {
+  outline: 1px solid var(--agora-border-strong);
+}
+
+.cke_toolbar_separator {
+  background: var(--agora-border);
+  box-shadow: none;
+}
+
+.cke_combo_text,
+.cke_button_label,
+.cke_path_item,
+.cke_path_empty {
+  color: var(--agora-text);
+  text-shadow: none;
+}
+
+a.cke_path_item:hover,
+a.cke_path_item:focus {
+  color: var(--agora-text);
+  background: var(--agora-surface-hover);
+  box-shadow: none;
+}
+
+.cke_combo_arrow,
+.cke_button_arrow {
+  border-top-color: var(--agora-text-muted);
+}
+
+.cke_resizer {
+  border-right-color: var(--agora-text-muted);
+  box-shadow: none;
+}
+
+.cke_source {
+  color: var(--agora-text);
+  background: var(--agora-surface);
+}
+
+/* The icons of the skin are drawn for a light toolbar: light glyphs in the dark scheme, with the same hues (as for SCEditor). */
+&[data-bs-theme="dark"] .cke_button_icon,
+&[data-bs-theme="dark"] .cke_toolbox_collapser .cke_toolbox_collapser_arrow {
+  filter: invert(1) hue-rotate(180deg) brightness(1.1);
 }
 
 .kbbcode-preview-bottom {
-  margin: 0.75rem 0;
+  margin: 1rem 0;
   background: var(--agora-surface);
   border: 1px dashed var(--agora-border-strong);
-  border-radius: var(--agora-radius-sm);
+  border-radius: var(--agora-radius);
 }
 
 /* The attachments of the form. */
@@ -239,20 +431,20 @@ textarea.span12,
   color: var(--agora-text-muted);
   text-align: center;
   background: var(--agora-surface-2) !important;
-  border: 2px dashed var(--agora-border-strong) !important;
+  border: 1px dashed var(--agora-border-strong) !important;
   border-radius: var(--agora-radius) !important;
 }
 
 #files {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.5rem;
 
   > * {
     padding: 0.5rem;
     background: var(--agora-surface-2);
     border: 1px solid var(--agora-border);
-    border-radius: var(--agora-radius-sm);
+    border-radius: var(--agora-radius);
   }
 }
 
@@ -261,7 +453,7 @@ textarea.span12,
 .kpoll-options,
 #poll-options {
   .form-control {
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
   }
 }
 
@@ -272,11 +464,11 @@ textarea.span12,
   color: var(--agora-text);
   background: var(--agora-surface);
   border: 1px solid var(--agora-border);
-  border-radius: var(--agora-radius-sm);
+  border-radius: var(--agora-radius);
   box-shadow: var(--agora-shadow-raised);
 
   li.highlight {
-    background: var(--agora-accent-soft);
+    background: var(--agora-surface-hover);
   }
 }
 
@@ -297,7 +489,7 @@ textarea.span12,
   }
 
   legend {
-    margin: 0.75rem 0 0.25rem;
+    margin: 1rem 0 0.25rem;
     font-size: 1rem;
     font-weight: 650;
   }
@@ -308,7 +500,7 @@ textarea.span12,
   }
 
   .table td:first-child {
-    padding-top: 1.35rem;
+    padding-top: 1.5rem;
     font-weight: 550;
   }
 
@@ -318,7 +510,7 @@ textarea.span12,
   }
 
   .table td p {
-    margin: 0.35rem 0 0;
+    margin: 0.25rem 0 0;
     font-size: 0.86rem;
     color: var(--agora-text-muted);
   }
@@ -338,7 +530,7 @@ textarea.span12,
 
   /* The list of the aliases of the category, under the alias. */
   #aliascheck .form-select {
-    margin-top: 0.4rem;
+    margin-top: 0.5rem;
   }
 
   .form-group.row.pt-3 .col-md-10.center {
@@ -358,7 +550,7 @@ textarea.span12,
     --bs-btn-hover-color: var(--agora-accent-text);
     --bs-btn-hover-bg: var(--agora-accent-strong);
     --bs-btn-hover-border-color: var(--agora-accent-strong);
-    padding-inline: 1.4rem;
+    padding-inline: 1.5rem;
   }
 }
 
@@ -378,12 +570,12 @@ textarea.span12,
     }
 
     td:first-child {
-      padding: 0.75rem 0.25rem 0.25rem;
+      padding: 1rem 0.25rem 0.25rem;
       border-bottom: 0;
     }
 
     td:not(:first-child) {
-      padding: 0 0.25rem 0.75rem;
+      padding: 0 0.25rem 1rem;
     }
   }
 }

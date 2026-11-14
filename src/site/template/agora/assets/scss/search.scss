@@ -13,7 +13,7 @@
 
 .agora-search-head {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   align-items: center;
   margin: 0.25rem 0 1rem;
 
@@ -22,62 +22,88 @@
   }
 }
 
-/* The search bar: the words, the button in the field, and the mode. */
+/* The search bar: one field with the icon, the words, the mode (a chip) and the button, in this order. The two blocks of the markup
+ * (the words with their button, the mode) are not boxes of their own: their children are placed in the bar. */
 .agora-search-bar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  align-items: stretch;
-  margin-bottom: 0.75rem;
-}
-
-.agora-search-query {
-  position: relative;
-  display: flex;
-  flex: 1 1 24rem;
+  gap: 0.5rem;
   align-items: center;
-  min-width: 0;
+  min-height: 56px;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  margin-bottom: 1rem;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border-strong);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
-  .agora-search-query-icon {
-    position: absolute;
-    left: 1.1rem;
-    display: inline-flex;
-    color: var(--agora-text-muted);
-    pointer-events: none;
-
-    svg {
-      width: 1.15rem;
-      height: 1.15rem;
-    }
-  }
-
-  input[type="search"] {
-    min-height: 54px;
-    padding: 0 7.5rem 0 3rem;
-    font-size: 1.05rem;
-    border-radius: var(--agora-radius-pill);
-    box-shadow: var(--agora-shadow);
-  }
-
-  > .btn {
-    position: absolute;
-    right: 6px;
-    min-height: 42px;
-    padding-inline: 1.3rem;
-    border-radius: var(--agora-radius-pill);
+  &:focus-within {
+    border-color: var(--agora-text-muted);
+    box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
   }
 }
 
+.agora-search-query,
 .agora-search-mode {
-  flex: 0 1 14rem;
-  min-width: 0;
+  display: contents;
+}
 
-  .form-select {
-    width: 100%;
-    height: 100%;
-    min-height: 54px;
-    border-radius: var(--agora-radius-pill);
+.agora-search-query-icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--agora-text-muted);
+  pointer-events: none;
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
   }
+}
+
+/* The words: no frame of their own, the bar is the field (and shows the focus). */
+.agora-search-bar input[type="search"] {
+  flex: 1 1 auto;
+  order: 1;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0;
+  font-size: 1.05rem;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  outline: 0 !important;
+}
+
+/* The mode: a chip in the bar. */
+.agora-search-bar .agora-search-mode .form-select {
+  flex: none;
+  order: 2;
+  width: auto;
+  max-width: 14rem;
+  min-height: 40px;
+  padding-block: 0;
+  padding-inline-start: 1rem;
+  font-size: 0.9rem;
+  color: var(--agora-text-muted);
+  background-color: var(--agora-surface-2) !important;
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: none;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--agora-text);
+    background-color: var(--agora-surface-hover) !important;
+  }
+}
+
+.agora-search-bar .agora-search-query > .btn {
+  flex: none;
+  order: 3;
+  min-height: 40px;
+  padding-inline: 1.5rem;
+  border-radius: var(--agora-radius);
 }
 
 /* The options. */
@@ -94,7 +120,7 @@
     gap: 0.5rem;
     align-items: center;
     min-height: 48px;
-    padding: 0.6rem 1.1rem;
+    padding: 0.5rem 1rem;
     font-weight: 650;
     cursor: pointer;
     list-style: none;
@@ -119,7 +145,7 @@
     svg {
       width: 1.05rem;
       height: 1.05rem;
-      color: var(--agora-accent);
+      color: var(--agora-text-muted);
     }
   }
 
@@ -135,24 +161,24 @@
 .agora-search-fields {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
-  gap: 0.75rem;
-  padding: 1rem 1.1rem;
+  gap: var(--agora-gap);
+  padding: var(--agora-pad);
 }
 
 .agora-search-field {
   min-width: 0;
-  padding: 0.85rem;
+  padding: 1rem;
   margin: 0;
   background: var(--agora-surface-2);
   border: 1px solid var(--agora-border);
-  border-radius: var(--agora-radius-sm);
+  border-radius: var(--agora-radius);
 
   /* The title inside the card, not on its border (a legend floats, the fields come under it). */
   legend {
     float: left;
     width: 100%;
     padding: 0;
-    margin: 0 0 0.45rem;
+    margin: 0 0 0.5rem;
     font-size: 0.8rem;
     font-weight: 650;
     color: var(--agora-text-muted);
@@ -165,7 +191,7 @@
   }
 
   > :not(legend) + :not(label.visually-hidden) {
-    margin-top: 0.45rem;
+    margin-top: 0.5rem;
   }
 
   .form-check {
@@ -202,7 +228,7 @@
 .agora-search-pair {
   display: grid;
   grid-template-columns: 4.5rem minmax(0, 1fr);
-  gap: 0.45rem;
+  gap: 0.5rem;
 }
 
 .agora-search-actions {
@@ -210,16 +236,16 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
-  padding: 0 1.1rem 1.1rem;
+  padding: 0 1rem 1rem;
 }
 
 /* The results. */
 .agora-search-results-title {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 0.6rem;
+  gap: 0.25rem 0.5rem;
   align-items: baseline;
-  margin: 1.25rem 0 0.75rem;
+  margin: 1.5rem 0 1rem;
   font-size: 1.15rem;
 
   small {
@@ -232,16 +258,16 @@
 .agora-search-result {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  padding: 1rem 1.1rem;
-  margin-bottom: 0.75rem;
+  gap: 0.5rem;
+  padding: var(--agora-pad);
+  margin-bottom: var(--agora-gap);
   background: var(--agora-surface);
   border: 1px solid var(--agora-border);
   border-radius: var(--agora-radius);
   box-shadow: var(--agora-shadow);
 
   &.agora-search-result-moderator {
-    border-inline-start: 3px solid var(--agora-success);
+    border-color: var(--agora-success);
   }
 
   &.message-unapproved {
@@ -255,7 +281,7 @@
 
 .agora-search-result-head {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   align-items: flex-start;
   min-width: 0;
 }
@@ -303,15 +329,15 @@
 .agora-search-result-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 0.9rem;
+  gap: 0.25rem 1rem;
   align-items: center;
-  margin-top: 0.3rem;
+  margin-top: 0.25rem;
   font-size: 0.8rem;
   color: var(--agora-text-muted);
 
   span {
     display: inline-flex;
-    gap: 0.3rem;
+    gap: 0.25rem;
     align-items: center;
   }
 
@@ -322,11 +348,11 @@
 }
 
 .agora-search-result-category {
-  padding: 0.1rem 0.55rem;
+  padding: 0.25rem 0.5rem;
   font-weight: 600;
-  color: var(--agora-accent-strong);
-  background: var(--agora-accent-soft);
-  border-radius: var(--agora-radius-pill);
+  color: var(--agora-text);
+  background: var(--agora-surface-hover);
+  border-radius: var(--agora-radius);
 }
 
 /* The text of the message, at most six lines (Aurelia gives .kmessage a height of 120px at least). */
@@ -366,15 +392,23 @@
     grid-column: auto;
   }
 
-  .agora-search-mode {
-    flex: 1 1 100%;
+  /* The words on the first row, the mode and the button under them. */
+  .agora-search-bar {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+    padding: 0.5rem;
   }
 
-  .agora-search-query input[type="search"] {
-    padding-right: 6rem;
+  .agora-search-query-icon {
+    margin-inline-start: 0.5rem;
   }
 
-  .agora-search-query > .btn {
-    padding-inline: 0.9rem;
+  .agora-search-bar input[type="search"] {
+    flex-basis: calc(100% - 2.25rem);
+  }
+
+  .agora-search-bar .agora-search-mode .form-select {
+    flex: 1 1 auto;
+    max-width: none;
   }
 }

@@ -14,10 +14,10 @@
 
 .agora-section-head {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 0.9rem 1rem 0.9rem 1.1rem;
+  padding: 1rem;
   background: var(--agora-surface-2);
   border-bottom: 1px solid var(--agora-border);
 }
@@ -28,7 +28,7 @@
   h1 {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.2rem 0.6rem;
+    gap: 0.25rem 0.5rem;
     align-items: baseline;
     margin: 0;
     font-size: 1.1rem;
@@ -44,18 +44,18 @@
     }
 
     small {
-      padding: 0.05rem 0.55rem;
+      padding: 0.25rem 0.5rem;
       font-size: 0.75rem;
       font-weight: 600;
-      color: var(--agora-accent-strong);
-      background: var(--agora-accent-soft);
-      border-radius: var(--agora-radius-pill);
+      color: var(--agora-text-muted);
+      background: var(--agora-surface-hover);
+      border-radius: var(--agora-radius);
     }
   }
 }
 
 .agora-section-desc {
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
   font-size: 0.88rem;
   color: var(--agora-text-muted);
 
@@ -67,7 +67,7 @@
 .agora-section-actions {
   flex-shrink: 0;
   flex-wrap: nowrap;
-  gap: 0.3rem;
+  gap: 0.25rem;
 
   .btn {
     width: 34px;
@@ -87,7 +87,7 @@
 /* The categories. */
 .agora-section {
   .table > tbody > tr > td {
-    padding-block: 0.95rem;
+    padding-block: 1rem;
   }
 
   .table > tbody > tr:not(:last-child) > td {
@@ -102,7 +102,7 @@
   dl {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.4rem;
+    gap: 0.5rem;
     margin: 0;
     text-align: center;
   }
@@ -141,20 +141,20 @@
 .agora-subcats {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.25rem;
   padding: 0;
-  margin: 0.55rem 0 0;
+  margin: 0.5rem 0 0;
   list-style: none;
 
   > li {
     display: inline-flex;
-    gap: 0.3rem;
+    gap: 0.25rem;
     align-items: center;
-    padding: 0.2rem 0.65rem;
+    padding: 0.25rem 0.5rem;
     font-size: 0.84rem;
     background: var(--agora-surface-2);
     border: 1px solid var(--agora-border);
-    border-radius: var(--agora-radius-pill);
+    border-radius: var(--agora-radius);
 
     a {
       color: var(--agora-text);
@@ -179,7 +179,7 @@
 }
 
 .agora-section .moderators {
-  margin-top: 0.45rem;
+  margin-top: 0.5rem;
   font-size: 0.84rem;
   color: var(--agora-text-muted);
 }
@@ -196,7 +196,7 @@
 
 @media (max-width: 767.98px) {
   .agora-section-head {
-    padding: 0.8rem 0.75rem 0.8rem 0.9rem;
+    padding: 1rem;
   }
 
   .agora-section tr.category > td:last-child {

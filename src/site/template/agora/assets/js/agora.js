@@ -16,14 +16,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		return;
 	}
 
-	/* The text of SCEditor is in a frame with its own style sheet (dark text): it gets the colours of the forum. */
+	/* The text of SCEditor and of CKEditor is in a frame with its own style sheet (dark text on white): it gets the colours of the
+	 * forum. */
+	const frames = ".sceditor-container iframe, .cke_wysiwyg_frame";
+
 	const paintEditors = function () {
 		const colors = getComputedStyle(forum);
 		const text = colors.getPropertyValue("--agora-text").trim();
 		const link = colors.getPropertyValue("--agora-link").trim();
 		const surface = colors.getPropertyValue("--agora-surface").trim();
 
-		forum.querySelectorAll(".sceditor-container iframe").forEach(function (frame) {
+		forum.querySelectorAll(frames).forEach(function (frame) {
 			const doc = frame.contentDocument;
 
 			if (!doc || !doc.head) {
@@ -38,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				doc.head.appendChild(style);
 			}
 
-			style.textContent = "html, body { color: " + text + "; background: " + surface + "; }"
+			style.textContent = "html, body, body.cke_editable { color: " + text + "; background: " + surface + "; }"
 				+ " p, table, code::before { color: " + text + "; }"
 				+ " a { color: " + link + "; }"
 				+ " blockquote, code, pre { color: inherit; background: rgba(127, 127, 127, 0.12); }";
@@ -48,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	/* The editors are made after this script, and SCEditor writes the document of its frame after it put the frame in the page: the
 	 * frames are painted when they appear, when they are loaded and a few times after. */
 	const watchEditors = function () {
-		forum.querySelectorAll(".sceditor-container iframe:not([data-agora-painted])").forEach(function (frame) {
+		forum.querySelectorAll(".sceditor-container iframe:not([data-agora-painted]), .cke_wysiwyg_frame:not([data-agora-painted])").forEach(function (frame) {
 			frame.setAttribute("data-agora-painted", "1");
 			frame.addEventListener("load", paintEditors);
 		});
@@ -73,6 +76,21 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	window.addEventListener("load", watchEditors);
+
+	/* CKEditor writes the document of its frame again (when it gets its text, after the source mode): painted each time. */
+	if (window.CKEDITOR) {
+		const hook = function (editor) {
+			editor.on("contentDom", paintEditors);
+		};
+
+		Object.keys(window.CKEDITOR.instances).forEach(function (name) {
+			hook(window.CKEDITOR.instances[name]);
+		});
+
+		window.CKEDITOR.on("instanceCreated", function (event) {
+			hook(event.editor);
+		});
+	}
 
 	/* The colour scheme of the options follows the device: the forum (the scheme of Bootstrap, data-bs-theme, of #kunena) and the
 	 * pop-ups which Bootstrap puts at the end of the page get the light or the dark colours, also when the device changes them. */

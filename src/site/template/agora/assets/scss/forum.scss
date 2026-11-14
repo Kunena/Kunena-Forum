@@ -15,15 +15,15 @@
 .kfrontend {
   position: relative;
   margin-top: 0 !important;
-  margin-bottom: var(--agora-gap) !important;
+  margin-bottom: var(--agora-gap-section) !important;
   overflow: hidden;
 
   > .btn-toolbar.float-end,
   > h2.btn-toolbar.float-end,
   > h2.float-end {
     position: absolute;
-    top: 0.55rem;
-    right: 0.6rem;
+    top: 0.5rem;
+    right: 0.5rem;
     z-index: 1;
     float: none !important;
     margin: 0;
@@ -49,10 +49,10 @@
   > h2.card-header {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 0.6rem;
+    gap: 0.25rem 0.5rem;
     align-items: baseline;
     min-height: 50px;
-    padding: 0.8rem 3.5rem 0.8rem 1.1rem;
+    padding: 1rem 3.5rem 1rem 1rem;
     margin: 0;
     font-size: 1.05rem;
     font-weight: 700;
@@ -85,11 +85,11 @@
   }
 
   .card-body {
-    padding: 1rem 1.1rem;
+    padding: 1rem;
   }
 
   .bg-faded {
-    padding: 0.65rem 0.25rem !important;
+    padding: 0.5rem 0.25rem !important;
     color: var(--agora-text-muted) !important;
     background: transparent !important;
   }
@@ -118,9 +118,10 @@ tr.category {
     width: 44px;
     height: 44px;
     font-size: 1.35rem;
-    color: var(--agora-accent);
-    background: var(--agora-accent-soft);
-    border-radius: 12px;
+    color: var(--agora-text-muted);
+    background: var(--agora-surface-2);
+    border: 1px solid var(--agora-border);
+    border-radius: var(--agora-radius);
 
     /* The wrapper of an SVG icon: no line box around the svg, which stays centred in the tile. */
     .kcaticon {
@@ -141,7 +142,7 @@ tr.category {
     flex-wrap: wrap;
     gap: 0.25rem 0.5rem;
     align-items: baseline;
-    margin: 0 0 0.15rem;
+    margin: 0 0 0.25rem;
     font-size: 1.02rem;
     font-weight: 650;
 
@@ -196,9 +197,9 @@ tr.category {
   ul.inline {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.3rem 0.9rem;
+    gap: 0.25rem 1rem;
     padding: 0;
-    margin: 0.35rem 0 0;
+    margin: 0.25rem 0 0;
     font-size: 0.88rem;
     list-style: none;
   }
@@ -221,7 +222,7 @@ tr.category {
   }
 
   .started {
-    margin-top: 0.15rem;
+    margin-top: 0.25rem;
     font-size: 0.84rem;
     line-height: 1.45;
 
@@ -230,7 +231,7 @@ tr.category {
     }
 
     .ktopic-category {
-      margin-inline-end: 0.35rem;
+      margin-inline-end: 0.25rem;
     }
   }
 
@@ -243,7 +244,7 @@ tr.category {
 
   .repliesnum,
   .viewsnum {
-    margin-inline-start: 0.3rem;
+    margin-inline-start: 0.25rem;
     font-weight: 700;
     color: var(--agora-text);
   }
@@ -276,12 +277,8 @@ tr.category > th[scope="row"] a {
   color: var(--agora-text-muted);
 }
 
-/* An unread topic or category: a mark of the accent. */
+/* An unread topic or category: its title in bold (and the "new" mark of Kunena). */
 .topic-item-unread {
-  > :first-child {
-    box-shadow: inset 3px 0 0 var(--agora-success);
-  }
-
   .topictitle {
     font-weight: 750;
   }
@@ -301,7 +298,7 @@ ul.inline {
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0;
-  margin: 0 0 0.75rem;
+  margin: 0 0 1rem;
   list-style: none;
 
   > li {
@@ -318,16 +315,6 @@ ul.inline {
   .input-group {
     flex-wrap: nowrap;
   }
-
-  .form-control {
-    border-start-start-radius: var(--agora-radius-pill);
-    border-end-start-radius: var(--agora-radius-pill);
-  }
-
-  .btn {
-    border-start-end-radius: var(--agora-radius-pill) !important;
-    border-end-end-radius: var(--agora-radius-pill) !important;
-  }
 }
 
 h2.float-end,
@@ -336,6 +323,10 @@ h2.float-end,
 }
 
 /* The filters and the bulk actions of the lists. */
+.timefilter {
+  padding-right: 0.5rem;
+}
+
 .filter-sel,
 .filter,
 #kchecktask,
@@ -360,9 +351,10 @@ h2.float-end,
     width: 44px;
     height: 44px;
     padding: 0 !important;
-    color: var(--agora-accent);
-    background: var(--agora-accent-soft);
-    border-radius: 12px;
+    color: var(--agora-text-muted);
+    background: var(--agora-surface-2);
+    border: 1px solid var(--agora-border);
+    border-radius: var(--agora-radius);
 
     svg,
     img,
@@ -377,7 +369,7 @@ h2.float-end,
     margin: 0;
 
     li {
-      padding-block: 0.12rem;
+      padding-block: 0.25rem;
     }
   }
 
@@ -404,4 +396,95 @@ h2.float-end,
 /* Credits, help and the other text pages. */
 .kfrontend .card-body > p:last-child {
   margin-bottom: 0;
+}
+
+/* The credits: the card is the only frame, the team as a list with lines between the people (Aurelia gives it a second frame and
+ * stripes of a fixed light grey). */
+.card:has(> #credits) > .card-header {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+#credits {
+  .kintro {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+
+    img {
+      flex-shrink: 0;
+      float: none !important;
+      border: 1px solid var(--agora-border);
+      border-radius: var(--agora-radius);
+    }
+
+    .intro {
+      margin: 0;
+    }
+  }
+
+  + .clearfix,
+  .clearfix {
+    display: none;
+  }
+
+  .credits {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .credits > dl.row {
+    --bs-gutter-x: 0;
+    --gutter-x: 0;
+    margin: 0 0 1rem;
+    border-top: 1px solid var(--agora-border);
+
+    > dt,
+    > dd {
+      padding: 0.5rem 0 0;
+      margin: 0;
+      background: transparent;
+    }
+
+    > dd {
+      padding: 0 0 0.5rem;
+      color: var(--agora-text-muted);
+    }
+
+    > dd form {
+      display: inline-block;
+    }
+
+    > hr {
+      padding: 0;
+      margin: 0;
+    }
+
+    > hr:last-child {
+      display: none;
+    }
+  }
+
+  .credits > p {
+    margin-bottom: 1rem;
+  }
+
+  .credits > p.center {
+    margin: 0;
+    padding-top: 1rem;
+    font-size: 0.85em;
+    color: var(--agora-text-muted);
+    text-align: center;
+    border-top: 1px solid var(--agora-border);
+  }
+}
+
+@media (min-width: 768px) {
+  #credits .credits > dl.row > dt,
+  #credits .credits > dl.row > dd {
+    padding: 0.5rem 0;
+  }
 }

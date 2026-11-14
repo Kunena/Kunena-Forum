@@ -31,7 +31,9 @@ Each of them must replace a layout of Aurelia of the same name (tested by `Agora
 
 `agora.scss` imports the styles of Aurelia, then the ones of Agora, all inside `#kunena.layout.agora`:
 
-- `tokens.scss`: the colours, radii and shadows as CSS variables, for light and for dark. The variables of Bootstrap (`--bs-*`) and
+- `tokens.scss`: the colours, the radius, the shadows and the spaces as CSS variables, for light and for dark. The accent is only
+  on the main button and the links; the neutrals are tinted with it. Every space is on the 8px scale (4px is the only half step),
+  every card has 1rem inside, one radius for all that is not round, 1px borders. The variables of Bootstrap (`--bs-*`) and
   the ones of the build of Bootstrap of Cassiopeia (without prefix) get the same colours.
 - `base.scss`: type, links, buttons, badges, forms, dropdowns, modals, pagination, tabs and tables.
 - `navigation.scss`, `forum.scss`, `topic.scss`, `profile.scss`, `editor.scss`: the parts of the forum.

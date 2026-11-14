@@ -12,7 +12,7 @@
  */
 
 & {
-  padding: clamp(0.5rem, 2vw, 1.25rem);
+  padding: var(--agora-pad);
   margin-bottom: 1.5rem;
   font-family: var(--agora-font);
   font-size: 0.975rem;
@@ -75,7 +75,7 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 summary:focus-visible {
-  outline: 2px solid var(--agora-accent) !important;
+  outline: 2px solid var(--agora-text) !important;
   outline-offset: 2px;
 }
 
@@ -111,6 +111,12 @@ hr {
   opacity: 1;
 }
 
+/* The columns of Bootstrap and of Cassiopeia: a gutter on the scale. */
+.row {
+  --bs-gutter-x: 1rem;
+  --gutter-x: 1rem;
+}
+
 /* Bootstrap shadows and borders of Aurelia are replaced by the cards of Agora. */
 .shadow,
 .shadow-lg,
@@ -120,6 +126,24 @@ hr {
 
 .border {
   border-color: var(--agora-border) !important;
+}
+
+/* Every border is 1px, in a neutral colour (Aurelia frames the first post of a sticky topic with border-2 border-primary-subtle). */
+.border-2,
+.border-3,
+.border-4,
+.border-5 {
+  border-width: 1px !important;
+}
+
+.border-primary-subtle,
+.border-primary {
+  border-color: var(--agora-border) !important;
+}
+
+.bg-primary-subtle {
+  color: var(--agora-text) !important;
+  background-color: var(--agora-surface-hover) !important;
 }
 
 /* The containers of Bootstrap and the colours which Aurelia gives to them, with the surfaces of Agora. */
@@ -174,15 +198,19 @@ hr {
 
 /* Buttons. */
 .btn {
-  --bs-btn-border-radius: var(--agora-radius-sm);
+  --bs-btn-border-radius: var(--agora-radius);
+  /* Cassiopeia: its own variable, set on .btn itself. */
+  --btn-border-radius: var(--agora-radius);
+  --bs-btn-padding-y: 0.5rem;
+  --btn-padding-y: 0.5rem;
   --bs-btn-font-weight: 550;
   --bs-btn-focus-box-shadow: 0 0 0 0.2rem var(--bs-focus-ring-color);
   display: inline-flex;
-  gap: 0.4em;
+  gap: 0.5rem;
   align-items: center;
   justify-content: center;
   min-height: var(--agora-touch);
-  padding-inline: 0.95rem;
+  padding-inline: 1rem;
   line-height: 1.2;
   white-space: normal;
   color: var(--bs-btn-color);
@@ -222,9 +250,11 @@ hr {
 .btn-small,
 .btn-xs {
   --bs-btn-padding-y: 0.25rem;
-  --bs-btn-padding-x: 0.6rem;
+  --btn-padding-y: 0.25rem;
+  --bs-btn-padding-x: 0.5rem;
+  --btn-padding-x: 0.5rem;
   --bs-btn-font-size: 0.85rem;
-  min-height: calc(var(--agora-touch) - 6px);
+  min-height: 32px;
 }
 
 .btn-primary,
@@ -263,7 +293,7 @@ hr {
   --bs-btn-hover-border-color: var(--agora-border-strong);
   --bs-btn-active-color: var(--agora-text);
   --bs-btn-active-bg: var(--agora-surface-hover);
-  --bs-btn-active-border-color: var(--agora-accent);
+  --bs-btn-active-border-color: var(--agora-text-muted);
   --bs-btn-disabled-color: var(--agora-text-muted);
   --bs-btn-disabled-bg: var(--agora-surface-2);
   --bs-btn-disabled-border-color: var(--agora-border);
@@ -291,6 +321,12 @@ hr {
   padding-inline: 0.25rem;
 }
 
+/* Cassiopeia gives these a radius of its own. */
+.btn-group,
+.btn-close {
+  border-radius: var(--agora-radius);
+}
+
 .btn-close {
   min-width: 2rem;
   min-height: 2rem;
@@ -309,13 +345,14 @@ hr {
 
 /* Badges and labels. */
 .badge {
-  padding: 0.35em 0.65em;
+  padding: 0.25rem 0.5rem;
   color: var(--bs-badge-color);
   font-weight: 600;
-  border-radius: var(--agora-radius-pill);
+  border-radius: var(--agora-radius);
 }
 
-.badge.bg-secondary {
+.badge.bg-secondary,
+.badge.bg-info {
   color: var(--agora-text-muted) !important;
   background-color: var(--agora-surface-hover) !important;
   border: 1px solid var(--agora-border);
@@ -343,13 +380,27 @@ textarea {
   font-size: max(16px, 0.95rem);
   color: var(--agora-text);
   background-color: var(--agora-surface);
+  padding-block: 0.5rem;
   border: 1px solid var(--agora-border-strong);
-  border-radius: var(--agora-radius-sm);
+  border-radius: var(--agora-radius);
 }
 
 .input-group-text {
   color: var(--agora-text-muted);
   background-color: var(--agora-surface-2);
+}
+
+/* A field and its button in a group: one shape, the corners where they meet square (the radius of the fields above is stronger
+ * than the one of Bootstrap for the groups). */
+.input-group > :not(:last-child):not(.dropdown-menu):not(.visually-hidden) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+/* A hidden label before the field does not count. */
+.input-group > :not(:first-child):not(.dropdown-menu):not(.visually-hidden):not(.visually-hidden:first-child + *) {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
 }
 
 /* Aurelia takes the background of the lists away (also their arrow): the lists get the colours of the scheme and an arrow. */
@@ -362,10 +413,10 @@ select.inputbox {
 .form-select:not([multiple]):not([size]),
 .form-select[size="1"],
 select.inputbox:not([multiple]):not([size]) {
-  padding-inline-end: 2.25rem;
+  padding-inline-end: 2.5rem;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23636b7e' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
   background-repeat: no-repeat !important;
-  background-position: right 0.75rem center !important;
+  background-position: right 1rem center !important;
   background-size: 14px 10px !important;
   appearance: none;
 }
@@ -382,16 +433,17 @@ select optgroup {
   background-color: var(--agora-surface);
 }
 
+/* A browser ignores the background colour of a selected option: a plain background image of one colour is shown. */
 select[multiple] option:checked {
-  color: var(--agora-accent-text);
-  background: var(--agora-accent) linear-gradient(0deg, var(--agora-accent), var(--agora-accent));
+  color: var(--agora-neutral-strong-text);
+  background: var(--agora-neutral-strong) linear-gradient(var(--agora-neutral-strong), var(--agora-neutral-strong));
 }
 
 .form-control:focus,
 .form-select:focus,
 textarea:focus,
 input:focus {
-  border-color: var(--agora-accent);
+  border-color: var(--agora-text-muted);
   box-shadow: 0 0 0 0.2rem var(--bs-focus-ring-color);
 }
 
@@ -407,8 +459,8 @@ input:focus {
   border-color: var(--agora-border-strong);
 
   &:checked {
-    background-color: var(--agora-accent);
-    border-color: var(--agora-accent);
+    background-color: var(--agora-neutral-strong);
+    border-color: var(--agora-neutral-strong);
   }
 }
 
@@ -427,7 +479,7 @@ input:focus {
 
 .form-switch .form-check-input {
   width: 2.2em;
-  border-radius: 2em;
+  border-radius: var(--agora-radius);
 }
 
 .form-label,
@@ -444,13 +496,13 @@ label {
 }
 
 .alert {
-  border-radius: var(--agora-radius-sm);
+  border-radius: var(--agora-radius);
 }
 
 .alert-info {
   color: var(--agora-text);
-  background: var(--agora-accent-soft);
-  border-color: color-mix(in srgb, var(--agora-accent) 25%, transparent);
+  background: var(--agora-surface-2);
+  border-color: var(--agora-border);
 }
 
 /* Dropdowns, modals, offcanvas and tooltips. */
@@ -461,10 +513,10 @@ label {
   --bs-dropdown-link-color: var(--agora-text);
   --bs-dropdown-link-hover-color: var(--agora-text);
   --bs-dropdown-link-hover-bg: var(--agora-surface-hover);
-  --bs-dropdown-link-active-bg: var(--agora-accent);
+  --bs-dropdown-link-active-bg: var(--agora-surface-hover);
   --bs-dropdown-divider-bg: var(--agora-border);
-  --bs-dropdown-border-radius: var(--agora-radius-sm);
-  padding: 0.4rem;
+  --bs-dropdown-border-radius: var(--agora-radius);
+  padding: 0.5rem;
   /* Cassiopeia gives the menus a white background and a light border. */
   color: var(--agora-text);
   background-color: var(--agora-surface);
@@ -481,9 +533,9 @@ label {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  min-height: calc(var(--agora-touch) - 4px);
+  min-height: 32px;
   color: var(--bs-dropdown-link-color);
-  border-radius: calc(var(--agora-radius-sm) - 3px);
+  border-radius: var(--agora-radius);
 
   &:hover,
   &:focus {
@@ -493,7 +545,8 @@ label {
 
   &.active,
   &:active {
-    color: var(--agora-accent-text);
+    color: var(--agora-text);
+    font-weight: 600;
     background-color: var(--bs-dropdown-link-active-bg);
   }
 }
@@ -521,14 +574,14 @@ label {
   --bs-pagination-hover-color: var(--agora-text);
   --bs-pagination-hover-bg: var(--agora-surface-hover);
   --bs-pagination-hover-border-color: var(--agora-border-strong);
-  --bs-pagination-active-color: var(--agora-accent-text);
-  --bs-pagination-active-bg: var(--agora-accent);
-  --bs-pagination-active-border-color: var(--agora-accent);
+  --bs-pagination-active-color: var(--agora-neutral-strong-text);
+  --bs-pagination-active-bg: var(--agora-neutral-strong);
+  --bs-pagination-active-border-color: var(--agora-neutral-strong);
   --bs-pagination-disabled-color: var(--agora-text-muted);
   --bs-pagination-disabled-bg: var(--agora-surface);
   --bs-pagination-disabled-border-color: var(--agora-border);
   flex-wrap: wrap;
-  gap: 0.3rem;
+  gap: 0.25rem;
   margin-block: 0.5rem;
 
   /* The colours are given again: the site template (Cassiopeia) has its own ones for the pagination. */
@@ -538,10 +591,11 @@ label {
     justify-content: center;
     min-width: var(--agora-touch);
     min-height: var(--agora-touch);
+    padding: 0.25rem 0.5rem;
     color: var(--bs-pagination-color);
     background-color: var(--bs-pagination-bg);
     border: 1px solid var(--bs-pagination-border-color);
-    border-radius: var(--agora-radius-sm) !important;
+    border-radius: var(--agora-radius) !important;
 
     &:hover {
       color: var(--bs-pagination-hover-color);
@@ -569,9 +623,9 @@ label {
 /* Nav tabs and pills (profile, posting form). */
 .nav-tabs {
   --bs-nav-tabs-border-color: var(--agora-border);
-  --bs-nav-tabs-link-active-color: var(--agora-accent-strong);
+  --bs-nav-tabs-link-active-color: var(--agora-text);
   --bs-nav-tabs-link-active-bg: transparent;
-  --bs-nav-tabs-link-active-border-color: transparent transparent var(--agora-accent);
+  --bs-nav-tabs-link-active-border-color: transparent transparent var(--agora-text);
   --bs-nav-tabs-link-hover-border-color: transparent transparent var(--agora-border-strong);
   flex-wrap: nowrap;
   gap: 0.25rem;
@@ -586,11 +640,12 @@ label {
 
   .nav-link {
     min-height: var(--agora-touch);
+    padding: 0.5rem 1rem;
     color: var(--agora-text-muted);
     white-space: nowrap;
     background: transparent;
     border: 0;
-    border-bottom: 2px solid transparent;
+    border-bottom: 1px solid transparent;
     border-radius: 0;
 
     &:hover {
@@ -600,9 +655,9 @@ label {
 
     &.active {
       font-weight: 650;
-      color: var(--agora-accent-strong);
+      color: var(--agora-text);
       background: transparent;
-      border-bottom-color: var(--agora-accent);
+      border-bottom-color: var(--agora-text);
     }
   }
 }
@@ -624,14 +679,14 @@ label {
   --bs-list-group-color: var(--agora-text);
   --bs-list-group-border-color: var(--agora-border);
   --bs-list-group-action-hover-bg: var(--agora-surface-hover);
-  --bs-list-group-active-bg: var(--agora-accent);
-  --bs-list-group-active-border-color: var(--agora-accent);
+  --bs-list-group-active-bg: var(--agora-neutral-strong);
+  --bs-list-group-active-border-color: var(--agora-neutral-strong);
 }
 
 .progress {
   --bs-progress-bg: var(--agora-surface-hover);
-  --bs-progress-bar-bg: var(--agora-accent);
-  border-radius: var(--agora-radius-pill);
+  --bs-progress-bar-bg: var(--agora-text-muted);
+  border-radius: var(--agora-radius);
 }
 
 /* Tables: no grid, rows with a line between them. */
@@ -643,14 +698,14 @@ label {
   --bs-table-striped-color: var(--agora-text);
   --bs-table-hover-bg: var(--agora-surface-hover);
   --bs-table-hover-color: var(--agora-text);
-  --bs-table-active-bg: var(--agora-accent-soft);
+  --bs-table-active-bg: var(--agora-surface-hover);
   margin-bottom: 0;
   color: var(--agora-text);
   vertical-align: middle;
   border-color: var(--agora-border);
 
   > :not(caption) > * > * {
-    padding: 0.8rem 0.9rem;
+    padding: 1rem;
     color: inherit;
     background-color: transparent;
     border-bottom-color: var(--agora-border);
@@ -659,6 +714,7 @@ label {
 
   > thead th,
   > thead td {
+    padding-block: 0.5rem;
     font-size: 0.78rem;
     font-weight: 650;
     color: var(--agora-text-muted);
@@ -691,14 +747,14 @@ label {
 /* The spinner, the "new" marks and the user colours of Kunena. */
 .knewchar,
 sup.knewchar {
-  padding: 0.1em 0.5em;
+  padding: 0.25rem 0.5rem;
   font-size: 0.7em;
   font-weight: 700;
   color: #fff !important;
   text-transform: uppercase;
   vertical-align: middle;
   background: var(--agora-success);
-  border-radius: var(--agora-radius-pill);
+  border-radius: var(--agora-radius);
 }
 
 /* The wrapper of an SVG category icon of a category with new posts is not a "new" mark: it keeps the look of the icon. */

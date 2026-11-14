@@ -14,7 +14,6 @@
 @media (max-width: 767.98px) {
   & {
     padding: 0.5rem;
-    border-radius: var(--agora-radius-sm);
   }
 
   .agora-navbar .navbar-toggler {
@@ -52,9 +51,9 @@
     > tbody > tr {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.35rem 0.75rem;
+      gap: 0.25rem 0.5rem;
       align-items: flex-start;
-      padding: 0.8rem 0.9rem;
+      padding: 1rem;
       border-bottom: 1px solid var(--agora-border);
 
       &:last-child {
@@ -81,7 +80,7 @@
 
   /* The last post of a category, under its name. */
   tr.category > td:last-child:not(:first-child) {
-    padding-top: 0.45rem !important;
+    padding-top: 0.5rem !important;
     border-top: 1px dashed var(--agora-border) !important;
 
     .lastpostlink {
@@ -97,7 +96,7 @@
   .kfrontend > .card-header,
   .kfrontend > h1.card-header,
   .kfrontend > h2.card-header {
-    padding-inline-start: 0.9rem;
+    padding-inline-start: 1rem;
     font-size: 1rem;
   }
 
@@ -108,7 +107,7 @@
 
     .nav-link {
       min-height: 40px;
-      padding-inline: 0.65rem;
+      padding-inline: 0.5rem;
     }
   }
 
@@ -153,7 +152,7 @@
     > .col-md-10 + .col-md-2 {
       order: -1;
       width: 100%;
-      padding: 0.65rem 0.9rem;
+      padding: 0.5rem 1rem;
       border-inline: 0;
       border-bottom: 1px solid var(--agora-border);
       border-radius: var(--agora-radius) var(--agora-radius) 0 0 !important;
@@ -162,13 +161,13 @@
     > .col-md-10,
     > .col-md-12 {
       width: 100%;
-      padding: 0.85rem 0.9rem 0.75rem;
+      padding: 1rem;
     }
 
     .profilebox {
       flex-direction: row;
       flex-wrap: wrap;
-      gap: 0.25rem 0.6rem;
+      gap: 0.25rem 0.5rem;
       justify-content: flex-start;
       text-align: start;
 
@@ -186,7 +185,7 @@
       }
 
       .rounded > svg {
-        padding: 9px;
+        padding: 0.5rem;
       }
 
       .topic-starter,
@@ -208,7 +207,7 @@
     > .col-md-12 > small.float-end {
       display: block;
       float: none !important;
-      margin: 0 0 0.35rem;
+      margin: 0 0 0.25rem;
     }
 
     /* The name of the author is in the box above: the line "by ..." of Aurelia is not needed. */
@@ -231,14 +230,14 @@
   /* The profile. */
   .agora-profile-head,
   .agora-profile-summary {
-    padding: 0.9rem;
+    padding: 1rem;
   }
 
   /* The posting form: the labels above the fields. */
   #postform {
     > .shadow-lg,
     > .p-3.rounded {
-      padding: 0.9rem !important;
+      padding: 1rem !important;
     }
 
     .col-sm-2,
@@ -289,20 +288,20 @@
 /* Very small screens (360px): less padding, the buttons with only their icon when they are in groups. */
 @media (max-width: 400px) {
   & {
-    padding: 0.35rem;
+    padding: 0.25rem;
   }
 
   .agora-navbar {
-    padding: 0.35rem;
+    padding: 0.25rem;
   }
 
   .pagination .page-link {
     min-width: 36px;
-    padding-inline: 0.45rem;
+    padding-inline: 0.5rem;
   }
 
   .btn {
-    padding-inline: 0.7rem;
+    padding-inline: 0.5rem;
   }
 }
 

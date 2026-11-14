@@ -15,9 +15,9 @@
 .kunena-topic-item {
   > h1 {
     display: flex;
-    gap: 0.6rem;
+    gap: 0.5rem;
     align-items: center;
-    margin: 0.25rem 0 0.75rem;
+    margin: 0.25rem 0 1rem;
 
     > svg,
     > img,
@@ -26,7 +26,7 @@
       flex-shrink: 0;
       width: 1.3rem;
       height: 1.3rem;
-      color: var(--agora-accent);
+      color: var(--agora-text-muted);
     }
   }
 
@@ -53,7 +53,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--agora-gap);
-  margin-block: 0.5rem var(--agora-gap);
+  margin-block: 0.5rem var(--agora-gap-section);
 }
 
 .row.message {
@@ -74,7 +74,7 @@
 
   /* The author. */
   > .col-md-2 {
-    padding: 1.1rem 0.75rem;
+    padding: 1rem;
     background: var(--agora-surface-2);
     border-inline-end: 1px solid var(--agora-border);
     border-start-start-radius: var(--agora-radius) !important;
@@ -91,14 +91,14 @@
   > .col-md-10,
   > .col-md-12 {
     min-width: 0;
-    padding: 1rem 1.25rem 0.85rem;
+    padding: var(--agora-pad);
   }
 
   > .col-md-10 > small.float-end,
   > .col-md-12 > small.float-end {
     position: relative;
     z-index: 1;
-    margin: 0 0 0.25rem 0.75rem;
+    margin: 0 0 0.25rem 1rem;
     font-size: 0.82rem;
 
     a {
@@ -108,7 +108,7 @@
 
   .shadow-none.p-4 {
     padding: 0 !important;
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 1rem !important;
   }
 }
 
@@ -130,7 +130,7 @@
 .profilebox {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.25rem;
   align-items: center;
   padding: 0;
   margin: 0;
@@ -161,7 +161,7 @@
   .rounded > svg {
     width: 72px;
     height: 72px;
-    padding: 16px;
+    padding: 1rem;
     color: var(--agora-text-muted);
     background: var(--agora-surface-hover);
     border-radius: 50%;
@@ -171,17 +171,17 @@
   .topic-moderator {
     display: inline-block;
     width: auto;
-    padding: 0.15rem 0.6rem;
+    padding: 0.25rem 0.5rem;
     line-height: 1.4;
     text-transform: none;
     white-space: nowrap;
     border: 0;
-    margin-top: 0.35rem;
+    margin-top: 0.25rem;
     font-size: 0.72rem;
     font-weight: 650;
-    color: var(--agora-accent-strong);
-    background: var(--agora-accent-soft);
-    border-radius: var(--agora-radius-pill);
+    color: var(--agora-text-muted);
+    background: var(--agora-surface-hover);
+    border-radius: var(--agora-radius);
   }
 }
 
@@ -197,15 +197,15 @@
 
   .content ul {
     padding: 0;
-    margin: 0.4rem 0 0;
+    margin: 0.5rem 0 0;
     list-style: none;
   }
 }
 
 /* The header of a message and its content. */
 .mykmsg-header {
-  padding: 0 0 0.6rem !important;
-  margin: 0 0 0.75rem;
+  padding: 0 0 0.5rem !important;
+  margin: 0 0 1rem;
   font-weight: 400;
   background: transparent;
   border-radius: 0;
@@ -232,11 +232,11 @@
   overflow-wrap: anywhere;
 
   p {
-    margin-bottom: 0.85em;
+    margin-bottom: 1rem;
   }
 
   img {
-    border-radius: var(--agora-radius-sm);
+    border-radius: var(--agora-radius);
   }
 
   a {
@@ -246,7 +246,7 @@
 
   ul,
   ol {
-    padding-inline-start: 1.5em;
+    padding-inline-start: 1.5rem;
   }
 
   table {
@@ -270,14 +270,13 @@
 .kmsg blockquote,
 .kmsgtext-quote,
 blockquote {
-  padding: 0.7rem 1rem;
-  margin: 0.75rem 0;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
   font-size: 0.95rem;
   color: var(--agora-text);
   background: var(--agora-surface-2);
-  border: 0;
-  border-inline-start: 3px solid var(--agora-accent);
-  border-radius: 0 var(--agora-radius-sm) var(--agora-radius-sm) 0;
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
 
   > :last-child {
     margin-bottom: 0;
@@ -295,13 +294,13 @@ pre.bbcode_code_body,
 .kmsg pre,
 pre.bbcode_code_body {
   max-width: 100%;
-  padding: 0.85rem 1rem;
+  padding: 1rem;
   overflow-x: auto;
   color: var(--agora-text);
   white-space: pre;
   background: var(--agora-surface-2) !important;
   border: 1px solid var(--agora-border);
-  border-radius: var(--agora-radius-sm);
+  border-radius: var(--agora-radius);
   overflow-wrap: normal;
 }
 
@@ -313,20 +312,20 @@ pre.bbcode_code_body:has(> code.hljs) {
 }
 
 .kmsg :not(pre) > code {
-  padding: 0.1em 0.35em;
+  padding: 0.25rem;
   background: var(--agora-surface-hover);
-  border-radius: 5px;
+  border-radius: var(--agora-radius);
 }
 
 .kspoiler,
 .kmsgtext-confidential,
 .kmsgtext-hide,
 .khide {
-  padding: 0.6rem 0.9rem;
-  margin: 0.6rem 0;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
   background: var(--agora-surface-2);
   border: 1px dashed var(--agora-border-strong);
-  border-radius: var(--agora-radius-sm);
+  border-radius: var(--agora-radius);
 }
 
 /* The link cards and the embeds (video, social networks, maps). */
@@ -335,7 +334,7 @@ pre.bbcode_code_body:has(> code.hljs) {
 .kunena-link-card {
   max-width: 34rem;
   overflow: hidden;
-  border-radius: var(--agora-radius-sm);
+  border-radius: var(--agora-radius);
 }
 
 .kmsg iframe,
@@ -343,15 +342,15 @@ pre.bbcode_code_body:has(> code.hljs) {
 .embed-responsive,
 .ratio {
   max-width: 100%;
-  border-radius: var(--agora-radius-sm);
+  border-radius: var(--agora-radius);
 }
 
 /* The signature, the "edited by" line and the thank you. */
 .ksig,
 .kmessage-signature,
 .ksignature {
-  padding-top: 0.6rem;
-  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  margin-top: 1rem;
   font-size: 0.86rem;
   color: var(--agora-text-muted);
   border-top: 1px dashed var(--agora-border);
@@ -359,7 +358,7 @@ pre.bbcode_code_body:has(> code.hljs) {
 
 .alert.alert-info.kmessage-editmarkup,
 .kmessage-editmarkup {
-  padding: 0.4rem 0.75rem;
+  padding: 0.5rem 1rem;
   font-size: 0.82rem;
 }
 
@@ -382,7 +381,7 @@ pre.bbcode_code_body:has(> code.hljs) {
 
   .btn {
     min-height: 32px;
-    padding: 0.2rem 0.6rem;
+    padding: 0.25rem 0.5rem;
     font-size: 0.8rem;
     color: var(--agora-text-muted);
     background: transparent;
@@ -397,14 +396,14 @@ pre.bbcode_code_body:has(> code.hljs) {
 
 .row.message .btn-toolbar.kmessagepadding {
   padding-top: 0.25rem;
-  margin: 0.4rem 0 0;
+  margin: 0.5rem 0 0;
 }
 
 /* The quick reply under a message. */
 .row.message .modal[id^="kreply"] {
   position: static !important;
   width: 100% !important;
-  margin-top: 0.75rem;
+  margin-top: 1rem;
 
   .modal-dialog {
     max-width: 100%;
@@ -424,24 +423,24 @@ pre.bbcode_code_body:has(> code.hljs) {
 .message .thumbnails {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  padding: 0.75rem 0 0;
-  margin: 0.75rem 0 0;
+  gap: 0.5rem;
+  padding: 1rem 0 0;
+  margin: 1rem 0 0;
   list-style: none;
   border-top: 1px dashed var(--agora-border);
 
   li,
   .thumbnail {
     max-width: 180px;
-    padding: 0.4rem;
+    padding: 0.5rem;
     font-size: 0.8rem;
     background: var(--agora-surface-2);
     border: 1px solid var(--agora-border);
-    border-radius: var(--agora-radius-sm);
+    border-radius: var(--agora-radius);
   }
 
   img {
-    border-radius: calc(var(--agora-radius-sm) - 3px);
+    border-radius: var(--agora-radius);
   }
 }
 
@@ -455,7 +454,7 @@ form[id^="kpoll"] {
   }
 
   .table > :not(caption) > * > * {
-    padding-block: 0.55rem;
+    padding-block: 0.5rem;
   }
 }
 

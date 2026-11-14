@@ -161,7 +161,8 @@ describe('Kunena writing: a warning before leaving the posting form', () => {
   const injectUpload = () => cy.get('#postform #kattach-list').then(($list) => {
     $list.append(`<input type="hidden" name="attachments[${garbageAttachment}]" value="1">`);
   });
-  const interceptCancelRemoval = () => cy.intercept('POST', '**task=removependingattachments**', { statusCode: 200, body: { removed: 0 } }).as('cancelRemoval');
+  // With SEF URLs the task is a path segment (task-removependingattachments), not a query parameter.
+  const interceptCancelRemoval = () => cy.intercept({ method: 'POST', url: /removependingattachments/ }, { statusCode: 200, body: { removed: 0 } }).as('cancelRemoval');
 
   it('sends the uploads of the form to the site on Cancel, and goes back', () => {
     interceptCancelRemoval();

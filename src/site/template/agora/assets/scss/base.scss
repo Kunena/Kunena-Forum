@@ -701,6 +701,18 @@ sup.knewchar {
   border-radius: var(--agora-radius-pill);
 }
 
+/* The wrapper of an SVG category icon of a category with new posts is not a "new" mark: it keeps the look of the icon. */
+.kcaticon.knewchar {
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit !important;
+  text-transform: none;
+  vertical-align: baseline;
+  background: none;
+  border-radius: 0;
+}
+
 .kwho-admin {
   color: var(--agora-danger) !important;
 }

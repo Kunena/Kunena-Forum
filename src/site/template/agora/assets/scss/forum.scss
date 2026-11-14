@@ -122,6 +122,11 @@ tr.category {
     background: var(--agora-accent-soft);
     border-radius: 12px;
 
+    /* The wrapper of an SVG icon: no line box around the svg, which stays centred in the tile. */
+    .kcaticon {
+      display: flex;
+    }
+
     svg,
     img,
     i {

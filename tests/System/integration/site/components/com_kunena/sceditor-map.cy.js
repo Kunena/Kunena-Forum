@@ -201,10 +201,15 @@ describe('Kunena SCEditor: the [map] BBCode', () => {
     value().then((loaded) => expect(loaded.trim(), 'the editor value').to.equal(text));
   });
 
+  // The text comes from the stored message, not from val(): a text set with val() right after the load of the create form was
+  // gone by the time of the check (the editor held '' again), which is not what this test is about.
   it('inserts nothing when the city is empty', () => {
-    openCreateForm();
-    editor().then((instance) => instance.val('Some text.'));
+    const text = 'Some text.';
+
+    setUp(text);
+    openEditForm(text);
     value().then((before) => {
+      expect(before.trim(), 'the editor value before').to.equal(text);
       insertMap('hybrid', '8');
       value().should('equal', before).and('not.include', '[map');
     });

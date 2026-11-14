@@ -29,7 +29,7 @@ if (empty($this->results)) {
 
 <?php if ($this->error) :
 ?>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger" role="alert">
         <?php echo $this->error; ?>
     </div>
 <?php endif; ?>
@@ -45,7 +45,7 @@ foreach ($this->results as $message) {
 $start = $this->pagination->limitstart + 1;
 $stop  = $this->pagination->limitstart + count($this->results);
 $range = $start . ' - ' . $stop;
-echo Text::sprintf('COM_KUNENA_FORUM_SEARCHRESULTS', $range, $this->pagination->total);
 ?>
+<div role="status"><?php echo Text::sprintf('COM_KUNENA_FORUM_SEARCHRESULTS', $range, $this->pagination->total); ?></div>
 <?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 </div>

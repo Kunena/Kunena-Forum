@@ -30,21 +30,41 @@ jQuery(function ($) {
         });
     };
 
+    // Takes the [attachment=ID] tags of the file out of the editor and leaves every other character of the text as it is.
     const removeAttachmentFromEditor = function (fileId) {
-        let editorText = '';
+        const tag = new RegExp('\\[attachment=' + fileId + '\\][^[\\]]+\\[/attachment\\]', 'g');
+        const isCkeditor = Joomla.getOptions('com_kunena.ckeditor_config') !== undefined;
+        const editor = isCkeditor ? CKEDITOR.instances.message : sceditor.instance(document.getElementById('message'));
+        const editorText = isCkeditor ? editor.getData() : editor.val();
 
-        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-            editorText = CKEDITOR.instances.message.getData();
-        } else {
-            editorText = sceditor.instance(document.getElementById('message')).val();
+        // The tag is not in the text: the editor is not touched.
+        if (editorText.search(tag) === -1) {
+            return;
         }
 
-        const cleanedEditorText = editorText.replace(new RegExp('\\[attachment=' + fileId + '\\][^[\\]]+\\[/attachment\\]', 'g'), '');
+        // The source view holds the BBCode as it is, so the text is written back without a conversion.
+        if (isCkeditor ? editor.mode === 'source' : editor.sourceMode()) {
+            if (isCkeditor) {
+                editor.setData(editorText.replace(tag, ''));
+            } else {
+                editor.val(editorText.replace(tag, ''));
+            }
 
-        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-            CKEDITOR.instances.message.setData(cleanedEditorText);
-        } else {
-            sceditor.instance(document.getElementById('message')).val(cleanedEditorText);
+            return;
+        }
+
+        // Writing the text back to the WYSIWYG view converts it to HTML again, which loses line breaks: the tag is taken out of
+        // the text of the document instead.
+        const body = isCkeditor ? editor.editable().$ : editor.getBody();
+
+        body.normalize();
+
+        const walker = body.ownerDocument.createTreeWalker(body, NodeFilter.SHOW_TEXT);
+
+        while (walker.nextNode()) {
+            if (walker.currentNode.data.search(tag) !== -1) {
+                walker.currentNode.data = walker.currentNode.data.replace(tag, '');
+            }
         }
     };
 

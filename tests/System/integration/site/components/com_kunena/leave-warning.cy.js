@@ -9,6 +9,7 @@ describe('Kunena writing: a warning before leaving the posting form', () => {
   const alias = `cypress-leave-warning-${stamp}`;
   const confirmText = 'Leave this form? The text you have written will be lost.';
   const ids = {};
+  const garbageAttachment = 999999991;
 
   const editorType = () => cy.window().then((win) => win.Joomla.getOptions('com_kunena.editor_type'));
   // Waits until the message editor is ready, so that leavewarning.js has taken its baseline.
@@ -154,6 +155,51 @@ describe('Kunena writing: a warning before leaving the posting form', () => {
     cy.get('@previous').then((previous) => cy.location('href').should('eq', previous));
     cy.wrap(confirm).should('have.been.calledOnceWith', confirmText);
     cy.get('@leaves').should('deep.eq', [false]);
+  });
+
+  // A garbage id only: no real upload is made, and the answer of the site is stubbed.
+  const injectUpload = () => cy.get('#postform #kattach-list').then(($list) => {
+    $list.append(`<input type="hidden" name="attachments[${garbageAttachment}]" value="1">`);
+  });
+  const interceptCancelRemoval = () => cy.intercept('POST', '**task=removependingattachments**', { statusCode: 200, body: { removed: 0 } }).as('cancelRemoval');
+
+  it('sends the uploads of the form to the site on Cancel, and goes back', () => {
+    interceptCancelRemoval();
+    openNewTopic();
+    injectUpload();
+    cy.get('#form_cancel_button').click();
+    cy.wait('@cancelRemoval').then((interception) => {
+      const body = typeof interception.request.body === 'string' ? interception.request.body : new TextDecoder().decode(interception.request.body);
+
+      expect(new URLSearchParams(body).getAll('ids[]'), 'the ids').to.deep.eq([String(garbageAttachment)]);
+    });
+    cy.get('@previous').then((previous) => cy.location('href').should('eq', previous));
+  });
+
+  it('sends no uploads when the question of Cancel is answered with Cancel', () => {
+    const confirm = cy.stub().returns(false);
+
+    cy.on('window:confirm', confirm);
+    interceptCancelRemoval();
+    openNewTopic();
+    injectUpload();
+    cy.get('#postform input[name="subject"]').type(`Leave warning upload kept ${stamp}`);
+    cy.location('href').then((href) => {
+      cy.get('#form_cancel_button').click();
+      cy.wrap(confirm).should('have.been.calledOnce');
+      cy.location('href').should('eq', href);
+    });
+    cy.get(`#postform input[name="attachments[${garbageAttachment}]"]`).should('exist');
+    cy.get('@cancelRemoval.all').should('have.length', 0);
+  });
+
+  it('sends nothing on Cancel when the form has no uploads', () => {
+    interceptCancelRemoval();
+    openNewTopic();
+    cy.get('#postform #kattach-list input[name^="attachments["]').should('not.exist');
+    cy.get('#form_cancel_button').click();
+    cy.get('@previous').then((previous) => cy.location('href').should('eq', previous));
+    cy.get('@cancelRemoval.all').should('have.length', 0);
   });
 
   it('sends the form without a warning, and still warns when the validation of the browser blocks the submit', () => {

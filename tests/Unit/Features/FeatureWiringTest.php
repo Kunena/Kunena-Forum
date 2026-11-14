@@ -167,6 +167,10 @@ class FeatureWiringTest extends UnitTestCase
         $this->assertFileHas($script, 'beforeunload', 'data-kunena-leave-warning', 'data-kunena-unsent', 'pageshow', 'defaultPrevented', 'COM_KUNENA_POST_CANCEL_CONFIRM');
         $this->assertFileHas($layout, 'data-kunena-leave-warning', 'leavewarning.js', 'id="form_cancel_button"', "Text::script('COM_KUNENA_POST_CANCEL_CONFIRM')");
 
+        // Cancel also removes the files uploaded in the form which were not posted.
+        $this->assertFileHas($script, 'kunena_upload_files_cancel');
+        $this->assertFileHas($layout, 'task=removependingattachments');
+
         // Cancel is no reset button which leaves by itself: the script asks first.
         $content = Files::read($layout);
         $this->assertStringNotContainsString('type="reset"', $content);

@@ -95,6 +95,11 @@ $this->doc->addScriptOptions(
         Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
+    'com_kunena.kunena_upload_files_cancel',
+    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removependingattachments&format=json&' .
+        Session::getFormToken() . '=1', false)
+);
+$this->doc->addScriptOptions(
     'com_kunena.kunena_upload_files_rem_inline',
     KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' .
         Session::getFormToken() . '=1', false)

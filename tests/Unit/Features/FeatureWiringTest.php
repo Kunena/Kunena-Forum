@@ -183,6 +183,25 @@ class FeatureWiringTest extends UnitTestCase
         $this->assertFileHas('src/site/language/en-GB/com_kunena.ini', 'COM_KUNENA_POST_CANCEL_CONFIRM = ');
     }
 
+    public function testAReplyCanBeScheduled(): void
+    {
+        $this->assertFileHas(self::AURELIA . '/layouts/topic/edit/default.php', 'type="datetime-local"', 'name="scheduled_time"', '$this->scheduleField');
+        $this->assertFileHas('src/site/src/Controller/Topic/Form/Reply/TopicFormReplyDisplay.php', '$this->scheduleField = $this->me->exists();');
+
+        // Only the reply form has the field: a new topic and an edit cannot be scheduled.
+        foreach (['Create/TopicFormCreateDisplay.php', 'Edit/TopicFormEditDisplay.php'] as $controller) {
+            $this->assertStringNotContainsString('scheduleField', Files::read('src/site/src/Controller/Topic/Form/' . $controller));
+        }
+
+        foreach (['default.php', 'top/default.php', 'bottom/default.php'] as $layout) {
+            $this->assertFileHas(self::AURELIA . '/layouts/message/item/' . $layout, 'COM_KUNENA_MESSAGE_SCHEDULED_FOR', '$message->scheduled_time > 0');
+        }
+
+        $this->assertFileHas('src/site/src/Controllers/TopicController.php', 'KunenaMessageSchedule::parse(', "'COM_KUNENA_POST_SUCCESS_SCHEDULED'");
+        $this->assertFileHas('src/plugins/plg_task_kunena/src/Extension/Kunena.php', "'publish.scheduledreplies' => [", "'method'          => 'publishScheduledReplies'", 'KunenaMessageSchedule::publishDue(');
+        $this->assertFileHas('src/plugins/plg_task_kunena/script.php', '$this->addPublishScheduledRepliesTask();', "'type'            => 'publish.scheduledreplies'", "'interval-minutes' => 5");
+    }
+
     public function testTheReportsPluginHasItsParts(): void
     {
         $this->assertFileExists(Files::path('src/plugins/plg_kunena_reports/reports.xml'));

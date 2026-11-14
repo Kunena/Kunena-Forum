@@ -68,6 +68,12 @@ if ($this->config->orderingSystem == 'mesid') {
     <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
 </small>
 <div class="clear-fix"></div>
+<?php if ($message->hold == 1 && $message->scheduled_time > 0) : ?>
+    <div class="alert alert-warning kmsg-scheduled" role="status">
+        <?php echo KunenaIcons::clock(); ?>
+        <?php echo Text::sprintf('COM_KUNENA_MESSAGE_SCHEDULED_FOR', KunenaDate::getInstance($message->scheduled_time)->toKunena('datetime')); ?>
+    </div>
+<?php endif; ?>
 <div class="horizontal-message">
     <div class="profile-horizontal-top">
         <?php echo $this->subLayout('User/Profile')

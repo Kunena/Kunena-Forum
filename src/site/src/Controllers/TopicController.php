@@ -50,6 +50,7 @@ use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageSchedule;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
@@ -1009,6 +1010,7 @@ class TopicController extends KunenaController
             'rating'            => 0,
             'params'            => '',
             'quote'             => 0,
+            'scheduled_time'    => $this->id && $this->me->exists() ? $this->app->getInput()->post->getString('scheduled_time', '') : '',
         ];
 
         if (!Session::checkToken('post')) {
@@ -1026,6 +1028,22 @@ class TopicController extends KunenaController
         }
 
         $this->app->setUserState('com_kunena.postfields', $fields);
+
+        // A scheduled reply: the date is read in the time zone of the user (as the dates are shown to him), and is in the future.
+        $scheduledTime = 0;
+
+        if ($fields['scheduled_time'] !== '') {
+            $timezone      = (string) $this->app->getIdentity()->getParam('timezone', $this->app->get('offset', 'UTC'));
+            $scheduledTime = KunenaMessageSchedule::parse($fields['scheduled_time'], $timezone, Factory::getDate()->toUnix());
+
+            if ($scheduledTime < 0) {
+                $error = $scheduledTime === KunenaMessageSchedule::PAST ? 'COM_KUNENA_POST_SCHEDULE_ERROR_PAST' : 'COM_KUNENA_POST_SCHEDULE_ERROR_INVALID';
+                $this->app->enqueueMessage(Text::_($error), 'error');
+                $this->setRedirectBack();
+
+                return;
+            }
+        }
 
         // Need to do to the replacement in case of VBA code is inserted without the bbcode tags [code][/code]
         // Optimized: only perform replacement if the pattern exists in the message
@@ -1322,6 +1340,13 @@ class TopicController extends KunenaController
             $message->hold = 1;
         }
 
+        // A scheduled reply waits unapproved for its time. When one of the rules above holds it for review, the task does not publish it.
+        if ($scheduledTime > 0) {
+            $message->scheduled_review = $message->hold == 1 ? 1 : 0;
+            $message->hold             = 1;
+            $message->scheduled_time   = $scheduledTime;
+        }
+
         // Activity integration
         $activity = KunenaFactory::getActivityIntegration();
 
@@ -1429,7 +1454,12 @@ class TopicController extends KunenaController
             return; // -- abort
         }
 
-        $message->processNotification();
+        // A scheduled reply notifies the subscribers when it is published (the moderators now when it is held for review).
+        $scheduledOnly = $scheduledTime > 0 && !$message->scheduled_review;
+
+        if (!$scheduledOnly) {
+            $message->processNotification();
+        }
 
         // The users who are mentioned in the message get an e-mail.
         $message->sendMentionNotifications();
@@ -1451,7 +1481,9 @@ class TopicController extends KunenaController
             }
         }
 
-        if ($message->hold == 1) {
+        if ($scheduledOnly) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_POST_SUCCESS_SCHEDULED', KunenaDate::getInstance($scheduledTime)->toKunena('datetime')), 'success');
+        } elseif ($message->hold == 1) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCES_REVIEW'), 'success');
         } else {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_POSTED'), 'success');
@@ -2079,7 +2111,8 @@ class TopicController extends KunenaController
             KunenaDraftHelper::delete($draftId, $this->me->userid);
         }
 
-        if ($message->hold == 1) {
+        // A scheduled reply (not held for review) keeps waiting for its time: it is not for the moderators.
+        if ($message->hold == 1 && !($message->scheduled_time > 0 && !$message->scheduled_review)) {
             // If user cannot approve message by himself, send email to moderators.
             if (!$topic->isAuthorised('approve')) {
                 $message->processNotification();

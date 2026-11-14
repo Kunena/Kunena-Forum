@@ -78,6 +78,14 @@ class UserController extends KunenaController
     public mixed $user = null;
 
     /**
+     * The login form of the "registered users only" page posts the login task.
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected array $regOnlyGuestTasks = ['login'];
+
+    /**
      * @param   bool  $cachable   catchable
      * @param   bool  $urlparams  urlparams
      *

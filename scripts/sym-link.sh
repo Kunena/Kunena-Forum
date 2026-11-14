@@ -62,7 +62,7 @@ sources=(
 	"src/plugins/plg_sampledata_kunena"
 	"pkg_kunena.xml"
 	"src/libraries/kunena/kunena.xml"
-	"src/media/kunena/kunena_media.xml"
+	"src/media/kunena_media.xml"
 )
 targets=(
 	"administrator/components/com_kunena"

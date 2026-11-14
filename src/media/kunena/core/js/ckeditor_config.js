@@ -183,6 +183,82 @@ CKEDITOR.editorConfig = function( config ) {
 	}
 
 	config.extraPlugins += ',kunenalinktarget';
+
+	// An image can be stored with parameters, [img size=200 alt=text float=left]. The
+	// BBCode plugin does not know such a tag and then fails on its [/img], so carry the
+	// parameters (hex encoded) inside the address to the image, keep them in an attribute
+	// of their own while the message is edited and write them back when it is saved.
+	if (!CKEDITOR.plugins.get('kunenaimageparams')) {
+		var imageParamsTag = /\[img(\s+[^\]\s][^\]]*)\]/gi;
+		var imageParamsAddress = /^kunenaimageparams_((?:[0-9a-f]{4})*)_/;
+		var imageParamsAttribute = 'data-kunena-image-params';
+		var imageAddressAttributes = ['src', 'data-cke-saved-src'];
+
+		CKEDITOR.plugins.add('kunenaimageparams', {
+			init: function (editor) {
+				// Before the setData listener of the BBCode plugin, which has the default priority 10.
+				editor.on('setData', function (event) {
+					if (typeof event.data.dataValue != 'string') {
+						return;
+					}
+
+					event.data.dataValue = event.data.dataValue.replace(imageParamsTag, function (tag, params) {
+						var hex = '';
+
+						for (var i = 0; i < params.length; i++) {
+							hex += ('000' + params.charCodeAt(i).toString(16)).slice(-4);
+						}
+
+						return '[img]kunenaimageparams_' + hex + '_';
+					});
+				}, null, null, 5);
+
+				// Before kunenaemoticons, so that it sees the address without the parameters.
+				editor.dataProcessor.dataFilter.addRules({
+					elements: {
+						img: function (element) {
+							imageAddressAttributes.forEach(function (name) {
+								var address = element.attributes[name];
+								var match = address !== undefined && address.match(imageParamsAddress);
+
+								if (!match) {
+									return;
+								}
+
+								var params = '';
+
+								for (var i = 0; i < match[1].length; i += 4) {
+									params += String.fromCharCode(parseInt(match[1].substr(i, 4), 16));
+								}
+
+								element.attributes[name] = address.substring(match[0].length);
+								element.attributes[imageParamsAttribute] = params;
+							});
+						}
+					}
+				}, 5);
+
+				// Before the rule of the BBCode plugin for all elements, which writes [img]<address>[/img].
+				editor.dataProcessor.htmlFilter.addRules({
+					elements: {
+						img: function (element) {
+							var params = element.attributes[imageParamsAttribute];
+
+							if (params === undefined) {
+								return;
+							}
+
+							var address = element.attributes['data-cke-saved-src'] || element.attributes.src || '';
+
+							return new CKEDITOR.htmlParser.text('[img' + params + ']' + address + '[/img]');
+						}
+					}
+				});
+			}
+		});
+	}
+
+	config.extraPlugins += ',kunenaimageparams';
 	config.linkDefaultProtocol= 'https://'
 
 	// Define font sizes in percent values.

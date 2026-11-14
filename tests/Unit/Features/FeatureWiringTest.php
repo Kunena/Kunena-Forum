@@ -194,7 +194,8 @@ class FeatureWiringTest extends UnitTestCase
         }
 
         foreach (['default.php', 'top/default.php', 'bottom/default.php'] as $layout) {
-            $this->assertFileHas(self::AURELIA . '/layouts/message/item/' . $layout, 'COM_KUNENA_MESSAGE_SCHEDULED_FOR', '$message->scheduled_time > 0');
+            $this->assertFileHas(self::AURELIA . '/layouts/message/item/' . $layout, 'COM_KUNENA_MESSAGE_SCHEDULED_FOR', '$message->scheduled_time > 0', "<div class=\"clearfix\"></div>
+    <div class=\"alert alert-warning kmsg-scheduled\"");
         }
 
         $this->assertFileHas('src/site/src/Controllers/TopicController.php', 'KunenaMessageSchedule::parse(', "'COM_KUNENA_POST_SUCCESS_SCHEDULED'");

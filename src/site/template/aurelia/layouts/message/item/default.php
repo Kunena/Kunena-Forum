@@ -63,6 +63,7 @@ $list = [];
 </small>
 <div class="clearfix d-sm-none"></div>
 <?php if ($message->hold == 1 && $message->scheduled_time > 0) : ?>
+    <div class="clearfix"></div>
     <div class="alert alert-warning kmsg-scheduled" role="status">
         <?php echo KunenaIcons::clock(); ?>
         <?php echo Text::sprintf('COM_KUNENA_MESSAGE_SCHEDULED_FOR', KunenaDate::getInstance($message->scheduled_time)->toKunena('datetime')); ?>

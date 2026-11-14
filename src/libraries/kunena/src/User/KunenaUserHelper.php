@@ -572,11 +572,17 @@ abstract class KunenaUserHelper
 
         // Make sure that userids are unique and that indexes are correct
         $e_userids = [];
+        $members   = [];
+        $missing   = [];
 
         foreach ($userids as $userid) {
             // Ignore guests and imported users, which haven't been mapped to Joomla (id<0).
-            if ($userid > 0 && empty(self::$_instances[$userid])) {
-                $e_userids[(int) $userid] = (int) $userid;
+            if ($userid > 0) {
+                $members[(int) $userid] = (int) $userid;
+
+                if (empty(self::$_instances[$userid])) {
+                    $e_userids[(int) $userid] = (int) $userid;
+                }
             }
         }
 
@@ -611,18 +617,38 @@ abstract class KunenaUserHelper
                 self::$_instances[$instance->userid] = $instance;
             }
 
+            // A user who is not there (deleted, or an id of a link) is known as one who does not exist, as get() makes him: get()
+            // would read him again with a query of its own. He is no user of the list which this load gives back.
+            foreach ($e_userids as $id) {
+                if (empty(self::$_instances[$id])) {
+                    $instance         = new KunenaUser(false);
+                    $instance->userid = $id;
+                    $instance->exists(false);
+                    self::$_instances[$id] = $instance;
+                    $missing[$id]          = true;
+                }
+            }
+
             // Preload avatars if configured
             $avatars = KunenaFactory::getAvatarIntegration();
             $avatars->load($e_userids);
+        }
 
-            // The display names (a custom field of the Joomla users) come with one query.
-            KunenaUserName::preload($e_userids);
+        // The display names (a custom field of the Joomla users) of all the users come with one query, also of the users which
+        // were loaded before without their name (the current user): else each of them costs a query of its own later. The name
+        // of the current user is on every page (the menu, the links to his profile): it comes with the first batch too.
+        if ($members) {
+            if (self::$_me instanceof KunenaUser && self::$_me->userid > 0) {
+                $members[(int) self::$_me->userid] = (int) self::$_me->userid;
+            }
+
+            KunenaUserName::preload($members);
         }
 
         $list = [];
 
         foreach ($userids as $userid) {
-            if (isset(self::$_instances[$userid])) {
+            if (isset(self::$_instances[$userid]) && !isset($missing[(int) $userid])) {
                 $list[$userid] = self::$_instances[$userid];
             }
         }

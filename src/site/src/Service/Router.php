@@ -402,6 +402,12 @@ class Router extends RouterView
         // Use category SEF feature?
         $sefcats = isset($this->getSefViews()[$vars['view']]) && empty($vars['id']);
 
+        // The aliases of all the segments are read with one query (resolveAlias asks for them one after the other). Only an address
+        // with category aliases resolves them (a chain of categories starts with one too).
+        if ($sefcats && class_exists('Kunena\Forum\Libraries\Route\KunenaRoute') && method_exists('Kunena\Forum\Libraries\Route\KunenaRoute', 'preloadAliases')) {
+            KunenaRoute::preloadAliases(array_map(static fn ($segment) => strtr((string) $segment, ':', '-'), $segments));
+        }
+
         // Category of the chain of category aliases (forum/parent/child): the next alias may name one of its descendants
         $chain = 0;
 

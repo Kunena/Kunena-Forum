@@ -30,6 +30,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Throwable;
 
 /**
  * Class KunenaControllerDisplay
@@ -79,6 +80,78 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
      * @since   Kunena 6.0
      */
     protected mixed $document = null;
+
+    /**
+     * The answer of before() when it was run by prepare(): null when it was not run yet.
+     *
+     * @var     boolean|null
+     * @since   Kunena 8.0
+     */
+    protected ?bool $prepared = null;
+
+    /**
+     * The error of before() when it was run by prepare(): it is thrown when the view is made, as before() would have thrown it.
+     *
+     * @var     Throwable|null
+     * @since   Kunena 8.0
+     */
+    protected ?Throwable $prepareError = null;
+
+    /**
+     * Run before() now and make the view later: a page with several lists (the tabs of a profile) prepares all of them, loads
+     * what they need together, then makes them. before() runs once; its error waits for the making of the view.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public function prepare(): void
+    {
+        if ($this->prepared !== null || $this->prepareError !== null) {
+            return;
+        }
+
+        try {
+            $this->prepared = $this->before() !== false;
+        } catch (Throwable $e) {
+            $this->prepareError = $e;
+        }
+    }
+
+    /**
+     * Forget the preparation: the next prepare() (or the making of the view) runs before() again. A page which surveyed its
+     * lists (their finders gave nothing) prepares them again for real.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public function resetPreparation(): void
+    {
+        $this->prepared     = null;
+        $this->prepareError = null;
+    }
+
+    /**
+     * The answer of before(): the one of prepare() when it ran, else before() is run now.
+     *
+     * @return  boolean  False when there is nothing to show.
+     *
+     * @throws  Throwable  The error of before().
+     * @since   Kunena 8.0
+     */
+    protected function runBefore(): bool
+    {
+        if ($this->prepareError !== null) {
+            throw $this->prepareError;
+        }
+
+        if ($this->prepared !== null) {
+            return $this->prepared;
+        }
+
+        return $this->before() !== false;
+    }
 
     /**
      * Return view as a string.
@@ -263,8 +336,8 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
         try {
-            // Run before executing action.
-            $result = $this->before();
+            // Run before executing action (or take its answer when prepare() ran it).
+            $result = $this->runBefore();
 
             if ($result === false) {
                 KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;

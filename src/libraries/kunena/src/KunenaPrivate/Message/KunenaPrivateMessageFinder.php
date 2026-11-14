@@ -29,6 +29,14 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 class KunenaPrivateMessageFinder extends KunenaFinder
 {
     /**
+     * The private messages which the searches of this page found, by id.
+     *
+     * @var     KunenaPrivateMessage[]
+     * @since   Kunena 8.0
+     */
+    protected static array $instances = [];
+
+    /**
      * @var     string
      * @since   Kunena 6.0
      */
@@ -130,24 +138,48 @@ class KunenaPrivateMessageFinder extends KunenaFinder
      */
     protected function load(array $ids): array
     {
+        $ids = array_values(array_unique(array_filter(array_map('intval', $ids))));
+
         if (empty($ids)) {
             return [];
         }
 
-        $query = $this->db->createQuery();
-        $query->select('*')->from('#__kunena_private')->where('id IN(' . implode(',', $ids) . ')');
-        $this->db->setQuery($query);
-        $results = $this->db->loadObjectList('id');
+        // The private messages which a search of this page found before are kept (a topic and the check of its private files
+        // look for the same message): only the others are read, and each row becomes its message (a load() would read it again).
+        $missing = array_values(array_diff($ids, array_keys(self::$instances)));
 
-        $_instances = [];
+        if ($missing) {
+            $query = $this->db->createQuery();
+            $query->select('*')->from('#__kunena_private')->where('id IN(' . implode(',', $missing) . ')');
+            $this->db->setQuery($query);
 
-        foreach ($results as $id => $instance) {
-            $pm_instance = new KunenaPrivateMessage();
-            $pm_instance->load($id);
-            $pm_instance->id  = $id;
-            $_instances [$id] = $pm_instance;
+            foreach ((array) $this->db->loadObjectList('id') as $id => $row) {
+                $message = new KunenaPrivateMessage((array) $row);
+                $message->exists(true);
+                self::$instances[(int) $id] = $message;
+            }
         }
 
-        return $_instances;
+        $list = [];
+
+        foreach ($ids as $id) {
+            if (isset(self::$instances[$id])) {
+                $list[$id] = self::$instances[$id];
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Forget the private messages which were found before (after one of them was changed or deleted).
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public static function forget(): void
+    {
+        self::$instances = [];
     }
 }

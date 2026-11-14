@@ -19,36 +19,64 @@ use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
- * The topic layout is always flat: the threaded and indented layouts are no longer offered.
+ * The topic layout (flat, threaded or indented) which the topic page shows: the one asked for, else the choice of the user in this
+ * session, else the choice saved in the profile, else the default layout of the configuration.
  */
 class KunenaUserTopicLayoutTest extends UnitTestCase
 {
-    public static function layouts(): array
-    {
-        return [
-            'none'     => [null],
-            'default'  => ['default'],
-            'flat'     => ['flat'],
-            'threaded' => ['threaded'],
-            'indented' => ['indented'],
-            'unknown'  => ['tree'],
-        ];
-    }
-
-    #[DataProvider('layouts')]
-    public function testTheLayoutIsFlatWhateverTheUserTheSessionAndTheConfigurationAsk(?string $layout): void
+    private function user(?string $session, mixed $view, string $config = 'flat'): KunenaUser
     {
         $this->requireJoomla();
 
         $app = $this->createStub(CMSApplication::class);
-        $app->method('getUserState')->willReturn('threaded');
+        $app->method('getUserState')->willReturn($session);
 
-        $user = self::bare(KunenaUser::class, [
-            'view'    => 'threaded',
-            '_config' => self::bare(KunenaConfig::class, ['config' => ['topicLayout' => 'indented']]),
+        return self::bare(KunenaUser::class, [
+            'view'    => $view,
+            '_config' => self::bare(KunenaConfig::class, ['config' => ['topicLayout' => $config]]),
             '_app'    => $app,
         ]);
+    }
 
-        $this->assertSame('flat', $user->getTopicLayout($layout));
+    public static function layouts(): array
+    {
+        return [
+            'flat'     => ['flat'],
+            'threaded' => ['threaded'],
+            'indented' => ['indented'],
+        ];
+    }
+
+    #[DataProvider('layouts')]
+    public function testTheLayoutAskedForWins(string $layout): void
+    {
+        $this->assertSame($layout, $this->user('threaded', 'indented', 'threaded')->getTopicLayout($layout));
+    }
+
+    #[DataProvider('layouts')]
+    public function testWithoutALayoutTheChoiceOfTheSessionIsUsed(string $layout): void
+    {
+        $user = $this->user($layout, 'flat');
+
+        $this->assertSame($layout, $user->getTopicLayout());
+        $this->assertSame($layout, $user->getTopicLayout('default'));
+    }
+
+    #[DataProvider('layouts')]
+    public function testWithoutAChoiceInTheSessionTheProfileIsUsed(string $layout): void
+    {
+        $this->assertSame($layout, $this->user(null, $layout, 'flat')->getTopicLayout());
+    }
+
+    #[DataProvider('layouts')]
+    public function testWithoutAnyChoiceTheConfigurationIsUsed(string $layout): void
+    {
+        $this->assertSame($layout, $this->user(null, 0, $layout)->getTopicLayout());
+    }
+
+    public function testAnUnknownLayoutGivesTheLayoutOfTheConfiguration(): void
+    {
+        $this->assertSame('indented', $this->user('threaded', 'flat', 'indented')->getTopicLayout('tree'));
+        $this->assertSame('threaded', $this->user('default', 'flat', 'threaded')->getTopicLayout());
     }
 }

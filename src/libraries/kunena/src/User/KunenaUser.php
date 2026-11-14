@@ -1553,17 +1553,36 @@ class KunenaUser
     }
 
     /**
-     * The topic layout: always flat, the threaded and indented layouts are no longer offered.
-     *
-     * @param   null|string  $layout  layout (ignored)
+     * @param   null|string  $layout  layout
      *
      * @return  string
      *
      * @since   Kunena 6.0
      */
-    public function getTopicLayout($layout = null): string
+    public function getTopicLayout($layout = null)
     {
-        return 'flat';
+        if ($layout == 'default') {
+            $layout = null;
+        }
+
+        if (!$layout) {
+            $layout = $this->_app->getUserState('com_kunena.topicLayout');
+        }
+
+        if (!$layout) {
+            $layout = $this->view;
+        }
+
+        switch ($layout) {
+            case 'flat':
+            case 'threaded':
+            case 'indented':
+                break;
+            default:
+                $layout = $this->_config->topicLayout;
+        }
+
+        return $layout;
     }
 
     /**

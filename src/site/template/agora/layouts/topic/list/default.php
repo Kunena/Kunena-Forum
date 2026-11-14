@@ -64,7 +64,10 @@ if ($this->ktemplate->params->get('ajaxTopicList', 1)) {
             <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
                   id="timeselect" name="timeselect"
                   method="post" target="_self">
-                <?php $this->displayTimeFilter('sel'); ?>
+                <div class="d-flex gap-2 align-items-center">
+                    <?php $this->displayTimeFilter('sel'); ?>
+                    <button type="submit" class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILTER_APPLY'); ?></button>
+                </div>
                 <?php echo HTMLHelper::_('form.token'); ?>
             </form>
         </div>

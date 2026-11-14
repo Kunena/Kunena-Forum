@@ -1679,37 +1679,7 @@ HTML;
             }
 
             $xml  = $this->loadXmlFileCached($xmlfile);
-            $icon = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
-
-            if ($topic->ordering) {
-                $topic->icon_id = 504;
-                $icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
-            }
-
-            if ($topic->locked) {
-                $topic->icon_id = 505;
-                $icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
-            }
-
-            if ($topic->ordering && $topic->locked) {
-                $topic->icon_id = 503;
-                $icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
-            }
-
-            if ($topic->hold == 2) {
-                $topic->icon_id = 501;
-                $icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
-            }
-
-            if ($topic->hold == 3) {
-                $topic->icon_id = 501;
-                $icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
-            }
-
-            if ($topic->moved_id > 0) {
-                $topic->icon_id = 500;
-                $icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
-            }
+            $icon = $this->get_xml_icon($xml, $this->getUserTopicIconId($topic), $topicicontype);
 
             if ($topicicontype == 'svg') {
                 if ($categoryIconset != 'default') {
@@ -1761,6 +1731,41 @@ HTML;
 
         return '<img loading=lazy src="' . $iconurl . '" alt="' . $icon->name . '" />';
 
+    }
+
+    /**
+     * Get the id of the icon of a topic with selectable topic icons (topicicons.xml): moved over deleted over sticky and
+     * locked, locked, sticky and the icon chosen for the topic. The topic itself is not changed.
+     *
+     * @param   KunenaTopic  $topic  topic
+     *
+     * @return  int
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getUserTopicIconId(KunenaTopic $topic): int
+    {
+        if ($topic->moved_id > 0) {
+            return 500;
+        }
+
+        if ($topic->hold == 2 || $topic->hold == 3) {
+            return 501;
+        }
+
+        if ($topic->ordering && $topic->locked) {
+            return 503;
+        }
+
+        if ($topic->locked) {
+            return 505;
+        }
+
+        if ($topic->ordering) {
+            return 504;
+        }
+
+        return (int) $topic->icon_id;
     }
 
     /**
@@ -1972,16 +1977,7 @@ HTML;
                 $xmlfile = JPATH_ROOT . '/media/kunena/labels/labels.xml';
             }
 
-            if ($topic->ordering) {
-                // Set sticky label on topic
-                $id = '11';
-            } else {
-                if ($topiclabels == 1) {
-                    $id = $topic->icon_id;
-                } else {
-                    $id = $topic->label_id;
-                }
-            }
+            $id = $this->getTopicLabelId($topic, $topiclabels);
 
             $cacheId = $this->getTemplateCacheId('labels', $xmlfile);
             $labels  = $this->getPersistentTemplateCache()->get($cacheId);
@@ -2022,6 +2018,28 @@ HTML;
 
             return $this->get_xml_label($xml, $id, $topicicontype);
         }
+    }
+
+    /**
+     * Get the id of the label of a topic (labels.xml): the icon (labels = 1) or the label (labels = 2) chosen for the topic,
+     * or the sticky label when a sticky topic has none.
+     *
+     * @param   mixed  $topic        topic
+     * @param   mixed  $topiclabels  the labels param of the template
+     *
+     * @return  int
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getTopicLabelId($topic, $topiclabels): int
+    {
+        $id = $topiclabels == 1 ? (int) $topic->icon_id : (int) $topic->label_id;
+
+        if ($topic->ordering && $id === 0) {
+            return 11;
+        }
+
+        return $id;
     }
 
     /**

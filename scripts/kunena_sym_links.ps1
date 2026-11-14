@@ -200,8 +200,25 @@ function Remove-PathSafely {
         $Item.Delete()
     }
     elseif ($Item.PSIsContainer) {
+        # A file can be held for a moment by an editor, a virus scanner or the web server: Windows then stops the delete halfway
+        # ("The directory is not empty"). Wait and try again, so that the folder is not left half deleted.
         # .NET deletes a link found inside the folder as a link, it does not follow it
-        [System.IO.Directory]::Delete($Item.FullName, $true)
+        for ($attempt = 1; $attempt -le 5; $attempt++) {
+            try {
+                [System.IO.Directory]::Delete($Item.FullName, $true)
+                return
+            }
+            catch {
+                if (-not (Test-Path -LiteralPath $Item.FullName)) { return }
+                Start-Sleep -Milliseconds 700
+            }
+        }
+
+        # Last resort: the delete of the command prompt, which also removes read-only files
+        cmd /c rmdir /s /q "$($Item.FullName)" 2>$null
+        if (Test-Path -LiteralPath $Item.FullName) {
+            throw "$($Item.FullName) could not be deleted, a file in it is in use. Stop Apache, close the editor which has the folder open and run this again."
+        }
     }
     else {
         $Item.Delete()

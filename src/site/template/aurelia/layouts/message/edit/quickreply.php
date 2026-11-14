@@ -60,7 +60,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
 
 <?php if ($quick == 1) :
 ?>
-    <div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" aria-hidden="true">
+    <div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" data-bs-focus="false" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -184,7 +184,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
     </div>
 <?php elseif ($quick == 0) :
 ?>
-    <div class="modal fade" style="position: relative; top: 10px; right: -10px; z-index: 1; width: 100%;display: none;" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" tabindex="-1" aria-labelledby="staticBackdropLabel<?php echo $message->displayField('id'); ?>" aria-hidden="true">
+    <div class="modal fade" style="position: relative; top: 10px; right: -10px; z-index: 1; width: 100%;display: none;" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" data-bs-focus="false" tabindex="-1" aria-labelledby="staticBackdropLabel<?php echo $message->displayField('id'); ?>" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

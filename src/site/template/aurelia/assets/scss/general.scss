@@ -123,6 +123,15 @@ sup.knewchar {
     box-shadow: 0 0 6px #b2b2b2;
 }
 
+// The quick reply (issue #8820): the empty part of its modal layer lets the clicks through to the page, only the dialog takes them.
+.modal[id^="kreply"] {
+    pointer-events: none;
+
+    .modal-content {
+        pointer-events: auto;
+    }
+}
+
 .kmsgattach {
     padding-top: 10px;
     padding-left: 30px;

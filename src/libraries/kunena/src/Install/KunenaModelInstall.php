@@ -355,8 +355,8 @@ class KunenaModelInstall extends BaseDatabaseModel
      *
      * @param   array   $menu            The forum item (link, access and params).
      * @param   int     $component_id    The id of the component Kunena.
-     * @param   string  $langCode        The language of the sub items, like en-GB.
-     * @param   string  $parentLanguage  The language of the forum item: * on a single language site, else the language.
+     * @param   string  $langCode        The language of the titles and aliases, like en-GB.
+     * @param   string  $parentLanguage  The language of the forum item and of its sub items: * on a single language site, else the language.
      * @param   bool    $multilingual    Are the items made for several languages.
      *
      * @return  boolean
@@ -503,7 +503,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             $params->loadArray($menuitem['params']);
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $table = new Menu($db);
-            $table->load(['menutype' => 'kunenamenu', 'link' => $menuitem['link'], 'language' => $langCode]);
+            $table->load(['menutype' => 'kunenamenu', 'link' => $menuitem['link'], 'language' => $parentLanguage]);
             $data = [
                 'menutype'     => 'kunenamenu',
                 'title'        => $menuitem['name'],
@@ -516,7 +516,7 @@ class KunenaModelInstall extends BaseDatabaseModel
                 'access'       => $menuitem['access'],
                 'params'       => (string) $params,
                 'home'         => 0,
-                'language'     => $langCode,
+                'language'     => $parentLanguage,
                 'client_id'    => 0,
             ];
             $table->setLocation($parent->id, 'last-child');

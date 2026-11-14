@@ -131,7 +131,7 @@ if ($this->topic->locked) {
             ->set('location', $this->message->id);
         echo '</div>';
 
-        echo '<table class="table table-sm kunena-topic-tree">';
+        echo '<div class="table-responsive"><table class="table table-sm kunena-topic-tree">';
         echo '<caption class="visually-hidden">' . Text::sprintf('COM_KUNENA_TOPIC_REPLIES_TITLE', $this->topic->displayField('subject')) . '</caption>';
         echo '<thead><tr><th scope="col">' . Text::_('COM_KUNENA_GEN_SUBJECT') . '</th><th scope="col">' . Text::_('COM_KUNENA_GEN_AUTHOR')
             . '</th><th scope="col">' . Text::_('COM_KUNENA_POSTED_AT') . '</th></tr></thead><tbody>';
@@ -143,16 +143,16 @@ if ($this->topic->locked) {
                 ->setLayout('row');
         }
 
-        echo '</tbody></table>';
+        echo '</tbody></table></div>';
     } elseif ($this->messages) {
         echo '<div class="topic-item-messages">';
 
         foreach ($this->messages as $id => $message) {
-            // Indented: each reply moves in by its depth in the tree of the page (its edges, without the first two).
-            $depth = $topicLayout == 'indented' ? min(max(\count((array) $message->indent) - 2, 0), 10) : 0;
+            // Indented: each reply moves in by its depth in the tree of the page (its edges, without the first two), up to 5 steps.
+            $depth = $topicLayout == 'indented' ? min(max(\count((array) $message->indent) - 2, 0), 5) : 0;
 
             if ($depth) {
-                echo '<div class="kunena-topic-indent" style="padding-inline-start: ' . (3 * $depth) . '%">';
+                echo '<div class="kunena-topic-indent kunena-topic-indent-' . $depth . '">';
             }
 
             echo $this->subRequest('Topic/Item/Message')

@@ -1515,9 +1515,32 @@ pre.bbcode_code_body:has(> code.hljs) {
   background-color: var(--bs-secondary-color);
 }
 
+/* The cell of the message itself is narrower than the cells of its parents: its dot ends the line of the last edge. */
 .kunena-topic-tree .ktree-root,
 .kunena-topic-tree .ktree-node,
 .kunena-topic-tree .ktree-leaf,
 .kunena-topic-tree .ktree-single {
   width: 0.75rem;
+}
+
+/* The indented topic layout: 1.5rem per level of the tree, at most 5 levels (layouts/topic/item/default.php), so that a message
+   keeps its room on a phone. */
+.kunena-topic-indent-1 {
+  padding-inline-start: 1.5rem;
+}
+
+.kunena-topic-indent-2 {
+  padding-inline-start: 3rem;
+}
+
+.kunena-topic-indent-3 {
+  padding-inline-start: 4.5rem;
+}
+
+.kunena-topic-indent-4 {
+  padding-inline-start: 6rem;
+}
+
+.kunena-topic-indent-5 {
+  padding-inline-start: 7.5rem;
 }

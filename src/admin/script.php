@@ -18,6 +18,7 @@ use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Schema\ChangeSet;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\ParameterType;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -182,6 +183,7 @@ class Com_KunenaInstallerScript extends InstallerScript
 
         if (\in_array($type, ['install', 'discover_install', 'update'], true)) {
             $this->addActionLogExtension();
+            $this->setSchemaVersion();
         }
     }
 
@@ -246,6 +248,53 @@ class Com_KunenaInstallerScript extends InstallerScript
             $db->setQuery($query)->execute();
         } catch (Throwable $e) {
             // Do nothing: the install goes on without the action log.
+        }
+    }
+
+    /**
+     * Records the newest file of sql/updates/mysql as the schema version of Kunena in #__schemas. With that row Kunena is
+     * listed on the Database page of the Joomla installer (System, Maintenance, Database): Joomla checks the tables with
+     * those files there, and its Fix button repairs what it finds.
+     *
+     * The row is written here and not through an update element of the manifest: Kunena runs its own SQL and PHP updates
+     * (upgradeDatabase()) and Joomla must not run the same files a second time. Joomla removes the row on uninstall.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    private function setSchemaVersion(): void
+    {
+        try {
+            $componentId = $this->getComponentId();
+
+            if (!$componentId) {
+                return;
+            }
+
+            /** @var DatabaseDriver  $db */
+            $db     = Factory::getContainer()->get('DatabaseDriver');
+            $schema = (new ChangeSet($db, JPATH_ADMINISTRATOR . '/components/' . $this->extension . '/sql/updates/'))->getSchema();
+
+            if (empty($schema)) {
+                return;
+            }
+
+            $query = $db->createQuery()
+                ->delete($db->quoteName('#__schemas'))
+                ->where($db->quoteName('extension_id') . ' = :id')
+                ->bind(':id', $componentId, ParameterType::INTEGER);
+            $db->setQuery($query)->execute();
+
+            $query = $db->createQuery()
+                ->insert($db->quoteName('#__schemas'))
+                ->columns($db->quoteName(['extension_id', 'version_id']))
+                ->values(':id, :schema')
+                ->bind(':id', $componentId, ParameterType::INTEGER)
+                ->bind(':schema', $schema);
+            $db->setQuery($query)->execute();
+        } catch (Throwable $e) {
+            // Do nothing: the install goes on, only the check on the Database page of Joomla is missing.
         }
     }
 

@@ -4,8 +4,7 @@ ALTER TABLE `#__kunena_polls_users` MODIFY `pollid` int(11) NOT NULL, MODIFY `us
 ALTER TABLE `#__kunena_thankyou` DROP INDEX `postid`, ADD PRIMARY KEY (`postid`, `userid`);
 ALTER TABLE `#__kunena_user_read` DROP INDEX `user_topic_id`, ADD PRIMARY KEY (`user_id`, `topic_id`);
 ALTER TABLE `#__kunena_user_topics` DROP INDEX `user_topic_id`, ADD PRIMARY KEY (`user_id`, `topic_id`);
-CREATE TABLE IF NOT EXISTS `#__kunena_drafts`
-(
+CREATE TABLE IF NOT EXISTS `#__kunena_drafts` (
     `id`            int(11)      NOT NULL AUTO_INCREMENT,
     `user_id`       int(11)      NOT NULL,
     `catid`         int(11)      NOT NULL DEFAULT 0,
@@ -23,8 +22,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_drafts`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
-CREATE TABLE IF NOT EXISTS `#__kunena_user_ignore`
-(
+CREATE TABLE IF NOT EXISTS `#__kunena_user_ignore` (
     `user_id`      int(11) NOT NULL,
     `ignored_id`   int(11) NOT NULL,
     `created_time` int(11) NOT NULL DEFAULT 0,
@@ -34,8 +32,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_ignore`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
-CREATE TABLE IF NOT EXISTS `#__kunena_user_follow`
-(
+CREATE TABLE IF NOT EXISTS `#__kunena_user_follow` (
     `user_id`      int(11) NOT NULL,
     `followed_id`  int(11) NOT NULL,
     `created_time` int(11) NOT NULL DEFAULT 0,
@@ -45,8 +42,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_follow`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
-CREATE TABLE IF NOT EXISTS `#__kunena_categories_translations`
-(
+CREATE TABLE IF NOT EXISTS `#__kunena_categories_translations` (
     `category_id` int(11)      NOT NULL,
     `language`    varchar(7)   NOT NULL,
     `name`        tinytext     NULL,

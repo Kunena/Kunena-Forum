@@ -47,4 +47,38 @@ class UpdateSqlFilesTest extends UnitTestCase
     {
         $this->assertFileDoesNotExist(Files::path(self::UPDATES . self::OLD_VERSION . '-DEV.sql'));
     }
+
+    /**
+     * The Database page of the Joomla installer checks the tables with these files. It reads the table name of a CREATE TABLE up to
+     * the next space, so with the bracket on the next line the name is "table(" and the page reports a table which is there as
+     * missing.
+     */
+    public function testTheBracketOfACreateTableIsOnTheLineOfTheTableName(): void
+    {
+        $wrong = [];
+
+        foreach (glob(Files::path(self::UPDATES) . '*.sql') ?: [] as $file) {
+            $sql = str_replace("\r\n", "\n", (string) file_get_contents($file));
+
+            if (preg_match('/CREATE TABLE[^;(]*\n\s*\(/i', $sql)) {
+                $wrong[] = basename($file);
+            }
+        }
+
+        $this->assertSame([], $wrong, 'A CREATE TABLE has its bracket on a new line in: ' . implode(', ', $wrong));
+    }
+
+    /**
+     * Kunena runs its own updates: the manifest must not make Joomla run the update files as well. Joomla lists Kunena on its Database
+     * page through the row of #__schemas which the installer script writes.
+     */
+    public function testJoomlaDoesNotRunTheUpdateFilesButTheInstallerScriptRecordsTheSchema(): void
+    {
+        $manifest = Files::read('src/admin/kunena.xml');
+        $script   = Files::read('src/admin/script.php');
+
+        $this->assertStringNotContainsString('<schemas>', $manifest);
+        $this->assertStringContainsString('$this->setSchemaVersion();', $script);
+        $this->assertStringContainsString("'#__schemas'", $script);
+    }
 }

@@ -157,7 +157,7 @@ describe('Kunena polls: who may change the poll of a topic', () => {
     cy.kunena_setOption('allowUserEditPoll', '0');
     cy.doFrontendLogin(user.name, user.password, false);
     edit(ids.first).then((response) => pageAfter(response)).then((body) => {
-      expect(body, 'the notice of the refusal').to.contain(notice);
+      expect(body, 'the notice of the refusal, as a warning').to.contain(`<div class="alert alert-warning">${notice}`);
       expect(body, 'the success of the edit').to.contain(edited);
     });
     cy.task('queryDB', `SELECT message FROM #__kunena_messages_text WHERE mesid = ${ids.first}`).then((rows) => {
@@ -199,7 +199,7 @@ describe('Kunena polls: who may change the poll of a topic', () => {
     cy.doFrontendLogin(user.name, user.password, false);
     // An empty title and no options: the request asks to remove the poll.
     edit(ids.first, { poll_title: '' }).then((response) => pageAfter(response)).then((body) => {
-      expect(body, 'the notice of the refusal').to.contain(notice);
+      expect(body, 'the notice of the refusal, as a warning').to.contain(`<div class="alert alert-warning">${notice}`);
     });
     pollOf().then((poll) => {
       expect(poll, 'the poll').to.not.eq(undefined);

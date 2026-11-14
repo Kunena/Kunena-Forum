@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
@@ -1972,6 +1973,9 @@ class TopicController extends KunenaController
                         $topic->tryAuthorise('poll.edit');
                         $poll->save();
                         $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_EDITED'), 'success');
+                    } catch (KunenaExceptionAuthorise $e) {
+                        // The message is saved all the same: the refusal of the poll is a caveat, not a failure
+                        $this->app->enqueueMessage($e->getMessage(), 'warning');
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
                     }
@@ -1983,6 +1987,8 @@ class TopicController extends KunenaController
                     $topic->tryAuthorise('poll.delete');
                     $poll->delete();
                     $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_DELETED'), 'success');
+                } catch (KunenaExceptionAuthorise $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'warning');
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
                 }

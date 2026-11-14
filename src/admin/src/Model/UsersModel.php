@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Database\ParameterType;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -60,6 +61,7 @@ class UsersModel extends ListModel
                 'enabled',
                 'banned',
                 'moderator',
+                'group_id',
             ];
         }
 
@@ -135,6 +137,7 @@ class UsersModel extends ListModel
         $id .= ':' . $this->getState('filter.enabled');
         $id .= ':' . $this->getState('filter.banned');
         $id .= ':' . $this->getState('filter.moderator');
+        $id .= ':' . $this->getState('filter.group_id');
 
         return parent::getStoreId($id);
     }
@@ -201,6 +204,9 @@ class UsersModel extends ListModel
 
         $moderator = $this->getUserStateFromRequest($this->context . '.filter.moderator', 'filter_moderator', '');
         $this->setState('filter.moderator', $moderator);
+
+        $groupId = $this->getUserStateFromRequest($this->context . '.filter.group_id', 'filter_group_id', '');
+        $this->setState('filter.group_id', $groupId);
 
         // List state information.
         parent::populateState($ordering, $direction);
@@ -292,6 +298,14 @@ class UsersModel extends ListModel
 
         if ($filter !== '') {
             $query->where('ku.moderator =' . (int) $filter);
+        }
+
+        // Filter by Joomla user group (direct membership only, one row per user).
+        $groupId = (int) $this->getState('filter.group_id');
+
+        if ($groupId > 0) {
+            $query->where('a.id IN (SELECT ' . $db->quoteName('user_id') . ' FROM ' . $db->quoteName('#__user_usergroup_map') . ' WHERE ' . $db->quoteName('group_id') . ' = :groupId)')
+                ->bind(':groupId', $groupId, ParameterType::INTEGER);
         }
 
         // Add the list ordering clause.

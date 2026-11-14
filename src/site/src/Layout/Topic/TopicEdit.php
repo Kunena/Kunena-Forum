@@ -85,4 +85,10 @@ class TopicEdit extends KunenaLayout
     public mixed $catid = null;
 
     public mixed $unsentFields = null;
+
+    public mixed $scheduleField = false;
+
+    public mixed $scheduledTime = '';
+
+    public mixed $scheduleTimezone = '';
 }

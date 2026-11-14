@@ -727,6 +727,23 @@ abstract class KunenaUserHelper
     }
 
     /**
+     * Make another user the current user, for the code which acts for him (the task which publishes his scheduled reply).
+     *
+     * @param   KunenaUser|null  $user  The user.
+     *
+     * @return  KunenaUser|null  The current user until now, to put him back.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function setMyself(?KunenaUser $user): ?KunenaUser
+    {
+        $previous  = self::$_me;
+        self::$_me = $user;
+
+        return $previous;
+    }
+
+    /**
      * The timezone which a user has chosen in his Joomla account. Loading the whole Joomla user for it would take
      * two queries (the user and its groups): the parameters come with the users which were loaded in one query, or are
      * read with a small query of their own.

@@ -1644,7 +1644,8 @@ class KunenaTopic extends KunenaDatabaseObject
     {
         $user = KunenaUserHelper::get($user);
 
-        if (!KunenaFactory::getConfig()->showNew || !$user->exists() || Factory::getApplication()->getIdentity()->guest) {
+        // Nobody is logged in on the command line (the scheduler task): no identity.
+        if (!KunenaFactory::getConfig()->showNew || !$user->exists() || (Factory::getApplication()->getIdentity()?->guest ?? true)) {
             return false;
         }
 

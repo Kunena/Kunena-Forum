@@ -69,8 +69,16 @@ if ($this->ktemplate->params->get('formRecover')) {
 $this->doc->addScriptOptions('com_kunena.editor_type', $this->editorType);
 $this->doc->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 $this->doc->addScriptOptions('com_kunena.topicIconLabels', (int) $this->ktemplate->params->get('topicIconLabels', 1));
-$this->doc->addScriptOptions('com_kunena.allowUserEditPoll', $this->config->allowUserEditPoll);
 $this->doc->addScriptOptions('com_kunena.privateMessage', $this->config->privateMessage);
+
+// The poll of the edited topic: the editors disable their poll button when it may not be edited, the save checks it again.
+$editPoll        = $this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id;
+$pollEditRefused = $editPoll ? $this->topic->tryAuthorise('poll.edit', null, false) : false;
+
+if ($pollEditRefused) {
+    $this->doc->addScriptOptions('com_kunena.pollEditRefused', $pollEditRefused->getMessage());
+}
+
 $this->doc->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
 $this->doc->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
 $this->doc->addScriptOptions(
@@ -248,7 +256,7 @@ Text::script('COM_KUNENA_POST_CANCEL_CONFIRM');
         <input type="hidden" name="return" value="<?php echo \intval($this->category->id) ?>" />
     <?php endif; ?>
     <?php
-    if ($this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id) :
+    if ($editPoll && !$pollEditRefused) :
     ?>
         <input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo \intval($this->message->getTopic()->getPoll()->id) ?>" />
         <input type="hidden" id="ckeditor_dialog_polltitle" name="ckeditor_dialog_polltitle" value="<?php echo $this->escape($this->message->getTopic()->getPoll()->title) ?>" />

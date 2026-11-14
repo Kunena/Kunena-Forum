@@ -23,6 +23,8 @@ Only the layouts which Agora changes:
   scheme of the options (`data-bs-theme` of Bootstrap); with the scheme auto, a small script gives it the colours of the device
   before the page is shown.
 - `widget/menubar/default.php`: the menu bar.
+- `widget/statistics/default.php`: the statistics of the index as tiles, as on the statistics page, then the activity of
+  today and yesterday, the latest member and a link to the statistics page.
 - `user/item/default.php`: the header of the profile as a card.
 
 Each of them must replace a layout of Aurelia of the same name (tested by `AgoraOptionsTest`).

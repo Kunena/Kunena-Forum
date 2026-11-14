@@ -51,44 +51,46 @@ HTMLHelper::_('behavior.core');
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered align-middle">
+            <caption class="visually-hidden"><?php echo Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?></caption>
             <thead>
             <tr>
-                <th class="col-md-1">
+                <th scope="col" class="col-md-1">
                     <?php echo Text::_('COM_KUNENA_ANN_DATE'); ?>
                 </th>
-                <th class="col-md-5">
+                <th scope="col" class="col-md-5">
                     <?php echo Text::_('COM_KUNENA_ANN_TITLE'); ?>
                 </th>
 
                 <?php if ($options) :
                     ?>
-                    <th class="col-md-1 center">
+                    <th scope="col" class="col-md-1 center">
                         <?php echo Text::_('COM_KUNENA_ANN_BANNER'); ?>
                     </th>
-                    <th class="col-md-1 center">
+                    <th scope="col" class="col-md-1 center">
                         <?php echo Text::_('COM_KUNENA_ANN_PUBLISH'); ?>
                     </th>
-                    <th class="col-md-1 center">
+                    <th scope="col" class="col-md-1 center">
                         <?php echo Text::_('COM_KUNENA_ANN_EDIT'); ?>
                     </th>
-                    <th class="col-md-1 center">
+                    <th scope="col" class="col-md-1 center">
                         <?php echo Text::_('COM_KUNENA_ANN_DELETE'); ?>
                     </th>
-                    <th class="col-md-1">
+                    <th scope="col" class="col-md-1">
                         <?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
                     </th>
                 <?php endif; ?>
 
-                <th class="col-md-1 center">
+                <th scope="col" class="col-md-1 center">
                     <?php echo Text::_('COM_KUNENA_ANN_ID'); ?>
                 </th>
 
                 <?php if ($options) :
                     ?>
-                    <th class="col-md-1 center">
+                    <th scope="col" class="col-md-1 center">
                         <label>
                             <input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
                         </label>
+                        <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?></span>
                     </th>
                 <?php endif; ?>
 

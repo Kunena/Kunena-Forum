@@ -35,7 +35,7 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
         <?php endif; ?>
         <?php echo HTMLHelper::_('form.token'); ?>
         <div class="input-group">
-            <input name="query" class="form-control hasTooltip" id="mod-search-searchword" type="search" maxlength="64" placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_WIDGET_SEARCH_INPUT_TOOLTIP'); ?>" />
+            <input name="query" class="form-control hasTooltip" id="kunena-search-topic-query" type="search" maxlength="64" placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_WIDGET_SEARCH_INPUT_TOOLTIP'); ?>" />
             <button class="btn btn-outline-primary" type="submit" aria-label="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>">
                 <?php echo KunenaIcons::search(); ?>
             </button>

@@ -16,6 +16,10 @@ leaves the page (a link, the back button, closing the tab), the browser asks whe
   the sending (an empty subject, for example), the warning stays on.
 - **Cancel** on an untouched form goes back at once, as before. With changes it asks once; **OK** empties the form and goes
   back without a second question, **Cancel** keeps the form and its text.
+- **Cancel**, when it goes back, also deletes the files uploaded in the form which were not posted yet: only the user's own
+  uploads, never the attachments a message already has, and nothing for a guest. When the question is answered with **Cancel**,
+  nothing is deleted. A form left any other way (a link, the back button, closing the tab) leaves its uploads to the scheduled
+  task *Kunena - Clean pending attachments*.
 - A form shown again after a post which failed (the text comes back from the server) warns from the start, because the text
   is kept nowhere else. A form opened from a draft does not, because the draft keeps the text.
 - The question of the browser is its own and in its own language: browsers do not show a text of the site there.

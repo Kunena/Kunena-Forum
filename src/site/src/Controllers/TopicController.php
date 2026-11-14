@@ -35,12 +35,14 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaPendingAttachment;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaCheckSpamEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -48,6 +50,7 @@ use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageSchedule;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
@@ -401,6 +404,61 @@ class TopicController extends KunenaController
         }
 
         echo json_encode($success);
+
+        jexit();
+    }
+
+    /**
+     * Remove with AJAX the files uploaded in a posting form which is cancelled: only the pending uploads of the user himself.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function removependingattachments()
+    {
+        // Only support JSON requests.
+        if ($this->input->getWord('format', 'html') != 'json') {
+            throw new RuntimeException(Text::_('Bad Request'), 400);
+        }
+
+        if (!Session::checkToken('request')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
+        $removed = 0;
+
+        // A guest cannot prove that an upload is his: his uploads are left to the scheduled clean-up.
+        if ($this->me->exists() && !$this->me->isBanned()) {
+            $ids = array_map('intval', (array) $this->input->post->get('ids', [], 'array'));
+            $ids = \array_slice(array_values(array_unique(array_filter($ids, fn ($id) => $id > 0))), 0, 100);
+
+            foreach ($ids as $id) {
+                $attachment = KunenaAttachmentHelper::get($id);
+
+                if (
+                    $attachment->exists()
+                    && KunenaPendingAttachment::mayRemoveOnCancel((int) $attachment->mesid, (int) $attachment->userid, (int) $this->me->userid)
+                    && $attachment->isAuthorised('delete')
+                    && $attachment->delete()
+                ) {
+                    $removed++;
+                }
+            }
+        }
+
+        header('Content-type: application/json');
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+
+        while (@ob_end_clean()) {
+        }
+
+        echo json_encode(['removed' => $removed]);
 
         jexit();
     }
@@ -952,6 +1010,7 @@ class TopicController extends KunenaController
             'rating'            => 0,
             'params'            => '',
             'quote'             => 0,
+            'scheduled_time'    => $this->id && $this->me->exists() ? $this->app->getInput()->post->getString('scheduled_time', '') : '',
         ];
 
         if (!Session::checkToken('post')) {
@@ -969,6 +1028,22 @@ class TopicController extends KunenaController
         }
 
         $this->app->setUserState('com_kunena.postfields', $fields);
+
+        // A scheduled reply: the date is read in the time zone of the user (as the dates are shown to him), and is in the future.
+        $scheduledTime = 0;
+
+        if ($fields['scheduled_time'] !== '') {
+            $timezone      = (string) $this->app->getIdentity()->getParam('timezone', $this->app->get('offset', 'UTC'));
+            $scheduledTime = KunenaMessageSchedule::parse($fields['scheduled_time'], $timezone, Factory::getDate()->toUnix());
+
+            if ($scheduledTime < 0) {
+                $error = $scheduledTime === KunenaMessageSchedule::PAST ? 'COM_KUNENA_POST_SCHEDULE_ERROR_PAST' : 'COM_KUNENA_POST_SCHEDULE_ERROR_INVALID';
+                $this->app->enqueueMessage(Text::_($error), 'error');
+                $this->setRedirectBack();
+
+                return;
+            }
+        }
 
         // Need to do to the replacement in case of VBA code is inserted without the bbcode tags [code][/code]
         // Optimized: only perform replacement if the pattern exists in the message
@@ -1250,6 +1325,28 @@ class TopicController extends KunenaController
             return;
         }
 
+        // Spam check of the plugins: the post is rejected or held for a moderator
+        $spamCheck = $message->dispatchSpamCheck($topic, $category, $this->me, $isNew, KunenaUserHelper::getUserIp());
+
+        if ($spamCheck->getVerdict() === KunenaCheckSpamEvent::REJECT) {
+            $reason = $spamCheck->getReason();
+            $this->app->enqueueMessage($reason !== '' ? htmlspecialchars($reason, ENT_QUOTES, 'UTF-8') : Text::_('COM_KUNENA_POST_ERROR_SPAM_REJECTED'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if ($spamCheck->getVerdict() === KunenaCheckSpamEvent::HOLD) {
+            $message->hold = 1;
+        }
+
+        // A scheduled reply waits unapproved for its time. When one of the rules above holds it for review, the task does not publish it.
+        if ($scheduledTime > 0) {
+            $message->scheduled_review = $message->hold == 1 ? 1 : 0;
+            $message->hold             = 1;
+            $message->scheduled_time   = $scheduledTime;
+        }
+
         // Activity integration
         $activity = KunenaFactory::getActivityIntegration();
 
@@ -1357,7 +1454,12 @@ class TopicController extends KunenaController
             return; // -- abort
         }
 
-        $message->processNotification();
+        // A scheduled reply notifies the subscribers when it is published (the moderators now when it is held for review).
+        $scheduledOnly = $scheduledTime > 0 && !$message->scheduled_review;
+
+        if (!$scheduledOnly) {
+            $message->processNotification();
+        }
 
         // The users who are mentioned in the message get an e-mail.
         $message->sendMentionNotifications();
@@ -1379,7 +1481,9 @@ class TopicController extends KunenaController
             }
         }
 
-        if ($message->hold == 1) {
+        if ($scheduledOnly) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_POST_SUCCESS_SCHEDULED', KunenaDate::getInstance($scheduledTime)->toKunena('datetime')), 'success');
+        } elseif ($message->hold == 1) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCES_REVIEW'), 'success');
         } else {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_POSTED'), 'success');
@@ -1651,7 +1755,6 @@ class TopicController extends KunenaController
 
         $attachIds          = isset($attachIds[0]) && $attachIds[0] !== '' ? explode(',', $attachIds[0]) : [];
         $attachIds          = $this->ownPrivateAttachments($attachIds, $message);
-        $moderator          = $this->me->isModerator($message->getCategory());
         $parent             = $message->getParent();
         $author             = $message->getAuthor();
         $pAuthor            = $parent->getAuthor();
@@ -1673,11 +1776,9 @@ class TopicController extends KunenaController
             $private->users()->add($author->userid);
         }
 
-        if ($pAuthor->exists() && ($moderator || $pAuthor->isModerator($message->getCategory()))) {
-            // Attach receiver (but only if moderator either posted or replied parent post).
-            if ($pAuthor->exists()) {
-                $private->users()->add($pAuthor->userid);
-            }
+        // Attach receiver: the author of the post replied to (none for the first post of a topic or a guest post).
+        if ($pAuthor->exists()) {
+            $private->users()->add($pAuthor->userid);
         }
 
         $private->attachments()->setMapped($attachIds);
@@ -2010,7 +2111,8 @@ class TopicController extends KunenaController
             KunenaDraftHelper::delete($draftId, $this->me->userid);
         }
 
-        if ($message->hold == 1) {
+        // A scheduled reply (not held for review) keeps waiting for its time: it is not for the moderators.
+        if ($message->hold == 1 && !($message->scheduled_time > 0 && !$message->scheduled_review)) {
             // If user cannot approve message by himself, send email to moderators.
             if (!$topic->isAuthorised('approve')) {
                 $message->processNotification();

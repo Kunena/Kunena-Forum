@@ -4,8 +4,7 @@ ALTER TABLE `#__kunena_polls_users` MODIFY `pollid` int(11) NOT NULL, MODIFY `us
 ALTER TABLE `#__kunena_thankyou` DROP INDEX `postid`, ADD PRIMARY KEY (`postid`, `userid`);
 ALTER TABLE `#__kunena_user_read` DROP INDEX `user_topic_id`, ADD PRIMARY KEY (`user_id`, `topic_id`);
 ALTER TABLE `#__kunena_user_topics` DROP INDEX `user_topic_id`, ADD PRIMARY KEY (`user_id`, `topic_id`);
-CREATE TABLE IF NOT EXISTS `#__kunena_drafts`
-(
+CREATE TABLE IF NOT EXISTS `#__kunena_drafts` (
     `id`            int(11)      NOT NULL AUTO_INCREMENT,
     `user_id`       int(11)      NOT NULL,
     `catid`         int(11)      NOT NULL DEFAULT 0,
@@ -23,8 +22,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_drafts`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
-CREATE TABLE IF NOT EXISTS `#__kunena_user_ignore`
-(
+CREATE TABLE IF NOT EXISTS `#__kunena_user_ignore` (
     `user_id`      int(11) NOT NULL,
     `ignored_id`   int(11) NOT NULL,
     `created_time` int(11) NOT NULL DEFAULT 0,
@@ -34,8 +32,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_ignore`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
-CREATE TABLE IF NOT EXISTS `#__kunena_user_follow`
-(
+CREATE TABLE IF NOT EXISTS `#__kunena_user_follow` (
     `user_id`      int(11) NOT NULL,
     `followed_id`  int(11) NOT NULL,
     `created_time` int(11) NOT NULL DEFAULT 0,
@@ -45,8 +42,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_follow`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
-CREATE TABLE IF NOT EXISTS `#__kunena_categories_translations`
-(
+CREATE TABLE IF NOT EXISTS `#__kunena_categories_translations` (
     `category_id` int(11)      NOT NULL,
     `language`    varchar(7)   NOT NULL,
     `name`        tinytext     NULL,
@@ -72,7 +68,15 @@ VALUES ('com_kunena.reportmessage', 'com_kunena', '', 'COM_KUNENA_MAILTPL_REPORT
 DELETE r1 FROM `#__kunena_rate` AS r1 INNER JOIN `#__kunena_rate` AS r2 ON r1.`topic_id` = r2.`topic_id` AND r1.`userid` = r2.`userid` AND r1.`id` > r2.`id`;
 ALTER TABLE `#__kunena_rate` ADD UNIQUE KEY `topic_user` (`topic_id`, `userid`);
 -- The smilies get a manual order: the current order (by id) stays the same, a second run keeps an order set since.
-ALTER TABLE `#__kunena_smileys` ADD `ordering` int(11) NOT NULL default '0' AFTER `emoticonbar`;
+ALTER TABLE `#__kunena_smileys` ADD COLUMN `ordering` int(11) NOT NULL default '0' AFTER `emoticonbar`;
 UPDATE `#__kunena_smileys` SET `ordering` = `id` WHERE `ordering` = 0;
 -- A locked topic can have a reason (closed, solved, sold...): the topics which are already locked have none.
-ALTER TABLE `#__kunena_topics` ADD `lock_reason` varchar(255) NOT NULL default '' AFTER `locked`;
+ALTER TABLE `#__kunena_topics` ADD COLUMN `lock_reason` varchar(255) NOT NULL default '' AFTER `locked`;
+-- The topic keeps a copy of its first and last post: as long as a post (mediumtext), else a recount fails on a long post.
+ALTER TABLE `#__kunena_topics` MODIFY `first_post_message` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL, MODIFY `last_post_message` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+-- A reply can be scheduled: published by the scheduler task at its time, unless it was held for review.
+ALTER TABLE `#__kunena_messages` ADD COLUMN `scheduled_time` int(11) NOT NULL default '0' AFTER `modified_reason`;
+ALTER TABLE `#__kunena_messages` ADD COLUMN `scheduled_review` tinyint(4) NOT NULL default '0' AFTER `scheduled_time`;
+-- The title and the image of a rank are 255 characters, as in the schema: the install file of the first versions of 6.x made them 250.
+ALTER TABLE `#__kunena_ranks` MODIFY `rankTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '';
+ALTER TABLE `#__kunena_ranks` MODIFY `rankImage` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL;

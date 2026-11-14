@@ -27,7 +27,7 @@ class MailTemplateRowsTest extends UnitTestCase
      */
     private static function rows(): array
     {
-        $sql = Files::read('src/admin/sql/updates/mysql/7.2.0-DEV.sql');
+        $sql = Files::read('src/admin/sql/updates/mysql/8.0.0-DEV.sql');
 
         preg_match_all(
             "/INSERT IGNORE INTO `#__mail_templates`[^;]*?VALUES \('(com_kunena\.\w+)', 'com_kunena', '', '(\w+)', '(\w+)', '(\w+)', '', '(\{.*?\})'\);/s",

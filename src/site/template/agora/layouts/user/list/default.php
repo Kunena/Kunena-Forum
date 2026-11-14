@@ -29,6 +29,7 @@ $direction = $this->state->get('list.direction');
 $this->addScript('tribute.js');
 $this->addStyleSheet('tribute.css');
 $this->addScript('assets/js/search.js');
+KunenaFactory::getTemplate()->addScriptOptions('com_kunena.usersearch_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json', false));
 
 // The columns of the list of Aurelia which can be sorted, as buttons: the name, then the options which are shown.
 $sorts = [$config->username ? ['COM_KUNENA_USERNAME', 'username'] : ['COM_KUNENA_REALNAME', 'name']];

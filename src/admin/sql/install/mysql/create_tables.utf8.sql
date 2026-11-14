@@ -151,12 +151,12 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics`
     `first_post_id`         int(11)    NOT NULL default '0',
     `first_post_time`       int(11)    NOT NULL default '0',
     `first_post_userid`     int(11)    NOT NULL default '0',
-    `first_post_message`    text       NULL,
+    `first_post_message`    mediumtext NULL,
     `first_post_guest_name` tinytext   NULL,
     `last_post_id`          int(11)    NOT NULL default '0',
     `last_post_time`        int(11)    NOT NULL default '0',
     `last_post_userid`      int(11)    NOT NULL default '0',
-    `last_post_message`     text       NULL,
+    `last_post_message`     mediumtext NULL,
     `last_post_guest_name`  tinytext   NULL,
     `rating`                tinyint(6) NOT NULL default '0',
     `params`                text       CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -200,6 +200,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_messages`
     `modified_by`     int(7)       NULL,
     `modified_time`   int(11)      NULL,
     `modified_reason` tinytext     NULL,
+    `scheduled_time`  int(11)      NOT NULL default '0',
+    `scheduled_review` tinyint(4)  NOT NULL default '0',
     PRIMARY KEY (id),
     KEY `thread` (thread),
     KEY `ip` (ip),
@@ -322,10 +324,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_private_user_map`
 CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
 (
     `rankId`      mediumint UNSIGNED NOT NULL AUTO_INCREMENT,
-    `rankTitle`   varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+    `rankTitle`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
     `rankMin`     mediumint UNSIGNED NOT NULL DEFAULT '0',
     `rankSpecial` tinyint UNSIGNED NOT NULL DEFAULT '0',
-    `rankImage`   varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `rankImage`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     PRIMARY KEY (rankId)
 )
     ENGINE = InnoDB

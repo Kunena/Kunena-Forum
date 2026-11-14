@@ -29,11 +29,12 @@ use Joomla\CMS\Language\Text;
         </h3>
 
         <table class="table table-striped table-bordered">
+            <caption class="visually-hidden"><?php echo $top[0]->title; ?></caption>
             <thead>
             <tr>
-                <th colspan="1" class="center">#</th>
-                <th colspan="5"><?php echo $top[0]->titleName; ?></th>
-                <th colspan="6"><?php echo $top[0]->titleCount; ?></th>
+                <th scope="col" colspan="1" class="center">#</th>
+                <th scope="col" colspan="5"><?php echo $top[0]->titleName; ?></th>
+                <th scope="col" colspan="6"><?php echo $top[0]->titleCount; ?></th>
             </tr>
             </thead>
             <tbody>

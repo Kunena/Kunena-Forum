@@ -40,4 +40,18 @@ describe('Kunena addresses with a missing or wrong value', () => {
       status(`view=category&catid=${encodeURIComponent(catid)}`).should('be.oneOf', [200, 404]);
     });
   });
+
+  it('does not find a layout or a format which the old controllers cannot show (it was "View not found")', () => {
+    [
+      'view=category&layout=doesnotexist',
+      'view=topics&layout=doesnotexist',
+      'view=credits&layout=doesnotexist',
+      'view=credits&format=raw',
+    ].forEach((query) => {
+      cy.request({ url: `${base}&${query}`, failOnStatusCode: false, timeout: 40000 }).then((response) => {
+        expect(response.status, query).to.eq(404);
+        expect(response.body, query).not.to.contain('View not found');
+      });
+    });
+  });
 });

@@ -727,6 +727,23 @@ abstract class KunenaUserHelper
     }
 
     /**
+     * Make another user the current user, for the code which acts for him (the task which publishes his scheduled reply).
+     *
+     * @param   KunenaUser|null  $user  The user.
+     *
+     * @return  KunenaUser|null  The current user until now, to put him back.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function setMyself(?KunenaUser $user): ?KunenaUser
+    {
+        $previous  = self::$_me;
+        self::$_me = $user;
+
+        return $previous;
+    }
+
+    /**
      * The timezone which a user has chosen in his Joomla account. Loading the whole Joomla user for it would take
      * two queries (the user and its groups): the parameters come with the users which were loaded in one query, or are
      * read with a small query of their own.
@@ -847,11 +864,21 @@ abstract class KunenaUserHelper
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
 
-        // Update banned state
+        // Update banned state of the users who have bans: the latest expiration of their bans, a subquery of each user (an update
+        // joined to a derived table failed with a syntax error on MariaDB 10.11, issue #10344)
+        $latest = $db->createQuery();
+        $latest->select('MAX(' . $db->quoteName('b.expiration') . ')')
+            ->from($db->quoteName('#__kunena_users_banned', 'b'))
+            ->where($db->quoteName('b.userid') . ' = ' . $db->quoteName('u.userid'));
+
+        $banned = $db->createQuery();
+        $banned->select($db->quoteName('userid'))
+            ->from($db->quoteName('#__kunena_users_banned'));
+
         $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_users', 'u'))
-            ->join('INNER', '(SELECT ' . $db->quoteName('userid') . ', MAX(' . $db->quoteName('expiration') . ') AS ' . $db->quoteName('banned') . ' FROM ' . $db->quoteName('#__kunena_users_banned') . ' GROUP BY ' . $db->quoteName('userid') . ') AS b ON ' . $db->quoteName('u.userid') . '=' . $db->quoteName('b.userid'))
-            ->set($db->quoteName('u.banned') . '=' . $db->quoteName('b.banned'));
+            ->set($db->quoteName('u.banned') . ' = (' . $latest . ')')
+            ->where($db->quoteName('u.userid') . ' IN (' . $banned . ')');
         $db->setQuery($query);
 
         try {

@@ -95,6 +95,11 @@ $this->doc->addScriptOptions(
         Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
+    'com_kunena.kunena_upload_files_cancel',
+    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removependingattachments&format=json&' .
+        Session::getFormToken() . '=1', false)
+);
+$this->doc->addScriptOptions(
     'com_kunena.kunena_upload_files_rem_inline',
     KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' .
         Session::getFormToken() . '=1', false)
@@ -515,6 +520,21 @@ Text::script('COM_KUNENA_POST_CANCEL_CONFIRM');
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($this->scheduleField) : ?>
+        <h2>
+            <?php echo Text::_('COM_KUNENA_POST_SCHEDULE'); ?>
+        </h2>
+        <div class="shadow-lg p-3 mb-5 rounded">
+            <div class="form-group row" id="kpost-schedule">
+                <div class="controls">
+                    <label class="form-label" for="kscheduled_time"><?php echo Text::_('COM_KUNENA_POST_SCHEDULE_LABEL'); ?></label>
+                    <input type="datetime-local" class="form-control" name="scheduled_time" id="kscheduled_time" value="<?php echo $this->escape($this->scheduledTime); ?>" aria-describedby="kscheduled_time_help" />
+                    <div id="kscheduled_time_help" class="form-text"><?php echo Text::sprintf('COM_KUNENA_POST_SCHEDULE_DESC', $this->escape($this->scheduleTimezone)); ?></div>
                 </div>
             </div>
         </div>

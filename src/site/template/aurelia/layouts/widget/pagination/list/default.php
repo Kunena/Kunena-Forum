@@ -28,15 +28,15 @@ if ($count == 0) {
 $last = 0;
 ?>
 
-<nav class="d-none d-sm-block">
+<nav>
     <ul class="pagination ms-0">
         <?php
-        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);
-        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->previous);
+        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start)->set('extraClass', 'd-none d-sm-block');
+        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->previous)->set('extraClass', 'd-none d-sm-block');
 
         foreach ($data->pages as $k => $item) {
             if ($last + 1 != $k) {
-                echo '<li class="page-item disabled"><a class="">...</a></li>';
+                echo '<li class="page-item disabled d-none d-sm-block"><a class="">...</a></li>';
             }
 
             $last = $k;
@@ -44,18 +44,8 @@ $last = 0;
             echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
         }
 
-        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->next);
-        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->end);
-        ?>
-    </ul>
-</nav>
-
-<nav class="d-block d-sm-none">
-    <ul class="pagination ms-0">
-        <?php
-        foreach ($data->pages as $k => $item) {
-            echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
-        }
+        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->next)->set('extraClass', 'd-none d-sm-block');
+        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->end)->set('extraClass', 'd-none d-sm-block');
         ?>
     </ul>
 </nav>

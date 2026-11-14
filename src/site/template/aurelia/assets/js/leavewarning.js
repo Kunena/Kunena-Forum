@@ -115,8 +115,31 @@
 						guards.get(form).armed = false;
 					}
 
-					form.reset();
-					window.history.back();
+					// The files uploaded in this form (read before the reset): the server removes only the pending uploads of the user.
+					const ids = Array.prototype.map.call(form.querySelectorAll('#kattach-list input[name^="attachments["]'), function (input) {
+						return input.name.slice('attachments['.length, -1);
+					});
+					const url = ids.length && window.Joomla && Joomla.getOptions ? Joomla.getOptions('com_kunena.kunena_upload_files_cancel') : null;
+
+					const leave = function () {
+						form.reset();
+						window.history.back();
+					};
+
+					if (!url) {
+						leave();
+
+						return;
+					}
+
+					const body = new URLSearchParams();
+
+					ids.forEach(function (id) {
+						body.append('ids[]', id);
+					});
+
+					// Back also when the request fails: a failed removal leaves the uploads to the scheduled clean-up.
+					fetch(url, {method: 'POST', keepalive: true, credentials: 'same-origin', body: body}).then(leave, leave);
 				});
 			}
 		});

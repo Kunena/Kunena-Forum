@@ -25,10 +25,11 @@ HTMLHelper::_('behavior.formvalidator');
 $this->getDocument()->getWebAssetManager()->addInlineStyle(
     '#adminForm .subform-repeatable-wrapper table { table-layout: fixed; width: 100%; }'
     . '#adminForm .subform-repeatable-wrapper th:nth-child(1) { width: 15% !important; }'
-    . '#adminForm .subform-repeatable-wrapper th:nth-child(2) { width: 19% !important; }'
-    . '#adminForm .subform-repeatable-wrapper th:nth-child(3) { width: 30% !important; }'
+    . '#adminForm .subform-repeatable-wrapper th:nth-child(2) { width: 16% !important; }'
+    . '#adminForm .subform-repeatable-wrapper th:nth-child(3) { width: 24% !important; }'
     . '#adminForm .subform-repeatable-wrapper th:nth-child(4) { width: 19% !important; }'
     . '#adminForm .subform-repeatable-wrapper th:nth-child(5) { width: 10% !important; }'
+    . '#adminForm .subform-repeatable-wrapper th:nth-child(6) { width: 9% !important; }'
     . '#adminForm .subform-repeatable-wrapper thead td:last-child { width: 110px !important; }'
     . '#adminForm .socials-no-controls .subform-repeatable-wrapper tr > :last-child { display: none; }'
     . '#adminForm .subform-repeatable-wrapper td .form-control, #adminForm .subform-repeatable-wrapper td .form-select { min-width: 0; max-width: 100%; }'

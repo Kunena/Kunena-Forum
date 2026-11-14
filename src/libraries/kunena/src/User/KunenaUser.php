@@ -1883,7 +1883,9 @@ class KunenaUser
                     return false;
                 }
 
-                return '<span data-bs-toggle="tooltip" data-placement="right" title="' . Text::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_BIRTHDATE', $this->birthdate) . '" >' . KunenaIcons::birthdate() . '</span>';
+                $title = Text::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_BIRTHDATE', KunenaDate::getInstance($this->birthdate)->toKunena('date', 'utc'));
+
+                return '<span data-bs-toggle="tooltip" data-placement="right" title="' . $this->escape($title) . '" >' . KunenaIcons::birthdate() . '</span>';
 
                 break;
             case 'location':

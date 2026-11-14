@@ -57,10 +57,10 @@ $template = KunenaTemplate::getInstance();
             </td>
             <td>
                 <div id="birthdate">
-                    <div class="input-group date">
+                    <div class="input-group date" data-date-format="<?php echo $this->escape($this->config->datePickerFormat); ?>">
                         <input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="<?php echo $this->config->datePickerFormat; ?>"
                             value="<?php echo $this->escape(KunenaDate::toPicker((string) $this->profile->birthdate)); ?>"
-                            data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
+                            data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC', $this->config->datePickerFormat ?: 'yyyy-mm-dd')) ?>">
                         <button class="btn btn-outline-secondary" type="button" aria-label="<?php echo Text::_('COM_KUNENA_SEARCH_LABEL_SELECT_DATE'); ?>">
                             <?php echo KunenaIcons::calendar(); ?>
                         </button>
@@ -137,6 +137,12 @@ $template = KunenaTemplate::getInstance();
         </tr>
 
         <?php foreach ($this->socials as $key => $social): ?>
+            <?php
+            // A website which the admin switched off is not shown.
+            if (!$this->socials->isEnabled($key)) {
+                continue;
+            }
+            ?>
             <tr>
                 <td class="col-md-3">
                     <label for="personalText">

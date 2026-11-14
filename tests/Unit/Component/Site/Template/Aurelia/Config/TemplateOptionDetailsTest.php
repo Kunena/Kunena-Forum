@@ -42,7 +42,6 @@ class TemplateOptionDetailsTest extends UnitTestCase
     private const KNOWN_UNDEFINED = [
         'maxPersonalText',
         'disableEmoticons',
-        'enableThreadedLayouts',
         'menu_showall',
         'menu_levels',
         'editor',

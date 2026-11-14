@@ -74,17 +74,19 @@ class TopicList extends KunenaLayout
      * Method to return HTML select list for time filter
      *
      * @param   int|string  $id      Id of the HTML select list
-     * @param   string      $attrib  Extra attribute to apply to the list
+     * @param   ?string     $attrib  Extra attribute to apply to the list
      *
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public function displayTimeFilter($id = 'filter-time', $attrib = 'class="form-select filter" onchange="this.form.submit()"')
+    public function displayTimeFilter($id = 'filter-time', $attrib = null)
     {
         if (!isset($this->state)) {
             return;
         }
+
+        $attrib ??= 'class="form-select form-select-sm filter" aria-label="' . Text::_('COM_KUNENA_FILTER_TIME') . '"';
 
         // Make the select list for time selection
         $timesel[] = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_SHOW_ALL'));

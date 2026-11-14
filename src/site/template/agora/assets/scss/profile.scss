@@ -39,6 +39,10 @@
   align-items: center;
   margin: 0;
   font-size: 0.95rem;
+  font-weight: 650;
+  line-height: 1.3;
+  color: var(--agora-text);
+  letter-spacing: -0.01em;
 
   .btn {
     --bs-btn-color: var(--agora-text);

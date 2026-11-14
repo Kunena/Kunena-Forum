@@ -53,6 +53,53 @@ describe('Kunena options: who may come in', () => {
     cy.request(`${base}&view=topic&catid=3&id=9`).its('body').should('include', topicWords);
   });
 
+  it('shows the login form to a visitor when the forum is only for registered users, and logs in back to the page', () => {
+    setOption('regOnly', '1');
+
+    cy.request({ url: `${base}&view=category&catid=3`, failOnStatusCode: false }).then((response) => {
+      const body = String(response.body);
+
+      expect(response.status, 'the status for a visitor').to.eq(403);
+      expect(body, 'the message').to.include('Please Log In');
+      expect(body.split('Only community members can participate in this forum').length - 1, 'the message, once').to.eq(1);
+      expect(body, 'the user name field').to.include('id="klogin-username-full"');
+      expect(body, 'the password field').to.include('id="klogin-passwd-full"');
+      expect(body, 'the topics of the category').to.not.include(topicWords);
+    });
+
+    // The feeds keep their answer, without the form.
+    cy.request({ url: `${base}&view=topics&format=feed&layout=feed&type=rss`, failOnStatusCode: false }).then((response) => {
+      expect(String(response.body), 'the feed').to.not.include('klogin-username-full');
+      expect(String(response.body), 'the feed').to.not.include(topicWords);
+    });
+
+    // A wrong password comes back to the same page with the form.
+    cy.visit(`${base}&view=category&catid=3`, { failOnStatusCode: false });
+    // The form is in the body of the "Please Log In" box.
+    cy.get('.card .card-body .kloginform #klogin-username-full').should('exist');
+    cy.get('#klogin-username-full').type('ci-user');
+    cy.get('#klogin-passwd-full').type('not-the-password');
+    // The button is named "submit", which hides form.submit(): click it as a user does.
+    cy.get('.kloginform button[type="submit"]').click();
+    cy.get('#klogin-username-full').should('exist');
+    cy.contains('Please Log In').should('exist');
+
+    cy.get('#klogin-username-full').clear().type('ci-user');
+    cy.get('#klogin-passwd-full').type('ci-user-17082005-x', { log: false });
+    cy.get('.kloginform button[type="submit"]').click();
+
+    cy.get('#klogin-username-full').should('not.exist');
+    cy.contains('Please Log In').should('not.exist');
+
+    // The user is logged in and on the category: the address asked for, or where the forum sends it (a SEF address).
+    cy.request(`${base}&view=category&catid=3`).then((response) => {
+      const redirect = (response.redirects || []).pop();
+      const target = redirect ? redirect.replace(/^\d+: /, '') : null;
+
+      cy.location('href').should('satisfy', (href) => href.includes('catid=3') || href === target);
+    });
+  });
+
   it('shows no profile to a visitor when the profiles are private', () => {
     setOption('pubProfile', '0');
     cy.request({ url: `${base}&view=user&layout=default&userid=798`, failOnStatusCode: false }).its('status').should('be.gte', 400);

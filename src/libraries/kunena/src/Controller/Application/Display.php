@@ -241,7 +241,11 @@ class Display extends KunenaControllerDisplay
 
             $this->content = KunenaLayout::factory('Widget/Custom')
                 ->set('header', Text::_('COM_KUNENA_LOGIN_NOTIFICATION'))
-                ->set('body', Text::_('COM_KUNENA_LOGIN_FORUM'));
+                ->set(
+                    'body',
+                    '<p>' . Text::_('COM_KUNENA_LOGIN_FORUM') . '</p>'
+                    . KunenaLayout::factory('Widget/Login/Login')->setLayout('login')->set('showHeading', false)->render()
+                );
         } else {
             // Display real content.
             try {

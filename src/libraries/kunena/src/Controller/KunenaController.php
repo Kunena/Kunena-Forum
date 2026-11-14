@@ -83,6 +83,14 @@ class KunenaController extends BaseController
     protected $app;
 
     /**
+     * Tasks a visitor may run when the forum is for registered users only.
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected array $regOnlyGuestTasks = [];
+
+    /**
      * Constructor.
      *
      * @param   array                     $config   An optional associative array of configuration settings.
@@ -291,7 +299,7 @@ class KunenaController extends BaseController
                 }
 
                 // If forum is for registered users only, prevent guests from accessing tasks.
-                if ($this->config->regOnly && !$this->me->exists()) {
+                if ($this->config->regOnly && !$this->me->exists() && !$this->isRegOnlyGuestTask($task)) {
                     throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
                 }
             }
@@ -364,6 +372,20 @@ class KunenaController extends BaseController
 
         // It's much faster and safer to exit now than let Joomla to send the response.
         Factory::getApplication()->close();
+    }
+
+    /**
+     * Whether a visitor may run the task when the forum is for registered users only.
+     *
+     * @param   string  $task  Task to be run.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    protected function isRegOnlyGuestTask(string $task): bool
+    {
+        return \in_array($task, $this->regOnlyGuestTasks, true);
     }
 
     /**

@@ -111,12 +111,13 @@ class KunenaAvatar
      * @param   string      $class  class
      * @param   int         $sizex  sizex
      * @param   int         $sizey  sizey
+     * @param   string      $online The status of the user (green, yellow, red, grey...), added as the class status-<online> of the icon
      *
      * @return  string|false
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getLink(KunenaUser $user, $class = 'kavatar', $sizex = 90, $sizey = 90): string|false
+    public function getLink(KunenaUser $user, $class = 'kavatar', $sizex = 90, $sizey = 90, string $online = ''): string|false
     {
         $size   = $this->getSize($sizex, $sizey);
         $avatar = $this->getURL($user, $size->x, $size->y);
@@ -125,29 +126,83 @@ class KunenaAvatar
             return \false;
         }
 
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        // A user without an avatar (Icontype): the person icon of the icon set of the template, at the size of the avatar.
+        if (($topicicontype == 'fa' || $topicicontype == 'svg') && $avatar == Uri::root() . 'media/kunena/core/svg/person.svg') {
+            return $this->getIcon($user, $class, $size, $topicicontype, $online);
+        }
+
         if ($class == 'none') {
             $class = ' class="kavatar"';
         } elseif ($class) {
             $class = ' class="' . $class . '"';
         }
 
-        $ktemplate     = KunenaFactory::getTemplate();
-        $topicicontype = $ktemplate->params->get('topicicontype');
-
         if ($topicicontype == 'svg') {
-            if ($avatar == Uri::root() . 'media/kunena/core/svg/person.svg') {
-                $link = '<span ' . $class . ' data-bs-toggle="tooltip" title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">'
-                    . KunenaSvgIcons::loadsvg('person') . '</span>';
-            } else {
-                $link = '<span' . $class . ' data-bs-toggle="tooltip" title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">
+            $link = '<span' . $class . ' data-bs-toggle="tooltip" title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">
 				<img alt="" loading=lazy src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"></span>';
-            }
         } else {
             $link = '<img loading=lazy' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"
 			  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
         }
 
         return $link;
+    }
+
+    /**
+     * Function to get the person icon of a user without an avatar, in the icon set of the template
+     *
+     * @param   KunenaUser  $user           user
+     * @param   string      $class          class
+     * @param   StdClass    $size           the size of the avatar
+     * @param   string      $topicicontype  fa or svg
+     * @param   string      $online         the status of the user
+     *
+     * @return  string
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected function getIcon(KunenaUser $user, $class, StdClass $size, string $topicicontype, string $online): string
+    {
+        $classes = trim(($class == 'none' ? 'kavatar' : trim((string) $class)) . ' d-inline-block lh-1');
+
+        if ($online !== '') {
+            $classes .= ' status-' . $online;
+        }
+
+        $title = Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName());
+        $span  = '<span class="' . $classes . '"';
+
+        // The box of the icon has the size of the avatar (lh-1: no taller line box). The icon has the size of the avatar too, but
+        // never more than its box: a stylesheet which makes the avatar or the icon smaller still wins.
+        $style = 'width: ' . $size->x . 'px; height: ' . $size->y . 'px';
+
+        if ($topicicontype == 'fa') {
+            return $span . ' style="' . $style . '; font-size: ' . $size->y . 'px" data-bs-toggle="tooltip" title="' . $title . '" role="img" aria-label="' . $title . '">'
+                . '<i class="fas fa-user-circle d-block mw-100 mh-100" aria-hidden="true"></i></span>';
+        }
+
+        // The SVG is 1em wide and high: give it the size of the avatar.
+        $svg = preg_replace_callback(
+            '/<svg\b[^>]*>/',
+            function ($tag) use ($size) {
+                $tag = preg_replace('/\s(width|height)="[^"]*"/', '', $tag[0]);
+
+                if (preg_match('/\sclass="/', $tag)) {
+                    $tag = preg_replace('/\sclass="([^"]*)"/', ' class="$1 d-block mw-100 mh-100"', $tag, 1);
+                } else {
+                    $tag = '<svg class="d-block mw-100 mh-100"' . substr($tag, 4);
+                }
+
+                return '<svg width="' . $size->x . '" height="' . $size->y . '"' . substr($tag, 4);
+            },
+            KunenaSvgIcons::loadsvg('person'),
+            1
+        );
+
+        return $span . ' style="' . $style . '" data-bs-toggle="tooltip" title="' . $title . '" role="img" aria-label="' . $title . '">' . $svg . '</span>';
     }
 
     /**

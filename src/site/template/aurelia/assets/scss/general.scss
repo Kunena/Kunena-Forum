@@ -1219,6 +1219,11 @@ a.dropdown-toggle {
     box-shadow: 0 0 0 1px #d4d4d4, 0 0 0 0 #fff, 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
+// The icon of a user without a picture: the ring shows the status, so the glyph keeps a readable colour.
+.dropdown-toggle span[role="img"] {
+    color: var(--bs-secondary-color) !important;
+}
+
 #ann-showdate select,
 #ann-publish select,
 #kuserform .form-inline input {
@@ -1354,6 +1359,12 @@ form:not(.form-no-margin) .control-group .controls {
         height: 100%;
         object-fit: cover;
     }
+}
+
+// The icon of a user without a picture fills its box, which has the size of the avatar.
+span[role="img"] > svg {
+    width: 100%;
+    height: 100%;
 }
 
 .fbs {

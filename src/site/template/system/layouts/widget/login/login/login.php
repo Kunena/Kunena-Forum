@@ -21,10 +21,14 @@ use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 
-$login = KunenaLogin::getInstance();
+$login       = KunenaLogin::getInstance();
+$showHeading = isset($this->showHeading) ? $this->showHeading : true;
 ?>
 <div class="kloginform center">
-    <h1><?php echo Text::_('COM_KUNENA_LOGIN_FORUM'); ?></h1>
+    <?php if ($showHeading) :
+        ?>
+        <h1><?php echo Text::_('COM_KUNENA_LOGIN_FORUM'); ?></h1>
+    <?php endif; ?>
     <form action="<?php echo Route::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
         <input type="hidden" name="view" value="user"/>
         <input type="hidden" name="task" value="login"/>

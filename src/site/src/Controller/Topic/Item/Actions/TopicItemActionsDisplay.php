@@ -75,7 +75,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 
         $catid  = $this->topic->category_id;
         $token  = Session::getFormToken();
-        $Itemid = KunenaRoute::fixMissingItemID();
+        $Itemid = (int) KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}");
 
         $task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&Itemid={$Itemid}&{$token}=1";
         $layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&Itemid={$Itemid}";

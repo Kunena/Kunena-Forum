@@ -2743,15 +2743,16 @@ class KunenaMessage extends KunenaDatabaseObject
 
         // Update topic
         if (!$this->hold && $topic->hold && $topic->exists()) {
-            // We published message -> publish and recount topic
+            // We published message -> publish and recount topic. The recount counts this message already (in the topic, the
+            // category, the user topics and the users): adding the post delta again would count it twice.
             $topic->hold = 0;
             $topic->recount();
-        }
-
-        try {
-            $topic->update($this, $postDelta);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        } else {
+            try {
+                $topic->update($this, $postDelta);
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
+            }
         }
 
         // Activity integration

@@ -67,10 +67,10 @@ describe('Kunena options: who may come in', () => {
       expect(body, 'the topics of the category').to.not.include(topicWords);
     });
 
-    // The feeds get no form.
+    // The feeds keep their answer, without the form.
     cy.request({ url: `${base}&view=topics&format=feed&layout=feed&type=rss`, failOnStatusCode: false }).then((response) => {
-      expect(response.status, 'the status of the feed').to.be.gte(400);
       expect(String(response.body), 'the feed').to.not.include('klogin-username-full');
+      expect(String(response.body), 'the feed').to.not.include(topicWords);
     });
 
     // A wrong password comes back to the same page with the form.

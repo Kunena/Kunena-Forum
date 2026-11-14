@@ -86,10 +86,12 @@ jQuery(document).ready(function ($) {
 	});
 
 	if ($.fn.datepicker !== undefined) {
-		$('.date').datepicker({
-			orientation: "top auto",
-			format: "yyyy-mm-dd",
-			language: "kunena"
+		$('.date').each(function () {
+			$(this).datepicker({
+				orientation: "top auto",
+				format: $(this).attr('data-date-format') || "yyyy-mm-dd",
+				language: "kunena"
+			});
 		});
 	}
 

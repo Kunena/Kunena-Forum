@@ -637,6 +637,11 @@ class UserController extends KunenaController
         $socials = KunenaUserSocials::getInstance($user->userid);
 
         foreach ($socials as $key => $social) {
+            // A website which the admin switched off keeps its value.
+            if (!$socials->isEnabled($key)) {
+                continue;
+            }
+
             if ($input->$method->get('social' . $key, '', 'string') !== null) {
                 $socials->$key->value = $input->$method->get('social' . $key, '', 'string');
             }

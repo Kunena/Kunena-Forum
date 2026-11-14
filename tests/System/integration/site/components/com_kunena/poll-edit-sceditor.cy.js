@@ -37,9 +37,10 @@ describe('Kunena polls: the poll dialog of the SCEditor edits the existing poll'
     cy.get('#polltitle').closest('.sceditor-dropdown').find('input.button').click();
     cy.get('#polltitle').should('not.exist');
   };
+  // The page after the save says that it succeeded (an error sends the form back, under a SEF address too).
   const save = () => {
     cy.get('#form_submit_button').should('not.be.disabled').click();
-    cy.location('search').should('not.contain', 'layout=edit');
+    cy.contains('The message has been successfully edited.').should('exist');
   };
 
   before(() => {

@@ -101,6 +101,18 @@ pre
 	tab-size: 4;
 }
 
+/* A [code] block of a message (plugins/code/plugin.js) */
+pre[data-kunena-code]
+{
+	font-family: monospace;
+	font-size: 0.875em;
+	background-color: #f8f9fa;
+	border: 1px solid #dee2e6;
+	border-radius: 0.375rem;
+	padding: 0.5rem 0.75rem;
+	margin: 0.5rem 0;
+}
+
 .marker
 {
 	background-color: Yellow;

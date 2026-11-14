@@ -144,6 +144,8 @@ describe('Kunena BBCode: borders on message tables and a background on plain cod
       expect(column.borderTopWidth === '0px' || column.borderTopStyle === 'none').to.equal(true);
     });
 
+    // The scheme follows the device by default, which may be dark: start from the light scheme.
+    cy.get('#kunena').invoke('attr', 'data-bs-theme', 'light');
     agoraBorder().then((light) => {
       messageTable().find('td').should(($td) => {
         expect(style($td).borderTopWidth).to.equal('1px');

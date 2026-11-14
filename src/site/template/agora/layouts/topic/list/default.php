@@ -66,7 +66,7 @@ if ($this->ktemplate->params->get('ajaxTopicList', 1)) {
                   method="post" target="_self">
                 <div class="d-flex gap-2 align-items-center">
                     <?php $this->displayTimeFilter('sel'); ?>
-                    <button type="submit" class="btn btn-sm btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILTER_APPLY'); ?></button>
+                    <button type="submit" class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILTER_APPLY'); ?></button>
                 </div>
                 <?php echo HTMLHelper::_('form.token'); ?>
             </form>

@@ -78,3 +78,6 @@ UPDATE `#__kunena_smileys` SET `ordering` = `id` WHERE `ordering` = 0;
 ALTER TABLE `#__kunena_topics` ADD `lock_reason` varchar(255) NOT NULL default '' AFTER `locked`;
 -- The topic keeps a copy of its first and last post: as long as a post (mediumtext), else a recount fails on a long post.
 ALTER TABLE `#__kunena_topics` MODIFY `first_post_message` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL, MODIFY `last_post_message` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+-- A reply can be scheduled: published by the scheduler task at its time, unless it was held for review.
+ALTER TABLE `#__kunena_messages` ADD `scheduled_time` int(11) NOT NULL default '0' AFTER `modified_reason`;
+ALTER TABLE `#__kunena_messages` ADD `scheduled_review` tinyint(4) NOT NULL default '0' AFTER `scheduled_time`;

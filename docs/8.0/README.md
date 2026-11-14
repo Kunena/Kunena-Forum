@@ -10,6 +10,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | Feature | For | Issue | What it does |
 | --- | --- | --- | --- |
 | [Drafts](features/drafts.md) | Users |  | Save a topic, a reply or an edit as a draft and finish it later. |
+| [Scheduled replies](features/scheduled-replies.md) | Users, moderators | [#9830](https://github.com/Kunena/Kunena-Forum/issues/9830) | A reply can be published later, on a chosen date and time, by a scheduler task. |
 | [Warning before leaving the posting form](features/leave-warning.md) | Users | [#6856](https://github.com/Kunena/Kunena-Forum/issues/6856) | The form of a topic, a reply or an edit asks before it is left with text which was not sent. |
 | [Markdown and safe HTML in messages](features/markdown-and-html.md) | Administrators, users |  | Messages can use Markdown, and a safe set of HTML tags, next to BBCode. |
 | [Link cards for pasted links](features/link-cards.md) | Administrators, users | [#3769](https://github.com/Kunena/Kunena-Forum/issues/3769) | A link in a message becomes a card with the title, a short text and the picture of the page. |

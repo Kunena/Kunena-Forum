@@ -138,7 +138,8 @@ class KunenaTemplateAgora extends KunenaTemplateAurelia
         $accent = (string) $this->params->get('accentColor');
 
         if (preg_match('/^#[0-9a-f]{3,8}$/i', $accent)) {
-            $this->addStyleDeclaration("#kunena.layout.agora { --agora-accent: {$accent}; }");
+            // The calendar of the date fields is outside #kunena (at the end of the page), it gets the accent too.
+            $this->addStyleDeclaration("#kunena.layout.agora, body:has(#kunena.layout.agora) .datepicker.dropdown-menu { --agora-accent: {$accent}; }");
         }
     }
 

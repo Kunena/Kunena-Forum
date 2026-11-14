@@ -76,6 +76,10 @@ $type       = $this->profile->getType(0, true);
 
                 <?php $rankChoices = $this->rankChoices(); ?>
                 <?php if ($rankChoices) : ?>
+                    <?php // The change of the rank opens with a small button beside the rank (no JavaScript needed). ?>
+                    <details class="agora-rank-edit">
+                        <summary class="btn btn-outline-secondary btn-sm" title="<?php echo $this->escape(Text::_('COM_KUNENA_USER_RANK_CHANGE_LABEL')); ?>"
+                                 aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_USER_RANK_CHANGE_LABEL')); ?>"><?php echo KunenaIcons::pencil(); ?></summary>
                     <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=changerank'); ?>"
                           method="post" class="d-inline-flex gap-1 align-items-center">
                         <input type="hidden" name="userid" value="<?php echo (int) $this->profile->userid; ?>"/>
@@ -88,6 +92,7 @@ $type       = $this->profile->getType(0, true);
                         <button type="submit" class="btn btn-outline-primary border btn-sm"><?php echo Text::_('COM_KUNENA_USER_RANK_CHANGE_SUBMIT'); ?></button>
                         <?php echo HTMLHelper::_('form.token'); ?>
                     </form>
+                    </details>
                 <?php endif; ?>
             <?php endif; ?>
         </div>

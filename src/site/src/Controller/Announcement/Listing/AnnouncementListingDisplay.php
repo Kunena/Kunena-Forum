@@ -82,8 +82,9 @@ class AnnouncementListingDisplay extends KunenaControllerDisplay
             }
         }
 
+        // Ten announcements on a page, the others on the next pages.
         if ($limit < 1 || $limit > 100) {
-            $limit = 20;
+            $limit = 10;
         }
 
         $limitstart = $this->input->getInt('limitstart', 0);

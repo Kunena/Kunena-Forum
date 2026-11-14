@@ -46,6 +46,17 @@ if ($this->ktemplate->params->get('ajaxTopicList', 1)) {
     );
     $this->addScript('assets/js/topiclist.js');
 }
+
+// The filters are in a panel which opens with a button of the header; it is open when a filter is in use (a filtered address).
+$filtersActive = false;
+
+if (!empty($this->filterBar)) {
+    HTMLHelper::_('bootstrap.collapse');
+
+    $filtersActive = $this->filters['q'] !== '' || $this->filters['author'] !== '' || $this->filters['status'] !== ''
+        || (int) $this->filters['tag'] > 0 || $this->input->getInt('catid', 0) > 0
+        || (KunenaMultilanguage::isEnabled() && $this->filters['language'] !== KunenaMultilanguage::getCurrent());
+}
 ?>
 <header class="agora-list-head">
     <div class="agora-list-title">
@@ -59,19 +70,41 @@ if ($this->ktemplate->params->get('ajaxTopicList', 1)) {
         </h1>
     </div>
 
+    <div class="agora-list-actions">
+    <?php if (!empty($this->filterBar)) : ?>
+        <button type="button" class="btn btn-outline-secondary agora-filter-toggle<?php echo $filtersActive ? '' : ' collapsed'; ?>"
+                data-bs-toggle="collapse" data-bs-target="#ktopicsfilter-panel" aria-controls="ktopicsfilter-panel"
+                aria-expanded="<?php echo $filtersActive ? 'true' : 'false'; ?>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h12l-4.5 5.5V13l-3 1.5v-6z"/></svg>
+            <?php echo Text::_('COM_KUNENA_FILTER'); ?>
+        </button>
+    <?php endif; ?>
+
+    <?php // The search of the forum beside the period, in the header: no row of its own. ?>
+    <div class="agora-list-search">
+        <?php echo $this->subLayout('Widget/Search')
+            ->set('catid', 'all')
+            ->setLayout('topic'); ?>
+    </div>
+
     <?php if ($view != 'user') : ?>
         <div class="agora-list-time" id="filter-time">
             <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
                   id="timeselect" name="timeselect"
                   method="post" target="_self">
+                <?php // The period applies when it is chosen; without JavaScript, a button. ?>
                 <div class="d-flex gap-2 align-items-center">
-                    <?php $this->displayTimeFilter('sel'); ?>
-                    <button type="submit" class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILTER_APPLY'); ?></button>
+                    <?php $this->displayTimeFilter('sel', 'class="form-select" onchange="this.form.submit()" aria-label="' . Text::_('COM_KUNENA_FILTER_TIME') . '"'); ?>
+                    <noscript>
+                        <button type="submit" class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILTER_APPLY'); ?></button>
+                    </noscript>
                 </div>
                 <?php echo HTMLHelper::_('form.token'); ?>
             </form>
         </div>
     <?php endif; ?>
+    </div>
 </header>
 
 <?php
@@ -87,7 +120,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
         0,
         [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FILTER_ALL_CATEGORIES'))],
         [],
-        'class="form-select form-select-sm" aria-label="' . Text::_('COM_KUNENA_CATEGORY') . '"',
+        'class="form-select" aria-label="' . Text::_('COM_KUNENA_CATEGORY') . '"',
         'value',
         'text',
         $this->input->getInt('catid', 0),
@@ -109,55 +142,60 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
         'poll'      => 'COM_KUNENA_FILTER_STATUS_POLL',
     ];
     ?>
+    <?php $filterTags = KunenaTopicTags::isEnabled() ? KunenaTopicTags::getAvailable() : []; ?>
+    <?php // The filters apply as they are chosen or typed (topiclist.js); the button is for the visitors without JavaScript. ?>
+    <div class="collapse<?php echo $filtersActive ? ' show' : ''; ?>" id="ktopicsfilter-panel">
     <form action="<?php echo $this->escape($filterBase); ?>" method="get"
-          id="ktopicsfilter" class="row g-2 align-items-center agora-list-filters" role="search">
+          id="ktopicsfilter" class="agora-list-filters" role="search">
         <?php foreach ($filterKeep as $keepKey => $keepValue) : ?>
             <input type="hidden" name="<?php echo $this->escape($keepKey); ?>" value="<?php echo $this->escape($keepValue); ?>"/>
         <?php endforeach; ?>
-        <div class="col-12 col-md-3">
-            <?php echo $filterCategories; ?>
+
+        <div class="agora-filters-text">
+            <label class="agora-filter-field agora-filter-subject">
+                <span class="agora-filter-icon" aria-hidden="true"><?php echo KunenaIcons::search(); ?></span>
+                <input type="search" name="fq" value="<?php echo $this->escape($this->filters['q']); ?>" class="form-control"
+                       placeholder="<?php echo Text::_('COM_KUNENA_FILTER_SUBJECT'); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_SUBJECT'); ?>" autocomplete="off"/>
+            </label>
+            <label class="agora-filter-field">
+                <span class="agora-filter-icon" aria-hidden="true"><?php echo KunenaIcons::user(); ?></span>
+                <input type="search" name="fauthor" value="<?php echo $this->escape($this->filters['author']); ?>" class="form-control"
+                       placeholder="<?php echo Text::_('COM_KUNENA_FILTER_AUTHOR'); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_AUTHOR'); ?>" autocomplete="off"/>
+            </label>
+            <div class="agora-filters-actions">
+                <a href="<?php echo $this->escape($filterResetUrl); ?>" class="btn btn-link" data-ktopics-reset><?php echo Text::_('COM_KUNENA_FILTER_RESET'); ?></a>
+                <noscript>
+                    <button type="submit" class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILTER_APPLY'); ?></button>
+                </noscript>
+            </div>
         </div>
-        <div class="col-6 col-md-2">
-            <select name="fstatus" class="form-select form-select-sm" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_STATUS'); ?>">
+
+        <div class="agora-filters-selects">
+            <?php echo $filterCategories; ?>
+            <select name="fstatus" class="form-select" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_STATUS'); ?>">
                 <?php foreach ($statusOptions as $value => $label) : ?>
                     <option value="<?php echo $value; ?>"<?php echo $this->filters['status'] === $value ? ' selected' : ''; ?>><?php echo Text::_($label); ?></option>
                 <?php endforeach; ?>
             </select>
-        </div>
-        <?php $filterTags = KunenaTopicTags::isEnabled() ? KunenaTopicTags::getAvailable() : []; ?>
-        <?php if ($filterTags) : ?>
-            <div class="col-6 col-md-2">
-                <select name="ftag" class="form-select form-select-sm" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_TAG'); ?>">
+            <?php if ($filterTags) : ?>
+                <select name="ftag" class="form-select" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_TAG'); ?>">
                     <option value="0"><?php echo Text::_('COM_KUNENA_FILTER_ALL_TAGS'); ?></option>
                     <?php foreach ($filterTags as $filterTag) : ?>
                         <option value="<?php echo (int) $filterTag->id; ?>"<?php echo (int) $this->filters['tag'] === (int) $filterTag->id ? ' selected' : ''; ?>><?php echo $this->escape($filterTag->title); ?></option>
                     <?php endforeach; ?>
                 </select>
-            </div>
-        <?php endif; ?>
-        <div class="col-6 col-md-3">
-            <input type="search" name="fq" value="<?php echo $this->escape($this->filters['q']); ?>" class="form-control form-control-sm"
-                   placeholder="<?php echo Text::_('COM_KUNENA_FILTER_SUBJECT'); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_SUBJECT'); ?>" autocomplete="off"/>
-        </div>
-        <?php if (KunenaMultilanguage::isEnabled()) : ?>
-            <div class="col-6 col-md-2">
-                <select name="flang" class="form-select form-select-sm" data-default="<?php echo $this->escape(KunenaMultilanguage::getCurrent()); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_LANGUAGE'); ?>">
+            <?php endif; ?>
+            <?php if (KunenaMultilanguage::isEnabled()) : ?>
+                <select name="flang" class="form-select" data-default="<?php echo $this->escape(KunenaMultilanguage::getCurrent()); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_LANGUAGE'); ?>">
                     <option value="all"<?php echo $this->filters['language'] === 'all' ? ' selected' : ''; ?>><?php echo Text::_('COM_KUNENA_FILTER_ALL_LANGUAGES'); ?></option>
                     <?php foreach (KunenaMultilanguage::getLanguages() as $languageCode => $languageTitle) : ?>
                         <option value="<?php echo $this->escape($languageCode); ?>"<?php echo $this->filters['language'] === $languageCode ? ' selected' : ''; ?>><?php echo $this->escape($languageTitle); ?></option>
                     <?php endforeach; ?>
                 </select>
-            </div>
-        <?php endif; ?>
-        <div class="col-6 col-md-2">
-            <input type="search" name="fauthor" value="<?php echo $this->escape($this->filters['author']); ?>" class="form-control form-control-sm"
-                   placeholder="<?php echo Text::_('COM_KUNENA_FILTER_AUTHOR'); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_AUTHOR'); ?>" autocomplete="off"/>
-        </div>
-        <div class="col-6 col-md-2 text-end">
-            <button type="submit" class="btn btn-sm btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILTER_APPLY'); ?></button>
-            <a href="<?php echo $this->escape($filterResetUrl); ?>" class="btn btn-sm btn-outline-secondary" data-ktopics-reset><?php echo Text::_('COM_KUNENA_FILTER_RESET'); ?></a>
+            <?php endif; ?>
         </div>
     </form>
+    </div>
 <?php endif; ?>
 
 <div class="agora-list-toolbar">
@@ -165,11 +203,6 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
         <?php echo $this->subLayout('Widget/Pagination/List')
             ->set('pagination', $this->pagination->setDisplayedPages(4))
             ->set('display', true); ?>
-    </div>
-    <div class="agora-list-search">
-        <?php echo $this->subLayout('Widget/Search')
-            ->set('catid', 'all')
-            ->setLayout('topic'); ?>
     </div>
 </div>
 

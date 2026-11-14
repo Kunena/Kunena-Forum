@@ -332,6 +332,11 @@ hr {
   min-height: 2rem;
 }
 
+/* The build of Bootstrap of Cassiopeia has no white cross for the dark scheme: the black one is turned white. */
+&[data-bs-theme="dark"] .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
 .btn-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -465,9 +470,11 @@ input:focus {
   background-color: var(--agora-surface);
   border-color: var(--agora-border-strong);
 
+  /* A box or a switch which is on is in the accent: the strong neutral was as light as the white knob of a switch in the dark
+     scheme. */
   &:checked {
-    background-color: var(--agora-neutral-strong);
-    border-color: var(--agora-neutral-strong);
+    background-color: var(--agora-accent);
+    border-color: var(--agora-accent);
   }
 }
 
@@ -770,7 +777,10 @@ label {
   border-width: 0 0 1px;
 }
 
+/* A wide table scrolls sideways, never up and down: the last border of a table is 1px below the box and gave a vertical
+   scroll bar. */
 .table-responsive {
+  overflow-y: hidden;
   border-radius: 0 0 var(--agora-radius) var(--agora-radius);
 }
 

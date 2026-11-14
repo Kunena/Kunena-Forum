@@ -50,42 +50,119 @@
   min-width: 11rem;
 }
 
-/* The filters of the list. */
+/* The button which opens the panel of the filters: pressed while it is open. */
+.agora-filter-toggle {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  &:not(.collapsed) {
+    color: var(--agora-text);
+    background: var(--agora-surface-hover);
+  }
+}
+
+/* The search of the forum and the period, together at the end of the header. */
+.agora-list-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-inline-start: auto;
+
+  .agora-list-search {
+    width: 16rem;
+    max-width: 100%;
+  }
+}
+
+/* The filters of the list, as a card: the two searches (with an icon) and the reset on the first row, the lists under them at
+ * the same width. They apply as they are chosen or typed. */
 .agora-list-filters {
-  --bs-gutter-x: 1rem;
-  padding: 1rem 0.5rem;
-  margin: 0 0 1rem !important;
+  display: grid;
+  gap: 0.5rem;
+  padding: var(--agora-pad);
+  margin: 0 0 1rem;
   background: var(--agora-surface);
   border: 1px solid var(--agora-border);
   border-radius: var(--agora-radius);
   box-shadow: var(--agora-shadow);
 
-  /* The columns of Bootstrap are too narrow for some fields and for the two buttons (they ran over the field before them):
-   * every field takes a share of the row and wraps when there is no room, the category and the search take more, the buttons
-   * take the room they need. */
-  > [class*="col-"] {
-    flex: 1 1 10rem;
-    width: auto;
-    max-width: 100%;
-  }
-
-  > .col-12,
-  > [class*="col-"]:has(input[name="fq"]) {
-    flex-basis: 14rem;
-  }
-
-  .form-select-sm,
-  .form-control-sm,
-  .btn {
+  .form-control,
+  .form-select {
+    width: 100%;
     min-height: 40px;
     font-size: 0.9rem;
   }
+}
 
-  .text-end {
-    display: flex;
-    flex: 0 0 auto;
-    gap: 0.5rem;
-    justify-content: flex-end;
+.agora-filters-text {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.agora-filters-selects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: 0.5rem;
+}
+
+/* A search with its icon inside the field, on the left. */
+.agora-filter-field {
+  position: relative;
+  display: block;
+  margin: 0;
+
+  .form-control {
+    padding-left: 2.25rem;
+  }
+}
+
+.agora-filter-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.75rem;
+  display: inline-grid;
+  color: var(--agora-text-muted);
+  pointer-events: none;
+  transform: translateY(-50%);
+
+  svg,
+  i {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.agora-filters-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  .btn-link {
+    min-height: 40px;
+    padding-inline: 0.5rem;
+    color: var(--agora-text-muted);
+
+    &:hover {
+      color: var(--agora-text);
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .agora-filters-text {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .agora-filter-subject {
+    grid-column: 1 / -1;
+  }
+
+  .agora-filters-selects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -124,6 +201,28 @@
   }
 }
 
+/* The pages of a long topic, under its subject: small chips, not the buttons of the pagination of the list. */
+#ktopicsform .pagination-small {
+  margin: 0.5rem 0 0;
+
+  .pagination {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin: 0;
+  }
+
+  .page-link {
+    display: inline-grid;
+    place-items: center;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 0 0.5rem;
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+}
+
 /* The bulk actions of the moderators, under the list. */
 .agora-topics-foot {
   display: flex;
@@ -142,8 +241,8 @@
 .agora-topics-top {
   display: inline-grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   color: var(--agora-text-muted);
   border: 1px solid var(--agora-border);
   border-radius: 50%;
@@ -174,6 +273,12 @@
   display: none !important;
 }
 
+/* The rows of the pagination hold nothing else: with one page, no row (and no space) at all. When the list is reloaded with
+ * more pages, the row comes back. */
+.agora-list-toolbar:not(:has(.page-item:not(.disabled):not(.active))) {
+  display: none;
+}
+
 /* The checkboxes of the bulk actions. */
 #ktopicsform input[type="checkbox"] {
   width: 1.15rem;
@@ -183,13 +288,14 @@
 }
 
 @media (max-width: 767.98px) {
+  .agora-list-actions,
+  .agora-list-actions .agora-list-search,
   .agora-list-time,
-  .agora-list-time .form-select,
-  .agora-list-toolbar .agora-list-search {
+  .agora-list-time .form-select {
     width: 100%;
   }
 
-  .agora-list-toolbar .agora-list-search {
+  .agora-list-actions {
     margin-inline-start: 0;
   }
 

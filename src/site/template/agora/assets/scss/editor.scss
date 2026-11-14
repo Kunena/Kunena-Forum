@@ -34,6 +34,13 @@
     margin-bottom: 1rem;
   }
 
+  /* The last row of a card (the subscription, the anonymous post) has no space under it: its text is in the middle. The
+     template of Joomla gives every .form-group its margin with !important. */
+  > .shadow-lg > .form-group.row:last-child,
+  > .p-3.rounded > .form-group.row:last-child {
+    margin-bottom: 0 !important;
+  }
+
   .col-form-label {
     padding-bottom: 0;
   }
@@ -494,22 +501,24 @@ a.cke_path_item:focus {
     font-weight: 650;
   }
 
-  .table > tbody > tr > td,
-  .table > tr > td {
+  /* The fields of the category: a label and its field in each row (not the lists of the announcements and of the files,
+     which use the same id). */
+  .tab-content .table > tbody > tr > td,
+  .tab-content .table > tr > td {
     vertical-align: top;
   }
 
-  .table td:first-child {
+  .tab-content .table td:first-child {
     padding-top: 1.5rem;
     font-weight: 550;
   }
 
-  .table td label {
+  .tab-content .table td label {
     display: block;
     margin: 0;
   }
 
-  .table td p {
+  .tab-content .table td p {
     margin: 0.25rem 0 0;
     font-size: 0.86rem;
     color: var(--agora-text-muted);
@@ -560,9 +569,29 @@ a.cke_path_item:focus {
   color: var(--agora-text);
 }
 
+/* The list of the announcements: the title may wrap and the cells are narrower, so that the table fits without a scroll bar. */
+#adminForm > .table-responsive > .table {
+  > :not(caption) > * > * {
+    padding-inline: 0.5rem;
+  }
+
+  > :not(caption) > * > :first-child {
+    padding-left: 1rem;
+  }
+
+  > :not(caption) > * > :last-child {
+    padding-right: 1rem;
+  }
+
+  td.nowrap:has(> .overflow) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
 @media (max-width: 767.98px) {
   /* The label above its field. */
-  #adminForm .table {
+  #adminForm .tab-content .table {
     tr,
     td {
       display: block;
@@ -578,4 +607,55 @@ a.cke_path_item:focus {
       padding: 0 0.25rem 1rem;
     }
   }
+}
+
+/* The form of an announcement: one card, the dates and the choices side by side, the buttons centred at the end. */
+.agora-ann-edit-title {
+  margin: 0.5rem 0 1rem;
+  font-size: 1.25rem;
+}
+
+.agora-ann-edit {
+  padding: var(--agora-pad);
+  margin-bottom: var(--agora-gap);
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow);
+
+  .form-label {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  /* The field of a date (without the class of Bootstrap) takes the room beside its calendar. */
+  .input-group.date > input {
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+    padding-inline: 0.75rem;
+  }
+
+  .input-group.date > .input-group-text {
+    cursor: pointer;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+.agora-ann-edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--agora-border);
 }

@@ -510,3 +510,35 @@ form[id^="kform-user"],
 .rounded-circle {
   border-radius: 50% !important;
 }
+
+/* The change of the rank (moderators): a small pencil beside the rank, the list and its button beside it when it is open. */
+.agora-rank-edit {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  > summary {
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    min-height: 32px;
+    padding: 0;
+    list-style: none;
+    cursor: pointer;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    svg,
+    i {
+      width: 0.9rem;
+      height: 0.9rem;
+    }
+  }
+
+  &[open] > summary {
+    color: var(--agora-text);
+    background: var(--agora-surface-hover);
+  }
+}

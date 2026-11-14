@@ -25,9 +25,15 @@ Only the layouts which Agora changes:
 - `widget/menubar/default.php`: the menu bar.
 - `widget/statistics/default.php`: the statistics of the index as tiles, as on the statistics page, then the activity of
   today and yesterday, the latest member and a link to the statistics page.
+- `announcement/edit/default.php`: the form of an announcement in one card, the dates and the choices side by side.
 - `user/item/default.php`: the header of the profile as a card.
 
 Each of them must replace a layout of Aurelia of the same name (tested by `AgoraOptionsTest`).
+
+## ./pages
+
+- `topics/default/default.php`: the lists of topics without who is online and the statistics, which Agora shows only on the
+  index of the forum.
 
 ## ./assets/scss
 
@@ -39,6 +45,8 @@ Each of them must replace a layout of Aurelia of the same name (tested by `Agora
   the ones of the build of Bootstrap of Cassiopeia (without prefix) get the same colours.
 - `base.scss`: type, links, buttons, badges, forms, dropdowns, modals, pagination, tabs and tables.
 - `navigation.scss`, `forum.scss`, `topic.scss`, `profile.scss`, `editor.scss`: the parts of the forum.
+- `datepicker.scss`: the calendar of the date fields, which is outside `#kunena` (at the end of the page): it gets the
+  tokens in `tokens.scss` and the accent of the options in `template.php`.
 - `mobile.scss`: small screens (tables as lists of cards, the author above a message, no horizontal scrolling at 360px).
 - `custom.scss`: your own styles (kept during an upgrade).
 

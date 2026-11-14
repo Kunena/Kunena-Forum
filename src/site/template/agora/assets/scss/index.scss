@@ -257,13 +257,26 @@ tr[class^="category"] {
   color: var(--agora-text-muted);
 }
 
-/* The button for a new section of the administrators: always shown (Aurelia shows it only on hover). */
-.kcat-new-top {
-  min-height: 0 !important;
-  margin: -0.25rem 0 0.5rem !important;
+/* The jump to a category and the button for a new section of the administrators (always shown, Aurelia shows it only on
+   hover) on one row: the list takes the room it has, the button stays at the end. */
+.agora-index-tools {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
 
-  .btn {
-    opacity: 1;
+  #jumpto {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  #jumpto .selector {
+    margin-bottom: 0 !important;
+  }
+
+  .kcat-new-top {
+    flex-shrink: 0;
+    margin-left: auto;
   }
 }
 

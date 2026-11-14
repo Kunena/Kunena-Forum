@@ -29,10 +29,6 @@ $kunena_profiler = KunenaProfiler::instance();
 $kunena_profiler->start('Total Time');
 KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 
-if ($this->config->enableForumJump) {
-    echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
-}
-
 $mmm             = 0;
 
 // Reload the categories in the background and make a category with a new message blink.
@@ -59,16 +55,20 @@ $firstSection = !empty($this->sections) ? reset($this->sections) : null;
 $newItemid    = $firstSection ? (int) KunenaRoute::getCategoryItemid($firstSection) : $activeId;
 
 // The button for a new section belongs to the index of the forum, not to the page of a category.
-if ($isAdmin && !Factory::getApplication()->getInput()->getInt('catid', 0)) : ?>
-    <style>
-        /* The button for a new category shows when the row is hovered (or has the focus); a touch screen has no hover: always. */
-        .kcat-new-top { min-height: 2rem; }
-        .kcat-new-top .btn { opacity: 0; transition: opacity .15s; }
-        .kcat-new-top:hover .btn, .kcat-new-top:focus-within .btn { opacity: 1; }
-        @media (hover: none) { .kcat-new-top .btn { opacity: 1; } }
-    </style>
-    <div class="mb-2 text-end kcat-new-top">
-        <a class="btn btn-outline-primary btn-sm <?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SECTION')); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SECTION')); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&layout=create&parentid=0&Itemid=' . $newItemid); ?>"><?php echo KunenaIcons::plus(); ?></a>
+$newSection = $isAdmin && !Factory::getApplication()->getInput()->getInt('catid', 0);
+$forumJump  = (bool) $this->config->enableForumJump;
+
+// The jump to a category and the button for a new section on one row: the jump on the left, the button on the right.
+if ($forumJump || $newSection) : ?>
+    <div class="agora-index-tools">
+        <?php if ($forumJump) {
+            echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+        } ?>
+        <?php if ($newSection) : ?>
+            <div class="kcat-new-top">
+                <a class="btn btn-outline-primary <?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SECTION')); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SECTION')); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&layout=create&parentid=0&Itemid=' . $newItemid); ?>"><?php echo KunenaIcons::plus(); ?></a>
+            </div>
+        <?php endif; ?>
     </div>
 <?php endif;
 

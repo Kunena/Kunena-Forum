@@ -53,19 +53,32 @@ class DisplayTest extends UnitTestCase
         $this->assertStringContainsString("\$this->output->setLayout('offline');", $branch);
     }
 
-    public function testTheRegisteredOnlyPageShowsTheMessageAndThenTheLoginForm(): void
+    public function testTheRegisteredOnlyPageShowsTheMessageAndThenTheLoginFormInTheBodyOfTheBox(): void
     {
         $branch = $this->regOnlyBranch();
 
-        $custom = strpos($branch, "KunenaLayout::factory('Widget/Custom')");
-        $login  = strpos($branch, "KunenaLayout::factory('Widget/Login/Login')->setLayout('login')");
+        $custom  = strpos($branch, "KunenaLayout::factory('Widget/Custom')");
+        $body    = strpos($branch, "'body',");
+        $message = strpos($branch, "Text::_('COM_KUNENA_LOGIN_FORUM')");
+        $login   = strpos($branch, "KunenaLayout::factory('Widget/Login/Login')->setLayout('login')");
 
         $this->assertNotFalse($custom);
+        $this->assertNotFalse($body);
+        $this->assertNotFalse($message);
         $this->assertNotFalse($login);
-        $this->assertLessThan($login, $custom);
+        $this->assertLessThan($body, $custom);
+        $this->assertLessThan($message, $body);
+        $this->assertLessThan($login, $message);
         $this->assertStringContainsString("->set('header', Text::_('COM_KUNENA_LOGIN_NOTIFICATION'))", $branch);
-        $this->assertStringContainsString("->set('body', Text::_('COM_KUNENA_LOGIN_FORUM'))", $branch);
-        $this->assertStringContainsString('$this->content->appendAfter(', $branch);
+        $this->assertStringNotContainsString('appendAfter(', $branch);
+    }
+
+    public function testTheLoginFormOfTheRegisteredOnlyPageDoesNotRepeatTheMessage(): void
+    {
+        $branch = $this->regOnlyBranch();
+
+        $this->assertSame(1, substr_count($branch, 'COM_KUNENA_LOGIN_FORUM'));
+        $this->assertStringContainsString("->setLayout('login')->set('showHeading', false)->render()", $branch);
     }
 
     public function testTheRegisteredOnlyPageRendersNothingElseOfTheForum(): void

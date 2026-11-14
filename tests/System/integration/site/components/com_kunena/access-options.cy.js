@@ -61,7 +61,7 @@ describe('Kunena options: who may come in', () => {
 
       expect(response.status, 'the status for a visitor').to.eq(403);
       expect(body, 'the message').to.include('Please Log In');
-      expect(body, 'the message').to.include('Only community members can participate in this forum');
+      expect(body.split('Only community members can participate in this forum').length - 1, 'the message, once').to.eq(1);
       expect(body, 'the user name field').to.include('id="klogin-username-full"');
       expect(body, 'the password field').to.include('id="klogin-passwd-full"');
       expect(body, 'the topics of the category').to.not.include(topicWords);
@@ -75,6 +75,8 @@ describe('Kunena options: who may come in', () => {
 
     // A wrong password comes back to the same page with the form.
     cy.visit(`${base}&view=category&catid=3`, { failOnStatusCode: false });
+    // The form is in the body of the "Please Log In" box.
+    cy.get('.card .card-body .kloginform #klogin-username-full').should('exist');
     cy.get('#klogin-username-full').type('ci-user');
     cy.get('#klogin-passwd-full').type('not-the-password');
     // The button is named "submit", which hides form.submit(): click it as a user does.

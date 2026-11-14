@@ -53,6 +53,44 @@ describe('Kunena options: who may come in', () => {
     cy.request(`${base}&view=topic&catid=3&id=9`).its('body').should('include', topicWords);
   });
 
+  it('shows the login form to a visitor when the forum is only for registered users, and logs in back to the page', () => {
+    setOption('regOnly', '1');
+
+    cy.request({ url: `${base}&view=category&catid=3`, failOnStatusCode: false }).then((response) => {
+      const body = String(response.body);
+
+      expect(response.status, 'the status for a visitor').to.eq(403);
+      expect(body, 'the message').to.include('Please Log In');
+      expect(body, 'the message').to.include('Only community members can participate in this forum');
+      expect(body, 'the user name field').to.include('id="klogin-username-full"');
+      expect(body, 'the password field').to.include('id="klogin-passwd-full"');
+      expect(body, 'the topics of the category').to.not.include(topicWords);
+    });
+
+    // The feeds get no form.
+    cy.request({ url: `${base}&view=topics&format=feed&layout=feed&type=rss`, failOnStatusCode: false }).then((response) => {
+      expect(response.status, 'the status of the feed').to.be.gte(400);
+      expect(String(response.body), 'the feed').to.not.include('klogin-username-full');
+    });
+
+    // A wrong password comes back to the same page with the form.
+    cy.visit(`${base}&view=category&catid=3`, { failOnStatusCode: false });
+    cy.get('#klogin-username-full').type('ci-user');
+    cy.get('#klogin-passwd-full').type('not-the-password');
+    cy.get('.kloginform form').submit();
+    cy.get('#klogin-username-full').should('exist');
+    cy.contains('Please Log In').should('exist');
+
+    cy.get('#klogin-username-full').clear().type('ci-user');
+    cy.get('#klogin-passwd-full').type('ci-user-17082005-x', { log: false });
+    cy.get('.kloginform form').submit();
+
+    cy.location('href').should('include', 'catid=3');
+    cy.get('#klogin-username-full').should('not.exist');
+    cy.contains('Please Log In').should('not.exist');
+    cy.contains(topicWords).should('exist');
+  });
+
   it('shows no profile to a visitor when the profiles are private', () => {
     setOption('pubProfile', '0');
     cy.request({ url: `${base}&view=user&layout=default&userid=798`, failOnStatusCode: false }).its('status').should('be.gte', 400);

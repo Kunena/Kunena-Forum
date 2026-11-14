@@ -38,6 +38,7 @@ $this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.c
 $this->doc->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->doc->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->doc->addScriptOptions('com_kunena.avatar_upload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=upload&format=json&' . Session::getFormToken() . '=1', false));
+$this->doc->addScriptOptions('com_kunena.avatar_gallery_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=galleryimages&format=json&' . Session::getFormToken() . '=1', false));
 $this->doc->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 ?>
 <h3>
@@ -85,8 +86,6 @@ $this->doc->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
         <tr>
             <td class="col-md-3">
                 <label><?php echo Text::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
-                <input id="kunena_url_avatargallery" type="hidden"
-                       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
             </td>
             <td>
 
@@ -106,23 +105,20 @@ $this->doc->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
                     </div>
                 <?php endif; ?>
 
-                <?php if ($this->galleryImages) :
-                    ?>
-                    <ul id="gallery_list" class="thumbnails">
+                <ul id="gallery_list" class="thumbnails">
 
-                        <?php foreach ($this->galleryImages as $image) :
-                            ?>
-                            <li class="col-md-2">
-                                <input type="radio" name="avatar_gallery" id="radio<?php echo $image ?>"
-                                       value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
-                                <label class=" radio thumbnail" for="radio<?php echo $image ?>">
-                                    <img loading=lazy src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="avatar"/>
-                                </label>
-                            </li>
-                        <?php endforeach; ?>
+                    <?php foreach (($this->galleryImages ?: []) as $index => $image) :
+                        ?>
+                        <li class="col-md-2">
+                            <input type="radio" name="avatar_gallery" id="kavatar-gallery-<?php echo (int) $index ?>"
+                                   value="<?php echo htmlspecialchars("gallery/{$image}", ENT_QUOTES, 'UTF-8'); ?>"/>
+                            <label class="radio thumbnail" for="kavatar-gallery-<?php echo (int) $index ?>">
+                                <img loading="lazy" src="<?php echo htmlspecialchars($this->galleryUri . '/' . implode('/', array_map('rawurlencode', explode('/', $image))), ENT_QUOTES, 'UTF-8'); ?>" alt="avatar"/>
+                            </label>
+                        </li>
+                    <?php endforeach; ?>
 
-                    </ul>
-                <?php endif; ?>
+                </ul>
 
             </td>
         </tr>

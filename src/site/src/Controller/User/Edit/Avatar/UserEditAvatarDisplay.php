@@ -24,6 +24,7 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
+use Kunena\Forum\Libraries\User\KunenaAvatarGalleryName;
 use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
 
 /**
@@ -68,12 +69,6 @@ class UserEditAvatarDisplay extends UserEditDisplay
      * @since   Kunena 6.0
      */
     protected mixed $name = 'User/Edit/Avatar';
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    protected mixed $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
 
     public mixed $avatar = null;
 
@@ -127,7 +122,7 @@ class UserEditAvatarDisplay extends UserEditDisplay
     protected function getGalleries($path)
     {
         $files  = [];
-        $images = $this->getGallery($path);
+        $images = KunenaAvatarGalleryName::pictures($path, '');
 
         if ($images) {
             $files[''] = $images;
@@ -137,30 +132,19 @@ class UserEditAvatarDisplay extends UserEditDisplay
         $folders = Folder::folders($path);
 
         foreach ($folders as $folder) {
-            $images = $this->getGallery("{$path}/{$folder}");
+            // Only the folders whose name is a gallery: the list and the save accept no other.
+            if (KunenaAvatarGalleryName::clean($folder) !== $folder) {
+                continue;
+            }
+
+            $images = KunenaAvatarGalleryName::pictures($path, $folder);
 
             if ($images) {
-                foreach ($images as $image) {
-                    $files[$folder][] = "{$folder}/{$image}";
-                }
+                $files[$folder] = $images;
             }
         }
 
         return $files;
-    }
-
-    /**
-     * Get files from selected gallery.
-     *
-     * @param   string  $path  Absolute path for the gallery.
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getGallery($path)
-    {
-        return Folder::files($path, $this->imageFilter);
     }
 
     /**

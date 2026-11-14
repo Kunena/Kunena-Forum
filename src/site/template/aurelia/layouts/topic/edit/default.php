@@ -428,6 +428,10 @@ Text::script('COM_KUNENA_POST_CANCEL_CONFIRM');
             ->set('wa', $this->wa)
             ->set('privateMessage', $this->privateMessage);
         ?>
+        <?php if ($pollEditRefused) : ?>
+            <?php // The reason why the poll button is disabled, also without hover: the editors link the button to it with aria-describedby. ?>
+            <p class="form-text" id="poll-edit-refused"><?php echo $this->escape($pollEditRefused->getMessage()); ?></p>
+        <?php endif; ?>
         <?php if (!empty($this->captchaEnabled)) : ?>
             <div class="form-group row">
                 <?php echo $this->captchaDisplay; ?>

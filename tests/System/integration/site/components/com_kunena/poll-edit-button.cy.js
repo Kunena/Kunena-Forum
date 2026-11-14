@@ -134,7 +134,8 @@ describe('Kunena polls: the poll button of a poll which may not be edited', () =
     ckeditorPollDisabled();
     ckeditorMode('wysiwyg');
     ckeditorPollDisabled();
-    cy.get('#cke_message .cke_button__polls').should('have.attr', 'title', notice);
+    cy.get('#cke_message .cke_button__polls').should('have.attr', 'title', notice).and('have.attr', 'aria-describedby', 'poll-edit-refused');
+    cy.get('#poll-edit-refused').should('be.visible').and('have.text', notice);
   });
 
   it('disables the poll button of the SCEditor, also after the source mode, and opens no dialog', () => {
@@ -146,6 +147,8 @@ describe('Kunena polls: the poll button of a poll which may not be edited', () =
     sceditorPoll().should('have.class', 'disabled');
     cy.get('#postform .sceditor-container .sceditor-button-source').first().click();
     sceditorPoll().should('have.class', 'disabled').and('have.attr', 'title', notice);
+    sceditorPoll().should('have.attr', 'aria-describedby', 'poll-edit-refused');
+    cy.get('#poll-edit-refused').should('be.visible').and('have.text', notice);
     sceditorPoll().click();
     cy.get('#polltitle').should('not.exist');
   });
@@ -153,7 +156,8 @@ describe('Kunena polls: the poll button of a poll which may not be edited', () =
   it('enables the poll button when nobody has voted', () => {
     useEditor('sceditor');
     openEdit();
-    sceditorPoll().should('not.have.class', 'disabled');
+    sceditorPoll().should('not.have.class', 'disabled').and('not.have.attr', 'aria-describedby');
     cy.get('#poll_exist_edit').should('exist');
+    cy.get('#poll-edit-refused').should('not.exist');
   });
 });

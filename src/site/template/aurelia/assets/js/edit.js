@@ -310,7 +310,7 @@ jQuery(document).ready(function ($) {
                     if (pollEditRefused !== undefined) {
                         // CKEditor enables the command again on every change of mode
                         evt.editor.getCommand('polls').disable();
-                        $('#cke_' + evt.editor.name + ' .cke_button__polls').attr('title', pollEditRefused);
+                        $('#cke_' + evt.editor.name + ' .cke_button__polls').attr({'title': pollEditRefused, 'aria-describedby': 'poll-edit-refused'});
                     } else if (polliconstatus === false) {
                         if (pollcatid !== undefined) {
                             if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {

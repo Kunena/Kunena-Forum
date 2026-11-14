@@ -913,7 +913,7 @@ jQuery(document).ready(function ($) {
 			jQuery('.sceditor-button-poll').toggleClass('disabled', !kunenaPollAllowed());
 
 			if (kunenaPollEditRefused !== undefined) {
-				jQuery('.sceditor-button-poll').attr('title', kunenaPollEditRefused);
+				jQuery('.sceditor-button-poll').attr({'title': kunenaPollEditRefused, 'aria-describedby': 'poll-edit-refused'});
 			}
 		};
 

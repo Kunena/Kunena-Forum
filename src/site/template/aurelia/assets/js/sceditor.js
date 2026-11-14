@@ -562,41 +562,80 @@ jQuery(document).ready(function ($) {
 				);
 
 				var poll_number_option = 0;
+				var $sceditor_poll_options = $content.find('#sceditor_poll_options');
+
+				// A field of an existing option keeps the id of that option, a field without id is a new option.
+				var addPollOption = function (text, optionId) {
+					poll_number_option++;
+
+					var poll_option_label = jQuery('<label>').attr('for', 'poll_option' + poll_number_option).attr('id', 'poll_option_label' + poll_number_option).text('Poll option ' + poll_number_option);
+					var poll_option = jQuery('<input type="text">').attr('id', 'poll_option' + poll_number_option);
+
+					if (text !== undefined) {
+						poll_option.val(text);
+					}
+
+					if (optionId !== undefined) {
+						poll_option.attr('data-poll-option-id', optionId);
+					}
+
+					$sceditor_poll_options.append(poll_option_label);
+					$sceditor_poll_options.append(poll_option);
+				};
+
+				// Prefill: the poll inserted before on this page, else the poll of the edited topic.
+				var $inserted_title = jQuery('#poll_options input[name="poll_title"]');
+
+				if ($inserted_title.length) {
+					$content.find('#polltitle').val($inserted_title.val());
+					$content.find('#polllifespan').val(jQuery('#poll_options input[name="poll_time_to_live"]').val());
+
+					jQuery('#poll_options input[name^="polloptionsID["]').each(function () {
+						var key = this.name.slice('polloptionsID['.length, -1);
+
+						addPollOption(jQuery(this).val(), /^\d+$/.test(key) ? key : undefined);
+					});
+				} else if (jQuery('#poll_exist_edit').length) {
+					$content.find('#polltitle').val(jQuery('#ckeditor_dialog_polltitle').val());
+					$content.find('#polllifespan').val(jQuery('#ckeditor_dialog_polltimetolive').val());
+
+					jQuery('.ckeditor_dialog_polloption').each(function () {
+						addPollOption(jQuery(this).val(), this.id.replace('ckeditor_dialog_polloption', ''));
+					});
+				}
 
 				$content.find('.addpolloption').on('click', function (e) {
-                    poll_number_option++;
-
-                    var poll_option_label = '<label for="poll_option'+poll_number_option+'" id="poll_option_label'+poll_number_option+'" >Poll option '+poll_number_option+'</label>';
-                    var poll_option = '<input type="text" id="poll_option'+poll_number_option+'" />';
-
-                    jQuery('#sceditor_poll_options').append( poll_option_label );
-                    jQuery('#sceditor_poll_options').append( poll_option );
+					addPollOption();
 				});
 
 				$content.find('.removepolloption').on('click', function (e) {
-                    if (poll_number_option > 0) {
-                        jQuery('#poll_option'+poll_number_option).remove();
-                        jQuery('#poll_option_label'+poll_number_option).remove();
-                        poll_number_option--;
-                    }
-                });
+					if (poll_number_option > 0) {
+						$content.find('#poll_option' + poll_number_option).remove();
+						$content.find('#poll_option_label' + poll_number_option).remove();
+						poll_number_option--;
+					}
+				});
 
 				$content.find('.button').on('click', function (e) {
-                    var poll_title = jQuery('<input type="hidden" name="poll_title">').val($content.find('#polltitle').val());
-                    var poll_lifespan = jQuery('<input type="hidden" name="poll_time_to_live">').val($content.find('#polllifespan').val());
+					var $poll_options = jQuery('#poll_options').empty();
+					var poll_title = jQuery('<input type="hidden" name="poll_title">').val($content.find('#polltitle').val());
+					var poll_lifespan = jQuery('<input type="hidden" name="poll_time_to_live">').val($content.find('#polllifespan').val());
 
-                    if (poll_number_option > 0) {
-                        jQuery('#poll_options').append( poll_title );
-                        jQuery('#poll_options').append( poll_lifespan );
+					if (poll_number_option > 0) {
+						$poll_options.append(poll_title);
+						$poll_options.append(poll_lifespan);
 
-                        for (var i = 1; i <= poll_number_option; i++) {
-                            jQuery('#poll_options').append( jQuery('<input type="hidden">').attr('name', 'polloptionsID[' + i + ']').val($content.find('#poll_option' + i).val()) );
-                        }
+						for (var i = 1; i <= poll_number_option; i++) {
+							var $field = $content.find('#poll_option' + i);
+							var optionId = $field.attr('data-poll-option-id');
+							var key = optionId !== undefined ? optionId : 'new' + i;
 
-                    }
+							$poll_options.append(jQuery('<input type="hidden">').attr('name', 'polloptionsID[' + key + ']').val($field.val()));
+						}
+					}
 
-                    editor.closeDropDown(true);
-                    e.preventDefault();
+					editor.closeDropDown(true);
+					e.preventDefault();
 				});
 
 				editor.createDropDown(caller, 'insertpoll', $content.get(0));

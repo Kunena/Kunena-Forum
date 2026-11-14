@@ -33,7 +33,7 @@ class KunenaUserSocialsUpgradeTest extends UnitTestCase
 
     public function testTheUpdateFileOfJoomlaCleansEveryRetiredProvider(): void
     {
-        $sql = (string) file_get_contents($this->root() . 'sql/updates/mysql/7.2.0-DEV.sql');
+        $sql = (string) file_get_contents($this->root() . 'sql/updates/mysql/8.0.0-DEV.sql');
 
         $this->assertStringContainsString('JSON_REMOVE', $sql);
 

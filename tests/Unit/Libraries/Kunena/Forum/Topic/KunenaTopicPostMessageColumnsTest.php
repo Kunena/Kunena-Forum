@@ -64,6 +64,6 @@ class KunenaTopicPostMessageColumnsTest extends UnitTestCase
 
     public function testTheUpdateFileOfJoomlaWidensTheColumns(): void
     {
-        $this->assertStringContainsString(self::MODIFY . ';', Files::read('src/admin/sql/updates/mysql/7.2.0-DEV.sql'));
+        $this->assertStringContainsString(self::MODIFY . ';', Files::read('src/admin/sql/updates/mysql/8.0.0-DEV.sql'));
     }
 }

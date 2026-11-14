@@ -55,6 +55,7 @@ use stdClass;
  * @property string $reddit
  * @property string $bluesky_app
  * @property string $threads
+ * @property string $signal
  *
  * @since   Kunena 6.4
  */
@@ -224,7 +225,21 @@ class KunenaUserSocials
      */
     public mixed $threads = '';
 
+    /**
+     * @var    string  Signal
+     * @since  Kunena 8.0
+     */
+    public mixed $signal = '';
+
     protected $userid = 0;
+
+    /**
+     * The providers of the request, null until they are read.
+     *
+     * @var    object|null
+     * @since  Kunena 8.0
+     */
+    private static ?object $providers = null;
 
     /**
      * Add the JSON content in colum params for the current user if it's empty
@@ -490,6 +505,13 @@ class KunenaUserSocials
         "title": "COM_KUNENA_MYPROFILE_THREADS",
         "nourl": 0,
         "fa": "fa-brands fa-threads"
+    },
+    "signal": {
+        "value": "",
+        "url": "##VALUE##",
+        "title": "COM_KUNENA_MYPROFILE_SIGNAL",
+        "nourl": 1,
+        "fa": "fa-brands fa-signal-messenger"
     }
 }
 JSON;
@@ -581,7 +603,8 @@ JSON;
 
     /**
      * The providers (social websites): the ones of the admin when there are, else the default ones. Each provider has an empty
-     * value, the address (##VALUE## is the value of the user), the title (a language key or a text), nourl and the icon.
+     * value, the address (##VALUE## is the value of the user), the title (a language key or a text), nourl, the icon and
+     * enabled (0 when the admin switched the provider off: it is hidden, the values of the users are kept).
      *
      * @return  object  The providers by key.
      *
@@ -589,16 +612,18 @@ JSON;
      */
     public static function getProviders(): object
     {
-        static $providers = null;
-
-        if ($providers !== null) {
-            return unserialize(serialize($providers));
+        if (self::$providers !== null) {
+            return unserialize(serialize(self::$providers));
         }
 
         $rows = self::getCustomProviderRows();
 
         if (!$rows) {
             $providers = json_decode(self::getDefaultSocialsJson());
+
+            foreach ($providers as $provider) {
+                $provider->enabled = 1;
+            }
         } else {
             $providers = new stdClass();
 
@@ -610,14 +635,17 @@ JSON;
                 }
 
                 $providers->$key = (object) [
-                    'value' => '',
-                    'url'   => (string) ($row['url'] ?? '##VALUE##'),
-                    'title' => (string) ($row['title'] ?? $key),
-                    'nourl' => (int) !empty($row['nourl']),
-                    'fa'    => (string) ($row['fa'] ?? ''),
+                    'value'   => '',
+                    'url'     => (string) ($row['url'] ?? '##VALUE##'),
+                    'title'   => (string) ($row['title'] ?? $key),
+                    'nourl'   => (int) !empty($row['nourl']),
+                    'fa'      => (string) ($row['fa'] ?? ''),
+                    'enabled' => (int) (!\array_key_exists('enabled', $row) || !empty($row['enabled'])),
                 ];
             }
         }
+
+        self::$providers = $providers;
 
         // A copy: the callers put the value of the user in the objects.
         return unserialize(serialize($providers));
@@ -633,6 +661,22 @@ JSON;
     public static function hasCustomProviders(): bool
     {
         return (bool) self::getCustomProviderRows();
+    }
+
+    /**
+     * Is the provider of the entry enabled: an entry without the flag is.
+     *
+     * @param   string  $key  The key of the provider.
+     *
+     * @return  bool
+     *
+     * @since   Kunena 8.0
+     */
+    public function isEnabled(string $key): bool
+    {
+        $entry = $this->$key ?? null;
+
+        return !\is_object($entry) || !isset($entry->enabled) || !empty($entry->enabled);
     }
 
     /**
@@ -709,11 +753,12 @@ JSON;
                 $default->value = \is_string($this->$key ?? null) ? $this->$key : '';
                 $this->$key     = $default;
             } else {
-                // The address, the title and the icon come from the list of the providers, the value is the one of the user.
-                $this->$key->url   = $default->url;
-                $this->$key->title = $default->title;
-                $this->$key->nourl = $default->nourl;
-                $this->$key->fa    = $default->fa;
+                // The address, the title, the icon and enabled come from the list of the providers, the value is the one of the user.
+                $this->$key->url     = $default->url;
+                $this->$key->title   = $default->title;
+                $this->$key->nourl   = $default->nourl;
+                $this->$key->fa      = $default->fa;
+                $this->$key->enabled = $default->enabled;
             }
         }
     }

@@ -183,6 +183,15 @@ class LanguageFilesTest extends UnitTestCase
         $this->assertStringNotContainsString('*-folder', $text);
     }
 
+    public function testTheGuestsPostTextNamesTheCategoryPermissions(): void
+    {
+        $text = Files::language('src/admin/language/en-GB/com_kunena.views.ini')['COM_KUNENA_A_PUBWRITE_DESC'];
+
+        foreach (['User Groups Allowed To Post', 'User Groups Allowed To Reply', 'Category Permissions', 'Public', 'Guest'] as $name) {
+            $this->assertStringContainsString($name, $text);
+        }
+    }
+
     /**
      * Every text which the code asks for (Text::_('COM_KUNENA_...'), Text::sprintf(...), the _1 and _MORE forms of Text::plural(...))
      * is in an English language file of the package: a missing one is shown as its key (for example the messages of the steps of an

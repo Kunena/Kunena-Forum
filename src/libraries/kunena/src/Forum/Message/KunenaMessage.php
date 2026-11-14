@@ -89,6 +89,8 @@ use ValueError;
  * @property int    $modified_by
  * @property string $modified_time
  * @property string $modified_reason
+ * @property int    $scheduled_time
+ * @property int    $scheduled_review
  * @property string $message
  * @since   Kunena 6.0
  */
@@ -130,6 +132,14 @@ class KunenaMessage extends KunenaDatabaseObject
     public mixed $thankyou = [];
 
     public mixed $replynum = null;
+
+    /**
+     * The edges of the message in the tree of the threaded and indented topic layouts (set by the topic page).
+     *
+     * @var     array|null
+     * @since   Kunena 8.0
+     */
+    public mixed $indent = null;
 
     /**
      * @var     string
@@ -250,6 +260,22 @@ class KunenaMessage extends KunenaDatabaseObject
      * @since   Kunena 6.4
      */
     public mixed $modified_reason = null;
+
+    /**
+     * Unix time at which the scheduled reply is published, 0 when it is not scheduled.
+     *
+     * @var     integer
+     * @since   Kunena 8.0
+     */
+    public mixed $scheduled_time = null;
+
+    /**
+     * 1 when the scheduled reply was held for review: it is not published at its time.
+     *
+     * @var     integer
+     * @since   Kunena 8.0
+     */
+    public mixed $scheduled_review = null;
 
     /**
      * @var     string
@@ -1037,6 +1063,12 @@ class KunenaMessage extends KunenaDatabaseObject
             $this->deleted_time = Factory::getDate()->toUnix();
         } else {
             $this->deleted_time = 0;
+        }
+
+        // Only an unapproved message can wait for its scheduled time: publishing, deleting or restoring it clears the schedule
+        if ((int) $this->hold !== 1) {
+            $this->scheduled_time   = 0;
+            $this->scheduled_review = 0;
         }
 
         // Flood protection
@@ -1889,27 +1921,29 @@ class KunenaMessage extends KunenaDatabaseObject
     protected function getTableProperties(): array
     {
         $properties = [
-            'id'              => $this->id,
-            'parent'          => $this->parent,
-            'thread'          => $this->thread,
-            'catid'           => $this->catid,
-            'name'            => $this->name,
-            'userid'          => $this->userid,
-            'email'           => $this->email,
-            'subject'         => $this->subject,
-            'time'            => $this->time,
-            'ip'              => $this->ip,
-            'topic_emoticon'  => $this->topic_emoticon,
-            'locked'          => $this->locked,
-            'hold'            => $this->hold,
-            'ordering'        => $this->ordering,
-            'hits'            => $this->hits,
-            'moved'           => $this->moved,
-            'deleted_time'    => $this->deleted_time,
-            'modified_by'     => $this->modified_by,
-            'modified_time'   => $this->modified_time,
-            'modified_reason' => $this->modified_reason,
-            'message'         => $this->message,
+            'id'               => $this->id,
+            'parent'           => $this->parent,
+            'thread'           => $this->thread,
+            'catid'            => $this->catid,
+            'name'             => $this->name,
+            'userid'           => $this->userid,
+            'email'            => $this->email,
+            'subject'          => $this->subject,
+            'time'             => $this->time,
+            'ip'               => $this->ip,
+            'topic_emoticon'   => $this->topic_emoticon,
+            'locked'           => $this->locked,
+            'hold'             => $this->hold,
+            'ordering'         => $this->ordering,
+            'hits'             => $this->hits,
+            'moved'            => $this->moved,
+            'deleted_time'     => $this->deleted_time,
+            'modified_by'      => $this->modified_by,
+            'modified_time'    => $this->modified_time,
+            'modified_reason'  => $this->modified_reason,
+            'scheduled_time'   => $this->scheduled_time,
+            'scheduled_review' => $this->scheduled_review,
+            'message'          => $this->message,
         ];
 
         return $properties;

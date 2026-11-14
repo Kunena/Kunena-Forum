@@ -366,7 +366,7 @@
                null="0"
                default="0"/>
         <field name="first_post_message"
-               type="text"
+               type="mediumtext"
                null="1"/>
         <field name="first_post_guest_name"
                type="tinytext"
@@ -384,7 +384,7 @@
                null="0"
                default="0"/>
         <field name="last_post_message"
-               type="text"
+               type="mediumtext"
                null="1"/>
         <field name="last_post_guest_name"
                type="tinytext"
@@ -496,6 +496,14 @@
         <field name="modified_reason"
                type="tinytext"
                null="1"/>
+        <field name="scheduled_time"
+               type="int(11)"
+               null="0"
+               default="0"/>
+        <field name="scheduled_review"
+               type="tinyint(4)"
+               null="0"
+               default="0"/>
         <key name="PRIMARY"
              unique="1"
              columns="id"/>
@@ -523,7 +531,7 @@
                null="0"
                default="0"/>
         <field name="message"
-               type="text"
+               type="mediumtext"
                null="0"/>
         <key name="PRIMARY"
              unique="1"

@@ -10,8 +10,12 @@
 jQuery(document).ready(function ($) {
     /* Provide autocomplete user list in search form and in user list */
     function remoteSearch(text, cb) {
-        const paths = (typeof Joomla !== 'undefined' && Joomla.getOptions) ? Joomla.getOptions('system.paths') : null;
-        const URL = ((paths && paths.root) || '') + '/index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json';
+        /* The address is made by the router on the server, with the menu item of the forum */
+        const URL = (typeof Joomla !== 'undefined' && Joomla.getOptions) ? Joomla.getOptions('com_kunena.usersearch_url') : null;
+        if (!URL) {
+            cb([]);
+            return;
+        }
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
@@ -23,7 +27,7 @@ jQuery(document).ready(function ($) {
             }
         }
     };
-        xhr.open("GET", URL + "&usersearch=" + encodeURIComponent(text), true);
+        xhr.open("GET", URL + (URL.indexOf('?') === -1 ? '?' : '&') + "usersearch=" + encodeURIComponent(text), true);
         xhr.send();
     }
 

@@ -44,6 +44,15 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
+                <field
+                    name="enabled"
+                    type="radio"
+                    default="1"
+                    layout="joomla.form.field.radio.switcher"
+                    label="COM_KUNENA_A_SOCIAL_ENABLED">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
             </form>
         </field>
     </fieldset>

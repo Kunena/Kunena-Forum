@@ -11,24 +11,24 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Application\Topic\Flat;
+namespace Kunena\Forum\Site\Controller\Application\Topic\Indented;
 
 \defined('_JEXEC') or die();
 
 use Exception;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Controller\Application\Display;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
- * Class ComponentKunenaControllerApplicationTopicFlatDisplay
+ * The topic in the indented layout: the page of the topic, after the layout is saved as the choice of the user.
  *
  * @since   Kunena 4.0
  */
-class ApplicationTopicFlatDisplay extends KunenaControllerDisplay
+class TopicDisplay extends Display
 {
     /**
-     * Return true if layout exists.
+     * Return true if layout exists: the indented layout uses the page of the topic.
      *
      * @return  boolean
      *
@@ -36,15 +36,19 @@ class ApplicationTopicFlatDisplay extends KunenaControllerDisplay
      *
      * @throws  Exception
      */
-    public function exists()
+    public function exists(): bool
     {
-        $page = KunenaPage::factory("{$this->input->getCmd('view')}/default");
+        if ($this->input->getWord('format', 'html') != 'html') {
+            return false;
+        }
 
-        return (bool) $page->getPath();
+        $this->page = KunenaPage::factory("{$this->input->getCmd('view')}/default");
+
+        return (bool) $this->page->getPath();
     }
 
     /**
-     * Change topic layout to flat.
+     * Change topic layout to indented.
      *
      * @return  void
      *

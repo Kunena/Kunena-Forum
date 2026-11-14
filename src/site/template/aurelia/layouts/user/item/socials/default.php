@@ -21,6 +21,11 @@ $showAll = isset($this->showAll) ? $this->showAll : false;
 ?>
 <div class="inline float-end">
     <?php foreach ($this->socials as $key => $social) {
+        // A website which the admin switched off is not shown.
+        if (!$this->socials->isEnabled($key)) {
+            continue;
+        }
+
         // Only show icons for networks that have values and that have Font Awesome icons
         if (isset($social->fa) && !empty($social->value) && !empty($social->nourl)) {
             // A network without an address (an account name or number: WeChat, QQ, Microsoft...): the icon with the name, no

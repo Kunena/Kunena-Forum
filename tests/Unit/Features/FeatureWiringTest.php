@@ -167,6 +167,10 @@ class FeatureWiringTest extends UnitTestCase
         $this->assertFileHas($script, 'beforeunload', 'data-kunena-leave-warning', 'data-kunena-unsent', 'pageshow', 'defaultPrevented', 'COM_KUNENA_POST_CANCEL_CONFIRM');
         $this->assertFileHas($layout, 'data-kunena-leave-warning', 'leavewarning.js', 'id="form_cancel_button"', "Text::script('COM_KUNENA_POST_CANCEL_CONFIRM')");
 
+        // Cancel also removes the files uploaded in the form which were not posted.
+        $this->assertFileHas($script, 'kunena_upload_files_cancel');
+        $this->assertFileHas($layout, 'task=removependingattachments');
+
         // Cancel is no reset button which leaves by itself: the script asks first.
         $content = Files::read($layout);
         $this->assertStringNotContainsString('type="reset"', $content);
@@ -177,6 +181,26 @@ class FeatureWiringTest extends UnitTestCase
         }
 
         $this->assertFileHas('src/site/language/en-GB/com_kunena.ini', 'COM_KUNENA_POST_CANCEL_CONFIRM = ');
+    }
+
+    public function testAReplyCanBeScheduled(): void
+    {
+        $this->assertFileHas(self::AURELIA . '/layouts/topic/edit/default.php', 'type="datetime-local"', 'name="scheduled_time"', '$this->scheduleField');
+        $this->assertFileHas('src/site/src/Controller/Topic/Form/Reply/TopicFormReplyDisplay.php', '$this->scheduleField = $this->me->exists();');
+
+        // Only the reply form has the field: a new topic and an edit cannot be scheduled.
+        foreach (['Create/TopicFormCreateDisplay.php', 'Edit/TopicFormEditDisplay.php'] as $controller) {
+            $this->assertStringNotContainsString('scheduleField', Files::read('src/site/src/Controller/Topic/Form/' . $controller));
+        }
+
+        foreach (['default.php', 'top/default.php', 'bottom/default.php'] as $layout) {
+            $this->assertFileHas(self::AURELIA . '/layouts/message/item/' . $layout, 'COM_KUNENA_MESSAGE_SCHEDULED_FOR', '$message->scheduled_time > 0', "<div class=\"clearfix\"></div>
+    <div class=\"alert alert-warning kmsg-scheduled\"");
+        }
+
+        $this->assertFileHas('src/site/src/Controllers/TopicController.php', 'KunenaMessageSchedule::parse(', "'COM_KUNENA_POST_SUCCESS_SCHEDULED'");
+        $this->assertFileHas('src/plugins/plg_task_kunena/src/Extension/Kunena.php', "'publish.scheduledreplies' => [", "'method'          => 'publishScheduledReplies'", 'KunenaMessageSchedule::publishDue(');
+        $this->assertFileHas('src/plugins/plg_task_kunena/script.php', '$this->addPublishScheduledRepliesTask();', "'type'            => 'publish.scheduledreplies'", "'interval-minutes' => 5");
     }
 
     public function testTheReportsPluginHasItsParts(): void

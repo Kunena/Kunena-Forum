@@ -101,8 +101,8 @@ endif; ?>
                     <button class="btn btn-outline-primary border" data-bs-toggle="dropdown">
                         <?php echo KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
                     </button>
-                    <button class="btn btn-outline-primary border dropdown-toggle" data-bs-toggle="dropdown">
-                        <span class="caret"></span>
+                    <button type="button" class="btn btn-outline-primary border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN'); ?></span>
                     </button>
                     <ul class="dropdown-menu">
                         <li><?php echo $this->messageButtons->get('reply_dropdown'); ?></li>
@@ -121,8 +121,8 @@ endif; ?>
                     <button class="btn btn-outline-primary border" data-bs-toggle="dropdown">
                         <?php echo KunenaIcons::shuffle() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
                     </button>
-                    <button class="btn btn-outline-primary border dropdown-toggle" data-bs-toggle="dropdown">
-                        <span class="caret"></span>
+                    <button type="button" class="btn btn-outline-primary border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN'); ?></span>
                     </button>
                     <ul class="dropdown-menu">
                         <li><?php echo $this->messageButtons->get('moderate_dropdown'); ?></li>

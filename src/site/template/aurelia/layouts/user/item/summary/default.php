@@ -218,7 +218,7 @@ if ($this->config->showUserStats) {
             if ($this->candisplaymail) :
                 ?>
                 <a class="btn btn-outline-primary border btn-sm" href="mailto:<?php echo $this->escape($this->profile->email); ?>"
-                   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
+                   rel="nofollow" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_MYPROFILE_EMAIL')); ?>"><?php echo KunenaIcons::email(); ?></a>
             <?php endif; ?>
             <?php
             if (!empty($this->profile->getWebsiteName()) && !empty($this->profile->getWebsiteURL())) :
@@ -227,7 +227,7 @@ if ($this->config->showUserStats) {
                    href="<?php echo htmlspecialchars($this->profile->getWebsiteURL(), ENT_COMPAT, 'UTF-8')  ?>"><?php echo KunenaIcons::globe() . ' ' . $this->escape($this->profile->getWebsiteName()); ?></a>
             <?php elseif (empty($this->profile->getWebsiteName()) && !empty($this->profile->getWebsiteURL())) :
                 ?>
-                <a class="btn btn-outline-primary border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
+                <a class="btn btn-outline-primary border btn-sm" rel="nofollow noopener noreferrer" target="_blank" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_MYPROFILE_WEBSITE')); ?>"
                    href="<?php echo htmlspecialchars($this->profile->getWebsiteURL(), ENT_COMPAT, 'UTF-8')  ?>"><?php echo KunenaIcons::globe(); ?></a>
             <?php elseif (!empty($this->profile->getWebsiteName()) && empty($this->profile->getWebsiteURL())) :
                 ?>

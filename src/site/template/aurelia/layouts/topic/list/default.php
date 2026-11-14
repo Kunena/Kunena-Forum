@@ -208,7 +208,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
             <tr>
                 <th scope="col" class="center d-none d-md-table-cell">
                     <a id="forumbottom"> </a>
-                    <a href="#forumtop" rel="nofollow">
+                    <a href="#forumtop" rel="nofollow" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_GEN_GOTOTOP')); ?>">
                         <span class="dropdown-divider"></span>
                         <?php echo KunenaIcons::arrowup(); ?>
                     </a>

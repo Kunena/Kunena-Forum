@@ -429,7 +429,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $thankyous = KunenaMessageThankyouHelper::getByMessage($batch);
 
         // First collect ids and users.
-        $threaded       = ($this->layout == 'indented' || $this->layout == 'threaded');
+        $layout         = $this->me->getTopicLayout($this->layout);
+        $threaded       = ($layout == 'indented' || $layout == 'threaded');
         $userlist       = [];
         $this->threaded = [];
         $location       = $this->pagination->limitstart;

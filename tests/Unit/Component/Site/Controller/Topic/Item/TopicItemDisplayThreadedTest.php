@@ -64,6 +64,16 @@ class TopicItemDisplayThreadedTest extends UnitTestCase
         $this->assertSame(['empty', 'lastedge', 'leaf'], $list[4]->indent);
     }
 
+    public function testAPageWithoutMessagesHasAnEmptyTree(): void
+    {
+        $display           = $this->display();
+        $display->messages = [];
+        $display->threaded = [];
+
+        $this->assertSame([], $this->invoke($display, 'getThreadedOrdering'));
+        $this->assertSame([], $this->invoke($display, 'getThreadedOrdering', 0, ['edge']));
+    }
+
     public function testTheDepthOfTheIndentedLayoutIsTheNumberOfEdgesWithoutTheFirstTwo(): void
     {
         $list  = $this->invoke($this->display(), 'getThreadedOrdering');

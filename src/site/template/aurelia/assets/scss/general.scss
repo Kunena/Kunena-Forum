@@ -1422,7 +1422,15 @@ a .rounded,
     font-size: 0.875em;
     color: #e93f8e;
     word-wrap: break-word;
-    white-space: pre-line !important;
+    white-space: pre-wrap;
+    margin: 0;
+}
+
+// A block coloured by highlight.js shows the background and the text colour of its theme (github-dark) all over.
+pre.bbcode_code_body:has(> code.hljs) {
+    padding: 0;
+    color: #c9d1d9;
+    background: #0d1117;
 }
 
 .form-select, .custom-select {

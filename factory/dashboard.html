@@ -714,7 +714,12 @@ function doneRow(job) {
   const merged = job.stage === 'merged'
   const risk = job.intake?.risk
   const ended = job.ended ? new Date(job.ended) : null
-  const day = ended && !isNaN(ended) ? ended.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : ''
+  const valid = ended && !isNaN(ended)
+  const day = valid
+    ? ended.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+      + ', ' + ended.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', hour12: false })
+    : ''
+  const full = valid ? ended.toLocaleString(undefined, { hour12: false }) : ''
   return `
     <tr class="${esc(job.stage)}" data-job="${esc(job.id)}" tabindex="0">
       <td class="job"><span class="num">${esc(num)}</span><span class="t">${esc(job.title)}</span></td>
@@ -724,7 +729,7 @@ function doneRow(job) {
       <td class="n opt">${job.round || '–'}</td>
       <td class="n">$${Number(job.cost_usd).toFixed(2)}</td>
       <td class="n opt">${elapsed(job)}</td>
-      <td class="n opt">${esc(day)}</td>
+      <td class="n opt" title="${esc(full)}">${esc(day)}</td>
     </tr>`
 }
 

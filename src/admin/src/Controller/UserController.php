@@ -340,27 +340,41 @@ class UserController extends FormController
         $error = false;
 
         if ($uids) {
+            $target = KunenaCategoryHelper::get($catid);
+
             foreach ($uids as $id) {
                 // All the messages of the user (without nolimit only one page of them was moved).
                 list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'nolimit' => -1, 'user' => $id]);
 
-                foreach ($messages as $message) {
-                    $topic = $message->getTopic();
+                // The messages of the user which may be moved, grouped by topic.
+                $topics        = [];
+                $topicMessages = [];
 
+                foreach ($messages as $message) {
                     try {
                         $message->tryAuthorise('move');
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
                         $error = true;
 
-                        // Do not move a topic the user is not allowed to move.
+                        // Do not move a message the user is not allowed to move.
                         continue;
                     }
 
-                    $target = KunenaCategoryHelper::get($catid);
+                    $topics[$message->thread]          = $message->getTopic();
+                    $topicMessages[$message->thread][] = $message->id;
+                }
 
+                foreach ($topicMessages as $thread => $messageIds) {
+                    $topic = $topics[$thread];
+
+                    if ($topic->category_id == $target->id) {
+                        continue;
+                    }
+
+                    // Only the messages of the user move: they split off into a new topic, or the whole topic moves when it has no other messages.
                     try {
-                        $topic->move($target, false, false, '', false);
+                        $topic->move($target, $messageIds, false, '', false);
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
                         $error = true;

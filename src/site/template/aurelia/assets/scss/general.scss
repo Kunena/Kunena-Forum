@@ -1460,3 +1460,87 @@ pre.bbcode_code_body:has(> code.hljs) {
 }
 
 .table th, .table td { background-color: inherit; }
+
+/* The tree of the threaded topic layout: the edges of each message (layouts/topic/item/message/row.php). */
+.kunena-topic-tree .ktree {
+  display: inline-block;
+  position: relative;
+  width: 1.25rem;
+  height: 1.5rem;
+  vertical-align: middle;
+}
+
+.kunena-topic-tree .ktree-edge::before,
+.kunena-topic-tree .ktree-crossedge::before,
+.kunena-topic-tree .ktree-lastedge::before,
+.kunena-topic-tree .ktree-gap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 50%;
+  border-inline-start: 1px solid var(--bs-border-color);
+}
+
+.kunena-topic-tree .ktree-lastedge::before {
+  bottom: 50%;
+}
+
+.kunena-topic-tree .ktree-gap::before {
+  border-inline-start-style: dotted;
+}
+
+.kunena-topic-tree .ktree-crossedge::after,
+.kunena-topic-tree .ktree-lastedge::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 50%;
+  inset-inline-end: 0;
+  border-top: 1px solid var(--bs-border-color);
+}
+
+.kunena-topic-tree .ktree-root::after,
+.kunena-topic-tree .ktree-node::after,
+.kunena-topic-tree .ktree-leaf::after,
+.kunena-topic-tree .ktree-single::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: -0.25rem;
+  border-radius: 50%;
+  background-color: var(--bs-secondary-color);
+}
+
+/* The cell of the message itself is narrower than the cells of its parents: its dot ends the line of the last edge. */
+.kunena-topic-tree .ktree-root,
+.kunena-topic-tree .ktree-node,
+.kunena-topic-tree .ktree-leaf,
+.kunena-topic-tree .ktree-single {
+  width: 0.75rem;
+}
+
+/* The indented topic layout: 1.5rem per level of the tree, at most 5 levels (layouts/topic/item/default.php), so that a message
+   keeps its room on a phone. */
+.kunena-topic-indent-1 {
+  padding-inline-start: 1.5rem;
+}
+
+.kunena-topic-indent-2 {
+  padding-inline-start: 3rem;
+}
+
+.kunena-topic-indent-3 {
+  padding-inline-start: 4.5rem;
+}
+
+.kunena-topic-indent-4 {
+  padding-inline-start: 6rem;
+}
+
+.kunena-topic-indent-5 {
+  padding-inline-start: 7.5rem;
+}

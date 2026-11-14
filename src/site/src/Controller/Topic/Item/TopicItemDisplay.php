@@ -429,7 +429,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $thankyous = KunenaMessageThankyouHelper::getByMessage($batch);
 
         // First collect ids and users.
-        $threaded       = ($this->layout == 'indented' || $this->layout == 'threaded');
+        $layout         = $this->me->getTopicLayout($this->layout);
+        $threaded       = ($layout == 'indented' || $layout == 'threaded');
         $userlist       = [];
         $this->threaded = [];
         $location       = $this->pagination->limitstart;
@@ -472,7 +473,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $this->message = reset($this->messages);
         }
 
-        if ($threaded) {
+        // A page without a message which the user may see has no tree.
+        if ($threaded && $this->messages) {
             if (!isset($this->messages[$this->topic->first_post_id])) {
                 $this->messages = $this->getThreadedOrdering(0, ['edge']);
             } else {
@@ -557,6 +559,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
     protected function getThreadedOrdering($parent = 0, $indent = [])
     {
         $list = [];
+
+        if (empty($this->threaded[$parent])) {
+            return $list;
+        }
 
         if (\count($indent) == 1 && $this->topic->getTotal() > $this->pagination->limitstart + $this->pagination->limit) {
             $last = -1;

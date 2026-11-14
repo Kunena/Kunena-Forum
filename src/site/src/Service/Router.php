@@ -132,7 +132,7 @@ class Router extends RouterView
         $segments = [];
 
         // If Kunena Forum isn't installed or SEF is not enabled, do nothing
-        if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('7.1') || !KunenaForum::installed() || !KunenaConfig::getInstance()->sef) {
+        if (!$this->isEnabled()) {
             return $segments;
         }
 
@@ -519,6 +519,18 @@ class Router extends RouterView
         }
 
         return $vars;
+    }
+
+    /**
+     * Whether Kunena Forum is installed and the SEF URLs are on.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    protected function isEnabled(): bool
+    {
+        return class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.1') && KunenaForum::installed() && KunenaConfig::getInstance()->sef;
     }
 
     /**

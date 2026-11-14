@@ -20,9 +20,11 @@ use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Mail\Mail;
 use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Database\DatabaseDriver;
@@ -39,6 +41,7 @@ use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaCheckSpamEvent;
 use Kunena\Forum\Libraries\Event\KunenaDeleteEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -61,6 +64,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Libraries\User\KunenaUserName;
 use StdClass;
+use Throwable;
 use ValueError;
 
 /**
@@ -2893,5 +2897,37 @@ class KunenaMessage extends KunenaDatabaseObject
         $this->_attachments_add[$tmpid] = $attachment;
 
         return $success;
+    }
+
+    /**
+     * Ask the plugins of the kunena group whether this new post is spam (onKunenaCheckSpam), before it is saved.
+     * A listener that fails is logged and never stops the post; the answers given before it are kept.
+     *
+     * @param   KunenaTopic     $topic       The topic, the new and unsaved topic for a new topic.
+     * @param   KunenaCategory  $category    The category.
+     * @param   KunenaUser      $user        The poster, a guest user object for a guest.
+     * @param   bool            $isNewTopic  True for a new topic, false for a reply.
+     * @param   string          $ip          The address of the visitor.
+     *
+     * @return  KunenaCheckSpamEvent  The event, with the verdict and the reason of the listeners.
+     *
+     * @since   Kunena 8.0
+     */
+    public function dispatchSpamCheck(KunenaTopic $topic, KunenaCategory $category, KunenaUser $user, bool $isNewTopic, string $ip): KunenaCheckSpamEvent
+    {
+        $event = new KunenaCheckSpamEvent(
+            'onKunenaCheckSpam',
+            ['message' => $this, 'topic' => $topic, 'category' => $category, 'user' => $user, 'isNewTopic' => $isNewTopic, 'ip' => $ip]
+        );
+
+        try {
+            PluginHelper::importPlugin('kunena');
+
+            Factory::getApplication()->getDispatcher()->dispatch('onKunenaCheckSpam', $event);
+        } catch (Throwable $e) {
+            Log::add($e->getMessage(), Log::WARNING, 'kunena');
+        }
+
+        return $event;
     }
 }

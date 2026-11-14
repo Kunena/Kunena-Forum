@@ -426,51 +426,40 @@ jQuery(document).ready(function ($) {
 			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_X_SOCIAL'),
 		});
 	
-		// Add bbcode maps
+		// Add bbcode maps: [map type=.. zoom=.. control=..]place[/map] is shown as a placeholder with the place name (no map in the
+		// editor), which keeps its attributes in data-kunena-map-* to give the same bbcode back.
 		sceditor.formats.bbcode.set('map', {
+			tags: {
+				div: {
+					'data-kunena-map': null
+				}
+			},
+			isInline: false,
+			allowedChildren: ['#', '#newline'],
 			format: function (element, content) {
-				if (jQuery(element).data('sceditor-emoticon'))
-					return content;
-	
-				var type = jQuery(element).attr('type'),
-					zoom = jQuery(element).attr('zoom');
-	
-				var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
-					? '=' + width + 'x' + height
-					: ''
-				;
-	
-				if (align === 'left' || align === 'right')
-					attrs += ' align='+align
-	
-				return '[map' + attrs + ']' + url + '[/map]';
+				var attrs = '';
+
+				['type', 'zoom', 'control'].forEach(function (name) {
+					if (element.hasAttribute('data-kunena-map-' + name))
+						attrs += ' ' + name + '=' + element.getAttribute('data-kunena-map-' + name);
+				});
+
+				return '[map' + attrs + ']' + content + '[/map]';
 			},
 			html: function (token, attrs, content) {
-				var	width, height, match,
-					align = attrs.align,
-					attribs = '';
-	
-				// handle [img=340x240]url[/img]
-				if (attrs.defaultattr) {
-					match = attrs.defaultattr.split(/x/i);
-	
-					width  = match[0];
-					height = (match.length === 2 ? match[1] : match[0]);
-	
-					if (width !== undefined && height !== undefined && width > 0 && height > 0) {
-						attribs +=
-							' width="' + sceditor.escapeEntities(width, true) + '"' +
-							' height="' + sceditor.escapeEntities(height, true) + '"';
-					}
-				}
-	
-				if (align === 'left' || align === 'right')
-					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
-	
-				return '<img alt="" ' + attribs +
-					' src="' + sceditor.escapeUriScheme(content) + '" />';
+				var data = '';
+
+				['type', 'zoom', 'control'].forEach(function (name) {
+					if (attrs[name] !== undefined)
+						data += ' data-kunena-map-' + name + '="' + sceditor.escapeEntities(attrs[name], true) + '"';
+				});
+
+				// The content is the text of the tag, already escaped by the parser.
+				return '<div data-kunena-map="1"' + data +
+					' title="' + sceditor.escapeEntities(Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP'), true) + '"' +
+					' style="border: 1px dashed #888; padding: 4px 8px;">' + content + '</div>';
 			}
-		})
+		});
 	
 		sceditor.command.set('map', {
 			_dropDown: function (editor, caller) {

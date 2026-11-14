@@ -823,7 +823,7 @@ input[type="radio"] {
 
 #editavatar input[type="radio"],
 #poll-vote input[type="radio"],
-#search input[type="radio"] {
+.kunena-search-panel input[type="radio"] {
     display: inline-block;
 }
 
@@ -845,10 +845,6 @@ ul.list-inline i {
     padding-right: 8px;
     padding-left: 20px;
     margin-top: 12px;
-}
-
-#search [class*="span"] {
-    margin-left: 6px;
 }
 
 div.pagination a.disabled,
@@ -876,40 +872,34 @@ div.pagination a.disabled:hover {
     display: inline-block;
 }
 
-.btn-toolbar .btn.fa:before,
-#search .btn.fa:before {
+.btn-toolbar .btn.fa:before {
     font-size: 14px;
     content: "\f106";
 }
 
-.btn-toolbar .btn.fa.collapsed:before,
-#search .btn.fa.collapsed:before {
+.btn-toolbar .btn.fa.collapsed:before {
     font-size: 14px;
     content: "\f107";
 }
 
-.btn-toolbar .btn.b3:before,
-#search .btn.b3:before {
+.btn-toolbar .btn.b3:before {
     font-family: "Glyphicons Halflings", serif;
     font-size: 14px;
     content: "\e260";
 }
 
-.btn-toolbar .btn.b3.collapsed:before,
-#search .btn.b3.collapsed:before {
+.btn-toolbar .btn.b3.collapsed:before {
     font-family: "Glyphicons Halflings", serif;
     font-size: 14px;
     content: "\e259";
 }
 
-.btn-toolbar .btn.b2:before,
-#search .btn.b2:before {
+.btn-toolbar .btn.b2:before {
     font-size: 14px;
     background-position: -288px -120px;
 }
 
-.btn-toolbar .btn.b2.collapsed:before,
-#search .btn.b2.collapsed:before {
+.btn-toolbar .btn.b2.collapsed:before {
     font-size: 14px;
     background-position: -313px -119px;
 }
@@ -1217,10 +1207,6 @@ a.dropdown-toggle {
     box-shadow: 0 0 0 1px #d4d4d4, 0 0 0 0 #fff, 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-// #search select#mode {
-//   margin-left: 0;
-// }
-
 #ann-showdate select,
 #ann-publish select,
 #kuserform .form-inline input {
@@ -1267,8 +1253,7 @@ a.dropdown-toggle {
 
 #ann-date .date,
 #ann-date2 .date,
-#ann-date3 .date,
-#searchatdate .date {
+#ann-date3 .date {
     display: inline-block !important;
 }
 

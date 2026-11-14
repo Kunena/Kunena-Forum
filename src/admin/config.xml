@@ -577,6 +577,16 @@
                 <option value="8760">COM_KUNENA_SHOW_YEAR</option>
             </field>
             <field
+                name="topicLayout"
+                type="list"
+                default="flat"
+                label="COM_KUNENA_COM_A_TOPIC_LAYOUT"
+                description="COM_KUNENA_COM_A_TOPIC_LAYOUT_DESC">
+                <option value="flat">COM_KUNENA_COM_A_TOPIC_LAYOUT_FLAT</option>
+                <option value="threaded">COM_KUNENA_COM_A_TOPIC_LAYOUT_THREADED</option>
+                <option value="indented">COM_KUNENA_COM_A_TOPIC_LAYOUT_INDENTED</option>
+            </field>
+            <field
                 name="pickupCategory"
                 type="radio"
                 default="0"

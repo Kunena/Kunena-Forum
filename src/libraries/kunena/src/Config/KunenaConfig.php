@@ -237,6 +237,7 @@ use SimpleXMLElement;
  * @property string $thumbWidth                   Thumbnail Width (px)
  * @property string $timeToCreatePage             Display Page Creation Time
  * @property string $topicIcons                   Selectable Topic Icons
+ * @property string $topicLayout                  Default topic layout
  * @property string $topicListId                  Topiclist ID
  * @property string $topicShowModerators          Show Moderators in Topic View
  * @property string $topicSubscriptions           Topic Subscriptions

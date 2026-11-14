@@ -425,6 +425,22 @@ form {
     word-wrap: break-word;
 }
 
+// A table written with [table] in a message: bordered cells. The layout table of [columns] stays without borders.
+.kmsg table:not(.bbcode_columns) {
+    border-collapse: collapse;
+}
+
+.kmsg table:not(.bbcode_columns) > tbody > tr > th,
+.kmsg table:not(.bbcode_columns) > tbody > tr > td {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--bs-border-color, #dee2e6);
+}
+
+.kmsg table:not(.bbcode_columns) > tbody > tr > th {
+    font-weight: bold;
+    background-color: var(--bs-tertiary-bg, #f8f9fa);
+}
+
 .input-xxlarge {
     width: 98%;
     height: 100%;
@@ -1424,6 +1440,8 @@ a .rounded,
     word-wrap: break-word;
     white-space: pre-wrap;
     margin: 0;
+    padding: 1em;
+    background: var(--bs-tertiary-bg, #f1f1f1);
 }
 
 // A block coloured by highlight.js shows the background and the text colour of its theme (github-dark) all over.

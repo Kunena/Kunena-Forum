@@ -1400,6 +1400,17 @@ a .rounded,
     border-radius: 50%;
 }
 
+/* With the SVG icon set the avatar picture is wrapped in a span which carries the shape class */
+span.rounded > img {
+    border-radius: var(--bs-border-radius);
+}
+
+span.img-thumbnail > img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
 .kfrontend {
     margin: 3rem 0;
 }

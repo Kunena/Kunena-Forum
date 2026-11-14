@@ -63,14 +63,25 @@ jQuery(document).ready(function ($) {
 		// Get the list of images from the gallery selected drop-down above
 		$.ajax({
 			dataType: "json",
-			url: $('#kunena_url_avatargallery').val(),
-			data: 'gallery_name=' + encodeURIComponent(gallery_selected)
+			url: Joomla.getOptions('com_kunena.avatar_gallery_url'),
+			data: {gallery_name: gallery_selected}
 		}).done(function (response) {
-			$.each(response, function (key, value) {
-				gallery_list.append('<li class="span2"><input id="radio' + gallery_selected + '/' + value.filename + '" type="radio" value="gallery/' + gallery_selected + '/' + value.filename + '" name="avatar_gallery"><label class=" radio thumbnail" for="radio' + gallery_selected + '/' + value.filename + '"><img alt="" src="' + value.url + '"></label></li>');
-			});
-		}).fail(function (response) {
+			if (!Array.isArray(response)) {
+				return;
+			}
 
+			// The names come from the server: they are set as attributes, never written into the markup.
+			$.each(response, function (key, item) {
+				const id = 'kavatar-gallery-' + key;
+
+				$('<li>', {'class': 'col-md-2'})
+					.append($('<input>', {type: 'radio', name: 'avatar_gallery', id: id}).val(item.value))
+					.append($('<label>', {'class': 'radio thumbnail', 'for': id})
+						.append($('<img>', {loading: 'lazy', alt: 'avatar'}).attr('src', item.url)))
+					.appendTo(gallery_list);
+			});
+		}).fail(function () {
+			gallery_list.empty();
 		});
 	});
 

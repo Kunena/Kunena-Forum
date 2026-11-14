@@ -31,6 +31,9 @@ $attachments          = KunenaAttachmentHelper::sort(
 );
 $attachs              = $message->getNbAttachments();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
+$author               = $message->getAuthor();
+$avatar               = $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
+$showPm               = $this->pmHasBody && $this->config->privateMessage;
 
 $list = [];
 ?>
@@ -50,18 +53,24 @@ $list = [];
         ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
             endif; ?>
         <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->getNumlink($this->location); ?></a>
-        <span class="d-block d-sm-none"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+        <span class="kmsg-author-phone d-flex d-sm-none align-items-center gap-2 mt-1">
+            <?php if ($avatar) : ?>
+                <?php echo $author->getLink($avatar, null, '', '', null, 0, $this->config->avatarEdit); ?>
+            <?php endif; ?>
+            <?php echo $author->getLink(); ?>
+        </span>
     </span>
 </small>
+<div class="clearfix d-sm-none"></div>
 
 <div class="shadow-none p-4 mb-5 rounded">
-    <div class="mykmsg-header">
+    <div class="mykmsg-header<?php echo $showPm ? '' : ' d-none d-sm-block'; ?>">
         <?php
         $title   = KunenaMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
-        $langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-        echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($this->message->getTopic(), $this->message, $this->message->displayField('subject'), null, KunenaTemplate::getInstance()->tooltips() . ' topictitle')); ?>
+        $langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW'; ?>
+        <span class="d-none d-sm-inline"><?php echo Text::sprintf($langstr, $author->getLink(), $this->getTopicLink($this->message->getTopic(), $this->message, $this->message->displayField('subject'), null, KunenaTemplate::getInstance()->tooltips() . ' topictitle')); ?></span>
         <?php
-        if ($this->pmHasBody && $this->config->privateMessage) : ?>
+        if ($showPm) : ?>
             <div class="kmsg">
                 <div class="kmsgtext-hide">
                     <?php foreach ($this->message->pm as $pm) {

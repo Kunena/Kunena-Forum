@@ -66,7 +66,6 @@ if ($this->config->orderingSystem == 'mesid') {
     ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
                 endif; ?>
     <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
-    <span class="d-block d-sm-none"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 </small>
 <div class="clear-fix"></div>
 <div class="horizontal-message">

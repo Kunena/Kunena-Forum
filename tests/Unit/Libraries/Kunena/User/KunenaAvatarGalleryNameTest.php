@@ -12,10 +12,13 @@
 
 namespace Kunena\Tests\Unit\Libraries\Kunena\User;
 
+use FilesystemIterator;
 use Kunena\Forum\Libraries\User\KunenaAvatarGalleryName;
 use Kunena\Tests\Unit\Support\Files;
 use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * The list of the pictures of a gallery of avatars put the name of the request behind the path of the galleries as it came, for
@@ -23,6 +26,11 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 class KunenaAvatarGalleryNameTest extends UnitTestCase
 {
+    /**
+     * A temporary folder of galleries, removed after the test.
+     */
+    private string $galleries = '';
+
     public static function galleries(): array
     {
         return [['animals'], ['Sci-Fi'], ['my_pictures'], ['Level 1'], ['v1.2'], ['Tiere-Übersicht'], ['2024']];
@@ -73,21 +81,136 @@ class KunenaAvatarGalleryNameTest extends UnitTestCase
         $this->assertNull(KunenaAvatarGalleryName::clean($name));
     }
 
-    public static function views(): array
+    public static function pictures(): array
     {
-        return [['HtmlViewRaw.php'], ['view.raw.php']];
+        return [['a.png'], ['b.PNG'], ['c.gif'], ['d.jpg'], ['e.JPEG'], ['f.webp'], ['G.WebP'], ['my cat-1_v2.jpg'], ['Übersicht.png']];
     }
 
-    #[DataProvider('views')]
-    public function testViewListsOneFolderOfTheGalleriesForMembers(string $file): void
+    #[DataProvider('pictures')]
+    public function testPictureIsAPicture(string $name): void
     {
-        $source = Files::read('src/site/src/View/User/' . $file);
+        $this->assertTrue(KunenaAvatarGalleryName::isPicture($name));
+    }
 
-        $this->assertSame(1, preg_match('/public function displayGalleryimages\(\)\s*\{(.*?)\n    \}\n/s', $source, $m));
+    public static function noPictures(): array
+    {
+        return [
+            'index'          => ['index.html'],
+            'hidden'         => ['.hidden.png'],
+            'a folder'       => ['a/b.png'],
+            'windows folder' => ['a\\b.png'],
+            'two points'     => ['..png'],
+            'svg'            => ['x.svg'],
+            'double'         => ['x.php.txt'],
+            'no name'        => ['.png'],
+            'space around'   => [' x.png'],
+            'null byte'      => ["x.php\0.png"],
+            'null'           => [null],
+        ];
+    }
 
-        $this->assertStringContainsString("KunenaAvatarGalleryName::clean(\$this->app->getInput()->get('gallery_name'", $m[1]);
-        $this->assertStringContainsString('$this->me->exists() && $gallery_name !== null && is_dir($folder) ? Folder::files($folder) : []', $m[1]);
-        $this->assertSame(1, substr_count($m[1], 'Folder::files('), 'One place lists files.');
+    #[DataProvider('noPictures')]
+    public function testAnythingElseIsNoPicture(mixed $name): void
+    {
+        $this->assertFalse(KunenaAvatarGalleryName::isPicture($name));
+    }
+
+    public static function avatars(): array
+    {
+        return [['gallery/a.png'], ['gallery/animals/cat.JPG'], ['gallery/Tiere-Übersicht/katze.webp'], ['gallery/Level 1/x.gif']];
+    }
+
+    #[DataProvider('avatars')]
+    public function testAvatarOfAGalleryIsAccepted(string $value): void
+    {
+        $this->assertTrue(KunenaAvatarGalleryName::isAvatar($value));
+    }
+
+    public static function noAvatars(): array
+    {
+        return [
+            'empty folder'  => ['gallery//x.png'],
+            'two folders'   => ['gallery/a/b/x.png'],
+            'up'            => ['gallery/../x.png'],
+            'other folder'  => ['users/x.png'],
+            'hidden folder' => ['gallery/.git/x.png'],
+            'no picture'    => ['gallery/a/index.html'],
+            'only a folder' => ['gallery/a'],
+            'no gallery'    => ['x.png'],
+            'leading slash' => ['/gallery/x.png'],
+            'empty'         => [''],
+            'null'          => [null],
+        ];
+    }
+
+    #[DataProvider('noAvatars')]
+    public function testAnythingElseIsNoAvatar(mixed $value): void
+    {
+        $this->assertFalse(KunenaAvatarGalleryName::isAvatar($value));
+    }
+
+    private function makeGalleries(): string
+    {
+        $this->galleries = str_replace('\\', '/', sys_get_temp_dir()) . '/kunena-phpunit-' . bin2hex(random_bytes(4));
+
+        mkdir($this->galleries . '/animals/deeper', 0755, true);
+
+        foreach (['b.png', 'a.JPG', 'index.html', '.hidden.png', 'animals/cat.png', 'animals/index.html', 'animals/deeper/x.png'] as $file) {
+            file_put_contents($this->galleries . '/' . $file, 'x');
+        }
+
+        // A folder whose name looks like a picture is no picture.
+        mkdir($this->galleries . '/folder.png');
+
+        return $this->galleries;
+    }
+
+    protected function tearDown(): void
+    {
+        if ($this->galleries !== '') {
+            $items = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($this->galleries, FilesystemIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::CHILD_FIRST
+            );
+
+            foreach ($items as $item) {
+                $item->isDir() ? rmdir($item->getPathname()) : unlink($item->getPathname());
+            }
+
+            rmdir($this->galleries);
+        }
+
+        parent::tearDown();
+    }
+
+    public function testRootListsOnlyItsPicturesSorted(): void
+    {
+        $this->assertSame(['a.JPG', 'b.png'], KunenaAvatarGalleryName::pictures($this->makeGalleries(), ''));
+    }
+
+    public function testFolderListsItsPicturesWithTheFolder(): void
+    {
+        $this->assertSame(['animals/cat.png'], KunenaAvatarGalleryName::pictures($this->makeGalleries(), 'animals'));
+    }
+
+    public function testRefusedOrMissingGalleryListsNothing(): void
+    {
+        $path = $this->makeGalleries();
+
+        $this->assertSame([], KunenaAvatarGalleryName::pictures($path, '..'));
+        $this->assertSame([], KunenaAvatarGalleryName::pictures($path, 'animals/deeper'));
+        $this->assertSame([], KunenaAvatarGalleryName::pictures($path, 'missing'));
+    }
+
+    public function testTaskListsOneGalleryForMembers(): void
+    {
+        $source = Files::read('src/site/src/Controllers/UserController.php');
+
+        $this->assertSame(1, preg_match('/public function galleryimages\(\)\s*\{(.*?)\n    \}\n/s', $source, $m));
+
+        $this->assertStringContainsString("if (!Session::checkToken('get')) {\n            throw new RuntimeException(Text::_('Forbidden'), 403);", $m[1]);
+        $this->assertStringContainsString('if ($this->me->exists()) {', $m[1]);
+        $this->assertStringContainsString("KunenaAvatarGalleryName::pictures(JPATH_ROOT . '/media/kunena/avatars/gallery', \$name)", $m[1]);
         $this->assertStringContainsString('use Kunena\Forum\Libraries\User\KunenaAvatarGalleryName;', $source);
     }
 }

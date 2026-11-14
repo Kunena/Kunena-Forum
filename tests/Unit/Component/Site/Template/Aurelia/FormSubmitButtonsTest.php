@@ -81,6 +81,7 @@ class FormSubmitButtonsTest extends UnitTestCase
     {
         foreach (self::TIME_FILTERS as $file) {
             $this->assertStringContainsString("aria-label=\"' . Text::_('COM_KUNENA_FILTER_TIME') . '\"", Files::read($file), $file);
+            $this->assertStringContainsString('class="form-select form-select-sm filter"', Files::read($file), $file . ': the select is not as small as its btn-sm button.');
         }
 
         foreach (self::FORUM_JUMPS as $file) {

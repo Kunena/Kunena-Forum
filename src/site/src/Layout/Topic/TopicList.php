@@ -86,7 +86,7 @@ class TopicList extends KunenaLayout
             return;
         }
 
-        $attrib ??= 'class="form-select filter" aria-label="' . Text::_('COM_KUNENA_FILTER_TIME') . '"';
+        $attrib ??= 'class="form-select form-select-sm filter" aria-label="' . Text::_('COM_KUNENA_FILTER_TIME') . '"';
 
         // Make the select list for time selection
         $timesel[] = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_SHOW_ALL'));

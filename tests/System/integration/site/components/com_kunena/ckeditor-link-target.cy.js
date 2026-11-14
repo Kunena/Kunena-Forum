@@ -35,10 +35,17 @@ describe('Kunena CKEditor: the link opens in the same window or in a new window'
     expect(event.defaultPrevented, expected ? 'the page warns' : 'the page does not warn').to.eq(expected);
   });
 
-  // Opens the link dialog, on the link of the message when there is one.
+  // Opens the link dialog, on the link of the message when there is one. CKEditor runs the dialog's onShow (which fills in the
+  // fields) 100 ms after the dialog became the current one, and fires dialogShow after it: the spec waits for that event.
+  let dialogShown = false;
   const openLinkDialog = () => editor().then((instance) => {
     const link = instance.editable().findOne('a');
 
+    dialogShown = false;
+    instance.on('dialogShow', (event) => {
+      event.removeListener();
+      dialogShown = true;
+    });
     instance.focus();
 
     if (link) {
@@ -50,6 +57,7 @@ describe('Kunena CKEditor: the link opens in the same window or in a new window'
   const linkDialog = () => cy.window().should((win) => {
     const current = win.CKEDITOR.dialog.getCurrent();
 
+    expect(dialogShown, 'the dialog is shown').to.eq(true);
     expect(current && current.getName(), 'the open dialog').to.eq('link');
   }).then((win) => win.CKEDITOR.dialog.getCurrent());
   const targetSelect = () => linkDialog().then((dialog) => cy.get(`#${dialog.getContentElement('info', 'kunenaLinkTarget').getInputElement().getId()}`));
@@ -146,7 +154,7 @@ describe('Kunena CKEditor: the link opens in the same window or in a new window'
       expect(dialog.getValueOf('info', 'kunenaLinkTarget'), 'the choice of a new link').to.eq('');
     });
     targetSelect().should('be.visible').find('option').should(($options) => {
-      expect([...$options].map((option) => [option.textContent, option.value])).to.deep.eq([['Same window', ''], ['New window', '_blank']]);
+      expect([...$options].map((option) => [option.textContent.trim(), option.value])).to.deep.eq([['Same window', ''], ['New window', '_blank']]);
     });
     linkDialog().then((dialog) => cy.get(`#${dialog.getContentElement('info', 'kunenaLinkTarget').getElement().getId()}`)).should('contain', 'Open the link in');
   });

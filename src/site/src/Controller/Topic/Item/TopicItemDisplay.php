@@ -192,7 +192,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
             0,
             $options,
             $this->catParams,
-            'class="form-select" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_FORUM_TOP') . '" size="1" onchange = "this.form.submit()"',
+            'class="form-select" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_FORUM_TOP') . '" size="1" aria-label="' . Text::_('COM_KUNENA_CATEGORY') . '"',
             'value',
             'text'
         );

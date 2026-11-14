@@ -16,7 +16,8 @@ describe('Kunena user search: the autocomplete works with direct component acces
 
     expect(url, 'the address of the user search').to.be.a('string').and.not.be.empty;
 
-    return `${url}${url.includes('?') ? '&' : '?'}usersearch=${encodeURIComponent(text)}`;
+    // The address starts with the path of the site, as the browser reads it: cy.request would put the baseUrl in front of it again.
+    return new URL(`${url}${url.includes('?') ? '&' : '?'}usersearch=${encodeURIComponent(text)}`, win.location.href).href;
   });
 
   const names = (body) => (Array.isArray(body) ? body : JSON.parse(body)).map((user) => user.name);

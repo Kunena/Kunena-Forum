@@ -583,27 +583,35 @@ class KunenaMessage extends KunenaDatabaseObject
      * @param   bool    $once          once
      * @param   int     $recipientId   The user who gets the mail.
      * @param   bool    $follower      The recipient follows the author.
+     * @param   bool    $approvedAuthor  The recipient is the author of the message which a moderator approved.
      *
      * @return  void
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId = 0, bool $follower = false): void
+    protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId = 0, bool $follower = false, bool $approvedAuthor = false): void
     {
-        $unsubscribeUrl = $this->addNotificationHeaders($mail, $subscription, $recipientId, $follower);
+        if ($approvedAuthor) {
+            // The author did not subscribe to this e-mail: nothing to unsubscribe from.
+            $this->addForumHeaders($mail);
+            $unsubscribeUrl = '';
+        } else {
+            $unsubscribeUrl = $this->addNotificationHeaders($mail, $subscription, $recipientId, $follower);
+        }
 
         $layout = KunenaLayout::factory('Email/Subscription')->debug(false)
             ->set('mail', $mail)
             ->set('message', $this)
             ->set('messageUrl', $url)
             ->set('once', $once)
-            ->set('unsubscribeUrl', $unsubscribeUrl);
+            ->set('unsubscribeUrl', $unsubscribeUrl)
+            ->set('approved', $approvedAuthor);
 
         $msg = '';
 
         try {
-            $msg = trim($layout->render($subscription ? 'default' : 'moderator'));
+            $msg = trim($layout->render($subscription || $approvedAuthor ? 'default' : 'moderator'));
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
@@ -1154,23 +1162,31 @@ class KunenaMessage extends KunenaDatabaseObject
      * @param   bool    $follower      The recipient follows the author.
      * @param   string  $email         The address.
      * @param   string  $language      The language of the recipient.
+     * @param   bool    $approvedAuthor  The recipient is the author of the message which a moderator approved.
      *
      * @return  boolean
      *
      * @since   Kunena 8.0
      */
-    protected function deliverNotification(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId, bool $follower, string $email, string $language): bool
+    protected function deliverNotification(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId, bool $follower, string $email, string $language, bool $approvedAuthor = false): bool
     {
-        $templateId = $subscription ? 'com_kunena.subscription' : 'com_kunena.moderator';
+        $templateId = $subscription || $approvedAuthor ? 'com_kunena.subscription' : 'com_kunena.moderator';
 
         if (KunenaMailTemplate::isUsed($templateId)) {
-            $unsubscribeUrl = $this->addNotificationHeaders($mail, $subscription, $recipientId, $follower);
-            $data           = $this->getMailTemplateData($subscription, $url, $once, $unsubscribeUrl);
+            if ($approvedAuthor) {
+                // The author did not subscribe to this e-mail: nothing to unsubscribe from.
+                $this->addForumHeaders($mail);
+                $unsubscribeUrl = '';
+            } else {
+                $unsubscribeUrl = $this->addNotificationHeaders($mail, $subscription, $recipientId, $follower);
+            }
+
+            $data = $this->getMailTemplateData($subscription, $url, $once, $unsubscribeUrl, $approvedAuthor);
 
             return KunenaMailTemplate::send($templateId, $language, $mail, $data['html'], $data['plain'], ['sitename', 'boardtitle', 'heading', 'subject', 'topic', 'category', 'author', 'url'], $email);
         }
 
-        $this->attachEmailBody($mail, $subscription, $subject, $url, $once, $recipientId, $follower);
+        $this->attachEmailBody($mail, $subscription, $subject, $url, $once, $recipientId, $follower, $approvedAuthor);
 
         return KunenaEmail::send($mail, [$email]);
     }
@@ -1475,29 +1491,31 @@ class KunenaMessage extends KunenaDatabaseObject
      * @param   string  $url             The address of the message.
      * @param   bool    $once            Only the first message is mailed.
      * @param   string  $unsubscribeUrl  The address to unsubscribe (empty when there is none).
+     * @param   bool    $approvedAuthor  The recipient is the author of the message which a moderator approved.
      *
      * @return  array  html and plain.
      *
      * @since   Kunena 8.0
      */
-    protected function getMailTemplateData(int $subscription, string $url, bool $once, string $unsubscribeUrl): array
+    protected function getMailTemplateData(int $subscription, string $url, bool $once, string $unsubscribeUrl, bool $approvedAuthor = false): array
     {
         $topic   = $this->getTopic();
         $subject = $this->subject ?: $topic->subject;
 
         $authorName = $this->getAuthor()->getName('???', false);
 
-        if ($subscription) {
-            $heading = $this->_approved
-                ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION_APPROVED_MESSAGE')
-                : self::formatEmailHeading(Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT'), $this->_config->boardTitle, $authorName);
+        if ($approvedAuthor) {
+            $heading = Text::_(self::subscriptionHeadingKey((bool) $this->parent, true));
+            $note    = '';
+        } elseif ($subscription) {
+            $heading = self::formatEmailHeading(Text::_(self::subscriptionHeadingKey((bool) $this->parent, false)), $this->_config->boardTitle, $authorName);
             $note    = Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
         } else {
             $heading = self::formatEmailHeading(Text::_(empty($this->modified_time) ? 'COM_KUNENA_POST_EMAIL_MOD1' : 'COM_KUNENA_POST_EMAIL_MOD3'), $this->_config->boardTitle, $authorName);
             $note    = Text::_('COM_KUNENA_POST_EMAIL_MOD2');
         }
 
-        $more   = $once ? Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') : '';
+        $more   = $once && !$approvedAuthor ? Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') : '';
         $footer = Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3');
         $esc    = static fn (string $text): string => htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 
@@ -1515,7 +1533,7 @@ class KunenaMessage extends KunenaDatabaseObject
         $html = $common + [
             'message'     => $this->_config->mailFull ? '<p style="margin:18px 0 4px;color:#888888">' . $esc(Text::_('COM_KUNENA_MESSAGE')) . ':</p><div style="border-left:3px solid #dddddd;padding:4px 14px;margin:0 0 6px">' . $this->displayField('message', true, 'subscription') . '</div>' : '',
             'more'        => $more ? '<p style="font-size:14px">' . $esc($more) . '</p>' : '',
-            'footer'      => $esc($footer) . '<br>' . $esc($note),
+            'footer'      => $esc($footer) . ($note !== '' ? '<br>' . $esc($note) : ''),
             'unsubscribe' => $unsubscribeUrl
                 ? '<p style="font-size:12px;color:#999999">' . $esc(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC')) . ' <a href="' . $esc($unsubscribeUrl) . '" style="color:#999999">' . $esc(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE')) . '</a></p>'
                 : '',
@@ -1524,7 +1542,7 @@ class KunenaMessage extends KunenaDatabaseObject
         $plain = $common + [
             'message'     => $this->_config->mailFull ? Text::_('COM_KUNENA_MESSAGE') . ":\n" . $this->displayField('message', false) . "\n" : '',
             'more'        => $more ? $more . "\n" : '',
-            'footer'      => $footer . "\n" . $note,
+            'footer'      => $footer . ($note !== '' ? "\n" . $note : ''),
             'unsubscribe' => $unsubscribeUrl ? Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC') . "\n" . $unsubscribeUrl : '',
         ];
 
@@ -1587,6 +1605,77 @@ class KunenaMessage extends KunenaDatabaseObject
     public static function notificationExcludeList(int $currentUserId, int $authorId): array
     {
         return array_values(array_unique(array_filter([$currentUserId, $authorId], static fn (int $id) => $id > 0)));
+    }
+
+    /**
+     * The language key of the heading of a notification e-mail for a subscriber, or for the author of an approved message.
+     *
+     * @param   bool  $isReply         The message is a reply (not the first message of a topic).
+     * @param   bool  $approvedAuthor  The recipient is the author of the message which a moderator approved.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function subscriptionHeadingKey(bool $isReply, bool $approvedAuthor): string
+    {
+        if ($approvedAuthor) {
+            return 'COM_KUNENA_POST_EMAIL_NOTIFICATION_APPROVED_MESSAGE';
+        }
+
+        return $isReply ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT';
+    }
+
+    /**
+     * Whether the author of an approved message gets the e-mail which tells him that his message was approved.
+     *
+     * @param   int     $authorId       The id of the author (0 for a guest).
+     * @param   int     $approverId     The id of the moderator who approves the message.
+     * @param   bool    $authorExists   The user of the author exists.
+     * @param   bool    $authorBlocked  The user of the author is blocked.
+     * @param   string  $authorEmail    The address of the author.
+     * @param   bool    $authorMayRead  The author may read the message.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function authorGetsApprovalEmail(int $authorId, int $approverId, bool $authorExists, bool $authorBlocked, string $authorEmail, bool $authorMayRead): bool
+    {
+        return $authorId > 0
+            && $authorExists
+            && !$authorBlocked
+            && MailHelper::isEmailAddress($authorEmail)
+            && $authorId !== $approverId
+            && $authorMayRead;
+    }
+
+    /**
+     * Add the author of an approved message to the recipients of the notification, once, flagged as the approved author.
+     *
+     * @param   array   $emailToList  The recipients.
+     * @param   object  $author       The author (userid and email).
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    public static function addApprovedAuthor(array $emailToList, object $author): array
+    {
+        $authorId = (int) $author->userid;
+
+        $emailToList = array_values(array_filter($emailToList, static fn ($emailTo) => (int) ($emailTo->id ?? 0) !== $authorId));
+
+        $emailToList[] = (object) [
+            'id'             => $authorId,
+            'email'          => (string) $author->email,
+            'subscription'   => 0,
+            'moderator'      => 0,
+            'admin'          => 0,
+            'approvedAuthor' => 1,
+        ];
+
+        return $emailToList;
     }
 
     /**
@@ -2126,6 +2215,15 @@ class KunenaMessage extends KunenaDatabaseObject
             return false;
         }
 
+        // The author of an approved message gets one e-mail which tells him that a moderator approved it.
+        if ($approved) {
+            $author = KunenaUserHelper::get($this->userid);
+
+            if (self::authorGetsApprovalEmail((int) $this->userid, (int) KunenaUserHelper::getMyself()->userid, $author->exists(), $author->isBlocked(), (string) $author->email, $this->isAuthorised('read', $author))) {
+                $emailToList = self::addApprovedAuthor($emailToList, $author);
+            }
+        }
+
         // Nobody to notify: do not queue or send an empty notification
         if (empty($emailToList)) {
             return false;
@@ -2434,6 +2532,9 @@ class KunenaMessage extends KunenaDatabaseObject
         // Send one email per recipient, in their own language.
         $success = true;
 
+        // The e-mail to the author of an approved message does not count for the rule of the visible address.
+        $otherRecipients = \count(array_filter($emailToList, static fn ($emailTo) => empty($emailTo->approvedAuthor)));
+
         foreach ($emailToList as $recipientIndex => $emailTo) {
             if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
                 continue;
@@ -2442,7 +2543,7 @@ class KunenaMessage extends KunenaDatabaseObject
             if (
                 $this->_config->emailVisibleAddress == $emailTo->email &&
                 !(
-                    \count($emailToList) == 1 &&
+                    $otherRecipients == 1 &&
                     ($emailTo->moderator || $emailTo->subscription)
                 )
             ) {
@@ -2494,7 +2595,7 @@ class KunenaMessage extends KunenaDatabaseObject
                 $mail->setSubject($mailSubject);
                 $mail->setSender([$this->_config->email, $mailnamesender]);
 
-                if (!$this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, (string) $recipientLanguage)) {
+                if (!$this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, (string) $recipientLanguage, !empty($emailTo->approvedAuthor))) {
                     $success = false;
                 } elseif ($onRecipientSent !== null) {
                     $onRecipientSent($recipientIndex);

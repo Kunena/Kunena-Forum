@@ -15,7 +15,7 @@ there, with tags like `{TOPIC}` and `{URL}`, in HTML and plain text.
 
 | Template | For |
 | --- | --- |
-| `com_kunena.subscription` | a reply or a new topic for the subscribers |
+| `com_kunena.subscription` | a reply or a new topic for the subscribers; also the e-mail to the author when a moderator approves the post |
 | `com_kunena.moderator` | a new message for the moderators |
 | `com_kunena.mention` | the e-mail to a mentioned user |
 | `com_kunena.reportmessage` | a reported message |

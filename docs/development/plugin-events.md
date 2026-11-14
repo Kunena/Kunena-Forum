@@ -269,7 +269,8 @@ These events let a plugin see or change what Kunena shows.
 
 - When: around the display of a view of the older controllers (`KunenaController::display()`, html only): once with type
   `start` before the view is shown and once with type `end` after it. And when the profile box of a message is built in the
-  topic view (`getMessageProfileBox()`), with type `topic.profile`.
+  topic view (`getMessageProfileBox()`), with type `topic.profile`. It does not fire when `KunenaController::display()` cannot
+  show the requested view or layout and answers with a 404.
 - Arguments: `type` (string: `start`, `end` or `topic.profile`); `view` (the view object); `params` (a
   `Joomla\Registry\Registry`, only with `topic.profile`).
 - Context: none; the `type` says where it fires.

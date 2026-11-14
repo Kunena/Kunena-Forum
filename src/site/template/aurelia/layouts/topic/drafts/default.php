@@ -36,12 +36,13 @@ $topics   = $topicIds ? KunenaTopicHelper::getTopics(array_values(array_unique($
     <div class="alert alert-info"><?php echo Text::_('COM_KUNENA_DRAFTS_NONE'); ?></div>
 <?php else : ?>
     <table class="table table-striped table-hover">
+        <caption class="visually-hidden"><?php echo Text::_('COM_KUNENA_DRAFTS'); ?></caption>
         <thead>
         <tr>
-            <th><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
-            <th><?php echo Text::_('COM_KUNENA_CATEGORY'); ?></th>
-            <th><?php echo Text::_('COM_KUNENA_DRAFT_LAST_SAVED'); ?></th>
-            <th></th>
+            <th scope="col"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
+            <th scope="col"><?php echo Text::_('COM_KUNENA_CATEGORY'); ?></th>
+            <th scope="col"><?php echo Text::_('COM_KUNENA_DRAFT_LAST_SAVED'); ?></th>
+            <th scope="col"><span class="visually-hidden"><?php echo Text::_('COM_KUNENA_DRAFT_ACTIONS'); ?></span></th>
         </tr>
         </thead>
         <tbody>

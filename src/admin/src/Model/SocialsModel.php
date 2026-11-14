@@ -67,19 +67,22 @@ class SocialsModel extends AdminModel
 
         $rows = KunenaUserSocials::getCustomProviderRows();
 
-        // A name which is a language key (the default providers) is shown as the text of the key.
+        // A name which is a language key (the default providers) is shown as the text of the key. A row saved before the
+        // switch Enabled existed is enabled.
         foreach ($rows as $index => $row) {
-            $rows[$index]['title'] = Text::_((string) ($row['title'] ?? ''));
+            $rows[$index]['title']   = Text::_((string) ($row['title'] ?? ''));
+            $rows[$index]['enabled'] = (int) (!\array_key_exists('enabled', $row) || !empty($row['enabled']));
         }
 
         if (!$rows) {
             foreach (KunenaUserSocials::getProviders() as $key => $provider) {
                 $rows[] = [
-                    'key'   => $key,
-                    'title' => Text::_($provider->title),
-                    'url'   => $provider->url,
-                    'fa'    => $provider->fa,
-                    'nourl' => (int) $provider->nourl,
+                    'key'     => $key,
+                    'title'   => Text::_($provider->title),
+                    'url'     => $provider->url,
+                    'fa'      => $provider->fa,
+                    'nourl'   => (int) $provider->nourl,
+                    'enabled' => 1,
                 ];
             }
         }
@@ -143,11 +146,12 @@ class SocialsModel extends AdminModel
             }
 
             $rows['socials' . \count($rows)] = [
-                'key'   => $key,
-                'title' => $title !== '' ? $title : $key,
-                'url'   => $nourl ? '##VALUE##' : $url,
-                'fa'    => preg_replace('/[^a-z0-9 -]/i', '', (string) ($row['fa'] ?? '')),
-                'nourl' => $nourl,
+                'key'     => $key,
+                'title'   => $title !== '' ? $title : $key,
+                'url'     => $nourl ? '##VALUE##' : $url,
+                'fa'      => preg_replace('/[^a-z0-9 -]/i', '', (string) ($row['fa'] ?? '')),
+                'nourl'   => $nourl,
+                'enabled' => (string) ($row['enabled'] ?? '1') === '0' ? 0 : 1,
             ];
         }
 

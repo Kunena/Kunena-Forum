@@ -39,6 +39,7 @@ echo $this->subLayout('Widget/Datepicker');
 $this->addScript('tribute.js');
 $this->addStyleSheet('tribute.css');
 $this->addScript('assets/js/search.js');
+KunenaFactory::getTemplate()->addScriptOptions('com_kunena.usersearch_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json', false));
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post">
@@ -52,7 +53,7 @@ $this->addScript('assets/js/search.js');
             <h2 class="accordion-header" id="searchHeader">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#search" aria-expanded="true" aria-controls="search"><?php echo Text::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?></button>
             </h2>
-            <div class="accordion-collapse collapse show" id="search" aria-labelledby="searchHeader">
+            <div class="accordion-collapse collapse show kunena-search-panel" id="search" aria-labelledby="searchHeader">
                 <div class="accordion-body">
                     <div class="row g-3">
                         <fieldset class="col-md-6">

@@ -256,7 +256,7 @@ class KunenaTopicLockReasonTest extends UnitTestCase
     public function testTheUpdateFileOfJoomlaAddsTheColumn(): void
     {
         $this->assertStringContainsString(
-            "ALTER TABLE `#__kunena_topics` ADD `lock_reason` varchar(255) NOT NULL default '' AFTER `locked`;",
+            "ALTER TABLE `#__kunena_topics` ADD COLUMN `lock_reason` varchar(255) NOT NULL default '' AFTER `locked`;",
             Files::read('src/admin/sql/updates/mysql/8.0.0-DEV.sql')
         );
     }

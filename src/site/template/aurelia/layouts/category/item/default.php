@@ -40,11 +40,11 @@ $this->addStyleSheet('rating.css');
     <?php if (!empty($this->topics)) : ?>
         <div class="row">
             <div class="col-md-12">
-                <h2 class="float-end">
+                <div class="float-end kunena-search-widget">
                     <?php echo $this->subLayout('Widget/Search')
                         ->set('catid', $this->category->id)
                         ->setLayout('topic'); ?>
-                </h2>
+                </div>
 
                 <div class="float-start">
                     <?php echo $this->subLayout('Widget/Pagination/List')
@@ -111,7 +111,7 @@ $this->addStyleSheet('rating.css');
                         <tr>
                             <th scope="col" class="center d-none d-md-table-cell">
                                 <a id="forumbottom"> </a>
-                                <a href="#forumtop" rel="nofollow">
+                                <a href="#forumtop" rel="nofollow" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_GEN_GOTOTOP')); ?>">
                                     <span class="dropdown-divider"></span>
                                     <?php echo KunenaIcons::arrowup(); ?>
                                 </a>

@@ -23,6 +23,7 @@ use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Router\Exception\RouteNotFoundException;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Input\Input;
@@ -37,7 +38,6 @@ use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
  * Class KunenaController
@@ -173,7 +173,21 @@ class KunenaController extends BaseController
         $config['base_path'] = $this->basePath;
         $config['layout']    = $lName;
 
-        $view = $this->getView($vName, $vFormat, 'site', $config);
+        try {
+            $view = $this->getView($vName, $vFormat, 'site', $config);
+        } catch (Exception $e) {
+            if ($e->getMessage() !== Text::sprintf('JLIB_APPLICATION_ERROR_VIEW_NOT_FOUND', $vName, $vFormat, 'site')) {
+                throw $e;
+            }
+
+            // No previous exception: the error page of a site in debug mode would show its "View not found" text.
+            throw new RouteNotFoundException(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404);
+        }
+
+        // The view cannot show a layout without its display method (see KunenaView::displayLayout()).
+        if ($view && !method_exists($view, 'display' . ucfirst($lName))) {
+            throw new RouteNotFoundException(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404);
+        }
 
         if ($view) {
             if ($this->app->isClient('site') && $vFormat == 'html') {
@@ -202,8 +216,7 @@ class KunenaController extends BaseController
                 $displayEvent = new KunenaDisplayEvent('onKunenaDisplay', ['type' => 'start', 'view' => $view]);
                 Factory::getApplication()->getDispatcher()->dispatch('onKunenaDisplay', $displayEvent);
 
-                $test = new KunenaView($config);
-                $test->displayAll();
+                $view->displayAll();
                 $displayEvent->setType('end');
                 Factory::getApplication()->getDispatcher()->dispatch('onKunenaDisplay', $displayEvent);
             } else {
@@ -432,11 +445,28 @@ class KunenaController extends BaseController
 
         if (class_exists($class)) {
             $instance = new $class();
+            static::useComponentFactory($instance);
         } else {
             throw new KunenaException(Text::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class), 404);
         }
 
         return $instance;
+    }
+
+    /**
+     * Give a controller the MVC factory of Kunena, so that it finds the namespaced views and models (the constructors of the
+     * controllers pass no factory on, and Joomla then falls back to its LegacyFactory).
+     *
+     * @param   BaseController  $controller  The controller.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected static function useComponentFactory(BaseController $controller): void
+    {
+        $controller->factory = Factory::getApplication()->bootComponent('com_kunena')->getMVCFactory();
     }
 
     /**

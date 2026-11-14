@@ -137,6 +137,12 @@ $template = KunenaTemplate::getInstance();
         </tr>
 
         <?php foreach ($this->socials as $key => $social): ?>
+            <?php
+            // A website which the admin switched off is not shown.
+            if (!$this->socials->isEnabled($key)) {
+                continue;
+            }
+            ?>
             <tr>
                 <td class="col-md-3">
                     <label for="personalText">

@@ -98,6 +98,45 @@ describe('Kunena date fields: the format of the date picker', () => {
     });
   });
 
+  it('shows the birthdate beside a post in the date format of the forum', () => {
+    cy.kunena_setOption('datePickerFormat', 'dd.mm.yyyy');
+    cy.task('queryDB', `UPDATE #__kunena_users SET birthdate = '1990-06-05' WHERE userid = ${user.id}`);
+    cy.then(() => cy.request(`${base}&view=topic&catid=3&id=9&mesid=${old.message}`)).then((page) => {
+      expect(page.body, 'the post of the user').to.contain(`${word} of a day`);
+      // COM_KUNENA_LIB_DATE_FMT of en-GB: d M Y.
+      expect(page.body, 'the birthdate in the tooltip').to.contain('title="Birthdate: 05 Jun 1990"');
+      expect(page.body, 'the birthdate of the database').not.to.contain('Birthdate: 1990-06-05');
+    });
+  });
+
+  // The calendar writes the date in the format of the option, and in yyyy-mm-dd without the option.
+  [
+    { format: 'dd.mm.yyyy', shown: '05.06.1990', picked: '12.06.1990' },
+    { format: '', shown: '1990-06-05', picked: '1990-06-12' },
+  ].forEach(({ format, shown, picked }) => {
+    it(`picks the birthdate in the calendar in the format ${format || 'yyyy-mm-dd'}`, () => {
+      cy.kunena_setOption('datePickerFormat', format);
+      cy.task('queryDB', `UPDATE #__kunena_users SET birthdate = '1990-06-05' WHERE userid = ${user.id}`);
+      cy.doFrontendLogin(user.name, user.password, false);
+      // The tooltip of Bootstrap moves the title out of the field: it is read in the page as sent.
+      cy.request(`${base}&view=user&layout=edit`).then((page) => {
+        const field = /<input[^>]*name="birthdate"[^>]*>/.exec(page.body)?.[0] ?? '';
+        const title = /title="([^"]*)"/.exec(field)?.[1];
+
+        expect(title, 'the hint of the field').to.contain(format || 'yyyy-mm-dd');
+        expect(title, 'the hint of the field').not.to.contain('Year (YYYY) / Month (MM) / Day (DD)');
+      });
+      cy.visit(`${base}&view=user&layout=edit`);
+      cy.get('input[name="birthdate"]').should('have.value', shown);
+      cy.get('#birthdate .input-group.date .btn').click({ force: true });
+      cy.get('.datepicker-days td.day.active').filter(':visible').should('have.length', 1).and('have.text', '5');
+      cy.get('.datepicker-days th.datepicker-switch').filter(':visible').should('contain', '1990');
+      cy.get('input[name="birthdate"]').should('have.value', shown);
+      cy.get('.datepicker-days td.day:not(.old):not(.new)').filter(':visible').filter((index, day) => day.textContent.trim() === '12').click();
+      cy.get('input[name="birthdate"]').should('have.value', picked);
+    });
+  });
+
   it('keeps the birthdate with a save without a change of the user form of the backend', () => {
     cy.task('queryDB', `UPDATE #__kunena_users SET birthdate = '1990-06-05' WHERE userid = ${user.id}`);
     // The cookies of the logins of the site go first: with them the backend lost its session after the save.

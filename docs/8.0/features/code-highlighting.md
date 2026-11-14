@@ -21,7 +21,8 @@ were written.
   `media/kunena/core/highlightjs` and served by your own site: no CDN is used. The dark theme gives the block its own background, so it
   reads the same on a light and on a dark page.
 - The files are loaded only on a page which shows a code block, and only when the option is on. With the option off the block keeps the
-  look of the template, with its indentation, and no script is loaded.
+  look of the template, with its indentation, and no script is loaded. In Aurelia a block that is not coloured is shown on a light
+  background, with padding.
 - E-mails (the subscriptions) and feeds get the plain block, without colours and without a script. The plain text of an e-mail shows
   `Code:` and the code.
 

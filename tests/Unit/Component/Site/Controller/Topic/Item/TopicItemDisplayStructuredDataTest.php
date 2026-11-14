@@ -67,7 +67,7 @@ class TopicItemDisplayStructuredDataTest extends UnitTestCase
 
         // The address of the request and of the site, an application without plugins, the configuration and the template:
         // what KunenaParser::stripBBCode() and the parser need without a site.
-        $config = $this->bare(KunenaConfig::class, ['config' => ['boardTitle' => 'The Board', 'template' => 'aurelia', 'debug' => 0]]);
+        $config = $this->bare(KunenaConfig::class, ['config' => ['boardTitle' => 'The Board', 'template' => 'aurelia', 'debug' => 0, 'fallbackEnglish' => 0]]);
         $this->replace(Uri::class, 'instances', ['SERVER' => new Uri(self::HOST . '/forum/topic?x=1')]);
         $this->replace(Uri::class, 'root', ['prefix' => self::HOST, 'path' => '']);
         $this->replace(Uri::class, 'base', ['prefix' => self::HOST, 'path' => '']);

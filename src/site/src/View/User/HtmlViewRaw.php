@@ -14,9 +14,6 @@
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
-use Joomla\Filesystem\Folder;
-use Kunena\Forum\Libraries\User\KunenaAvatarGalleryName;
 use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
@@ -89,40 +86,6 @@ class KunenaViewUser extends KunenaView
 
                 $response[] = $user_obj;
             }
-        }
-
-        // Set the MIME type and header for JSON output.
-        $this->document->setMimeEncoding('application/json');
-        Factory::getApplication()->setHeader(
-            'Content-Disposition',
-            'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
-        );
-        Factory::getApplication()->sendHeaders();
-
-        echo json_encode($response);
-    }
-
-    /**
-     * Return the list of files for the avatar gallery selected by the user
-     *
-     * @return  void
-     *
-     * @since   Kunena 5.0
-     *
-     * @throws  Exception
-     */
-    public function displayGalleryimages()
-    {
-        $response = [];
-
-        // The name of one folder of the galleries, for a member: any other name is no gallery.
-        $gallery_name = KunenaAvatarGalleryName::clean($this->app->getInput()->get('gallery_name', null, 'string'));
-        $folder       = JPATH_BASE . '/media/kunena/avatars/gallery/' . $gallery_name;
-        $list_files   = $this->me->exists() && $gallery_name !== null && is_dir($folder) ? Folder::files($folder) : [];
-
-        foreach ($list_files as $key => $file) {
-            $response[$key]['filename'] = $file;
-            $response[$key]['url']      = Uri::root() . 'media/kunena/avatars/gallery/' . $gallery_name . '/' . $file;
         }
 
         // Set the MIME type and header for JSON output.

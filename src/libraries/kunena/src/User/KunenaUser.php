@@ -43,7 +43,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
-use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Tables\KunenaUsers;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -714,39 +713,7 @@ class KunenaUser
     {
         $avatars = KunenaFactory::getAvatarIntegration();
 
-        if (!$avatars) {
-            $ktemplate     = KunenaFactory::getTemplate();
-            $topicicontype = $ktemplate->params->get('topicicontype');
-
-            // When KunenaFactory::getConfig()->avatarType is true it means Icontype
-            if (KunenaFactory::getConfig()->avatarType && $avatars->css) {
-                if ($sizex == 20) {
-                    if ($topicicontype == 'fa') {
-                        return '<i class="fas fa-user-circle status-' . $online . '" aria-hidden="true"></i>';
-                    }
-
-                    return '<span class="rounded-circle status-' . $online . '" aria-hidden="true">' . KunenaSvgIcons::loadsvg('person') . '</span>';
-                } elseif ($sizex == 'logout' || $sizex == 'profile') {
-                    if ($topicicontype == 'fa') {
-                        return '<i class="fas fa-user-circle fa-7x"></i>';
-                    }
-
-                    if ($topicicontype == 'svg') {
-                        return '<span class="glyphicon glyphicon-user user-circle user-xl b2-7x" aria-hidden="true"></span>';
-                    }
-                }
-
-                if ($topicicontype == 'fa') {
-                    return '<i class="fas fa-user-circle fa-3x"></i>';
-                }
-
-                if ($topicicontype == 'svg' && $this->avatar == null) {
-                    return KunenaSvgIcons::loadsvg('person');
-                }
-            }
-        }
-
-        return $avatars->getLink($this, $class, $sizex, $sizey);
+        return $avatars->getLink($this, $class, $sizex, $sizey, $online);
     }
 
     /**

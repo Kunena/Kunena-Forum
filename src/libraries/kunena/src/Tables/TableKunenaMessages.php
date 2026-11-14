@@ -155,6 +155,18 @@ class TableKunenaMessages extends KunenaTable
 
     /**
      * @var     null
+     * @since   Kunena 8.0
+     */
+    public mixed $scheduled_time = null;
+
+    /**
+     * @var     null
+     * @since   Kunena 8.0
+     */
+    public mixed $scheduled_review = null;
+
+    /**
+     * @var     null
      * @since   Kunena 6.0
      */
     public mixed $params = null;

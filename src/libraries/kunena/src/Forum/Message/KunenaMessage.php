@@ -134,6 +134,14 @@ class KunenaMessage extends KunenaDatabaseObject
     public mixed $replynum = null;
 
     /**
+     * The edges of the message in the tree of the threaded and indented topic layouts (set by the topic page).
+     *
+     * @var     array|null
+     * @since   Kunena 8.0
+     */
+    public mixed $indent = null;
+
+    /**
      * @var     string
      * @since   Kunena 6.4
      */

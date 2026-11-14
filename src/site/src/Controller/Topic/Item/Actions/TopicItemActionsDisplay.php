@@ -276,28 +276,18 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
         }
 
         // Add buttons for changing between different layout modes.
+        // The layout in which the user sees the topic now gets no button, the two others do (items of the dropdown Layout).
         if ($template->params->get('enableThreadedLayouts', '0')) {
-            $url = "index.php?option=com_kunena&view=user&task=change&topicLayout=%s&{$token}=1";
+            $url     = "index.php?option=com_kunena&view=user&task=change&topicLayout=%s&{$token}=1";
+            $current = KunenaUserHelper::getMyself()->getTopicLayout();
 
-            if ($this->layout != 'default') {
-                $this->topicButtons->set(
-                    'flat',
-                    $this->getButton(\sprintf($url, 'flat'), 'flat', 'layout', 'user', false, $button)
-                );
-            }
-
-            if ($this->layout != 'threaded') {
-                $this->topicButtons->set(
-                    'threaded',
-                    $this->getButton(\sprintf($url, 'threaded'), 'threaded', 'layout', 'user', false, $button)
-                );
-            }
-
-            if ($this->layout != 'indented') {
-                $this->topicButtons->set(
-                    'indented',
-                    $this->getButton(\sprintf($url, 'indented'), 'indented', 'layout', 'user', false, $button)
-                );
+            foreach (['flat', 'threaded', 'indented'] as $topicLayout) {
+                if ($topicLayout != $current) {
+                    $this->topicButtons->set(
+                        $topicLayout,
+                        $this->getButton(\sprintf($url, $topicLayout), $topicLayout, 'layout', 'user', false, true)
+                    );
+                }
             }
         }
 

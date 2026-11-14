@@ -115,13 +115,14 @@
     border-radius: var(--agora-radius-pill);
   }
 
-  .klogout .dropdown-toggle .rounded > svg {
+  .klogout .dropdown-toggle > span > svg {
     width: 1.25rem;
     height: 1.25rem;
   }
 
+  /* The picture, or the box of the icon of a user without one, whatever the avatar type. */
   .klogout .dropdown-toggle img,
-  .klogout .dropdown-toggle .rounded {
+  .klogout .dropdown-toggle > span {
     display: inline-grid !important;
     place-items: center;
     width: 30px !important;

@@ -11,10 +11,6 @@ class ComposerStaticInit6b7e8d3091d7c0760780d4fb1aa23391
         array (
             'enshrined\\svgSanitize\\' => 22,
         ),
-        'P' => 
-        array (
-            'Pedrollo\\GravatarLib\\' => 21,
-        ),
         'N' => 
         array (
             'Nbbc\\' => 5,
@@ -33,10 +29,6 @@ class ComposerStaticInit6b7e8d3091d7c0760780d4fb1aa23391
         'enshrined\\svgSanitize\\' => 
         array (
             0 => __DIR__ . '/..' . '/enshrined/svg-sanitize/src',
-        ),
-        'Pedrollo\\GravatarLib\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/Emberlabs',
         ),
         'Nbbc\\' => 
         array (

@@ -14,15 +14,15 @@ namespace Kunena\Tests\Unit\Plugin\Kunena\Gravatar;
 
 use FilesystemIterator;
 use Kunena\Forum\Plugin\Kunena\Gravatar\Helper\GravatarPrivacy;
+use Kunena\Forum\Plugin\Kunena\Gravatar\Helper\GravatarUrl;
 use Kunena\Tests\Unit\Support\Files;
 use Kunena\Tests\Unit\UnitTestCase;
-use Pedrollo\GravatarLib\Gravatar;
 use PHPUnit\Framework\Attributes\DataProvider;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 /**
- * Gravatar and a hidden e-mail address (Kunena 7.1): the address of a Gravatar has the MD5 of the e-mail address in it, in the html
+ * Gravatar and a hidden e-mail address (Kunena 7.1): the address of a Gravatar has a hash of the e-mail address in it, in the html
  * of every page with the avatar. That hash is checked against guessed or leaked addresses, so a member who hides the address gets
  * the default image instead.
  */
@@ -35,7 +35,7 @@ class GravatarPrivacyTest extends UnitTestCase
         }
 
         require_once Files::path('src/plugins/plg_kunena_gravatar/src/Helper/GravatarPrivacy.php');
-        require_once Files::path('src/libraries/kunena/External/Emberlabs/Gravatar.php');
+        require_once Files::path('src/plugins/plg_kunena_gravatar/src/Helper/GravatarUrl.php');
     }
 
     public static function settings(): array
@@ -74,21 +74,16 @@ class GravatarPrivacyTest extends UnitTestCase
 
     private function url(string $email, mixed $hideEmail): string
     {
-        $gravatar = new Gravatar();
-        $gravatar->setAvatarSize(64);
-        $gravatar->setDefaultImage('identicon');
-        $gravatar->setMaxRating('g');
-        $gravatar->enableSecureImages();
-
-        return $gravatar->buildGravatarURL(GravatarPrivacy::emailForHash($email, $hideEmail));
+        return GravatarUrl::build(GravatarPrivacy::emailForHash($email, $hideEmail), 64, 'identicon');
     }
 
     public function testAHiddenAddressHasNoHashInTheAvatar(): void
     {
         $url = $this->url('Jane.Doe@example.com', 1);
 
+        $this->assertStringNotContainsString(hash('sha256', 'jane.doe@example.com'), $url);
         $this->assertStringNotContainsString(md5('jane.doe@example.com'), $url);
-        $this->assertStringContainsString(str_repeat('0', 32), $url);
+        $this->assertStringContainsString(str_repeat('0', 64), $url);
         $this->assertStringContainsString('d=identicon', $url);
 
         // All the hidden members look the same: one could not be told apart from another.
@@ -97,7 +92,7 @@ class GravatarPrivacyTest extends UnitTestCase
 
     public function testAMemberWhoShowsTheAddressStillGetsTheirGravatar(): void
     {
-        $this->assertStringContainsString(md5('jane.doe@example.com'), $this->url('Jane.Doe@example.com', 0));
+        $this->assertStringContainsString(hash('sha256', 'jane.doe@example.com'), $this->url('Jane.Doe@example.com', 0));
     }
 
     public function testNothingSendsAnAddressToGravatarWithoutTheRule(): void
@@ -108,17 +103,32 @@ class GravatarPrivacyTest extends UnitTestCase
         foreach ($files as $file) {
             $path = str_replace('\\', '/', $file->getPathname());
 
-            if ($file->getExtension() !== 'php' || str_contains($path, '/External/')) {
+            // The class which makes the address is the one place with the address of Gravatar.
+            if ($file->getExtension() !== 'php' || str_contains($path, '/External/') || str_ends_with($path, '/Helper/GravatarUrl.php')) {
                 continue;
             }
 
-            foreach (file($path) as $number => $line) {
-                if (preg_match('/buildGravatarURL\(|gravatar\.com\/avatar/i', $line) && !str_contains($line, 'GravatarPrivacy::emailForHash')) {
-                    $found[] = substr($path, strpos($path, '/src/') + 1) . ':' . ($number + 1) . ' ' . trim($line);
+            $source = file_get_contents($path);
+            $name   = substr($path, strpos($path, '/src/') + 1);
+
+            if (preg_match('/gravatar\.com\/avatar/i', $source)) {
+                $found[] = $name . ': an address of Gravatar outside GravatarUrl';
+            }
+
+            // Every address is made from what the rule gives.
+            preg_match_all('/GravatarUrl::build\(\s*([^,]*)/', $source, $calls);
+
+            foreach ($calls[1] as $argument) {
+                if (!str_contains($argument, 'GravatarPrivacy::emailForHash(')) {
+                    $found[] = $name . ': GravatarUrl::build(' . trim($argument) . ' without GravatarPrivacy';
                 }
             }
         }
 
         $this->assertSame([], $found, implode("\n", $found));
+        $this->assertStringContainsString(
+            'GravatarUrl::build(',
+            Files::read('src/plugins/plg_kunena_gravatar/src/Helper/KunenaAvatarGravatar.php')
+        );
     }
 }

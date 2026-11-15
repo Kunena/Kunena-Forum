@@ -11,7 +11,6 @@
             "KunenaScssPhp\\League\\Uri\\": ["External/league/uri/", "External/league/uri-interfaces/"],
             "KunenaScssPhp\\Symfony\\Component\\Filesystem\\": "External/symfony/filesystem/",
             "Nbbc\\": "External/Nbbc/src/",
-            "Pedrollo\\GravatarLib\\": "External/Emberlabs/",
             "enshrined\\svgSanitize\\": "External/enshrined/svg-sanitize/src/"
         },
         "classmap": [

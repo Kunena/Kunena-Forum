@@ -15,13 +15,11 @@ namespace Kunena\Forum\Plugin\Kunena\Gravatar\Helper;
 
 \defined('_JEXEC') or die();
 
-use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Pedrollo\GravatarLib\Gravatar;
 
 /**
  * Class KunenaAvatarGravatar
@@ -61,22 +59,15 @@ class KunenaAvatarGravatar extends KunenaAvatar
      */
     protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
     {
-        $user     = KunenaFactory::getUser($user);
-        $gravatar = new Gravatar();
-        $gravatar->setAvatarSize(min($sizex, $sizey));
-        $gravatar->setDefaultImage($this->params->get("default_image", false));
-        $gravatar->setMaxRating('g');
-
-        $uri = Uri::getInstance();
-
-        if ($uri->isSSL()) {
-            $gravatar->enableSecureImages();
-        } else {
-            $gravatar->disableSecureImages();
-        }
+        $user = KunenaFactory::getUser($user);
 
         // The hash of the address is in the html of every page with this avatar: not for a member who hides the address (Kunena
-        // 7.1). An empty address gives the default image (the all-zero hash, forced).
-        return $gravatar->buildGravatarURL(GravatarPrivacy::emailForHash($user->email, $user->hideEmail));
+        // 7.1). An empty address gives the default image (the hash of zeros, forced).
+        return GravatarUrl::build(
+            GravatarPrivacy::emailForHash($user->email, $user->hideEmail),
+            min($sizex, $sizey),
+            (string) $this->params->get('default_image', ''),
+            'g'
+        );
     }
 }

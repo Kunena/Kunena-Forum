@@ -321,6 +321,16 @@ abstract class KunenaDiagnostics
     /**
      * @return  string
      *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_bookmarkOrphaned(): string
+    {
+        return "DELETE a FROM #__kunena_bookmarks AS a LEFT JOIN #__kunena_messages AS m ON m.id=a.message_id WHERE m.id IS NULL";
+    }
+
+    /**
+     * @return  string
+     *
      * @since   Kunena 6.0
      */
     protected static function delete_topicInSection(): string
@@ -771,6 +781,22 @@ abstract class KunenaDiagnostics
      *
      * @return  array
      *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_bookmarkOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.*');
+        }
+
+        return ['message_id' => 'invalid'];
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
      * @since   Kunena 6.0
      */
     protected static function fields_topicInSection(?QueryInterface $query = null): array
@@ -1121,6 +1147,7 @@ abstract class KunenaDiagnostics
             'reactionOrphaned',
             'historyOrphaned',
             'digestOrphaned',
+            'bookmarkOrphaned',
             'userCategoryOrphaned',
             'userReadOrphaned',
             'userReadWrongCategory',
@@ -1526,6 +1553,21 @@ abstract class KunenaDiagnostics
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
         $query->from("#__kunena_digest AS a")->leftJoin("#__kunena_messages AS m ON m.id=a.message_id")->where("m.id IS NULL");
+
+        return $query;
+    }
+
+    /**
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_bookmarkOrphaned(): QueryInterface
+    {
+        // Query to find bookmarks which do not belong in any existing message
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->from("#__kunena_bookmarks AS a")->leftJoin("#__kunena_messages AS m ON m.id=a.message_id")->where("m.id IS NULL");
 
         return $query;
     }

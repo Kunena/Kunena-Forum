@@ -21,9 +21,11 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageBookmarks;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
@@ -145,6 +147,18 @@ class MessageListingRecentDisplay extends ListDisplay
                     ->filterByUser($user, 'thankee')
                     ->filterByHold([0]);
                 break;
+            case 'bookmarks':
+                // The bookmarks are private: always the ones of the user who is logged in, whatever the request asks.
+                $me = KunenaUserHelper::getMyself();
+
+                if (!KunenaMessageBookmarks::mayBookmark($me, !isset($this->config->bookmarks) || (bool) $this->config->bookmarks)) {
+                    throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $me->exists() ? 404 : 401);
+                }
+
+                $finder
+                    ->filterByUser($me, 'bookmarker')
+                    ->filterByHold([0]);
+                break;
             default:
                 $finder
                     ->filterByUser($user, 'author')
@@ -252,6 +266,11 @@ class MessageListingRecentDisplay extends ListDisplay
                 $this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
                 $this->messagemore = 'COM_KUNENA_PROFILE_THANKYOU_GIVEN_TIMES';
                 $actions           = ['approve', 'delete', 'permdelete'];
+                break;
+            case 'bookmarks':
+                $this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_BOOKMARKS');
+                $this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
+                $actions           = [];
                 break;
             case 'recent':
             default:

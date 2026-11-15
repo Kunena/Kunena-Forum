@@ -74,6 +74,17 @@ UPDATE `#__kunena_smileys` SET `ordering` = `id` WHERE `ordering` = 0;
 ALTER TABLE `#__kunena_topics` ADD COLUMN `lock_reason` varchar(255) NOT NULL default '' AFTER `locked`;
 -- The reply which the author or a moderator accepted as the answer of the topic: the topics which are there have none.
 ALTER TABLE `#__kunena_topics` ADD COLUMN `answer_id` int(11) NOT NULL default '0' AFTER `lock_reason`;
+-- The messages which a user bookmarked (My bookmarks).
+CREATE TABLE IF NOT EXISTS `#__kunena_bookmarks` (
+    `user_id`      int(11) NOT NULL,
+    `message_id`   int(11) NOT NULL,
+    `created_time` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`user_id`, `message_id`),
+    KEY `message_id` (`message_id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
 -- The posts which wait for the daily or weekly digest of a user (instead of an e-mail for each post).
 CREATE TABLE IF NOT EXISTS `#__kunena_digest` (
     `user_id`      int(11) NOT NULL,

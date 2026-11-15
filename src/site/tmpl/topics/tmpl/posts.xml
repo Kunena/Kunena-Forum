@@ -16,6 +16,7 @@
                 <option value="recent">COM_KUNENA_POSTS_MODE_OPTION_RECENT</option>
                 <option value="thankyou">COM_KUNENA_POSTS_MODE_OPTION_THANKYOU</option>
                 <option value="mythanks">COM_KUNENA_POSTS_MODE_OPTION_MYTHANKS</option>
+                <option value="bookmarks">COM_KUNENA_POSTS_MODE_OPTION_BOOKMARKS</option>
                 <option value="unapproved">COM_KUNENA_POSTS_MODE_OPTION_UNAPROVED</option>
                 <option value="deleted">COM_KUNENA_POSTS_MODE_OPTION_DELETED</option>
             </field>

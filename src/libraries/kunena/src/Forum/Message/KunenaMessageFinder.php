@@ -232,6 +232,10 @@ class KunenaMessageFinder extends KunenaFinder
             case '!thankee':
                 $this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $this->db->quoteName('th.postid') . ' = a.id AND ' . $this->db->quoteName('th.targetuserid') . ' != ' . (int) $user->userid);
                 break;
+            case 'bookmarker':
+                // The messages which the user bookmarked.
+                $this->query->innerJoin($this->db->quoteName('#__kunena_bookmarks', 'bm') . ' ON ' . $this->db->quoteName('bm.message_id') . ' = a.id AND ' . $this->db->quoteName('bm.user_id') . ' = ' . (int) $user->userid);
+                break;
         }
 
         return $this;

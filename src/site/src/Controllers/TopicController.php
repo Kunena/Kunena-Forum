@@ -49,6 +49,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageBookmarks;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageReactions;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageSchedule;
@@ -2857,6 +2858,56 @@ class TopicController extends KunenaController
 
         $this->app->enqueueMessage(Text::_($saved ? 'COM_KUNENA_REACTION_SAVED' : 'COM_KUNENA_REACTION_REMOVED'), 'success');
         $this->setRedirect($message->getUrl($topic->getCategory(), false));
+    }
+
+    /**
+     * Bookmark a message for the user (the list My bookmarks), or remove his bookmark.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function bookmark()
+    {
+        if (!Session::checkToken('get')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $enabled = !isset($this->config->bookmarks) || (bool) $this->config->bookmarks;
+
+        if (!KunenaMessageBookmarks::mayBookmark($this->me, $enabled)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $message = KunenaMessageHelper::get($this->mesid);
+
+        try {
+            $message->tryAuthorise('read');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return; // -- abort
+        }
+
+        try {
+            $bookmarked = KunenaMessageBookmarks::toggle((int) $message->id, (int) $this->me->userid);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::_($bookmarked ? 'COM_KUNENA_BOOKMARK_SAVED' : 'COM_KUNENA_BOOKMARK_REMOVED'), 'success');
+        $this->setRedirect($message->getUrl($message->getTopic()->getCategory(), false));
     }
 
     /**

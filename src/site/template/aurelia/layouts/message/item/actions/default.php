@@ -72,6 +72,7 @@ echo $this->subLayout('Message/Item/Reactions')
             <?php echo $this->messageButtons->get('thankyou'); ?>
             <?php echo $this->messageButtons->get('unthankyou'); ?>
             <?php echo $this->messageButtons->get('answer'); ?>
+            <?php echo $this->messageButtons->get('bookmark'); ?>
 
             <?php if ($this->messageButtons->get('moderate')) :
             ?>
@@ -161,6 +162,7 @@ endif; ?>
             <?php echo $this->messageButtons->get('thankyou'); ?>
             <?php echo $this->messageButtons->get('unthankyou'); ?>
             <?php echo $this->messageButtons->get('answer'); ?>
+            <?php echo $this->messageButtons->get('bookmark'); ?>
             <?php echo $multiQuote; ?>
         </div>
 

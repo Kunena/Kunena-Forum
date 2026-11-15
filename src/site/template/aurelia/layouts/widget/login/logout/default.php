@@ -136,6 +136,15 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
                         </div>
                         <?php endif; ?>
 
+                        <?php if (!isset($this->config->bookmarks) || $this->config->bookmarks) : ?>
+                        <div id="bookmarks">
+                            <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=bookmarks'); ?>" class="btn btn-link">
+                                <?php echo KunenaIcons::bookmark(); ?>
+                                <?php echo Text::_('COM_KUNENA_MY_BOOKMARKS'); ?>
+                            </a>
+                        </div>
+                        <?php endif; ?>
+
                         <?php if ($this->me->isModerator()) : ?>
                         <div id="modlog">
                             <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=modlog'); ?>" class="btn btn-link">

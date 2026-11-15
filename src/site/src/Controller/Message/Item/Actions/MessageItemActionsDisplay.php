@@ -27,6 +27,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageBookmarks;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageReactions;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicAnswer;
@@ -353,6 +354,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
             $this->messageButtons->set(
                 'answer_dropdown',
                 $this->getButton(\sprintf($task, 'answer'), $answerName, 'message', 'user', $answerName, true, KunenaIcons::check())
+            );
+        }
+
+        // Bookmark the message for the user (My bookmarks), or remove his bookmark.
+        if (KunenaMessageBookmarks::mayBookmark($me, !isset($this->config->bookmarks) || (bool) $this->config->bookmarks)) {
+            $bookmarkName = KunenaMessageBookmarks::isBookmarked((int) $this->message->id, (int) $me->userid) ? 'unbookmark' : 'bookmark';
+
+            $this->messageButtons->set(
+                'bookmark',
+                $this->getButton(\sprintf($task, 'bookmark'), $bookmarkName, 'message', 'user', $bookmarkName, false, KunenaIcons::bookmark())
+            );
+            $this->messageButtons->set(
+                'bookmark_dropdown',
+                $this->getButton(\sprintf($task, 'bookmark'), $bookmarkName, 'message', 'user', $bookmarkName, true, KunenaIcons::bookmark())
             );
         }
 

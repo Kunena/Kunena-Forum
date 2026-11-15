@@ -1188,6 +1188,12 @@ class KunenaMessage extends KunenaDatabaseObject
             ->where($this->_db->quoteName('message_id') . ' = ' . (int) $this->id);
         $queries[] = $query;
 
+        // Delete the bookmarks
+        $query = $this->_db->createQuery();
+        $query->delete($this->_db->quoteName('#__kunena_bookmarks'))
+            ->where($this->_db->quoteName('message_id') . ' = ' . (int) $this->id);
+        $queries[] = $query;
+
         // Delete message
         $query = $this->_db->createQuery();
         $query->delete($this->_db->quoteName('#__kunena_messages_text'))

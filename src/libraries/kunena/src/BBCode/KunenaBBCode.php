@@ -177,6 +177,229 @@ class KunenaBBCode extends BBCode
     }
 
     /**
+     * @param   string  $string  string
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     */
+    protected function autoDetectURLs($string): array
+    {
+        // The text of [url]address[/url] is the address as written: one address chunk, encoded, without links or smileys.
+        if ($this->urlWithoutDefinition > 0) {
+            return ['', htmlspecialchars((string) $string, ENT_QUOTES, 'UTF-8')];
+        }
+
+        $search = preg_split('/(?xi)
+		\b
+		(
+			(?:
+				(?:https?|ftp):\/\/
+				|
+				www\d{0,3}\.
+				|
+				mailto:
+				|
+				(?:[a-zA-Z0-9._-]{2,}@)
+			)
+			(?:
+				[^\s()<>]+
+				|
+				\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)
+			)+
+			(?:
+				\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)
+				|
+				[^\s`!()\[\]{};:\'"\.,<>?«»“”‘’™]
+			)
+		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+        $output = [];
+
+        if ($search !== false) {
+            foreach ($search as $index => $token) {
+                // The tokens alternate: text, address, text, address. Text is escaped later, so it must stay a text token.
+                if ($index & 1) {
+                    if (preg_match("/^(https?|ftp|mailto):/ui", $token)) {
+                        // Protocol has been provided, so just use it as-is.
+                        $url = $token;
+                    } else {
+                        // Add scheme to emails and raw domain URLs.
+                        $url = (strpos($token, '@') ? 'mailto:' : 'http://') . $token;
+                    }
+
+                    // Never start URL from the middle of text (except for punctuation).
+                    $invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index - 1]);
+                    $invalid |= !$this->IsValidURL($url, true);
+
+                    // We have a full, complete, and properly-formatted URL, with protocol.
+                    // Now we need to apply the $this->getURLPattern() template to turn it into HTML.
+                    $params = UriHelper::parse_url($url);
+
+                    if (!$invalid && substr($url, 0, 7) == 'mailto:') {
+                        $email = StringHelper::substr($url, 7);
+
+                        if ($this->canCloakEmail($params)) {
+                            $output[$index] = HTMLHelper::_('email.cloak', $email, $this->IsValidEmail($email));
+                        } else {
+                            $output[$index] = $email;
+                        }
+                    } elseif ($invalid || empty($params['host']) || !empty($params['pass'])) {
+                        $output[$index - 1] .= $token;
+                        $output[$index]     = '';
+                    } else {
+                        $params['url']  = $url;
+                        $params['link'] = $url;
+                        $params['text'] = $token;
+                        $output[$index] = $this->FillTemplate($this->getURLPattern(), $params);
+                    }
+                } else {
+                    $output[$index] = $token;
+                }
+            }
+        }
+
+        return $output;
+    }
+
+    /**
+     * @param   mixed  $params  params
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function canCloakEmail(&$params): bool
+    {
+        if (PluginHelper::isEnabled('content', 'emailcloak')) {
+            $plugin = PluginHelper::getPlugin('content', 'emailcloak');
+            $params = new Registry($plugin->params);
+
+            if ($params->get('mode', 1)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Used for Smart Auto Linking, it loads the content of the url given to search the title from it
+     *
+     * @param   string  $url  url
+     *
+     * @return string
+     *
+     * @since   Kunena 6.0
+     */
+    public function get_title(string $url): string
+    {
+        // The title comes from the cache of the link cards: the other site is asked once for a week, not at every view of the topic
+        // (and at most a few times for a page). It is plain text, so it is only encoded for our html.
+        $card = KunenaLinkPreview::get($url);
+
+        return $card ? htmlspecialchars((string) $card['title'], ENT_QUOTES, 'UTF-8') : '';
+    }
+
+    /**
+     * Is the host of the link one of the domains of the list (or a subdomain of one): the own domains of the site, whose links
+     * get no rel="nofollow noopener noreferrer".
+     *
+     * @param   string  $url   The address of the link.
+     * @param   string  $list  The domains, one on each line (blanks, commas and semicolons also separate them).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isOwnDomain(string $url, string $list): bool
+    {
+        // PHP and the browsers read a backslash or a user before the host differently (http://evil.org\@example.com/ opens
+        // evil.org): such a link is never an own domain.
+        if (str_contains($url, '\\') || parse_url($url, PHP_URL_USER) !== null || parse_url($url, PHP_URL_PASS) !== null) {
+            return false;
+        }
+
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+
+        if ($host === '') {
+            return false;
+        }
+
+        foreach (preg_split('/[\s,;]+/', strtolower($list), -1, PREG_SPLIT_NO_EMPTY) as $domain) {
+            // An entry may be written as an address: only its host counts.
+            $domain = preg_replace('#^[a-z][a-z0-9+.-]*://#', '', $domain);
+            $domain = ltrim(preg_split('#[/?\#:]#', $domain, 2)[0], '.');
+
+            if (!preg_match('/^[a-z0-9-]+(\.[a-z0-9-]+)*$/', $domain)) {
+                continue;
+            }
+
+            if ($host === $domain || str_ends_with($host, '.' . $domain)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * The address of an emoticon of Kunena, rebuilt with the address of the current site: the editor stores emoticons as an image
+     * path in the message, which breaks when the site moves to or from a (sub)folder or to another domain.
+     *
+     * @param   string  $url        The address of the image tag.
+     * @param   string  $smileyUrl  The address of the site the emoticons are served from (without a trailing slash).
+     * @param   string  $smileyDir  The folder of the site the emoticons are in.
+     *
+     * @return  string|null  The rebuilt address, or null when the address is not an existing emoticon of Kunena.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function emoticonUrl(string $url, string $smileyUrl, string $smileyDir): ?string
+    {
+        if (!preg_match('#^(?:https?://[^/]+)?(?:/[^?\#]*)?/media/kunena/emoticons/([^/?\#]+)$#i', $url, $matches)) {
+            return null;
+        }
+
+        $file = $matches[1];
+
+        // On Windows is_file() follows ..\ out of the folder of the emoticons.
+        if (str_contains($file, '\\') || $file === '.' || $file === '..') {
+            return null;
+        }
+
+        if (!is_file($smileyDir . '/media/kunena/emoticons/' . $file)) {
+            return null;
+        }
+
+        return $smileyUrl . '/media/kunena/emoticons/' . $file;
+    }
+
+    /**
+     * Which address of the site a link of the URL tag points to: only a non-SEF address (index.php?...) goes through the router;
+     * a SEF address (/index.php/forum/...) is kept as written, and index.php/... is resolved against the base path of the site.
+     *
+     * @param   string  $url   The address of the link.
+     * @param   string  $base  The base path of the site, without a trailing slash ('' at the root of the domain).
+     *
+     * @return  array  ['url' => string, 'route' => bool]
+     *
+     * @since   Kunena 8.0
+     */
+    public static function siteLink(string $url, string $base): array
+    {
+        if (preg_match('#^/?index\.php\?#i', $url)) {
+            return ['url' => $url[0] === '/' ? substr($url, 1) : $url, 'route' => true];
+        }
+
+        if (preg_match('#^index\.php(?=[/\#]|\z)#i', $url)) {
+            return ['url' => $base . '/' . $url, 'route' => false];
+        }
+
+        return ['url' => $url, 'route' => false];
+    }
+
+    /**
      * Get global instance from BBCode parser.
      *
      * @param   bool  $relative  relative
@@ -1650,9 +1873,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return "[{$name}]{$content}";
         }
 
-        // Display nothing in activity streams etc..
-        if (!empty($bbcode->parent->forceSecure)) {
-            return '';
+        $filename = basename($fileurl);
+
+        // Display tag in activity streams etc..
+        if (!empty($bbcode->parent->forceMinimal)) {
+            return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $bbcode->HTMLEncode($filename) . '</a>';
         }
 
         // Display nothing in subscription mails

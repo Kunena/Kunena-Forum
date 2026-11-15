@@ -84,6 +84,10 @@ echo $this->subLayout('Message/Item/Reactions')
                 <?php echo $this->messageButtons->get('publish'); ?>
                 <?php echo $this->messageButtons->get('spam'); ?>
             <?php endif; ?>
+            <?php if ($this->messageButtons->get('warn')) : ?>
+                <?php echo $this->messageButtons->get('warn'); ?>
+                <?php echo $this->subLayout('Message/Item/Warn')->set('message', $this->message); ?>
+            <?php endif; ?>
         </div>
 
     <?php else :
@@ -152,11 +156,15 @@ endif; ?>
                         <li><?php echo $this->messageButtons->get('publish_dropdown'); ?></li>
                         <li><?php echo $this->messageButtons->get('spam_dropdown'); ?></li>
                         <li><?php echo $this->messageButtons->get('ban_dropdown'); ?></li>
+                        <li><?php echo $this->messageButtons->get('warn_dropdown'); ?></li>
                     </ul>
                 </div>
             <?php endif; ?>
             <?php if ($this->messageButtons->get('ban')) : ?>
                 <?php echo $this->subLayout('Message/Item/Ban')->set('message', $this->message); ?>
+            <?php endif; ?>
+            <?php if ($this->messageButtons->get('warn')) : ?>
+                <?php echo $this->subLayout('Message/Item/Warn')->set('message', $this->message); ?>
             <?php endif; ?>
 
             <?php echo $this->messageButtons->get('thankyou'); ?>

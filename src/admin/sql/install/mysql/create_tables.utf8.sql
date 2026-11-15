@@ -390,6 +390,23 @@ CREATE TABLE IF NOT EXISTS `#__kunena_thankyou`
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `#__kunena_warnings`
+(
+    `id`           int(11)      NOT NULL AUTO_INCREMENT,
+    `user_id`      int(11)      NOT NULL,
+    `moderator_id` int(11)      NOT NULL DEFAULT 0,
+    `message_id`   int(11)      NOT NULL DEFAULT 0,
+    `points`       tinyint(4)   NOT NULL DEFAULT 1,
+    `reason`       varchar(255) NOT NULL DEFAULT '',
+    `created_time` int(11)      NOT NULL DEFAULT 0,
+    `expires_time` int(11)      NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `#__kunena_bookmarks`
 (
     `user_id`      int(11) NOT NULL,

@@ -59,6 +59,7 @@ use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserWarnings;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Forum\Libraries\User\KunenaUserRankPolicy;
@@ -1026,6 +1027,153 @@ class UserController extends KunenaController
         $return = $this->app->getInput()->getString('return', '');
 
         $this->setRedirect($return !== '' && KunenaRoute::isInternal($return) ? $return : $user->getUrl(false));
+    }
+
+    /**
+     * Give the author of a message a warning with points and a reason (the form of the message); when his active points reach the
+     * threshold of the setting, he is banned automatically.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function warn()
+    {
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $message = KunenaMessageHelper::get($this->app->getInput()->getInt('mesid', 0));
+
+        try {
+            $message->tryAuthorise('read');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $user   = KunenaUserHelper::get((int) $message->userid);
+        $points = KunenaUserWarnings::cleanPoints($this->app->getInput()->getInt('points', 0));
+        $reason = trim($this->app->getInput()->getString('reason', ''));
+
+        $mayWarn = KunenaUserWarnings::mayWarn(
+            !isset($this->config->warnings) || (bool) $this->config->warnings,
+            $this->me->isModerator($message->getCategory()),
+            (int) $this->me->userid,
+            (int) $user->userid,
+            $user->exists(),
+            $user->isAdmin(),
+            (bool) $user->isModerator(),
+            $this->me->isAdmin()
+        );
+
+        if (!$mayWarn) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if ($points === null || $reason === '') {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_WARNING_ERROR_FORM'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $now = time();
+
+        KunenaUserWarnings::add((int) $user->userid, (int) $this->me->userid, (int) $message->id, $points, $reason, $now, (int) ($this->config->warningExpireDays ?? 30));
+
+        $active = KunenaUserWarnings::activePoints(KunenaUserWarnings::getWarnings((int) $user->userid), $now);
+
+        if ($this->config->logModeration) {
+            KunenaLog::log(
+                KunenaLog::TYPE_MODERATION,
+                KunenaLog::LOG_USER_WARNING,
+                ['mesid' => (int) $message->id, 'points' => $points, 'reason' => $reason, 'active' => $active],
+                $message->getCategory(),
+                $message->getTopic(),
+                $user
+            );
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_WARNING_SAVED', $points, $user->getName(), $active), 'success');
+
+        try {
+            $banned = KunenaUserWarnings::banIfReached($user, $active, (int) ($this->config->warningBanPoints ?? 10), (int) ($this->config->warningBanDays ?? 7));
+        } catch (Exception $e) {
+            $banned = false;
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        if ($banned) {
+            if ($this->config->logModeration) {
+                KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_USER_BAN, ['reason_public' => Text::sprintf('COM_KUNENA_WARNING_BAN_REASON', $active)], null, null, $user);
+            }
+
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_WARNING_BANNED', $user->getName()), 'warning');
+        }
+
+        $this->setRedirect($message->getUrl($message->getCategory(), false));
+    }
+
+    /**
+     * Remove a warning (the list of the warnings of the profile): for the moderators who may warn the user.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function unwarn()
+    {
+        $warning = KunenaUserWarnings::getWarning($this->app->getInput()->getInt('id', 0));
+        $user    = KunenaUserHelper::get($warning ? (int) $warning->user_id : 0);
+
+        if (!Session::checkToken('post')) {
+            $this->setRedirect($user->getUrl(false), Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+
+            return;
+        }
+
+        $mayWarn = $warning && KunenaUserWarnings::mayWarn(
+            !isset($this->config->warnings) || (bool) $this->config->warnings,
+            (bool) $this->me->isModerator(),
+            (int) $this->me->userid,
+            (int) $user->userid,
+            $user->exists(),
+            $user->isAdmin(),
+            (bool) $user->isModerator(),
+            $this->me->isAdmin()
+        );
+
+        if (!$mayWarn) {
+            $this->setRedirect($user->exists() ? $user->getUrl(false) : KunenaRoute::_('index.php?option=com_kunena', false), Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+
+            return;
+        }
+
+        KunenaUserWarnings::remove((int) $warning->id);
+
+        if ($this->config->logModeration) {
+            KunenaLog::log(
+                KunenaLog::TYPE_MODERATION,
+                KunenaLog::LOG_USER_UNWARNING,
+                ['points' => (int) $warning->points, 'reason' => (string) $warning->reason],
+                null,
+                null,
+                $user
+            );
+        }
+
+        $this->setRedirect($user->getUrl(false), Text::_('COM_KUNENA_WARNING_REMOVED'), 'success');
     }
 
     // Internal functions:

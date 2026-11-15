@@ -265,6 +265,10 @@ use SimpleXMLElement;
  * @property int    $editHistory                  The edit history of the messages: 0 off, 1 for the moderators, 2 for everybody who reads
  * @property int    $digestEmails                 The users may get a daily or weekly digest instead of an e-mail for each new post
  * @property int    $bookmarks                    The users may bookmark messages (My bookmarks)
+ * @property int    $warnings                     The moderators may give warnings with points to the users
+ * @property int    $warningExpireDays            The days after which the points of a warning do not count any more (0: never)
+ * @property int    $warningBanPoints             The active points which ban the user automatically (0: no automatic ban)
+ * @property int    $warningBanDays               The days of the automatic ban (0: permanent)
  * @property string $enableHtml                   Enable safe HTML in messages
  * @property string $trimLongUrls                 Trim Long URLs
  * @property string $trimLongUrlsBack             Back Portion of Trimmed URLs

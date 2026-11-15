@@ -23,6 +23,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [Tag topics with Joomla Tags](features/tags.md) | Administrators, moderators, users |  | Topics get tags of the Joomla component Tags, shown as labels and usable as a filter. |
 | [Suggest similar topics](features/similar-topics.md) | Users |  | While the subject of a new topic is typed, topics with a similar subject are shown. |
 | [The first post of a topic on every page](features/first-post-on-every-page.md) | Users |  | The first message of a topic is shown on top of every page of a long topic. |
+| [Warnings with points](features/warnings.md) | Moderators, users, administrators |  | Moderators give warnings with points which expire; at a threshold the user is banned automatically. |
 | [Bookmarks of messages](features/bookmarks.md) | Users, administrators |  | Bookmark single messages and find them again in the private list My bookmarks. |
 | [Multi-quote](features/multi-quote.md) | Users |  | Choose several messages of a topic with a Multi-quote button and reply with all of them quoted. |
 | [Digest e-mails of the subscriptions](features/digest-emails.md) | Users, administrators |  | A daily or weekly e-mail with the new posts of the subscriptions instead of an e-mail for each post, sent by a scheduled task. |

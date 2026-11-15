@@ -155,6 +155,7 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         $domains[] = $this->createKunenaTableDomain('edits', '#__kunena_messages_history', 'edited_by', $user->id);
         $domains[] = $this->createKunenaTableDomain('digest', '#__kunena_digest', 'user_id', $user->id);
         $domains[] = $this->createKunenaTableDomain('bookmarks', '#__kunena_bookmarks', 'user_id', $user->id);
+        $domains[] = $this->createKunenaTableDomain('warnings', '#__kunena_warnings', 'user_id', $user->id);
 
         try {
             $domains[] = $this->createKunenaTableDomain('inbox_received', '#__kunena_inbox', 'user_id', $user->id);
@@ -223,6 +224,7 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         KunenaHelper::deleteUserData('#__kunena_messages_history', 'edited_by', $user->id);
         KunenaHelper::deleteUserData('#__kunena_digest', 'user_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_bookmarks', 'user_id', $user->id);
+        KunenaHelper::deleteUserData('#__kunena_warnings', 'user_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_sessions', 'userid', $user->id);
         KunenaHelper::deleteUserData('#__kunena_polls_users', 'userid', $user->id);
         KunenaHelper::deleteUserData('#__kunena_private_user_map', 'user_id', $user->id);

@@ -306,6 +306,20 @@ class KunenaLog
     public const string LOG_USER_UNBAN = 'LOG_USER_UNBAN';
 
     /**
+     * A warning with points given to a user.
+     *
+     * @since   Kunena 8.0
+     */
+    public const string LOG_USER_WARNING = 'LOG_USER_WARNING';
+
+    /**
+     * A warning of a user removed.
+     *
+     * @since   Kunena 8.0
+     */
+    public const string LOG_USER_UNWARNING = 'LOG_USER_UNWARNING';
+
+    /**
      * @return  void
      *
      * @since   Kunena 6.0

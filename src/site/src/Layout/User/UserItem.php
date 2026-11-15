@@ -32,7 +32,9 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
+use Kunena\Forum\Libraries\User\KunenaUserWarnings;
 use stdClass;
 use Stringable;
 
@@ -358,6 +360,35 @@ class UserItem extends KunenaLayout
             $tab->content    = $this->tabRequest('User/Ban/Form');
             $tab->active     = false;
             $tabs['banuser'] = $tab;
+        }
+
+        // The warnings of the user: for himself (when he has some) and for the moderators who may warn him.
+        if (!isset($this->config->warnings) || $this->config->warnings) {
+            $profileUser = KunenaUserHelper::get((int) $this->profile->userid);
+            $canWarn     = KunenaUserWarnings::mayWarn(
+                true,
+                $moderator,
+                (int) $this->me->userid,
+                (int) $profileUser->userid,
+                $profileUser->exists(),
+                $profileUser->isAdmin(),
+                (bool) $profileUser->isModerator(),
+                $this->me->isAdmin()
+            );
+            $warnings = ($myProfile || $canWarn) ? KunenaUserWarnings::getWarnings((int) $profileUser->userid) : [];
+
+            if ($canWarn || ($myProfile && $warnings)) {
+                $tab               = new stdClass();
+                $tab->title        = Text::_('COM_KUNENA_WARNINGS');
+                $tab->content      = KunenaLayout::factory('User/Item/Warnings')->setProperties([
+                    'warnings'  => $warnings,
+                    'active'    => KunenaUserWarnings::activePoints($warnings, time()),
+                    'threshold' => (int) ($this->config->warningBanPoints ?? 10),
+                    'canRemove' => $canWarn,
+                ]);
+                $tab->active       = false;
+                $tabs['warnings']  = $tab;
+            }
         }
 
         PluginHelper::importPlugin('kunena');

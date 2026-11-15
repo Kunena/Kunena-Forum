@@ -38,6 +38,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserWarnings;
 
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
@@ -614,6 +615,29 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
         }
 
         // Ban the author in one step (a box with the reason): a moderator, for a user who is no admin or moderator and is not banned.
+        // A warning with points for the author of the message: the moderators of the category, for a user whom they may ban.
+        $author = KunenaUserHelper::get((int) $this->message->userid);
+
+        if (
+            $this->message->userid && KunenaUserWarnings::mayWarn(
+                !isset($this->config->warnings) || (bool) $this->config->warnings,
+                $me->isModerator($this->category),
+                (int) $me->userid,
+                (int) $author->userid,
+                $author->exists(),
+                $author->isAdmin(),
+                (bool) $author->isModerator(),
+                $me->isAdmin()
+            )
+        ) {
+            foreach (['warn' => false, 'warn_dropdown' => true] as $key => $dropdown) {
+                $this->messageButtons->set(
+                    $key,
+                    $this->getButton('#warn' . (int) $this->message->id, 'warn', 'message', 'moderation', $key, $dropdown, KunenaIcons::flag())->set('modal', 'modal')
+                );
+            }
+        }
+
         if (!empty($this->config->quickBan) && $me->exists() && $me->isModerator($this->category) && $this->message->userid && $this->message->userid != $me->userid) {
             $quickBan = KunenaBan::getInstanceByUserid((int) $this->message->userid, true);
             $canBan   = false;

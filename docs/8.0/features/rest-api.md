@@ -1,12 +1,13 @@
-# REST API (read only)
+# REST API
 
 > **Label:** `feature` · **Since:** Kunena 8.0 · **For:** Developers, administrators
 
-The categories, topics and posts of the forum through the web services of Joomla (JSON:API), read only.
+The categories, topics and posts of the forum through the web services of Joomla (JSON:API), and the replies of the users.
 
 ## Endpoints
 
-The API is at `/api/index.php/v1/kunena/` of the site. All the endpoints use the method `GET`.
+The API is at `/api/index.php/v1/kunena/` of the site. The endpoints which read use the method `GET`; a reply is posted with
+`POST v1/kunena/posts` ([Post a reply](#post-a-reply)).
 
 | Endpoint | What it gives | Filter |
 | --- | --- | --- |
@@ -57,7 +58,41 @@ services of Joomla. Its option:
 | --- | --- |
 | Readable without a token | Yes |
 
-Writing (new topics, replies) is not in this version of the API.
+## Post a reply
+
+`POST v1/kunena/posts` posts a reply of the user of the API token. It is never public: without a token the answer is 401.
+
+```bash
+curl -X POST "https://example.org/api/index.php/v1/kunena/posts"   -H "X-Joomla-Token: <the token of the user>" -H "Content-Type: application/json"   -d '{"topic_id": 62, "message": "Thank you, this works.", "subscribe": true}'
+```
+
+The body (flat, or as JSON:API in `data.attributes`):
+
+| Field | |
+| --- | --- |
+| `topic_id` | The topic: the reply answers its first message. |
+| `parent_id` | Or the message which the reply answers (with `topic_id`, it must be a message of that topic). |
+| `message` | The text, in BBCode. |
+| `subscribe` | Optional: subscribe the user to the topic. |
+
+The reply has the rules of the form of the site: the permission to reply (a locked topic, a banned user...), the flood protection
+(for a reply too, by user), an identical reply of the same user within 5 minutes, the links of the new users and the maximum of
+links, the moderation of the category and of the new users, and the spam check of the plugins. The subscribers and the mentioned
+users get their notification, with the address of the message on the site.
+
+| Answer | When |
+| --- | --- |
+| 201 | The reply is posted: the post, as `GET v1/kunena/posts/<id>` gives it. |
+| 202 | The reply waits for a moderator: `{"success": true, "message": "...", "data": {"id": ..., "status": "held"}}`. |
+| 400 | No topic, no text, too many links, or the reply could not be saved. |
+| 403 | The user may not reply; a new user with links or images; the spam check rejected it; a user who gets a captcha on the site. |
+| 404 | The topic or the message does not exist, or the user may not read it. |
+| 409 | The same reply was posted a moment ago. |
+| 429 | The flood protection: the user must wait. |
+
+The error has the text of the forum in the language of the site (`errors[0].title`). The API cannot show a captcha: a user who gets
+one on the site (a guest, or a user with fewer posts than the option of the captcha) posts on the site. New topics, edits and
+deletes are not in the API: they answer 404 (no route) or 405.
 
 ---
 

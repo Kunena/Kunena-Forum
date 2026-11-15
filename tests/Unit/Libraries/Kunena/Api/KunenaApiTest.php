@@ -66,12 +66,19 @@ class KunenaApiTest extends UnitTestCase
         $this->assertNull(KunenaApi::date(null));
     }
 
-    public function testThePluginHasOnlyRoutesWhichRead(): void
+    public function testThePluginReadsAndPostsRepliesOnly(): void
     {
         $source = Files::read('src/plugins/plg_webservices_kunena/src/Extension/Kunena.php');
 
-        $this->assertSame(2, substr_count($source, 'new Route(['));
+        $this->assertSame(3, substr_count($source, 'new Route(['));
         $this->assertSame(2, substr_count($source, "new Route(['GET']"));
+        // The one route which writes: a reply, never public (only with the API token of a user).
+        $this->assertStringContainsString(
+            "new Route(['POST'], 'v1/kunena/posts', 'posts.add', [], ['component' => 'com_kunena', 'public' => false]);",
+            $source
+        );
+        $this->assertStringNotContainsString("'PATCH'", $source);
+        $this->assertStringNotContainsString("'DELETE'", $source);
         $this->assertStringNotContainsString('createCRUDRoutes', $source);
         $this->assertStringContainsString("'v1/kunena/categories' => 'categories'", $source);
         $this->assertStringContainsString("'v1/kunena/topics'     => 'topics'", $source);
@@ -80,17 +87,39 @@ class KunenaApiTest extends UnitTestCase
 
     public static function controllers(): array
     {
-        return [['Categories'], ['Topics'], ['Posts']];
+        return [
+            'the categories' => ['Categories', ['add', 'edit', 'delete']],
+            'the topics'     => ['Topics', ['add', 'edit', 'delete']],
+            'the posts'      => ['Posts', ['edit', 'delete']],
+        ];
     }
 
     #[DataProvider('controllers')]
-    public function testTheControllersChangeNothing(string $name): void
+    public function testTheControllersChangeNothing(string $name, array $tasks): void
     {
         $source = Files::read('src/api/src/Controller/' . $name . 'Controller.php');
 
-        foreach (['add', 'edit', 'delete'] as $task) {
+        foreach ($tasks as $task) {
             $this->assertSame(1, preg_match('/public function ' . $task . '\(.*?\)\s*\{(.*?)\n    \}/s', $source, $m), $task);
             $this->assertStringContainsString("throw new RuntimeException('Method Not Allowed', 405);", $m[1]);
+        }
+    }
+
+    public function testAReplyIsPostedByTheUserOfTheTokenWithTheRulesOfTheForm(): void
+    {
+        $source = Files::read('src/api/src/Controller/PostsController.php');
+
+        $this->assertSame(1, preg_match('/public function add\(\)\s*\{(.*?)\n    \}/s', $source, $m));
+        $this->assertStringContainsString('KunenaApiReply::reply(', $m[1]);
+        $this->assertStringContainsString('KunenaUserHelper::getMyself()', $m[1]);
+        // A reply which waits for a moderator is not shown: 202 instead of the post.
+        $this->assertStringContainsString("setHeader('status', 202, true)", $m[1]);
+        $this->assertStringContainsString("setHeader('status', 201, true)", $m[1]);
+
+        $reply = Files::read('src/libraries/kunena/src/Api/KunenaApiReply.php');
+
+        foreach (["tryAuthorise('reply', \$me)", 'canDoCaptcha()', 'dispatchSpamCheck(', 'processNotification($url)', 'sendMentionNotifications(', 'holdsNewUser('] as $rule) {
+            $this->assertStringContainsString($rule, $reply);
         }
     }
 

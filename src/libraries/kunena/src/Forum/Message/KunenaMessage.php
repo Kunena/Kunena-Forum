@@ -2482,12 +2482,14 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @param   string  $oldText  The text of the message before an edit (empty for a new message).
      * @param   bool    $isNew    Is it a new message: the users who get the notification of the message anyway do not get a second e-mail.
+     * @param   string  $url      The address of the message in the e-mail (empty: its address on the site, with the router of the
+     *                            application; the REST API gives the address on the site).
      *
      * @return  int  The number of e-mails which were sent.
      *
      * @since   Kunena 8.0
      */
-    public function sendMentionNotifications(string $oldText = '', bool $isNew = true): int
+    public function sendMentionNotifications(string $oldText = '', bool $isNew = true, string $url = ''): int
     {
         if ($this->hold != 0) {
             return 0;
@@ -2537,7 +2539,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
         $topic      = $this->getTopic();
         $authorName = $this->getAuthor()->getName($this->name, false);
-        $url        = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl(null, false);
+        $url        = $url !== '' ? $url : Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl(null, false);
         $sender     = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
         $sent       = 0;
 

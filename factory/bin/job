@@ -413,6 +413,27 @@ def pr_state(job):
     return gh_json("pr", "view", str(job["pr"]), "--json", "state")["state"]
 
 
+def branch_prs(job, states):
+    """The PRs from the job's branch in this repository (never from a fork) in one of `states`."""
+    prs = gh_json("pr", "list", "--head", job["branch"], "--state", "all", "--limit", "100",
+                  "--json", "number,url,state,headRefName,isCrossRepository")
+    return [p for p in prs if not p["isCrossRepository"] and p["headRefName"] == job["branch"]
+            and p["state"] in states]
+
+
+NO_BRANCH = {"intake", "needs-info", "spec"}
+
+
+def find_pr(job):
+    """Record the job's PR when the job did not: the one open or merged PR from its branch."""
+    if job["pr"] or job["stage"] in NO_BRANCH | TERMINAL:
+        return job
+    prs = branch_prs(job, {"OPEN", "MERGED"})
+    if len(prs) == 1:
+        job["pr"], job["pr_url"] = prs[0]["number"], prs[0]["url"]
+    return job
+
+
 def check_reviews_done(job):
     rd = round_dir(job)
     missing = [r for r in reviewers(job) if not (rd / f"review-{r}.md").exists()]
@@ -435,6 +456,8 @@ def advance(job, stage):
     d = job_dir(job["id"])
     decision = header(d / "intake.md").get("DECISION") if (d / "intake.md").exists() else None
     intake_body = lambda: "\n".join((d / "intake.md").read_text().split("\n\n", 1)[1:]).strip()
+    if stage in {"merged", "needs-human", "rejected"}:
+        find_pr(job)
 
     if stage == "merged":
         require(job["pr"] and pr_state(job) == "MERGED", "the PR isn't merged")
@@ -504,7 +527,7 @@ def advance(job, stage):
                               "branch, resolve the conflicts, push, and try again")
             git(job, "push", "origin", job["branch"])
         if not job["pr"]:
-            prs = gh_json("pr", "list", "--head", job["branch"], "--state", "open", "--json", "number,url")
+            prs = branch_prs(job, {"OPEN"})
             require(len(prs) == 1, f"expected one open PR from {job['branch']}, found {len(prs)}")
             job["pr"], job["pr_url"] = prs[0]["number"], prs[0]["url"]
         # Every PR of the factory carries this label, whether or not the builder set it.
@@ -634,6 +657,12 @@ def cmd_queue():
     jobs = {j["issue"]: j for j in all_jobs()}
     # A job is done once its PR is merged on GitHub, which also closes the issue.
     for j in jobs.values():
+        if j["stage"] not in TERMINAL and not j["pr"]:
+            try:
+                if find_pr(j)["pr"]:
+                    save(j)
+            except Exception:  # noqa: BLE001 - a failed lookup is no PR; list the other jobs
+                pass
         if j["stage"] not in TERMINAL and j["pr"] and pr_state(j) == "MERGED":
             save(advance(sync(j), "merged"))
     issues = gh_json("issue", "list", "--label", LABELS["queue"], "--state", "open",
@@ -677,6 +706,7 @@ def cmd_queue():
 
 def cmd_merge(job):
     sync(job)
+    find_pr(job)
     if job["stage"] == "approve":
         save(advance(job, "merging"))
     if job["stage"] != "merging":
@@ -810,6 +840,10 @@ def main(argv):
             cmd_agents(sync(resolve(args[0])), args[1])
         elif cmd == "sync" and len(args) == 1:
             job = sync(resolve(args[0]))
+            try:
+                find_pr(job)
+            except Exception:  # noqa: BLE001 - a failed lookup is no PR
+                pass
             save(job)
             reviews = " ".join(f"{k}:{v}" for k, v in job["reviews"].items())
             print(f"{job['id']}: {job['stage']} round {job['round']} gate {job['gate'] or '-'} {reviews}".rstrip())

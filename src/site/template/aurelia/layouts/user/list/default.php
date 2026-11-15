@@ -26,6 +26,7 @@ $config = $this->config;
 $cols = 1;
 
 $this->addScript('assets/js/search.js');
+KunenaFactory::getTemplate()->addScriptOptions('com_kunena.usersearch_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json', false));
 ?>
 <h1>
     <?php echo Text::_('COM_KUNENA_MEMBERS'); ?>

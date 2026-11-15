@@ -41,6 +41,12 @@
 jQuery(document).ready(function ($) {
     /* Provide autocomplete user list in search form and in user list */
     function remoteSearch(text, cb) {
+        /* The address is made by the router on the server, with the menu item of the forum */
+        const URL = (typeof Joomla !== 'undefined' && Joomla.getOptions) ? Joomla.getOptions('com_kunena.usersearch_url') : null;
+        if (!URL) {
+            cb([]);
+            return;
+        }
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
@@ -58,8 +64,9 @@ jQuery(document).ready(function ($) {
                     cb([]);
                 }
             }
-        };
-        xhr.open("GET", KunenaUserSearch.url(userField.dataset.searchUrl, text), true);
+        }
+    };
+        xhr.open("GET", URL + (URL.indexOf('?') === -1 ? '?' : '&') + "usersearch=" + encodeURIComponent(text), true);
         xhr.send();
     }
 

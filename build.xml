@@ -300,6 +300,14 @@
 			</fileset>
 		</copy>
 
+		<!-- The REST API (folder webapi of the package, the api part of the manifest) -->
+		<copy
+			todir="${tmp_dir}/packages/com_kunena/webapi"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="src/api" />
+		</copy>
+
 		<!-- Add version information to all xml files and forum.php -->
 		<copy
 			todir="${tmp_dir}/packages/com_kunena"
@@ -502,6 +510,12 @@
 			<fileset dir="${kunena.plugins}/plg_quickicon_kunena" />
 		</copy>
 		<copy
+			todir="${tmp_dir}/packages/plg_webservices_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${kunena.plugins}/plg_webservices_kunena" />
+		</copy>
+		<copy
 			todir="${tmp_dir}/packages/plg_sampledata_kunena"
 			overwrite="true">
 			<filterchain refid="filter" />
@@ -648,6 +662,14 @@
 			overwrite="true">
 			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_quickicon_kunena">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+		<copy
+			todir="${tmp_dir}/packages/plg_webservices_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${project_dir}/plugins/plg_webservices_kunena">
 				<include name="**/*.xml" />
 			</fileset>
 		</copy>
@@ -896,6 +918,14 @@
 			<property
 				name="base.directory"
 				value="${tmp_dir}/packages/plg_privacy_kunena" />
+		</phingcall>
+		<phingcall target="archive">
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_webservices_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_webservices_kunena" />
 		</phingcall>
 		<phingcall target="archive">
 			<property

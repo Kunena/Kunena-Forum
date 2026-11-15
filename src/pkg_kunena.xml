@@ -103,6 +103,10 @@
             type="plugin"
             group="privacy"
             id="kunena">plg_privacy_kunena_v@kunenaversion@.zip</file>
+        <file
+            type="plugin"
+            group="webservices"
+            id="kunena">plg_webservices_kunena_v@kunenaversion@.zip</file>
     </files>
 
     <blockChildUninstall>true</blockChildUninstall>

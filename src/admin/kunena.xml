@@ -76,4 +76,10 @@
             <filename>config.xml</filename>
         </files>
     </administration>
+    <!-- The REST API (the web services of Joomla, routes of the plugin Web Services - Kunena): installed in api/components/com_kunena. -->
+    <api>
+        <files folder="webapi">
+            <folder>src</folder>
+        </files>
+    </api>
 </extension>

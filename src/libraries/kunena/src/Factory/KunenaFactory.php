@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Factory;
 
 use Exception;
 use Joomla\CMS\Application\AdministratorApplication;
+use Joomla\CMS\Application\ApiApplication;
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -84,12 +85,12 @@ abstract class KunenaFactory
      *
      * @param   string  $client  The fallback Application Instance to return when run from 'cli' (Console)
      *
-     * @return  SiteApplication|AdministratorApplication
+     * @return  SiteApplication|AdministratorApplication|ApiApplication  The API application too: the REST API of Kunena (8.0).
      *
      * @throws  RuntimeException
      * @since   Kunena 6.4.3
      */
-    public static function getApplication(string $client = ''): SiteApplication|AdministratorApplication
+    public static function getApplication(string $client = ''): SiteApplication|AdministratorApplication|ApiApplication
     {
         if (Factory::getApplication()->isClient('cli')) {
             if (empty($client)) {

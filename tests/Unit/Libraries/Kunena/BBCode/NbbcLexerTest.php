@@ -14,11 +14,13 @@ namespace Kunena\Tests\Unit\Libraries\Kunena\BBCode;
 
 use Kunena\Tests\Unit\Support\Files;
 use Kunena\Tests\Unit\UnitTestCase;
+use Nbbc\BBCode;
 use Nbbc\BBCodeException;
+use Nbbc\BBCodeLexer;
 
 /**
- * The lexer of the parser Nbbc throws BBCodeException when PCRE fails: the class did not exist (Kunena 7.1, #10332), so the error
- * became a fatal error.
+ * The lexer of the parser Nbbc (Kunena 7.1): an unclosed [ followed by many quotes made the pattern of a tag backtrack until PCRE
+ * failed (#10341), and the lexer then threw BBCodeException, a class which did not exist (#10332).
  */
 class NbbcLexerTest extends UnitTestCase
 {
@@ -43,5 +45,19 @@ class NbbcLexerTest extends UnitTestCase
     {
         $this->assertTrue(class_exists(BBCodeException::class));
         $this->assertTrue(is_subclass_of(BBCodeException::class, \Exception::class));
+    }
+
+    public function testAnUnclosedTagWithManyQuotesIsText(): void
+    {
+        $text  = 'Hello [b ' . str_repeat('"a" ', 20000) . 'world';
+        $lexer = new BBCodeLexer($text);
+        $out   = '';
+
+        while ($lexer->nextToken() !== BBCode::BBCODE_EOI) {
+            $out .= $lexer->text;
+        }
+
+        $this->assertSame($text, $out);
+        $this->assertSame(PREG_NO_ERROR, preg_last_error());
     }
 }

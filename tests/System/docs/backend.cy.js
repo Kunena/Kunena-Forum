@@ -57,7 +57,7 @@ describe('Documentation: the administration', () => {
   });
 
   it('the options of the template: features', () => {
-    open(`${base}&view=template&layout=edit&name=aurelia`);
+    open(`${base}&view=template&layout=edit&name=agora`);
     tab('Features');
     forum('admin-template-features', 'main');
   });
@@ -84,16 +84,22 @@ describe('Documentation: the administration', () => {
   });
 
   it('the menu item of the forum with the categories of this forum', () => {
-    open('/administrator/index.php?option=com_menus&task=item.edit&id=117');
+    // The menu item Forum Home which the install of Kunena made (its id changes when Kunena is installed again).
+    cy.task('queryDB', "SELECT id FROM #__menu WHERE menutype = 'kunenamenu' AND link LIKE 'index.php?option=com_kunena&view=home%' AND published = 1 ORDER BY id LIMIT 1")
+      .then((rows) => {
+        const id = rows[0].id;
 
-    // The option is on one of the tabs of the form.
-    cy.contains('label', /Categories of this forum/i).closest('joomla-tab-element').then(($pane) => {
-      cy.get(`joomla-tab button[aria-controls="${$pane.attr('id')}"]`).filter(':visible').first().click();
-    });
-    forum('admin-menu-item-forum-home', 'main');
+        open(`/administrator/index.php?option=com_menus&task=item.edit&id=${id}`);
 
-    // The menu item was checked out by opening it: it is free again.
-    cy.task('queryDB', 'UPDATE #__menu SET checked_out = NULL, checked_out_time = NULL WHERE id = 117');
+        // The option is on one of the tabs of the form.
+        cy.contains('label', /Categories of this forum/i).closest('joomla-tab-element').then(($pane) => {
+          cy.get(`joomla-tab button[aria-controls="${$pane.attr('id')}"]`).filter(':visible').first().click();
+        });
+        forum('admin-menu-item-forum-home', 'main');
+
+        // The menu item was checked out by opening it: it is free again.
+        cy.task('queryDB', `UPDATE #__menu SET checked_out = NULL, checked_out_time = NULL WHERE id = ${id}`);
+      });
   });
 
   it('the mail templates of Kunena in the mail templates of Joomla', () => {

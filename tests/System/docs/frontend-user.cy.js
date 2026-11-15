@@ -93,7 +93,7 @@ describe('Documentation: the forum as a user', () => {
 
   it('the marker of a followed user in the list of topics', () => {
     follow();
-    open(`${base}&view=topics&layout=default&mode=replies`);
+    open(`${base}&view=topics&layout=default&mode=replies&sel=-1`);
     forum('follow-marker-in-lists', '#kunena', { maxHeight: 1135 });
   });
 
@@ -101,7 +101,7 @@ describe('Documentation: the forum as a user', () => {
     [[5, 3], [7, 4], [4, 2]].forEach(([topic, tag]) => {
       cy.task('queryDB', `INSERT INTO #__contentitem_tag_map (type_alias, core_content_id, content_item_id, tag_id, tag_date, type_id) VALUES ('com_kunena.topic', 0, ${topic}, ${tag}, NOW(), 0)`);
     });
-    open(`${base}&view=topics&layout=default&mode=replies`);
+    open(`${base}&view=topics&layout=default&mode=replies&sel=-1`);
     forum('tags-in-lists', '#kunena', { maxHeight: 1135 });
   });
 
@@ -126,7 +126,8 @@ describe('Documentation: the forum as a user', () => {
 
   it('the inbox with private messages and notifications', () => {
     cy.task('queryDB', `INSERT INTO #__kunena_inbox (user_id, sender_id, type, conversation_id, subject, body, topic_id, message_id, created_time) VALUES (${user.id}, ${admin}, 'message', 1, 'Welcome to the forum', 'Hello! Tell me if you have a question about the forum.', 0, 0, UNIX_TIMESTAMP() - 1800)`);
-    cy.task('queryDB', `INSERT INTO #__kunena_inbox (user_id, sender_id, type, conversation_id, subject, body, topic_id, message_id, created_time) VALUES (${user.id}, ${admin}, 'mention', 0, 'Meet our new moderators', 'ci-admin mentioned you in a message.', 4, 0, UNIX_TIMESTAMP() - 600)`);
+    // The notification names a message which exists (the first message of the topic): without one the inbox says that it is gone.
+    cy.task('queryDB', `INSERT INTO #__kunena_inbox (user_id, sender_id, type, conversation_id, subject, body, topic_id, message_id, created_time) SELECT ${user.id}, ${admin}, 'mention', 0, 'Meet our new moderators', 'ci-admin mentioned you in a message.', id, first_post_id, UNIX_TIMESTAMP() - 600 FROM #__kunena_topics WHERE id = 4`);
     open(`${base}&view=user&layout=default`);
     cy.contains(tabs, /Inbox/i).filter(':visible').first().click();
     forum('inbox-tab', '#kunena');

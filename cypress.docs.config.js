@@ -1,4 +1,4 @@
-import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { defineConfig } from 'cypress';
 import base from './cypress.config.js';
@@ -8,10 +8,11 @@ import base from './cypress.config.js';
 //
 //   KUNENA_CMS_PATH=E:/www/apache/htdocs/tests npx cypress run --config-file cypress.docs.config.js
 //
-// The options of the Aurelia template are kept in a file of the template (config/params.ini, not in git): the task
-// kunenaTemplateParams changes some of them for a screenshot, and gives the old values back, so a test can put them back.
+// The pictures show the Agora template (the default of a new install). Its options are kept in a file of the template
+// (config/params.ini, not in git): the task kunenaTemplateParams changes some of them for a screenshot, and gives the old values
+// back, so a test can put them back.
 
-const paramsFile = 'src/site/template/aurelia/config/params.ini';
+const paramsFile = 'src/site/template/agora/config/params.ini';
 
 const readParams = () => {
   const params = {};
@@ -32,6 +33,9 @@ const readParams = () => {
 export default defineConfig({
   ...base,
   screenshotsFolder: 'docs/8.0/images',
+  // The folder of the screenshots is the folder of the pictures of the docs: Cypress must not empty it before a run (the pictures of
+  // the tests which fail would be lost).
+  trashAssetsBeforeRuns: false,
   videosFolder: 'tests/System/output/videos',
   video: false,
   viewportWidth: 1200,
@@ -65,6 +69,11 @@ export default defineConfig({
 
         if (details.path !== target) {
           rmSync(details.path);
+
+          // The folder of the spec which Cypress made for the screenshot stays empty: it is not left among the pictures.
+          if (readdirSync(dirname(details.path)).length === 0) {
+            rmSync(dirname(details.path), { recursive: true });
+          }
         }
 
         return { path: target };

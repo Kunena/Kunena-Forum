@@ -10,6 +10,8 @@ different.
   [tests/README.md](../../tests/README.md), the part *Cypress against the checkout*.
 - Google Chrome. The pictures are taken in a big window (the options in `cypress.docs.config.js`), which Electron does not give.
 - The users `ci-admin` (the administrator of the test site) and `ci-user`, which the specs of the tests make.
+- The template of the forum is Agora (the default of a new install; *Kunena, Templates*): the pictures show the template of the forum,
+  and the specs change the options of Agora.
 
 ## Make the pictures
 
@@ -32,7 +34,7 @@ The pictures are saved as `docs/8.0/images/<name>.png`. Run one spec with `--spe
 
 ## What the specs change
 
-Every spec puts back what it changed: the options of Kunena in the database (`cy.kunena_setOption`), the file of the options of the Aurelia
+Every spec puts back what it changed: the options of Kunena in the database (`cy.kunena_setOption`), the file of the options of the Agora
 template (`config/params.ini`), and the rows it added (follows, ignores, tags, drafts, messages). The sample forum (categories, topics and
 users with a readable text) is data of the test site.
 

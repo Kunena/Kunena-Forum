@@ -27,7 +27,7 @@ describe('Documentation: the forum as an administrator', () => {
   });
 
   it('the filter bar of the lists of topics', () => {
-    open(`${base}&view=topics&layout=default&mode=replies`);
+    open(`${base}&view=topics&layout=default&mode=replies&sel=-1`);
     forum('topic-list-filter-bar');
   });
 

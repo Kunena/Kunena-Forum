@@ -1,7 +1,7 @@
 # What is new in Kunena 8.0
 
 Every new feature of Kunena 8.0 has a page with what it does, how it looks and which options it has. The pictures are made on a test
-forum with the Aurelia template in the Cassiopeia template of Joomla.
+forum with the Agora template (the default of a new install) in the Cassiopeia template of Joomla.
 
 All the pages have the label `feature`. The number of the issue is the issue in the repository on GitHub.
 

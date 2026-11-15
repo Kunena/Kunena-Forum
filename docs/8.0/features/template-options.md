@@ -4,7 +4,7 @@
 
 An overview of the options which the Aurelia template has now.
 
-![The tab Features of the Aurelia template](../images/admin-template-features.png)
+![The tab Features of the template (Agora has the same options)](../images/admin-template-features.png)
 
 | Option | Choices | Default | Page |
 | --- | --- | --- | --- |

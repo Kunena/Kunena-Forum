@@ -70,7 +70,7 @@ export const addMessage = (thread, userid, name, text, subject = 'Re: the topic'
   `INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon, locked, hold, ordering, hits, moved, modified_by, modified_time, modified_reason) VALUES (${thread}, ${thread}, 3, '${name}', ${userid}, '', ${sqlString(subject)}, UNIX_TIMESTAMP(), '${ip}', 0, 0, 0, 0, 0, 0, 0, 0, '')`,
 ).then((info) => cy.task('queryDB', `INSERT INTO #__kunena_messages_text (mesid, message) VALUES (${info.insertId}, ${sqlString(text)})`).then(() => info.insertId));
 
-// Options of the Aurelia template (a file of the template). Kunena keeps the options in a cache of its own, which is cleared.
+// Options of the Agora template (a file of the template). Kunena keeps the options in a cache of its own, which is cleared.
 export const templateOptions = (updates) => cy.task('kunenaTemplateParams', updates)
   .then(() => cy.task('deleteRelativePath', 'cache/com_kunena_template'))
   .then(() => cy.task('deleteRelativePath', 'administrator/cache/com_kunena_template'));

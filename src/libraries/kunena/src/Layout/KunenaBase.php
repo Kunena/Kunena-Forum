@@ -90,6 +90,16 @@ class KunenaBase extends KunenaLayoutBase
     protected mixed $includePaths = null;
 
     /**
+     * The layout files which were found in this request, by layout name and paths: a page renders the same layouts many
+     * times (a row and its pagination for every topic), and looking for the file (realpath() and file_exists() in each path)
+     * cost about a quarter of a page.
+     *
+     * @var     array<string, string|false>
+     * @since   Kunena 8.0
+     */
+    private static array $foundPaths = [];
+
+    /**
      * Support for closure variables.
      *
      * @var     array
@@ -465,18 +475,13 @@ class KunenaBase extends KunenaLayoutBase
 
         $paths = [];
 
-        foreach ($this->includePaths as $path) {
+        foreach ($this->includePaths ?? [] as $path) {
             $paths[] = $path;
         }
 
-        // Find the layout file path.
-        $path = KunenaPath::find($paths, "{$layout}.php");
-
-        if (!$path) {
-            $path = KunenaPath::find($paths, 'default.php');
-        }
-
-        return $path;
+        // Find the layout file path, once in a request.
+        return self::$foundPaths[$layout . "\0" . implode("\0", $paths)] ??= KunenaPath::find($paths, "{$layout}.php")
+            ?: KunenaPath::find($paths, 'default.php');
     }
 
     /**

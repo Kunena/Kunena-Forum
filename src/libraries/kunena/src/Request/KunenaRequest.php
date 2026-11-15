@@ -18,6 +18,7 @@ namespace Kunena\Forum\Libraries\Request;
 use Exception;
 use InvalidArgumentException;
 use Joomla\Input\Input;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerBase;
 
 /**
@@ -74,12 +75,14 @@ class KunenaRequest
         $classnamespaced = 'Kunena\Forum\Site\Controller\\' . $ex[0] . '\\' . $ex[1] . '\\' . $subpart . str_replace(' ', '', $words);
 
         if (!class_exists($classnamespaced)) {
-            if (JDEBUG && KunenaConfig->debug) {
+            // With the debug mode of Joomla and the one of Kunena on, the developer sees which class is missing. The name has only
+            // letters, digits and _ (the request is cleaned above).
+            if (JDEBUG && KunenaConfig::getInstance()->debug) {
                 throw new InvalidArgumentException(\sprintf('In the KunenaRequest class the controller %s doesn\'t exist.', $classnamespaced), 404);
-            } else {
-                // The name of the class is built from the request: it is not said back to the visitor.
-                throw new InvalidArgumentException('The page does not exist.', 404);
             }
+
+            // The name of the class is built from the request: it is not said back to the visitor.
+            throw new InvalidArgumentException('The page does not exist.', 404);
         }
 
         // Create controller object.

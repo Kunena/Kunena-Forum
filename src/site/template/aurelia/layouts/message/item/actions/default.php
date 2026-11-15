@@ -25,6 +25,15 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $fullactions     = $this->ktemplate->params->get('fullactions');
 $quick           = $this->ktemplate->params->get('quick');
 
+// Multi-quote: a button which adds the message to the quotes of a reply (assets/js/multiquote.js), where the message can be quoted.
+$multiQuote = '';
+
+if ($this->messageButtons->get('quote')) {
+    $multiQuote = '<button type="button" class="btn btn-outline-primary border kmultiquote" data-kmultiquote="' . (int) $this->message->id
+        . '" aria-pressed="false" title="' . $this->escape(Text::_('COM_KUNENA_MULTIQUOTE_TOGGLE_LONG')) . '">'
+        . KunenaIcons::quote() . ' ' . Text::_('COM_KUNENA_MULTIQUOTE_TOGGLE') . '</button>';
+}
+
 // The reactions of the message: shown in every case (a guest, a locked topic), the actions below only when they apply.
 echo $this->subLayout('Message/Item/Reactions')
     ->set('message', $this->message)
@@ -53,6 +62,7 @@ echo $this->subLayout('Message/Item/Reactions')
 
             <?php echo $this->messageButtons->get('reply'); ?>
             <?php echo $this->messageButtons->get('quote'); ?>
+            <?php echo $multiQuote; ?>
             <?php echo $this->messageButtons->get('edit'); ?>
             <?php
             if ($this->message->isAuthorised('delete')) :
@@ -151,6 +161,7 @@ endif; ?>
             <?php echo $this->messageButtons->get('thankyou'); ?>
             <?php echo $this->messageButtons->get('unthankyou'); ?>
             <?php echo $this->messageButtons->get('answer'); ?>
+            <?php echo $multiQuote; ?>
         </div>
 
     <?php else : ?>

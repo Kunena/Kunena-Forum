@@ -2204,17 +2204,13 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         if ($fields['quote'] === true) {
-            $userfromparent     = KunenaUserHelper::get($useridfromparent);
-            $userfromparentname = $userfromparent->getName();
-
-            if (empty($userfromparent->getName())) {
-                $userfromparentname = 'anonymous';
-            }
-
-            // The confidential text like the parser hides it: the tags in any case, a block in a block. The text of [private] is shown
-            // to nobody, the quote does not give it either.
-            $text             = KunenaParser::removeBlocks((string) $this->message, ['confidential', 'private']);
-            $message->message = "[quote=\"{$userfromparentname} post={$this->id} userid={$useridfromparent}\"]" . $text . "[/quote]";
+            // The [quote] block of the message, without its confidential and private parts (KunenaMessageQuotes::block).
+            $message->message = KunenaMessageQuotes::block(
+                (int) $this->id,
+                (int) $useridfromparent,
+                (string) KunenaUserHelper::get($useridfromparent)->getName(),
+                (string) $this->message
+            );
         } else {
             if (\is_array($safefields)) {
                 $message->bind($safefields);

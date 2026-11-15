@@ -1647,3 +1647,33 @@ button.kreaction:hover {
 .kunena-history .card-header a {
   text-decoration: underline;
 }
+
+/* Multi-quote (assets/js/multiquote.js): the button of a message which is chosen, and the bar with the reply and the clearing of
+ * the choice, kept at the bottom of the screen while the topic is read. */
+.kmultiquote.active,
+.kmultiquote[aria-pressed="true"] {
+  color: var(--bs-primary);
+  background: var(--bs-primary-bg-subtle);
+  border-color: var(--bs-primary) !important;
+}
+
+.kmultiquote-bar {
+  position: sticky;
+  bottom: 1rem;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  background: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.15);
+}
+
+.kmultiquote-bar[hidden] {
+  display: none;
+}

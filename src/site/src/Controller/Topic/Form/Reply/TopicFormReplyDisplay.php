@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageQuotes;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -206,6 +207,17 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
         list($this->topic, $this->message) = $parent->newReply($saved ? $saved : ['quote' => $quote], $parent->userid);
         $this->action                      = 'post';
+
+        // Multi-quote: the messages of the topic which the user chose (quotes=12,15,18) are quoted in the new reply.
+        $quoteIds = KunenaMessageQuotes::parseIds($this->input->getString('quotes', ''));
+
+        if (!$saved && $quoteIds) {
+            $quotes = KunenaMessageQuotes::build(KunenaMessageHelper::getMessages($quoteIds, 'none'), (int) $this->topic->id);
+
+            if ($quotes !== '') {
+                $this->message->message = $quotes;
+            }
+        }
 
         $this->privateMessage       = new KunenaPrivateMessage();
         $this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;

@@ -16,7 +16,9 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageQuotes;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 Text::script('COM_KUNENA_RATE_LOGIN');
@@ -36,6 +38,21 @@ Text::script('COM_KUNENA_SOCIAL_REDDIT_LABEL');
 
 $this->addScript('assets/js/topic.js');
 
+// Multi-quote: the bar and the buttons of the messages (assets/js/multiquote.js), for a user who may reply to the topic.
+$multiQuote = '';
+
+if ($this->topic->isAuthorised('reply')) {
+    $this->addScript('assets/js/multiquote.js');
+
+    foreach (['COM_KUNENA_MULTIQUOTE', 'COM_KUNENA_MULTIQUOTE_REPLY', 'COM_KUNENA_MULTIQUOTE_REPLY_1', 'COM_KUNENA_MULTIQUOTE_CLEAR', 'COM_KUNENA_MULTIQUOTE_CLEARED'] as $key) {
+        Text::script($key);
+    }
+
+    $multiQuote = ' data-kmultiquote-url="' . KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . (int) $this->category->id . '&id=' . (int) $this->topic->id) . '"'
+        . ' data-kmultiquote-topic="' . (int) $this->topic->id . '"'
+        . ' data-kmultiquote-max="' . KunenaMessageQuotes::MAX_QUOTES . '"';
+}
+
 $this->ktemplate = KunenaFactory::getTemplate();
 $quick           = $this->ktemplate->params->get('quick');
 $txt             = '';
@@ -49,7 +66,7 @@ if ($this->topic->locked) {
 }
 
 ?>
-<div class="kunena-topic-item <?php echo $txt; ?>">
+<div class="kunena-topic-item <?php echo $txt; ?>"<?php echo $multiQuote; ?>>
     <?php if ($this->category->headerdesc) : ?>
         <div id="topic-item-category-headerdesc<?php echo $this->category->id; ?>" class="alert alert-info shadow-lg rounded alert-dismissible fade show">
             <?php echo $this->category->displayField('headerdesc'); ?>

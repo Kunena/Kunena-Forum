@@ -693,6 +693,21 @@ form[id^="kpoll"] {
   background: var(--agora-accent-soft);
 }
 
+/* Multi-quote: the chosen message with the soft accent, the bar on the surface of Agora. */
+.kmultiquote.active,
+.kmultiquote[aria-pressed="true"] {
+  color: var(--agora-text) !important;
+  background: var(--agora-accent-soft) !important;
+  border-color: var(--agora-accent) !important;
+}
+
+.kmultiquote-bar {
+  background: var(--agora-surface);
+  border-color: var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow-raised);
+}
+
 /* The edit history: the removed and the added words on a tint of the colours of Agora (light and dark). */
 .kunena-history-diff,
 .kunena-history-subject {

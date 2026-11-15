@@ -179,7 +179,9 @@ A job is finished for this run when it reaches `merged`, `rejected`,
 `needs-info` or `needs-human`.
 
 A person can merge a job's PR by hand at any stage. `factory/bin/job queue`
-then moves the job to `merged`; stop any agents still running for it.
+then moves the job to `merged`; stop any agents still running for it. `job
+queue` also finds the PR of a job that did not record it, by its branch (PRs
+from the same repository only).
 
 ## /factory run
 

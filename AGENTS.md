@@ -70,3 +70,4 @@ read `.gitignore` sees those copies too; exclude `.worktrees/` in its config.
 
 The scripts in `factory/bin` are Python and run on Windows and Linux; start them
 as `python3 factory/bin/job ...`. On Windows the checks run in Git Bash.
+Their tests are in `factory/tests`: `python3 -X utf8 -m unittest discover -s factory/tests`.

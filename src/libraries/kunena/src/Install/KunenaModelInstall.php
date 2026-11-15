@@ -2297,6 +2297,12 @@ class KunenaModelInstall extends BaseDatabaseModel
             }
         }
 
+        // A new install has the template Agora (the default of config.xml since Kunena 8.0). A forum which is upgraded keeps its
+        // template: one which never stored it had the former default, Aurelia (the save below would store the new default).
+        if (!ComponentHelper::getParams('com_kunena')->exists('template')) {
+            $config->template = 'aurelia';
+        }
+
         $config->save();
     }
 

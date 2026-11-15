@@ -4,8 +4,8 @@ Kunena is a forum component for Joomla, written in PHP. This branch (`K8.0`) is 
 
 ## Layout
 
-- `src/site`: the frontend component (`src/Controllers`, `src/Models`, ...) and the templates (`template/aurelia` is the default,
-  on Bootstrap 5; `template/system` holds the fallback layouts; `template/agora` is a second template).
+- `src/site`: the frontend component (`src/Controllers`, `src/Models`, ...) and the templates (`template/agora` is the default of a new install,
+  `template/aurelia` the former default, both on Bootstrap 5; `template/system` holds the fallback layouts).
 - `src/admin`: the backend component, the database schema (`sql/`, `install/`), the forms and the language files.
 - `src/libraries/kunena/src`: the library, namespace `Kunena\Forum\Libraries` (forum objects, access, BBCode, uploads, email...).
 - `src/plugins`: the plugins (`plg_kunena_*`, `plg_system_kunena`, ...).

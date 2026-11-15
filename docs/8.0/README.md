@@ -102,6 +102,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [Backend: menu icons, order of the views and update check](features/administration-dashboard.md) | Administrators |  | A cleaner administration: icons in the menu, the views in alphabetical order and a real update check. |
 | [Choose the Joomla content plugins for the forum](features/content-plugins.md) | Administrators |  | Run only the content plugins you choose on the text of the forum. |
 | [New options of the Aurelia template](features/template-options.md) | Administrators |  | An overview of the options which the Aurelia template has now. |
+| [Agora is the default template of a new install](features/default-template.md) | Administrators |  | A new forum has the Agora template; an upgraded forum keeps its template. |
 
 ## Making the pictures again
 

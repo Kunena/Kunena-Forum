@@ -16,7 +16,7 @@
             <field
                 name="template"
                 type="hidden"
-                default="aurelia"
+                default="agora"
                 label="Template" />
             <field
                 name="boardTitle"

@@ -16,14 +16,11 @@ namespace Kunena\Forum\Plugin\Finder\Kunena\Extension;
 \defined('_JEXEC') or die('');
 
 use Exception;
-use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Finder\AfterDeleteEvent;
 use Joomla\CMS\Event\Finder\AfterSaveEvent;
 use Joomla\CMS\Event\Finder\BeforeSaveEvent;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
-use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Component\Finder\Administrator\Indexer\Adapter;
 use Joomla\Component\Finder\Administrator\Indexer\Helper;
 use Joomla\Component\Finder\Administrator\Indexer\Indexer;
@@ -31,6 +28,7 @@ use Joomla\Component\Finder\Administrator\Indexer\Result;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\QueryInterface;
 use Joomla\Event\SubscriberInterface;
+use Kunena\Forum\Libraries\Access\KunenaFinderAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Event\KunenaBeforeDeleteEvent;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -106,6 +104,14 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @since  7.0.0
      */
     protected $old_cataccesstype = \null;
+
+    /**
+     * The view levels of the site (id => groups), read once.
+     *
+     * @var    ?array
+     * @since  Kunena 7.1
+     */
+    protected ?array $viewLevels = \null;
 
     /**
      * The table name.
@@ -766,25 +772,28 @@ final class Kunena extends Adapter implements SubscriberInterface
     protected function getAccessLevel($catid): int
     {
         $category = KunenaCategoryHelper::get($catid);
-        $user     = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById(0);
 
-        $groups_r     = (array) Access::getGroupsByUser($user->id, \true);
-        $groups       = (array) Access::getGroupsByUser($user->id, \false);
+        // Smart Search needs the id of a view level; the view levels of the site are read once (id => groups).
+        if ($this->viewLevels === \null) {
+            $db   = $this->getDatabase();
+            $rows = $db->setQuery($db->createQuery()->select($db->quoteName(['id', 'rules']))->from($db->quoteName('#__viewlevels')))->loadObjectList();
 
-        // Check against Joomla access level: the level of the category is the level of the item (0 is a level which nobody has,
-        // it would hide the topics of a category for everybody, also for the users who may read it).
-        if ($category->accesstype == 'joomla.level') {
-            return (int) $category->access ?: 1;
-        }
-        // Check against Joomla user group
-        elseif ($category->accesstype == 'joomla.group') {
-            $pubAccess = \in_array($category->pubAccess, $category->pubRecurse ? $groups_r : $groups);
+            $this->viewLevels = [];
 
-            if ($pubAccess) {
-                return 1;
+            foreach ($rows as $row) {
+                $groups = json_decode((string) $row->rules, true);
+
+                $this->viewLevels[(int) $row->id] = \is_array($groups) ? $groups : [];
             }
         }
 
-        return 0;
+        // A category of a view level has the level of the category (0 is a level which nobody has: Public, as before); a category of
+        // a user group the narrowest level of that group (Kunena 7.1: it was 0, so the registered users did not find its messages).
+        return KunenaFinderAccess::viewLevel(
+            (string) $category->accesstype,
+            (int) $category->access ?: 1,
+            (int) $category->pubAccess,
+            $this->viewLevels
+        );
     }
 }

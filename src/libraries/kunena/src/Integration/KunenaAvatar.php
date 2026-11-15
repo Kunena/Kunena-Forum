@@ -140,15 +140,58 @@ class KunenaAvatar
             $class = ' class="' . $class . '"';
         }
 
+        // The picture for the screens with more pixels for each point (most phones and laptops): the image of the size of the
+        // layout was stretched there, and blurred.
+        $srcset = self::srcset([
+            1 => $avatar,
+            2 => $this->getURL($user, $size->x * 2, $size->y * 2),
+            3 => $this->getURL($user, $size->x * 3, $size->y * 3),
+        ]);
+
         if ($topicicontype == 'svg') {
             $link = '<span' . $class . ' data-bs-toggle="tooltip" title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">
-				<img alt="" loading=lazy src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"></span>';
+				<img alt="" loading=lazy src="' . $avatar . '"' . $srcset . ' width="' . $size->x . '" height="' . $size->y . '"></span>';
         } else {
-            $link = '<img loading=lazy' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"
+            $link = '<img loading=lazy' . $class . ' src="' . $avatar . '"' . $srcset . ' width="' . $size->x . '" height="' . $size->y . '"
 			  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
         }
 
         return $link;
+    }
+
+    /**
+     * The srcset attribute of an avatar: an address for each pixel density. An address which is the same as the one of a lower
+     * density (an SVG, or an integration which has one size only) adds nothing, so a picture which has only one address has none.
+     *
+     * @param   array  $urls  density (1, 2, 3) => address.
+     *
+     * @return  string  The attribute with a space before it, or an empty string.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function srcset(array $urls): string
+    {
+        ksort($urls);
+
+        $candidates = [];
+        $seen       = [];
+
+        foreach ($urls as $density => $url) {
+            $url = (string) $url;
+
+            if ($url === '' || isset($seen[$url])) {
+                continue;
+            }
+
+            $seen[$url]   = true;
+            $candidates[] = str_replace([',', ' '], ['%2C', '%20'], $url) . ' ' . (int) $density . 'x';
+        }
+
+        if (\count($candidates) < 2) {
+            return '';
+        }
+
+        return ' srcset="' . htmlspecialchars(implode(', ', $candidates), ENT_QUOTES, 'UTF-8') . '"';
     }
 
     /**

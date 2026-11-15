@@ -85,15 +85,18 @@ class KunenaAvatarKunena extends KunenaAvatar
             $origPath = "{$path}/{$avatar}";
 
             if (!is_file($origPath)) {
-                // If avatar does not exist use default image.
-                if ($sizex <= 90) {
-                    $avatar = KunenaConfig::getInstance()->defaultAvatarSmall;
+                // If avatar does not exist use default image: the small one only when it has the pixels which are asked for (it is
+                // 48 pixels, and was stretched up to 90, blurred).
+                $template = KunenaFactory::getTemplate();
+                $small    = KunenaConfig::getInstance()->defaultAvatarSmall;
+
+                if (self::usesSmallDefault($sizex, self::imageWidth(JPATH_SITE . '/' . $template->getAvatarPath($small)))) {
+                    $avatar = $small;
                 } else {
                     $avatar = KunenaConfig::getInstance()->defaultAvatar;
                 }
 
                 // Search from the template.
-                $template = KunenaFactory::getTemplate();
                 $origPath = JPATH_SITE . '/' . $template->getAvatarPath($avatar);
                 $avatar   = $template->name . '/' . $avatar;
             } elseif (str_starts_with($avatar, 'users/') && strtolower(substr($avatar, -4)) === '.svg') {
@@ -149,6 +152,42 @@ class KunenaAvatarKunena extends KunenaAvatar
         }
 
         return KURL_MEDIA . 'avatars/' . $config->defaultAvatar;
+    }
 
+    /**
+     * Whether the small default avatar is used for an avatar of this width: only when it is at least as wide (it is not stretched).
+     * When its width is not known, the rule of before: up to 90 pixels.
+     *
+     * @param   int  $sizex       The width which is asked for.
+     * @param   int  $smallWidth  The width of the small default avatar (0: unknown).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function usesSmallDefault(int $sizex, int $smallWidth): bool
+    {
+        return $smallWidth > 0 ? $sizex <= $smallWidth : $sizex <= 90;
+    }
+
+    /**
+     * The width of an image file, read once for each file (0 when it cannot be read).
+     *
+     * @param   string  $file  The path.
+     *
+     * @return  integer
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function imageWidth(string $file): int
+    {
+        static $widths = [];
+
+        if (!isset($widths[$file])) {
+            $info          = is_file($file) ? @getimagesize($file) : false;
+            $widths[$file] = $info ? (int) $info[0] : 0;
+        }
+
+        return $widths[$file];
     }
 }

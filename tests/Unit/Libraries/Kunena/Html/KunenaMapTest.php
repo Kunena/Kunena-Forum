@@ -75,4 +75,33 @@ class KunenaMapTest extends UnitTestCase
     {
         $this->assertStringContainsString('marker=10,20', KunenaMap::osmEmbedUrl(10.0, 20.0, 10));
     }
+
+    public function testFoundCoordinatesAreKept(): void
+    {
+        $this->assertTrue(KunenaMap::answersFromCache(['coords' => [52.37, 4.89], 'time' => 1], 2_000_000_000));
+    }
+
+    public function testAnAddressWhichWasNotFoundIsKeptForAWeek(): void
+    {
+        $now = 2_000_000_000;
+
+        $this->assertTrue(KunenaMap::answersFromCache(['coords' => null, 'time' => $now - 6 * 86400], $now));
+        $this->assertFalse(KunenaMap::answersFromCache(['coords' => null, 'time' => $now - 8 * 86400], $now));
+    }
+
+    /**
+     * A service which did not answer is kept for an hour: a page with the map waited for it (up to the timeout) at every view.
+     */
+    public function testAServiceWhichDidNotAnswerIsKeptForAnHour(): void
+    {
+        $now = 2_000_000_000;
+
+        $this->assertTrue(KunenaMap::answersFromCache(['coords' => null, 'time' => $now - 1800, 'failed' => true], $now));
+        $this->assertFalse(KunenaMap::answersFromCache(['coords' => null, 'time' => $now - 7200, 'failed' => true], $now));
+    }
+
+    public function testARowWithoutCoordinatesIsNoAnswer(): void
+    {
+        $this->assertFalse(KunenaMap::answersFromCache(['time' => 2_000_000_000], 2_000_000_000));
+    }
 }

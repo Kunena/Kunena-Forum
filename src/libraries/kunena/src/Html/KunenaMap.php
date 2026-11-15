@@ -46,6 +46,14 @@ abstract class KunenaMap
     protected const int NOT_FOUND_TTL = 604800;
 
     /**
+     * How long it is kept that the service did not answer (seconds): a page with the map does not wait for the service at every
+     * view (it waited up to the timeout, at every view), and the address is looked up again after this time.
+     *
+     * @since   Kunena 8.0
+     */
+    protected const int FAILED_TTL = 3600;
+
+    /**
      * @var     int
      * @since   Kunena 8.0
      */
@@ -113,15 +121,8 @@ abstract class KunenaMap
         $cache = self::cache();
         $row   = $cache ? json_decode((string) $cache->get($hash), true) : false;
 
-        if (\is_array($row) && \array_key_exists('coords', $row)) {
-            if ($row['coords'] !== null) {
-                return $row['coords'];
-            }
-
-            // Not found: it is looked up again after some time.
-            if ((int) $row['time'] > time() - self::NOT_FOUND_TTL) {
-                return null;
-            }
+        if (\is_array($row) && self::answersFromCache($row, time())) {
+            return $row['coords'];
         }
 
         if (self::$lookups >= self::MAX_LOOKUPS) {
@@ -132,8 +133,12 @@ abstract class KunenaMap
 
         $found = self::lookup($address);
 
-        // The service did not answer: nothing is kept, it is looked up again later.
+        // The service did not answer: kept for a short time (FAILED_TTL), then it is looked up again.
         if ($found === false) {
+            if ($cache) {
+                $cache->store(json_encode(['coords' => null, 'time' => time(), 'failed' => true]), $hash);
+            }
+
             return null;
         }
 
@@ -143,6 +148,32 @@ abstract class KunenaMap
         }
 
         return $found;
+    }
+
+    /**
+     * Whether a row of the cache answers for its address: coordinates always; "not found" for NOT_FOUND_TTL; "the service did not
+     * answer" for FAILED_TTL. Otherwise the address is looked up again.
+     *
+     * @param   array  $row  The row of the cache: coords, time and, for a service which did not answer, failed.
+     * @param   int    $now  The time now.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function answersFromCache(array $row, int $now): bool
+    {
+        if (!\array_key_exists('coords', $row)) {
+            return false;
+        }
+
+        if ($row['coords'] !== null) {
+            return true;
+        }
+
+        $ttl = empty($row['failed']) ? self::NOT_FOUND_TTL : self::FAILED_TTL;
+
+        return (int) ($row['time'] ?? 0) > $now - $ttl;
     }
 
     /**

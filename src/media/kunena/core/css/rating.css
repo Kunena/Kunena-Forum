@@ -56,8 +56,9 @@
 	flex: 0 0 14px;
 	height: 14px;
 	width: 14px;
-    background-size: 200%;
+    /* The sprite (two stars of 24px) at the size of the item: after the shorthand, which resets the size. */
     background: url("../images/stars.svg") 0 0;
+    background-size: 200%;
     cursor: pointer;
 }
 

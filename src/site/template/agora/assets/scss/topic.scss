@@ -149,13 +149,18 @@
     font-weight: 700;
   }
 
+  /* The avatar of the author: a circle of 96px, as on the profile and in the lists. A picture which is not square (a portrait)
+     is cropped to the circle, not shown tall. */
   img.rounded,
   img.img-rounded,
   .rounded img,
   .kavatar,
   img[class*="avatar"] {
+    width: 96px !important;
     max-width: 96px;
+    height: 96px !important;
     object-fit: cover;
+    border-radius: 50% !important;
   }
 
   /* The avatar of a user without a picture. */
@@ -370,6 +375,57 @@ pre.bbcode_code_body:has(> code.hljs) {
   color: var(--agora-text-muted);
 }
 
+/* A message: its actions (Quick reply, Action, Moderate) at the bottom of the card, also when the author beside it makes the
+ * card taller than its text. The card is a column; the line with the time and the IP (a float before) stays at the top right. */
+.message-published {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+
+  > .btn-toolbar {
+    margin-top: auto !important;
+  }
+}
+
+/* The time and the IP: on a narrow screen a line of their own, at the right, above the message; on a wide screen on the line of
+ * the title of the message (shown from 576px), at its right (as the float was). The selector is as precise as the one of the
+ * column of the message. */
+.row.message > .message-published > small.float-end {
+  align-self: flex-end;
+  margin: 0 0 0.25rem;
+}
+
+@media (min-width: 576px) {
+  .row.message > .message-published > small.float-end {
+    position: absolute;
+    top: var(--agora-pad);
+    right: var(--agora-pad);
+    margin: 0;
+  }
+
+  /* The title line keeps room for them (about 260px): a long title wraps before it reaches them. */
+  .row.message > .message-published .mykmsg-header > span {
+    display: block;
+    padding-right: 18rem;
+  }
+}
+
+/* "Report this" at the end of the line of the actions, on their middle (not on a line of its own between the text and the
+ * actions); only when the actions come right after it (not after the attachments of the message). */
+.message-published:has(> .report.pb-5 ~ .clearfix + .btn-toolbar) {
+  > .report.pb-5 {
+    position: absolute;
+    right: var(--agora-pad);
+    bottom: calc(var(--agora-pad) + 6px);
+    margin: 0;
+  }
+
+  > .btn-toolbar {
+    padding-right: 8rem;
+  }
+}
+
 /* The report button and the actions of a message. */
 .report.pb-5 {
   padding-bottom: 0 !important;
@@ -469,6 +525,68 @@ form[id^="kpoll"] {
 .kignored-message summary {
   cursor: pointer;
   background: var(--agora-surface-2);
+}
+
+/* The history of a topic under the reply form: each message a card, its subject a header bar at the top (Aurelia draws it as a
+ * label over the corner, which covered the text once the padding under it was gone), its text under it. */
+.khistory[class*="badger-left"] {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0 !important;
+  margin: 0;
+  overflow: hidden;
+  background: var(--agora-surface);
+  border: 1px solid var(--agora-border);
+  border-radius: var(--agora-radius);
+  box-shadow: none;
+
+  &::after {
+    position: static;
+    order: -1;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 650;
+    color: var(--agora-text);
+    background: var(--agora-surface-2);
+    border: 0;
+    border-bottom: 1px solid var(--agora-border);
+    border-radius: 0;
+  }
+
+  .kmessage {
+    min-height: 0;
+    padding: 1rem;
+  }
+
+  .kmsg {
+    margin: 0;
+  }
+
+  > .card {
+    margin: 0 1rem 1rem !important;
+  }
+}
+
+/* A message of the history and its author: the space is between the rows (the author can be taller than a short message). */
+.row:has(> .col-md-10 > .khistory) {
+  margin-bottom: var(--agora-gap);
+}
+
+/* The time of a message of the history in the header bar of its card, at the right (it floated beside the card and made it
+   narrower). */
+.col-md-10:has(> .khistory) {
+  position: relative;
+
+  > small.float-end {
+    position: absolute;
+    top: calc(0.5rem + 1px);
+    right: 1rem;
+    z-index: 1;
+    float: none;
+    margin: 0 !important;
+    line-height: 1.5;
+  }
 }
 
 /* Similar topics, the moderation tools and the history of a topic. */

@@ -481,8 +481,11 @@ a.cke_path_item:focus {
 
 /* The form of a category in the forum (the moderators): the fields in a table of Aurelia. */
 #adminForm {
+  /* The tabs of the category on more lines when they do not fit (no scroll bar under them). */
   .tabbable-line > .nav-tabs {
+    flex-wrap: wrap;
     margin-bottom: 0.5rem;
+    overflow: visible;
   }
 
   /* Aurelia puts a light line under the tabs in the element itself. */
@@ -508,9 +511,15 @@ a.cke_path_item:focus {
     vertical-align: top;
   }
 
+  /* The label in line with the text of its field (the field has 1rem of padding in the cell and its own above its text). */
   .tab-content .table td:first-child {
-    padding-top: 1.5rem;
+    padding-top: 1.6rem;
     font-weight: 550;
+  }
+
+  /* No stripes: the lines between the rows are enough. */
+  .tab-content .table-striped > tbody > tr:nth-of-type(odd) > * {
+    --bs-table-bg-type: transparent;
   }
 
   .tab-content .table td label {
@@ -586,6 +595,26 @@ a.cke_path_item:focus {
   td.nowrap:has(> .overflow) {
     white-space: normal;
     overflow-wrap: anywhere;
+  }
+}
+
+/* On a wide screen the labels take a column of their own width, the fields the rest (Aurelia gives both cells 20% in the element). */
+@media (min-width: 768px) {
+  #adminForm .tab-content .table {
+    td:first-child {
+      width: 14rem !important;
+    }
+
+    td:not(:first-child) {
+      width: auto !important;
+    }
+
+    /* A row with a help text in a third column: the field keeps a good share, the help text takes the rest. */
+    th:nth-child(2):not(:last-child),
+    td:nth-child(2):not(:last-child) {
+      width: 40% !important;
+      min-width: 14rem;
+    }
   }
 }
 

@@ -269,7 +269,11 @@ abstract class KunenaFactory
             $lookup2 = JPATH_ADMINISTRATOR . '/components/com_kunena';
         }
 
-        if (empty($loaded["{$client}/{$file}"])) {
+        // A file is loaded once in a request. The key of the check and the one of the result were not the same ("site/com_kunena"
+        // and "com_kunena"), so every call parsed the file again.
+        $key = "{$client}/{$file}";
+
+        if (empty($loaded[$key])) {
             $lang = Factory::getApplication()->getLanguage();
 
             $english = false;
@@ -279,13 +283,13 @@ abstract class KunenaFactory
                 $english = true;
             }
 
-            $loaded[$file] = $lang->load($file, $lookup1, null, $english, true)
-    || $lang->load($file, $lookup2, null, $english, true);
+            $loaded[$key] = $lang->load($file, $lookup1, null, $english, true)
+                || $lang->load($file, $lookup2, null, $english, true);
         }
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-        return $loaded[$file];
+        return $loaded[$key];
     }
 
     /**

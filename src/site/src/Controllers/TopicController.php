@@ -29,6 +29,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\ParameterType;
 use Joomla\Http\HttpFactory;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
@@ -47,6 +48,7 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
+use Kunena\Forum\Libraries\Forum\KunenaFloodPolicy;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageBookmarks;
@@ -1192,27 +1194,13 @@ class TopicController extends KunenaController
 
         $dateNowUnix = Factory::getDate()->toUnix();
 
-        // Flood protection
-        if ($this->config->floodProtection && !$this->me->isModerator($category) && $isNew) {
-            $timelimit = $dateNowUnix - $this->config->floodProtection;
-            $ip        = KunenaUserHelper::getUserIp();
+        // Flood protection: the time between two consecutive posts, for a new topic and for a reply (Kunena 7.1). It was checked
+        // for a new topic only, so the replies could be posted as fast as a script sends them.
+        if ($this->config->floodProtection && !$this->me->isModerator($category)) {
+            $wait = KunenaFloodPolicy::secondsToWait($dateNowUnix, (int) $this->config->floodProtection, $this->getLastPostTimes());
 
-            $query = $this->db->createQuery();
-            $query->select('COUNT(*)')
-                ->from($this->db->quoteName('#__kunena_messages'))
-                ->where('ip=' . $this->db->quote($ip) . ' AND time > ' . $this->db->quote($timelimit));
-            $this->db->setQuery($query);
-
-            $count = 0;
-
-            try {
-                $count = $this->db->loadResult();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-            }
-
-            if ($count) {
-                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodProtection), 'error');
+            if ($wait > 0) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $wait), 'error');
                 $this->setRedirectBack();
 
                 return;
@@ -1408,6 +1396,9 @@ class TopicController extends KunenaController
         // Save message
         try {
             $message->save();
+
+            // Remembered for the flood protection: a message of an anonymous post keeps no user and no IP address.
+            $this->app->setUserState('com_kunena.lastposttime', $dateNowUnix);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -1708,6 +1699,46 @@ class TopicController extends KunenaController
         $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SAVED_WITHOUT_LINKS_AND_IMAGES'), 'success');
 
         return $text;
+    }
+
+    /**
+     * The times of the last post of the poster, from every place where it is known (KunenaFloodPolicy takes the latest): the
+     * messages of the user (of the IP address for a guest), and the session, for a post which keeps no user and no address.
+     *
+     * @return  array
+     *
+     * @since   Kunena 7.1
+     */
+    protected function getLastPostTimes(): array
+    {
+        $times  = [(int) $this->app->getUserState('com_kunena.lastposttime', 0)];
+        $userid = (int) $this->me->userid;
+        $ip     = (string) KunenaUserHelper::getUserIp();
+
+        if ($userid > 0 || $ip !== '') {
+            $query = $this->db->createQuery()
+                ->select('MAX(' . $this->db->quoteName('time') . ')')
+                ->from($this->db->quoteName('#__kunena_messages'));
+
+            if ($userid > 0) {
+                $query->where($this->db->quoteName('userid') . ' = :userid')
+                    ->bind(':userid', $userid, ParameterType::INTEGER);
+            } else {
+                $query->where($this->db->quoteName('userid') . ' = 0')
+                    ->where($this->db->quoteName('ip') . ' = :ip')
+                    ->bind(':ip', $ip);
+            }
+
+            $this->db->setQuery($query);
+
+            try {
+                $times[] = (int) $this->db->loadResult();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+        }
+
+        return $times;
     }
 
     /**

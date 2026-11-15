@@ -22,6 +22,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Event\KunenaCheckSpamEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\KunenaFloodPolicy;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -117,7 +118,8 @@ abstract class KunenaApiReply
      */
     public static function isFlood(int $lastPostTime, int $now, int $seconds, bool $moderator): bool
     {
-        return $seconds > 0 && !$moderator && $lastPostTime > 0 && $lastPostTime > $now - $seconds;
+        // The same rule as the form of the site.
+        return !$moderator && KunenaFloodPolicy::secondsToWait($now, $seconds, [$lastPostTime]) > 0;
     }
 
     /**

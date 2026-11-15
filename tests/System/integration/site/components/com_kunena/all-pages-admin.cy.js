@@ -73,6 +73,7 @@ describe('Kunena pages for an administrator', () => {
     'the form of a reply': ['view=topic&layout=reply&catid=%catid%&id=%id%', '#postform'],
     'the form to edit a message of another user': ['view=topic&layout=edit&catid=%catid%&id=%id%&mesid=%mesid%', '#postform'],
     'the report of a message': ['view=topic&layout=report&catid=%catid%&id=%id%&mesid=%mesid%', 'body'],
+    'the edit history of a message': ['view=topic&layout=history&catid=%catid%&id=%id%&mesid=%mesid%', '.kunena-history'],
     'the moderation of a topic': ['view=topic&layout=moderate&catid=%catid%&id=%id%', 'body'],
     'the log of the moderators': ['view=topic&layout=modlog', 'body'],
     'the drafts': ['view=topic&layout=drafts', 'body'],

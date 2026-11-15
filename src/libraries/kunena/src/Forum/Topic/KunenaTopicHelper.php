@@ -142,6 +142,12 @@ abstract class KunenaTopicHelper
               ->where($db->quoteName('message_id') . ' IN (' . $messageIds . ')');
         $queries [] = $query;
 
+        // Delete the edit history
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_messages_history'))
+              ->where($db->quoteName('message_id') . ' IN (' . $messageIds . ')');
+        $queries [] = $query;
+
         // Delete poll users, poll options and polls (if not shadow)
         foreach ([['#__kunena_polls_users', 'pollid'], ['#__kunena_polls_options', 'pollid'], ['#__kunena_polls', 'id']] as [$table, $column]) {
             $pollIds = $db->createQuery();

@@ -50,7 +50,7 @@ class PageControllersTest extends UnitTestCase
         'category/create', 'category/default', 'category/list', 'category/manage', 'category/user',
         'credits/default', 'inbox/default', 'misc/default', 'search/default',
         'statistics/default', 'statistics/whoisonline',
-        'topic/create', 'topic/default', 'topic/drafts', 'topic/edit', 'topic/moderate', 'topic/modlog', 'topic/poll',
+        'topic/create', 'topic/default', 'topic/drafts', 'topic/edit', 'topic/history', 'topic/moderate', 'topic/modlog', 'topic/poll',
         'topic/reply', 'topic/report', 'topic/unsubscribe', 'topic/vote',
         'topics/default', 'topics/moderator', 'topics/posts', 'topics/unread', 'topics/user',
         'user/attachments', 'user/banmanager', 'user/default', 'user/edit', 'user/list', 'user/moderate',

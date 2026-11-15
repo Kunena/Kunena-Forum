@@ -509,6 +509,17 @@
                 label="COM_KUNENA_A_REACTIONS"
                 description="COM_KUNENA_A_REACTIONS_DESC"/>
             <field
+                name="editHistory"
+                type="list"
+                default="1"
+                filter="integer"
+                label="COM_KUNENA_A_EDIT_HISTORY"
+                description="COM_KUNENA_A_EDIT_HISTORY_DESC">
+                <option value="0">COM_KUNENA_A_EDIT_HISTORY_OFF</option>
+                <option value="1">COM_KUNENA_A_EDIT_HISTORY_MODERATORS</option>
+                <option value="2">COM_KUNENA_A_EDIT_HISTORY_EVERYBODY</option>
+            </field>
+            <field
                 name="enableFollow"
                 type="radio"
                 default="1"

@@ -249,6 +249,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
                 '#__kunena_users_banned'     => ['userid'],
                 '#__kunena_rate'             => ['userid'],
                 '#__kunena_reactions'        => ['user_id'],
+                '#__kunena_messages_history' => ['edited_by'],
                 '#__kunena_drafts'           => ['user_id'],
                 '#__kunena_sessions'         => ['userid'],
                 '#__kunena_karma'            => ['userid'],

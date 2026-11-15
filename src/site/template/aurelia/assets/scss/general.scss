@@ -1615,3 +1615,35 @@ button.kreaction:hover {
   grid-template-columns: repeat(4, auto);
   gap: 0.125rem;
 }
+
+/* The edit history of a message (layouts/topic/history): the text before and after each edit, word by word. The removed words are
+ * struck through on a red tint, the added ones on a green tint (not only the colour: the line through and the underline). */
+.kunena-history-diff {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.kunena-history-diff,
+.kunena-history-subject {
+  del {
+    color: inherit;
+    text-decoration: line-through;
+    background: var(--bs-danger-bg-subtle);
+  }
+
+  ins {
+    color: inherit;
+    text-decoration: underline;
+    background: var(--bs-success-bg-subtle);
+  }
+}
+
+.kunena-history-list {
+  padding: 0;
+}
+
+/* The links in the lines of text of the history (the editor, the way back): underlined, not only coloured (WCAG 1.4.1). */
+.kunena-history-intro a,
+.kunena-history .card-header a {
+  text-decoration: underline;
+}

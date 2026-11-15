@@ -356,6 +356,14 @@ class KunenaMessage extends KunenaDatabaseObject
     protected mixed $_approved = false;
 
     /**
+     * The subject and the text before an edit (edit()), kept in the edit history when the edit is saved; null when there is none.
+     *
+     * @var    array|null
+     * @since  Kunena 8.0
+     */
+    protected ?array $_previousVersion = null;
+
+    /**
      * @var     array
      * @since   Kunena 6.0
      */
@@ -1167,6 +1175,12 @@ class KunenaMessage extends KunenaDatabaseObject
             ->where($this->_db->quoteName('message_id') . ' = ' . (int) $this->id);
         $queries[] = $query;
 
+        // Delete the edit history
+        $query = $this->_db->createQuery();
+        $query->delete($this->_db->quoteName('#__kunena_messages_history'))
+            ->where($this->_db->quoteName('message_id') . ' = ' . (int) $this->id);
+        $queries[] = $query;
+
         // Delete message
         $query = $this->_db->createQuery();
         $query->delete($this->_db->quoteName('#__kunena_messages_text'))
@@ -1290,6 +1304,11 @@ class KunenaMessage extends KunenaDatabaseObject
     public function edit($fields = [], $user = null): void
     {
         $user = KunenaUserHelper::get($user);
+
+        // The version before the edit, for the edit history (kept when the edit is saved).
+        if ($this->exists()) {
+            $this->_previousVersion = ['subject' => (string) $this->subject, 'message' => (string) $this->message];
+        }
 
         $this->bind($fields, ['name', 'email', 'subject', 'message', 'modified_reason'], true);
 
@@ -2421,6 +2440,16 @@ class KunenaMessage extends KunenaDatabaseObject
 
         // Cascade changes to other tables
         $this->update($newTopic);
+
+        // The edit history: the version before an edit, when the setting keeps it.
+        if (!$isNew && $this->_previousVersion !== null) {
+            $previous               = $this->_previousVersion;
+            $this->_previousVersion = null;
+
+            if ((int) ($this->_config->editHistory ?? KunenaMessageHistory::MODERATORS) !== KunenaMessageHistory::OFF) {
+                KunenaMessageHistory::record($this, $previous, KunenaUserHelper::get((int) $this->modified_by));
+            }
+        }
 
         return true;
     }

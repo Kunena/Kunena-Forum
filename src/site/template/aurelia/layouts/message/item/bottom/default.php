@@ -18,9 +18,11 @@ namespace Kunena\Forum\Site;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHistory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicAnswer;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 $message              = $this->message;
@@ -245,6 +247,14 @@ if ($this->config->orderingSystem == 'mesid') {
             <?php if ($message->modified_reason) {
                 echo Text::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason);
             } ?>
+            <?php
+            // The edit history: a link with the number of the earlier versions, for the users who may see it.
+            $historySetting = (int) ($this->config->editHistory ?? KunenaMessageHistory::MODERATORS);
+            $historyCount   = $historySetting ? KunenaMessageHistory::getCount((int) $message->id) : 0;
+
+            if ($historyCount && KunenaMessageHistory::canSee($historySetting, $this->me->isModerator($this->category), true)) : ?>
+                &middot; <a class="kmsg-history-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=history&catid=' . (int) $this->category->id . '&id=' . (int) $this->topic->id . '&mesid=' . (int) $message->id); ?>" rel="nofollow"><?php echo Text::sprintf('COM_KUNENA_HISTORY_LINK', $historyCount); ?></a>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
 

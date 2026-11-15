@@ -693,6 +693,28 @@ form[id^="kpoll"] {
   background: var(--agora-accent-soft);
 }
 
+/* The edit history: the removed and the added words on a tint of the colours of Agora (light and dark). */
+.kunena-history-diff,
+.kunena-history-subject {
+  del {
+    background: color-mix(in srgb, var(--agora-danger) 20%, transparent);
+  }
+
+  ins {
+    background: color-mix(in srgb, var(--agora-success) 20%, transparent);
+  }
+}
+
+.kunena-history-diff {
+  line-height: 1.7;
+}
+
+/* The links in the lines of text of the history: underlined (the links of Agora have none). */
+.kunena-history-intro a,
+.kunena-history .card-header a {
+  text-decoration: underline;
+}
+
 /* The tree of the threaded view on a phone: Aurelia makes every cell of a table a row of its own (480px and less), three lines
  * for each reply. Here a reply is its subject with its edges, then the author and the time on one small line under it; the
  * titles of the columns are only for the screen readers (the cells are no longer under them). */

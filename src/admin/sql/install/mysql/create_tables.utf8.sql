@@ -390,6 +390,23 @@ CREATE TABLE IF NOT EXISTS `#__kunena_thankyou`
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `#__kunena_messages_history`
+(
+    `id`          int(11)      NOT NULL AUTO_INCREMENT,
+    `message_id`  int(11)      NOT NULL,
+    `edited_by`   int(11)      NOT NULL DEFAULT 0,
+    `edited_time` int(11)      NOT NULL DEFAULT 0,
+    `reason`      varchar(255) NOT NULL DEFAULT '',
+    `subject`     varchar(255) NOT NULL DEFAULT '',
+    `message`     mediumtext   NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `message_id` (`message_id`),
+    KEY `edited_by` (`edited_by`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `#__kunena_reactions`
 (
     `message_id`   int(11)       NOT NULL,

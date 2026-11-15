@@ -35,6 +35,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageFinder;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHistory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageReactions;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -431,6 +432,11 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         // The reactions of all the messages of the page, and the ones of the user, in two queries.
         KunenaMessageReactions::load(array_map(static fn ($message): int => (int) $message->id, $batch), (int) $this->me->userid);
+
+        // The numbers of the earlier versions of the messages of the page (the link to the edit history), in one query.
+        if ((int) ($this->config->editHistory ?? KunenaMessageHistory::MODERATORS) !== KunenaMessageHistory::OFF) {
+            KunenaMessageHistory::load(array_map(static fn ($message): int => (int) $message->id, $batch));
+        }
 
         // First collect ids and users.
         $layout         = $this->me->getTopicLayout($this->layout);

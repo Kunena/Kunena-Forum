@@ -302,6 +302,9 @@ class KunenaUpload
     }
 
     /**
+     * HMAC-SHA256 keyed with the site secret, stable for one file, user and session so the chunks of one upload meet in one
+     * file. Each input has its length in front, so two different sets of inputs never give the same message.
+     *
      * @param   string  $filename  Original filename.
      *
      * @return  string  Protected filename.
@@ -318,7 +321,13 @@ class KunenaUpload
         $token   = Factory::getApplication()->get('secret') . $user->id . $session->getToken();
         list($name, $ext) = $this->splitFilename($filename);
 
-        return md5("{$name}.{$token}.{$ext}");
+        $parts = ['kunena-upload'];
+        
+        foreach ([(string) $name, (string) (int) $user->id, (string) $session->getToken(), (string) $ext] as $value) {
+            $parts[] = \strlen($value) . ':' . $value;
+        }
+        
+        return hash_hmac('sha256', implode('|', $parts), (string) Factory::getApplication()->get('secret'));
     }
 
     /**

@@ -23,12 +23,8 @@
 			});
 		},
 
-		// The address of the search, below the folder of the site (the site may be installed in a sub-folder), with the term encoded.
-		url: function (term) {
-			const paths = root.Joomla && root.Joomla.getOptions ? root.Joomla.getOptions('system.paths') : null;
-			const base = paths && typeof paths.base === 'string' ? paths.base.replace(/\/+$/, '') : '';
-
-			return base + '/index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json&usersearch=' + encodeURIComponent(term);
+		url: function (base, term) {
+			return base + (base.includes('?') ? '&' : '?') + 'usersearch=' + encodeURIComponent(term);
 		},
 
 		// The line of the dropdown for one user.
@@ -63,14 +59,14 @@ jQuery(document).ready(function ($) {
                 }
             }
         };
-        xhr.open("GET", KunenaUserSearch.url(text), true);
+        xhr.open("GET", KunenaUserSearch.url(userField.dataset.searchUrl, text), true);
         xhr.send();
     }
 
     const userField = document.getElementById("kusersearch");
 
     // The page of the list of users has no script of Tribute.
-    if (userField && typeof Tribute !== 'undefined') {
+    if (userField && userField.dataset.searchUrl && typeof Tribute !== 'undefined') {
         const tribute = new Tribute({
             collection: [],
             //..other config options

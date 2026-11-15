@@ -74,7 +74,7 @@ $this->addScript('assets/js/search.js');
                                 <legend><?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input id="kusersearch" type="text" name="searchuser" class="form-control" value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?>" />
+                                        <input id="kusersearch" type="text" name="searchuser" class="form-control" data-search-url="<?php echo $this->escape(KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json', false)); ?>" value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?>" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">

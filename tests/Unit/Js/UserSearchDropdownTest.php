@@ -5,8 +5,8 @@
  *
  * Regression test for the autocomplete of the user field (search form and list of users). The dropdown of Tribute writes each name
  * into the page as html, so a name with markup ran script in the browser of whoever typed the start of that name. The term was put
- * into the address as typed, and the address started with "/index.php", which is wrong when the site is in a sub-folder. And the
- * page of the list of users has no Tribute script at all, so the script stopped there with an error.
+ * into the address as typed, and requests did not use a routed URL with a menu item. The page of the list of users
+ * has no Tribute script at all, so the script stopped there with an error.
  *
  * @package         Kunena.Tests
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -84,7 +84,7 @@ class UserSearchDropdownTest extends TestCase
 
     public function testTermIsEncodedInTheAddress(): void
     {
-        $r = $this->run_script(['base' => '', 'terms' => ['jan', 'a&usersearch=b', 'x#y', 'é ü', '<script>', '../../x'], 'items' => []]);
+        $r = $this->run_script(['base' => '/index.php?option=com_kunena&Itemid=123', 'terms' => ['jan', 'a&usersearch=b', 'x#y', 'é ü', '<script>', '../../x'], 'items' => []]);
 
         $this->assertStringEndsWith('&usersearch=jan', $r['urls'][0]);
         $this->assertStringEndsWith('&usersearch=a%26usersearch%3Db', $r['urls'][1], 'An & in the term does not add a parameter.');
@@ -94,19 +94,34 @@ class UserSearchDropdownTest extends TestCase
         $this->assertStringEndsWith('&usersearch=..%2F..%2Fx', $r['urls'][5]);
     }
 
-    public function testAddressIsBelowTheFolderOfTheSite(): void
+    public function testRoutedAddressIsPreserved(): void
     {
-        $sub = $this->run_script(['base' => '/7.1', 'terms' => ['a'], 'items' => []]);
-        $this->assertStringStartsWith('/7.1/index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json&usersearch=', $sub['urls'][0]);
+        $plain = $this->run_script(['base' => '/7.1/index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json&Itemid=123', 'terms' => ['a'], 'items' => []]);
+        $this->assertSame('/7.1/index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json&Itemid=123&usersearch=a', $plain['urls'][0]);
 
-        $slash = $this->run_script(['base' => '/forum/', 'terms' => ['a'], 'items' => []]);
-        $this->assertStringStartsWith('/forum/index.php?', $slash['urls'][0], 'No double slash.');
+        $sef = $this->run_script(['base' => '/forum/members.json', 'terms' => ['a'], 'items' => []]);
+        $this->assertSame('/forum/members.json?usersearch=a', $sef['urls'][0]);
+    }
 
-        $root = $this->run_script(['base' => '', 'terms' => ['a'], 'items' => []]);
-        $this->assertStringStartsWith('/index.php?', $root['urls'][0]);
+    public function testAutocompleteUsesTheUrlFromTheField(): void
+    {
+        $base = '/forum/index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json&Itemid=123';
+        $r = $this->run_script(['base' => $base, 'terms' => ['a&b'], 'items' => [], 'exerciseRequest' => true]);
 
-        $none = $this->run_script(['base' => null, 'terms' => ['a'], 'items' => []]);
-        $this->assertStringStartsWith('/index.php?', $none['urls'][0], 'Without the paths of Joomla it still is an address.');
+        $this->assertTrue($r['autocompleteAttached']);
+        $this->assertSame(['method' => 'GET', 'url' => $base . '&usersearch=a%26b'], $r['request']);
+
+        $missing = $this->run_script(['base' => '', 'terms' => ['a'], 'items' => [], 'exerciseRequest' => true]);
+        $this->assertFalse($missing['autocompleteAttached']);
+        $this->assertArrayNotHasKey('request', $missing);
+    }
+
+    public function testSearchFieldsExposeRoutedAutocompleteUrl(): void
+    {
+        foreach (['search/form/default.php', 'widget/search/user.php'] as $layout) {
+            $source = file_get_contents(__DIR__ . '/../../../src/site/template/aurelia/layouts/' . $layout);
+            $this->assertStringContainsString('data-search-url="<?php echo $this->escape(KunenaRoute::_(\'index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json\', false)); ?>"', $source);
+        }
     }
 
     public function testPageWithoutTributeDoesNotStopTheScript(): void

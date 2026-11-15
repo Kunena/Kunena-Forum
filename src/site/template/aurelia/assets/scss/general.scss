@@ -1677,3 +1677,26 @@ button.kreaction:hover {
 .kmultiquote-bar[hidden] {
   display: none;
 }
+
+/* The new replies of a topic which is read (assets/js/topicnew.js): a bar at the top of the topic, kept in view while it is read. */
+.ktopic-new-replies {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  color: var(--bs-body-color);
+  background: var(--bs-primary-bg-subtle);
+  border: 1px solid var(--bs-primary);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.15);
+}
+
+.ktopic-new-replies[hidden] {
+  display: none;
+}

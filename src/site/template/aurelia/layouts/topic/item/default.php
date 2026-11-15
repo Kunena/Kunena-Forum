@@ -14,9 +14,11 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageQuotes;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicNewReplies;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -55,6 +57,23 @@ if ($this->topic->isAuthorised('reply')) {
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $quick           = $this->ktemplate->params->get('quick');
+
+// The new replies of the topic, asked in the background (assets/js/topicnew.js) with the option of the background reload of the lists.
+if ($this->ktemplate->params->get('ajaxTopicList', 1)) {
+    foreach (['COM_KUNENA_TOPIC_NEW_REPLIES', 'COM_KUNENA_TOPIC_NEW_REPLIES_1', 'COM_KUNENA_TOPIC_NEW_REPLIES_SHOW'] as $key) {
+        Text::script($key);
+    }
+
+    $this->ktemplate->addScriptOptions('com_kunena.topicnew', [
+        'url'      => KunenaRoute::_(
+            'index.php?option=com_kunena&view=topic&task=newreplies&format=raw&id=' . (int) $this->topic->id
+            . '&after=' . (int) $this->topic->last_post_id . '&' . Session::getFormToken() . '=1',
+            false
+        ),
+        'interval' => KunenaTopicNewReplies::interval($this->ktemplate->params->get('ajaxTopicListInterval', 30)),
+    ]);
+    $this->addScript('assets/js/topicnew.js');
+}
 $txt             = '';
 
 if ($this->topic->ordering) {

@@ -59,6 +59,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicAnswer;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicLockReason;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicNewReplies;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateStars;
@@ -671,6 +672,47 @@ class TopicController extends KunenaController
         }
 
         $this->setRedirectBack();
+    }
+
+    /**
+     * The new replies of a topic since the last message which the page shows (asked in the background by the topic page):
+     * {count, url}, the url of the first new reply. Only a topic which the user may read; the template option of the background
+     * reload must be on.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function newreplies()
+    {
+        if (!Session::checkToken('get')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
+        $topic = KunenaTopicHelper::get($this->app->getInput()->getInt('id', 0));
+
+        if (!$topic->exists() || !$topic->isAuthorised('read') || !KunenaFactory::getTemplate()->params->get('ajaxTopicList', 1)) {
+            throw new RuntimeException(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+        }
+
+        $new      = KunenaTopicNewReplies::find((int) $topic->id, $this->app->getInput()->getInt('after', 0), (int) $this->me->userid);
+        $response = ['count' => $new['count'], 'url' => ''];
+
+        if ($new['first']) {
+            $response['url'] = KunenaMessageHelper::get($new['first'])->getUrl($topic->getCategory(), false);
+        }
+
+        header('Content-type: application/json');
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Pragma: no-cache');
+
+        while (@ob_end_clean()) {
+        }
+
+        echo new KunenaResponseJson($response);
+
+        jexit();
     }
 
     /**

@@ -693,6 +693,15 @@ form[id^="kpoll"] {
   background: var(--agora-accent-soft);
 }
 
+/* The new replies of the topic which is read: the soft accent of Agora, its radius and its raised shadow. */
+.ktopic-new-replies {
+  color: var(--agora-text);
+  background: color-mix(in srgb, var(--agora-accent) 14%, var(--agora-surface));
+  border-color: var(--agora-accent);
+  border-radius: var(--agora-radius);
+  box-shadow: var(--agora-shadow-raised);
+}
+
 /* Multi-quote: the chosen message with the soft accent, the bar on the surface of Agora. */
 .kmultiquote.active,
 .kmultiquote[aria-pressed="true"] {

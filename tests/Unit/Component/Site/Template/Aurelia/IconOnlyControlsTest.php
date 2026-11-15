@@ -94,6 +94,25 @@ class IconOnlyControlsTest extends UnitTestCase
         }
     }
 
+    /**
+     * A pencil and the button which shows or hides a section are only an icon: the mouse shows their name too (title), like the
+     * button of a new category next to them.
+     */
+    public function testTheIconButtonsOfTheCategoryIndexHaveATooltip(): void
+    {
+        foreach ([self::AURELIA, self::AGORA] as $folder) {
+            $lines = explode("\n", Files::read($folder . 'category/index/default.php'));
+
+            foreach (preg_grep('/KunenaIcons::(pencil|collapse)\(\)/', $lines) as $line) {
+                $this->assertStringContainsString('title="', $line, $folder . ': ' . trim(substr($line, 0, 90)));
+            }
+
+            foreach (preg_grep('/KunenaIcons::pencil\(\)/', $lines) as $line) {
+                $this->assertMatchesRegularExpression('/COM_KUNENA_CATEGORY_EDIT_NAMED.*title=|title=.*COM_KUNENA_CATEGORY_EDIT_NAMED/', $line);
+            }
+        }
+    }
+
     public function testEveryGoToTopLinkHasAName(): void
     {
         foreach (['category/item', 'message/list', 'topic/list', 'user/list'] as $layout) {

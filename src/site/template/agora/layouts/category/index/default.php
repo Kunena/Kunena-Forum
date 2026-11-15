@@ -96,10 +96,10 @@ foreach ($this->sections as $section) :
                 <div class="btn-toolbar agora-section-actions">
                     <?php if ($this->me->isAdmin()) : ?>
                         <a class="btn btn-outline-primary btn-sm <?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SUB')); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SUB')); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&layout=create&parentid=' . (int) $section->id . '&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::plus(); ?></a>
-                        <a class="btn btn-outline-primary btn-sm" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_EDIT')); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
+                        <a class="btn btn-outline-primary btn-sm <?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $section->name)); ?>" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $section->name)); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
                     <?php endif; ?>
 
-                    <button class="btn btn-outline-primary btn-sm" type="button" aria-expanded="true" aria-controls="section<?php echo $section->id; ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_TEMPLATE_AGORA_TOGGLE_SECTION')); ?>" data-bs-toggle="collapse" data-bs-target="#section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
+                    <button class="btn btn-outline-primary btn-sm" type="button" aria-expanded="true" aria-controls="section<?php echo $section->id; ?>" title="<?php echo $this->escape(Text::_('COM_KUNENA_TEMPLATE_AGORA_TOGGLE_SECTION')); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_TEMPLATE_AGORA_TOGGLE_SECTION')); ?>" data-bs-toggle="collapse" data-bs-target="#section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
                 </div>
             <?php endif; ?>
         </div>
@@ -134,7 +134,7 @@ foreach ($this->sections as $section) :
                                     <h3>
                                         <?php echo $this->getCategoryLink($category, $this->escape($category->name), null, $this->ktemplate->tooltips(), true, false); ?>
                                         <?php if ($isAdmin) : ?>
-                                            <a class="btn btn-link btn-sm p-0" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $category->name)); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $category->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
+                                            <a class="btn btn-link btn-sm p-0 <?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $category->name)); ?>" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $category->name)); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $category->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
                                         <?php endif; ?>
                                         <small class="nowrap">
                                             <span class="kcatcount"><?php echo KunenaCategory::getInstance()->totalCount($category->getTopics()); ?></span>
@@ -187,7 +187,7 @@ foreach ($this->sections as $section) :
                                                     }
 
                                                     if ($isAdmin) {
-                                                        echo ' <a class="btn btn-link btn-sm p-0" aria-label="' . htmlspecialchars(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $subcategory->name), ENT_COMPAT, 'UTF-8') . '" href="' . Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $subcategory->id . '&layout=manage&Itemid=' . $Itemid) . '">' . KunenaIcons::pencil() . '</a>';
+                                                        echo ' <a class="btn btn-link btn-sm p-0 ' . $this->ktemplate->tooltips() . '" data-bs-toggle="tooltip" title="' . htmlspecialchars(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $subcategory->name), ENT_COMPAT, 'UTF-8') . '" aria-label="' . htmlspecialchars(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $subcategory->name), ENT_COMPAT, 'UTF-8') . '" href="' . Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $subcategory->id . '&layout=manage&Itemid=' . $Itemid) . '">' . KunenaIcons::pencil() . '</a>';
                                                     }
                                                     ?>
                                                 </li>

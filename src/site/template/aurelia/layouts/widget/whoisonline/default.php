@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
     <div class="btn-toolbar float-end">
         <div class="btn-group">
             <button type="button" class="btn btn-outline-primary border btn-sm" data-bs-toggle="collapse" data-bs-target="#kwho" aria-controls="kwho" aria-expanded="true"
-                aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', Text::_('COM_KUNENA_MEMBERS'))); ?>"><?php echo KunenaIcons::collapse(); ?></button>
+                title="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', Text::_('COM_KUNENA_MEMBERS'))); ?>" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', Text::_('COM_KUNENA_MEMBERS'))); ?>"><?php echo KunenaIcons::collapse(); ?></button>
         </div>
     </div>
     <h2 class="card-header">

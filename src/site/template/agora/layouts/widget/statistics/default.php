@@ -40,7 +40,7 @@ $activity = [
         <div class="btn-group">
             <button type="button" class="btn btn-outline-primary border btn-sm" data-bs-toggle="collapse"
                 data-bs-target="#kstats" aria-controls="kstats" aria-expanded="true"
-                aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', Text::_('COM_KUNENA_STATISTICS'))); ?>"><?php echo KunenaIcons::collapse(); ?></button>
+                title="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', Text::_('COM_KUNENA_STATISTICS'))); ?>" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', Text::_('COM_KUNENA_STATISTICS'))); ?>"><?php echo KunenaIcons::collapse(); ?></button>
         </div>
     </div>
     <h2 class="card-header">

@@ -241,11 +241,15 @@ abstract class KunenaParser
             return false;
         }
 
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
         $bbcode = KunenaBBCode::getInstance(self::$relative);
         $bbcode->SetLimit($len);
         $bbcode->SetPlainMode(true);
         $txt = $bbcode->Parse($txt);
         $txt = self::prepareContent($txt, $target);
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return $txt;
     }
@@ -261,6 +265,8 @@ abstract class KunenaParser
      */
     public static function &prepareContent(&$content, $target = 'body')
     {
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
         // The system plugin may be disabled or missing: getPlugin() has no object to give then.
         $plugin       = PluginHelper::getPlugin('system', 'kunena');
         $params       = new Registry($plugin->params ?? null);
@@ -277,6 +283,8 @@ abstract class KunenaParser
                 $content = HTMLHelper::_('content.prepare', $content, $params, 'kunena.contentprepare.' . $target);
             }
         }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return $content;
     }
@@ -363,6 +371,8 @@ abstract class KunenaParser
             return false;
         }
 
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
         // The text of [private] is shown to nobody: the block goes in any case of the name of the tag (the parser in the plain
         // mode drops it, not after the opening tag [PRIVATE] was taken out below).
         $txt = self::removeBlocks($txt, ['confidential', 'hide', 'private']);
@@ -401,6 +411,8 @@ abstract class KunenaParser
         if (!$html) {
             $txt = $bbcode->UnHTMLEncode($txt);
         }
+
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return $txt;
     }

@@ -64,7 +64,8 @@ class KunenaTemplateAgora extends KunenaTemplateAurelia
     }
 
     /**
-     * The colour scheme chosen in the options of the template: auto (as the device), light or dark.
+     * The colour scheme chosen in the options of the template: auto (the colours of the site template around the forum), light or
+     * dark.
      *
      * @return  string
      *
@@ -79,7 +80,7 @@ class KunenaTemplateAgora extends KunenaTemplateAurelia
 
     /**
      * The attributes of the element #kunena for the colour scheme of the options: the scheme of Bootstrap, light without JavaScript
-     * when the scheme follows the device.
+     * when the scheme follows the site template.
      *
      * @return  string
      *
@@ -94,8 +95,10 @@ class KunenaTemplateAgora extends KunenaTemplateAurelia
     }
 
     /**
-     * A small script, put right in the element #kunena, which gives it the colours of the device before the page is shown when the
-     * scheme of the options follows the device (no flash of the light colours on a dark device).
+     * A small script, put right in the element #kunena, which gives it the colours of the site template around the forum before the
+     * page is shown when the scheme of the options is auto: the nearest data-bs-theme (light or dark) of an ancestor, else the first
+     * background of an ancestor which is not transparent (dark when its relative luminance is below 0.5), else light. The choice is
+     * kept as window.kunenaAgoraTheme(), which agora.js calls again when the colours of the page change.
      *
      * @return  string
      *
@@ -107,8 +110,21 @@ class KunenaTemplateAgora extends KunenaTemplateAurelia
             return '';
         }
 
-        return '<script>(function (el) { try { el.setAttribute("data-bs-theme",'
-            . ' window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); } catch (e) {} })(document.currentScript.parentElement);</script>';
+        return '<script>(function (el) { try {'
+            . ' window.kunenaAgoraTheme = function (forum) {'
+            . ' var node, theme, rgb, i, lum;'
+            . ' for (node = forum.parentElement; node; node = node.parentElement) {'
+            . ' theme = node.getAttribute("data-bs-theme"); if (theme === "dark" || theme === "light") { return theme; } }'
+            . ' for (node = forum.parentElement; node; node = node.parentElement) {'
+            . ' rgb = (getComputedStyle(node).backgroundColor.match(/^rgba?\(([^)]*)\)/) || [])[1];'
+            . ' rgb = rgb ? rgb.match(/[\d.]+/g) : null;'
+            . ' if (!rgb || rgb.length < 3 || (rgb.length > 3 && +rgb[3] === 0)) { continue; }'
+            . ' for (i = 0; i < 3; i++) { rgb[i] = rgb[i] / 255;'
+            . ' rgb[i] = rgb[i] <= 0.03928 ? rgb[i] / 12.92 : Math.pow((rgb[i] + 0.055) / 1.055, 2.4); }'
+            . ' lum = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];'
+            . ' return lum < 0.5 ? "dark" : "light"; }'
+            . ' return "light"; };'
+            . ' el.setAttribute("data-bs-theme", window.kunenaAgoraTheme(el)); } catch (e) {} })(document.currentScript.parentElement);</script>';
     }
 
     /**
@@ -132,7 +148,7 @@ class KunenaTemplateAgora extends KunenaTemplateAurelia
 
         parent::initialize();
 
-        // The colours of the scheme for the editor, and for the scheme auto the colours of the device when it changes them.
+        // The colours of the scheme for the editor, and for the scheme auto the colours of the site template when they change.
         $this->addScript('assets/js/agora.js');
 
         $accent = (string) $this->params->get('accentColor');

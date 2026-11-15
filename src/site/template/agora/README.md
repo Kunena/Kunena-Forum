@@ -12,16 +12,18 @@ below. A new feature of Aurelia is in Agora at once; it only needs styles in Ago
 ## ./config
 
 `config.xml` has every option of Aurelia (with the same start values, see `AgoraOptionsTest`) and the options of Agora in the tab
-Colors: the colour scheme (auto: as the device of the visitor, light or dark) and the accent colour. The scheme is chosen by the
-administrator only: the forum has no switcher for the visitors.
+Colors: the colour scheme (auto: the light or dark colours of the site template around the forum, light or dark) and the accent
+colour. The scheme auto follows the site template, not the device: the `data-bs-theme` of the page (`html`, `body` or another
+ancestor of `#kunena`), else the colour of its background. The scheme is chosen by the administrator only: the forum has no
+switcher for the visitors.
 
 ## ./layouts
 
 Only the layouts which Agora changes:
 
 - `page/default.php`, `page/offline.php`, `page/unauthorized.php`: the element `#kunena` gets the class `agora` and the colour
-  scheme of the options (`data-bs-theme` of Bootstrap); with the scheme auto, a small script gives it the colours of the device
-  before the page is shown.
+  scheme of the options (`data-bs-theme` of Bootstrap); with the scheme auto, a small script gives it the colours of the site
+  template (`data-bs-theme` of the page, else its background) before the page is shown.
 - `widget/menubar/default.php`: the menu bar.
 - `widget/statistics/default.php`: the statistics of the index as tiles, as on the statistics page, then the activity of
   today and yesterday, the latest member and a link to the statistics page.
@@ -55,4 +57,5 @@ The style sheet is compiled to `media/kunena/cache/agora/css/kunena.css` when a 
 ## ./assets/js
 
 `agora.js`: the text of SCEditor (in a frame with its own style sheet) gets the colours of the scheme, and with the scheme auto
-the colours follow the device when it changes them. The other scripts are the ones of Aurelia (`KunenaTemplateAgora::addScript()`).
+the colours follow the site template when it changes them (`data-bs-theme` of `html` or `body`, or its own colours after a change
+of the colours of the device). The other scripts are the ones of Aurelia (`KunenaTemplateAgora::addScript()`).

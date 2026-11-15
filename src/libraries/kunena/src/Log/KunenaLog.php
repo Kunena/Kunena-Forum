@@ -140,6 +140,20 @@ class KunenaLog
     public const string LOG_POST_UNTHANKYOU = 'LOG_POST_UNTHANKYOU';
 
     /**
+     * A reply accepted as the answer of its topic.
+     *
+     * @since   Kunena 8.0
+     */
+    public const string LOG_POST_ANSWER = 'LOG_POST_ANSWER';
+
+    /**
+     * The accepted answer of a topic removed.
+     *
+     * @since   Kunena 8.0
+     */
+    public const string LOG_POST_UNANSWER = 'LOG_POST_UNANSWER';
+
+    /**
      * @since   Kunena 5.0
      */
     public const string LOG_POLL_MODERATE = 'LOG_POLL_MODERATE';

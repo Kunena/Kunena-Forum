@@ -53,6 +53,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageSchedule;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicAnswer;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicLockReason;
@@ -2734,6 +2735,74 @@ class TopicController extends KunenaController
 
         $this->app->enqueueMessage(Text::_($solved ? 'COM_KUNENA_TOPIC_MARKED_NOT_SOLVED' : 'COM_KUNENA_TOPIC_MARKED_SOLVED'), 'success');
         $this->setRedirectBack();
+    }
+
+    /**
+     * Accept a reply as the answer of its topic, or remove it when it is the answer: for the author of the topic (when it is not
+     * locked) and the moderators. Accepting marks the topic as solved, removing marks it as not solved (with the topic icons).
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function answer()
+    {
+        if (!Session::checkToken('get')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $message = KunenaMessageHelper::get($this->mesid);
+
+        try {
+            $message->tryAuthorise('read');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return; // -- abort
+        }
+
+        $topic     = $message->getTopic();
+        $category  = $topic->getCategory();
+        $moderator = $this->me->isModerator($category);
+        $enabled   = !isset($this->config->acceptedAnswers) || (bool) $this->config->acceptedAnswers;
+
+        if (!KunenaTopicAnswer::mayChoose($topic, $message, $this->me, $moderator, $enabled)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $solvedIcon = $this->config->topicIcons && isset(KunenaFactory::getTemplate()->getUserTopicIcons()[KunenaTopic::ICON_SOLVED]);
+        $accepted   = KunenaTopicAnswer::toggle($topic, $message, $solvedIcon);
+
+        try {
+            $topic->save();
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if ($this->config->logModeration) {
+            KunenaLog::log(
+                $moderator ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+                $accepted ? KunenaLog::LOG_POST_ANSWER : KunenaLog::LOG_POST_UNANSWER,
+                ['mesid' => (int) $message->id],
+                $category,
+                $topic,
+                $message->getAuthor()
+            );
+        }
+
+        $this->app->enqueueMessage(Text::_($accepted ? 'COM_KUNENA_TOPIC_ANSWER_ACCEPTED' : 'COM_KUNENA_TOPIC_ANSWER_REMOVED'), 'success');
+        $this->setRedirect($message->getUrl($category, false));
     }
 
     /**

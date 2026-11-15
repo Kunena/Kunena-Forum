@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicAnswer;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -74,6 +75,12 @@ if ($this->config->orderingSystem == 'mesid') {
         <?php echo KunenaIcons::clock(); ?>
         <?php echo Text::sprintf('COM_KUNENA_MESSAGE_SCHEDULED_FOR', KunenaDate::getInstance($message->scheduled_time)->toKunena('datetime')); ?>
     </div>
+<?php endif; ?>
+<?php if ($isReply && KunenaTopicAnswer::isAnswer($this->topic, $message) && (int) $message->hold === 0) : ?>
+    <div class="clearfix"></div>
+    <p class="kmsg-answer mb-2">
+        <span class="badge bg-success"><?php echo KunenaIcons::check(); ?> <?php echo Text::_('COM_KUNENA_MESSAGE_ACCEPTED_ANSWER'); ?></span>
+    </p>
 <?php endif; ?>
 
 <div class="horizontal-message">

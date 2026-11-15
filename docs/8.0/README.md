@@ -23,6 +23,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [Tag topics with Joomla Tags](features/tags.md) | Administrators, moderators, users |  | Topics get tags of the Joomla component Tags, shown as labels and usable as a filter. |
 | [Suggest similar topics](features/similar-topics.md) | Users |  | While the subject of a new topic is typed, topics with a similar subject are shown. |
 | [The first post of a topic on every page](features/first-post-on-every-page.md) | Users |  | The first message of a topic is shown on top of every page of a long topic. |
+| [Accepted answer](features/accepted-answer.md) | Users, moderators, administrators |  | The author of a topic or a moderator accepts a reply as the answer: it gets a badge, is shown at the top of the topic, and the topic is marked as solved. |
 | [Topic status: Mark as solved](features/topic-status-solved.md) | Users, moderators | [#5146](https://github.com/Kunena/Kunena-Forum/issues/5146) | A Mark as solved button, the name under the topic icons and a batch status for moderators. |
 | [Filter bar on the lists of topics](features/topic-list-filter.md) | Users |  | Filter a list of topics on category, status, tag, words in the subject and author, without leaving the page. |
 | [The Unread list shows only the unread topics](features/unread-list.md) | Users | [#6036](https://github.com/Kunena/Kunena-Forum/issues/6036) | The Unread menu item pages over the unread topics only: full pages and the right number of pages. |

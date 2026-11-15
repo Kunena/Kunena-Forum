@@ -53,6 +53,7 @@ $quick           = $this->ktemplate->params->get('quick');
             <?php endif; ?>
             <?php echo $this->messageButtons->get('thankyou'); ?>
             <?php echo $this->messageButtons->get('unthankyou'); ?>
+            <?php echo $this->messageButtons->get('answer'); ?>
 
             <?php if ($this->messageButtons->get('moderate')) :
             ?>
@@ -141,6 +142,7 @@ endif; ?>
 
             <?php echo $this->messageButtons->get('thankyou'); ?>
             <?php echo $this->messageButtons->get('unthankyou'); ?>
+            <?php echo $this->messageButtons->get('answer'); ?>
         </div>
 
     <?php else : ?>

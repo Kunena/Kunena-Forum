@@ -62,6 +62,7 @@ use RuntimeException;
  * @property int    $icon_id
  * @property int    $locked
  * @property string $lock_reason
+ * @property int    $answer_id
  * @property int    $hold
  * @property int    $ordering
  * @property int    $posts
@@ -202,6 +203,14 @@ class KunenaTopic extends KunenaDatabaseObject
      * @since   Kunena 8.0
      */
     public mixed $lock_reason = null;
+
+    /**
+     * The id of the reply which is the accepted answer of the topic (0: none). See KunenaTopicAnswer.
+     *
+     * @var     integer
+     * @since   Kunena 8.0
+     */
+    public mixed $answer_id = null;
 
     /**
      * @var     string
@@ -1314,6 +1323,7 @@ class KunenaTopic extends KunenaDatabaseObject
             'label_id'              => $this->label_id,
             'locked'                => $this->locked,
             'lock_reason'           => $this->lock_reason,
+            'answer_id'             => $this->answer_id,
             'hold'                  => $this->hold,
             'ordering'              => $this->ordering,
             'posts'                 => $this->posts,

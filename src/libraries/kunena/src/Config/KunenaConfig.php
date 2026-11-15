@@ -260,6 +260,7 @@ use SimpleXMLElement;
  * @property int    $inactiveLockDays             Days without a new message after which a topic gets closed for replies (0 is never)
  * @property string $lockReasons                  The reasons of a locked topic, one per line (plain text or a language key, empty is no reasons)
  * @property int    $lockByAuthor                 The author of a topic may lock it with a reason
+ * @property int    $acceptedAnswers              The author of a topic and the moderators may accept a reply as its answer
  * @property string $enableHtml                   Enable safe HTML in messages
  * @property string $trimLongUrls                 Trim Long URLs
  * @property string $trimLongUrlsBack             Back Portion of Trimmed URLs

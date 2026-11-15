@@ -70,6 +70,12 @@ class TableKunenaTopics extends KunenaTable
 
     /**
      * @var     null
+     * @since   Kunena 8.0
+     */
+    public mixed $answer_id = null;
+
+    /**
+     * @var     null
      * @since   Kunena 6.0
      */
     public mixed $hold = null;

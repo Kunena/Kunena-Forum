@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicAnswer;
 use Kunena\Forum\Libraries\Html\KunenaIpLocation;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
@@ -293,6 +294,25 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                     )
                 );
             }
+        }
+
+        // Accept the reply as the answer of the topic (or remove it): the author of the topic and the moderators.
+        $acceptedAnswers = !isset($this->config->acceptedAnswers) || (bool) $this->config->acceptedAnswers;
+        $moderator       = $me->isModerator($this->category);
+
+        if (KunenaTopicAnswer::mayChoose($this->topic, $this->message, $me, $moderator, $acceptedAnswers)) {
+            $answerName = KunenaTopicAnswer::isAnswer($this->topic, $this->message) ? 'unanswer' : 'answer';
+
+            $this->messageButtons->set(
+                'answer',
+                $this->getButton(\sprintf($task, 'answer'), $answerName, 'message', 'user', $answerName, false, KunenaIcons::check())
+            );
+
+            // Dropdown Item version
+            $this->messageButtons->set(
+                'answer_dropdown',
+                $this->getButton(\sprintf($task, 'answer'), $answerName, 'message', 'user', $answerName, true, KunenaIcons::check())
+            );
         }
 
         // Report this.

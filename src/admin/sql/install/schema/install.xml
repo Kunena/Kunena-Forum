@@ -325,6 +325,10 @@
                type="varchar(255)"
                null="0"
                default=""/>
+        <field name="answer_id"
+               type="int(11)"
+               null="0"
+               default="0"/>
         <field name="hold"
                type="tinyint(4)"
                null="0"

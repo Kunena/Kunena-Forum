@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics`
     `label_id`              int(11)    NOT NULL default '0',
     `locked`                tinyint(4) NOT NULL default '0',
     `lock_reason`           varchar(255) NOT NULL default '',
+    `answer_id`             int(11) NOT NULL default '0',
     `hold`                  tinyint(4) NOT NULL default '0',
     `ordering`              int(11)    NOT NULL default '0',
     `posts`                 int(11)    NOT NULL default '0',

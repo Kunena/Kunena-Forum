@@ -607,6 +607,59 @@ form[id^="kpoll"] {
   }
 }
 
+/* The accepted answer: the box at the top of the topic, and the card of the reply which is the answer, with an edge of the colour of
+ * success (the badge on the reply has it too). */
+.kunena-topic-answer {
+  border-color: var(--agora-success) !important;
+  border-inline-start-width: 4px;
+
+  > .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: flex-start;
+    padding: var(--agora-pad);
+  }
+
+  .card-title {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 0 !important;
+    font-size: 1rem;
+    font-weight: 650;
+    color: var(--agora-success-text) !important;
+  }
+
+  .kunena-topic-answer-by,
+  .kunena-topic-answer-text {
+    margin: 0 !important;
+  }
+
+  .kunena-topic-answer-text {
+    color: var(--agora-text);
+  }
+
+  .btn {
+    margin-top: 0.5rem;
+  }
+}
+
+.row.message:has(.kmsg-answer) {
+  border-color: var(--agora-success);
+  box-shadow: 0 0 0 1px var(--agora-success), var(--agora-shadow);
+}
+
+.kmsg-answer {
+  margin: 0 0 0.5rem !important;
+
+  .badge {
+    display: inline-flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+}
+
 /* The tree of the threaded view on a phone: Aurelia makes every cell of a table a row of its own (480px and less), three lines
  * for each reply. Here a reply is its subject with its edges, then the author and the time on one small line under it; the
  * titles of the columns are only for the screen readers (the cells are no longer under them). */

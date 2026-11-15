@@ -107,6 +107,11 @@ if ($this->topic->locked) {
         echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
     }
 
+    // The accepted answer of the topic, on every page.
+    echo $this->subLayout('Topic/Item/Answer')
+        ->set('topic', $this->topic)
+        ->set('category', $this->category);
+
     $count = 1;
 
     // The template option "Show the first post on every page": the first message of the topic on top of the pages which

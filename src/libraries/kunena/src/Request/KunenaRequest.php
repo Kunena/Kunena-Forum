@@ -74,8 +74,12 @@ class KunenaRequest
         $classnamespaced = 'Kunena\Forum\Site\Controller\\' . $ex[0] . '\\' . $ex[1] . '\\' . $subpart . str_replace(' ', '', $words);
 
         if (!class_exists($classnamespaced)) {
-            // The name of the class is built from the request: it is not said back to the visitor.
-            throw new InvalidArgumentException('The page does not exist.', 404);
+            if (JDEBUG && KunenaConfig->debug) {
+                throw new InvalidArgumentException(\sprintf('In the KunenaRequest class the controller %s doesn\'t exist.', $classnamespaced), 404);
+            } else {
+                // The name of the class is built from the request: it is not said back to the visitor.
+                throw new InvalidArgumentException('The page does not exist.', 404);
+            }
         }
 
         // Create controller object.

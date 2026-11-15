@@ -2963,6 +2963,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         ) {
             $fileurl = $bbcode->getSmileyURL() . '/media/kunena/emoticons/' . $emoticon[1];
         }
+        
+        // Emoticons inserted by the editor are stored as an image path in the message: rebuild it with the address of the
+        // current site, so they keep working after the site moved to another (sub)folder or domain.
+        $emoticonUrl = KunenaBBCode::emoticonUrl($fileurl, $bbcode->getSmileyURL(), $bbcode->getSmileyDir());
+        
+        if ($emoticonUrl !== null) {
+            $fileurl = $emoticonUrl;
+        }
 
         $filename = basename($fileurl);
 

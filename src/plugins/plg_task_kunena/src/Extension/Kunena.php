@@ -34,6 +34,7 @@ use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Administrator\Model\TrashsModel;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaPendingAttachment;
+use Kunena\Forum\Libraries\Email\KunenaDigest;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -81,6 +82,10 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         'publish.scheduledreplies' => [
             'langConstPrefix' => 'PLG_TASK_KUNENA_PUBLISHSCHEDULED',
             'method'          => 'publishScheduledReplies',
+        ],
+        'send.digests' => [
+            'langConstPrefix' => 'PLG_TASK_KUNENA_SENDDIGESTS',
+            'method'          => 'sendDigests',
         ],
     ];
 
@@ -477,6 +482,39 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_PUBLISHSCHEDULEDSUCCESS', $result['published'], $result['skipped']));
         } catch (Exception $e) {
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_PUBLISHSCHEDULEDERROR', $e->getMessage()));
+
+            return Status::KNOCKOUT;
+        }
+
+        return Status::OK;
+    }
+
+    /**
+     * Send the daily and weekly digests which are due: each user who chose one gets one e-mail with the new posts of his
+     * subscriptions since his last digest.
+     *
+     * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
+     *
+     * @return  integer  The routine exit code.
+     *
+     * @since   Kunena 8.0
+     */
+    private function sendDigests(ExecuteTaskEvent $event): int
+    {
+        if (
+            !ComponentHelper::isEnabled('com_kunena')
+            || !KunenaForum::isCompatible('7.1')
+            || !KunenaForum::installed()
+        ) {
+            return Status::NO_RUN;
+        }
+
+        try {
+            $result = KunenaDigest::sendDue(time());
+
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_SENDDIGESTSSUCCESS', $result['sent'], $result['users']));
+        } catch (Exception $e) {
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_SENDDIGESTSERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
         }

@@ -34,7 +34,15 @@ Text::script('COM_KUNENA_CLEARED');
         ?>
             <tr>
                 <td class="col-md-7">
-                    <?php echo $field->label; ?>
+                    <?php
+                    // The label names its list (id k + name) for the screen readers, when the list has that id.
+                    $fieldId = 'k' . $field->name;
+
+                    if (str_contains((string) $field->field, 'id="' . $fieldId . '"')) : ?>
+                        <label for="<?php echo $fieldId; ?>"><?php echo $field->label; ?></label>
+                    <?php else : ?>
+                        <?php echo $field->label; ?>
+                    <?php endif; ?>
                 </td>
                 <td class="col-md-5">
                     <?php echo $field->field; ?>

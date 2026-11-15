@@ -35,6 +35,7 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Email\KunenaDigest;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Event\KunenaAfterProfileUpdateEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
@@ -737,6 +738,12 @@ class UserController extends KunenaController
         $this->user->canSubscribe        = $this->app->getInput()->getInt('cansubscribe', -1);
         $this->user->userListtime        = $this->app->getInput()->getInt('userlisttime', -2);
         $this->user->displayAgeBirthdate = $this->app->getInput()->getInt('displayAgeBirthdate', 1);
+
+        // The digest of the subscriptions: an e-mail for each post (the default) is stored as no value.
+        if ($this->app->getInput()->get('digest', null) !== null) {
+            $digest = KunenaDigest::clean($this->app->getInput()->getInt('digest', KunenaDigest::EACH));
+            KunenaUserHelper::setJoomlaParam((int) $this->user->userid, KunenaDigest::PARAM, $digest === KunenaDigest::EACH ? null : $digest);
+        }
 
         // The e-mail when the user is mentioned in a post: 1 (the default) is stored as no value.
         if ($this->app->getInput()->get('mentionemail', null) !== null) {

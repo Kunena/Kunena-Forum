@@ -37,6 +37,7 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Email\KunenaDigest;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
@@ -1181,6 +1182,12 @@ class KunenaMessage extends KunenaDatabaseObject
             ->where($this->_db->quoteName('message_id') . ' = ' . (int) $this->id);
         $queries[] = $query;
 
+        // Delete the posts collected for the digests
+        $query = $this->_db->createQuery();
+        $query->delete($this->_db->quoteName('#__kunena_digest'))
+            ->where($this->_db->quoteName('message_id') . ' = ' . (int) $this->id);
+        $queries[] = $query;
+
         // Delete message
         $query = $this->_db->createQuery();
         $query->delete($this->_db->quoteName('#__kunena_messages_text'))
@@ -2284,6 +2291,19 @@ class KunenaMessage extends KunenaDatabaseObject
 
             if (self::authorGetsApprovalEmail((int) $this->userid, (int) KunenaUserHelper::getMyself()->userid, $author->exists(), $author->isBlocked(), (string) $author->email, $this->isAuthorised('read', $author))) {
                 $emailToList = self::addApprovedAuthor($emailToList, $author);
+            }
+        }
+
+        // The subscribers who chose a daily or weekly digest: the post is collected for their digest, they get no e-mail now.
+        if (!empty($emailToList) && (int) ($this->_config->digestEmails ?? 1)) {
+            [$emailToList, $digestUsers] = KunenaDigest::split($emailToList, KunenaDigest::frequencies(array_column($emailToList, 'id')));
+
+            if ($digestUsers) {
+                try {
+                    KunenaDigest::collect((int) $this->id, $digestUsers, (int) $this->time);
+                } catch (ExecutionFailureException $e) {
+                    KunenaError::displayDatabaseError($e);
+                }
             }
         }
 

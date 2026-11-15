@@ -520,6 +520,16 @@
                 <option value="2">COM_KUNENA_A_EDIT_HISTORY_EVERYBODY</option>
             </field>
             <field
+                name="digestEmails"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_DIGEST_EMAILS"
+                description="COM_KUNENA_A_DIGEST_EMAILS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
                 name="enableFollow"
                 type="radio"
                 default="1"

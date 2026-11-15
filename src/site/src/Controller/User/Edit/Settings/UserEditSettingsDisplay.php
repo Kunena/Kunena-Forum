@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site\Controller\User\Edit\Settings;
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Email\KunenaDigest;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
@@ -147,6 +148,28 @@ class UserEditSettingsDisplay extends UserEditDisplay
             'kcansubscribe'
         );
         $this->settings[] = $item;
+
+        // The e-mails of the subscriptions: one for each post, or a daily or weekly digest (when the forum sends digests).
+        if (!empty($this->config->digestEmails) && !empty($this->config->allowSubscriptions)) {
+            $item             = new StdClass();
+            $item->name       = 'digest';
+            $item->label      = Text::_('COM_KUNENA_USER_DIGEST');
+            $options          = [];
+            $options[]        = HTMLHelper::_('select.option', KunenaDigest::EACH, Text::_('COM_KUNENA_USER_DIGEST_EACH'));
+            $options[]        = HTMLHelper::_('select.option', KunenaDigest::DAILY, Text::_('COM_KUNENA_USER_DIGEST_DAILY'));
+            $options[]        = HTMLHelper::_('select.option', KunenaDigest::WEEKLY, Text::_('COM_KUNENA_USER_DIGEST_WEEKLY'));
+            $item->field      = HTMLHelper::_(
+                'select.genericlist',
+                $options,
+                'digest',
+                'class="kinputbox form-select" size="1"',
+                'value',
+                'text',
+                KunenaDigest::clean(KunenaUserHelper::getJoomlaParam((int) $this->profile->userid, KunenaDigest::PARAM, KunenaDigest::EACH)),
+                'kdigest'
+            );
+            $this->settings[] = $item;
+        }
 
         $item             = new StdClass();
         $item->name       = 'userlisttime';

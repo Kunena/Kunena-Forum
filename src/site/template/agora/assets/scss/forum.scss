@@ -292,8 +292,9 @@ tr[class^="category"] {
       display: none;
     }
 
+    /* The category on its line, "Topic started ... by ..." on the next one: the sentence does not wrap after the category. */
     .ktopic-category {
-      margin-inline-end: 0.25rem;
+      display: block;
     }
   }
 

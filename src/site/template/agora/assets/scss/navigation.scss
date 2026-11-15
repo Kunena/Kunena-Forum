@@ -215,6 +215,16 @@
 .kannouncement-title {
   font-size: 1.25rem;
   line-height: 1.3;
+
+  /* Its link starts at the edge of the text under it (a .btn-link has padding of its own). */
+  .btn-link {
+    padding-inline: 0;
+  }
+}
+
+/* The text of the announcement ends at the padding of the box: the same space under it as above the title. */
+.alert:has(> .kannouncement-title) > div > p:last-child {
+  margin-bottom: 0;
 }
 
 #announcement,

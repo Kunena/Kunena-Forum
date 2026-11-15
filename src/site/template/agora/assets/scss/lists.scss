@@ -203,6 +203,16 @@
   }
 }
 
+/* A row of a list of topics: the icon, the numbers, the last post and the box are centred on the height of the row (the subject
+ * and its lines are the tallest cell), so the space beside the icon is the same above and under it. The index keeps them at the
+ * top (a category can have a long description and subcategories). */
+#ktopicsform tr[class^="category"] {
+  > th,
+  > td:not(:nth-child(2)) {
+    vertical-align: middle;
+  }
+}
+
 /* The pages of a long topic, under its subject: small chips, not the buttons of the pagination of the list. */
 #ktopicsform .pagination-small {
   margin: 0.5rem 0 0;

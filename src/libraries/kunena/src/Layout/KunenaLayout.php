@@ -415,7 +415,7 @@ class KunenaLayout extends KunenaBase
             // A category which hides the replies from the guests gives them the first message (like getTopicLink()).
             $message = !KunenaUserHelper::getMyself()->userid && $lastTopic->getCategory()->hidesRepliesForGuests()
                 ? $lastTopic->first_post_message : $lastTopic->last_post_message;
-            $title   = KunenaParser::stripBBCode((string) $message, 200, false);
+            $title   = self::excerpt((string) $message);
 
             if (strpos($class, 'hasTooltip') !== false) {
                 // Tooltips will decode HTML and we don't want the HTML to be parsed
@@ -444,6 +444,35 @@ class KunenaLayout extends KunenaBase
     }
 
     /**
+     * The excerpts of the texts of the posts which were made in this request (text => excerpt): a topic list asks for the excerpt
+     * of the same post for each link of a row.
+     *
+     * @var    string[]
+     * @since  Kunena 8.0
+     */
+    private static array $excerpts = [];
+
+    /**
+     * The excerpt of the text of a post for the title (the tooltip) of a link: without BBCode, at most 200 characters. It is made
+     * once in a request for each text (stripBBCode() parses the whole text, a topic list asked for it about four times a row).
+     *
+     * @param   string  $text  The BBCode of the post.
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public static function excerpt(string $text): string
+    {
+        if ($text === '') {
+            return '';
+        }
+
+        return self::$excerpts[md5($text)] ??= (string) KunenaParser::stripBBCode($text, 200, false);
+    }
+
+    /**
      * @param   KunenaTopic          $topic      topic
      * @param   null                 $action     action
      * @param   null                 $content    content
@@ -469,32 +498,13 @@ class KunenaLayout extends KunenaBase
         }
 
         if ($title === null) {
-            $titleFirstPostCleaned = '';
-            if (!empty($topic->first_post_message)) {
-                $titleFirstPostCleaned = KunenaParser::stripBBCode($topic->first_post_message, 200, false);
-            }
+            // The text of the first post, or of the last one for a link to the last (or unread) post. A guest gets the first post
+            // in a category which hides the replies from the guests. The excerpt is made when it is used, once in a request.
+            $last = !$action instanceof KunenaMessage && ($action === 'unread' || $action === 'last')
+                && !(!KunenaUserHelper::getMyself()->userid && $topic->getCategory()->hidesRepliesForGuests())
+                && !empty($topic->first_post_message);
 
-            if ($action instanceof KunenaMessage) {
-                $title = $titleFirstPostCleaned;
-            } else {
-                switch ($action) {
-                    case 'first':
-                        $title = $titleFirstPostCleaned;
-                        break;
-                    case 'unread':
-                    case 'last':
-                        if (!KunenaUserHelper::getMyself()->userid && $topic->getCategory()->hidesRepliesForGuests()) {
-                            $title = $titleFirstPostCleaned;
-                        } else {
-                            if (!empty($topic->first_post_message)) {
-                                $title = KunenaParser::stripBBCode($topic->last_post_message, 200, false);
-                            }
-                        }
-                        break;
-                    default:
-                        $title = $titleFirstPostCleaned;
-                }
-            }
+            $title = self::excerpt((string) ($last ? $topic->last_post_message : $topic->first_post_message));
 
             if ($class !== null) {
                 if (strpos($class, 'hasTooltip') !== false) {

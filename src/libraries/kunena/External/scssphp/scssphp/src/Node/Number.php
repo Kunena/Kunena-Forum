@@ -12,13 +12,11 @@
 
 namespace KunenaScssPhp\ScssPhp\Node;
 
-use KunenaScssPhp\ScssPhp\Base\Range;
 use KunenaScssPhp\ScssPhp\Compiler;
-use KunenaScssPhp\ScssPhp\Exception\RangeException;
 use KunenaScssPhp\ScssPhp\Exception\SassScriptException;
 use KunenaScssPhp\ScssPhp\Node;
 use KunenaScssPhp\ScssPhp\Type;
-use KunenaScssPhp\ScssPhp\Util;
+use KunenaScssPhp\ScssPhp\Util\NumberUtil;
 
 /**
  * Dimension + optional units
@@ -33,15 +31,9 @@ use KunenaScssPhp\ScssPhp\Util;
  *
  * @template-implements \ArrayAccess<int, mixed>
  */
-class Number extends Node implements \ArrayAccess
+final class Number extends Node implements \ArrayAccess, \JsonSerializable
 {
     const PRECISION = 10;
-
-    /**
-     * @var int
-     * @deprecated use {Number::PRECISION} instead to read the precision. Configuring it is not supported anymore.
-     */
-    public static $precision = self::PRECISION;
 
     /**
      * @see http://www.w3.org/TR/2012/WD-css3-values-20120308/
@@ -49,7 +41,7 @@ class Number extends Node implements \ArrayAccess
      * @var array
      * @phpstan-var array<string, array<string, float|int>>
      */
-    protected static $unitTable = [
+    private static $unitTable = [
         'in' => [
             'in' => 1,
             'pc' => 6,
@@ -109,10 +101,9 @@ class Number extends Node implements \ArrayAccess
      */
     public function __construct($dimension, $numeratorUnits, array $denominatorUnits = [])
     {
-        if (\is_string($numeratorUnits)) {
+        if (is_string($numeratorUnits)) {
             $numeratorUnits = $numeratorUnits ? [$numeratorUnits] : [];
         } elseif (isset($numeratorUnits['numerator_units'], $numeratorUnits['denominator_units'])) {
-            // TODO get rid of this once `$number[2]` is not used anymore
             $denominatorUnits = $numeratorUnits['denominator_units'];
             $numeratorUnits = $numeratorUnits['numerator_units'];
         }
@@ -131,7 +122,7 @@ class Number extends Node implements \ArrayAccess
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      */
     public function getNumeratorUnits()
     {
@@ -139,11 +130,21 @@ class Number extends Node implements \ArrayAccess
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      */
     public function getDenominatorUnits()
     {
         return $this->denominatorUnits;
+    }
+
+    /**
+     * @return mixed
+     */
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
+    {
+        // Passing a compiler instance makes the method output a Sass representation instead of a CSS one, supporting full units.
+        return $this->output(new Compiler());
     }
 
     /**
@@ -228,6 +229,16 @@ class Number extends Node implements \ArrayAccess
     }
 
     /**
+     * Returns true if the number has any units
+     *
+     * @return bool
+     */
+    public function hasUnits()
+    {
+        return !$this->unitless();
+    }
+
+    /**
      * Checks whether the number has exactly this unit
      *
      * @param string $unit
@@ -258,16 +269,28 @@ class Number extends Node implements \ArrayAccess
      * @param float|int $max
      * @param string|null $name
      *
-     * @return float|int
+     * @return float
      * @throws SassScriptException
      */
     public function valueInRange($min, $max, $name = null)
     {
-        try {
-            return Util::checkRange('', new Range($min, $max), $this);
-        } catch (RangeException $e) {
-            throw SassScriptException::forArgument(sprintf('Expected %s to be within %s%s and %s%3$s', $this, $min, $this->unitStr(), $max), $name);
-        }
+        return NumberUtil::fuzzyCheckRange($this->dimension, $min, $max) ?? throw SassScriptException::forArgument(sprintf('Expected %s to be within %s%s and %s%3$s.', $this, $min, $this->unitStr(), $max), $name);
+    }
+
+    /**
+     * @param float|int $min
+     * @param float|int $max
+     * @param string    $name
+     * @param string    $unit
+     *
+     * @return float
+     * @throws SassScriptException
+     *
+     * @internal
+     */
+    public function valueInRangeWithUnit($min, $max, $name, $unit)
+    {
+        return NumberUtil::fuzzyCheckRange($this->dimension, $min, $max) ?? throw SassScriptException::forArgument(sprintf('Expected %s to be within %s%s and %s%3$s.', $this, $min, $unit, $max), $name);
     }
 
     /**
@@ -315,9 +338,9 @@ class Number extends Node implements \ArrayAccess
         }
 
         throw new SassScriptException(sprintf(
-        	'Incompatible units %s and %s.',
-        	self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
-        	self::getUnitString($other->numeratorUnits, $other->denominatorUnits)
+            'Incompatible units %s and %s.',
+            self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
+            self::getUnitString($other->numeratorUnits, $other->denominatorUnits)
         ));
     }
 
@@ -357,7 +380,6 @@ class Number extends Node implements \ArrayAccess
 
         try {
             $this->greaterThan($other);
-
             return true;
         } catch (SassScriptException $e) {
             return false;
@@ -535,7 +557,7 @@ class Number extends Node implements \ArrayAccess
     /**
      * Output number
      *
-     * @param \ScssPhp\ScssPhp\Compiler $compiler
+     * @param \KunenaScssPhp\ScssPhp\Compiler $compiler
      *
      * @return string
      */
@@ -656,9 +678,9 @@ class Number extends Node implements \ArrayAccess
             }
 
             throw new SassScriptException(sprintf(
-            	'Incompatible units %s and %s.',
-            	self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
-            	self::getUnitString($numeratorUnits, $denominatorUnits)
+                'Incompatible units %s and %s.',
+                self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
+                self::getUnitString($numeratorUnits, $denominatorUnits)
             ));
         }
 
@@ -678,17 +700,17 @@ class Number extends Node implements \ArrayAccess
             }
 
             throw new SassScriptException(sprintf(
-            	'Incompatible units %s and %s.',
-            	self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
-            	self::getUnitString($numeratorUnits, $denominatorUnits)
+                'Incompatible units %s and %s.',
+                self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
+                self::getUnitString($numeratorUnits, $denominatorUnits)
             ));
         }
 
         if (\count($oldNumerators) || \count($oldDenominators)) {
             throw new SassScriptException(sprintf(
-            	'Incompatible units %s and %s.',
-            	self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
-            	self::getUnitString($numeratorUnits, $denominatorUnits)
+                'Incompatible units %s and %s.',
+                self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
+                self::getUnitString($numeratorUnits, $denominatorUnits)
             ));
         }
 
@@ -766,13 +788,13 @@ class Number extends Node implements \ArrayAccess
             return 1;
         }
 
-        foreach (static::$unitTable as $unitVariants) {
+        foreach (self::$unitTable as $unitVariants) {
             if (isset($unitVariants[$unit1]) && isset($unitVariants[$unit2])) {
                 return $unitVariants[$unit1] / $unitVariants[$unit2];
             }
         }
 
-        return;
+        return null;
     }
 
     /**

@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Notification\KunenaPopupNotification;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use ScssPhp\ScssPhp\Exception\SassException;
+use KunenaScssPhp\ScssPhp\Exception\SassException;
 
 /**
  * Aurelia template.

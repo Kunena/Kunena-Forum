@@ -10,5 +10,8 @@ return array(
     'Pedrollo\\GravatarLib\\' => array($vendorDir . '/Emberlabs'),
     'Nbbc\\' => array($vendorDir . '/Nbbc/src'),
     'Kunena\\Forum\\' => array($baseDir . '/src'),
+    'KunenaScssPhp\\Symfony\\Component\\Filesystem\\' => array($vendorDir . '/symfony/filesystem'),
+    'KunenaScssPhp\\SourceSpan\\' => array($vendorDir . '/scssphp/source-span/src'),
     'KunenaScssPhp\\ScssPhp\\' => array($vendorDir . '/scssphp/scssphp/src'),
+    'KunenaScssPhp\\League\\Uri\\' => array($vendorDir . '/league/uri', $vendorDir . '/league/uri-interfaces'),
 );

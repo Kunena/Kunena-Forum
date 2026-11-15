@@ -39,11 +39,11 @@ use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use KunenaScssPhp\ScssPhp\Compiler;
+use KunenaScssPhp\ScssPhp\Exception\SassException;
 use KunenaScssPhp\ScssPhp\OutputStyle;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
-use ScssPhp\ScssPhp\Exception\SassException;
 use SimpleXMLElement;
 use StdClass;
 

@@ -14,7 +14,7 @@
 defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use ScssPhp\ScssPhp\Exception\SassException;
+use KunenaScssPhp\ScssPhp\Exception\SassException;
 
 require_once KPATH_SITE . '/template/aurelia/template.php';
 

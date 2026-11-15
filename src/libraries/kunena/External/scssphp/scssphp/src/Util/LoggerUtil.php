@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * SCSSPHP
+ *
+ * @copyright 2012-2020 Leaf Corcoran
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ * @link http://scssphp.github.io/scssphp
+ */
+
+namespace KunenaScssPhp\ScssPhp\Util;
+
+use KunenaScssPhp\ScssPhp\Deprecation;
+use KunenaScssPhp\ScssPhp\Logger\DeprecationProcessingLogger;
+use KunenaScssPhp\ScssPhp\Logger\LoggerInterface;
+use KunenaScssPhp\ScssPhp\StackTrace\Trace;
+use KunenaScssPhp\SourceSpan\FileSpan;
+
+/**
+ * @internal
+ */
+final class LoggerUtil
+{
+    public static function warnForDeprecation(LoggerInterface $logger, Deprecation $deprecation, string $message, ?FileSpan $span = null, ?Trace $trace = null): void
+    {
+        if ($deprecation->isFuture() && !$logger instanceof DeprecationProcessingLogger) {
+            return;
+        }
+
+        $logger->warn($message, $deprecation, $span, $trace);
+    }
+}

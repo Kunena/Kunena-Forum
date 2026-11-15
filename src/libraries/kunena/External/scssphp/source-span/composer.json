@@ -1,0 +1,43 @@
+{
+    "name": "scssphp/source-span",
+    "type": "library",
+    "description": "Provides a representation for source code locations and spans.",
+    "keywords": ["parsing"],
+    "license": [
+        "MIT"
+    ],
+    "authors": [
+        {
+            "name": "Christophe Coevoet",
+            "homepage": "https://github.com/stof"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "SourceSpan\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "SourceSpan\\Tests\\": "tests/" }
+    },
+    "require": {
+        "php": ">=8.1",
+        "ext-mbstring": "*",
+        "league/uri": "^7.6",
+        "league/uri-interfaces": "^7.6"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpunit/phpunit": "^9.5.6",
+        "squizlabs/php_codesniffer": "~3.5",
+        "symfony/phpunit-bridge": "^6.4 || ^7.3 || ^8.0",
+        "symfony/var-dumper": "^6.4 || ^7.3 || ^8.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

@@ -17,7 +17,7 @@ namespace KunenaScssPhp\ScssPhp;
  *
  * @author Leaf Corcoran <leafot@gmail.com>
  */
-class Version
+final class Version
 {
-    const VERSION = '1.10.0';
+    const VERSION = '2.1.0';
 }

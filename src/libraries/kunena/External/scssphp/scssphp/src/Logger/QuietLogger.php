@@ -10,18 +10,23 @@
  * @link http://scssphp.github.io/scssphp
  */
 
-namespace ScssPhp\ScssPhp\Logger;
+namespace KunenaScssPhp\ScssPhp\Logger;
+
+use KunenaScssPhp\ScssPhp\Deprecation;
+use KunenaScssPhp\ScssPhp\StackTrace\Trace;
+use KunenaScssPhp\SourceSpan\FileSpan;
+use KunenaScssPhp\SourceSpan\SourceSpan;
 
 /**
  * A logger that silently ignores all messages.
  */
-class QuietLogger implements LoggerInterface
+final class QuietLogger implements LoggerInterface
 {
-    public function warn($message, $deprecation = false)
+    public function warn(string $message, ?Deprecation $deprecation = null, ?FileSpan $span = null, ?Trace $trace = null): void
     {
     }
 
-    public function debug($message)
+    public function debug(string $message, SourceSpan $span): void
     {
     }
 }

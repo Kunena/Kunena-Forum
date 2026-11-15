@@ -100,6 +100,29 @@ def operator():
     return _operator
 
 
+_roles = {}
+TRUSTED_ROLES = {"admin", "maintain", "write"}
+
+
+def collaborator_role(login):
+    """The user's role_name on the repository, or None. Looked up once per user per run."""
+    if login not in _roles:
+        role = None
+        if re.fullmatch(r"[A-Za-z0-9-]+", login):
+            try:
+                role = gh("api", f"repos/{{owner}}/{{repo}}/collaborators/{login}/permission",
+                          "--jq", ".role_name").strip()
+            except Exception:
+                pass  # not a collaborator, rate limit, network: not trusted
+        _roles[login] = role
+    return _roles[login]
+
+
+def trusted(login, author):
+    """True for the issue's author, the operator or a user with write access."""
+    return login == author or login == operator() or collaborator_role(login) in TRUSTED_ROLES
+
+
 # ---- Job files -------------------------------------------------------------
 
 
@@ -220,7 +243,6 @@ def fetch_issue(number):
 def write_issue_md(job):
     issue = fetch_issue(job["issue"])
     author = issue["author"]["login"]
-    trusted = {author, operator()}
     lines = [
         f"# Issue #{issue['number']}: {issue['title']}",
         "",
@@ -234,7 +256,7 @@ def write_issue_md(job):
         "",
         quote(issue["body"] or ""),
     ]
-    comments = [c for c in issue["comments"] if c["author"]["login"] in trusted]
+    comments = [c for c in issue["comments"] if trusted(c["author"]["login"], author)]
     if comments:
         lines += ["", "## Comments"]
         for c in comments:
@@ -246,13 +268,13 @@ def write_issue_md(job):
 
 
 def replied_since_question(issue):
-    """True when the author or operator commented after the factory's last comment."""
+    """True when the author, the operator or a user with write access commented after the factory's last comment."""
     last_factory = None
     replied = False
     for c in issue["comments"]:
         if c["body"].startswith(MARKER):
             last_factory, replied = c["createdAt"], False
-        elif last_factory and c["author"]["login"] in {issue["author"]["login"], operator()}:
+        elif last_factory and trusted(c["author"]["login"], issue["author"]["login"]):
             replied = True
     return replied
 

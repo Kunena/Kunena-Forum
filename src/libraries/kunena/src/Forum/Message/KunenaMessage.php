@@ -1161,6 +1161,12 @@ class KunenaMessage extends KunenaDatabaseObject
             ->where($this->_db->quoteName('postid') . ' = ' . $this->_db->quote($this->id));
         $queries[] = $query;
 
+        // Delete reactions
+        $query = $this->_db->createQuery();
+        $query->delete($this->_db->quoteName('#__kunena_reactions'))
+            ->where($this->_db->quoteName('message_id') . ' = ' . (int) $this->id);
+        $queries[] = $query;
+
         // Delete message
         $query = $this->_db->createQuery();
         $query->delete($this->_db->quoteName('#__kunena_messages_text'))

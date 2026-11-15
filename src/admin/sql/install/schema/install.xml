@@ -828,6 +828,28 @@
         <key name="targetuserid"
              columns="targetuserid"/>
     </table>
+    <table name="kunena_reactions">
+        <field primary_key="yes"
+               name="message_id"
+               type="int(11)"
+               null="0"/>
+        <field primary_key="yes"
+               name="user_id"
+               type="int(11)"
+               null="0"/>
+        <field name="reaction"
+               type="varbinary(64)"
+               null="0"/>
+        <field name="created_time"
+               type="int(11)"
+               null="0"
+               default="0"/>
+        <key name="PRIMARY"
+             unique="1"
+             columns="message_id,user_id"/>
+        <key name="user_id"
+             columns="user_id"/>
+    </table>
     <table name="kunena_user_categories">
         <field primary_key="yes"
                name="user_id"

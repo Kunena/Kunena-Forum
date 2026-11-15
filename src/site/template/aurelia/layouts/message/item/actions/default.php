@@ -24,6 +24,14 @@ $config          = KunenaConfig::getInstance();
 $this->ktemplate = KunenaFactory::getTemplate();
 $fullactions     = $this->ktemplate->params->get('fullactions');
 $quick           = $this->ktemplate->params->get('quick');
+
+// The reactions of the message: shown in every case (a guest, a locked topic), the actions below only when they apply.
+echo $this->subLayout('Message/Item/Reactions')
+    ->set('message', $this->message)
+    ->set('counts', $this->reactionCounts)
+    ->set('mine', $this->reactionMine)
+    ->set('list', $this->reactionList)
+    ->set('url', $this->reactionUrl);
 ?>
 
 <?php if (!$fullactions) :

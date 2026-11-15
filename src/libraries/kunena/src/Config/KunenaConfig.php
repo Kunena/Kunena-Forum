@@ -261,6 +261,7 @@ use SimpleXMLElement;
  * @property string $lockReasons                  The reasons of a locked topic, one per line (plain text or a language key, empty is no reasons)
  * @property int    $lockByAuthor                 The author of a topic may lock it with a reason
  * @property int    $acceptedAnswers              The author of a topic and the moderators may accept a reply as its answer
+ * @property string $reactions                    The reactions on the messages, separated by spaces (empty is no reactions)
  * @property string $enableHtml                   Enable safe HTML in messages
  * @property string $trimLongUrls                 Trim Long URLs
  * @property string $trimLongUrlsBack             Back Portion of Trimmed URLs

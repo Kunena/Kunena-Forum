@@ -50,6 +50,7 @@ use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageReactions;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageSchedule;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -2803,6 +2804,59 @@ class TopicController extends KunenaController
 
         $this->app->enqueueMessage(Text::_($accepted ? 'COM_KUNENA_TOPIC_ANSWER_ACCEPTED' : 'COM_KUNENA_TOPIC_ANSWER_REMOVED'), 'success');
         $this->setRedirect($message->getUrl($category, false));
+    }
+
+    /**
+     * Give a reaction (an emoji of the list of the setting) to a message of another user: it replaces the reaction of the user on
+     * the message, or removes it when it is the same.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function react()
+    {
+        if (!Session::checkToken('get')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $message = KunenaMessageHelper::get($this->mesid);
+
+        try {
+            $message->tryAuthorise('read');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return; // -- abort
+        }
+
+        $reactions = KunenaMessageReactions::parse(isset($this->config->reactions) ? (string) $this->config->reactions : '');
+        $reaction  = KunenaMessageReactions::clean($this->app->getInput()->getString('reaction', ''), $reactions);
+        $topic     = $message->getTopic();
+
+        if ($reaction === null || !KunenaMessageReactions::mayReact($topic, $message, $this->me, $reactions)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        try {
+            $saved = KunenaMessageReactions::toggle((int) $message->id, (int) $this->me->userid, $reaction);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::_($saved ? 'COM_KUNENA_REACTION_SAVED' : 'COM_KUNENA_REACTION_REMOVED'), 'success');
+        $this->setRedirect($message->getUrl($topic->getCategory(), false));
     }
 
     /**

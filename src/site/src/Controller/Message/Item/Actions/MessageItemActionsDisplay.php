@@ -27,6 +27,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageReactions;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicAnswer;
 use Kunena\Forum\Libraries\Html\KunenaIpLocation;
@@ -79,6 +80,38 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
     public mixed $ipLink = null;
 
     /**
+     * The reactions of the message which were given, in the order of the list: [reaction => number].
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    public array $reactionCounts = [];
+
+    /**
+     * The reaction of the user on the message, null when he has none.
+     *
+     * @var     string|null
+     * @since   Kunena 8.0
+     */
+    public ?string $reactionMine = null;
+
+    /**
+     * The reactions which the user can give to the message (empty when he may not react).
+     *
+     * @var     string[]
+     * @since   Kunena 8.0
+     */
+    public array $reactionList = [];
+
+    /**
+     * The address of the task react of the message, without the reaction.
+     *
+     * @var     string
+     * @since   Kunena 8.0
+     */
+    public string $reactionUrl = '';
+
+    /**
      * Prepare message actions display.
      *
      * @return  boolean|false|void
@@ -114,6 +147,14 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
         $button = $fullactions ? true : false;
 
         $this->quickReply = null;
+
+        // The reactions: the ones which were given (also for the guests and in a locked topic), and the list to choose from when
+        // the user may react.
+        $reactions            = KunenaMessageReactions::parse(isset($this->config->reactions) ? (string) $this->config->reactions : '');
+        $this->reactionCounts = $reactions ? KunenaMessageReactions::sort(KunenaMessageReactions::getCounts((int) $this->message->id), $reactions) : [];
+        $this->reactionMine   = $reactions ? KunenaMessageReactions::getMine((int) $this->message->id, (int) $me->userid) : null;
+        $this->reactionList   = !$this->config->readOnly && KunenaMessageReactions::mayReact($this->topic, $this->message, $me, $reactions) ? $reactions : [];
+        $this->reactionUrl    = \sprintf($task, 'react');
 
         if ($this->config->readOnly) {
             return false;

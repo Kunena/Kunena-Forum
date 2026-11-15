@@ -1555,3 +1555,63 @@ pre.bbcode_code_body:has(> code.hljs) {
 .kunena-topic-indent-5 {
   padding-inline-start: 7.5rem;
 }
+
+/* The reactions of a message (layouts/message/item/reactions): a pill per reaction which was given, with its number, and a button
+ * with the list to choose from. The reaction of the user has the colour of the links. */
+.kreactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: center;
+  margin: 0 0 0.5rem;
+}
+
+.kreaction {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+  min-height: 32px;
+  padding: 0.125rem 0.625rem;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: var(--bs-body-color);
+  text-decoration: none;
+  background: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 999px;
+}
+
+a.kreaction:hover,
+button.kreaction:hover {
+  color: var(--bs-body-color);
+  border-color: var(--bs-secondary-color);
+}
+
+.kreaction-mine {
+  background: var(--bs-primary-bg-subtle);
+  border-color: var(--bs-primary);
+}
+
+.kreaction-count {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.kreaction-menu {
+  min-width: 0;
+  padding: 0.25rem;
+
+  .dropdown-item {
+    padding: 0.25rem 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    text-align: center;
+    border-radius: 0.375rem;
+  }
+}
+
+.kreaction-menu:is(.show) {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 0.125rem;
+}

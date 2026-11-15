@@ -580,7 +580,9 @@ class KunenaBBCode extends BBCode
             $path = explode('/', $params['path']);
 
             if (strstr($params['host'], 'soundcloud.') && !empty($path[1])) {
-                return '<iframe allowtransparency="true" width="100%" height="350" src="https://w.soundcloud.com/player/?url=' . $params['url'] . '&amp;auto_play=false&amp;visual=true" style="border: 0"></iframe><br />';
+                // The address is encoded: a quote in it would close the src attribute and add attributes (onload...) to the frame.
+                return '<iframe allowtransparency="true" width="100%" height="350" src="https://w.soundcloud.com/player/?url='
+                    . htmlspecialchars($params['url'], ENT_QUOTES, 'UTF-8') . '&amp;auto_play=false&amp;visual=true" style="border: 0"></iframe><br />';
             }
         }
 

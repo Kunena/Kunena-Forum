@@ -55,15 +55,16 @@ use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaAvatarGalleryName;
+use Kunena\Forum\Libraries\User\KunenaAvatarPath;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\User\KunenaUserWarnings;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Forum\Libraries\User\KunenaUserRankPolicy;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
+use Kunena\Forum\Libraries\User\KunenaUserWarnings;
 use Kunena\Forum\Plugin\Kunena\Kunena\Helper\KunenaProfileKunena;
 use RuntimeException;
 use stdClass;
@@ -946,9 +947,14 @@ class UserController extends KunenaController
         if (!empty($DelAvatar) || !empty($DelProfileInfo)) {
             $avatar_deleted = '';
 
-            // Delete avatar from file system
-            if (is_file(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar) && !stristr($user->avatar, 'gallery/')) {
-                File::delete(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar);
+            // Delete avatar from file system: only the upload of this user (Kunena 7.1, the stored value is a path which is not
+            // trusted: never a gallery picture, never a file outside the folder of the avatars).
+            $avatarFile = KunenaAvatarPath::isUploadOf($user->avatar, (int) $user->userid)
+                ? KunenaAvatarPath::getPath(JPATH_ROOT . '/media/kunena/avatars', $user->avatar)
+                : null;
+
+            if ($avatarFile !== null && is_file($avatarFile)) {
+                File::delete($avatarFile);
                 $avatar_deleted = Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
             }
 
@@ -1571,22 +1577,25 @@ class UserController extends KunenaController
             throw new RuntimeException('Delete avatar cannot be done, user not exist');
         }
 
-        if (!empty($user->avatar)) {
-            if (preg_match('|^users/|', $user->avatar)) {
-                // Delete old uploaded avatars:
-                if (is_dir(KPATH_MEDIA . '/avatars/resized')) {
-                    $deletelist = Folder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
+        // Only the upload of this user is deleted (Kunena 7.1): "users/" alone let a stored users/../.. delete other files.
+        if (!empty($user->avatar) && KunenaAvatarPath::isUploadOf($user->avatar, (int) $user->userid)) {
+            // Delete old uploaded avatars:
+            if (is_dir(KPATH_MEDIA . '/avatars/resized')) {
+                $deletelist = Folder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
 
-                    foreach ($deletelist as $delete) {
-                        if (is_file($delete . '/' . $user->avatar)) {
-                            File::delete($delete . '/' . $user->avatar);
-                        }
+                foreach ($deletelist as $delete) {
+                    $resized = KunenaAvatarPath::getPath($delete, $user->avatar);
+
+                    if ($resized !== null && is_file($resized)) {
+                        File::delete($resized);
                     }
                 }
+            }
 
-                if (is_file(KPATH_MEDIA . '/avatars/' . $user->avatar)) {
-                    File::delete(KPATH_MEDIA . '/avatars/' . $user->avatar);
-                }
+            $original = KunenaAvatarPath::getPath(KPATH_MEDIA . '/avatars', $user->avatar);
+
+            if ($original !== null && is_file($original)) {
+                File::delete($original);
             }
         }
     }

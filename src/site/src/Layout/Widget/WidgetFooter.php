@@ -74,8 +74,11 @@ class WidgetFooter extends KunenaLayout
             $doc = Factory::getApplication()->getDocument();
             $doc->addHeadLink($url, 'alternate', 'rel', ['type' => 'application/rss+xml']);
 
-            return '<a rel="alternate" type="application/rss+xml" href="' . $url . '" aria-label="'
-                . htmlspecialchars(Text::_('COM_KUNENA_RSS_FEED_LABEL'), ENT_QUOTES, 'UTF-8') . '">' . KunenaIcons::rss(true) . '</a>';
+            // Only an icon: its name for the screen readers (aria-label) and for the mouse (the tooltip of the title).
+            $label = htmlspecialchars(Text::_('COM_KUNENA_RSS_FEED_LABEL'), ENT_QUOTES, 'UTF-8');
+
+            return '<a rel="alternate" type="application/rss+xml" href="' . $url . '" class="' . KunenaFactory::getTemplate()->tooltips()
+                . '" data-bs-toggle="tooltip" title="' . $label . '" aria-label="' . $label . '">' . KunenaIcons::rss(true) . '</a>';
         }
     }
 

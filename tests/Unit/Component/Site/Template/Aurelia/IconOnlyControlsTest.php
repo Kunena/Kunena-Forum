@@ -110,7 +110,16 @@ class IconOnlyControlsTest extends UnitTestCase
             foreach (preg_grep('/KunenaIcons::pencil\(\)/', $lines) as $line) {
                 $this->assertMatchesRegularExpression('/COM_KUNENA_CATEGORY_EDIT_NAMED.*title=|title=.*COM_KUNENA_CATEGORY_EDIT_NAMED/', $line);
             }
+
+            // The RSS icon of a category.
+            $rss = preg_grep('/getCategoryRSSURL\(\$category->id\)/', $lines);
+
+            $this->assertCount(1, $rss, $folder);
+            $this->assertMatchesRegularExpression('/title="<\?php echo \$this->escape\(Text::_\(\'COM_KUNENA_CATEGORIES_LABEL_GETRSS\'\)\)/', reset($rss));
         }
+
+        // The RSS icon at the bottom of every page (the footer of both templates).
+        $this->assertStringContainsString('title="\' . $label . \'" aria-label="\' . $label', Files::read('src/site/src/Layout/Widget/WidgetFooter.php'));
     }
 
     public function testEveryGoToTopLinkHasAName(): void

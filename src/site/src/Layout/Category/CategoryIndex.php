@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site\Layout\Category;
 use Exception;
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -139,6 +140,42 @@ class CategoryIndex extends KunenaLayout
         }
 
         return KunenaIcons::caticon((string) $caticonpath, false, true);
+    }
+
+    /**
+     * The tooltip of the icon of a category (and of the small icon of a subcategory): what the icon shows, new posts or not.
+     *
+     * @param   object  $category  The KunenaCategory object
+     *
+     * @return  string  The plain text (the link encodes it).
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function getCategoryIconTitle($category): string
+    {
+        return self::categoryIconTitle((string) $category->name, KunenaUserHelper::getMyself()->exists(), (int) $category->getNewCount());
+    }
+
+    /**
+     * The text of the tooltip: for a user, the name and whether the category has new posts for him; for a guest, whose posts are
+     * never new (nothing is kept of what a guest read), the name only.
+     *
+     * @param   string  $name      The name of the category.
+     * @param   bool    $member    The user is logged in.
+     * @param   int     $newCount  The new posts of the category for the user.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function categoryIconTitle(string $name, bool $member, int $newCount): string
+    {
+        if (!$member) {
+            return $name;
+        }
+
+        return Text::sprintf($newCount > 0 ? 'COM_KUNENA_CATEGORY_ICON_NEW_POSTS' : 'COM_KUNENA_CATEGORY_ICON_NO_NEW_POSTS', $name);
     }
 
     /**

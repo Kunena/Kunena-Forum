@@ -138,7 +138,7 @@ foreach ($this->sections as $section) :
                             data-last-post="<?php echo (int) $lastTopic->last_post_id; ?>"
                             data-sig="<?php echo (int) $lastTopic->last_post_id . '-' . (int) $category->numTopics . '-' . (int) $category->numPosts . '-' . (int) $category->getNewCount(); ?>">
                             <td id="kcat-icon" class="d-none d-md-table-cell">
-                                <?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), $category->name, null, true, false); ?>
+                                <?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), $this->getCategoryIconTitle($category), $this->ktemplate->tooltips(), true, false); ?>
                             </td>
                             <td>
                                 <div>
@@ -162,7 +162,7 @@ foreach ($this->sections as $section) :
                                                 <?php endif; ?>
 
                                                 <?php if ($this->config->enableRss) : ?>
-                                                    <a href="<?php echo $this->getCategoryRSSURL($category->id); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS')); ?>"
+                                                    <a href="<?php echo $this->getCategoryRSSURL($category->id); ?>" class="<?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS')); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS')); ?>"
                                                        rel="alternate" type="application/rss+xml">
                                                         <?php echo KunenaIcons::rss(); ?>
                                                     </a>
@@ -187,7 +187,7 @@ foreach ($this->sections as $section) :
                                                     <?php $totaltopics = KunenaCategory::getInstance()->totalCount($subcategory->getTopics()); ?>
 
                                                     <?php if ($this->config->showChildCatIcon) : ?>
-                                                        <?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, $this->ktemplate->tooltips(), true, false) . '<small class="d-none d-sm-block muted"> ('
+                                                        <?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), $this->getCategoryIconTitle($subcategory), $this->ktemplate->tooltips(), true, false) . $this->getCategoryLink($subcategory, '', null, $this->ktemplate->tooltips(), true, false) . '<small class="d-none d-sm-block muted"> ('
                                                             . $totaltopics . ')</small>';
                                                     else : ?>
                                                         <?php echo $this->getCategoryLink($subcategory, '', null, $this->ktemplate->tooltips(), true, false) . '<small class="d-none d-sm-block muted"> ('

@@ -60,6 +60,16 @@ class KunenaAvatar
     protected bool $resize = \false;
 
     /**
+     * The addresses of the avatars which this integration made in this request (it is one instance in a request), by user,
+     * avatar file and size: a page shows the avatar of a user many times (every post, every topic of a list, at three pixel
+     * densities), and every address looked on the disk for the picture and its resized copy.
+     *
+     * @var     array<string, string>
+     * @since   Kunena 8.0
+     */
+    private array $urls = [];
+
+    /**
      * Function to get the Avatar image for the user
      *
      * @param   KunenaUser  $user   user
@@ -291,10 +301,14 @@ class KunenaAvatar
         $size = $this->getSize($sizex, $sizey);
 
         if (!$size->x || !$size->y) {
-            return false;
+            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+            return '';
         }
 
-        $result = $this->_getURL($user, $size->x, $size->y);
+        // The avatar file and its time are in the key: a new avatar of the user gets its own address.
+        $key    = "{$user->userid}|{$user->avatar}|{$user->timestamp}|{$size->x}x{$size->y}";
+        $result = $this->urls[$key] ??= $this->_getURL($user, $size->x, $size->y);
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return $result;

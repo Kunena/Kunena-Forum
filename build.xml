@@ -700,7 +700,7 @@
 
 		<property
 			name="languages"
-			value="en-GB, af-ZA, ar-AA, az-AZ, bg-BG, bs-BA, ca-ES, ckb-IQ, cs-CZ, cy-GB, da-DK, de-DE, el-GR, eo-XX, es-ES, et-EE, eu-ES, fa-IR, fi-FI, fr-FR, he-IL, hi-IN, hr-HR, hu-HU, id-ID, it-IT, ja-JP, km-KH,
+			value="en-GB, af-ZA, ar-AA, az-AZ, bg-BG, bs-BA, ca-ES, ckb-IQ, cs-CZ, cy-GB, da-DK, de-DE, el-GR, eo-XX, es-ES, es-GT, et-EE, eu-ES, fa-IR, fi-FI, fr-FR, ga-IE, gl-ES, he-IL, hi-IN, hr-HR, hu-HU, id-ID, it-IT, ja-JP, km-KH,
 		ko-KR, kz-KZ, lt-LT, lv-LV, mk-MK, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU, sk-SK, sl-SI, sq-AL, sr-RS, sr-YU, sv-SE, th-TH, tr-TR, ug-CN, uk-UA, ur-PK, vi-VN, zh-CN, zh-TW" />
 		<foreach
 			list="${languages}"

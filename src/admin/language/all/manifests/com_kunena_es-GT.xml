@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension type="file" version="2.5" method="upgrade">
+    <name>Kunena Language - Spanish (Guatemala)</name>
+    <version>@kunenaversion@</version>
+    <creationDate>@kunenaversiondate@</creationDate>
+    <build>@kunenaversionbuild@</build>
+    <author>Kunena Team</author>
+    <authorEmail>translations@kunena.org</authorEmail>
+    <authorUrl>https://crowdin.com/project/kunena-forum/es_GT/</authorUrl>
+    <copyright>(C) 2008 - @currentyear@ Kunena Team. All rights reserved.</copyright>
+    <license>GNU/GPL</license>
+    <description>Spanish (Guatemala) language file for Kunena Forum Component</description>
+
+    <fileset>
+        <files folder="admin" target="administrator/language/es-GT">
+            <filename>com_kunena.controllers.ini</filename>
+            <filename>com_kunena.ini</filename>
+            <filename>com_kunena.models.ini</filename>
+            <filename>com_kunena.libraries.ini</filename>
+            <filename>com_kunena.sys.ini</filename>
+            <filename>com_kunena.views.ini</filename>
+            <filename>com_kunena.install.ini</filename>
+        </files>
+        <files folder="site" target="language/es-GT">
+            <filename>com_kunena.ini</filename>
+            <filename>com_kunena.models.ini</filename>
+            <filename>com_kunena.templates.ini</filename>
+            <filename>com_kunena.views.ini</filename>
+            <filename>kunena_tmpl_aurelia.ini</filename>
+        </files>
+    </fileset>
+</extension>

@@ -155,6 +155,8 @@ function Get-LinkDefs {
                 $src = Join-Path $kunenaGitDir 'src'
                 $defs += New-LinkDef 'Kunena' 'administrator\components\com_kunena' (Join-Path $src 'admin')
                 $defs += New-LinkDef 'Kunena' 'components\com_kunena' (Join-Path $src 'site')
+                # The REST API (Kunena 8.0): without this link the site kept the installed copy, and changes of the API did not reach it
+                $defs += New-LinkDef 'Kunena' 'api\components\com_kunena' (Join-Path $src 'api')
                 $defs += New-LinkDef 'Kunena' 'libraries\kunena' (Join-Path $src 'libraries\kunena')
                 $defs += New-LinkDef 'Kunena' 'media\kunena' (Join-Path $src 'media\kunena')
 

@@ -2,8 +2,11 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$Url,
 
+    [ValidateRange(1, 10000)]
     [int]$Iterations = 20,
+    [ValidateRange(0, 1000)]
     [int]$Warmup = 3,
+    [ValidateRange(1, 3600)]
     [int]$TimeoutSec = 30,
     [string]$CsvPath = '',
     [switch]$CsvAppend
@@ -11,28 +14,62 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
+# Windows PowerShell 5.1 draws a progress bar for every response, which took longer than the request itself: every measurement
+# was about 0.5 s too high.
+$ProgressPreference = 'SilentlyContinue'
+
+# The number of SQL queries in the debug bar of Joomla (Debug System and the SQL queries of the debug plugin on): the debug bar
+# has them as JSON, one {"sql":...} object for each query in "statements":[...].
+function Get-QueryCount {
+    param([string]$Content)
+
+    $start = $Content.IndexOf('"statements":[')
+
+    if ($start -lt 0) {
+        return $null
+    }
+
+    return ([regex]::Matches($Content.Substring($start), '\{"sql":')).Count
+}
+
 function Invoke-MeasureRequest {
     param(
         [string]$TargetUrl,
         [int]$TimeoutSeconds
     )
 
+    $statusCode = 0
+    $content = ''
+    $bytes = 0
+    $failure = $null
+
     $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
-    $response = Invoke-WebRequest -Uri $TargetUrl -Method Get -TimeoutSec $TimeoutSeconds -UseBasicParsing
-    $stopwatch.Stop()
 
-    $queryCount = $null
+    try {
+        $response = Invoke-WebRequest -Uri $TargetUrl -Method Get -TimeoutSec $TimeoutSeconds -UseBasicParsing
+        $statusCode = [int]$response.StatusCode
+        $content = [string]$response.Content
+        $bytes = [int]$response.RawContentLength
+    }
+    catch {
+        # An error page (404, 500...) is measured too, with its status code, instead of stopping the run. Without an answer of
+        # the server (timeout, refused) the status code is 0.
+        $failure = $_.Exception.Message
+        $errorResponse = $_.Exception.Response
 
-    # Try common debug-output patterns for SQL query counters.
-    if ($response.Content -match '(?i)(\d+)\s+queries') {
-        $queryCount = [int]$Matches[1]
+        if ($errorResponse -and $errorResponse.StatusCode) {
+            $statusCode = [int]$errorResponse.StatusCode
+        }
     }
 
+    $stopwatch.Stop()
+
     [PSCustomObject]@{
-        StatusCode = [int]$response.StatusCode
+        StatusCode = $statusCode
         DurationMs = [math]::Round($stopwatch.Elapsed.TotalMilliseconds, 2)
-        Bytes = [int]$response.RawContentLength
-        QueryCount = $queryCount
+        Bytes = $bytes
+        QueryCount = Get-QueryCount $content
+        Error = $failure
     }
 }
 
@@ -51,12 +88,32 @@ for ($i = 1; $i -le $Iterations; $i++) {
     $results += $measurement
 }
 
-$durations = $results | Select-Object -ExpandProperty DurationMs
+$failed = @($results | Where-Object { $_.StatusCode -lt 200 -or $_.StatusCode -ge 400 })
+
+if ($failed.Count -gt 0) {
+    Write-Host ("{0} of {1} request(s) did not answer 2xx/3xx, status code(s): {2}" -f $failed.Count, $results.Count, (($failed | ForEach-Object { $_.StatusCode } | Sort-Object -Unique) -join ', ')) -ForegroundColor Yellow
+
+    # Status 0: no answer could be read. Windows PowerShell 5.1 cannot read the error pages of Joomla ("The connection was closed
+    # unexpectedly"); PowerShell 7 (pwsh) gives their status code.
+    $noAnswer = @($failed | Where-Object { $_.StatusCode -eq 0 } | Select-Object -First 1)
+
+    if ($noAnswer.Count -gt 0) {
+        Write-Host ("No answer: {0}" -f $noAnswer[0].Error) -ForegroundColor Yellow
+
+        if ($PSVersionTable.PSVersion.Major -lt 6) {
+            Write-Host 'Run the script with pwsh (PowerShell 7) to get the status code of an error page.' -ForegroundColor Yellow
+        }
+    }
+
+    Write-Host ''
+}
+
+$durations = @($results | Select-Object -ExpandProperty DurationMs)
 $average = [math]::Round((($durations | Measure-Object -Average).Average), 2)
 $minimum = [math]::Round((($durations | Measure-Object -Minimum).Minimum), 2)
 $maximum = [math]::Round((($durations | Measure-Object -Maximum).Maximum), 2)
 $p95Index = [math]::Ceiling($durations.Count * 0.95) - 1
-$sortedDurations = $durations | Sort-Object
+$sortedDurations = @($durations | Sort-Object)
 $p95 = $sortedDurations[[math]::Max(0, $p95Index)]
 
 Write-Host 'Performance results'
@@ -66,7 +123,7 @@ Write-Host ("Min ms: {0}" -f $minimum)
 Write-Host ("Max ms: {0}" -f $maximum)
 Write-Host ("P95 ms: {0}" -f ([math]::Round($p95, 2)))
 
-$withQueryCounts = $results | Where-Object { $_.QueryCount -ne $null }
+$withQueryCounts = @($results | Where-Object { $null -ne $_.QueryCount })
 if ($withQueryCounts.Count -gt 0) {
     $queryAvg = [math]::Round((($withQueryCounts | Measure-Object -Property QueryCount -Average).Average), 2)
     $queryMin = ($withQueryCounts | Measure-Object -Property QueryCount -Minimum).Minimum
@@ -80,8 +137,8 @@ if ($withQueryCounts.Count -gt 0) {
     Write-Host ("Max queries: {0}" -f $queryMax)
 } else {
     Write-Host ''
-    Write-Host 'No query-count marker detected in response.'
-    Write-Host 'Enable Joomla debug SQL output if you want query-count tracking.'
+    Write-Host 'No SQL queries found in the response.'
+    Write-Host 'Turn on Debug System in the Joomla configuration and the SQL queries of the plugin "System - Debug" to count them.'
 }
 
 Write-Host ''
@@ -102,6 +159,7 @@ if (-not [string]::IsNullOrWhiteSpace($CsvPath)) {
             DurationMs = $row.DurationMs
             Bytes = $row.Bytes
             QueryCount = $row.QueryCount
+            Error = $row.Error
             AvgMs = $null
             MinMs = $null
             MaxMs = $null
@@ -119,6 +177,7 @@ if (-not [string]::IsNullOrWhiteSpace($CsvPath)) {
         DurationMs = $null
         Bytes = $null
         QueryCount = $null
+        Error = $null
         AvgMs = $average
         MinMs = $minimum
         MaxMs = $maximum

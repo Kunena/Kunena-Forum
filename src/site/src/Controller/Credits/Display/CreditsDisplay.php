@@ -124,7 +124,7 @@ class CreditsDisplay extends KunenaControllerDisplay
         $this->thanks     = Text::sprintf(
             'COM_KUNENA_CREDITS_THANKS_TO',
             'https://www.kunena.org/team#special_thanks',
-            'https://www.transifex.com/projects/p/Kunena',
+            'https://crowdin.com/project/kunena-forum',
             'https://www.kunena.org',
             'https://github.com/Kunena/Kunena-Forum/graphs/contributors'
         );

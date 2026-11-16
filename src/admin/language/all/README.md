@@ -45,14 +45,13 @@ where the key is used.
 Translating languages
 =====================
 
-Many of the languages in this package are missing translations. To see the status of your language, please visit our Transifex status page:
-https://www.transifex.com/Kunena-Forum/Kunena/
+Many of the languages in this package are missing translations. To see the status of your language, please visit our Crowdin project:
+https://crowdin.com/project/kunena-forum
 
-If you want to help us to translate your language, please register into Transifex site and request a membership to a team.
+If you want to help us to translate your language, please register on Crowdin and join the project.
 
-Here are our wiki pages for the translators (please read them before starting your work):
+Here is our wiki page for the translators (please read it before starting your work):
 
-https://docs.kunena.org/en/languages/transifex
 https://docs.kunena.org/en/languages/translating-kunena
 
 More Information

@@ -29,7 +29,6 @@ use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Joomla\CMS\User\User;
 use Joomla\Http\Http;
 use Joomla\Utilities\IpHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;

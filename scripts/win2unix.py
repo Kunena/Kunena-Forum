@@ -1,37 +1,70 @@
-import os,sys,re
+"""Convert Windows line endings (CRLF) to Unix line endings (LF) in the text files of a folder.
 
-dictionary = {
-'\r\n':'\n',
-#'\r':'\n'
-}
+Usage: python3 scripts/win2unix.py [--dry-run] <folder>
 
-def string_replace(filename, text, dic):
-    for i, j in dic.iteritems():
-        (text, count) = re.subn(i, j, text)
-	if count:
-		print "%s: replaced %dx '%s' with '%s'" % (filename, count, i.replace('\n','\\n').replace('\r','\\r'), j.replace('\n','\\n'.replace('\r','\\r')))
-    return text
+Only text files of the types below are changed. The folders of git, of the dependencies and of the software factory are left out.
+A file which is not valid UTF-8 (a binary file with a text extension) is left as it is.
 
-def file_replace(filename, dic):
-    f = open(filename, 'rb')
-    file = f.read()
-    f.close()
-  
-    txt = string_replace(filename, file, dic)
+Git can do this for the files it tracks (.gitattributes, git add --renormalize .); this script is for a folder outside git, for
+example an unpacked package.
+"""
 
-    f = open(filename, 'wb')
-    f.write(txt)
-    f.close()
+import argparse
+import os
+import sys
+
+EXTENSIONS = {'.php', '.css', '.scss', '.xml', '.ini', '.js', '.mjs', '.json', '.txt', '.md', '.sql', '.html', '.svg', '.sh', '.py'}
+SKIPPED_FOLDERS = {'.git', 'node_modules', 'vendor', '.worktrees', '.idea'}
 
 
-if len(sys.argv)<2:
-	print "Usage: python %s directory" % (sys.argv[0])
-	sys.exit()
+def convert(path, dry_run):
+    """Return the number of line endings converted in the file (0 when it is not changed)."""
+    with open(path, 'rb') as handle:
+        data = handle.read()
 
-dir = sys.argv[1]
+    count = data.count(b'\r\n')
 
-for root, dirs, files in os.walk(dir):
-	for name in files:
-		if name[-4:] != '.php' and name[-4:] != '.css' and name[-4:] != '.xml' and name[-4:] != '.ini' and name[-3:] != '.js' and name[-4:] != '.txt':
-			continue
-		file_replace(root+'/'+name, dictionary)
+    if count == 0:
+        return 0
+
+    try:
+        data.decode('utf-8')
+    except UnicodeDecodeError:
+        print(f'{path}: not UTF-8 text, left as it is')
+        return 0
+
+    if not dry_run:
+        with open(path, 'wb') as handle:
+            handle.write(data.replace(b'\r\n', b'\n'))
+
+    print(f"{path}: {'would replace' if dry_run else 'replaced'} {count}x CRLF with LF")
+
+    return count
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Convert CRLF to LF in the text files of a folder.')
+    parser.add_argument('folder')
+    parser.add_argument('--dry-run', action='store_true', help='only show what would be changed')
+    arguments = parser.parse_args()
+
+    if not os.path.isdir(arguments.folder):
+        parser.error(f'{arguments.folder} is not a folder')
+
+    files = 0
+
+    for root, folders, names in os.walk(arguments.folder):
+        folders[:] = [folder for folder in folders if folder not in SKIPPED_FOLDERS]
+
+        for name in names:
+            if os.path.splitext(name)[1].lower() in EXTENSIONS:
+                if convert(os.path.join(root, name), arguments.dry_run):
+                    files += 1
+
+    print(f"{files} file(s) {'would be' if arguments.dry_run else ''} converted".replace('  ', ' '))
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

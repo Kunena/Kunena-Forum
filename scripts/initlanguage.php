@@ -1,73 +1,74 @@
 <?php
 
-if ($_SERVER['argc'] > 1) {
-    $languages = explode(',', $_SERVER['argv'][1]);
-} else {
-    $languages = scandir('components/com_kunena/site/language');
+/**
+ * Kunena Component
+ *
+ * Create the language files which a translation does not have yet: for every English file (of the backend, the frontend and every
+ * plugin) a file with only the header, which the translators fill on Crowdin. Existing files are never changed.
+ *
+ * Usage: php scripts/initlanguage.php [--dry-run] [nl-NL,de-DE]
+ *   Without languages: every translation of the package (the language tags which have a folder somewhere).
+ *   A new language tag (xx-XX) gets its folders.
+ *
+ * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
 
-    foreach ($languages as $i => $language) {
-        if ($language[0] == '.') {
-            unset($languages[$i]);
-        } elseif (!is_dir("components/com_kunena/site/language/{$language}")) {
-            unset($languages[$i]);
-        }
-    }
-}
+require __DIR__ . '/languages.inc.php';
 
-$files = [
-    'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.controllers.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.libraries.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.models.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.views.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_acl.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_altauserpoints.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_community.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_comprofiler.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_easysocial.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_easyprofile.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_gravatar.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_joomla.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_kunena.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_quickicon_kunena.sys.ini',
-    'components/com_kunena/admin/language/en-GB/en-GB.plg_system_kunena.sys.ini',
-    'components/com_kunena/site/language/en-GB/en-GB.com_kunena.controllers.ini',
-    'components/com_kunena/site/language/en-GB/en-GB.com_kunena.ini',
-    'components/com_kunena/site/language/en-GB/en-GB.com_kunena.models.ini',
-    'components/com_kunena/site/language/en-GB/en-GB.com_kunena.templates.ini',
-    'components/com_kunena/site/language/en-GB/en-GB.com_kunena.tpl_blue_eagle.ini',
-    'components/com_kunena/site/language/en-GB/en-GB.kunena_tmpl_crypsis.ini',
-    'components/com_kunena/site/language/en-GB/en-GB.com_kunena.views.ini'
-];
+[$options, $arguments] = commandLine($argv);
+$dryRun                = isset($options['dry-run']);
+$languages             = requestedLanguages($arguments[0] ?? null);
 
-echo "\nInitializing language files...\n\n";
+$header = <<<'INI'
+; Kunena Forum translation
+;
+; This file has not been translated yet. All translations are made on https://crowdin.com/project/kunena-forum
+; Please join the translation team if you want to contribute your changes to the next release.
+;
+; License GNU General Public License version 3 or later; see LICENSE.txt
+; Note : All ini files need to be saved as UTF-8 - No BOM
+
+INI;
 
 foreach ($languages as $language) {
-    if ($language == 'en-GB') {
-        continue;
+    if (!isLanguageTag($language)) {
+        fwrite(STDERR, "Error: '{$language}' is not a language tag (xx-XX).\n");
+
+        exit(1);
     }
+}
 
+echo "\nInitializing language files" . ($dryRun ? ' (dry run, nothing is written)' : '') . "...\n\n";
 
-    if (!is_dir("components/com_kunena/site/language/{$language}")) {
-        die("Error: Unknown language '{$language}'\n\n");
-    }
+$created = 0;
 
-    // Save language files
-    foreach ($files as $infile) {
-        $outfile = preg_replace('|en-GB|', $language, $infile);
+foreach ($languages as $language) {
+    foreach (languageFolders() as $folder) {
+        foreach (iniFiles($folder . '/en-GB') as $file) {
+            $outfile = "{$folder}/{$language}/{$file}";
 
-        if (!is_file($outfile)) {
-            $contents = '; Sorry, this language file hasn\'t been translated yet.
-;
-; If you want to help us, please start by reading our documentation on translating Kunena:
-; http://docs.kunena.org/index.php/Translating_Kunena
-';
+            if (is_file($outfile)) {
+                continue;
+            }
 
-            echo "Create $outfile\n";
-            $fp = fopen($outfile, 'w');
-            fwrite($fp, $contents);
-            fclose($fp);
+            echo 'Create ' . relativePath($outfile) . "\n";
+            $created++;
+
+            if ($dryRun) {
+                continue;
+            }
+
+            if (!is_dir(\dirname($outfile)) && !mkdir(\dirname($outfile), 0755, true)) {
+                fwrite(STDERR, 'Error: cannot create ' . relativePath(\dirname($outfile)) . "\n");
+
+                exit(1);
+            }
+
+            file_put_contents($outfile, $header);
         }
     }
 }
+
+echo "\n{$created} file(s) " . ($dryRun ? 'would be created' : 'created') . ".\n\n";

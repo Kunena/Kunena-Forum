@@ -1,280 +1,168 @@
 <?php
 
-$header = '; Kunena Forum translation
-;
-; All translations can be found from https://www.transifex.net/projects/p/Kunena/r/Kunena2/
-; Please join the translation team if you want to contribute your changes to the next release.
-;
-; License GNU General Public License version 3 or later; see LICENSE.txt
-; Note : All ini files need to be saved as UTF-8 - No BOM
-
-; Using new INI string format for Joomla! 2.5
-
-';
-
-echo "\nFinding language strings from all php and xml files...\n";
-
-$checklist = checkdir('administrator');
-$checklist += checkdir('components');
-$checklist += checkdir('modules');
-
-$keys = ['COM_KUNENA' => 'administrator/components/com_kunena/kunena.j25.xml'];
-$files = [];
-
-foreach ($checklist as $file => $dummy) {
-    $strings = findStrings($file);
-
-    foreach ($strings as $string) {
-        $prefix = isset($keys[$string]) ? strprefix($keys[$string], $file) : $file;
-
-        if ($prefix != $file && preg_match('#^components/com_kunena/views/[^\.]+\.xml$#', $file)) {
-            // Special case, use sys.ini file (2 locations if needed)
-            $prefix = 'components/com_kunena/views/**/*.xml';
-            $files['admin/en-GB.com_kunena.sys.ini'][$prefix][$string] = $prefix;
-        } else {
-            $keys[$string] = $prefix;
-        }
-    }
-}
-
-
-foreach ($keys as $key => $location) {
-    if (empty($location)) {
-        $files['site/en-GB.com_kunena.ini']['Common strings for both frontend and backend'][$key] = $location;
-    } elseif (preg_match('#^administrator/components/com_kunena/install/modules/#', $location)) {
-        $files['site/en-GB.com_kunena.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^administrator/components/com_kunena/install/plugins/#', $location)) {
-        $files['site/en-GB.com_kunena.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^administrator/components/com_kunena/install/#', $location)) {
-        $files['admin/en-GB.com_kunena.install.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^administrator/components/com_kunena/libraries/#', $location)) {
-        $files['admin/en-GB.com_kunena.libraries.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^administrator/components/com_kunena/controllers/#', $location)) {
-        $files['admin/en-GB.com_kunena.controllers.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^administrator/components/com_kunena/models/#', $location)) {
-        $files['admin/en-GB.com_kunena.models.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^administrator/components/com_kunena/views/#', $location)) {
-        $files['admin/en-GB.com_kunena.views.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^administrator/components/com_kunena/media/kunena/topicicons/default/topicicons.xml#', $location)) {
-        $files['site/en-GB.com_kunena.templates.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^administrator/components/com_kunena/kunena\.#', $location)) {
-        $files['admin/en-GB.com_kunena.sys.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^administrator/components/com_kunena/#', $location)) {
-        $files['admin/en-GB.com_kunena.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^components/com_kunena/views/[^\.]+\.xml$#', $location)) {
-        $files['admin/en-GB.com_kunena.sys.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^components/com_kunena/controllers/#', $location)) {
-        $files['site/en-GB.com_kunena.controllers.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^components/com_kunena/models/#', $location)) {
-        $files['site/en-GB.com_kunena.models.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^components/com_kunena/views/#', $location)) {
-        $files['site/en-GB.com_kunena.views.ini'][$location][$key] = $location;
-    } elseif (preg_match('#^components/com_kunena/template/#', $location)) {
-        if (preg_match('#/crypsis/#', $location)) {
-            $files['site/en-GB.kunena_tmpl_crypsis.ini'][$location][$key] = $location;
-        } else {
-            $files['site/en-GB.com_kunena.templates.ini'][$location][$key] = $location;
-        }
-    } elseif (preg_match('#^components/com_kunena/lib#', $location)) {
-        $files['admin/en-GB.com_kunena.libraries.ini'][$location][$key] = $location;
-    } else {
-        $files['site/en-GB.com_kunena.ini'][$location][$key] = $location;
-    }
-}
-
-echo "Loading existing language strings...\n\n";
-
-$filter = '/^en-GB\.com_kunena.*\.ini$/';
-$langfiles = checkdir('administrator', $filter);
-$langfiles += checkdir('components', $filter);
-
-list($translations, $filestrings) = loadTranslations(array_keys($langfiles));
-
-foreach ($files as $filename => $fkeys) {
-    saveLang($keys, $fkeys, $translations, $filestrings, $filename, $header);
-}
-
 /**
- * @param           $dir
- * @param   string  $filter
+ * Kunena Component
  *
- * @return array
+ * Compare the keys of the English language files with the keys of the code (PHP, XML and JavaScript of src); it changes nothing.
+ * - Missing: a key of Kunena which the code uses and no English file has (it is shown as the key itself).
+ * - Unused: an English key which no file of the code names. A key which the code puts together ('COM_KUNENA_BUTTON_' . $name) is
+ *   counted as used when the code has its beginning (a prefix ending with "_"), so the list is short; check a key before removing
+ *   it, a name can be put together in other ways.
  *
- * @since version
- */
-function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/')
-{
-    $checklist = [];
-    $files = scandir($dir);
+ * Usage: php scripts/findlanguagestrings.php [--missing] [--unused]   (both lists without an option)
+ *
+ * Exit code: 1 when a key is missing, 0 otherwise.
+ *
+ * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
 
-    foreach ($files as $file) {
-        if ($file[0] == '.') {
+require __DIR__ . '/languages.inc.php';
+
+[$options]   = commandLine($argv);
+$showMissing = isset($options['missing']) || !isset($options['unused']);
+$showUnused  = isset($options['unused']) || !isset($options['missing']);
+
+// The English keys, and the file of each.
+$english = [];
+
+foreach (languageFolders() as $folder) {
+    foreach (iniFiles($folder . '/en-GB') as $file) {
+        foreach (array_keys(readStrings("{$folder}/en-GB/{$file}") ?: []) as $key) {
+            $english[(string) $key] = relativePath("{$folder}/en-GB/{$file}");
+        }
+    }
+}
+
+// The keys which the code names. A key of Kunena: COM_KUNENA_..., PLG_..._KUNENA..., MOD_KUNENA..., PKG_KUNENA..., KUNENA_....
+$kunenaKey = '/^(COM_KUNENA|PLG_[A-Z0-9]+_KUNENA|PLG_KUNENA|MOD_KUNENA|PKG_KUNENA|KUNENA_|TPL_KUNENA)/';
+$used      = [];
+$prefixes  = [];
+$where     = [];
+$constants = [];
+
+$files = new RecursiveIteratorIterator(
+    new RecursiveCallbackFilterIterator(
+        new RecursiveDirectoryIterator(kunenaRoot() . '/src', FilesystemIterator::SKIP_DOTS | FilesystemIterator::UNIX_PATHS),
+        static fn (SplFileInfo $file) => !$file->isDir() || !\in_array($file->getFilename(), ['External', 'node_modules', 'vendor', 'language'], true)
+    )
+);
+
+foreach ($files as $file) {
+    if (!\in_array($file->getExtension(), ['php', 'xml', 'js'], true) || str_ends_with($file->getFilename(), '.min.js')) {
+        continue;
+    }
+
+    $path = str_replace('\\', '/', $file->getPathname());
+
+    foreach (file($path) ?: [] as $number => $line) {
+        if (!preg_match_all('/\b[A-Z][A-Z0-9]*_[A-Z0-9_]+/', $line, $matches)) {
             continue;
         }
 
-        $path = "$dir/$file";
-
-        if (is_dir($path)) {
-            $checklist += checkdir($path, $filter);
-        } elseif (preg_match($filter, $file)) {
-            $checklist[$path] = 1;
-        }
-    }
-
-    return $checklist;
-}
-
-/**
- * @param $s1
- * @param $s2
- *
- * @return false|string
- *
- * @since version
- */
-function strprefix($s1, $s2)
-{
-    $prefix = $s1 ^ $s2;
-
-    return substr($s1, 0, strlen($prefix) - strlen(ltrim($prefix, chr(0))));
-}
-
-/**
- * @param $filename
- *
- * @return mixed
- *
- * @since version
- */
-function findStrings($filename)
-{
-    $file = file_get_contents("$filename");
-    preg_match_all('/COM_KUNENA_[\w\d_]*/u', $file, $matches);
-
-    return $matches[0];
-}
-
-/**
- * @param $keys
- * @param $fkeys
- * @param $translations
- * @param $filestrings
- * @param $outfile
- * @param $header
- *
- *
- * @since version
- */
-function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $header)
-{
-    $out = $header;
-    ksort($fkeys);
-
-    foreach ($fkeys as $location => $list) {
-        $autogen = [];
-        $out .= "\n; JROOT/{$location}\n\n";
-        ksort($list);
-
-        foreach ($list as $key => $string) {
-            if ($key[strlen($key) - 1] == '_') {
-                foreach ($translations as $tkey => $tstring) {
-                    if (strpos($tkey, $key) === 0 && !isset($keys[$tkey])) {
-                        unset($filestrings[$outfile][$tkey]);
-                        $autogen[$key][$tkey] = $translations[$tkey];
-                    }
-                }
+        // Any mention counts as a use (a key in a comment is kept rather than reported as unused).
+        foreach ($matches[0] as $token) {
+            if (str_ends_with($token, '_')) {
+                $prefixes[$token] = true;
             } else {
-                unset($filestrings[$outfile][$key]);
+                $used[$token] = true;
+            }
+        }
 
-                if (!isset($translations[$key])) {
-                    // Missing key
-                    $translations[$key] = $key;
+        // A key which the code asks for: a whole string ('KEY', "KEY") or the text of an XML element (>KEY<), outside a comment.
+        // The name of a constant (define('KUNENA_LOADED', ...), defined('KUNENA_LOADED')) is not a key.
+        $code = (string) preg_replace('#(//|<!--|^\s*\*|^\s*/\*|^\s*\#).*$#', '', $line);
+
+        if (preg_match_all('/\bdefined?\(\s*[\'"]([A-Z0-9_]+)[\'"]/i', $code, $defines)) {
+            foreach ($defines[1] as $constant) {
+                $constants[$constant] = true;
+            }
+        }
+
+        if (preg_match_all('/([\'">])([A-Z][A-Z0-9]*_[A-Z0-9_]*[A-Z0-9])(?:\'|"|<)/', $code, $strings)) {
+            foreach ($strings[2] as $token) {
+                if (!isset($where[$token]) && preg_match($kunenaKey, $token)) {
+                    $where[$token] = relativePath($path) . ':' . ($number + 1);
                 }
-
-                $out .= "{$key}=\"{$translations[$key]}\"\n";
             }
-        }
-
-        ksort($autogen);
-
-        foreach ($autogen as $tkey => $auto) {
-            ksort($auto);
-            $out .= "\n; Automatically generated strings for {$tkey}*\n\n";
-
-            foreach ($auto as $genkey => $genvalue) {
-                $out .= "{$genkey}=\"{$genvalue}\"\n";
-            }
-
-            $out .= "\n; End of automatically generated strings for {$tkey}*\n";
         }
     }
-
-    if (!empty($filestrings[$outfile])) {
-        $out .= "\n; Removed strings\n\n";
-
-        foreach ($filestrings[$outfile] as $key => $string) {
-            if (!isset($keys[$key])) {
-                $out .= "; {$key}=\"{$translations[$key]}\"\n";
-            }
-        }
-
-        /*
-        $out.= "\n; Moved strings\n\n";
-        foreach ($filestrings[$outfile] as $key=>$string) {
-            if (isset($keys[$key])) $out.= "{$key}=\"{$translations[$key]}\"\n";
-        }
-        */
-    }
-
-    // Saving temporary language file
-    $outfile = preg_replace(['|^site/|', '|^admin/|'], ['components/com_kunena/language/en-GB/','administrator/components/com_kunena/language/en-GB/'], $outfile);
-    $fp = fopen($outfile, 'w');
-    fwrite($fp, $out);
-    fclose($fp);
 }
 
-/**
- * @param $files
- *
- * @return array
- *
- * @since version
- */
-function loadTranslations($files)
-{
-    $translations = [];
-    $filestrings = [];
+// Missing: a key of Kunena in the code, without an English text. A key which is the beginning of English keys is a prefix which
+// Joomla completes: Text::plural() (KEY_1, KEY_MORE), the textPrefix of a controller, the langConstPrefix of a task (KEY_TITLE).
+$missing = [];
+$sorted  = array_keys($english);
+sort($sorted);
 
-    foreach ($files as $file) {
-        if (preg_match('/com_kunena\.menu\.ini$/', $file)) {
-            continue;
-        }
-
-        echo "Load $file\n";
-        $contents = file_get_contents($file);
-
-        // Put commented out translations back so that we do not loose them
-        $contents = preg_replace('|;\s*(COM_)|', '\1', $contents);
-        $strings = (array) parse_ini_string($contents);
-
-        if (!$strings) {
-            echo "ERROR LOADING $file!\n";
-        }
-
-        $file = preg_replace(['|^components/.*/|', '|^administrator/.*/|'], ['site/','admin/'], $file);
-
-        foreach ($strings as $key => $str) {
-            if (!isset($translations[$key])) {
-                $translations[$key] = $str;
-            } elseif ($translations[$key] != $str) {
-                echo "Conflict: $key=\"{$translations[$key]}\" <==> \"$str\"\n";
-            }
-        }
-
-        $filestrings[$file] = $strings;
+foreach ($where as $key => $location) {
+    if (isset($english[$key]) || isset($constants[$key])) {
+        continue;
     }
 
-    ksort($translations);
+    // The first English key after "KEY_" in the sorted list starts with it when there is one.
+    $position = 0;
 
-    return [$translations, $filestrings];
+    foreach ($sorted as $position => $candidate) {
+        if (strcmp($candidate, $key . '_') >= 0) {
+            break;
+        }
+    }
+
+    if (!str_starts_with($sorted[$position] ?? '', $key . '_')) {
+        $missing[$key] = $location;
+    }
 }
+
+ksort($missing);
+
+// Unused: an English key which the code does not name, and which does not start with a prefix of the code.
+$unused = [];
+
+foreach ($english as $key => $file) {
+    if (isset($used[$key])) {
+        continue;
+    }
+
+    foreach ($prefixes as $prefix => $dummy) {
+        if (str_starts_with($key, $prefix) && \strlen($prefix) > 11) {
+            continue 2;
+        }
+    }
+
+    // The suffixes of Text::plural() and of the numbered texts.
+    if (preg_match('/^(.+)_(1|MORE|\d+)$/', $key, $match) && isset($used[$match[1]])) {
+        continue;
+    }
+
+    $unused[$file][] = $key;
+}
+
+ksort($unused);
+
+echo "\n" . \count($english) . ' English keys, ' . \count($where) . " keys of Kunena in the code.\n";
+
+if ($showMissing) {
+    echo "\nMissing (used by the code, no English text): " . \count($missing) . "\n";
+
+    foreach ($missing as $key => $location) {
+        echo "  {$key}  ({$location})\n";
+    }
+}
+
+if ($showUnused) {
+    echo "\nUnused (no file of the code names them): " . array_sum(array_map('count', $unused)) . "\n";
+
+    foreach ($unused as $file => $keys) {
+        echo "  {$file}\n";
+
+        foreach ($keys as $key) {
+            echo "    {$key}\n";
+        }
+    }
+}
+
+echo "\n";
+
+exit($missing ? 1 : 0);

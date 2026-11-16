@@ -106,7 +106,7 @@ class HtmlView extends BaseHtmlView
     protected mixed $modCats = null;
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  mixed
      *

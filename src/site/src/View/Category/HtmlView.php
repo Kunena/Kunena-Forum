@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\View\KunenaView;
 class HtmlView extends KunenaView
 {
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *

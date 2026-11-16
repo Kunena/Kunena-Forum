@@ -26,13 +26,13 @@ use Joomla\Database\DatabaseDriver;
 class TableKunenaPrivatePostMap extends KunenaTable
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $private_id = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $message_id = null;

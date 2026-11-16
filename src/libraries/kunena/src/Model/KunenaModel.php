@@ -238,7 +238,7 @@ class KunenaModel extends BaseDatabaseModel
     /**
      * @param   string  $key      key
      * @param   string  $request  request
-     * @param   null    $default  default
+     * @param   mixed   $default  default
      * @param   string  $type     type
      *
      * @return  mixed|object
@@ -258,7 +258,7 @@ class KunenaModel extends BaseDatabaseModel
 
     /**
      * @param   string  $name     name
-     * @param   null    $default  default
+     * @param   mixed   $default  default
      * @param   string  $hash     hash
      * @param   string  $type     type
      *

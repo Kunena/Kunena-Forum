@@ -30,19 +30,19 @@ use Joomla\Filesystem\Path;
 class KunenaPath extends Path
 {
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public static mixed $tmpdir = null;
 
     /**
-     * @var     null
+     * @var     int|false|null
      * @since   Kunena 6.0
      */
     public static mixed $apache = null;
 
     /**
-     * @var     null
+     * @var     int|false|null
      * @since   Kunena 6.0
      */
     public static mixed $owner = null;

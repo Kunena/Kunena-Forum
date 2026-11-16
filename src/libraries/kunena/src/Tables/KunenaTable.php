@@ -37,7 +37,7 @@ abstract class KunenaTable extends Table
     protected mixed $_exists = false;
 
     /**
-     * @param   null  $pk  pk
+     * @param   array|null  $pk  pk
      *
      * @return  boolean
      *
@@ -199,8 +199,8 @@ abstract class KunenaTable extends Table
     }
 
     /**
-     * @param   null  $keys   keys
-     * @param   bool  $reset  reset
+     * @param   array|null  $keys   keys
+     * @param   bool        $reset  reset
      *
      * @return  boolean
      *

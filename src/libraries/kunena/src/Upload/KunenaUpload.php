@@ -282,10 +282,10 @@ class KunenaUpload
     /**
      * Convert into human readable format bytes to kB, MB, GB
      *
-     * @param   integer  $bytes       size in bytes
-     * @param   null     $force_unit  a definitive unit
-     * @param   null     $format      the return string format
-     * @param   boolean  $si          whether to use SI prefixes or IEC
+     * @param   integer      $bytes       size in bytes
+     * @param   string|null  $force_unit  a definitive unit
+     * @param   string|null  $format      the return string format
+     * @param   boolean      $si          whether to use SI prefixes or IEC
      *
      * @return  string
      *

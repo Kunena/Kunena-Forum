@@ -119,7 +119,7 @@ class HtmlView extends BaseHtmlView
     }
 
     /**
-     * @param   null  $tpl  tmpl
+     * @param   string|null  $tpl  tmpl
      *
      * @return  mixed
      *

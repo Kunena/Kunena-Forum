@@ -491,8 +491,8 @@ class CategoryModel extends CategoriesModel
      *
      * Note. Calling getState in this method will result in recursion.
      *
-     * @param   null  $ordering
-     * @param   null  $direction
+     * @param   string|null  $ordering
+     * @param   string|null  $direction
      *
      * @return  void
      *

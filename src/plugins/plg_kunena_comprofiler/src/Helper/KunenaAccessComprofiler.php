@@ -73,8 +73,8 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
     /**
      * Get group name in selected access type.
      *
-     * @param   string  $accesstype  Access type.
-     * @param   null    $id          Group id.
+     * @param   string    $accesstype  Access type.
+     * @param   int|null  $id          Group id.
      *
      * @return  boolean|integer|null
      *

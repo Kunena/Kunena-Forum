@@ -33,10 +33,10 @@ class Kunenagrid
     /**
      * Display a boolean setting widget.
      *
-     * @param   integer  $i        The row index.
-     * @param   integer  $value    The value of the boolean field.
-     * @param   null     $taskOn   Task to turn the boolean setting on.
-     * @param   null     $taskOff  Task to turn the boolean setting off.
+     * @param   integer      $i        The row index.
+     * @param   integer      $value    The value of the boolean field.
+     * @param   string|null  $taskOn   Task to turn the boolean setting on.
+     * @param   string|null  $taskOff  Task to turn the boolean setting off.
      *
      * @return  string   The boolean setting widget.
      *

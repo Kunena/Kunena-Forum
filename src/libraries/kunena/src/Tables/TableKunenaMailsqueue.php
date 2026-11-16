@@ -26,49 +26,49 @@ use Joomla\Database\DatabaseDriver;
 class TableKunenaMailsqueue extends KunenaTable
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 7.1
      */
     public $id = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 7.1
      */
     public mixed $subject = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 7.1
      */
     public mixed $messageId = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 7.1
      */
     public mixed $url = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 7.1
      */
     public mixed $emailListJson = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 7.1
      */
     public mixed $categoryName = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 7.1
      */
     public mixed $once = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 7.1
      */
     public mixed $send = null;

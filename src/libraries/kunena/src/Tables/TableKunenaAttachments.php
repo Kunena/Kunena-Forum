@@ -33,49 +33,49 @@ use UnexpectedValueException;
 class TableKunenaAttachments extends KunenaTable
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public $id = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public $userid = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $mesid = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $protected = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $hash = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $size = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $folder = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $filetype = null;
@@ -93,13 +93,13 @@ class TableKunenaAttachments extends KunenaTable
     public mixed $filename_real = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $comment = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $inline = null;

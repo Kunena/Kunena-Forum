@@ -32,31 +32,31 @@ use Kunena\Forum\Libraries\Tables\TableKunenaKarma;
 class KunenaKarma
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 8.0
      */
     public $id = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 8.0
      */
     public mixed $typeAlias = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.2
      */
     public $userid = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.2
      */
     public mixed $target_userid = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.2
      */
     public mixed $time = null;

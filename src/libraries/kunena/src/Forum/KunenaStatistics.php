@@ -40,67 +40,67 @@ use RuntimeException;
 class KunenaStatistics
 {
     /**
-     * @var     null
+     * @var     KunenaStatistics|null
      * @since   Kunena 6.0
      */
     protected static mixed $_instance = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $lastUserId = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $memberCount = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $sectionCount = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $categoryCount = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $topicCount = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $messageCount = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $todayTopicCount = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $yesterdayTopicCount = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $todayReplyCount = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $yesterdayReplyCount = null;

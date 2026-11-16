@@ -34,145 +34,145 @@ use UnexpectedValueException;
 class TableKunenaMessages extends KunenaTable
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public $id = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $parent = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $thread = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $catid = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $name = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public $userid = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $email = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $subject = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $time = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $ip = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $topic_emoticon = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $locked = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $hold = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $ordering = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $hits = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $moved = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 7.0
      */
     public mixed $deleted_time = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $modified_by = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $modified_time = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $modified_reason = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 8.0
      */
     public mixed $scheduled_time = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 8.0
      */
     public mixed $scheduled_review = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $params = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public $message = null;
@@ -236,8 +236,8 @@ class TableKunenaMessages extends KunenaTable
     }
 
     /**
-     * @param   null  $id     id
-     * @param   bool  $reset  reset
+     * @param   mixed  $id     id
+     * @param   bool   $reset  reset
      *
      * @return  boolean
      *

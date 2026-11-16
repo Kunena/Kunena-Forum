@@ -31,37 +31,37 @@ use RuntimeException;
 class KunenaUserCategories extends KunenaTable
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $user_id = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $category_id = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $role = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $allreadtime = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $subscribed = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $params = null;

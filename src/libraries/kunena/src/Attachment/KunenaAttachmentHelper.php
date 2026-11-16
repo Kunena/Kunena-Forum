@@ -150,10 +150,10 @@ abstract class KunenaAttachmentHelper
     /**
      * Find filename which isn't already taken in the filesystem.
      *
-     * @param   string  $folder     Relative path from JPATH_ROOT.
-     * @param   string  $basename   Filename without extension.
-     * @param   string  $extension  File extension.
-     * @param   null    $protected  True to randomize the filename. If not given, uses Kunena configuration setting.
+     * @param   string     $folder     Relative path from JPATH_ROOT.
+     * @param   string     $basename   Filename without extension.
+     * @param   string     $extension  File extension.
+     * @param   bool|null  $protected  True to randomize the filename. If not given, uses Kunena configuration setting.
      *
      * @return  string
      *
@@ -367,7 +367,7 @@ abstract class KunenaAttachmentHelper
 
     /**
      * @param   mixed  $category  category
-     * @param   null   $user      user
+     * @param   mixed  $user      user
      *
      * @return  array|boolean
      *

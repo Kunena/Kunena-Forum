@@ -30,7 +30,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class HtmlView extends BaseHtmlView
 {
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  mixed
      *

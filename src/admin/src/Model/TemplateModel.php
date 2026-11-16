@@ -132,8 +132,8 @@ class TemplateModel extends AdminModel
      *
      * Note. Calling getState in this method will result in recursion.
      *
-     * @param   null  $ordering   ordering
-     * @param   null  $direction  direction
+     * @param   string|null  $ordering   ordering
+     * @param   string|null  $direction  direction
      *
      * @return  void
      *
@@ -164,7 +164,7 @@ class TemplateModel extends AdminModel
     /**
      * @param   string  $key        key
      * @param   string  $request    request
-     * @param   null    $default    default
+     * @param   mixed   $default    default
      * @param   string  $type       type
      * @param   bool    $resetPage  resetPage
      *

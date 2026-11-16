@@ -327,7 +327,7 @@ class KunenaMessage extends KunenaDatabaseObject
     protected mixed $_attachments_del = [];
 
     /**
-     * @var     null
+     * @var     KunenaTopic|null
      * @since   Kunena 6.0
      */
     protected $_topic = null;

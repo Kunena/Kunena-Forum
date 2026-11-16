@@ -26,25 +26,25 @@ use Joomla\Database\DatabaseDriver;
 class TableKunenaPolls extends KunenaTable
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public $id = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $title = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $threadid = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $polltimetolive = null;

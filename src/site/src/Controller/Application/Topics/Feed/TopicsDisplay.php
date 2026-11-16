@@ -206,7 +206,7 @@ class TopicsDisplay extends KunenaControllerDisplay
     /**
      * Prepare to display the posts
      *
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *

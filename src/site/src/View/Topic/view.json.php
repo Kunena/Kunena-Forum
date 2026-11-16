@@ -31,7 +31,7 @@ use stdClass;
 class json extends KunenaView
 {
     /**
-     * @param   null  $tpl  tmpl
+     * @param   string|null  $tpl  tmpl
      *
      * @return  void
      *

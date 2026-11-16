@@ -31,49 +31,49 @@ use UnexpectedValueException;
 class TableKunenaPrivate extends KunenaTable
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public $id = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $parentid = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $author_id = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $created_at = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $attachments = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $subject = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $body = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $params = null;

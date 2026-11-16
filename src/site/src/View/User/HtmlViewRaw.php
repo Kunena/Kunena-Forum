@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\View\KunenaView;
 class KunenaViewUser extends KunenaView
 {
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *

@@ -162,7 +162,7 @@ abstract class KunenaTemplateHelper
     /**
      * parseXmlFiles
      *
-     * @param   null  $templateBaseDir  template
+     * @param   string|null  $templateBaseDir  template
      *
      * @return  array
      *

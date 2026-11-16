@@ -79,8 +79,8 @@ class HtmlView extends KunenaView
     public mixed $header = null;
 
     /**
-     * @param   null  $layout  layout
-     * @param   null  $tpl     tpl
+     * @param   string|null  $layout  layout
+     * @param   string|null  $tpl     tpl
      *
      * @return  mixed|void
      *
@@ -106,7 +106,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -128,7 +128,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -179,7 +179,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -209,7 +209,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -302,7 +302,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -391,7 +391,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -485,7 +485,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -564,7 +564,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -610,7 +610,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *

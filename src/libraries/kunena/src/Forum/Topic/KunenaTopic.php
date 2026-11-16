@@ -437,7 +437,7 @@ class KunenaTopic extends KunenaDatabaseObject
     protected mixed $_posts = 0;
 
     /**
-     * @var     null
+     * @var     KunenaPagination|null
      * @since   Kunena 6.0
      */
     protected mixed $_pagination = null;

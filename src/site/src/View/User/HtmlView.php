@@ -144,7 +144,7 @@ class HtmlView extends KunenaView
     protected array $userObjectCache = [];
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -190,7 +190,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -226,7 +226,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *

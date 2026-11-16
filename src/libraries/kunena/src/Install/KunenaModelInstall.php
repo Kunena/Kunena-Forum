@@ -107,7 +107,7 @@ class KunenaModelInstall extends BaseDatabaseModel
     protected mixed $_action = false;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     protected mixed $_errormsg = null;
@@ -119,7 +119,7 @@ class KunenaModelInstall extends BaseDatabaseModel
     protected mixed $_versiontablearray = null;
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected mixed $_versionarray = null;
@@ -249,10 +249,10 @@ class KunenaModelInstall extends BaseDatabaseModel
     }
 
     /**
-     * @param   string  $task    task
-     * @param   bool    $result  result
-     * @param   string  $msg     message
-     * @param   null    $id      id
+     * @param   string           $task    task
+     * @param   bool             $result  result
+     * @param   string           $msg     message
+     * @param   int|string|null  $id      id
      *
      * @return  void
      *
@@ -989,10 +989,10 @@ class KunenaModelInstall extends BaseDatabaseModel
     }
 
     /**
-     * @param   string  $path      path
-     * @param   string  $filename  filename
-     * @param   null    $dest      dest
-     * @param   bool    $silent    silent
+     * @param   string       $path      path
+     * @param   string       $filename  filename
+     * @param   string|null  $dest      dest
+     * @param   bool         $silent    silent
      *
      * @return bool|null
      *
@@ -1054,9 +1054,9 @@ class KunenaModelInstall extends BaseDatabaseModel
     // TODO: move to migration
 
     /**
-     * @param   object  $version  version
-     * @param   string  $type     type
-     * @param   null    $action   action
+     * @param   object       $version  version
+     * @param   string       $type     type
+     * @param   string|null  $action   action
      *
      * @return  string
      *
@@ -2642,7 +2642,7 @@ class KunenaModelInstall extends BaseDatabaseModel
     }
 
     /**
-     * @param   null  $stats  stats
+     * @param   stdClass|null  $stats  stats
      *
      * @return  void
      *
@@ -2661,7 +2661,7 @@ class KunenaModelInstall extends BaseDatabaseModel
     }
 
     /**
-     * @param   null  $stats  stats
+     * @param   stdClass|null  $stats  stats
      *
      * @return  void
      *

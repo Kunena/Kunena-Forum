@@ -28,7 +28,7 @@ use StdClass;
 class raw extends KunenaView
 {
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *

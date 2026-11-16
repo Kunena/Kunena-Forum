@@ -17,11 +17,11 @@ namespace Kunena\Forum\Administrator\Controller;
 
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Input\Input;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
+use Joomla\Input\Input;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Administrator\Model\TrashsModel;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -56,8 +56,8 @@ class TrashsController extends AdminController
      *
      * @param   array                     $config   config
      * @param   MVCFactoryInterface|null  $factory  The factory.
-     * @param   null                      $app      The CMSApplication for the dispatcher
-     * @param   null                      $input    Input
+     * @param   CMSApplication|null       $app      The CMSApplication for the dispatcher
+     * @param   Input|null                $input    Input
      *
      * @throws  Exception
      * @since   Kunena 2.0

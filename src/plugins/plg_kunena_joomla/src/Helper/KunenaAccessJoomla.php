@@ -43,7 +43,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
     protected array $groupUsers = [];
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected static mixed $viewLevels = null;
@@ -113,8 +113,8 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
     /**
      * Get group name in selected access type.
      *
-     * @param   string  $accesstype  Access type.
-     * @param   null    $id          Group id.
+     * @param   string    $accesstype  Access type.
+     * @param   int|null  $id          Group id.
      *
      * @return  string|null|array
      *
@@ -363,8 +363,8 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
     /**
      * Groups which are allowed or denied to do an action on an asset.
      *
-     * @param   string  $action  action
-     * @param   null    $asset   asset
+     * @param   string       $action  action
+     * @param   string|null  $asset   asset
      *
      * @return  array  ['allow' => group ids, 'deny' => group ids]
      *
@@ -407,8 +407,8 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
     }
 
     /**
-     * @param   string  $action  action
-     * @param   null    $asset   asset
+     * @param   string       $action  action
+     * @param   string|null  $asset   asset
      *
      * @return  array
      * @since   Kunena 6.0

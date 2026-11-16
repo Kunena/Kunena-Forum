@@ -223,7 +223,7 @@ EOF;
      * @param         $name
      * @param         $scope
      * @param         $type
-     * @param   null  $id  id
+     * @param   string|null  $id  id
      *
      * @return  string
      *

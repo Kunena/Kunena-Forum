@@ -16,12 +16,14 @@ namespace Kunena\Forum\Administrator\Controller;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
+use Joomla\Input\Input;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -48,10 +50,10 @@ class UserController extends FormController
     /**
      * Constructor.
      *
-     * @param   array                     $config   An optional associative array of configuration settings.
-     * @param   MVCFactoryInterface|null  $factory  The factory.
-     * @param   null                      $app      The CMSApplication for the dispatcher
-     * @param   null                      $input    Input
+     * @param   array                         $config   An optional associative array of configuration settings.
+     * @param   MVCFactoryInterface|null      $factory  The factory.
+     * @param   CMSApplicationInterface|null  $app      The CMSApplication for the dispatcher
+     * @param   Input|null                    $input    Input
      *
      * @throws Exception
      * @since   Kunena 2.0
@@ -68,8 +70,8 @@ class UserController extends FormController
     /**
      * Method to save the form data.
      *
-     * @param   null  $key     key
-     * @param   null  $urlVar  url var
+     * @param   string|null  $key     key
+     * @param   string|null  $urlVar  url var
      *
      * @return  void
      *

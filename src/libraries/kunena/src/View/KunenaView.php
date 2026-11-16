@@ -81,7 +81,7 @@ class KunenaView extends HtmlView
     public array $templateFiles = [];
 
     /**
-     * @var     null
+     * @var     bool|null
      * @since   Kunena 6.0
      */
     public mixed $teaser = null;
@@ -254,7 +254,7 @@ class KunenaView extends HtmlView
 
     /**
      * @param   string|null  $layout  layout
-     * @param   null  $tpl     tmpl
+     * @param   string|null  $tpl     tmpl
      *
      * @return  mixed|void
      *
@@ -372,9 +372,9 @@ class KunenaView extends HtmlView
 
     /**
      * @param   KunenaCategory  $category  category
-     * @param   null            $content   content
-     * @param   null            $title     title
-     * @param   null            $class     class
+     * @param   string|null     $content   content
+     * @param   string|null     $title     title
+     * @param   string|null     $class     class
      *
      * @return  mixed
      *
@@ -430,10 +430,10 @@ class KunenaView extends HtmlView
 
     /**
      * @param   KunenaTopic          $topic     topic
-     * @param   null                 $action    action
-     * @param   null                 $content   content
-     * @param   null                 $title     title
-     * @param   null                 $class     class
+     * @param   KunenaMessage|null   $action    action
+     * @param   string|null          $content   content
+     * @param   string|null          $title     title
+     * @param   string|null          $class     class
      * @param   KunenaCategory|null  $category  category
      *
      * @return  mixed

@@ -74,7 +74,7 @@ class HtmlView extends BaseHtmlView
     /**
      * Display the view
      *
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  mixed
      *

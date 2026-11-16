@@ -81,7 +81,7 @@ class CategoryManageDisplay extends KunenaControllerDisplay
     protected mixed $name = 'Category/Manage';
 
     /**
-     * @var     null
+     * @var     mixed
      * @since   Kunena 6.0
      */
     protected mixed $state = null;

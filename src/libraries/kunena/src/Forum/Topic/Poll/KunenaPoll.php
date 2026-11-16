@@ -55,7 +55,7 @@ class KunenaPoll
     protected mixed $_db = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     protected mixed $_total = null;

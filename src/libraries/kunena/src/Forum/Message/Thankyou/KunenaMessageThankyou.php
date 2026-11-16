@@ -138,8 +138,8 @@ class KunenaMessageThankyou
     }
 
     /**
-     * @param   null  $identifier  identifier
-     * @param   bool  $reload      reload
+     * @param   mixed  $identifier  identifier
+     * @param   bool   $reload      reload
      *
      * @return  KunenaMessage
      *

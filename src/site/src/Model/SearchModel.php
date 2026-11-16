@@ -42,7 +42,7 @@ use Kunena\Forum\Libraries\User\KunenaUserName;
 class SearchModel extends KunenaModel
 {
     /**
-     * @var     null
+     * @var     mixed
      * @since   Kunena 6.0
      */
     protected mixed $error = null;
@@ -468,8 +468,8 @@ class SearchModel extends KunenaModel
      *
      * Note. Calling getState in this method will result in recursion.
      *
-     * @param   null  $ordering
-     * @param   null  $direction
+     * @param   string|null  $ordering
+     * @param   string|null  $direction
      *
      * @return  void
      *

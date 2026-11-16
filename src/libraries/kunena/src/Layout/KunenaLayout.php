@@ -291,11 +291,11 @@ class KunenaLayout extends KunenaBase
     }
 
     /**
-     * @param   string  $link   link
-     * @param   string  $name   name
-     * @param   string  $scope  scope
-     * @param   string  $type   type
-     * @param   null    $id     id
+     * @param   string       $link   link
+     * @param   string       $name   name
+     * @param   string       $scope  scope
+     * @param   string       $type   type
+     * @param   string|null  $id     id
      *
      * @return  string
      *
@@ -309,11 +309,11 @@ class KunenaLayout extends KunenaBase
 
     /**
      * @param   KunenaCategory  $category   category
-     * @param   null            $content    content
-     * @param   null            $title      title
+     * @param   string|null     $content    content
+     * @param   string|null     $title      title
      * @param   string|null     $class      class
      * @param   bool            $follow     follow
-     * @param   null            $canonical  canonical
+     * @param   bool|null       $canonical  canonical
      *
      * @return  mixed
      *
@@ -474,9 +474,9 @@ class KunenaLayout extends KunenaBase
 
     /**
      * @param   KunenaTopic          $topic      topic
-     * @param   null                 $action     action
-     * @param   null                 $content    content
-     * @param   null                 $title      title
+     * @param   KunenaMessage|null   $action     action
+     * @param   string|null          $content    content
+     * @param   string|null          $title      title
      * @param   string|null          $class      class
      * @param   KunenaCategory|null  $category   category
      * @param   bool                 $follow     follow

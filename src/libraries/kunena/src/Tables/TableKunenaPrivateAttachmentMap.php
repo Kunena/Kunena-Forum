@@ -26,13 +26,13 @@ use Joomla\Database\DatabaseDriver;
 class TableKunenaPrivateAttachmentMap extends KunenaTable
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $private_id = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $attachment_id = null;

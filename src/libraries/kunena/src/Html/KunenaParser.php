@@ -39,7 +39,7 @@ use stdClass;
 abstract class KunenaParser
 {
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     public static mixed $emoticons = null;
@@ -166,11 +166,11 @@ abstract class KunenaParser
     }
 
     /**
-     * @param   string  $txt      text
-     * @param   null    $parent   parent
-     * @param   int     $len      len
-     * @param   string  $context  context
-     * @param   string  $target   target
+     * @param   string       $txt      text
+     * @param   object|null  $parent   parent
+     * @param   int          $len      len
+     * @param   string       $context  context
+     * @param   string       $target   target
      *
      * @return  false|string
      *

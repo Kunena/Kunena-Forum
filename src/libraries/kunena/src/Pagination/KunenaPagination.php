@@ -110,25 +110,25 @@ class KunenaPagination
     protected mixed $viewall = false;
 
     /**
-     * @var     null
+     * @var     callable|null
      * @since   Kunena 6.0
      */
     protected mixed $itemActiveChrome = null;
 
     /**
-     * @var     null
+     * @var     callable|null
      * @since   Kunena 6.0
      */
     protected mixed $itemInactiveChrome = null;
 
     /**
-     * @var     null
+     * @var     callable|null
      * @since   Kunena 6.0
      */
     protected mixed $listChrome = null;
 
     /**
-     * @var     null
+     * @var     callable|null
      * @since   Kunena 6.0
      */
     protected mixed $footerChrome = null;

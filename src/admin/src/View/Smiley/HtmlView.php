@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 class HtmlView extends BaseHtmlView
 {
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  mixed
      *

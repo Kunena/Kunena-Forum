@@ -54,7 +54,7 @@ class KunenaMessageFinder extends KunenaFinder
     protected int $unapprovedOf = 0;
 
     /**
-     * @var     null
+     * @var     bool|null
      * @since   Kunena 6.0
      */
     protected mixed $moved = null;

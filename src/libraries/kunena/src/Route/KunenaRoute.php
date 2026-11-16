@@ -620,7 +620,7 @@ abstract class KunenaRoute
     }
 
     /**
-     * @param   null  $uri  uri
+     * @param   Uri|string|null  $uri  uri
      *
      * @return  integer
      *
@@ -1147,8 +1147,8 @@ abstract class KunenaRoute
     }
 
     /**
-     * @param   string  $string   string
-     * @param   null    $default  default
+     * @param   string       $string   string
+     * @param   string|null  $default  default
      *
      * @return  mixed
      *

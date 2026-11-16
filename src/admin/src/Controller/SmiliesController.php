@@ -78,8 +78,8 @@ class SmiliesController extends FormController
     /**
      * Edit
      *
-     * @param   null  $key     key
-     * @param   null  $urlVar  url var
+     * @param   string|null  $key     key
+     * @param   string|null  $urlVar  url var
      *
      * @return  void
      *
@@ -113,8 +113,8 @@ class SmiliesController extends FormController
     /**
      * Save
      *
-     * @param   null  $key     key
-     * @param   null  $urlVar  url var
+     * @param   string|null  $key     key
+     * @param   string|null  $urlVar  url var
      *
      * @return  void
      *
@@ -379,7 +379,7 @@ class SmiliesController extends FormController
     /**
      * Method to just redirect to main manager in case of use of cancel button
      *
-     * @param   null  $key  key
+     * @param   string|null  $key  key
      *
      * @return  void
      *

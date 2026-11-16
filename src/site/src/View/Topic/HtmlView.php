@@ -39,6 +39,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
@@ -75,7 +76,7 @@ class HtmlView extends KunenaView
     public array $inline_attachments = [];
 
     /**
-     * @var     null
+     * @var     KunenaPoll|null
      * @since   Kunena 6.0
      */
     public mixed $poll = null;
@@ -217,7 +218,7 @@ class HtmlView extends KunenaView
     public mixed $headerText = null;
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -241,7 +242,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -256,7 +257,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -577,7 +578,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -592,7 +593,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -1031,7 +1032,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $template  template
+     * @param   string|null  $template  template
      *
      * @return  void
      *
@@ -1048,9 +1049,9 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   integer  $id        id
-     * @param   string   $message   message
-     * @param   null     $template  template
+     * @param   integer      $id        id
+     * @param   string       $message   message
+     * @param   string|null  $template  template
      *
      * @return  void
      *
@@ -1354,7 +1355,7 @@ class HtmlView extends KunenaView
      *
      * @param   string      $path     path
      * @param   Input|null  $input    input
-     * @param   null        $options  options
+     * @param   mixed       $options  options
      *
      * @return  KunenaControllerDisplay
      *
@@ -1368,7 +1369,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  boolean|false
      *
@@ -1459,7 +1460,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  boolean|false
      *
@@ -1530,7 +1531,7 @@ class HtmlView extends KunenaView
     }
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  boolean|false
      *

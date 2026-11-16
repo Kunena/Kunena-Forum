@@ -41,43 +41,43 @@ class KunenaUsers extends KunenaTable
     public $userid = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $name = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $username = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $email = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $blocked = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $registerDate = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $lastvisitDate = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $view = null;
@@ -366,8 +366,8 @@ class KunenaUsers extends KunenaTable
     }
 
     /**
-     * @param   null  $userid  userid
-     * @param   bool  $reset   reset
+     * @param   mixed  $userid  userid
+     * @param   bool   $reset   reset
      *
      * @return  boolean
      *

@@ -91,7 +91,7 @@ use stdClass;
 class KunenaUser
 {
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected static mixed $_ranks = null;
@@ -325,7 +325,7 @@ class KunenaUser
     public mixed $displayAgeBirthdate = null;
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected mixed $_allowed = null;

@@ -45,7 +45,7 @@ class KunenaTopicFinder extends KunenaFinder
     protected mixed $hold = [0];
 
     /**
-     * @var     null
+     * @var     bool|null
      * @since   Kunena 6.0
      */
     protected mixed $moved = null;

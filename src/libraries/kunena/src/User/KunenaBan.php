@@ -196,7 +196,7 @@ class KunenaBan
      *
      * @access  protected
      *
-     * @param   null  $identifier  identifier
+     * @param   int|null  $identifier  identifier
      *
      * @throws  Exception
      * @since   Kunena 6.0
@@ -237,13 +237,13 @@ class KunenaBan
     /**
      * Do the ban for the specified user from site or forum
      *
-     * @param   null    $userid          userid
-     * @param   null    $ip              The address IP of the user
-     * @param   int     $banlevel        Set if the user from forum or from site, from forum is set to 0 and from site is set to 1
-     * @param   null    $expiration      The expiration date of the ban, if no date is specified the ban is set for lifetime
-     * @param   string  $reason_private  The private reason
-     * @param   string  $reason_public   The public reason
-     * @param   string  $comment         Set a comment for others moderators
+     * @param   int|null     $userid          userid
+     * @param   string|null  $ip              The address IP of the user
+     * @param   int          $banlevel        Set if the user from forum or from site, from forum is set to 0 and from site is set to 1
+     * @param   mixed        $expiration      The expiration date of the ban, if no date is specified the ban is set for lifetime
+     * @param   string       $reason_private  The private reason
+     * @param   string       $reason_public   The public reason
+     * @param   string       $comment         Set a comment for others moderators
      *
      * @return void
      * @since Kunena 1.6
@@ -450,7 +450,7 @@ class KunenaBan
      *
      * @access  public
      *
-     * @param   null  $identifier  The ban object to be loaded
+     * @param   int|null  $identifier  The ban object to be loaded
      *
      * @return KunenaBan|null The ban object.
      *
@@ -506,8 +506,8 @@ class KunenaBan
      *
      * @access  public
      *
-     * @param   null  $identifier  The ban object to be loaded
-     * @param   bool  $create      create
+     * @param   int|null  $identifier  The ban object to be loaded
+     * @param   bool      $create      create
      *
      * @return KunenaBan|null The ban object.
      *
@@ -944,8 +944,8 @@ class KunenaBan
     }
 
     /**
-     * @param   null  $public   public
-     * @param   null  $private  private
+     * @param   string|null  $public   public
+     * @param   string|null  $private  private
      *
      * @return  void
      *

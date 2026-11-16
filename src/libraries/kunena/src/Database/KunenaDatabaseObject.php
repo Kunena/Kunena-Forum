@@ -35,7 +35,7 @@ use Kunena\Forum\Libraries\Exception\KunenaException;
 abstract class KunenaDatabaseObject
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public $id = null;
@@ -47,7 +47,7 @@ abstract class KunenaDatabaseObject
     protected mixed $_name = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     protected mixed $_table = null;

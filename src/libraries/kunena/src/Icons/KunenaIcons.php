@@ -283,9 +283,9 @@ class KunenaIcons
     /**
      * Return the category icon
      *
-     * @param   string  $categoryicon  icon
-     * @param   null    $new           new
-     * @param   bool    $big           big
+     * @param   string     $categoryicon  icon
+     * @param   bool|null  $new           new
+     * @param   bool       $big           big
      *
      * @return  string
      *
@@ -1190,7 +1190,7 @@ class KunenaIcons
     /**
      * Return the rss icon
      *
-     * @param   null  $text  text
+     * @param   string|null  $text  text
      *
      * @return  string
      *

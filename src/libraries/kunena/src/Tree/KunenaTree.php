@@ -75,7 +75,7 @@ class KunenaTree implements Iterator
     protected mixed $heap = [];
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     protected mixed $_count = null;

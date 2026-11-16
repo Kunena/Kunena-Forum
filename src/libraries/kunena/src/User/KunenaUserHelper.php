@@ -56,25 +56,25 @@ abstract class KunenaUserHelper
     protected static array $_instances_name = [];
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected static mixed $_online = null;
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected static mixed $_online_status = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     protected static mixed $_lastid = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     protected static mixed $_total = null;
@@ -86,7 +86,7 @@ abstract class KunenaUserHelper
     protected static mixed $_topposters = null;
 
     /**
-     * @var     null
+     * @var     KunenaUser|null
      * @since   Kunena 6.0
      */
     protected static mixed $_me = null;

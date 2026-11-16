@@ -137,9 +137,9 @@ class KunenaBBCodeEditor
     /**
      * Inserts a button or another element at the specified location. See insertElements for details.
      *
-     * @param   mixed  $element  element
-     * @param   null   $pos      pos
-     * @param   mixed  $where    where
+     * @param   mixed        $element  element
+     * @param   string|null  $pos      pos
+     * @param   mixed        $where    where
      *
      * @return  void
      *
@@ -159,9 +159,9 @@ class KunenaBBCodeEditor
      * inserted after/before the element named $where. If NULL is specified then it is inserted after
      * all other elements.
      *
-     * @param   mixed  $elements  elements
-     * @param   null   $pos       pos
-     * @param   mixed  $where     where
+     * @param   mixed        $elements  elements
+     * @param   string|null  $pos       pos
+     * @param   mixed        $where     where
      *
      * @return bool
      *
@@ -360,9 +360,9 @@ class KunenaBBCodeEditorButton extends KunenaBBCodeEditorElement
     /**
      * Add a new display action. This can be used to show a button specific action area.
      *
-     * @param   mixed   $selection  selection
-     * @param   string  $class      class
-     * @param   null    $tag        tag
+     * @param   mixed        $selection  selection
+     * @param   string       $class      class
+     * @param   string|null  $tag        tag
      *
      * @return  void
      *
@@ -397,14 +397,14 @@ class KunenaBBCodeEditorButton extends KunenaBBCodeEditorElement
     /**
      * Specify what code should be inserted when the user presses the button.
      *
-     * @param   null  $repeat        repeat
-     * @param   null  $empty_before  empty
-     * @param   null  $empty_after   empty
-     * @param   null  $start         start
-     * @param   null  $end           end
-     * @param   null  $before        before
-     * @param   null  $after         after
-     * @param   null  $tag           tag
+     * @param   bool|null    $repeat        repeat
+     * @param   string|null  $empty_before  empty
+     * @param   string|null  $empty_after   empty
+     * @param   string|null  $start         start
+     * @param   string|null  $end           end
+     * @param   string|null  $before        before
+     * @param   string|null  $after         after
+     * @param   string|null  $tag           tag
      *
      *
      * @return  void

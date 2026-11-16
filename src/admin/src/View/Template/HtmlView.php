@@ -40,7 +40,7 @@ class HtmlView extends BaseHtmlView
     public ?array $modifiedFiles = null;
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  mixed
      *

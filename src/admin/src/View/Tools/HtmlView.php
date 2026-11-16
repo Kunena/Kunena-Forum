@@ -139,7 +139,7 @@ class HtmlView extends BaseHtmlView
     protected array $fieldInfo = [];
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  mixed
      *

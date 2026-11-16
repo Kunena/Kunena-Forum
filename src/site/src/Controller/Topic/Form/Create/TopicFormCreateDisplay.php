@@ -37,7 +37,7 @@ use RuntimeException;
 class TopicFormCreateDisplay extends KunenaControllerDisplay
 {
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $captchaHtml = null;

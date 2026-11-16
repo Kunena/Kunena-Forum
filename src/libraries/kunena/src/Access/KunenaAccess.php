@@ -59,7 +59,7 @@ class KunenaAccess
     public const int TOPIC_SUBSCRIPTION = 2;
 
     /**
-     * @var     null
+     * @var     KunenaAccess|null
      * @since   Kunena 6.0
      */
     protected static mixed $instance = null;

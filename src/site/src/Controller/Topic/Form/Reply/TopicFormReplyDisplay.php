@@ -40,7 +40,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 class TopicFormReplyDisplay extends KunenaControllerDisplay
 {
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $captchaHtml = null;

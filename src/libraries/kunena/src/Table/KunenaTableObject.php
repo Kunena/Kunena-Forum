@@ -792,8 +792,8 @@ abstract class KunenaTableObject
     }
 
     /**
-     * @param   null  $keys   keys
-     * @param   bool  $reset  reset
+     * @param   array|null  $keys   keys
+     * @param   bool        $reset  reset
      *
      * @return  boolean|KunenaTableObject
      *

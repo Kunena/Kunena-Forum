@@ -47,19 +47,19 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
     protected mixed $_table = 'KunenaPrivate';
 
     /**
-     * @var     null
+     * @var     KunenaTableMap|null
      * @since   Kunena 6.0
      */
     protected mixed $_attachments = null;
 
     /**
-     * @var     null
+     * @var     KunenaTableMap|null
      * @since   Kunena 6.0
      */
     protected mixed $_posts = null;
 
     /**
-     * @var     null
+     * @var     KunenaTableMap|null
      * @since   Kunena 6.0
      */
     protected mixed $_users = null;

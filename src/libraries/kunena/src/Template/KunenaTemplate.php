@@ -258,7 +258,7 @@ class KunenaTemplate
     protected array $style_variables = [];
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected mixed $compiled_style_variables = null;
@@ -298,7 +298,7 @@ class KunenaTemplate
      *
      * @access    protected
      *
-     * @param   null  $name  name
+     * @param   string|null  $name  name
      *
      * @throws  Exception
      * @since     Kunena 6.0
@@ -869,11 +869,11 @@ class KunenaTemplate
     }
 
     /**
-     * @param   string  $link   link
-     * @param   string  $name   name
-     * @param   string  $scope  scope
-     * @param   string  $type   type
-     * @param   null    $id     id
+     * @param   string       $link   link
+     * @param   string       $name   name
+     * @param   string       $scope  scope
+     * @param   string       $type   type
+     * @param   string|null  $id     id
      *
      * @return  string
      *
@@ -1201,11 +1201,11 @@ HTML;
     }
 
     /**
-     * @param   string  $file      file
-     * @param   bool    $url       url
-     * @param   string  $basepath  basepath
-     * @param   null    $default   default
-     * @param   null    $ignore    ignore
+     * @param   string       $file      file
+     * @param   bool         $url       url
+     * @param   string       $basepath  basepath
+     * @param   string|null  $default   default
+     * @param   string|null  $ignore    ignore
      *
      * @return  string
      *

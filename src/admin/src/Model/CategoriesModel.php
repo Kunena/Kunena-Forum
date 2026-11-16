@@ -373,9 +373,9 @@ class CategoriesModel extends KunenaModel
     /**
      * Save the new order of categories choosed by user in the table TableKunenaCategories
      *
-     * @param   TableKunenaCategories $tableObject
-     * @param   null                  $pks    pks
-     * @param   null                  $order  order
+     * @param   TableKunenaCategories  $tableObject
+     * @param   array|null             $pks          pks
+     * @param   array|null             $order        order
      *
      * @return  boolean
      *

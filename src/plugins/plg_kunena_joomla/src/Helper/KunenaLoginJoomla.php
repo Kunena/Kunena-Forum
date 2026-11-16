@@ -32,10 +32,10 @@ class KunenaLoginJoomla extends KunenaLoginAbstract
     /**
      * Method to login via Joomla! framework
      *
-     * @param   string   $username    Username of user
-     * @param   string   $password    Password of user
-     * @param   boolean  $rememberme  Remember the user next time it wants login
-     * @param   null     $secretkey   The secretkey given by user when TFA is enabled
+     * @param   string       $username    Username of user
+     * @param   string       $password    Password of user
+     * @param   boolean      $rememberme  Remember the user next time it wants login
+     * @param   string|null  $secretkey   The secretkey given by user when TFA is enabled
      *
      * @return  boolean|Exception  True on success, false if failed or silent handling is configured, or a \Exception object on authentication error.
      *

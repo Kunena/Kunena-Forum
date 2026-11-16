@@ -71,19 +71,19 @@ abstract class KunenaMenuFix
     public static array $same = [];
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     public static mixed $structure = null;
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     public static mixed $parent = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $parentid = null;

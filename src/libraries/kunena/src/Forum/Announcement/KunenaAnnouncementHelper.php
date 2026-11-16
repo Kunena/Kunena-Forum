@@ -254,8 +254,8 @@ abstract class KunenaAnnouncementHelper
     /**
      * Get url
      *
-     * @param   null  $layout  layout
-     * @param   bool  $xhtml   xhtml
+     * @param   string|null  $layout  layout
+     * @param   bool         $xhtml   xhtml
      *
      * @return string
      *

@@ -90,25 +90,25 @@ class KunenaAnnouncement extends KunenaDatabaseObject
     protected mixed $_table = 'KunenaAnnouncements';
 
     /**
-     * @var     null
+     * @var     KunenaDate|null
      * @since   Kunena 6.0
      */
     protected mixed $_date = null;
 
     /**
-     * @var     null
+     * @var     KunenaUser|null
      * @since   Kunena 6.0
      */
     protected mixed $_author = null;
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected mixed $_authcache = null;
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected mixed $_authfcache = null;
@@ -229,8 +229,8 @@ class KunenaAnnouncement extends KunenaDatabaseObject
     }
 
     /**
-     * @param   string  $field  field
-     * @param   null    $mode   mode
+     * @param   string       $field  field
+     * @param   string|null  $mode   mode
      *
      * @return  integer|string
      *
@@ -295,8 +295,8 @@ class KunenaAnnouncement extends KunenaDatabaseObject
     /**
      * Returns the global KunenaForumAnnouncement object.
      *
-     * @param   null  $identifier  Announcement id to load.
-     * @param   bool  $reload      reload
+     * @param   mixed  $identifier  Announcement id to load.
+     * @param   bool   $reload      reload
      *
      * @return  KunenaAnnouncement
      *

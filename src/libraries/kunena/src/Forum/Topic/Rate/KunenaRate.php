@@ -49,25 +49,25 @@ class KunenaRate
     public mixed $rate = 0;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public $userid = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $time = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 7.0
      */
     public $id = 0;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 7.0
      */
     public mixed $typeAlias = null;

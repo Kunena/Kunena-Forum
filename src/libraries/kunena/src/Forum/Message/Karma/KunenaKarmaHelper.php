@@ -37,7 +37,7 @@ abstract class KunenaKarmaHelper
      *
      * @internal  param The $identifier rate object to load - Can be only an integer.
      *
-     * @param   null  $identifier  identifier
+     * @param   KunenaKarma|int|null  $identifier  identifier
      *
      * @param   bool  $reload      reload
      *

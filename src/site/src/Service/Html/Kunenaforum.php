@@ -254,10 +254,10 @@ class Kunenaforum
     }
 
     /**
-     * @param   string  $name         name
-     * @param   mixed   $options      options
-     * @param   array   $selected     selected
-     * @param   null    $class_input  input
+     * @param   string       $name         name
+     * @param   mixed        $options      options
+     * @param   array        $selected     selected
+     * @param   string|null  $class_input  input
      *
      * @return  string
      *

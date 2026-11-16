@@ -57,8 +57,8 @@ class RanksController extends AdminController
     /**
      * Edit a rank
      *
-     * @param   null  $key     key
-     * @param   null  $urlVar  url var
+     * @param   string|null  $key     key
+     * @param   string|null  $urlVar  url var
      *
      * @return  void
      *

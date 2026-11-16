@@ -37,7 +37,7 @@ use stdClass;
 class raw extends KunenaView
 {
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -227,7 +227,7 @@ class raw extends KunenaView
     /**
      * Save rate for user logged in by JSON call
      *
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *
@@ -268,7 +268,7 @@ class raw extends KunenaView
     /**
      * Return the template text corresponding to the category selected
      *
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  void
      *

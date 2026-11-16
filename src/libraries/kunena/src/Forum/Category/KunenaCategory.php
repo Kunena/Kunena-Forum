@@ -430,7 +430,7 @@ class KunenaCategory extends KunenaDatabaseObject
     protected mixed $authorised = [];
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected mixed $_aliases = null;
@@ -1608,8 +1608,8 @@ class KunenaCategory extends KunenaDatabaseObject
     /**
      * Returns the global \Kunena\Forum\Libraries\Forum\Category\Category object.
      *
-     * @param   null  $identifier  The category id to load.
-     * @param   bool  $reload      Force reload from the database.
+     * @param   mixed  $identifier  The category id to load.
+     * @param   bool   $reload      Force reload from the database.
      *
      * @return  KunenaCategory
      *
@@ -2121,7 +2121,7 @@ class KunenaCategory extends KunenaDatabaseObject
     /**
      * @see     KunenaDatabaseObject::load()
      *
-     * @param   null  $id  id
+     * @param   int|null  $id  id
      *
      * @return  boolean
      *

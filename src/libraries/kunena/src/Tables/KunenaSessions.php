@@ -42,7 +42,7 @@ class KunenaSessions extends KunenaTable
     public mixed $allowed = 'na';
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $allowedcats = null;

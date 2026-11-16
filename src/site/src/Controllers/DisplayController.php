@@ -13,8 +13,10 @@ namespace Kunena\Forum\Site\Controllers;
 \defined('_JEXEC') or die;
 
 use Exception;
+use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
@@ -36,9 +38,9 @@ class DisplayController extends KunenaController
      * @param   array                     $config   An optional associative array of configuration settings.
      *                                              Recognized key values include 'name', 'default_task', 'model_path', and
      *                                              'view_path' (this list is not meant to be comprehensive).
-     * @param   MVCFactoryInterface|null  $factory  The factory.
-     * @param   null                      $app      The JApplication for the dispatcher
-     * @param   null                      $input    Input
+     * @param   MVCFactoryInterface|null      $factory  The factory.
+     * @param   CMSApplicationInterface|null  $app      The JApplication for the dispatcher
+     * @param   Input|null                    $input    Input
      *
      * @throws Exception
      * @since   3.0.1

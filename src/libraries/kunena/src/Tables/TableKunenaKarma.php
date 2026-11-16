@@ -26,13 +26,13 @@ use Joomla\Database\DatabaseDriver;
 class TableKunenaKarma extends KunenaTable
 {
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.2
      */
     public mixed $target_userid = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.2
      */
     public mixed $time = null;

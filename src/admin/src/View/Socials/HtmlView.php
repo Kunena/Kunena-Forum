@@ -35,7 +35,7 @@ class HtmlView extends BaseHtmlView
     protected mixed $form = null;
 
     /**
-     * @param   null  $tpl  tpl
+     * @param   string|null  $tpl  tpl
      *
      * @return  mixed
      *

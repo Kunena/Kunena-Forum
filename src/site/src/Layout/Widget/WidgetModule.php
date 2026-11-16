@@ -27,7 +27,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 class WidgetModule extends KunenaLayout
 {
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $position = null;

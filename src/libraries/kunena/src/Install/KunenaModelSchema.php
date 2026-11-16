@@ -49,25 +49,25 @@ use Joomla\Database\DatabaseDriver;
 class KunenaModelSchema extends BaseDatabaseModel
 {
     /**
-     * @var     null
+     * @var     DOMDocument|null
      * @since   Kunena 6.0
      */
     protected mixed $schema = null;
 
     /**
-     * @var     null
+     * @var     DOMDocument|null
      * @since   Kunena 6.0
      */
     protected mixed $xmlschema = null;
 
     /**
-     * @var     null
+     * @var     DOMDocument|null
      * @since   Kunena 6.0
      */
     protected mixed $upgradeschema = null;
 
     /**
-     * @var     null
+     * @var     DOMDocument|null
      * @since   Kunena 6.0
      */
     protected mixed $diffschema = null;
@@ -79,13 +79,13 @@ class KunenaModelSchema extends BaseDatabaseModel
     protected mixed $db = null;
 
     /**
-     * @var     null
+     * @var     array|null
      * @since   Kunena 6.0
      */
     protected mixed $sql = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     protected mixed $version = null;
@@ -175,9 +175,9 @@ class KunenaModelSchema extends BaseDatabaseModel
     }
 
     /**
-     * @param   null  $from   from
-     * @param   null  $to     to
-     * @param   null  $using  using
+     * @param   DOMDocument|null  $from   from
+     * @param   DOMDocument|null  $to     to
+     * @param   DOMDocument|null  $using  using
      *
      * @return  DOMDocument|null
      *

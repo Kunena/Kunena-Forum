@@ -1453,7 +1453,7 @@ class ToolsController extends FormController
     /**
      * Method to just redirect to main manager in case of use of cancel button
      *
-     * @param   null  $key  key
+     * @param   string|null  $key  key
      *
      * @return  void
      *

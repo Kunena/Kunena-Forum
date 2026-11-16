@@ -23,8 +23,9 @@
   "devDependencies": {
     "cypress": "^16.3.0",
     "joomla-cypress": "^2.0.0",
+    "mailparser": "^3.14.3",
     "mysql2": "^3.24.6",
     "pg": "^8.23.1",
-    "smtp-tester": "^2.1.0"
+    "smtp-server": "^3.21.4"
   }
 }

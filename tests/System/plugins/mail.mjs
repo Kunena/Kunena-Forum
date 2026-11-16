@@ -1,10 +1,42 @@
-import mailTester from 'smtp-tester';
+import { simpleParser } from 'mailparser';
+import { SMTPServer } from 'smtp-server';
 
 // The mail server instance
 let mailServer = null;
 
 // The cached mails
 let cachedMails = [];
+
+/**
+ * The mail as the tests read it: the envelope, the headers (an address header as its text) and the parsed body.
+ *
+ * @param envelope  the envelope of the SMTP session
+ * @param parsed    the mail parsed by mailparser
+ *
+ * @returns the mail
+ */
+function buildMail(envelope, parsed) {
+  const headers = {};
+
+  parsed.headers.forEach((value, name) => {
+    headers[name] = value && value.text !== undefined ? value.text : value;
+  });
+
+  const receivers = {};
+
+  envelope.rcptTo.forEach((recipient) => {
+    receivers[recipient.address] = true;
+  });
+
+  return {
+    sender: envelope.mailFrom ? envelope.mailFrom.address : '',
+    receivers,
+    headers,
+    body: parsed.text,
+    html: parsed.html,
+    attachments: parsed.attachments,
+  };
+}
 
 /**
  * Returns all cached mails. It waits for maximum 3 seconds till a mail arrives.
@@ -24,7 +56,7 @@ async function getMails() {
     /* eslint-enable no-await-in-loop */
   }
 
-  return new Promise((resolve) => { resolve(cachedMails); });
+  return cachedMails;
 }
 
 /**
@@ -39,7 +71,7 @@ function clearEmails() {
 }
 
 /**
- * Starts the mail server.
+ * Starts the mail server: an SMTP server without authentication and without TLS, which keeps every mail it receives.
  *
  * @returns null
  */
@@ -49,14 +81,26 @@ function startMailServer(config) {
     return null;
   }
 
+  mailServer = new SMTPServer({
+    disabledCommands: ['AUTH', 'STARTTLS'],
+    logger: false,
+    onData(stream, session, callback) {
+      simpleParser(stream)
+        .then((parsed) => {
+          // Uncomment the next line when you want to see the incoming mails while writing the tests
+          // console.log(parsed.subject, parsed.text);
+
+          cachedMails.push(buildMail(session.envelope, parsed));
+          callback(null, 'OK');
+        })
+        .catch(callback);
+    },
+  });
+
+  mailServer.on('error', (error) => console.error('Mail server:', error.message));
+
   // Start the mail server on the configured port
-  mailServer = mailTester.init(config.env.smtp_port);
-
-  // Uncomment the next line when you want to see the incoming mails while writing the tests
-  // mailServer.module('logAll');
-
-  // Listen to incoming mails and add them to the internal cache
-  mailServer.bind((addr, id, email) => cachedMails.push(email));
+  mailServer.listen(config.env.smtp_port);
 
   // Reset the cached mails
   cachedMails = [];

@@ -20,7 +20,7 @@ It is simplified to offer an initial understanding. Detailed explanations follow
 On the left, **Cypress** is running as a [Node.js](https://nodejs.org/) application. The file **`cypress.config.mjs`** is used to configure settings and preferences for running the Joomla System Tests in your environment.
 
 In the middle, the **Cypress Test Runner** controls a **Browser** with the **Joomla** application running HTML, CSS, and JavaScript. Also running in the browser context are the **Database Commands**, the **API commands** and the npm packages **[joomala-cypress](https://github.com/joomla-projects/joomla-cypress/)** and
-**[smtp-tester](https://www.npmjs.com/package/smtp-tester)**.
+the mail server of the tests (**[smtp-server](https://www.npmjs.com/package/smtp-server)** and **[mailparser](https://www.npmjs.com/package/mailparser)**).
 
 The **Joomla** CMS server software is depicted on the right. It runs with PHP on the **Web Server** and includes
 several key components: the public **User-Frontend**, the administrator **Admin-Backend**, the **API**, and the **Web-Installer**. These components and their interactions will be detailed later in the document.
@@ -136,7 +136,8 @@ SMTP configuration.
 
 The used npm package "Helpers for using Cypress with Joomla for testing" **[joomala-cypress](https://github.com/joomla-projects/joomla-cypress/)** helps in writing the Cypress tests for Joomla in extending the Cypress API with custom commands.
 
-The **[smtp-tester](https://www.npmjs.com/package/smtp-tester)** npm package creates an SMTP server that listens
+The task `startMailServer` (`plugins/mail.mjs`, with the npm packages **[smtp-server](https://www.npmjs.com/package/smtp-server)** and
+**[mailparser](https://www.npmjs.com/package/mailparser)**) creates an SMTP server that listens
 on the `smtp_port` specified in `cypress.config.mjs` during test runtime.
 This server accepts connections, receives emails, and provides the capability to check the received emails during the test.
 
@@ -180,9 +181,9 @@ The Joomla System Tests come with some convenient [Cypress Tasks](https://docs.c
 - **copyRelativeFile** – Copies a file relative to the CMS root folder
 - **checkForLogs** – Checks the log file (path defined in configuration) for errors
 - **clearLogs** – Clears the logs in the log file from the configuration
-- **startMailServer** – Starts the smtp-tester SMTP server
-- **getMails** – Get received mails from smtp-tester
-- **clearEmails** – Clear all smtp-tester received mails
+- **startMailServer** – Starts the SMTP server of the tests
+- **getMails** – Get the received mails (`headers`, `body`, `html`, `sender`, `receivers`, `attachments`)
+- **clearEmails** – Clear all received mails
 
 The following code in a test executes the writing file task with parameters:
 ```JavaScript

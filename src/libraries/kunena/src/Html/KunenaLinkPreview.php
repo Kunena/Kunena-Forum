@@ -117,7 +117,8 @@ abstract class KunenaLinkPreview
             return true;
         }
         
-        $list = (string) KunenaConfig::getInstance()->linkPreviewBlock;
+        // Keep empty in K7.1 instead of a setting from Kunena config which doesn't exist except in K8.0
+        $list = (string) '';
         
         foreach (preg_split('/[\s,;]+/', strtolower($list), -1, PREG_SPLIT_NO_EMPTY) as $domain) {
             $domain = ltrim($domain, '.');

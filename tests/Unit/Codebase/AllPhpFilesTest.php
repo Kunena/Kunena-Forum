@@ -53,7 +53,6 @@ class AllPhpFilesTest extends UnitTestCase
      * - the views for a format (view.raw.php, view.json.php) are found by Joomla by the name of the file;
      * - attachment.php is a standalone entry point, and KunenaInstaller is loaded by the installer;
      * - View/Default is a folder with the name of a keyword;
-     * - Inbox/HtmlView.php declares the namespace of the Credits view (a copy of that file: the same class twice);
      * - the other ones differ in the case of a letter (item/Item, ForumJump/Forumjump), which an autoloader on Linux does not accept.
      */
     private const KNOWN_MISMATCHES = [
@@ -64,7 +63,6 @@ class AllPhpFilesTest extends UnitTestCase
         'src/site/src/Layout/Widget/WidgetForumjump.php',
         'src/site/src/View/Category/view.raw.php',
         'src/site/src/View/Default/HtmlView.php',
-        'src/site/src/View/Inbox/HtmlView.php',
         'src/site/src/View/Topic/view.json.php',
         'src/site/src/View/Topic/view.raw.php',
         'src/site/src/View/Topics/view.json.php',
@@ -72,9 +70,9 @@ class AllPhpFilesTest extends UnitTestCase
     ];
 
     /**
-     * Classes which two files declare.
+     * Classes which two files declare (none since Inbox/HtmlView.php has the namespace of the Inbox view, Kunena 8.0).
      */
-    private const KNOWN_DOUBLES = ['Kunena' . "\x5c" . 'Forum' . "\x5c" . 'Site' . "\x5c" . 'View' . "\x5c" . 'Credits' . "\x5c" . 'HtmlView'];
+    private const KNOWN_DOUBLES = [];
 
     /** @var string[]|null */
     private static ?array $files = null;

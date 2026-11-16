@@ -66,7 +66,7 @@ class TrashsController extends AdminController
     {
         parent::__construct($config, $factory, $app, $input);
 
-        $layout        = $this->input->get('layout', 'messages');
+        $layout        = $this->input->getCmd('layout', 'messages');
         $this->baseurl = 'administrator/index.php?option=com_kunena&view=trashs&layout=' . $layout;
     }
 

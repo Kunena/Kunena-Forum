@@ -85,7 +85,7 @@ class CategoryController extends KunenaController
     public function save($key = null, $urlVar = null)
     {
         $this->internalSave();
-        $postCatid = $this->input->post->get('catid', '', 'raw');
+        $postCatid = $this->input->post->getInt('catid', 0);
 
         if ($this->app->isClient('administrator')) {
             if ($this->task === 'apply') {
@@ -381,7 +381,7 @@ class CategoryController extends KunenaController
      */
     public function cancel($key = null, $urlVar = null)
     {
-        $postCatid = $this->input->post->get('catid', '', 'raw');
+        $postCatid = $this->input->post->getInt('catid', 0);
         $category  = KunenaCategoryHelper::get($postCatid);
         $category->checkIn();
 
@@ -398,7 +398,7 @@ class CategoryController extends KunenaController
      */
     public function save2copycategory(): void
     {
-        $postCatid = $this->input->post->get('catid', '', 'raw');
+        $postCatid = $this->input->post->getInt('catid', 0);
         $postAlias = $this->input->post->get('alias', '', 'raw');
         $postName  = $this->input->post->get('name', '', 'raw');
 

@@ -239,7 +239,7 @@ class KunenaBan
      *
      * @param   null    $userid          userid
      * @param   null    $ip              The address IP of the user
-     * @param   bool    $banlevel        Set if the user from forum or from site, from forum is set to 0 and from site is set to 1
+     * @param   int     $banlevel        Set if the user from forum or from site, from forum is set to 0 and from site is set to 1
      * @param   null    $expiration      The expiration date of the ban, if no date is specified the ban is set for lifetime
      * @param   string  $reason_private  The private reason
      * @param   string  $reason_public   The public reason

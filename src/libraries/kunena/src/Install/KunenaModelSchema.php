@@ -312,8 +312,8 @@ class KunenaModelSchema extends BaseDatabaseModel
      * @return  boolean|DOMDocument
      *
      * @since   Kunena 6.0
-     * @throws DOMException
-     * @throws  KunenaSchemaException*@throws DOMException
+     * @throws  DOMException
+     * @throws  KunenaSchemaException
      */
     public function getSchemaFromDatabase($reload = false)
     {

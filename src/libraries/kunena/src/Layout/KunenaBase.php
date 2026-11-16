@@ -311,11 +311,11 @@ class KunenaBase extends KunenaLayoutBase
      *
      * @param   array  $data  data
      *
-     * @return  KunenaLayoutBase Instance of $this to allow chaining.
+     * @return  static Instance of $this to allow chaining (a KunenaLayout stays one: its render() has no required argument).
      *
      * @since    Kunena 6.0
      */
-    public function debug($data = []): KunenaLayoutBase
+    public function debug($data = []): static
     {
         $this->debug = (bool) $data;
 

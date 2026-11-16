@@ -91,11 +91,10 @@ class Router extends RouterView
     {
         static $instance = null;
 
+        // The router of the site, as Joomla makes it (the constructor needs the application and its menu; there is no load()).
         if (!$instance) {
-            if (!$instance) {
-                $instance = new Router();
-                $instance->load();
-            }
+            $app      = Factory::getApplication();
+            $instance = new Router($app, $app->getMenu());
         }
 
         return $instance;

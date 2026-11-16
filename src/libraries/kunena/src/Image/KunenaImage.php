@@ -94,13 +94,9 @@ class KunenaImage extends Image
             if ($exif && isset($exif['Orientation'])) {
                 $orientation = $exif['Orientation'];
 
+                // 1: the picture is upright, nothing to turn.
                 if ($orientation != 1) {
                     switch ($orientation) {
-                        case 1: // Nothing
-                            $angle  = 0;
-                            $flip   = 0;
-                            break;
-
                         case 2: // Horizontal flip
                             $angle  = 0;
                             $flip   = 1;

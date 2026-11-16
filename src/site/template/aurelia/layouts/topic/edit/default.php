@@ -229,7 +229,7 @@ Text::script('COM_KUNENA_POST_CANCEL_CONFIRM');
         <input type="hidden" name="draftid" value="<?php echo $draftId; ?>" />
     <?php endif; ?>
     <input id="kurl_topicons_request" type="hidden" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=topicicons&format=json&' . Session::getFormToken() . '=1', false); ?>" />
-    <input id="kurl_category_template_text" type="hidden" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=categorytemplate&format=json&catid' . $this->message->id . '&' . Session::getFormToken() . '=1', false); ?>" />
+    <input id="kurl_category_template_text" type="hidden" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=categorytemplate&format=json&' . Session::getFormToken() . '=1', false); ?>" />
     <input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />
     <input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
     <?php if (!$this->config->allowChangeSubject) :

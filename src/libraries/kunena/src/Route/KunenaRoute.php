@@ -32,7 +32,6 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use Throwable;
 
@@ -252,6 +251,10 @@ abstract class KunenaRoute
      *
      * @return  boolean|string
      *
+     * With $xhtml (the default) the address is escaped for HTML by Route::link() of Joomla (htmlspecialchars, ENT_COMPAT: not the
+     * single quotes).
+     * @psalm-taint-escape ($xhtml is true ? 'html' : null)
+     *
      * @since   Kunena 6.0
      * @throws  Exception
      */
@@ -317,7 +320,6 @@ abstract class KunenaRoute
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         if (self::$search === false) {
-            $user         = KunenaUserHelper::getMyself();
             $language     = strtolower(Factory::getApplication()->getDocument()->getLanguage());
             self::$search = false;
 
@@ -355,10 +357,6 @@ abstract class KunenaRoute
                     // Save Kunena menu items so that we can make fast searches
                     $home                                                                 = self::getHome($item);
                     self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
-                }
-
-                if (isset($cache)) {
-                    $cache->store(serialize(self::$search), 'search', "com_kunena.route.v1.{$language}.{$user->userid}");
                 }
             }
         }

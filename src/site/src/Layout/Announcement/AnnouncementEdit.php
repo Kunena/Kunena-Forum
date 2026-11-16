@@ -48,7 +48,7 @@ class AnnouncementEdit extends KunenaLayout
      *
      * @param   string  $name        Name of input to create
      * @param   string  $attributes  Attibutes to be added to input
-     * @param   int     $id          Id to be added to the input
+     * @param   int|false  $id       Id to be added to the input
      *
      * @return  string
      *

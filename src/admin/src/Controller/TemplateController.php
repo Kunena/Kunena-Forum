@@ -93,7 +93,7 @@ class TemplateController extends FormController
      */
     public function save($key = null, $urlVar = null)
     {
-        $template = $this->input->get('templatename', '');
+        $template = $this->input->getCmd('templatename', '');
         KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 
         if (!Session::checkToken()) {
@@ -494,7 +494,7 @@ class TemplateController extends FormController
      */
     public function applychanges(): void
     {
-        $template = $this->input->get('templatename', '');
+        $template = $this->input->getCmd('templatename', '');
         $menus    = $this->input->get('selections', [], 'array');
         $menus    = ArrayHelper::toInteger($menus);
 
@@ -540,7 +540,7 @@ class TemplateController extends FormController
             return;
         }
 
-        $template = $this->input->get('templatename');
+        $template = $this->input->getCmd('templatename');
 
         if (!$this->isSafeTemplateName($template)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error');
@@ -650,7 +650,10 @@ class TemplateController extends FormController
 
         if (!$this->isSafeTemplateName($templatename) || !$this->isSafeFilename($filename, 'scss')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_SCSS'), 'warning');
-            $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosescss&id=' . $templatename, false));
+
+            // Back to the files of the template when only the file is wrong; a wrong template name is not put in the address.
+            $back = $this->isSafeTemplateName($templatename) ? '&layout=choosescss&id=' . $templatename : '';
+            $this->setRedirect(KunenaRoute::_($this->baseurl . $back, false));
 
             return;
         }
@@ -703,7 +706,10 @@ class TemplateController extends FormController
 
         if (!$this->isSafeTemplateName($templatename) || !$this->isSafeFilename($filename, 'css')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'), 'error');
-            $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename, false));
+
+            // Back to the files of the template when only the file is wrong; a wrong template name is not put in the address.
+            $back = $this->isSafeTemplateName($templatename) ? '&layout=choosecss&id=' . $templatename : '';
+            $this->setRedirect(KunenaRoute::_($this->baseurl . $back, false));
 
             return;
         }

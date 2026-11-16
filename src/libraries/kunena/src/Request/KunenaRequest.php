@@ -20,6 +20,7 @@ use InvalidArgumentException;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerBase;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 
 /**
  * implements \Kunena Request class.
@@ -50,10 +51,10 @@ class KunenaRequest
      * @param   Input|null  $input    input
      * @param   mixed       $options  options
      *
-     * @return  KunenaControllerBase| KunenaControllerDisplay
+     * @return  KunenaControllerBase|KunenaControllerDisplay
      *
-     * @throws Exception
-     *@since   Kunena 6.0
+     * @throws  Exception
+     * @since   Kunena 6.0
      */
     public static function factory(string $path, ?Input $input = null, $options = null)
     {

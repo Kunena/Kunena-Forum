@@ -123,8 +123,8 @@ class TrashsModel extends ListModel
      *
      * Note. Calling getState in this method will result in recursion.
      *
-     * @param   null  $ordering   ordering
-     * @param   null  $direction  direction
+     * @param   string  $ordering   ordering
+     * @param   string  $direction  direction
      *
      * @return  void
      *

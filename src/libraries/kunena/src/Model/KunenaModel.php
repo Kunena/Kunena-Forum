@@ -163,7 +163,19 @@ class KunenaModel extends BaseDatabaseModel
      * @param   int     $default  default
      * @param   string  $hash     hash
      *
-     * @return  mixed
+     * @return  mixed  The integer of the request (the filter int of Joomla), or the default.
+     *
+     * An integer carries no text, so it is safe for every use (for the taint analysis of Psalm):
+     * @psalm-taint-escape html
+     * @psalm-taint-escape has_quotes
+     * @psalm-taint-escape sql
+     * @psalm-taint-escape file
+     * @psalm-taint-escape include
+     * @psalm-taint-escape callable
+     * @psalm-taint-escape shell
+     * @psalm-taint-escape header
+     * @psalm-taint-escape cookie
+     * @psalm-taint-escape ssrf
      *
      * @since   Kunena 6.0
      */

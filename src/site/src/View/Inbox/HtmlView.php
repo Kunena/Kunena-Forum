@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\View\Credits;
+namespace Kunena\Forum\Site\View\Inbox;
 
 \defined('_JEXEC') or die();
 

@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site\Controllers;
 use Exception;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -58,8 +59,9 @@ class MiscController extends KunenaController
             $name = KunenaPath::clean($name);
 
             // The name of a folder of the templates, never a path.
+            // An unknown name gives the template of the configuration, as KunenaTemplate::getInstance() does (Agora by default).
             if (preg_match('/^[\w\-]+$/', $name) !== 1 || !is_readable(KPATH_SITE . "/template/{$name}/config/template.xml")) {
-                $name = 'aurelia';
+                $name = (string) KunenaFactory::getConfig()->template;
             }
 
             setcookie('kunena_template', $name, 0, Uri::root(true) . '/', '', true);

@@ -509,7 +509,7 @@ class KunenaView extends HtmlView
         $template       = Factory::getApplication()->getTemplate(true);
         $layout         = $this->getLayout();
         $layoutTemplate = $this->getLayoutTemplate();
-        $view           = $input->get('view');
+        $view           = $input->getCmd('view');
 
         // Create the template file name based on the layout
         $file = isset($tpl) ? $layout . '_' . $tpl : $layout;

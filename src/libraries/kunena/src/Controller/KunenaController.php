@@ -444,7 +444,7 @@ class KunenaController extends BaseController
         $input = Factory::getApplication()->getInput();
 
         $app     = Factory::getApplication();
-        $command = $input->get('task', 'display');
+        $command = $input->getCmd('task', 'display');
 
         // Check for a controller.task command.
         if (strpos($command, '.') !== false) {

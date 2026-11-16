@@ -18,7 +18,7 @@ namespace Kunena\Forum\Libraries\User;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
-use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -773,23 +773,30 @@ JSON;
         $user = KunenaUserHelper::getMyself(); 
 
         if ($user->userid > 0 && empty($user->socials)) {
-            $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->createQuery();
-
-            $fields = array(
-                $db->quoteName('socials') . ' = ' . $db->quote(self::getDefaultSocialsJson())
-            );
-            
-            $conditions = array(
-                $db->quoteName('userid')  . ' = ' . $user->userid
-            );
-
-            $query->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
-            $db->setQuery($query);
+            $db = Factory::getContainer()->get('DatabaseDriver');
 
             try {
-                $result = $db->execute();
-            } catch (ExecutionFailureException $e) {
+                $columns = $db->getTableColumns($db->replacePrefix('#__kunena_users'));
+
+                if (!isset($columns['socials'])) {
+                    Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_SOCIALS_DATABASE_UPDATE_REQUIRED'), 'error');
+
+                    return;
+                }
+
+                $query = $db->createQuery();
+                $fields = array(
+                    $db->quoteName('socials') . ' = ' . $db->quote(self::getDefaultSocialsJson())
+                );
+
+                $conditions = array(
+                    $db->quoteName('userid')  . ' = ' . $user->userid
+                );
+
+                $query->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
+                $db->setQuery($query);
+                $db->execute();
+            } catch (\RuntimeException $e) {
                 KunenaError::displayDatabaseError($e);
             }
         }

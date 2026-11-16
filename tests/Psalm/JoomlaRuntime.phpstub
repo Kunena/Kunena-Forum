@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * The constants and the functions which Joomla and Kunena define while a request runs (index.php, defines.php, api.php of
+ * Kunena...): Psalm does not run that code, and reported every use of them as undefined. The values only give the types.
+ * The paths (JPATH_*, KPATH_*) are defined with their real values in tests/Psalm/autoload.php, so that Psalm finds the files
+ * which are included with them.
+ */
+
+\define('JDEBUG', false);
+\define('JVERSION', '6.0.0');
+\define('KURL_MEDIA', '');
+\define('KUNENA_PROFILER', 0);
+
+/**
+ * Stop the request (libraries/import.legacy.php of Joomla).
+ *
+ * @param   int|string  $message  The exit code or the message.
+ */
+function jexit($message = 0): never
+{
+    exit($message);
+}

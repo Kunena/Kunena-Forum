@@ -1,16 +1,19 @@
 <?xml version="1.0"?>
 <!--
-    The taint analysis of Kunena (the flow of the data of the request to the HTML, the SQL, the files...): vendor/bin/psalm with
-    the option taint-analysis, and the environment variable KUNENA_TEST_JOOMLA=/path/to/joomla.
+    The static analysis of Kunena: vendor/bin/psalm, and the taint analysis (the flow of the data of the request to the HTML, the
+    SQL, the files...) with the option taint-analysis. Both need the environment variable KUNENA_TEST_JOOMLA=/path/to/joomla.
 
-    Psalm needs the classes of Joomla (a Joomla installation, like for the unit tests: tests/Psalm/autoload.php), and the stub
-    tests/Psalm/JoomlaInput.phpstub tells it that the values of the request (the Input of Joomla) come from the user.
+    Psalm needs the classes of Joomla (a Joomla installation, like for the unit tests: tests/Psalm/autoload.php, which also adds the
+    namespaces of the components of Joomla), the stub tests/Psalm/JoomlaInput.phpstub tells it that the values of the request (the
+    Input of Joomla) come from the user, and tests/Psalm/JoomlaRuntime.phpstub gives it the constants and functions which Joomla
+    defines while a request runs.
 -->
 <psalm
     errorLevel="8"
     resolveFromConfigFile="true"
     findUnusedCode="false"
     findUnusedBaselineEntry="false"
+    findUnusedIssueHandlerSuppression="false"
     autoloader="tests/Psalm/autoload.php"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
@@ -23,7 +26,104 @@
             <directory name="src/media" />
         </ignoreFiles>
     </projectFiles>
+
+    <!-- The libraries which Kunena bundles (NBBC, scssphp, svg-sanitize...): read for their classes, not analysed. -->
+    <extraFiles>
+        <directory name="src/libraries/kunena/External" />
+    </extraFiles>
+
     <stubs>
         <file name="tests/Psalm/JoomlaInput.phpstub" />
+        <file name="tests/Psalm/JoomlaRuntime.phpstub" />
     </stubs>
+
+    <issueHandlers>
+        <!-- The #[\Override] attribute of PHP 8.3 on every method which overrides one: a convention, not an error. -->
+        <MissingOverrideAttribute errorLevel="suppress" />
+
+        <!-- The layout files run inside a layout or a view object ($this), with the variables which it gives them. -->
+        <InvalidScope>
+            <errorLevel type="suppress">
+                <directory name="src/site/template" />
+                <directory name="src/admin/tmpl" />
+                <directory name="src/plugins/*/tmpl" />
+            </errorLevel>
+        </InvalidScope>
+        <UndefinedGlobalVariable>
+            <errorLevel type="suppress">
+                <directory name="src/site/template" />
+                <directory name="src/admin/tmpl" />
+                <directory name="src/plugins/*/tmpl" />
+            </errorLevel>
+        </UndefinedGlobalVariable>
+
+        <!-- The integrations with other extensions (JomSocial, Community Builder, EasyBlog, EasySocial, UddeIM) use their classes,
+             which are only there when that extension is installed. -->
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <directory name="src/plugins/plg_kunena_community" />
+                <directory name="src/plugins/plg_kunena_comprofiler" />
+                <directory name="src/plugins/plg_kunena_easyblog" />
+                <directory name="src/plugins/plg_kunena_easysocial" />
+                <directory name="src/plugins/plg_kunena_uddeim" />
+            </errorLevel>
+        </UndefinedClass>
+        <UndefinedDocblockClass>
+            <errorLevel type="suppress">
+                <directory name="src/plugins/plg_kunena_community" />
+                <directory name="src/plugins/plg_kunena_comprofiler" />
+                <directory name="src/plugins/plg_kunena_easyblog" />
+                <directory name="src/plugins/plg_kunena_easysocial" />
+                <directory name="src/plugins/plg_kunena_uddeim" />
+            </errorLevel>
+        </UndefinedDocblockClass>
+        <UndefinedFunction>
+            <errorLevel type="suppress">
+                <directory name="src/plugins/plg_kunena_comprofiler" />
+            </errorLevel>
+        </UndefinedFunction>
+        <MissingFile>
+            <errorLevel type="suppress">
+                <directory name="src/plugins/plg_kunena_comprofiler" />
+            </errorLevel>
+        </MissingFile>
+        <UndefinedConstant>
+            <errorLevel type="suppress">
+                <directory name="src/plugins/plg_kunena_community" />
+                <directory name="src/plugins/plg_kunena_easysocial" />
+                <!-- XC_TYPE_PHP: the constant of the XCache extension, which the cache helper checks for. -->
+                <file name="src/libraries/kunena/src/Cache/KunenaCacheHelper.php" />
+            </errorLevel>
+        </UndefinedConstant>
+
+        <!-- Reported on the DateTime of PHP which KunenaDate extends (through Date of Joomla); Kunena does not override these. -->
+        <MethodSignatureMustProvideReturnType errorLevel="suppress" />
+
+        <!-- A reference to a property ($x = &$this->list[...]) which Psalm cannot follow: a limit of Psalm, not an error. -->
+        <UnsupportedPropertyReferenceUsage errorLevel="suppress" />
+
+        <!-- Taint analysis: the texts are escaped with htmlspecialchars(ENT_COMPAT) (escape() of Joomla and of KunenaParser, the
+             addresses of Route), which leaves the single quotes. A single quote only matters inside an attribute in single quotes,
+             and no template prints a text there without ENT_QUOTES; check it again when this is in doubt:
+             grep -rnE "=\s*'<\?(php|=)" src/site/template src/admin/tmpl src/plugins/*/tmpl -->
+        <TaintedTextWithQuotes errorLevel="suppress" />
+
+        <!-- Taint analysis (Psalm ignores @psalm-suppress in the code for these): answers in JSON, sent with the header
+             Content-type: application/json, which the browser does not show as HTML (the texts of the user are in them). -->
+        <TaintedHtml>
+            <errorLevel type="suppress">
+                <file name="src/site/src/Controllers/TopicController.php" />
+                <file name="src/site/src/Controllers/UserController.php" />
+                <file name="src/site/src/View/Topic/view.json.php" />
+            </errorLevel>
+        </TaintedHtml>
+
+        <!-- KunenaBase::__get() calls $this->closures[...]: set() only puts objects with __invoke() there, a text goes to a
+             property. -->
+        <TaintedCallable>
+            <errorLevel type="suppress">
+                <file name="src/libraries/kunena/src/Layout/KunenaBase.php" />
+            </errorLevel>
+        </TaintedCallable>
+    </issueHandlers>
 </psalm>

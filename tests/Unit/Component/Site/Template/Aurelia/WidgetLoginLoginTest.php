@@ -62,6 +62,20 @@ class WidgetLoginLoginTest extends UnitTestCase
         $this->assertStringContainsString('<button type="submit"', $source);
     }
 
+    /**
+     * The login of the menu bar is in the page twice for a guest, in a desktop and a mobile form (one of them hidden by the
+     * stylesheet): they had the same ID for the field "remember me", so every page of a guest had a duplicate ID.
+     */
+    public function testTheDesktopAndTheMobileFormHaveNoIdInCommon(): void
+    {
+        preg_match_all('/\sid="([^"<]+)"/', Files::read('src/site/template/aurelia/layouts/widget/login/login/desktop.php'), $desktop);
+        preg_match_all('/\sid="([^"<]+)"/', Files::read('src/site/template/aurelia/layouts/widget/login/login/mobile.php'), $mobile);
+
+        $this->assertContains('kform-desktop-login-remember', $desktop[1]);
+        $this->assertContains('kmobile-form-login-remember', $mobile[1]);
+        $this->assertSame([], array_values(array_intersect($desktop[1], $mobile[1])));
+    }
+
     #[DataProvider('layouts')]
     public function testTheHeadingIsShownUnlessTheLayoutIsToldNotTo(string $file): void
     {

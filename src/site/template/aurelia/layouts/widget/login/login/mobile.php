@@ -64,7 +64,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                 </div>
 
                 <?php if ($this->rememberMe) : ?>
-                    <div class="form-group row center" id="kform-login-remember">
+                    <div class="form-group row center" id="kmobile-form-login-remember">
                         <div class="controls">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="rememberme"

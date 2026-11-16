@@ -14,7 +14,6 @@
 
     <fileset>
         <files folder="site" target="language/ka-GE">
-            <filename>kunena_ckeditor.js</filename>
         </files>
     </fileset>
 </extension>

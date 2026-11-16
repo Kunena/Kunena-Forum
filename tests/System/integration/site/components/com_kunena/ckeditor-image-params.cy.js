@@ -1,9 +1,8 @@
-// An image can be stored with parameters, [img size=200], [img alt=my words], [img float=right] (issue #10101). The BBCode plugin of
-// CKEditor does not know such a tag and failed on its [/img], so the editor stayed blank. The plugin kunenaimageparams
-// (ckeditor_config.js) keeps the parameters in an attribute of the image while the message is edited and writes them back when it is
-// saved, so a message comes back unchanged after an edit, a quote and a switch to the source mode and back, and an untouched message
-// does not count as changed for the leave warning. The editor of the templates is set to CKEditor for the spec (params.ini) and put
-// back afterwards; the rows are inserted by the spec, nothing is posted.
+// An image can be stored with parameters, [img size=200], [img alt=my words], [img float=right] (issue #10101). The BBCode of the
+// editor (editor/ckeditor5/src/bbcode.js) keeps the parameters in an attribute of the image while the message is edited and writes
+// them back when it is saved, so a message comes back unchanged after an edit, a quote and a switch to the source mode and back,
+// and an untouched message does not count as changed for the leave warning. The editor of the templates is set to CKEditor for the
+// spec (params.ini) and put back afterwards; the rows are inserted by the spec, nothing is posted.
 describe('Kunena CKEditor: an image with parameters opens and keeps them', () => {
   const base = '/index.php?option=com_kunena';
   const templates = 'E:/www/apache/htdocs/tests/components/com_kunena/template';
@@ -25,16 +24,10 @@ describe('Kunena CKEditor: an image with parameters opens and keeps them', () =>
   const iniFile = (template) => `${templates}/${template}/config/params.ini`;
   const clearCache = () => cy.task('deleteRelativePath', 'cache/com_kunena_template');
 
-  const editor = () => cy.window().its('CKEDITOR.instances.message');
-  const editorData = () => editor().then((instance) => instance.getData());
+  const editorData = () => cy.editor_data();
   // Waits until the message editor is CKEditor and ready, so that leavewarning.js has taken its baseline.
-  const editorReady = () => cy.window().should((win) => {
-    expect(win.Joomla.getOptions('com_kunena.editor_type'), 'the editor of the template').to.eq('ckeditor');
-    expect(win.CKEDITOR && win.CKEDITOR.instances.message && win.CKEDITOR.instances.message.status, 'the editor').to.eq('ready');
-  }).wait(100);
-  const setMode = (mode) => editor().then((instance) => new Cypress.Promise((resolve) => {
-    instance.setMode(mode, resolve);
-  }));
+  const editorReady = () => cy.editor_ready();
+  const setMode = (mode) => cy.editor_source(mode === 'source');
   // Whether a beforeunload of the page now would show the browser's dialog (as in leave-warning.cy.js).
   const shouldWarn = (expected) => cy.window().should((win) => {
     const event = new win.Event('beforeunload', { cancelable: true });
@@ -43,18 +36,9 @@ describe('Kunena CKEditor: an image with parameters opens and keeps them', () =>
     expect(event.defaultPrevented, expected ? 'the page warns' : 'the page does not warn').to.eq(expected);
   });
   // The addresses of the images in the editable area, in their order.
-  const imageSources = () => editor().then((instance) => {
-    const images = instance.editable().find('img');
-    const sources = [];
-
-    for (let i = 0; i < images.count(); i++) {
-      sources.push(images.getItem(i).getAttribute('src'));
-    }
-
-    return sources;
-  });
+  const imageSources = () => cy.editor_editable().then(($editable) => [...$editable.find('img')].map((image) => image.getAttribute('src')));
   // The toolbar is usable: the bold button is not disabled.
-  const toolbarEnabled = () => cy.get('.cke_button__bold').should('be.visible').and('not.have.class', 'cke_button_disabled');
+  const toolbarEnabled = () => cy.editor_button('Bold').should('have.length', 1).and('be.visible').and('not.have.class', 'ck-disabled');
 
   // Inserts a message of the topic; the first one is the first post of the topic.
   const insertMessage = (key, parent, text, second) => cy.task(
@@ -178,16 +162,14 @@ describe('Kunena CKEditor: an image with parameters opens and keeps them', () =>
   it('puts a parameter with markup into the editor as an attribute value only', () => {
     cy.visit(`${base}&view=topic&layout=edit&catid=${ids.category}&id=${ids.topic}&mesid=${ids.injection}`);
     editorReady();
-    editor().then((instance) => {
-      const editable = instance.editable();
-      const image = editable.findOne('img');
+    cy.editor_editable().then(($editable) => {
+      const image = $editable.find('img');
 
-      expect(editable.find('svg').count(), 'the svg elements').to.eq(0);
-      expect(editable.find('img').count(), 'the images').to.eq(1);
-      expect(image.getAttribute('src'), 'the address').to.eq('https://example.org/a.png');
-      expect(image.hasAttribute('onload'), 'an onload attribute').to.eq(false);
-      expect(image.hasAttribute('onerror'), 'an onerror attribute').to.eq(false);
-      expect(instance.window.$.kunenaXss, 'kunenaXss of the editor').to.be.undefined;
+      expect($editable.find('svg').length, 'the svg elements').to.eq(0);
+      expect(image.length, 'the images').to.eq(1);
+      expect(image.attr('src'), 'the address').to.eq('https://example.org/a.png');
+      expect(image[0].hasAttribute('onload'), 'an onload attribute').to.eq(false);
+      expect(image[0].hasAttribute('onerror'), 'an onerror attribute').to.eq(false);
     });
     cy.window().then((win) => {
       expect(win.kunenaXss, 'kunenaXss of the page').to.be.undefined;
@@ -198,9 +180,7 @@ describe('Kunena CKEditor: an image with parameters opens and keeps them', () =>
   it('writes a plain image of a new topic as [img]', () => {
     cy.visit(`${base}&view=topic&layout=create&catid=${ids.category}`);
     editorReady();
-    editor().then((instance) => new Cypress.Promise((resolve) => {
-      instance.setData('[img]https://example.org/b.png[/img]', { callback: resolve });
-    }));
+    cy.editor_instance().invoke('setData', '[img]https://example.org/b.png[/img]');
     imageSources().should('deep.eq', ['https://example.org/b.png']);
     editorData().should('contain', '[img]https://example.org/b.png[/img]');
   });

@@ -1,8 +1,9 @@
-// The link dialog of CKEditor chooses where a link opens (issue #7793): "Same window" writes [url=<address>], "New window" writes
-// [url=<address> target=_blank]. The plugin kunenalinktarget (ckeditor_config.js) moves the parameter to the target attribute when a
-// message is loaded and back into the address when it is saved, so a message comes back unchanged after an edit, a quote and a switch
-// to the source mode and back, and an untouched message does not count as changed for the leave warning. The editor of the templates
-// is set to CKEditor for the spec (params.ini) and put back afterwards; the rows are inserted by the spec, nothing is posted.
+// The link form of CKEditor chooses where a link opens (issue #7793): without "New window" it writes [url=<address>], with it
+// [url=<address> target=_blank]. The choice is the manual decorator newWindow of the link (editor/ckeditor5/src/kunena-editor.js);
+// the BBCode of the editor (bbcode.js) moves the parameter to the target attribute when a message is loaded and back into the address
+// when it is saved, so a message comes back unchanged after an edit, a quote and a switch to the source mode and back, and an
+// untouched message does not count as changed for the leave warning. The editor of the templates is set to CKEditor for the spec
+// (params.ini) and put back afterwards; the rows are inserted by the spec, nothing is posted.
 describe('Kunena CKEditor: the link opens in the same window or in a new window', () => {
   const base = '/index.php?option=com_kunena';
   const templates = 'E:/www/apache/htdocs/tests/components/com_kunena/template';
@@ -17,16 +18,10 @@ describe('Kunena CKEditor: the link opens in the same window or in a new window'
   const iniFile = (template) => `${templates}/${template}/config/params.ini`;
   const clearCache = () => cy.task('deleteRelativePath', 'cache/com_kunena_template');
 
-  const editor = () => cy.window().its('CKEDITOR.instances.message');
-  const editorData = () => editor().then((instance) => instance.getData());
+  const editorData = () => cy.editor_data();
   // Waits until the message editor is CKEditor and ready, so that leavewarning.js has taken its baseline.
-  const editorReady = () => cy.window().should((win) => {
-    expect(win.Joomla.getOptions('com_kunena.editor_type'), 'the editor of the template').to.eq('ckeditor');
-    expect(win.CKEDITOR && win.CKEDITOR.instances.message && win.CKEDITOR.instances.message.status, 'the editor').to.eq('ready');
-  }).wait(100);
-  const setMode = (mode) => editor().then((instance) => new Cypress.Promise((resolve) => {
-    instance.setMode(mode, resolve);
-  }));
+  const editorReady = () => cy.editor_ready();
+  const setMode = (mode) => cy.editor_source(mode === 'source');
   // Whether a beforeunload of the page now would show the browser's dialog (as in leave-warning.cy.js).
   const shouldWarn = (expected) => cy.window().should((win) => {
     const event = new win.Event('beforeunload', { cancelable: true });
@@ -35,41 +30,29 @@ describe('Kunena CKEditor: the link opens in the same window or in a new window'
     expect(event.defaultPrevented, expected ? 'the page warns' : 'the page does not warn').to.eq(expected);
   });
 
-  // Opens the link dialog, on the link of the message when there is one. CKEditor runs the dialog's onShow (which fills in the
-  // fields) 100 ms after the dialog became the current one, and fires dialogShow after it: the spec waits for that event.
-  let dialogShown = false;
-  const openLinkDialog = () => editor().then((instance) => {
-    const link = instance.editable().findOne('a');
+  // The choice "New window" of the link form: the manual decorator newWindow of the link command, for the selection.
+  const newWindow = () => cy.editor_instance().then(({ editor }) => editor.commands.get('link').manualDecorators.get('linkNewWindow'));
+  // Selects the text of the (first) link of the message, as a click on the link does before its form is opened.
+  const selectLink = () => cy.editor_instance().then(({ editor }) => {
+    const { model } = editor;
 
-    dialogShown = false;
-    instance.on('dialogShow', (event) => {
-      event.removeListener();
-      dialogShown = true;
+    editor.editing.view.focus();
+    model.change((writer) => {
+      for (const { item } of model.createRangeIn(model.document.getRoot())) {
+        if (item.is('$textProxy') && item.hasAttribute('linkHref')) {
+          writer.setSelection(model.createRange(model.createPositionAt(item.parent, item.startOffset), model.createPositionAt(item.parent, item.endOffset)));
+
+          return;
+        }
+      }
     });
-    instance.focus();
-
-    if (link) {
-      instance.getSelection().selectElement(link);
-    }
-
-    instance.execCommand('link');
   });
-  const linkDialog = () => cy.window().should((win) => {
-    const current = win.CKEDITOR.dialog.getCurrent();
-
-    expect(dialogShown, 'the dialog is shown').to.eq(true);
-    expect(current && current.getName(), 'the open dialog').to.eq('link');
-  }).then((win) => win.CKEDITOR.dialog.getCurrent());
-  const targetSelect = () => linkDialog().then((dialog) => cy.get(`#${dialog.getContentElement('info', 'kunenaLinkTarget').getInputElement().getId()}`));
-  // Fills in a new link in the dialog of the new-topic page and presses OK.
-  const insertLink = (target) => {
-    openLinkDialog();
-    linkDialog().then((dialog) => {
-      dialog.setValueOf('info', 'url', 'https://example.com');
-      dialog.setValueOf('info', 'linkDisplayText', 'x');
-      dialog.setValueOf('info', 'kunenaLinkTarget', target);
-      dialog.click('ok');
-    });
+  // Saves the selected link as its form does: the address and the choice "New window".
+  const saveLink = (href, blank) => cy.editor_execute('link', href, { linkNewWindow: blank });
+  // Inserts a new link in the editor of the new-topic page, as the link form does.
+  const insertLink = (blank) => {
+    cy.editor_instance().invoke('focus');
+    cy.editor_execute('link', 'https://example.com', { linkNewWindow: blank }, 'x');
   };
 
   before(() => {
@@ -146,48 +129,38 @@ describe('Kunena CKEditor: the link opens in the same window or in a new window'
     cy.task('queryDB', `DELETE FROM #__kunena_categories WHERE id = ${ids.category}`);
   });
 
-  it('offers the choice in the dialog of a new link, "Same window" first', () => {
+  it('offers the choice in the form of a new link, not chosen', () => {
     cy.visit(`${base}&view=topic&layout=create&catid=${ids.category}`);
     editorReady();
-    openLinkDialog();
-    linkDialog().then((dialog) => {
-      expect(dialog.getValueOf('info', 'kunenaLinkTarget'), 'the choice of a new link').to.eq('');
+    newWindow().should((decorator) => {
+      expect(decorator.label, 'the label of the choice').to.eq('New window');
+      expect(Boolean(decorator.value), 'the choice of a new link').to.eq(false);
     });
-    targetSelect().should('be.visible').find('option').should(($options) => {
-      expect([...$options].map((option) => [option.textContent.trim(), option.value])).to.deep.eq([['Same window', ''], ['New window', '_blank']]);
-    });
-    linkDialog().then((dialog) => cy.get(`#${dialog.getContentElement('info', 'kunenaLinkTarget').getElement().getId()}`)).should('contain', 'Open the link in');
   });
 
   it('writes target=_blank for "New window"', () => {
     cy.visit(`${base}&view=topic&layout=create&catid=${ids.category}`);
     editorReady();
-    insertLink('_blank');
+    insertLink(true);
     editorData().should('contain', '[url=https://example.com target=_blank]x[/url]');
   });
 
-  it('writes no target for "Same window"', () => {
+  it('writes no target without "New window"', () => {
     cy.visit(`${base}&view=topic&layout=create&catid=${ids.category}`);
     editorReady();
-    insertLink('');
+    insertLink(false);
     editorData().should('contain', '[url=https://example.com]x[/url]').and('not.contain', 'target=');
   });
 
-  it('hides the choice for an e-mail link', () => {
+  it('writes no target for an e-mail link', () => {
     cy.visit(`${base}&view=topic&layout=create&catid=${ids.category}`);
     editorReady();
-    openLinkDialog();
-    targetSelect().should('be.visible');
-    linkDialog().then((dialog) => {
-      dialog.setValueOf('info', 'linkType', 'email');
-    });
-    targetSelect().should('not.be.visible');
-    linkDialog().then((dialog) => {
-      dialog.hide();
-    });
+    cy.editor_instance().invoke('focus');
+    cy.editor_execute('link', 'mailto:rich@example.com', { linkNewWindow: true }, 'mail me');
+    editorData().should('contain', '[email=rich@example.com]mail me[/email]').and('not.contain', 'target=');
   });
 
-  it('keeps target=_blank of a stored message through the editor, the source mode and the dialog', () => {
+  it('keeps target=_blank of a stored message through the editor, the source mode and the link form', () => {
     cy.visit(`${base}&view=topic&layout=edit&catid=${ids.category}&id=${ids.topic}&mesid=${ids.message}`);
     cy.get('#postform').should('have.attr', 'data-kunena-leave-warning');
     editorReady();
@@ -200,22 +173,15 @@ describe('Kunena CKEditor: the link opens in the same window or in a new window'
     editorData().should('contain', withTarget);
     shouldWarn(false);
 
-    // The dialog shows the link as "New window", with the address alone; OK without a change keeps the parameter.
-    openLinkDialog();
-    linkDialog().then((dialog) => {
-      expect(dialog.getValueOf('info', 'kunenaLinkTarget'), 'the choice').to.eq('_blank');
-      expect(dialog.getValueOf('info', 'protocol'), 'the protocol').to.eq('https://');
-      expect(dialog.getValueOf('info', 'url'), 'the URL field').to.eq('example.com');
-      dialog.click('ok');
-    });
+    // The form shows the link as "New window"; saving it without a change keeps the parameter.
+    selectLink();
+    newWindow().its('value').should('eq', true);
+    saveLink('https://example.com', true);
     editorData().should('contain', withTarget);
 
-    // "Same window" removes the parameter, which is a change of the text.
-    openLinkDialog();
-    linkDialog().then((dialog) => {
-      dialog.setValueOf('info', 'kunenaLinkTarget', '');
-      dialog.click('ok');
-    });
+    // Without "New window" the parameter is removed, which is a change of the text.
+    selectLink();
+    saveLink('https://example.com', false);
     editorData().should('contain', '[url=https://example.com]x[/url]').and('not.contain', 'target=');
     shouldWarn(true);
   });
@@ -239,18 +205,13 @@ describe('Kunena CKEditor: the link opens in the same window or in a new window'
     setMode('wysiwyg');
     editorData().should('contain', withoutTarget).and('not.contain', 'target=');
 
-    openLinkDialog();
-    linkDialog().then((dialog) => {
-      expect(dialog.getValueOf('info', 'kunenaLinkTarget'), 'the choice').to.eq('');
-      dialog.click('ok');
-    });
+    selectLink();
+    newWindow().its('value').should('not.eq', true);
+    saveLink('https://example.org', false);
     editorData().should('contain', withoutTarget).and('not.contain', 'target=');
 
-    openLinkDialog();
-    linkDialog().then((dialog) => {
-      dialog.setValueOf('info', 'kunenaLinkTarget', '_blank');
-      dialog.click('ok');
-    });
+    selectLink();
+    saveLink('https://example.org', true);
     editorData().should('contain', '[url=https://example.org target=_blank]y[/url]');
     shouldWarn(true);
   });

@@ -16,8 +16,5 @@
         <files folder="admin" target="administrator/language/ga-IE">
             <filename>com_kunena.ini</filename>
         </files>
-        <files folder="site" target="language/ga-IE">
-            <filename>kunena_ckeditor.js</filename>
-        </files>
     </fileset>
 </extension>

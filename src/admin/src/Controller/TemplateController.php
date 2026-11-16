@@ -143,20 +143,6 @@ class TemplateController extends FormController
             $editorButtons = $this->SaveSCeditorParamFile($params);
         }
 
-        if (!empty($params['nameskinckeditor'])) {
-            if (!is_dir(KPATH_MEDIA . '/core/js/skins/' . $params['nameskinckeditor'])) {
-                $params['nameskinckeditor'] = '';
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_SKIN'), 'error');
-            }
-        }
-
-        if (!empty($params['ckeditorcustomprefixconfigfile'])) {
-            if (!is_file(KPATH_MEDIA . '/core/js/' . $params['ckeditorcustomprefixconfigfile'] . 'ckeditor_config.js')) {
-                $params['ckeditorcustomprefixconfigfile'] = '';
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_CUSTOM_CONFIG_FILE'), 'error');
-            }
-        }
-
         $file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
         if (\count($params) > 0) {

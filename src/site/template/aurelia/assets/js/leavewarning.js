@@ -33,10 +33,10 @@
 			return instance ? instance.val() : undefined;
 		}
 
-		if (type === 'ckeditor' && window.CKEDITOR) {
-			const instance = CKEDITOR.instances[id];
+		if (type === 'ckeditor' && window.KunenaEditor) {
+			const instance = KunenaEditor.get(id);
 
-			return instance && instance.status === 'ready' ? instance.getData() : undefined;
+			return instance ? instance.getData() : undefined;
 		}
 
 		return undefined;
@@ -144,14 +144,17 @@
 			}
 		});
 
-		// A CKEditor is ready later, after edit.js has created it and put a copied text into it.
-		if (editorType() === 'ckeditor' && window.CKEDITOR) {
-			CKEDITOR.on('instanceReady', function (event) {
-				if (EDITORS.indexOf(event.editor.name) !== -1) {
-					guards.forEach(function (guard) {
-						takeEditorBaseline(guard, event.editor.name);
-					});
-				}
+		// The editor (CKEditor 5) is ready later, after edit.js has created it and put a copied text into it.
+		if (editorType() === 'ckeditor' && window.KunenaEditor) {
+			EDITORS.forEach(function (id) {
+				KunenaEditor.ready(id, function () {
+					// After the handlers of edit.js, which put a copied text into it.
+					setTimeout(function () {
+						guards.forEach(function (guard) {
+							takeEditorBaseline(guard, id);
+						});
+					}, 0);
+				});
 			});
 		}
 

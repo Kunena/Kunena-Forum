@@ -131,13 +131,7 @@ class pkg_kunena_languagesInstallerScript
      */
     public function postflight($type, $parent)
     {
-        $languages = LanguageHelper::getKnownLanguages();
-
-        foreach ($languages as $language) {
-            if (file_exists(JPATH_SITE . '/language/' . $language['tag'] . '/kunena_ckeditor.js')) {
-                File::copy(JPATH_SITE . '/language/' . $language['tag'] . '/kunena_ckeditor.js', JPATH_SITE . '/media/kunena/core/js/lang/' . substr($language['tag'], 0, 2) . '.js');
-            }
-        }
+        // The editor (CKEditor 5) has its own translations in media/kunena/core/js/ckeditor5: nothing to copy (Kunena 8.0).
     }
 
     /**

@@ -33,43 +33,15 @@ describe('Kunena editors: the display text of an e-mail link', () => {
     return cy.task('queryDB', `INSERT INTO #__kunena_messages_text (mesid, message) VALUES (${result.insertId}, '${message}')`);
   });
 
-  const editor = () => cy.window().its('CKEDITOR.instances.message');
-  const editorData = () => editor().then((instance) => instance.getData());
-  const editorReady = () => cy.window().should((win) => {
-    expect(win.Joomla.getOptions('com_kunena.editor_type'), 'the editor of the template').to.eq('ckeditor');
-    expect(win.CKEDITOR && win.CKEDITOR.instances.message && win.CKEDITOR.instances.message.status, 'the editor').to.eq('ready');
-  }).wait(100);
-  const setMode = (mode) => editor().then((instance) => new Cypress.Promise((resolve) => {
-    instance.setMode(mode, resolve);
-  }));
-  const editorBody = () => cy.get('#cke_message iframe.cke_wysiwyg_frame').its('0.contentDocument.body').should('not.be.empty');
-
-  // Opens the link dialog of a new link; CKEditor fires dialogShow after the onShow of the dialog filled in the fields.
-  let dialogShown = false;
-  const openLinkDialog = () => editor().then((instance) => {
-    dialogShown = false;
-    instance.on('dialogShow', (event) => {
-      event.removeListener();
-      dialogShown = true;
-    });
-    instance.focus();
-    instance.execCommand('link');
-  });
-  const linkDialog = () => cy.window().should((win) => {
-    const current = win.CKEDITOR.dialog.getCurrent();
-
-    expect(dialogShown, 'the dialog is shown').to.eq(true);
-    expect(current && current.getName(), 'the open dialog').to.eq('link');
-  }).then((win) => win.CKEDITOR.dialog.getCurrent());
-  // Fills in a new e-mail link in the dialog of the new-topic page and presses OK.
+  const editorData = () => cy.editor_data();
+  const editorReady = () => cy.editor_ready();
+  const setMode = (mode) => cy.editor_source(mode === 'source');
+  const editorBody = () => cy.editor_editable();
+  // Inserts a new e-mail link in the editor of the new-topic page, as the link form of CKEditor does: the link command with the
+  // address and the text (an empty text: CKEditor writes the address as the text).
   const insertEmail = (displayText) => {
-    openLinkDialog();
-    linkDialog().then((dialog) => {
-      dialog.setValueOf('info', 'linkType', 'email');
-      dialog.setValueOf('info', 'emailAddress', address);
-      dialog.setValueOf('info', 'linkDisplayText', displayText);
-      dialog.click('ok');
-    });
+    cy.editor_instance().invoke('focus');
+    cy.editor_execute('link', `mailto:${address}`, {}, displayText);
   };
 
   const scEditor = () => cy.window().then((win) => win.sceditor.instance(win.document.getElementById('message')));

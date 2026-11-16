@@ -22,31 +22,73 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
-$this->wa->registerAndUseScript('ckeditor', 'media/kunena/core/js/ckeditor.js');
-$this->doc->addScriptOptions('com_kunena.ckeditor_config', $this->template->params->get('ckeditorcustomprefixconfigfile') . 'ckeditor_config.js');
+// The editor of Kunena: CKEditor 5 with the BBCode of Kunena (built from editor/ckeditor5 into media/kunena/core/js/ckeditor5).
+$this->wa->registerAndUseStyle('kunena.editor', 'media/kunena/core/js/ckeditor5/ckeditor5.css');
+
+// The language of the editor: the one of the user, else the one of the page; CKEditor names it "de" or "pt-br".
+$user         = Factory::getApplication()->getIdentity();
+$userLanguage = $user->getParam('language', 'default');
+$languageTag  = LanguageHelper::exists($userLanguage) ? $userLanguage : Factory::getApplication()->getLanguage()->getTag();
+$editorLanguage = 'en';
+
+foreach ([strtolower($languageTag), strtolower(substr($languageTag, 0, 2))] as $candidate) {
+    if ($candidate !== 'en' && is_file(JPATH_ROOT . '/media/kunena/core/js/ckeditor5/translations/' . $candidate . '.js')) {
+        $editorLanguage = $candidate;
+        $this->wa->registerAndUseScript('kunena.editor.language', 'media/kunena/core/js/ckeditor5/translations/' . $candidate . '.js');
+        break;
+    }
+}
+
+$this->wa->registerAndUseScript('kunena.editor', 'media/kunena/core/js/ckeditor5/kunena-editor.js', [], ['defer' => false]);
+$this->doc->addScriptOptions('com_kunena.ckeditor_config', 'ckeditor5');
+$this->doc->addScriptOptions('com_kunena.ckeditor_language', $editorLanguage);
 $this->doc->addScriptOptions('com_kunena.ckeditor_buttons_configuration', $this->template->params->get('editorButtons'));
 $this->doc->addScriptOptions('com_kunena.ckeditor_smiley_path', Uri::root(true) . '/media/kunena/emoticons/');
-$this->doc->addScriptOptions('com_kunena.ckeditor_skiname', $this->template->params->get('nameskinckeditor'));
 $this->doc->addScriptOptions('com_kunena.localstorage', $this->template->params->get('localstorage'));
-
-$user = Factory::getApplication()->getIdentity();
-$userLanguage = $user->getParam('language', 'default');
-if (!LanguageHelper::exists($userLanguage)) {
-    $userLanguage = 'default';
-}
-$joomlaLanguage = Factory::getApplication()->getLanguage()->getLocale();
-
-if ($userLanguage != 'default' && $userLanguage != 'active') {
-    $this->doc->addScriptOptions('com_kunena.ckeditor_userdefaultlanguage', substr($userLanguage, 0, 2));
-} else {
-    $this->doc->addScriptOptions('com_kunena.ckeditor_userdefaultlanguage', 'default');
-}
-
-$this->doc->addScriptOptions('com_kunena.ckeditor_joomladefaultlanguage', substr($joomlaLanguage[2], 0, 2));
 
 Text::script('COM_KUNENA_EDITOR_LINK_TARGET');
 Text::script('COM_KUNENA_EDITOR_LINK_TARGET_SAME');
 Text::script('COM_KUNENA_EDITOR_LINK_TARGET_NEW');
+
+// The texts of the editor and of its dialogs (media/kunena/core/js/ckeditor5).
+foreach ([
+    'COM_KUNENA_EDITOR_CONFIDENTIAL',
+    'COM_KUNENA_EDITOR_DIALOG_POLLS_PROPERTIES',
+    'COM_KUNENA_EDITOR_EBAY',
+    'COM_KUNENA_EDITOR_EMOTICONS',
+    'COM_KUNENA_EDITOR_HIDE',
+    'COM_KUNENA_EDITOR_INSTAGRAM',
+    'COM_KUNENA_EDITOR_MAP',
+    'COM_KUNENA_EDITOR_MAP_PLACE',
+    'COM_KUNENA_EDITOR_MAP_TYPE',
+    'COM_KUNENA_EDITOR_MAP_ZOOM',
+    'COM_KUNENA_EDITOR_PASTE_IMAGES_NOT_ALLOWED',
+    'COM_KUNENA_EDITOR_POLL',
+    'COM_KUNENA_EDITOR_SIZE_1',
+    'COM_KUNENA_EDITOR_SIZE_2',
+    'COM_KUNENA_EDITOR_SIZE_3',
+    'COM_KUNENA_EDITOR_SIZE_4',
+    'COM_KUNENA_EDITOR_SIZE_5',
+    'COM_KUNENA_EDITOR_SIZE_6',
+    'COM_KUNENA_EDITOR_SOUNDCLOUD',
+    'COM_KUNENA_EDITOR_SPOILER',
+    'COM_KUNENA_EDITOR_TWEET',
+    'COM_KUNENA_EDITOR_VIDEO',
+    'COM_KUNENA_EDITOR_VIDEO_HEIGHT',
+    'COM_KUNENA_EDITOR_VIDEO_ID',
+    'COM_KUNENA_EDITOR_VIDEO_OR_PROVIDER',
+    'COM_KUNENA_EDITOR_VIDEO_PROVIDER',
+    'COM_KUNENA_EDITOR_VIDEO_SIZE',
+    'COM_KUNENA_EDITOR_VIDEO_URL',
+    'COM_KUNENA_EDITOR_VIDEO_WIDTH',
+    'COM_KUNENA_POLL_ADD_POLL_OPTION',
+    'COM_KUNENA_POLL_OPTION_NAME',
+    'COM_KUNENA_POLL_REMOVE_POLL_OPTION',
+    'COM_KUNENA_POLL_TIME_TO_LIVE',
+    'COM_KUNENA_POLL_TITLE',
+] as $key) {
+    Text::script($key);
+}
 
 HTMLHelper::_('bootstrap.tab');
 
@@ -90,15 +132,13 @@ $template = KunenaTemplate::getInstance();
 
                                                                             if (!empty($this->message->message)) {
                                                                                 echo $this->escape($this->message->message);
-                                                                            } ?>
-    </textarea>
+                                                                            } ?></textarea>
     </div>
     <div class="tab-pane fade" id="message_private-tab" role="tabpanel" aria-labelledby="profile-tab">
         <textarea class="span12" name="message_private" id="message_private" rows="12" tabindex="7"
             placeholder="<?php echo Text::_('COM_KUNENA_ENTER_PRIVATE_MESSAGE') ?>"><?php if (!empty($this->privateMessage->body)) {
                                                                                         echo $this->escape($this->privateMessage->body);
-                                                                                    } ?>
-    </textarea>
+                                                                                    } ?></textarea>
     </div>
 </div>
 

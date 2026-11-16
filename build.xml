@@ -742,7 +742,6 @@
 			<mapper type="flatten" />
 			<fileset dir="${kunena.site}">
 				<include name="**/${lang}/*.ini" />
-				<include name="**/${lang}/kunena_ckeditor.js" />
 			</fileset>
 		</copy>
 

@@ -1,5 +1,5 @@
-// A [code] block stays verbatim in the CKEditor (issue #7873): the code plugin (media/kunena/core/js/plugins/code/plugin.js) shows
-// it as a <pre> with the text as written, without smileys, BBCode or HTML made of it, and writes the same BBCode back. The text
+// A [code] block stays verbatim in the CKEditor (issue #7873): the BBCode of the editor (editor/ckeditor5/src/bbcode.js) shows it
+// as a code block with the text as written, without smileys, BBCode or HTML made of it, and writes the same BBCode back. The text
 // outside the block converts as before. The spec uses the template Aurelia with the CKEditor and puts the file of its options back.
 describe('Kunena CKEditor: the text of a [code] block stays as written', () => {
   const base = '/index.php?option=com_kunena';
@@ -22,21 +22,9 @@ describe('Kunena CKEditor: the text of a [code] block stays as written', () => {
     return cy.writeFile(params, value).then(() => cy.task('deleteRelativePath', 'cache/com_kunena_template'));
   };
 
-  const editor = () => cy.window().its('CKEDITOR.instances.message');
-  const ckeditorReady = () => cy.window().should((win) => {
-    expect(win.CKEDITOR && win.CKEDITOR.instances.message && win.CKEDITOR.instances.message.status, 'the editor').to.eq('ready');
-  });
-  const ckeditorMode = (mode) => cy.window().then((win) => new Cypress.Promise((resolve) => {
-    win.CKEDITOR.instances.message.setMode(mode, resolve);
-  }));
-  const ckeditorSetData = (data) => cy.window().then((win) => new Cypress.Promise((resolve) => {
-    win.CKEDITOR.instances.message.setData(data, { callback: resolve });
-  }));
-  const editorBody = () => cy.get('#cke_message iframe.cke_wysiwyg_frame').its('0.contentDocument.body').should('not.be.empty');
-
   const openEdit = () => {
     cy.visit(`${base}&view=topic&layout=edit&catid=${ids.category}&id=${ids.topic}&mesid=${ids.message}`);
-    ckeditorReady();
+    cy.editor_ready();
   };
 
   before(() => {
@@ -101,27 +89,24 @@ describe('Kunena CKEditor: the text of a [code] block stays as written', () => {
     cy.task('queryDB', `DELETE FROM #__kunena_categories WHERE id = ${ids.category}`);
   });
 
-  it('shows the code block as plain text, with a smiley outside of it only', () => {
+  it('shows the code block as plain text, the smiley code outside of it as text', () => {
     openEdit();
-    editorBody().find('pre').should('have.length', 1).then(($pre) => {
-      expect($pre[0].textContent, 'the text of the block').to.eq(content);
-      expect($pre.find('*'), 'no element in the block').to.have.length(0);
+    cy.editor_editable().find('pre').should('have.length', 1).then(($pre) => {
+      // CKEditor 5 shows the lines of a code block as a <code> with <br> between them: no other element.
+      expect($pre.find(':not(code, br)'), 'no element made of the text').to.have.length(0);
+      expect($pre.text(), 'the text of the block').to.contain('echo "[b]bold[/b]"; // <img src=x onerror="window.kunenaXss=1"> & more');
     });
-    editorBody().find('img').should('have.length', 1).and(($img) => {
-      expect($img.closest('pre'), 'the smiley is outside of the block').to.have.length(0);
-    });
+    cy.editor_editable().find('img').should('have.length', 0);
+    cy.editor_editable().should('contain.text', 'Before the code :D');
     cy.window().then((win) => {
       expect(win.kunenaXss, 'no script ran in the page').to.eq(undefined);
     });
-    cy.get('#cke_message iframe.cke_wysiwyg_frame').its('0.contentWindow').then((frame) => {
-      expect(frame.kunenaXss, 'no script ran in the editor').to.eq(undefined);
-    });
-    editor().invoke('getData').should('contain', code).and('contain', 'Before the code :D');
+    cy.editor_data().should('contain', code).and('contain', 'Before the code :D');
   });
 
   it('saves the code block unchanged', () => {
     openEdit();
-    editor().invoke('getData').should('contain', code);
+    cy.editor_data().should('contain', code);
     cy.get('#form_submit_button').should('not.be.disabled').click();
     cy.location('href').should('not.contain', 'layout=edit');
     cy.task('queryDB', `SELECT message FROM #__kunena_messages_text WHERE mesid = ${ids.message}`).then((rows) => {
@@ -135,19 +120,18 @@ describe('Kunena CKEditor: the text of a [code] block stays as written', () => {
     ['[code]\n  one <two> & "three"\n[/code]', '[code=php]\n\t$a = 1; // :P\n[/code]', '[code type=php]\n  [i]x[/i] :)\n[/code]'].forEach((block) => {
       const data = `A line\n${block}\nThe end`;
 
-      ckeditorSetData(data);
-      editor().invoke('getData').should('eq', data);
-      ckeditorMode('source');
-      ckeditorMode('wysiwyg');
-      editor().invoke('getData').should('eq', data);
+      cy.editor_instance().invoke('setData', data);
+      cy.editor_data().should('eq', data);
+      cy.editor_source(true);
+      cy.editor_source(false);
+      cy.editor_data().should('eq', data);
     });
   });
 
   it('converts a text without a code block as before', () => {
     openEdit();
-    ckeditorSetData('[b]x[/b] :D\nline two\nline three');
-    editorBody().find('strong').should('have.text', 'x');
-    editorBody().find('img').should('have.length', 1);
-    editor().invoke('getData').should('eq', '[b]x[/b] :D\nline two\nline three');
+    cy.editor_instance().invoke('setData', '[b]x[/b] :D\nline two\nline three');
+    cy.editor_editable().find('strong').should('have.text', 'x');
+    cy.editor_data().should('eq', '[b]x[/b] :D\nline two\nline three');
   });
 });

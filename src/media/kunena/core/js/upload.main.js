@@ -34,8 +34,20 @@ jQuery(function ($) {
     const removeAttachmentFromEditor = function (fileId) {
         const tag = new RegExp('\\[attachment=' + fileId + '\\][^[\\]]+\\[/attachment\\]', 'g');
         const isCkeditor = Joomla.getOptions('com_kunena.ckeditor_config') !== undefined;
-        const editor = isCkeditor ? CKEDITOR.instances.message : sceditor.instance(document.getElementById('message'));
-        const editorText = isCkeditor ? editor.getData() : editor.val();
+
+        // CKEditor 5: the tag is taken out of the texts of the editor, the paragraphs and the formatting stay as they are.
+        if (isCkeditor) {
+            const instance = window.KunenaEditor && window.KunenaEditor.get('message');
+
+            if (instance) {
+                instance.removeText(tag);
+            }
+
+            return;
+        }
+
+        const editor = sceditor.instance(document.getElementById('message'));
+        const editorText = editor.val();
 
         // The tag is not in the text: the editor is not touched.
         if (editorText.search(tag) === -1) {
@@ -43,19 +55,15 @@ jQuery(function ($) {
         }
 
         // The source view holds the BBCode as it is, so the text is written back without a conversion.
-        if (isCkeditor ? editor.mode === 'source' : editor.sourceMode()) {
-            if (isCkeditor) {
-                editor.setData(editorText.replace(tag, ''));
-            } else {
-                editor.val(editorText.replace(tag, ''));
-            }
+        if (editor.sourceMode()) {
+            editor.val(editorText.replace(tag, ''));
 
             return;
         }
 
         // Writing the text back to the WYSIWYG view converts it to HTML again, which loses line breaks: the tag is taken out of
         // the text of the document instead.
-        const body = isCkeditor ? editor.editable().$ : editor.getBody();
+        const body = editor.getBody();
 
         body.normalize();
 
@@ -126,7 +134,7 @@ jQuery(function ($) {
 	    // Get editor content while preserving line breaks
 	    let editor_text = '';
 	    if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-	        editor_text = CKEDITOR.instances.message.getData();
+	        editor_text = window.KunenaEditor.get('message')?.getData() ?? '';
 	    } else {
 	        editor_text = sceditor.instance(document.getElementById('message')).val();
 	    }
@@ -336,7 +344,7 @@ jQuery(function ($) {
 	    // Insert content into message
 	    if ($('#message').length > 0) {
 	        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-	            CKEDITOR.instances.message.insertText(content_to_inject);
+	            window.KunenaEditor.get('message')?.insertText(content_to_inject);
 	        } else {
 	            sceditor.instance(document.getElementById('message')).insert(content_to_inject);
 	        }
@@ -380,7 +388,7 @@ jQuery(function ($) {
         if (attachid && filename) {
             const content = ' [attachment=' + attachid + ']' + filename + '[/attachment]';
             if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                CKEDITOR.instances.message.insertText(content);
+                window.KunenaEditor.get('message')?.insertText(content);
             } else {
                 sceditor.instance(document.getElementById('message')).insert(content);
             }

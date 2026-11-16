@@ -15,20 +15,20 @@ describe('Kunena writing: a warning before leaving the posting form', () => {
   // Waits until the message editor is ready, so that leavewarning.js has taken its baseline.
   const editorReady = () => editorType().then((type) => {
     if (type === 'ckeditor') {
-      cy.window().should((win) => {
-        expect(win.CKEDITOR.instances.message && win.CKEDITOR.instances.message.status, 'the editor').to.eq('ready');
-      });
+      cy.editor_ready();
     } else {
       cy.window().should('have.property', 'sceditor');
       cy.get('#postform .sceditor-container iframe').first().its('0.contentDocument.body').should('not.be.empty');
     }
   }).wait(100);
-  const editorBody = () => editorType().then((type) => cy.get(type === 'ckeditor' ? '#cke_message iframe.cke_wysiwyg_frame' : '#postform .sceditor-container iframe')
-    .first().its('0.contentDocument.body').should('not.be.empty'));
+  // The element of the formatted text: the editable element of CKEditor in the page, the body of the iframe of the SCEditor.
+  const editorBody = () => editorType().then((type) => (type === 'ckeditor'
+    ? cy.editor_editable()
+    : cy.get('#postform .sceditor-container iframe').first().its('0.contentDocument.body').should('not.be.empty')));
   const typeInEditor = (text) => editorBody().then(($body) => cy.wrap($body).click().type(text, { parseSpecialCharSequences: false }));
-  const editorText = () => editorType().then((type) => cy.window().then((win) => (type === 'ckeditor'
-    ? win.CKEDITOR.instances.message.getData()
-    : win.sceditor.instance(win.document.getElementById('message')).val())));
+  const editorText = () => editorType().then((type) => (type === 'ckeditor'
+    ? cy.editor_data()
+    : cy.window().then((win) => win.sceditor.instance(win.document.getElementById('message')).val())));
   // Whether a beforeunload of the page now would show the browser's dialog.
   const leaveIsPrevented = (win) => {
     const event = new win.Event('beforeunload', { cancelable: true });

@@ -17,8 +17,8 @@ describe('Kunena attachments: the blank lines of a message after removing a file
   // How the test reads the text of each editor, and when it is ready.
   const editors = {
     ckeditor: {
-      ready: (win) => win.CKEDITOR?.instances?.message?.status === 'ready',
-      read: (win) => win.CKEDITOR.instances.message.getData(),
+      ready: (win) => Boolean(win.KunenaEditor?.get('message')),
+      read: (win) => win.KunenaEditor.get('message').getData(),
     },
     sceditor: {
       ready: (win) => Boolean(win.sceditor?.instance(win.document.getElementById('message'))),
@@ -28,7 +28,7 @@ describe('Kunena attachments: the blank lines of a message after removing a file
 
   // CRLF of the posted form becomes LF, the spaces at the end of a line go, and so do the line breaks before the first and after the
   // last text of the message: they are not part of the text, as every save trims the ends of a message
-  // (KunenaMessage::updateAttachments()) and the BBCode loader of CKEditor drops the line breaks at the end of any text it loads. The
+  // (KunenaMessage::updateAttachments()) and CKEditor drops the line breaks at the end of any text it loads (an empty paragraph). The
   // line breaks between the paragraphs are compared as they are.
   const normalise = (value) => value.replace(/\r\n/g, '\n').replace(/[ \t]+$/gm, '').replace(/^\n+|\n+$/g, '');
   const tag = (name) => `[attachment=${ids[name]}]${name}-${stamp}.txt[/attachment]`;

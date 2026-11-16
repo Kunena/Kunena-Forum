@@ -1312,6 +1312,13 @@ form:not(.form-no-margin) .control-group .controls {
     display: flex;
 }
 
+/* The tab of the message fills the row and may be narrower than its content: CKEditor puts the buttons which do not fit into the
+   menu at the end of its toolbar, instead of widening the form. */
+#myTabContent > .tab-pane {
+    flex: 1 1 100%;
+    min-width: 0;
+}
+
 #posts,
 #subscriptions,
 #favorites,
@@ -1419,7 +1426,7 @@ span.img-thumbnail > img {
     margin: 3rem 0;
 }
 
-.cke_chrome {
+.ck.ck-editor {
     margin-bottom: 3em; /* or 35px */
 }
 

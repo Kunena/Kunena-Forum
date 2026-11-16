@@ -34,18 +34,11 @@ describe('Kunena polls: the poll button of a poll which may not be edited', () =
     cy.visit(`${base}&view=topic&layout=edit&catid=3&id=${ids.topic}&mesid=${ids.first}`);
   };
 
-  const ckeditorReady = () => cy.window().should((win) => {
-    expect(win.CKEDITOR && win.CKEDITOR.instances.message && win.CKEDITOR.instances.message.status, 'the editor').to.eq('ready');
-  });
-  const ckeditorMode = (mode) => cy.window().then((win) => new Cypress.Promise((resolve) => {
-    win.CKEDITOR.instances.message.setMode(mode, resolve);
-  }));
-  const ckeditorPollDisabled = () => {
-    cy.window().should((win) => {
-      expect(win.CKEDITOR.instances.message.getCommand('polls').state, 'the state of the command polls').to.eq(win.CKEDITOR.TRISTATE_DISABLED);
-    });
-    cy.get('#cke_message .cke_button__polls').should('have.attr', 'aria-disabled', 'true');
-  };
+  const ckeditorReady = () => cy.editor_ready();
+  const ckeditorMode = (mode) => cy.editor_source(mode === 'source');
+  const ckeditorPoll = () => cy.editor_button('polls');
+  // The button is disabled for CKEditor (a click does nothing) and for a screen reader.
+  const ckeditorPollDisabled = () => ckeditorPoll().should('have.class', 'ck-disabled').and('have.attr', 'aria-disabled', 'true');
 
   const sceditorPoll = () => cy.get('#postform .sceditor-container .sceditor-button-poll').first();
 
@@ -129,12 +122,12 @@ describe('Kunena polls: the poll button of a poll which may not be edited', () =
     openEdit();
     ckeditorReady();
     ckeditorPollDisabled();
-    cy.get('#cke_message .cke_button__polls').should('have.attr', 'title', notice);
+    ckeditorPoll().should('have.attr', 'title', notice);
     ckeditorMode('source');
     ckeditorPollDisabled();
     ckeditorMode('wysiwyg');
     ckeditorPollDisabled();
-    cy.get('#cke_message .cke_button__polls').should('have.attr', 'title', notice).and('have.attr', 'aria-describedby', 'poll-edit-refused');
+    ckeditorPoll().should('have.attr', 'title', notice).and('have.attr', 'aria-describedby', 'poll-edit-refused');
     cy.get('#poll-edit-refused').should('be.visible').and('have.text', notice);
   });
 

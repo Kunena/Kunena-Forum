@@ -107,7 +107,10 @@
 			instantiated: [],
 			started: []
 		};
-		const CKEDITOR = window.CKEDITOR;
+		// The editor of Kunena (CKEditor 5): its textarea keeps the BBCode, the editor is ready later than the page.
+		const editors = function () {
+			return window.KunenaEditor;
+		};
 
 		function init()
 		{
@@ -200,14 +203,10 @@
 
 					if (!params.started[this.getInstanceIdentifier()]) {
 						if (self.isCKEditorPresent()) {
-							const intervalId = setInterval(function () {
-								if (CKEDITOR.isLoaded) {
-									clearInterval(intervalId);
-									self.bindSaveData();
-									params.started[self.getInstanceIdentifier()] = true;
-								}
-							}, 100
-							);
+							editors().ready('message', function () {
+								self.bindSaveData();
+								params.started[self.getInstanceIdentifier()] = true;
+							});
 						}
 						else {
 							self.bindSaveData();
@@ -216,22 +215,13 @@
 					}
 				},
 
+				// The editor of the form is there: the data is saved once it is ready.
 				isCKEditorPresent: function () {
-					if (this.isCKEditorExists()) {
-						CKEDITOR.isLoaded = false;
-						CKEDITOR.on('instanceReady', function () {
-							CKEDITOR.isLoaded = true;
-						}
-						);
-						return true;
-					}
-					else {
-						return false;
-					}
+					return this.isCKEditorExists() && document.getElementById('message') !== null;
 				},
 
 				isCKEditorExists: function () {
-					return typeof CKEDITOR !== "undefined";
+					return typeof editors() !== "undefined";
 				},
 
 				findFieldsToProtect: function (target) {
@@ -324,9 +314,9 @@
 							}
 							else {
 								if (self.isCKEditorExists()) {
-									const editor = CKEDITOR.instances[field.attr("name")] || CKEDITOR.instances[field.attr("id")];
+									const editor = editors().get(field.attr("id"));
 									if (editor) {
-										editor.updateElement();
+										// The textarea of the editor keeps its BBCode.
 										self.saveToBrowserStorage(prefix, field.val(), false);
 									}
 									else {
@@ -410,6 +400,15 @@
 					else if (name === undefined || name.indexOf("[") === -1) {
 						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
 						field.val(resque);
+
+						// The editor of a textarea shows the restored text too (it may be created before or after this).
+						if (field.attr("id") && typeof window.KunenaEditor !== "undefined") {
+							window.KunenaEditor.ready(field.attr("id"), function (editor) {
+								if (editor.getData() !== resque) {
+									editor.setData(resque);
+								}
+							});
+						}
 					}
 					else {
 						resque = resque.split(",");
@@ -439,13 +438,11 @@
 					}
 
 					if (this.isCKEditorExists()) {
-						const editor = CKEDITOR.instances[field.attr("name")] || CKEDITOR.instances[field.attr("id")];
+						const editor = editors().get(field.attr("id"));
 						if (editor) {
-							editor.document.on('keyup', function () {
-								editor.updateElement();
+							editor.on('change', function () {
 								self.saveToBrowserStorage(prefix, field.val());
-							}
-							);
+							});
 						}
 					}
 				},

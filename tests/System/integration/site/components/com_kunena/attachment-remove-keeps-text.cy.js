@@ -49,11 +49,9 @@ describe('Kunena attachments: the text of the message after removing an upload',
   const views = {
     CKEditor: {
       editor: 'ckeditor',
-      ready: (win) => win.CKEDITOR?.instances?.message?.status === 'ready',
-      read: (win) => win.CKEDITOR.instances.message.getData(),
-      set: (win) => new Cypress.Promise((resolve) => {
-        win.CKEDITOR.instances.message.setData(text, { callback: resolve });
-      }),
+      ready: (win) => Boolean(win.KunenaEditor?.get('message')),
+      read: (win) => win.KunenaEditor.get('message').getData(),
+      set: (win) => win.KunenaEditor.get('message').setData(text),
     },
     'SCEditor WYSIWYG': {
       editor: 'sceditor',

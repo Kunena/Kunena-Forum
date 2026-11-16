@@ -98,7 +98,7 @@ jQuery(document).ready(function ($) {
 
         if (pollEditRefused !== undefined) {
             if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                CKEDITOR.instances.message.getCommand('polls').disable();
+                window.KunenaEditor.get('message')?.setCommandEnabled('polls', false);
             }
         } else if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
             if (pollcatid !== undefined) {
@@ -107,23 +107,23 @@ jQuery(document).ready(function ($) {
 
             if (pollcategoriesid[catid] !== undefined) {
                 if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                    CKEDITOR.instances.message.getCommand('polls').enable();
+                    window.KunenaEditor.get('message')?.setCommandEnabled('polls', true);
                 }
 
             } else {
 				if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                    CKEDITOR.instances.message.getCommand('polls').disable();
+                    window.KunenaEditor.get('message')?.setCommandEnabled('polls', false);
                 }
 
             }
         } else if (pollexist.length > 0) {
 			if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                CKEDITOR.instances.message.getCommand('polls').enable();
+                window.KunenaEditor.get('message')?.setCommandEnabled('polls', true);
             }
 
         } else {
 			if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                CKEDITOR.instances.message.getCommand('polls').disable();
+                window.KunenaEditor.get('message')?.setCommandEnabled('polls', false);
             }
 
         }
@@ -213,19 +213,19 @@ jQuery(document).ready(function ($) {
             })
                 .done(function (data) {
                     if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                        const editor_text = CKEDITOR.instances.message.getData();
+                        const editor_text = (window.KunenaEditor.get('message')?.getData() ?? '');
 
                         if (editor_text.length > 1) {
                             if (editor_text.length > 1) {
                                 $('#modal_confirm_template_category').modal('show');
                             } else {
-                                CKEDITOR.instances.message.setData(category_template_text);
+                                window.KunenaEditor.get('message')?.setData(category_template_text);
                             }
                         } else {
                             if (data.length > 1) {
                                 $('#modal_confirm_template_category').modal('show');
                             } else {
-                                CKEDITOR.instances.message.setData(data.data);
+                                window.KunenaEditor.get('message')?.setData(data.data);
                             }
                         }
                     }
@@ -240,15 +240,15 @@ jQuery(document).ready(function ($) {
         $('#modal_confirm_template_category').modal('hide');
         const textarea = $("#editor").next();
         textarea.empty();
-        CKEDITOR.instances.message.setData(category_template_text?.responseJSON?.data);
+        window.KunenaEditor.get('message')?.setData(category_template_text?.responseJSON?.data);
     });
 
     $('#modal_confirm_erase_keep_old').click(function () {
         $('#modal_confirm_template_category').modal('hide');
-        const existing_content = CKEDITOR.instances.message.getData();
+        const existing_content = (window.KunenaEditor.get('message')?.getData() ?? '');
         const textarea = $("#editor").next();
         textarea.empty();
-        CKEDITOR.instances.message.setData(category_template_text?.responseJSON?.data + ' ' + existing_content);
+        window.KunenaEditor.get('message')?.setData(category_template_text?.responseJSON?.data + ' ' + existing_content);
     });
 
     if ($.fn.datepicker !== undefined) {
@@ -263,175 +263,88 @@ jQuery(document).ready(function ($) {
 	});
 
     if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-        CKEDITOR.replace('message', {
-			customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),
-			on: {
-				instanceReady: function (event) {
-					CKEDITOR.plugins.clipboard.preventDefaultDropOnElement(event.editor.document);
+        // The submit button: enabled when one of the editors has a text.
+        const updateSubmit = function () {
+            const length = ['message', 'message_private'].reduce(function (total, id) {
+                const instance = window.KunenaEditor.get(id);
 
-					if (event.editor.getData().length > 0)
-					{
-						submitButton.removeAttr("disabled");
-					}
+                return total + (instance ? instance.getData().length : 0);
+            }, 0);
 
-                    event.editor.on("beforeCommandExec", function (event) {
-                        // Show the paste dialog for the paste buttons and right-click paste
-                        if (event.data.name == "paste") {
-                            event.editor._.forcePasteDialog = true;
-                        }
+            if (length > 0) {
+                submitButton.removeAttr('disabled');
+            } else if (submitButton.disabled === undefined) {
+                submitButton.prop('disabled', true);
+            }
+        };
 
-                        // Don't show the paste dialog for Ctrl+Shift+V
-                        if (event.data.name == "pastetext" && event.data.commandData.from == "keystrokeHandler") {
-                            event.cancel();
-                        }
-                    })
-                    
-				},
-				change : function (event) {
-					if (event.editor.getData().length > 0)
-					{
-						submitButton.removeAttr("disabled");
-					}
+        // The poll button: only in a category with polls, and not when the poll cannot be changed any more.
+        const updatePollButton = function (instance) {
+            if (pollEditRefused !== undefined) {
+                instance.setCommandEnabled('polls', false);
+                $(instance.editor.ui.view.element).find('[data-kunena-button="polls"]').attr({'title': pollEditRefused, 'aria-describedby': 'poll-edit-refused'});
+            } else if (pollcatid !== undefined && typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
+                instance.setCommandEnabled('polls', pollcategoriesid[$('#kcategory_poll').val()] !== undefined);
+            } else {
+                instance.setCommandEnabled('polls', pollexist.length > 0);
+            }
+        };
 
-					if (event.editor.getData().length == 0 && submitButton.disabled === undefined)
-					{
-						submitButton.prop("disabled", true);
-					}
+        // A text which was copied from the quick reply to the full editor.
+        const restoreCopy = function (instance) {
+            const copy = localStorage.getItem('copyKunenaeditor');
 
-				},
-                mode: function (evt) {
-                    const cat = localStorage.getItem('copyKunenaeditor');
+            if (copy) {
+                instance.setData(copy);
+                localStorage.removeItem('copyKunenaeditor');
+            }
+        };
 
-                    if (cat) {
-                        evt.editor.setData(cat);
-                        localStorage.removeItem('copyKunenaeditor');
-                    }
-
-                    if (pollEditRefused !== undefined) {
-                        // CKEditor enables the command again on every change of mode
-                        evt.editor.getCommand('polls').disable();
-                        $('#cke_' + evt.editor.name + ' .cke_button__polls').attr({'title': pollEditRefused, 'aria-describedby': 'poll-edit-refused'});
-                    } else if (polliconstatus === false) {
-                        if (pollcatid !== undefined) {
-                            if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
-                                const catid = $('#kcategory_poll').val();
-
-                                if (pollcategoriesid[catid] !== undefined) {
-                                    evt.editor.getCommand('polls').enable();
-                                } else {
-                                    evt.editor.getCommand('polls').disable();
-                                }
-                            } else if (pollexist.length > 0) {
-                                evt.editor.getCommand('polls').enable();
-                            } else {
-                                evt.editor.getCommand('polls').disable();
-                            }
-                        } else {
-                            evt.editor.getCommand('polls').disable();
-                        }
-                    }
-                }
-            },
-            mentions: [ {
-      feed: dataFeed,
-      itemTemplate:
-        '<li data-id="{id}">' +
-        '<img src="{avatar}" width="36" height="36"/>' +
-        ' '+
-        '<strong class="username">{username}</strong>' +
-        '</li>',
-      outputTemplate:
-        '[mention userid={userid}]{username}[/mention]',
-      minChars: 1
-    }
-  ]
+        window.KunenaEditor.create('message', {mentions: dataFeed}).then(function (instance) {
+            restoreCopy(instance);
+            updatePollButton(instance);
+            updateSubmit();
+            instance.on('change', updateSubmit);
         });
 
-// Get the data for the mentions list
-function dataFeed(opts, callback) {
+        if (document.getElementById('message_private')) {
+            window.KunenaEditor.create('message_private').then(function (instance) {
+                if (Joomla.getOptions('com_kunena.localstorage')) {
+                    restoreCopy(instance);
+                }
+
+                instance.setCommandEnabled('polls', false);
+                updateSubmit();
+                instance.on('change', updateSubmit);
+            });
+        }
+    }
+
+// The users which can be mentioned: a promise of the list (the editor asks for it while @name is typed).
+function dataFeed(query) {
     let url = Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions');
 
     // A new topic has no users yet: the users are searched with the typed text, for the category.
     if (Joomla.getOptions('com_kunena.mentions_search')) {
         const catid = jQuery('#postcatid').val() || jQuery('#poll_catid').val() || '';
 
-        url += '&catid=' + encodeURIComponent(catid) + '&q=' + encodeURIComponent(opts.query || '');
+        url += '&catid=' + encodeURIComponent(catid) + '&q=' + encodeURIComponent(query || '');
     }
 
-    $.getJSON(url)
-    .done(function( json ) {
-        callback(JSON.parse(json));
-    })
-    .fail(function( jqxhr, textStatus, error ) {
-		const err = textStatus + ", " + error;
-        console.error( 'Request Failed: ' + err );
+    return new Promise(function (resolve) {
+        $.getJSON(url)
+            .done(function (json) {
+                const users = JSON.parse(json) || [];
+                const text = String(query || '').toLowerCase();
+
+                resolve(users.filter(function (user) {
+                    return String(user.username || '').toLowerCase().indexOf(text) !== -1;
+                }).slice(0, 10));
+            })
+            .fail(function (jqxhr, textStatus, error) {
+                console.error('Request Failed: ' + textStatus + ', ' + error);
+                resolve([]);
+            });
     });
 }
-
-        CKEDITOR.on('dialogDefinition', function (ev) {
-            const dialogName = ev.data.name;
-            const dialogDefinition = ev.data.definition;
-
-            if (dialogName == 'link') {
-                const linkType = dialogDefinition.getContents('info').get('linkType');
-                // Remove the 'anchor' link option.
-                linkType.items.splice(1, 1);
-                // Remove the 'phone' link option.
-                linkType.items.splice(2, 2);
-
-                const protocol = dialogDefinition.getContents('info').get('protocol');
-                protocol.items.splice(2, 4);
-            }
-        });
-
-        CKEDITOR.replace('message_private', {
-			customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),
-			on: {
-				instanceReady: function (event) {
-					CKEDITOR.plugins.clipboard.preventDefaultDropOnElement(event.editor.document);
-
-					if (event.editor.getData().length > 0)
-					{
-						submitButton.removeAttr("disabled");
-					}
-
-					event.editor.on("beforeCommandExec", function (event) {
-                        // Show the paste dialog for the paste buttons and right-click paste
-                        if (event.data.name == "paste") {
-                            event.editor._.forcePasteDialog = true;
-                        }
-
-                        // Don't show the paste dialog for Ctrl+Shift+V
-                        if (event.data.name == "pastetext" && event.data.commandData.from == "keystrokeHandler") {
-                            event.cancel();
-                        }
-                    })
-				},
-				change : function (event) {
-					if (event.editor.getData().length > 0)
-					{
-						submitButton.removeAttr("disabled");
-					}
-
-					if (CKEDITOR.instances.message.getData().length == 0 && event.editor.getData().length == 0 && submitButton.disabled === undefined)
-					{
-						submitButton.prop("disabled", true);
-					}
-
-				},
-                mode: function (evt) {
-                    if (Joomla.getOptions('com_kunena.localstorage')) {
-						const cat = localStorage.getItem('copyKunenaeditor');
-	
-	                    if (cat) {
-	                        evt.editor.setData(cat);
-	                        localStorage.removeItem('copyKunenaeditor');
-	                    }
-					}
-
-                    evt.editor.getCommand('polls').disable();
-                }
-            }
-        });
-    }
 });

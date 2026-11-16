@@ -1,5 +1,5 @@
-// The Subscript and Superscript buttons of CKEditor write [sub] and [sup] (issue #8673): the bbcode plugin of the bundle maps the
-// tags to the elements sub and sup and back, so a message with the tags comes back unchanged after an edit, a quote and a switch to
+// The Subscript and Superscript buttons of CKEditor write [sub] and [sup] (issue #8673): the BBCode of the editor (editor/ckeditor5) maps
+// the tags to the elements sub and sup and back, so a message with the tags comes back unchanged after an edit, a quote and a switch to
 // the source mode and back, also inside other tags and when the template hides both buttons, and an untouched message does not
 // count as changed for the leave warning. The editor of the templates is set to CKEditor for the spec (params.ini) and put back
 // afterwards; the rows are inserted by the spec, nothing is posted.
@@ -30,16 +30,10 @@ describe('Kunena CKEditor: subscript and superscript are written as [sub] and [s
     clearCache();
   };
 
-  const editor = () => cy.window().its('CKEDITOR.instances.message');
-  const editorData = () => editor().then((instance) => instance.getData());
+  const editorData = () => cy.editor_data();
   // Waits until the message editor is CKEditor and ready, so that leavewarning.js has taken its baseline.
-  const editorReady = () => cy.window().should((win) => {
-    expect(win.Joomla.getOptions('com_kunena.editor_type'), 'the editor of the template').to.eq('ckeditor');
-    expect(win.CKEDITOR && win.CKEDITOR.instances.message && win.CKEDITOR.instances.message.status, 'the editor').to.eq('ready');
-  }).wait(100);
-  const setMode = (mode) => editor().then((instance) => new Cypress.Promise((resolve) => {
-    instance.setMode(mode, resolve);
-  }));
+  const editorReady = () => cy.editor_ready();
+  const setMode = (mode) => cy.editor_source(mode === 'source');
   // Whether a beforeunload of the page now would show the browser's dialog (as in leave-warning.cy.js).
   const shouldWarn = (expected) => cy.window().should((win) => {
     const event = new win.Event('beforeunload', { cancelable: true });
@@ -48,21 +42,16 @@ describe('Kunena CKEditor: subscript and superscript are written as [sub] and [s
     expect(event.defaultPrevented, expected ? 'the page warns' : 'the page does not warn').to.eq(expected);
   });
   // Types the text into the empty editor of the new-topic page, selects it and runs the command of the button.
-  const formatText = (text, command) => editor().then((instance) => {
-    const range = instance.createRange();
-
-    instance.focus();
-    instance.insertText(text);
-    range.selectNodeContents(instance.editable());
-    instance.getSelection().selectRanges([range]);
-    instance.execCommand(command);
-  });
-  // The posted value: the textarea of the form after CKEditor wrote its data into it, as it does on submit.
-  const postedValue = () => editor().then((instance) => {
-    instance.updateElement();
-
-    return instance.element.getValue();
-  });
+  const formatText = (text, command) => {
+    cy.editor_instance().then((instance) => {
+      instance.focus();
+      instance.insertText(text);
+    });
+    cy.editor_selectAll();
+    cy.editor_execute(command);
+  };
+  // The posted value: the textarea of the form, as the editor writes it on submit.
+  const postedValue = () => cy.editor_posted();
 
   before(() => {
     ['agora', 'aurelia'].forEach((template) => {
@@ -136,7 +125,7 @@ describe('Kunena CKEditor: subscript and superscript are written as [sub] and [s
   it('writes [sub] for the Subscript button, in the data, the source mode and the posted form', () => {
     cy.visit(`${base}&view=topic&layout=create&catid=${ids.category}`);
     editorReady();
-    cy.get('.cke_button__subscript').should('exist');
+    cy.editor_button('Subscript').should('have.length', 1);
     formatText('text', 'subscript');
     editorData().should('contain', '[sub]text[/sub]');
     setMode('source');
@@ -148,7 +137,7 @@ describe('Kunena CKEditor: subscript and superscript are written as [sub] and [s
   it('writes [sup] for the Superscript button, in the data, the source mode and the posted form', () => {
     cy.visit(`${base}&view=topic&layout=create&catid=${ids.category}`);
     editorReady();
-    cy.get('.cke_button__superscript').should('exist');
+    cy.editor_button('Superscript').should('have.length', 1);
     formatText('text', 'superscript');
     editorData().should('contain', '[sup]text[/sup]');
     setMode('source');
@@ -160,23 +149,15 @@ describe('Kunena CKEditor: subscript and superscript are written as [sub] and [s
   it('shows stored [sub] and [sup] as formatting, with the Subscript command on inside it', () => {
     cy.visit(`${base}&view=topic&layout=edit&catid=${ids.category}&id=${ids.topic}&mesid=${ids.message}`);
     editorReady();
-    editor().should((instance) => {
-      const editable = instance.editable();
-
-      expect(editable.findOne('sub') && editable.findOne('sub').getText(), 'the text of sub').to.eq('2');
-      expect(editable.findOne('sup') && editable.findOne('sup').getText(), 'the text of sup').to.eq('2');
-      expect(editable.getText(), 'the text of the editor').to.not.contain('[sub]').and.not.contain('[sup]');
+    cy.editor_editable().should(($editable) => {
+      expect($editable.find('sub').text(), 'the text of sub').to.eq('2');
+      expect($editable.find('sup').text(), 'the text of sup').to.eq('2');
+      expect($editable.text(), 'the text of the editor').to.not.contain('[sub]').and.not.contain('[sup]');
     });
-    editor().then((instance) => {
-      const range = instance.createRange();
-
-      instance.focus();
-      range.setStart(instance.editable().findOne('sub').getFirst(), 1);
-      range.collapse(true);
-      instance.getSelection().selectRanges([range]);
-    });
-    cy.window().should((win) => {
-      expect(win.CKEDITOR.instances.message.getCommand('subscript').state, 'the state of the Subscript command').to.eq(win.CKEDITOR.TRISTATE_ON);
+    // The caret after the 2 of H2O: the Subscript command is on there.
+    cy.editor_instance().should(({ editor }) => {
+      editor.model.change((writer) => writer.setSelection(writer.createPositionAt(editor.model.document.getRoot().getChild(0), 2)));
+      expect(editor.commands.get('subscript').value, 'the state of the Subscript command').to.eq(true);
     });
   });
 
@@ -198,11 +179,14 @@ describe('Kunena CKEditor: subscript and superscript are written as [sub] and [s
   it('keeps [sub] and [sup] inside bold, a list and a quote', () => {
     cy.visit(`${base}&view=topic&layout=edit&catid=${ids.category}&id=${ids.topic}&mesid=${ids.reply}`);
     editorReady();
-    editorData().should('contain', '[sub][b]a[/b][/sub]').and('contain', '[sup]b[/sup]').and('contain', '[sub]c[/sub]');
+    // CKEditor 5 writes nested tags in its own order ([b] outside [sub], the same formatting); the form sends the stored text
+    // unchanged until the text is changed.
+    editorData().should('contain', '[b][sub]a[/sub][/b]').and('contain', '[sup]b[/sup]').and('contain', '[sub]c[/sub]');
 
     setMode('source');
     setMode('wysiwyg');
-    editorData().should('contain', '[sub][b]a[/b][/sub]').and('contain', '[sup]b[/sup]').and('contain', '[sub]c[/sub]');
+    editorData().should('contain', '[b][sub]a[/sub][/b]').and('contain', '[sup]b[/sup]').and('contain', '[sub]c[/sub]');
+    postedValue().should('contain', '[sub][b]a[/b][/sub]');
     shouldWarn(false);
   });
 
@@ -220,9 +204,9 @@ describe('Kunena CKEditor: subscript and superscript are written as [sub] and [s
     cy.visit(`${base}&view=topic&layout=edit&catid=${ids.category}&id=${ids.topic}&mesid=${ids.message}`);
     editorReady();
     cy.window().its('Joomla').invoke('getOptions', 'com_kunena.ckeditor_buttons_configuration').should('eq', 'Subscript,Superscript');
-    cy.get('.cke_button__bold').should('exist');
-    cy.get('.cke_button__subscript').should('not.exist');
-    cy.get('.cke_button__superscript').should('not.exist');
+    cy.editor_button('Bold').should('have.length', 1);
+    cy.editor_button('Subscript').should('have.length', 0);
+    cy.editor_button('Superscript').should('have.length', 0);
     editorData().should('contain', formula);
     setMode('source');
     setMode('wysiwyg');

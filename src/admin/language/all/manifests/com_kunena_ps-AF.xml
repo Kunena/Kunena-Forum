@@ -14,7 +14,6 @@
 
     <fileset>
         <files folder="site" target="language/ps-AF">
-            <filename>kunena_ckeditor.js</filename>
         </files>
     </fileset>
 </extension>

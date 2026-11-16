@@ -261,162 +261,76 @@ textarea.span12,
   box-shadow: var(--agora-shadow-raised);
 }
 
-/* CKEditor 4 (skin moonocolor): the surfaces, the borders and the radius of Agora instead of the grey gradients of the skin, in both
- * schemes. Its text is in a frame, painted by agora.js. Its menus and dialogs are put at the end of the page, outside the forum: they
- * keep the look of the skin. */
-.cke,
-.cke_chrome {
-  max-width: 100%;
-  overflow: hidden;
-  padding: 0;
-  border: 1px solid var(--agora-border-strong) !important;
-  border-radius: var(--agora-radius);
-  box-shadow: none;
+/* CKEditor 5: the surfaces, the borders, the radius and the accent of Agora, in both schemes, through the custom properties of the
+ * editor. Its pop-ups (the link, the lists of the dropdowns) are at the end of the page, outside #kunena: they get the same
+ * properties there. */
+@mixin agora-ckeditor {
+  --ck-border-radius: var(--agora-radius);
+  --ck-color-base-background: var(--agora-surface);
+  --ck-color-base-foreground: var(--agora-surface-2);
+  --ck-color-base-border: var(--agora-border-strong);
+  --ck-color-base-text: var(--agora-text);
+  --ck-color-text: var(--agora-text);
+  --ck-color-focus-border: var(--agora-accent);
+  --ck-color-focus-outer-shadow: var(--agora-accent-soft);
+  --ck-color-toolbar-background: var(--agora-surface-2);
+  --ck-color-toolbar-border: var(--agora-border);
+  --ck-color-panel-background: var(--agora-surface);
+  --ck-color-panel-border: var(--agora-border);
+  --ck-color-dropdown-panel-background: var(--agora-surface);
+  --ck-color-dropdown-panel-border: var(--agora-border);
+  --ck-color-input-background: var(--agora-surface);
+  --ck-color-input-border: var(--agora-border-strong);
+  --ck-color-input-text: var(--agora-text);
+  --ck-color-list-background: var(--agora-surface);
+  --ck-color-list-button-hover-background: var(--agora-surface-2);
+  --ck-color-list-button-on-background: var(--agora-accent);
+  --ck-color-list-button-on-text: #fff;
+  --ck-color-button-default-background: transparent;
+  --ck-color-button-default-hover-background: var(--agora-surface);
+  --ck-color-button-default-active-background: var(--agora-surface);
+  --ck-color-button-on-background: var(--agora-accent-soft);
+  --ck-color-button-on-hover-background: var(--agora-accent-soft);
+  --ck-color-button-on-color: var(--agora-accent);
+  --ck-color-button-action-background: var(--agora-accent);
+  --ck-color-button-action-hover-background: var(--agora-accent);
+  --ck-color-tooltip-background: var(--agora-text);
+  --ck-color-tooltip-text: var(--agora-surface);
+  --ck-color-shadow-drop: rgba(0, 0, 0, 0.15);
+  --ck-color-labeled-field-label-background: var(--agora-surface);
 }
 
-.cke_inner,
-.cke_contents,
-.cke_wysiwyg_frame,
-.cke_wysiwyg_div {
-  background: var(--agora-surface);
+.ck.ck-editor {
+  @include agora-ckeditor;
+
+  width: 100%;
 }
 
-/* The skin is drawn with the box model of the browser: the border-box of Agora (on every element of the forum) would squeeze the
- * buttons into the height of their icon. */
-.cke,
-.cke *,
-.cke *::before,
-.cke *::after {
-  box-sizing: content-box;
+@at-root body:has(#kunena.layout.agora) .ck-body-wrapper {
+  @include agora-ckeditor;
 }
 
-.cke_top,
-.cke_bottom {
-  padding: 0.5rem 0.5rem 0;
-  color: var(--agora-text-muted);
-  background: var(--agora-surface-2);
-  box-shadow: none;
-}
-
-.cke_top {
-  border-bottom: 1px solid var(--agora-border);
-}
-
-.cke_bottom {
-  padding-bottom: 0.5rem;
-  border-top: 1px solid var(--agora-border);
-}
-
-.cke_toolgroup,
-a.cke_combo_button {
-  margin: 0 0.5rem 0.5rem 0;
-  background: var(--agora-surface);
-  border: 1px solid var(--agora-border);
-  border-radius: var(--agora-radius);
-  box-shadow: none;
-}
-
-/* The buttons: 32px high, the icon in the middle (as the small buttons of the forum). */
-a.cke_button,
-.cke_toolgroup a.cke_button:last-child,
-.cke_toolgroup a.cke_button:first-child {
-  height: 1rem;
-  padding: 0.5rem;
-  border-radius: calc(var(--agora-radius) - 1px);
-}
-
-.cke_button_icon {
-  margin: 0;
-}
-
-.cke_toolbar_separator {
-  height: 1rem;
-  margin: 0.5rem 0.25rem 0;
-}
-
-.cke_combo_text,
-.cke_combo_open {
-  height: 2rem;
-  line-height: 2rem;
-}
-
-.cke_combo_text {
-  padding: 0 0.25rem 0 0.5rem;
-}
-
-.cke_combo_open {
-  /* Inline, it would add a line of text under the arrow. */
-  display: block;
-  float: left;
-  margin: 0 0.5rem 0 0;
-}
-
-.cke_combo_arrow {
-  margin-top: 0.875rem;
-}
-
-a.cke_button_off:hover,
-a.cke_button_off:focus,
-a.cke_button_off:active,
-a.cke_button_on,
-.cke_combo_off a.cke_combo_button:hover,
-.cke_combo_off a.cke_combo_button:focus,
-.cke_combo_on a.cke_combo_button {
-  background: var(--agora-surface-hover);
-  border-color: var(--agora-border-strong);
-  box-shadow: none;
-}
-
-a.cke_button_on {
-  outline: 1px solid var(--agora-border-strong);
-}
-
-.cke_toolbar_separator {
-  background: var(--agora-border);
-  box-shadow: none;
-}
-
-.cke_combo_text,
-.cke_button_label,
-.cke_path_item,
-.cke_path_empty {
-  color: var(--agora-text);
-  text-shadow: none;
-}
-
-a.cke_path_item:hover,
-a.cke_path_item:focus {
-  color: var(--agora-text);
-  background: var(--agora-surface-hover);
-  box-shadow: none;
-}
-
-.cke_combo_arrow,
-.cke_button_arrow {
-  border-top-color: var(--agora-text-muted);
-}
-
-.cke_resizer {
-  border-right-color: var(--agora-text-muted);
-  box-shadow: none;
-}
-
-.cke_source {
+/* The text of the message: the height of the textarea of the form, the paragraphs as the lines of the message. */
+.ck.ck-editor__editable_inline {
+  min-height: 12rem;
   color: var(--agora-text);
   background: var(--agora-surface);
-}
 
-/* The icons of the skin are drawn for a light toolbar: light glyphs in the dark scheme, with the same hues (as for SCEditor). */
-&[data-bs-theme="dark"] .cke_button_icon,
-&[data-bs-theme="dark"] .cke_toolbox_collapser .cke_toolbox_collapser_arrow {
-  filter: invert(1) hue-rotate(180deg) brightness(1.1);
-}
+  p {
+    margin: 0;
+  }
 
-.kbbcode-preview-bottom {
-  margin: 1rem 0;
-  background: var(--agora-surface);
-  border: 1px dashed var(--agora-border-strong);
-  border-radius: var(--agora-radius);
+  blockquote {
+    padding: 0.25rem 0.75rem;
+    margin: 0.5rem 0;
+    border-left: 3px solid var(--agora-border-strong);
+  }
+
+  pre {
+    color: var(--agora-text);
+    background: var(--agora-surface-2);
+    border: 1px solid var(--agora-border);
+  }
 }
 
 /* The attachments of the form. */

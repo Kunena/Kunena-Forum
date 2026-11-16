@@ -14,14 +14,18 @@
   "scripts": {
     "cypress:install": "cypress install",
     "cypress:open": "cypress open --config-file cypress.config.js",
-    "cypress:run": "cypress run --config-file cypress.config.js"
+    "cypress:run": "cypress run --config-file cypress.config.js",
+    "build:editor": "node editor/ckeditor5/build.mjs",
+    "test:js": "node --test tests/Js"
   },
   "browserslist": [
     "last 2 major version",
     "not ie < 11"
   ],
   "devDependencies": {
+    "ckeditor5": "49.1.0",
     "cypress": "^16.3.0",
+    "esbuild": "0.28.2",
     "joomla-cypress": "^2.0.0",
     "mailparser": "^3.14.3",
     "mysql2": "^3.24.6",

@@ -28,9 +28,9 @@
     "cypress": "^16.3.0",
     "esbuild": "0.28.2",
     "joomla-cypress": "^2.0.0",
-    "mailparser": "^3.14.3",
+    "mailparser": "^3.14.5",
     "mysql2": "^3.24.6",
     "pg": "^8.23.1",
-    "smtp-server": "^3.21.4"
+    "smtp-server": "^3.21.6"
   }
 }

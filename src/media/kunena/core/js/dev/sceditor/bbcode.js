@@ -2522,6 +2522,8 @@
 			return toBBCode(element, hasCodeParent);
 		};
 
+		var sanitize;
+
 		/**
 		 * Initializer
 		 * @private
@@ -2540,6 +2542,7 @@
 			// Add BBCode helper methods
 			this.toBBCode   = base.toSource;
 			this.fromBBCode = base.toHtml;
+			sanitize = this.__UNSTABLE__sanitize;
 		};
 
 		/**
@@ -2577,7 +2580,7 @@
 			var container = context.createElement('div');
 			var parser = new BBCodeParser(base.opts.parserOptions);
 
-			container.innerHTML = html;
+			container.innerHTML = sanitize(html);
 			css(containerParent, 'visibility', 'hidden');
 			containerParent.appendChild(container);
 			context.body.appendChild(containerParent);

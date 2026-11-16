@@ -16,6 +16,7 @@
     "cypress:open": "cypress open --config-file cypress.config.js",
     "cypress:run": "cypress run --config-file cypress.config.js",
     "build:editor": "node editor/ckeditor5/build.mjs",
+    "build:sceditor": "node editor/sceditor/build.mjs",
     "test:js": "node --test tests/Js"
   },
   "browserslist": [

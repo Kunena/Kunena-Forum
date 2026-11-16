@@ -267,6 +267,8 @@ final class KunenaMarkup
     {
         $lines = explode("\n", $text);
         $out   = [];
+
+        /** @var list<array<string, mixed>> $stack The open lists (filled below; the closure takes it by reference). */
         $stack = [];
         $count = \count($lines);
 

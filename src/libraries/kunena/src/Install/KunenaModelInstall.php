@@ -2273,6 +2273,9 @@ class KunenaModelInstall extends BaseDatabaseModel
             $file = JPATH_ADMINISTRATOR . '/components/com_fireboard/fireboard_config.php';
 
             if (is_file($file)) {
+                // The configuration file of FireBoard sets $fbConfig.
+                $fbConfig = null;
+
                 require_once $file;
 
                 if (isset($fbConfig)) {

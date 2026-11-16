@@ -61,7 +61,6 @@ class TopicListingRecentDisplay extends ListDisplay
         $model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
         $this->state    = $model->getState();
         $this->me       = KunenaUserHelper::getMyself();
-        $moreUri        = null;
         $holding        = $this->getOptions()->get('topics_deletedtopics');
         $this->embedded = $this->getOptions()->get('embedded', true);
 
@@ -213,10 +212,6 @@ class TopicListingRecentDisplay extends ListDisplay
                     }
                 }
             }
-        }
-
-        if ($moreUri) {
-            $this->pagination->setUri($moreUri);
         }
 
         $this->topics = $finder

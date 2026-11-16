@@ -309,7 +309,6 @@ class UserController extends KunenaController
      */
     public function save()
     {
-        $return = null;
         $errors = 0;
         $userid = $this->app->getInput()->getInt('userid');
 
@@ -411,10 +410,6 @@ class UserController extends KunenaController
                 null,
                 $this->user
             );
-        }
-
-        if ($return) {
-            return $return;
         }
     }
 

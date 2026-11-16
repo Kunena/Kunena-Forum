@@ -477,7 +477,7 @@ class KunenaBan
      *
      * @access  public
      *
-     * @param   null  $identifier  The ban object to be loaded
+     * @param   string|null  $identifier  The IP address of the ban to load.
      * @param   bool  $create      create
      *
      * @return KunenaBan|null The ban object.

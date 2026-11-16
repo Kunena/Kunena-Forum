@@ -499,23 +499,10 @@ class HtmlView extends KunenaView
             return;
         }
 
-        $catid = 0;
-
+        // The feed of the whole forum (the branch for the feed of a category never ran: its id was always 0).
         if ($this->config->enableRss) {
-            if ($catid > 0) {
-                $category = KunenaCategoryHelper::get($catid);
-
-                if ($category->pubAccess == 0 && $category->parent) {
-                    $rss_params = '&catid=' . (int) $catid;
-                }
-            } else {
-                $rss_params = '';
-            }
-
-            if (isset($rss_params)) {
-                $document = Factory::getApplication()->getDocument();
-                $document->addCustomTag('<link rel="alternate" type="application/rss+xml" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
-            }
+            $document = Factory::getApplication()->getDocument();
+            $document->addCustomTag('<link rel="alternate" type="application/rss+xml" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL('') . '" />');
         }
 
         $result = $this->loadTemplateFile($tpl);

@@ -80,7 +80,7 @@ abstract class KunenaUserHelper
     protected static mixed $_total = null;
 
     /**
-     * @var     null
+     * @var     array|null  The top posters, null before they are loaded.
      * @since   Kunena 6.0
      */
     protected static mixed $_topposters = null;

@@ -37,7 +37,7 @@ class Kunenaforum
      * @param   mixed   $parent     parent
      * @param   array   $options    options
      * @param   array   $params     params
-     * @param   null    $attribs    attribs
+     * @param   array|string|null  $attribs  attribs
      * @param   string  $key        key
      * @param   string  $text       text
      * @param   array   $selected   selected

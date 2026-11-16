@@ -102,7 +102,7 @@ class KunenaSessions extends KunenaTable
     }
 
     /**
-     * @param   null  $oid    oid
+     * @param   mixed  $oid    The user id of the session to load.
      * @param   bool  $reset  reset
      *
      * @return  boolean

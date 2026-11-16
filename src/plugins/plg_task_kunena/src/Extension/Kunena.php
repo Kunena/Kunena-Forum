@@ -261,6 +261,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         $db             = Factory::getContainer()->get('DatabaseDriver');
         $batchSize      =  $config->emailBatchSize;
         $processedCount = 0;
+        /** @var list<int> $failedIds The ids which failed in this run (filled in the loop). */
         $failedIds = [];
         
         // Process the notifications by batch

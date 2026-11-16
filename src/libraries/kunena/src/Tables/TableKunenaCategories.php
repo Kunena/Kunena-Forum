@@ -39,7 +39,7 @@ class TableKunenaCategories extends KunenaTable
     public $id = null;
 
     /**
-     * @var     null
+     * @var     int|null
      * @since   Kunena 6.0
      */
     public mixed $parentid = null;

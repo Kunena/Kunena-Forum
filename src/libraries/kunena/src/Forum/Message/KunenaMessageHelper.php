@@ -72,7 +72,7 @@ abstract class KunenaMessageHelper
     /**
      * Returns \Kunena\Forum\Libraries\Forum\Message\Message object.
      *
-     * @param   null  $identifier  The message to load - Can be only an integer.
+     * @param   int|null  $identifier  The message to load - Can be only an integer.
      * @param   bool  $reload      reload
      *
      * @return  KunenaMessage  The message object.

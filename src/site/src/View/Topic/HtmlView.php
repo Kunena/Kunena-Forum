@@ -57,13 +57,13 @@ use LogicException;
 class HtmlView extends KunenaView
 {
     /**
-     * @var     null
+     * @var     Registry|null  The buttons, made by the display methods.
      * @since   Kunena 6.0
      */
     public mixed $topicButtons = null;
 
     /**
-     * @var     null
+     * @var     Registry|null  The buttons, made by the display methods.
      * @since   Kunena 6.0
      */
     public mixed $messageButtons = null;
@@ -1173,13 +1173,8 @@ class HtmlView extends KunenaView
                 $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', [$this, 'fillMessageInfo'], $contents);
             }
 
-            // FIXME: enable caching after fixing the issues
+            // FIXME: enable caching after fixing the issues (a cached message of a guest was shown here, before the cache was off)
             // if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
-        } elseif ($usertype == 'guest') {
-            echo $contents;
-            $this->setLayout($layout);
-
-            return;
         }
 
         $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', [$this, 'fillMessageInfo'], $contents);

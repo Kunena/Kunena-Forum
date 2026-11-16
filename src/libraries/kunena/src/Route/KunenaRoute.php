@@ -137,7 +137,7 @@ abstract class KunenaRoute
     public static mixed $search = false;
 
     /**
-     * @var     null
+     * @var     Uri|null  The address of the current page, null before the router read it.
      * @since   Kunena 6.0
      */
     public static mixed $current = null;
@@ -938,7 +938,7 @@ abstract class KunenaRoute
     }
 
     /**
-     * @param   null  $uri  uri
+     * @param   Uri|string|null  $uri  uri
      *
      * @return  boolean|Uri|null
      *

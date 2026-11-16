@@ -3461,7 +3461,6 @@ class TopicController extends KunenaController
             $target = KunenaCategoryHelper::get($targetCategory);
         }
 
-        $error        = null;
         $targetobject = null;
         
         if ($targetobject) {
@@ -3554,11 +3553,7 @@ class TopicController extends KunenaController
             );
         }
 
-        if ($error) {
-            $this->app->enqueueMessage($error, 'error');
-        } else {
-            $this->app->enqueueMessage(Text::_($onlyChanged ? 'COM_KUNENA_MODERATION_TOPIC_SAVED' : 'COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'), 'success');
-        }
+        $this->app->enqueueMessage(Text::_($onlyChanged ? 'COM_KUNENA_MODERATION_TOPIC_SAVED' : 'COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'), 'success');
 
         // Go to where the messages are now (the new or merged topic), not to the topic they left.
         if ($targetobject instanceof KunenaTopic) {

@@ -87,7 +87,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  * @property int     $last_topic_id
  * @property int     $last_post_id
  * @property int     $last_post_time
- * @property string  $params
+ * @property mixed   $params
  * @property int     $allowRatings
  *
  * @since   Kunena 6.0
@@ -322,7 +322,7 @@ class KunenaCategory extends KunenaDatabaseObject
     public mixed $moderators = null;
 
     /**
-     * @var     string
+     * @var     Registry|array|string|null  The parameters: the JSON of the database, an array, or the Registry made of them.
      * @since   Kunena 6.4
      */
     public mixed $params = null;

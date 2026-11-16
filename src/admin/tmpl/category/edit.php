@@ -11,6 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
+/** @psalm-suppress ParadoxicalCondition create.php includes this file after checking _JEXEC itself. */
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;

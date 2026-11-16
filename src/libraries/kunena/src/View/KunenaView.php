@@ -253,7 +253,7 @@ class KunenaView extends HtmlView
     }
 
     /**
-     * @param   null  $layout  layout
+     * @param   string|null  $layout  layout
      * @param   null  $tpl     tmpl
      *
      * @return  mixed|void

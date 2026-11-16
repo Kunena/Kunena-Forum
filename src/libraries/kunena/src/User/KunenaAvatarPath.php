@@ -98,7 +98,11 @@ abstract class KunenaAvatarPath
      */
     public static function isUploadOf($avatar, int $userid): bool
     {
-        return $userid > 0 && self::isUpload($avatar) && preg_match('#^users/avatar(\d+)\.#', $avatar, $m) === 1 && (int) $m[1] === $userid;
+        if ($userid <= 0 || !self::isUpload($avatar) || preg_match('#^users/avatar(\d+)\.#', $avatar, $match) !== 1) {
+            return false;
+        }
+
+        return (int) $match[1] === $userid;
     }
 
     /**

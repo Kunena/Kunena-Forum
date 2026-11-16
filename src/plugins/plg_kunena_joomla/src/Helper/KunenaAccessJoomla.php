@@ -348,7 +348,8 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
 
         foreach ((array) $db->loadObjectList() as $row) {
             $params = json_decode((string) $row->params, true);
-            $ids    = \is_array($params) && \is_array($params['moderatorGroups'] ?? null) ? $params['moderatorGroups'] : [];
+            $groups = \is_array($params) ? ($params['moderatorGroups'] ?? null) : null;
+            $ids    = \is_array($groups) ? $groups : [];
             $ids    = array_values(array_unique(array_filter(array_map('intval', array_filter($ids, 'is_numeric')), static fn ($id) => $id > 0)));
 
             if ($ids) {

@@ -20,6 +20,8 @@ use ReturnTypeWillChange;
 /**
  * Kunena Tree Class
  *
+ * @implements Iterator<array-key, mixed>
+ *
  * @since   Kunena 6.0
  */
 class KunenaTree implements Iterator

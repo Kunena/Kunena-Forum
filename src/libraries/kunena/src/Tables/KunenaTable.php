@@ -111,7 +111,7 @@ abstract class KunenaTable extends Table
     }
 
     /**
-     * @param   null  $exists  exists
+     * @param   bool|null  $exists  Set whether the row exists (null: only read it).
      *
      * @return  boolean
      *

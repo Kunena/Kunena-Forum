@@ -112,25 +112,25 @@ class KunenaStatistics
     public mixed $topTopics = null;
 
     /**
-     * @var     null
+     * @var     array|null  The top posters, null before they are loaded.
      * @since   Kunena 6.0
      */
     public mixed $topPosters = null;
 
     /**
-     * @var     null
+     * @var     array|null  The top profiles, null before they are loaded.
      * @since   Kunena 6.0
      */
     public mixed $topProfiles = null;
 
     /**
-     * @var     null
+     * @var     array|null  The top polls, null before they are loaded.
      * @since   Kunena 6.0
      */
     public mixed $topPolls = null;
 
     /**
-     * @var     null
+     * @var     array|null  The top thanks, null before they are loaded.
      * @since   Kunena 6.0
      */
     public mixed $topThanks = null;

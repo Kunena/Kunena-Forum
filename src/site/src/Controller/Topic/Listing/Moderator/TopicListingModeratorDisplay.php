@@ -65,7 +65,6 @@ class TopicListingModeratorDisplay extends ListDisplay
 
         $this->me       = KunenaUserHelper::getMyself();
         $access         = KunenaAccess::getInstance();
-        $moreUri        = null;
         $this->embedded = $this->getOptions()->get('embedded', true);
 
         $params = ComponentHelper::getParams('com_kunena');
@@ -141,10 +140,6 @@ class TopicListingModeratorDisplay extends ListDisplay
             ->find();
 
         $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
-
-        if ($moreUri) {
-            $this->pagination->setUri($moreUri);
-        }
 
         if ($this->topics) {
             $this->prepareTopics();

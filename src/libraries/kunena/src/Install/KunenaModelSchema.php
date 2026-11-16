@@ -213,7 +213,8 @@ class KunenaModelSchema extends BaseDatabaseModel
     }
 
     /**
-     * @param   object  $input  input
+     * @param   object|string  $input  A document, KUNENA_INPUT_DATABASE (the schema of the database), the file of a schema or the
+     *                                 XML of a schema (the type object made the three texts impossible).
      *
      * @return  DOMDocument|DOMNode|mixed|null
      *
@@ -221,7 +222,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      * @throws KunenaSchemaException
      * @throws DOMException
      */
-    protected function getDOMDocument(object $input)
+    protected function getDOMDocument(object|string $input)
     {
         if (($input instanceof DOMNode)) {
             $schema = $input;
@@ -435,9 +436,9 @@ class KunenaModelSchema extends BaseDatabaseModel
      * @param   object  $schema  schema
      * @param   string  $tag     tag
      * @param   string  $name    name
-     * @param   object  $loc     loc
+     * @param   array   $loc     The node in the new and in the old schema ('new', 'old').
      *
-     * @return  null
+     * @return  DOMElement|null  The node of the difference, null when there is none.
      *
      * @since   Kunena 6.0
      */

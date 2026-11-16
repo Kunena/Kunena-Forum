@@ -81,13 +81,13 @@ class TableKunenaAttachments extends KunenaTable
     public mixed $filetype = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $filename = null;
 
     /**
-     * @var     null
+     * @var     string|null
      * @since   Kunena 6.0
      */
     public mixed $filename_real = null;

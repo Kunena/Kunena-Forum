@@ -69,7 +69,6 @@ class TopicListingUnreadDisplay extends ListDisplay
         $this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
         $this->state    = $this->model->getState();
         $this->me       = KunenaUserHelper::getMyself();
-        $this->moreUri  = null;
         $this->access   = KunenaAccess::getInstance();
         $start          = $this->state->get('list.start');
         $limit          = $this->state->get('list.limit');
@@ -138,10 +137,6 @@ class TopicListingUnreadDisplay extends ListDisplay
 
             $this->mesIds     = [];
             $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
-        }
-
-        if ($this->moreUri) {
-            $this->pagination->setUri($this->moreUri);
         }
 
         if ($this->topics) {

@@ -25,6 +25,9 @@ use ReturnTypeWillChange;
 /**
  * Kunena Item Collection.
  *
+ * @implements ArrayAccess<array-key, mixed>
+ * @implements IteratorAggregate<array-key, mixed>
+ *
  * @since   Kunena 6.0
  */
 class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate

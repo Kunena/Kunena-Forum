@@ -311,7 +311,7 @@ class KunenaLayout extends KunenaBase
      * @param   KunenaCategory  $category   category
      * @param   null            $content    content
      * @param   null            $title      title
-     * @param   null            $class      class
+     * @param   string|null     $class      class
      * @param   bool            $follow     follow
      * @param   null            $canonical  canonical
      *
@@ -477,7 +477,7 @@ class KunenaLayout extends KunenaBase
      * @param   null                 $action     action
      * @param   null                 $content    content
      * @param   null                 $title      title
-     * @param   null                 $class      class
+     * @param   string|null          $class      class
      * @param   KunenaCategory|null  $category   category
      * @param   bool                 $follow     follow
      * @param   bool                 $canonical  canonical

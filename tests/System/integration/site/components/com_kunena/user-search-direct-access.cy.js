@@ -51,9 +51,22 @@ describe('Kunena user search: the autocomplete works with direct component acces
 
   it('shows the names in the autocomplete of the search form', () => {
     cy.visit(`${base}&view=search&Itemid=${menuId}`);
-    // Tribute opens its list after its trigger, the @ (search.js keeps the default of Tribute).
-    cy.get('#kusersearch').should('be.visible').type('@ci-');
-    cy.get('.tribute-container').should('be.visible').and('contain', 'ci-admin');
+    // The list opens after two letters (user-autocomplete.js; Tribute needed an @ in front of the name).
+    cy.get('#kusersearch').should('be.visible').type('ci-');
+    cy.get('#kusersearch').should('have.attr', 'aria-expanded', 'true');
+    cy.get('.kunena-autocomplete').should('be.visible').and('contain', 'ci-admin');
+    // The arrows and Enter take a name as it is, without sending the form: the page stays (its mark stays).
+    cy.window().then((win) => {
+      win.kunenaSamePage = true;
+    });
+    cy.get('.kunena-autocomplete [role="option"]').then(($options) => {
+      const index = [...$options].findIndex((option) => option.textContent.trim() === 'ci-admin');
+
+      expect(index, 'the place of ci-admin in the list').to.be.greaterThan(-1);
+      cy.get('#kusersearch').type('{downArrow}'.repeat(index + 1)).type('{enter}');
+    });
+    cy.get('#kusersearch').should('have.value', 'ci-admin').and('have.attr', 'aria-expanded', 'false');
+    cy.window().its('kunenaSamePage').should('eq', true);
   });
 
   it('gives the names from the address of the user list', () => {

@@ -35,9 +35,8 @@ if ($bootstrap) {
 
 echo $this->subLayout('Widget/Datepicker');
 
-// Load tribute script and css to have autocomplte on user field
-$this->addScript('tribute.js');
-$this->addStyleSheet('tribute.css');
+// The names of the users while a name is typed in the user field (search.js attaches it)
+$this->addScript('user-autocomplete.js');
 $this->addScript('assets/js/search.js');
 KunenaFactory::getTemplate()->addScriptOptions('com_kunena.usersearch_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json', false));
 ?>

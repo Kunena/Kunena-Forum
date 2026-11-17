@@ -20,7 +20,8 @@ use RecursiveIteratorIterator;
 
 /**
  * A script of the template which needs a library: the layout which loads the script loads the library too (the user list loaded
- * search.js without tribute.js, so the page had the error "Tribute is not defined").
+ * search.js without the library of the autocomplete, so the page had the error "Tribute is not defined"; the autocomplete is now
+ * Kunena's own user-autocomplete.js).
  */
 class ScriptDependenciesTest extends UnitTestCase
 {
@@ -30,7 +31,7 @@ class ScriptDependenciesTest extends UnitTestCase
      * Script => the global which it uses => the file which gives it.
      */
     private const NEEDS = [
-        'assets/js/search.js' => ['Tribute', "addScript('tribute.js')"],
+        'assets/js/search.js' => ['KunenaUserAutocomplete', "addScript('user-autocomplete.js')"],
     ];
 
     /**
@@ -55,7 +56,7 @@ class ScriptDependenciesTest extends UnitTestCase
     public function testTheScriptsReallyUseTheLibraries(): void
     {
         foreach (self::NEEDS as $script => [$global]) {
-            $this->assertStringContainsString("new $global(", Files::read(self::TEMPLATE . '/' . $script), "$script does not use $global (anymore): update NEEDS.");
+            $this->assertMatchesRegularExpression('/\b' . preg_quote($global, '/') . '\b/', Files::read(self::TEMPLATE . '/' . $script), "$script does not use $global (anymore): update NEEDS.");
         }
     }
 
@@ -78,6 +79,6 @@ class ScriptDependenciesTest extends UnitTestCase
 
     public function testTheLibraryOfTheScriptIsThere(): void
     {
-        $this->assertFileExists(Files::path('src/media/kunena/core/js/tribute.js'));
+        $this->assertFileExists(Files::path('src/media/kunena/core/js/user-autocomplete.js'));
     }
 }

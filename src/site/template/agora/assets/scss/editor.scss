@@ -378,21 +378,6 @@ textarea.span12,
   }
 }
 
-/* The mentions (tribute) and the emojis. */
-.tribute-container {
-  z-index: 1080;
-  overflow: hidden;
-  color: var(--agora-text);
-  background: var(--agora-surface);
-  border: 1px solid var(--agora-border);
-  border-radius: var(--agora-radius);
-  box-shadow: var(--agora-shadow-raised);
-
-  li.highlight {
-    background: var(--agora-surface-hover);
-  }
-}
-
 /* The form of a category in the forum (the moderators): the fields in a table of Aurelia. */
 #adminForm {
   /* The tabs of the category on more lines when they do not fit (no scroll bar under them). */

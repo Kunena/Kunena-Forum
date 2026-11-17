@@ -514,6 +514,7 @@ class ToolsController extends FormController
             }
 
             header('Content-type: application/json');
+            // JSON with its content type: the browser does not show it as HTML (psalm.xml, TaintedHtml).
             echo json_encode($response);
             flush();
             jexit();
@@ -953,7 +954,7 @@ class ToolsController extends FormController
             try {
                 $db->execute();
             } catch (Exception $e) {
-                echo $e->getMessage();
+                echo htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
             }
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_COLUMN_LANGUAGE_HAS_BEEN_CREATED'), 'message');
@@ -996,7 +997,7 @@ class ToolsController extends FormController
             try {
                 $db->execute();
             } catch (Exception $e) {
-                echo $e->getMessage();
+                echo htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
             }
 
             // Move values of old socials columns to the JSON in column socials
@@ -1299,7 +1300,7 @@ class ToolsController extends FormController
                         try {
                             $db->execute();
                         } catch (Exception $e) {
-                            echo $e->getMessage();
+                            echo htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
                         }
                     }
 

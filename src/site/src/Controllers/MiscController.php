@@ -64,6 +64,7 @@ class MiscController extends KunenaController
                 $name = (string) KunenaFactory::getConfig()->template;
             }
 
+            // The name of an existing folder of the templates ([\w-] only), checked above (psalm.xml, TaintedCookie).
             setcookie('kunena_template', $name, 0, Uri::root(true) . '/', '', true);
         } else {
             setcookie('kunena_template', '', time() - 3600, Uri::root(true) . '/', '', true);

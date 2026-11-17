@@ -94,6 +94,7 @@ class CategoryDisplay extends KunenaControllerDisplay
         );
         Factory::getApplication()->sendHeaders();
 
+        // JSON with its content type: the browser does not show it as HTML (psalm.xml, TaintedHtml).
         echo json_encode($response);
     }
 

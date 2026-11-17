@@ -1009,7 +1009,8 @@ class KunenaAttachment extends KunenaDatabaseObject
         }
 
         // Hash, size and MIME are set during saving, so let's deal with all other variables.
-        $this->userid    = \is_null($this->userid) ? KunenaUserHelper::getMyself() : $this->userid;
+        // The id of the user (a KunenaUser is no text: the folder below would fail on it).
+        $this->userid    = \is_null($this->userid) ? (int) KunenaUserHelper::getMyself()->userid : (int) $this->userid;
         $this->folder    = \is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
         $this->protected = KunenaConfig::getInstance()->attachmentProtection ? 1 : 0;
         $this->status    = \is_null($this->status) ? 0 : $this->status;
@@ -1223,10 +1224,12 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         $upload = KunenaUpload::getInstance(KunenaAttachmentHelper::getExtensions($catid, $this->userid));
 
-        $uploadBasePath = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/';
+        // The folder of the files of the user: named by the id of the user, a number.
+        $userFolder     = 'media/kunena/attachments/' . (int) $this->userid;
+        $uploadBasePath = JPATH_ROOT . '/' . $userFolder . '/';
 
         if (!is_dir($uploadBasePath)) {
-            mkdir(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/');
+            mkdir($uploadBasePath);
         }
 
         $upload->splitFilename($fileInput['name']);
@@ -1305,7 +1308,7 @@ class KunenaAttachment extends KunenaDatabaseObject
             $this->protected     = (bool) $config->attachmentProtection;
             $this->hash          = md5_file($uploadBasePath . $fileNameWithExt);
             $this->size          = $file->size;
-            $this->folder        = 'media/kunena/attachments/' . $this->userid;
+            $this->folder        = $userFolder;
             $this->filename      = $fileInput['name'];
             $this->filename_real = $uploadBasePath . $fileNameWithExt;
             $this->caption       = '';

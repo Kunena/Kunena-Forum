@@ -172,6 +172,7 @@ abstract class KunenaLinkPreview
             'http' => ['timeout' => $timeout, 'follow_location' => 0, 'ignore_errors' => true, 'header' => "Host: $hostHeader\r\nUser-Agent: $agent\r\nAccept: text/html,application/xhtml+xml\r\n"],
             'ssl'  => ['peer_name' => $host, 'SNI_enabled' => true, 'verify_peer' => true, 'verify_peer_name' => true],
         ]);
+        // The address of the DNS was checked as public above, and only it is read (psalm.xml, TaintedSSRF and TaintedFile).
         $body = @file_get_contents($target, false, $context, 0, 262144);
 
         if ($body === false || $body === '') {

@@ -163,7 +163,7 @@ class KunenaModel extends BaseDatabaseModel
      * @param   int     $default  default
      * @param   string  $hash     hash
      *
-     * @return  mixed  The integer of the request (the filter int of Joomla), or the default.
+     * @return  integer  The integer of the request (the filter int of Joomla), or the default.
      *
      * An integer carries no text, so it is safe for every use (for the taint analysis of Psalm):
      * @psalm-taint-escape html
@@ -183,8 +183,8 @@ class KunenaModel extends BaseDatabaseModel
     {
         $value = $this->getVar($name, $default, $hash, 'int');
 
-        // A list in the request (id[]=1) is no value: the default is used.
-        return \is_array($value) ? $default : $value;
+        // A list in the request (id[]=1) is no value: the default is used. The cast also tells Psalm that no text is left.
+        return (int) (\is_array($value) ? $default : $value);
     }
 
     /**

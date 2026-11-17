@@ -29,5 +29,5 @@ if (!$exception) {
 }
 ?>
 <div class="kmsgattach">
-    <?php echo $exception->getMessage(); ?>
+    <?php echo $this->escape($exception->getMessage()); ?>
 </div>

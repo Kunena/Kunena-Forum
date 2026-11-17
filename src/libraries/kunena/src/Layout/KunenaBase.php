@@ -628,13 +628,15 @@ class KunenaBase extends KunenaLayoutBase
 
         Log::add($error, Log::CRITICAL, 'com_kunena');
 
-        $error = "<b>Rendering Error</b> in layout <b>{$this->_name}</b>: {$e->getMessage()}";
+        // The message of an exception can hold a text of the request (an id, a name...): the page shows it as text.
+        $html  = static fn ($value): string => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+        $error = "<b>Rendering Error</b> in layout <b>{$html($this->_name)}</b>: {$html($e->getMessage())}";
 
         if ($this->debug) {
-            $error .= " in <b>{$location['file']}</b> on line {$location['line']}<br />";
+            $error .= " in <b>{$html($location['file'] ?? '')}</b> on line {$html($location['line'] ?? '')}<br />";
 
             if (isset($caller['file'])) {
-                $error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
+                $error .= "Layout was rendered in <b>{$html($caller['file'])}</b> on line {$html($caller['line'] ?? '')}";
             }
         } else {
             $error .= '. Please enable debug mode for more information.';

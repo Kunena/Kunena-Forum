@@ -54,6 +54,7 @@ $paths  = [
     'JPATH_PLUGINS'            => $joomlaRoot . '/plugins',
     'JPATH_THEMES'             => $joomlaRoot . '/templates',
     'KPATH_ADMIN'              => $kunena . '/admin',
+    'KPATH_FRAMEWORK'          => $kunena . '/libraries/kunena',
     'KPATH_SITE'               => $kunena . '/site',
     'KPATH_MEDIA'              => $kunena . '/media/kunena',
     'KPATH_COMPONENT_RELATIVE' => 'components/com_kunena',

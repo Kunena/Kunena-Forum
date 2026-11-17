@@ -81,6 +81,8 @@ abstract class KunenaTemplateHelper
      */
     public static function parseKunenaInstallFile(string $path)
     {
+        // The path of a template of the folder of the templates: the callers check the name (isSafeTemplateName(), the list of
+        // the folders) (psalm.xml, TaintedSSRF and TaintedFile).
         $xml = simplexml_load_file($path);
 
         if (!$xml || $xml->getName() != 'kinstall') {

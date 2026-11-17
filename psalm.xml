@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <!--
-    The static analysis of Kunena: vendor/bin/psalm, and the taint analysis (the flow of the data of the request to the HTML, the
-    SQL, the files...) with the option taint-analysis. Both need the environment variable KUNENA_TEST_JOOMLA=/path/to/joomla.
+    The static analysis of Kunena: vendor/bin/psalm. Since Psalm 7 it also runs the taint analysis (the flow of the data of the
+    request to the HTML, the SQL, the files...), which the option taint-analysis runs on its own. Both need the environment
+    variable KUNENA_TEST_JOOMLA=/path/to/joomla.
 
     Psalm needs the classes of Joomla (a Joomla installation, like for the unit tests: tests/Psalm/autoload.php, which also adds the
     namespaces of the components of Joomla), the stub tests/Psalm/JoomlaInput.phpstub tells it that the values of the request (the
@@ -98,6 +99,13 @@
             </errorLevel>
         </UndefinedConstant>
 
+        <!-- Agora's template.php includes Aurelia's after its own check of _JEXEC: Psalm reads the check of the included file as a
+             second one on the same path. The file needs it when it is loaded on its own. -->
+        <ParadoxicalCondition>
+            <errorLevel type="suppress">
+                <file name="src/site/template/aurelia/template.php" />
+            </errorLevel>
+        </ParadoxicalCondition>
         <!-- Reported on the DateTime of PHP which KunenaDate extends (through Date of Joomla); Kunena does not override these. -->
         <MethodSignatureMustProvideReturnType errorLevel="suppress" />
 
@@ -117,8 +125,32 @@
                 <file name="src/site/src/Controllers/TopicController.php" />
                 <file name="src/site/src/Controllers/UserController.php" />
                 <file name="src/site/src/View/Topic/view.json.php" />
+                <file name="src/site/src/Controller/Application/Category/Raw/CategoryDisplay.php" />
+                <!-- The tools answer the AJAX of the recount in JSON; the other texts of the file are escaped. -->
+                <file name="src/admin/src/Controller/ToolsController.php" />
             </errorLevel>
         </TaintedHtml>
+        <!-- The link preview reads the page from the address which the DNS gave and which was checked as a public one (the
+             protection against SSRF itself); the template helper reads the XML of a template whose name the callers check
+             (isSafeTemplateName(), the list of the folders of the templates). -->
+        <TaintedSSRF>
+            <errorLevel type="suppress">
+                <file name="src/libraries/kunena/src/Html/KunenaLinkPreview.php" />
+                <file name="src/libraries/kunena/src/Template/KunenaTemplateHelper.php" />
+            </errorLevel>
+        </TaintedSSRF>
+        <TaintedFile>
+            <errorLevel type="suppress">
+                <file name="src/libraries/kunena/src/Html/KunenaLinkPreview.php" />
+                <file name="src/libraries/kunena/src/Template/KunenaTemplateHelper.php" />
+            </errorLevel>
+        </TaintedFile>
+        <!-- The cookie of the template: the name of an existing folder of the templates ([\w-] only), checked before it is set. -->
+        <TaintedCookie>
+            <errorLevel type="suppress">
+                <file name="src/site/src/Controllers/MiscController.php" />
+            </errorLevel>
+        </TaintedCookie>
 
         <!-- KunenaBase::__get() calls $this->closures[...]: set() only puts objects with __invoke() there, a text goes to a
              property. -->

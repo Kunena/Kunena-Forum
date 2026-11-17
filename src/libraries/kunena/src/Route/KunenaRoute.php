@@ -254,6 +254,8 @@ abstract class KunenaRoute
      * With $xhtml (the default) the address is escaped for HTML by Route::link() of Joomla (htmlspecialchars, ENT_COMPAT: not the
      * single quotes).
      * @psalm-taint-escape ($xhtml is true ? 'html' : null)
+     * Every call is its own flow (an address of the request in one call is not in the addresses of the other calls):
+     * @psalm-taint-specialize
      *
      * @since   Kunena 6.0
      * @throws  Exception

@@ -30,6 +30,9 @@ abstract class KunenaAvatarGalleryName
      *
      * @return  string|null  The name of one folder, or null when it is none.
      *
+     * One part of a path, never "." or "..": safe to join to the folder of the galleries (for the taint analysis of Psalm).
+     * @psalm-taint-escape file
+     *
      * @since   Kunena 8.0
      */
     public static function clean($name): ?string
@@ -98,8 +101,15 @@ abstract class KunenaAvatarGalleryName
      */
     public static function pictures(string $galleriesPath, string $gallery): array
     {
-        if ($gallery !== '' && self::clean($gallery) !== $gallery) {
-            return [];
+        if ($gallery !== '') {
+            $clean = self::clean($gallery);
+
+            // A name which cleaning changes is not the name of a gallery.
+            if ($clean !== $gallery) {
+                return [];
+            }
+
+            $gallery = $clean;
         }
 
         $folder = $gallery === '' ? $galleriesPath : $galleriesPath . '/' . $gallery;

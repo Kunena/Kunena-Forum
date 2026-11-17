@@ -4,6 +4,9 @@ This page is for the builders of third-party Kunena templates and of template ov
 changed in the code that a template uses: scripts, layouts, HTML helpers, template settings and language strings. Each entry says
 what to use instead.
 
+The PHP classes, methods, tasks, events and bundled libraries which changed are in
+[Upgrading code to Kunena 8.0](../development/upgrading-to-8.0.md).
+
 A template that extends Aurelia and overrides only some layouts is affected by the layouts it overrides and by the scripts it loads
 itself. The layouts it does not override come from Aurelia and are already up to date.
 

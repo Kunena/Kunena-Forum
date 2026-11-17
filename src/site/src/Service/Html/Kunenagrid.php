@@ -16,10 +16,7 @@ namespace Kunena\Forum\Site\Service\Html;
 \defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
@@ -30,93 +27,6 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
  */
 class Kunenagrid
 {
-    /**
-     * Display a boolean setting widget.
-     *
-     * @param   integer      $i        The row index.
-     * @param   integer      $value    The value of the boolean field.
-     * @param   string|null  $taskOn   Task to turn the boolean setting on.
-     * @param   string|null  $taskOff  Task to turn the boolean setting off.
-     *
-     * @return  string   The boolean setting widget.
-     *
-     * @throws Exception
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public static function boolean(int $i, int $value, $taskOn = null, $taskOff = null): string
-    {
-        // Load the behavior.
-        self::behavior();
-
-        // Build the title.
-        $title = ($value) ? Text::_('COM_KUNENA_YES') : Text::_('COM_KUNENA_NO');
-        $title .= '::' . Text::_('COM_KUNENA_LIB_CLICK_TO_TOGGLE_STATE');
-
-        // Build the <a> tag.
-        $bool   = ($value) ? 'true' : 'false';
-        $task   = ($value) ? $taskOff : $taskOn;
-        $toggle = (!$task) ? false : true;
-
-        if ($toggle) {
-            return '<a class="grid_' . $bool . ' hasTip" data-bs-toggle="tooltip" title="' . $title . '" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" href="#toggle"></a>';
-        }
-
-        return '<a class="grid_' . $bool . '" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}"></a>';
-    }
-
-    /**
-     * @return  void
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public static function behavior(): void
-    {
-        static $loaded = false;
-
-        if (!$loaded) {
-            HTMLHelper::_('behavior.tooltip');
-
-            // Build the behavior script.
-            $js = '
-		window.addEvent(\'domready\', function(){
-			actions = $$(\'a.move_up\');
-			actions.combine($$(\'a.move_down\'));
-			actions.combine($$(\'a.grid_true\'));
-			actions.combine($$(\'a.grid_false\'));
-			actions.combine($$(\'a.grid_trash\'));
-			actions.combine($$(\'a.grid_action\'));
-			actions.each(function(a){
-				a.addEvent(\'click\', function(){
-					args = JSON.decode(this.rel);
-					listItemTask(args.id, args.task);
-				});
-			});
-			$$(\'input.check-all-toggle\').each(function(el){
-				el.addEvent(\'click\', function(){
-					if (el.checked) {
-						document.id(this.form).getElements(\'input[type=checkbox]\').each(function(i){
-							i.checked = true;
-						})
-					}
-					else {
-						document.id(this.form).getElements(\'input[type=checkbox]\').each(function(i){
-							i.checked = false;
-						})
-					}
-				});
-			});
-		});';
-
-            // Add the behavior to the document head.
-            $document = Factory::getApplication()->getDocument();
-            $document->addScriptDeclaration($js);
-
-            $loaded = true;
-        }
-    }
-
     /**
      * @param   string       $title          The link title
      * @param   string       $order          The order field for the column
@@ -150,61 +60,6 @@ class Kunenagrid
         $html .= '</a>';
 
         return $html;
-    }
-
-    /**
-     * @param   mixed    $row         row
-     * @param   integer  $i           i
-     * @param   string   $identifier  identifier
-     *
-     * @return  string
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public static function checkedOut($row, int $i, $identifier = 'id'): string
-    {
-        $userid = Factory::getApplication()->getIdentity()->get('id');
-
-        if ($row instanceof Table) {
-            $result = $row->isCheckedOut($userid);
-        } else {
-            $result = false;
-        }
-
-        if ($result) {
-            return self::_checkedOut($row);
-        }
-
-        if ($identifier == 'id') {
-            return self::id($i, $row->$identifier);
-        }
-
-        return self::id($i, $row->$identifier, $result, $identifier);
-    }
-
-    /**
-     * @param   mixed  $row      row
-     * @param   int    $overlib  overlib
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    protected static function _checkedOut($row, $overlib = 1): string
-    {
-        $hover = '';
-
-        if ($overlib) {
-            $text = addslashes(htmlspecialchars($row->editor, ENT_COMPAT, 'UTF-8'));
-
-            $date = HTMLHelper::_('date', $row->checked_out_time, Text::_('DATE_FORMAT_LC1'));
-            $time = HTMLHelper::_('date', $row->checked_out_time, 'H:i');
-
-            $hover = '<span class="editlinktip hasTip" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_LIB_CHECKED_OUT') . '::' . $text . '<br />' . $date . '<br />' . $time . '">';
-        }
-
-        return $hover . HTMLHelper::_('image', 'admin/checked_out.png', null, null, true) . '</span>';
     }
 
     /**
@@ -376,61 +231,5 @@ class Kunenagrid
     public static function task(int $i, string $img, string $alt, string $task, $prefix = '', $bootstrap = false)
     {
         return self::action($i, $task, $prefix, $alt, '', $task, $bootstrap, '<img loading=lazy src="' . KunenaFactory::getTemplate()->getImagePath($img) . '" alt="' . $alt . '" data-bs-toggle="tooltip" title="' . $alt . '" />');
-    }
-
-    /**
-     * @param   mixed   $rows   rows
-     * @param   string  $image  image
-     * @param   string  $task   task
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public static function order($rows, $image = 'filesave.png', $task = 'saveOrder'): string
-    {
-        return '<a href="javascript:saveOrder(' . (\count($rows) - 1) . ', \'' . $task . '\')" class="saveOrder" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
-    }
-
-    /**
-     * @param   mixed   $i        i
-     * @param   mixed   $task     task
-     * @param   bool    $enabled  enabled
-     * @param   string  $alt      alt
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public static function orderUp($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_UP'): string
-    {
-        $alt = Text::_($alt);
-
-        if ($enabled) {
-            return '<a class="move_up" href="#order" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" data-bs-toggle="tooltip" title="' . $alt . '"></a>';
-        }
-
-        return '<span class="move_up"></span>';
-    }
-
-    /**
-     * @param   mixed   $i        i
-     * @param   mixed   $task     task
-     * @param   bool    $enabled  enabled
-     * @param   string  $alt      alt
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    public static function orderDown($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_DOWN'): string
-    {
-        $alt = Text::_($alt);
-
-        if ($enabled) {
-            return '<a class="move_down" href="#order" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" data-bs-toggle="tooltip" title="' . $alt . '"></a>';
-        }
-
-        return '<span class="move_down"></span>';
     }
 }

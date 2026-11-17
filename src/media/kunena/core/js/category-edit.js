@@ -1,56 +1,71 @@
 /**
- * Kunena       Component
- * @package     Kunena.BackendTemplate
+ * Kunena Component
+ * @package Kunena.Media
  *
  * @copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
- * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link https://www.kunena.org
  **/
 
-jQuery(document).ready(function ($) {
-	const input_alias = $("#jform_aliases");
-	const box = $("#aliascheck");
-	const info = $("#aliasinfo");
-	const apply = $(".button-apply");
-	const save = $(".button-save");
-	const savenew = $(".button-save-new");
-	const savecopy = $(".button-save-copy");
+// The aliases of a category (the form of a category in the backend and in the forum): while an alias is typed, the server says
+// whether another category has it (task category.chkaliases); the buttons which save are disabled while it is taken.
+(function () {
+	'use strict';
 
-	input_alias.on('input', function () {
-		$.ajax({
-			dataType: "json",
-			url: "index.php?option=com_kunena&view=category&task=category.chkaliases&alias=" + encodeURIComponent(input_alias.val()) + "&catid=" + encodeURIComponent($('input[name="catid"]').val() || 0) + "&format=json"
-		}).done(function (response) {
-			if (!response.msg) {
-				input_alias.addClass("inputbox invalid-border");
+	const init = () => {
+		const input = document.getElementById('jform_aliases');
 
-				if (box.length) {
-					apply.prop('disabled', true);
-					save.prop('disabled', true);
-					savenew.prop('disabled', true);
-					savecopy.prop('disabled', true);
-				}
+		if (!input) {
+			return;
+		}
 
-				box.removeClass("valid icon-ok");
-				box.addClass("invalid icon icon-remove");
-				box.html(Joomla.Text._('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS'));
+		const box = document.getElementById('aliascheck');
+		const info = document.getElementById('aliasinfo');
+		const buttons = () => document.querySelectorAll('.button-apply, .button-save, .button-save-new, .button-save-copy');
+		let request = null;
+
+		input.addEventListener('input', () => {
+			const catid = (document.querySelector('input[name="catid"]') || {}).value || 0;
+			const url = `index.php?option=com_kunena&view=category&task=category.chkaliases&alias=${encodeURIComponent(input.value)}&catid=${encodeURIComponent(catid)}&format=json`;
+
+			// Only the answer of the last alias counts.
+			if (request) {
+				request.abort();
 			}
-			else {
-				input_alias.addClass("inputbox");
-				input_alias.removeClass("invalid-border");
 
-				if (box.length) {
-					apply.prop('disabled', false);
-					save.prop('disabled', false);
-					savenew.prop('disabled', false);
-					savecopy.prop('disabled', false);
-				}
+			request = new AbortController();
+			fetch(url, { credentials: 'same-origin', headers: { Accept: 'application/json' }, signal: request.signal })
+				.then((response) => response.json())
+				.then((answer) => {
+					const free = Boolean(answer && answer.msg);
 
-				if (box.length) {
-					info.addClass("valid icon icon-ok");
-					info.html("");
-				}
-			}
+					input.classList.add('inputbox');
+					input.classList.toggle('invalid-border', !free);
+
+					if (box) {
+						buttons().forEach((button) => {
+							button.disabled = !free;
+						});
+					}
+
+					if (!free && box) {
+						box.classList.remove('valid', 'icon-ok');
+						box.classList.add('invalid', 'icon', 'icon-remove');
+						box.textContent = Joomla.Text._('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
+					} else if (free && box && info) {
+						info.classList.add('valid', 'icon', 'icon-ok');
+						info.textContent = '';
+					}
+				})
+				.catch(() => {
+					// An aborted check (a newer alias), or no answer: the form stays as it is.
+				});
 		});
-	});
-});
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
+	}
+})();

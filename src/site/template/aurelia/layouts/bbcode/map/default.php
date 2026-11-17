@@ -88,7 +88,7 @@ if (!empty($this->config->googleMapApiKey)) {
 		var geocoder;
 		var {$mapid};
 
-		jQuery(document).ready(function() {
+		document.addEventListener('DOMContentLoaded', function() {
 			geocoder = new google.maps.Geocoder();
 			var latlng = new google.maps.LatLng(60.173602,24.940978);
 			var myOptions = {

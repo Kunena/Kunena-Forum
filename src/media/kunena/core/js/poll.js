@@ -7,48 +7,69 @@
  * @link https://www.kunena.org
  **/
 
-jQuery(document).ready(function ($) {
-	const results = $('#poll-results');
-	const hide = $('#kpoll_hide_results');
+// The poll of a topic: the buttons which show and hide its results, and the links which show all the voters or fewer of them.
+(function () {
+	'use strict';
 
-	$('#kpoll_go_results').click(function () {
-		if (results.is(':visible') === true) {
-			results.hide();
-			hide.hide();
-		}
-		else {
-			results.show();
-			hide.show();
-			$('#kpoll_go_results').hide();
-		}
-	});
+	// The elements start hidden by their style attribute: showing one takes that away.
+	const show = (element) => element && (element.style.display = '');
+	const hide = (element) => element && (element.style.display = 'none');
+	const visible = (element) => Boolean(element) && element.getClientRects().length > 0;
 
-	hide.click(function () {
-		if (results.is(':visible') === true) {
-			results.hide();
-			hide.show();
-			$('#kpoll_hide_results').hide();
-		}
-		else {
-			results.show();
-			hide.show();
-			$('#kpoll_go_results').hide();
-		}
-	});
+	const init = () => {
+		const results = document.getElementById('poll-results');
+		const goResults = document.getElementById('kpoll_go_results');
+		const hideResults = document.getElementById('kpoll_hide_results');
 
-	/* Under a poll : show more users list */
-	$(".link-show-extra-users").off('click').on('click', function (event) {
-	        event.preventDefault();
+		if (goResults) {
+			goResults.addEventListener('click', () => {
+				if (visible(results)) {
+					hide(results);
+					hide(hideResults);
+				} else {
+					show(results);
+					show(hideResults);
+					hide(goResults);
+				}
+			});
+		}
 
-	        if (!$(this).hasClass('link-show-more')) {
-	            $("#kpoll-moreusers-span").hide();
-	            $("#kpoll-moreusers").show();
-	            $(this).hide();
-	        } else {
-	            $("#kpoll-moreusers").hide();
-	            $("#kpoll-moreusers-span").show();
-	            $("#kpoll-lessusers").show();
-	            $(this).hide();
-	        }
-	 });
-});
+		if (hideResults) {
+			hideResults.addEventListener('click', () => {
+				if (visible(results)) {
+					hide(results);
+					show(hideResults);
+					hide(hideResults);
+				} else {
+					show(results);
+					show(hideResults);
+					hide(goResults);
+				}
+			});
+		}
+
+		/* Under a poll: all the users who voted, or fewer of them. */
+		document.querySelectorAll('.link-show-extra-users').forEach((link) => {
+			link.addEventListener('click', (event) => {
+				event.preventDefault();
+
+				if (!link.classList.contains('link-show-more')) {
+					hide(document.getElementById('kpoll-moreusers-span'));
+					show(document.getElementById('kpoll-moreusers'));
+				} else {
+					hide(document.getElementById('kpoll-moreusers'));
+					show(document.getElementById('kpoll-moreusers-span'));
+					show(document.getElementById('kpoll-lessusers'));
+				}
+
+				hide(link);
+			});
+		});
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
+	}
+})();

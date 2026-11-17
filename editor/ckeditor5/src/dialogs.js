@@ -97,8 +97,9 @@ function field(label, input) {
  * read when the message is saved.
  */
 export function openPollDialog() {
-	const $ = window.jQuery;
-	const maximum = parseInt($('#nb_options_allowed').val(), 10) || 0;
+	// The value of the first field which exists (undefined when none does).
+	const valueOf = (selector) => document.querySelector(selector)?.value;
+	const maximum = parseInt(valueOf('#nb_options_allowed'), 10) || 0;
 	const container = document.getElementById('poll_options');
 	const list = element('div', { class: 'kunena-poll-options' });
 	const title = element('input', { type: 'text', maxlength: '100' });
@@ -137,25 +138,25 @@ export function openPollDialog() {
 	});
 
 	// The poll which is edited, or the values of an earlier use of this dialog.
-	title.value = $('#poll_options input[name="poll_title"]').val() ?? $('#ckeditor_dialog_polltitle').val() ?? '';
-	lifespan.value = String($('#poll_options input[name="poll_time_to_live"]').val() ?? $('#ckeditor_dialog_polltimetolive').val() ?? '').slice(0, 10);
+	title.value = valueOf('#poll_options input[name="poll_title"]') ?? valueOf('#ckeditor_dialog_polltitle') ?? '';
+	lifespan.value = String(valueOf('#poll_options input[name="poll_time_to_live"]') ?? valueOf('#ckeditor_dialog_polltimetolive') ?? '').slice(0, 10);
 
-	const kept = $('#poll_options input[name^="polloptionsID"]');
+	const kept = document.querySelectorAll('#poll_options input[name^="polloptionsID"]');
 
 	if (kept.length) {
-		kept.each(function () {
-			const match = /\[(new)?(\d+)\]$/.exec(this.name);
+		kept.forEach((input) => {
+			const match = /\[(new)?(\d+)\]$/.exec(input.name);
 
 			if (match) {
-				match[1] ? (created = Math.max(created, +match[2]), addOption(this.value, `new${match[2]}`)) : addOption(this.value, match[2]);
+				match[1] ? (created = Math.max(created, +match[2]), addOption(input.value, `new${match[2]}`)) : addOption(input.value, match[2]);
 			}
 		});
 	} else {
-		$('.ckeditor_dialog_polloption').each(function () {
-			const id = (/\d+$/.exec(this.name) ?? [])[0];
+		document.querySelectorAll('.ckeditor_dialog_polloption').forEach((input) => {
+			const id = (/\d+$/.exec(input.name) ?? [])[0];
 
 			if (id) {
-				addOption(this.value, id);
+				addOption(input.value, id);
 			}
 		});
 	}

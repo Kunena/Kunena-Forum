@@ -29,16 +29,23 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('multiselect');
 
 $this->document->addScriptDeclaration(
-    ' var max_count = ' . (int) $this->config->maxSig . '
-jQuery(function($) {
-	jQuery(\'#user-signature\').keypress(function (e) {
-		var len = jQuery(this).val().length;
+    ' var max_count = ' . (int) $this->config->maxSig . ';
+document.addEventListener(\'DOMContentLoaded\', function () {
+	// The signature: no key beyond the limit, and the characters which are left in the counter.
+	var signature = document.getElementById(\'user-signature\');
+	var counter = document.getElementById(\'current_count\');
+
+	if (!signature) {
+		return;
+	}
+
+	signature.addEventListener(\'keypress\', function (e) {
+		var len = signature.value.length;
+
 		if (len > max_count) {
 			e.preventDefault();
-		} else if (len <= max_count) {
-			var char = max_count - len;
-
-			jQuery(\'#current_count\').val(char);
+		} else if (counter) {
+			counter.value = max_count - len;
 		}
 	});
 });

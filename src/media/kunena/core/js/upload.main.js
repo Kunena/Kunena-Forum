@@ -7,792 +7,782 @@
  * @link https://www.kunena.org
  **/
 
-jQuery(function ($) {
+(function () {
 	'use strict';
 
-    // Single declaration of global variables at the top
-    let fileCount = 0;
-    let filesedit = null;
-    let fileeditinline = 0;
+	// The files of the message: how many there are, those of the edited message (from the server), and how many of those are in
+	// the text.
+	let fileCount = 0;
+	let filesedit = null;
+	let fileeditinline = 0;
 
-    // Escape a value which is written into an html attribute.
-    const escapeAttr = function (value) {
-        return String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    };
+	// The data of each button of a file (the answer of the upload, or the file of the edited message).
+	const buttonData = new WeakMap();
 
-    const deleteAttachment = function (fileId) {
-        return $.ajax({
-            url: Joomla.getOptions('com_kunena.kunena_upload_files_rem'),
-            type: 'POST',
-            data: {
-                files_id_delete: fileId
-            }
-        });
-    };
+	const byId = (id) => document.getElementById(id);
+	const text = (key) => Joomla.Text._(key);
+	const isCkeditor = () => Joomla.getOptions('com_kunena.ckeditor_config') !== undefined;
+	const privateMessages = () => Joomla.getOptions('com_kunena.privateMessage') == 1;
 
-    // Takes the [attachment=ID] tags of the file out of the editor and leaves every other character of the text as it is.
-    const removeAttachmentFromEditor = function (fileId) {
-        const tag = new RegExp('\\[attachment=' + fileId + '\\][^[\\]]+\\[/attachment\\]', 'g');
-        const isCkeditor = Joomla.getOptions('com_kunena.ckeditor_config') !== undefined;
+	const show = (element, shown = true) => {
+		if (element) {
+			element.style.display = shown ? '' : 'none';
+		}
+	};
 
-        // CKEditor 5: the tag is taken out of the texts of the editor, the paragraphs and the formatting stay as they are.
-        if (isCkeditor) {
-            const instance = window.KunenaEditor && window.KunenaEditor.get('message');
+	// The label of a button: the icon (markup of the forum, an option of the page) and a language string.
+	const setLabel = (button, icon, key) => {
+		button.innerHTML = (Joomla.getOptions(icon) || '') + ' ';
+		button.append(text(key));
+	};
 
-            if (instance) {
-                instance.removeText(tag);
-            }
+	// A button which is done: green and, when asked, disabled.
+	const markDone = (button, icon, key, disabled = false) => {
+		button.classList.remove('btn-primary', 'btn-outline-primary');
+		button.classList.add('btn-success');
+		button.disabled = disabled;
+		setLabel(button, icon, key);
+	};
 
-            return;
-        }
+	const fileIdOf = (data) => data?.file_id || data?.result?.data?.id || data?.id;
 
-        const editor = sceditor.instance(document.getElementById('message'));
-        const editorText = editor.val();
+	// The buttons of a file (in the same group), of one kind or all.
+	const siblingsOf = (button, kind) => [...button.parentElement.children]
+		.filter((other) => other !== button && other.tagName === 'BUTTON' && (!kind || other.dataset.kunenaAttachment === kind));
 
-        // The tag is not in the text: the editor is not touched.
-        if (editorText.search(tag) === -1) {
-            return;
-        }
+	const fileButtons = (kind) => [...document.querySelectorAll('#files button')]
+		.filter((button) => !kind || button.dataset.kunenaAttachment === kind);
 
-        // The source view holds the BBCode as it is, so the text is written back without a conversion.
-        if (editor.sourceMode()) {
-            editor.val(editorText.replace(tag, ''));
-
-            return;
-        }
-
-        // Writing the text back to the WYSIWYG view converts it to HTML again, which loses line breaks: the tag is taken out of
-        // the text of the document instead.
-        const body = editor.getBody();
-
-        body.normalize();
-
-        const walker = body.ownerDocument.createTreeWalker(body, NodeFilter.SHOW_TEXT);
-
-        while (walker.nextNode()) {
-            if (walker.currentNode.data.search(tag) !== -1) {
-                walker.currentNode.data = walker.currentNode.data.replace(tag, '');
-            }
-        }
-    };
-
-    const removeAttachmentFromList = function (fileId) {
-        $('#kattachs-' + fileId).remove();
-        $('#kattach-' + fileId).remove();
-        $('#kattachments-message-container').find('.attachment-removal-error').remove();
-
-        $('#files > div').each(function () {
-            const containsAttachment = $(this).find('button').toArray().some(function (button) {
-                const data = $(button).data();
-                const buttonFileId = data.result?.data?.id || data.file_id || data.id;
-
-                return String(buttonFileId) === String(fileId);
-            });
-
-            if (containsAttachment) {
-                $(this).remove();
-            }
-        });
-
-        fileCount = Math.max(0, fileCount - 1);
-        if (fileCount === 0) {
-            $('#insert-all').hide();
-            $('#remove-all').hide();
-            $('#set-secure-all').hide();
-        }
-    };
-
-    const reportRemovalFailure = function (error) {
-        console.error('Failed to remove attachment', error);
-
-        const message = error?.responseJSON?.message || Joomla.Text._('COM_KUNENA_UPLOADED_LABEL_ERROR_REMOVE_FILE');
-        $('#kattachments-message-container').find('.attachment-removal-error').remove();
-        $('<div class="alert alert-danger attachment-removal-error" role="alert"/>')
-            .text(message)
-            .appendTo('#kattachments-message-container');
-
-        if (fileCount > 0) {
-            $('#remove-all').show();
-        }
-    };
-
-	// Add click handler for remove-all button
-	$('#remove-all').on('click', function (e) {
-		e.preventDefault();
-	
-	    $('#progress').hide();
-	
-	    // Reset insert-all button state
-	    $('#insert-all').removeClass('btn-success').addClass('btn-outline-primary');
-	    $('#insert-all').html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + Joomla.Text._('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON'));
-	
-	    // Hide action buttons
-	    $('#remove-all').hide();
-	    $('#insert-all').hide();
-	    $('#set-secure-all').hide(); // Also hide the secure-all button
-	
-	    // Get editor content while preserving line breaks
-	    let editor_text = '';
-	    if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-	        editor_text = window.KunenaEditor.get('message')?.getData() ?? '';
-	    } else {
-	        editor_text = sceditor.instance(document.getElementById('message')).val();
-	    }
-	
-	    // Find all attachment BBCodes
-	    const attachmentRegex = /\[attachment=([0-9]+)\]([^[\]]+)\[\/attachment\]/g;
-	    const attachments = [];
-	    let attachmentMatches;
-	    
-	    // Collect all attachments from the editor content
-	    while ((attachmentMatches = attachmentRegex.exec(editor_text)) !== null) {
-	        attachments.push({
-	            id: parseInt(attachmentMatches[1]),
-	            filename: attachmentMatches[2]
-	        });
-	    }
-	
-	    // Also collect attachments from the #files container that aren't in the editor
-	    $('#files > div').each(function() {
-	        const $buttons = $(this).find('button');
-	        $buttons.each(function() {
-	            const $btn = $(this);
-	            const data = $btn.data();
-	            if (data.result?.data?.id || data.file_id) {
-	                const fileId = Number(data.result?.data?.id || data.file_id);
-	                if (Number.isInteger(fileId) && fileId > 0 && !attachments.some(a => Number(a.id) === fileId)) {
-	                    attachments.push({
-	                        id: fileId,
-	                        filename: data.result?.data?.filename || data.name
-	                    });
-	                }
-	            }
-	        });
-	    });
-	
-	    // Remove all attachments if we found any
-	    if (attachments.length > 0) {
-	        // Remove each attachment via AJAX
-	        let i = 0;
-	        const removeAttachments = function() {
-	            if (i < attachments.length) {
-	                const attachment = attachments[i];
-	                deleteAttachment(attachment.id).done(function (response) {
-	                    if (response.result !== true) {
-	                        reportRemovalFailure(new Error('The server did not confirm attachment removal.'));
-	                        return;
-	                    }
-
-	                    removeAttachmentFromList(attachment.id);
-	                    removeAttachmentFromEditor(attachment.id);
-	                    i++;
-	                    removeAttachments();
-	                }).fail(reportRemovalFailure);
-	            } else {
-	                // Clear the files container and reset counters
-	                $('#files').empty();
-	                fileCount = 0;
-	                fileeditinline = 0;
-	            }
-	        };
-	        removeAttachments();
-	    }
-	
-	    // Remove any alert messages
-	    $('#alert_max_file').remove();
+	const post = (url, fields) => fetch(url, {
+		method: 'POST',
+		credentials: 'same-origin',
+		headers: { Accept: 'application/json' },
+		body: fields ? new URLSearchParams(fields) : undefined
 	});
 
-	// Add click handler for set-secure-all button
-	$('#set-secure-all').on('click', function (e) {
-	    e.preventDefault();
-	
-	    const child = $('#kattach-list').find('input');
-	    const filesidtosetprivate = [];
-	    const $this = $(this);
-	
-	    child.each(function (i, el) {
-	        const elem = $(el);
-	
-	        if (!(elem.attr('id') || '').match("[a-z]{8}")) {
-	            const fileid = (elem.attr('id') || '').match("[0-9]{1,8}");
-	            filesidtosetprivate.push(fileid);
-	        }
-	    });
-	
-	    if (filesidtosetprivate.length !== 0) {
-	        $.ajax({
-	            url: Joomla.getOptions('com_kunena.kunena_upload_files_set_private') + '&files_id=' + encodeURIComponent(JSON.stringify(filesidtosetprivate)),
-	            type: 'POST'
-	        })
-	        .done(function (data) {
-	            // Update all individual private buttons
-	            $('#files button').each(function() {
-	                const $btn = $(this);
-	                if ($btn.html().includes(Joomla.Text._('COM_KUNENA_EDITOR_INSERT_PRIVATE_ATTACHMENT'))) {
-	                    $btn.removeClass('btn-primary')
-	                       .addClass('btn-success')
-	                       .prop('disabled', true)
-	                       .html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + 
-	                            Joomla.Text._('COM_KUNENA_EDITOR_ATTACHMENT_IS_SECURED'));
-	                    
-	                    // Hide the corresponding insert button in the same container
-	                    $btn.siblings('button').each(function() {
-	                        const $siblingBtn = $(this);
-	                        if ($siblingBtn.html().includes(Joomla.Text._('COM_KUNENA_EDITOR_INSERT')) ||
-	                            $siblingBtn.html().includes(Joomla.Text._('COM_KUNENA_EDITOR_IN_MESSAGE'))) {
-	                            $siblingBtn.hide();
-	                        }
-	                    });
-	                }
-	            });
-	
-	            // Update the set-secure-all button
-	            $this.removeClass('btn-primary')
-	                 .addClass('btn-success')
-	                 .prop('disabled', true)
-	                 .html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + 
-	                      Joomla.Text._('COM_KUNENA_EDITOR_ATTACHMENTS_ARE_SECURED'));
-	
-	            // Hide both insert and insert-all buttons
-	            $('button').each(function() {
-	                const $btn = $(this);
-	                if ($btn.html().includes(Joomla.Text._('COM_KUNENA_EDITOR_INSERT')) ||
-	                    $btn.html().includes(Joomla.Text._('COM_KUNENA_EDITOR_IN_MESSAGE')) ||
-	                    $btn.attr('id') === 'insert-all') {
-	                    $btn.hide();
-	                }
-	            });
-	
-	            // Explicitly hide the insert-all button
-	            $('#insert-all').hide();
-				
-				// Add the hidden field attachment_private which should contains an array list with the ids of private attachments
-				$('#kattach-list').append('<input id="attachment_private" type="hidden" name="attachment_private" value="'+ filesidtosetprivate +'" />');
-	        })
-	        .fail(function () {
-	            //TODO: handle the error of ajax request
-	        });
-	    }
-	});
-	
-	// Add click handler for insert-all button
-	$('#insert-all').on('click', function (e) {
-	    e.preventDefault();
-	
-	    const child = $('#kattach-list').find('input');
-	    const files_id = [];
-	    let content_to_inject = '';
-	
-	    child.each(function (i, el) {
-	        const elem = $(el);
-	
-	        if (!(elem.attr('id') || '').match("[a-z]{8}")) {
-	            const attachid = (elem.attr('id') || '').match("[0-9]{1,8}");
-	            const filename = elem.attr('placeholder');
-	
-	            content_to_inject += '[attachment=' + attachid + ']' + filename + '[/attachment]';
-	
-	            // Find all buttons in #files div
-	            $('#files > div').each(function() {
-	                const $buttons = $(this).find('button');
-	                $buttons.each(function() {
-	                    const $btn = $(this);
-	                    // Check if this is the insert button (not private or remove button)
-	                    if ($btn.hasClass('btn-primary') && 
-	                        !$btn.hasClass('btn-danger') && 
-	                        $btn.html().includes(Joomla.Text._('COM_KUNENA_EDITOR_INSERT')) &&
-	                        ($btn.data('result')?.data?.id == attachid || 
-	                         $btn.data('id') == attachid)) {
-	                            $btn.removeClass('btn-primary btn-outline-primary')
-	                               .addClass('btn-success')
-	                               .html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + 
-	                                    Joomla.Text._('COM_KUNENA_EDITOR_IN_MESSAGE'));
-	                            
-	                            // Hide the private button for this attachment
-	                            $(this).siblings('button').each(function() {
-	                                if ($(this).html().includes(Joomla.Text._('COM_KUNENA_EDITOR_INSERT_PRIVATE_ATTACHMENT'))) {
-	                                    $(this).hide();
-	                                }
-	                            });
-	                    }
-	                });
-	            });
-	
-	            files_id.push(attachid);
-	        }
-	    });
-	
-	    // Update the Insert All button state
-	    $('#insert-all').removeClass('btn-outline-primary btn-primary')
-	                   .addClass('btn-success')
-	                   .html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + 
-	                        Joomla.Text._('COM_KUNENA_EDITOR_IN_MESSAGE'));
-	
-	    // Hide the "Set all attachments private" button since they're now inline
-	    $('#set-secure-all').hide();
-	
-	    // Inserting items in message from edit if they aren't already present
-	    if ($.isEmptyObject(filesedit) === false) {
-	        $(filesedit).each(function (index, file) {
-	            if (file.inline !== true) {
-	                content_to_inject += '[attachment=' + file.id + ']' + file.name + '[/attachment]';
-	                files_id.push(file.id);
-	            }
-	        });
-	    }
-	
-	    // Insert content into message
-	    if ($('#message').length > 0) {
-	        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-	            window.KunenaEditor.get('message')?.insertText(content_to_inject);
-	        } else {
-	            sceditor.instance(document.getElementById('message')).insert(content_to_inject);
-	        }
-	    }
-	
-	    $.ajax({
-	        url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + encodeURIComponent(JSON.stringify(files_id)),
-	        type: 'POST'
-	    })
-	    .done(function (data) {
-	        // Success handler if needed
-	    })
-	    .fail(function () {
-	        // TODO: handle the error of ajax request
-	    });
-	
-	    filesedit = null;
-	});
+	const postJson = async (url, fields) => (await post(url, fields)).json();
 
-    // Function to insert attachments in message
-    function insertInMessage(attachid, filename, button) {
-        // Ensure we have a valid attachment ID
-        if (!attachid && button) {
-            const data = button.data();
-            attachid = data.file_id || data.result?.data?.id || data.id;
-        }
-        // Ensure we have a valid filename
-        if (!filename && button) {
-            const data = button.data();
-            filename = data.name || data.result?.data?.filename;
-        }
-        // Only proceed if we have both id and filename
-        if (attachid && filename) {
-            const content = ' [attachment=' + attachid + ']' + filename + '[/attachment]';
-            if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                window.KunenaEditor.get('message')?.insertText(content);
-            } else {
-                sceditor.instance(document.getElementById('message')).insert(content);
-            }
-            if (button !== undefined) {
-                button.removeClass('btn-primary').addClass('btn-success').html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + Joomla.Text._('COM_KUNENA_EDITOR_IN_MESSAGE'));
-            }
-        }
-    }
-    jQuery.fn.extend({
-        insertAtCaret: function (myValue) {
-            return this.each(function (i) {
-                if (document.selection) {
-                    //For browsers like Internet Explorer
-                    this.focus();
-                    let sel = document.selection.createRange();
-                    sel.text = myValue;
-                    this.focus();
-                } else if (this.selectionStart || this.selectionStart === '0') {
-                    //For browsers like Firefox and Webkit based
-                    const startPos = this.selectionStart;
-                    const endPos = this.selectionEnd;
-                    const scrollTop = this.scrollTop;
-                    this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos, this.value.length);
-                    this.focus();
-                    this.selectionStart = startPos + myValue.length;
-                    this.selectionEnd = startPos + myValue.length;
-                    this.scrollTop = scrollTop;
-                } else {
-                    this.value += myValue;
-                    this.focus();
-                }
-            });
-        }
-    });
-       const setPrivateButton = $('<button>')
-    .addClass("btn btn-primary")
-    .html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + Joomla.Text._('COM_KUNENA_EDITOR_INSERT_PRIVATE_ATTACHMENT'))
-    .on('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+	const editorInstance = () => (isCkeditor() ? window.KunenaEditor?.get('message') : null);
 
-        const $this = $(this),
-        data = $this.data();
+	const insertInEditor = (content) => {
+		if (isCkeditor()) {
+			editorInstance()?.insertText(content);
+		} else if (window.sceditor) {
+			sceditor.instance(byId('message')).insert(content);
+		}
+	};
 
-        let file_id = 0;
-        if (data.result !== undefined) {
-            file_id = data.result.data.id;
-        } else {
-            file_id = data.id;
-        }
+	const editorText = () => {
+		if (isCkeditor()) {
+			return editorInstance()?.getData() ?? '';
+		}
 
-        const files_id = [];
-        files_id.push(file_id);
+		return window.sceditor ? sceditor.instance(byId('message')).val() : '';
+	};
 
-        $.ajax({
-            url: Joomla.getOptions('com_kunena.kunena_upload_files_set_private') + '&files_id=' + encodeURIComponent(JSON.stringify(files_id)),
-            type: 'POST'
-        })
-        .done(function (data) {
-            // Update private button state
-            $this.removeClass('btn-primary')
-                 .addClass('btn-success')
-                 .prop('disabled', true)
-                 .html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + 
-                      Joomla.Text._('COM_KUNENA_EDITOR_ATTACHMENT_IS_SECURED'));
-            
-            // Find and hide the insert button in the same container
-            $this.siblings('button').each(function() {
-                const $btn = $(this);
-                if ($btn.html().includes(Joomla.Text._('COM_KUNENA_EDITOR_INSERT')) ||
-                    $btn.html().includes(Joomla.Text._('COM_KUNENA_EDITOR_IN_MESSAGE'))) {
-                    $btn.hide();
-                }
-            });
+	// The hidden fields of a file, which the form sends: attachments[id] and attachment[id] (its name in the placeholder).
+	const addHiddenFields = (id, name) => {
+		const list = byId('kattach-list');
 
-            // Check if all attachments are now private
-            let allPrivate = true;
-            let anyNonPrivate = false;
-            $('#files button').each(function() {
-                const $btn = $(this);
-                if ($btn.html().includes(Joomla.Text._('COM_KUNENA_EDITOR_INSERT_PRIVATE_ATTACHMENT'))) {
-                    if (!$btn.prop('disabled')) {
-                        allPrivate = false;
-                        anyNonPrivate = true;
-                        return false; // Break the loop
-                    }
-                }
-            });
-			
-			// Add the hidden field attachment_private which should contains an array list with the id of private attachment
-			if ( $('#attachment_private').length > 0 ) {
-				const file_id = [];
-				file_id.push($('#attachment_private').val()); 
-				file_id.push(files_id);
-				
-				$('#attachment_private').removeAttr('value');
-				$('#attachment_private').attr('value');
-				$('#attachment_private').val(file_id);
+		if (!list) {
+			return;
+		}
+
+		const kept = document.createElement('input');
+		const named = document.createElement('input');
+
+		kept.type = 'hidden';
+		kept.id = 'kattachs-' + id;
+		kept.name = 'attachments[' + id + ']';
+		kept.value = '1';
+		named.type = 'hidden';
+		named.id = 'kattach-' + id;
+		named.placeholder = name;
+		named.name = 'attachment[' + id + ']';
+		named.value = '1';
+		list.append(kept, named);
+	};
+
+	// The ids of the private files, in the hidden field attachment_private ("1,2,3").
+	const addPrivateIds = (ids) => {
+		let field = byId('attachment_private');
+
+		if (!field) {
+			field = document.createElement('input');
+			field.type = 'hidden';
+			field.id = 'attachment_private';
+			field.name = 'attachment_private';
+			byId('kattach-list')?.append(field);
+		}
+
+		field.value = [field.value, ...ids].filter((id) => id !== '' && id !== undefined && id !== null).join(',');
+	};
+
+	// The files of the list (the hidden fields kattach-<id>): their ids and names.
+	const listedFiles = () => [...document.querySelectorAll('#kattach-list input')]
+		.filter((input) => !(input.id || '').match('[a-z]{8}'))
+		.map((input) => ({ id: ((input.id || '').match('[0-9]{1,8}') || [])[0], name: input.placeholder }))
+		.filter((file) => file.id);
+
+	const deleteAttachment = async (fileId) => {
+		const response = await post(Joomla.getOptions('com_kunena.kunena_upload_files_rem'), { files_id_delete: fileId });
+		let answer = null;
+
+		try {
+			answer = await response.json();
+		} catch {
+			// No JSON: the error below.
+		}
+
+		if (!response.ok) {
+			const error = new Error('The server refused the removal of the attachment.');
+
+			error.serverMessage = answer?.message;
+			throw error;
+		}
+
+		return answer;
+	};
+
+	// Takes the [attachment=ID] tags of the file out of the editor and leaves every other character of the text as it is.
+	const removeAttachmentFromEditor = (fileId) => {
+		const tag = new RegExp('\\[attachment=' + fileId + '\\][^[\\]]+\\[/attachment\\]', 'g');
+
+		// CKEditor 5: the tag is taken out of the texts of the editor, the paragraphs and the formatting stay as they are.
+		if (isCkeditor()) {
+			editorInstance()?.removeText(tag);
+
+			return;
+		}
+
+		if (!window.sceditor) {
+			return;
+		}
+
+		const editor = sceditor.instance(byId('message'));
+		const value = editor.val();
+
+		// The tag is not in the text: the editor is not touched.
+		if (value.search(tag) === -1) {
+			return;
+		}
+
+		// The source view holds the BBCode as it is, so the text is written back without a conversion.
+		if (editor.sourceMode()) {
+			editor.val(value.replace(tag, ''));
+
+			return;
+		}
+
+		// Writing the text back to the WYSIWYG view converts it to HTML again, which loses line breaks: the tag is taken out of
+		// the text of the document instead.
+		const body = editor.getBody();
+
+		body.normalize();
+
+		const walker = body.ownerDocument.createTreeWalker(body, NodeFilter.SHOW_TEXT);
+
+		while (walker.nextNode()) {
+			if (walker.currentNode.data.search(tag) !== -1) {
+				walker.currentNode.data = walker.currentNode.data.replace(tag, '');
+			}
+		}
+	};
+
+	const removeAttachmentFromList = (fileId) => {
+		byId('kattachs-' + fileId)?.remove();
+		byId('kattach-' + fileId)?.remove();
+		document.querySelectorAll('#kattachments-message-container .attachment-removal-error').forEach((error) => error.remove());
+
+		document.querySelectorAll('#files > div').forEach((item) => {
+			const containsAttachment = [...item.querySelectorAll('button')]
+				.some((button) => String(fileIdOf(buttonData.get(button))) === String(fileId));
+
+			if (containsAttachment) {
+				item.remove();
+			}
+		});
+
+		fileCount = Math.max(0, fileCount - 1);
+
+		if (fileCount === 0) {
+			['insert-all', 'remove-all', 'set-secure-all'].forEach((id) => show(byId(id), false));
+		}
+	};
+
+	const reportRemovalFailure = (error) => {
+		console.error('Failed to remove attachment', error);
+
+		const container = byId('kattachments-message-container');
+		const alert = document.createElement('div');
+
+		container?.querySelectorAll('.attachment-removal-error').forEach((old) => old.remove());
+		alert.className = 'alert alert-danger attachment-removal-error';
+		alert.setAttribute('role', 'alert');
+		alert.textContent = error?.serverMessage || text('COM_KUNENA_UPLOADED_LABEL_ERROR_REMOVE_FILE');
+		container?.append(alert);
+
+		if (fileCount > 0) {
+			show(byId('remove-all'));
+		}
+	};
+
+	// Removes a file on the server, then from the list and from the text; false when the server did not remove it.
+	const removeFile = async (fileId) => {
+		try {
+			const answer = await deleteAttachment(fileId);
+
+			if (answer?.result !== true) {
+				reportRemovalFailure(new Error('The server did not confirm attachment removal.'));
+
+				return false;
+			}
+		} catch (error) {
+			reportRemovalFailure(error);
+
+			return false;
+		}
+
+		removeAttachmentFromList(fileId);
+		removeAttachmentFromEditor(fileId);
+
+		return true;
+	};
+
+	const setInline = (ids) => {
+		post(Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + encodeURIComponent(JSON.stringify(ids)))
+			.catch(() => {});
+	};
+
+	const setPrivate = (ids) => post(Joomla.getOptions('com_kunena.kunena_upload_files_set_private') + '&files_id=' + encodeURIComponent(JSON.stringify(ids)));
+
+	const makeButton = (kind, data, className, icon, key) => {
+		const button = document.createElement('button');
+
+		button.type = 'button';
+		button.className = className;
+		button.dataset.kunenaAttachment = kind;
+		setLabel(button, icon, key);
+		buttonData.set(button, data);
+
+		return button;
+	};
+
+	// "Insert": the tag of the file into the text.
+	const insertButton = (data) => {
+		const button = makeButton('insert', data, 'btn btn-primary', 'com_kunena.icons.upload', 'COM_KUNENA_EDITOR_INSERT');
+
+		button.addEventListener('click', (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+
+			if (data.private) {
+				return;
+			}
+
+			const fileId = fileIdOf(data);
+			const filename = data.protected ? (data.hash || data.name) : (data.result?.data?.filename || data.name);
+
+			if (fileId && filename) {
+				insertInEditor(' [attachment=' + fileId + ']' + filename + '[/attachment]');
+				markDone(button, 'com_kunena.icons.upload', 'COM_KUNENA_EDITOR_IN_MESSAGE');
+			}
+
+			// A file in the text is not private.
+			siblingsOf(button, 'private').forEach((other) => show(other, false));
+
+			if (fileId) {
+				setInline([fileId]);
+			}
+		});
+
+		return button;
+	};
+
+	// "Private": the file is only shown to the users who may see the private message.
+	const privateButton = (data) => {
+		const button = makeButton('private', data, 'btn btn-primary', 'com_kunena.icons.secure', 'COM_KUNENA_EDITOR_INSERT_PRIVATE_ATTACHMENT');
+
+		button.addEventListener('click', async (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+
+			const fileId = data.result !== undefined ? data.result.data.id : data.id;
+
+			try {
+				const response = await setPrivate([fileId]);
+
+				if (!response.ok) {
+					return;
+				}
+			} catch {
+				return;
+			}
+
+			markDone(button, 'com_kunena.icons.secure', 'COM_KUNENA_EDITOR_ATTACHMENT_IS_SECURED', true);
+			// A private file is not in the text.
+			siblingsOf(button, 'insert').forEach((other) => show(other, false));
+			addPrivateIds([fileId]);
+
+			// All the files are private: the buttons for all of them are done.
+			const allPrivate = fileButtons('private').every((other) => other.disabled);
+
+			show(byId('insert-all'), false);
+
+			if (allPrivate) {
+				const secureAll = byId('set-secure-all');
+
+				if (secureAll) {
+					markDone(secureAll, 'com_kunena.icons.secure', 'COM_KUNENA_EDITOR_ATTACHMENTS_ARE_SECURED', true);
+				}
 			} else {
-				$('#kattach-list').append('<input id="attachment_private" type="hidden" name="attachment_private" value="'+ files_id +'" />');
-			}			
+				show(byId('set-secure-all'), false);
+			}
+		});
 
-            // Update global buttons based on state
-            if (allPrivate) {
-                // If all attachments are private, hide both insert-all and set-secure-all
-                $('#insert-all').hide();
-                $('#set-secure-all')
-                    .removeClass('btn-primary')
-                    .addClass('btn-success')
-                    .prop('disabled', true)
-                    .html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + 
-                         Joomla.Text._('COM_KUNENA_EDITOR_ATTACHMENTS_ARE_SECURED'));
-            } else if (anyNonPrivate) {
-                // If some attachments are not private, show both buttons
-                $('#insert-all').hide();
-                $('#set-secure-all').hide();
-            }
-        })
-        .fail(function () {
-            //TODO: handle the error of ajax request
-        });
-    });
-	
-    // Modified insertButton to properly handle button visibility
-    const insertButton = $('<button>').addClass("btn btn-primary").html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + Joomla.Text._('COM_KUNENA_EDITOR_INSERT')).on('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const $this = $(this);
-        const data = $this.data();
-        if (data.private) {
-            return;
-        }
-        const file_id = data.file_id || data.result?.data?.id || data.id;
-        const filename = data.protected ? (data.hash || data.name) : (data.result?.data?.filename || data.name);
-        insertInMessage(file_id, filename, $this);
-        // Hide private button after successful insertion
-        $this.siblings('button').each(function () {
-            const $btn = $(this);
-            if ($btn.html().includes(Joomla.Text._('COM_KUNENA_EDITOR_INSERT_PRIVATE_ATTACHMENT'))) {
-                $btn.hide();
-            }
-        });
-        if (file_id) {
-            const files_id = [file_id];
-            $.ajax({
-                url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + encodeURIComponent(JSON.stringify(files_id)),
-                type: 'POST'
-            });
-        }
-    });
-    const removeButton = $('<button/>').addClass('btn btn-danger').attr('type', 'button').html(Joomla.getOptions('com_kunena.icons.trash') + ' ' + Joomla.Text._('COM_KUNENA_GEN_REMOVE_FILE')).on('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const $this = $(this);
-        const data = $this.data();
-        $('#klabel_info_drop_browse').show();
-        let file_id = 0;
-        if (data.result !== undefined) {
-            file_id = data.result.data.id;
-        } else if (data.file_id !== undefined) {
-            file_id = data.file_id;
-        } else if (data.id !== undefined) {
-            file_id = data.id;
-        }
-        if (file_id === 0) {
-            console.error('Could not determine file ID');
-            return;
-        }
-        deleteAttachment(file_id).done(function (response) {
-            if (response.result !== true) {
-                reportRemovalFailure(new Error('The server did not confirm attachment removal.'));
-                return;
-            }
+		return button;
+	};
 
-            removeAttachmentFromList(file_id);
-            removeAttachmentFromEditor(file_id);
+	// "Remove File": the file is removed on the server, from the list and from the text.
+	const removeButton = (data) => {
+		const button = makeButton('remove', data, 'btn btn-danger', 'com_kunena.icons.trash', 'COM_KUNENA_GEN_REMOVE_FILE');
 
-            $('#alert_max_file').remove();
-            $('#form_submit_button').prop('disabled', false);
-        }).fail(reportRemovalFailure);
-    });
-    // The alert of too many files, above the list of the files.
-    const tooManyFiles = function () {
-        $('<div class="alert alert-danger alert-dismissible fade show" id="alert_max_file" role="alert">' + Joomla.Text._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>').insertBefore($('#files'));
-    };
+		button.addEventListener('click', async (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			show(byId('klabel_info_drop_browse'));
 
-    // The uploads (uploader.js): a file which is chosen or dropped is sent at once, the list shows it with its buttons.
-    KunenaUploader.attach(document.getElementById('fileupload'), {
-        url: function () {
-            return $('#kunena_upload_files_url').val();
-        },
-        params: function (file) {
-            return {
-                'catid': $('#kunena_upload').val(),
-                'filename': file.name,
-                'size': file.size,
-                'mime': file.type
-            };
-        },
-        // An image larger than the images of the forum is made smaller before it is sent.
-        resize: {
-            maxWidth: Joomla.getOptions('com_kunena.imageWidth'),
-            maxHeight: Joomla.getOptions('com_kunena.imageHeight')
-        },
-        previewWidth: 100,
-        previewHeight: 100,
-        accept: function (files) {
-            $('#form_submit_button').prop('disabled', true);
-            $('#remove-all').show();
-            $('#insert-all').show();
-            if (Joomla.getOptions('com_kunena.privateMessage') == 1) {
-                $('#set-secure-all').show();
-            }
-            $('#kattach_form').show();
-            const fileCountTotal = files.length + fileCount;
-            if (fileCountTotal > Joomla.getOptions('com_kunena.kunena_upload_files_maxfiles')) {
-                tooManyFiles();
-                $('#form_submit_button').prop('disabled', false);
-                return false;
-            }
-            fileCount = fileCountTotal;
-        },
-        add: function (file) {
-            $('#progress-bar').css('width', '0%');
-            $('#progress').show();
-            const context = $('<div/>').appendTo('#files');
-            $('<p/>').append($('<span/>').text(file.name)).append('<br>').appendTo(context);
-            return context;
-        },
-        preview: function (canvas, file, context) {
-            $(context.children()[0]).prepend('<br>').prepend(canvas);
-        },
-        progress: function (loaded, total) {
-            const progress = total ? parseInt(loaded / total * 100, 10) : 0;
-            $('.progress-bar').css('width', progress + '%').attr('aria-valuenow', progress);
-        },
-        done: function (result, context) {
-            if (result.success === true) {
-                $('#form_submit_button').prop('disabled', false);
-                const link = $('<a>').attr('target', '_blank').prop('href', result.location);
-                context.find('span').wrap(link);
-                // Add hidden inputs for attachments
-                $('#kattach-list').append('<input id="kattachs-' + result.data.id + '" type="hidden" name="attachments[' + result.data.id + ']" value="1" />' + '<input id="kattach-' + result.data.id + '" placeholder="' + escapeAttr(result.data.filename) + '" type="hidden" name="attachment[' + result.data.id + ']" value="1" />');
-                // Create button container
-                const buttonContainer = $('<div class="btn-group mt-2"/>');
-                // Add insert button
-                insertButton.clone(true).data('result', result).appendTo(buttonContainer);
-                // Add private button if enabled
-                if (Joomla.getOptions('com_kunena.privateMessage') == 1) {
-                    setPrivateButton.clone(true).data('result', result).appendTo(buttonContainer);
-                }
-                // Add remove button
-                removeButton.clone(true).data('result', result).appendTo(buttonContainer);
-                context.append(buttonContainer);
-            } else if (result.message) {
-                $('#form_submit_button').prop('disabled', false);
-                if (result.message.length > 0) {
-                    const error = $('<div class="alert alert-danger" role="alert">').text(result.message);
-                    context.find('span').append('<br>').append(error);
-                }
-            }
-        },
-        fail: function (message, context) {
-            $('#form_submit_button').prop('disabled', false);
-            const error = $('<span class="text-danger"/>').text(message || 'Upload failed');
-            $(context.children()[0]).append('<br>').append(error);
-        }
-    });
-	// Modified file handling for protected status
-	if ($('#kmessageid').val() > 0) {
-	    $.ajax({
-	        type: 'POST',
-	        url: Joomla.getOptions('com_kunena.kunena_upload_files_preload'),
-	        async: true,
-	        dataType: 'json',
-	        data: {
-	            mes_id: $('#kmessageid').val()
-	        }
-	    }).done(function (data) {
-	        if ($.isEmptyObject(data.files) === false) {
-	            fileCount = Object.keys(data.files).length;
-	            filesedit = data.files;
-	            let allPrivate = true;
-	            let hasInlineAttachments = false;
-	
-	            $(data.files).each(function (index, file) {
-	                // Properly determine protection status
-	                const isPrivate = Boolean(file.private) || (file.protected === 32);
-	                const isProtected = Boolean(file.protected === 1 || file.protected === 32);
-	                
-	                // Create the image preview
-					const imgObject = 	$('<img>', {					    
-					    alt: '',
-					    width: '100',
-					    height: '100'
-					});
-					imgObject.attr('src' , file.path);
+			const fileId = fileIdOf(data) || 0;
 
-	                let image = file.image ? imgObject : Joomla.getOptions('com_kunena.icons.attach') + ' <br />';				
-					const span = $('<span />').text(file.name);
-					const paragraph =  $('<p></p>').append(image);
-					paragraph.append('<br />');
-					paragraph.append(span);
-					paragraph.append('<br />');
-					const object = $('<div>').append(paragraph);
-	                
-	                // Create button container
-	                const buttonContainer = $('<div class="btn-group mt-2"/>');
-	
-	                // Enhanced attachment data object with corrected protected status
-	                const attachmentData = {
-	                    file_id: file.id,
-	                    uploaded: true,
-	                    name: file.name,
-	                    hash: file.hash,
-	                    inline: Boolean(file.inline),
-	                    private: isPrivate,
-	                    protected: isProtected,
-	                    result: {
-	                        data: {
-	                            id: file.id,
-	                            filename: isProtected ? file.hash : file.name
-	                        }
-	                    }
-	                };
-	
-	                // Create insert button with updated visibility logic
-	                const insertBtn = insertButton.clone(true).data(attachmentData);
-	                
-	                // Handle button visibility based on corrected status
-	                if (isPrivate) {
-	                    // For private attachments, hide the insert button
-	                    insertBtn.hide();
-	                } else if (file.inline) {
-	                    // For inline attachments, show as inserted
-	                    insertBtn.removeClass('btn-primary')
-	                            .addClass('btn-success')
-	                            .html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + 
-	                                 Joomla.Text._('COM_KUNENA_EDITOR_IN_MESSAGE'));
-	                    hasInlineAttachments = true;
-	                }
-	                buttonContainer.append(insertBtn);
-	
-	                // Handle private button with updated protection logic
-	                if (Joomla.getOptions('com_kunena.privateMessage') == 1) {
-	                    const privateBtn = setPrivateButton.clone(true).data(attachmentData);
-	                    if (isPrivate) {
-	                        // For private attachments, show private button as secured
-	                        privateBtn.removeClass('btn-primary')
-	                                .addClass('btn-success')
-	                                .prop('disabled', true)
-	                                .html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + 
-	                                     Joomla.Text._('COM_KUNENA_EDITOR_ATTACHMENT_IS_SECURED'));
-	                    } else if (file.inline) {
-	                        // For inline attachments, hide private button
-	                        privateBtn.hide();
-	                    }
-	                    buttonContainer.append(privateBtn);
-	                }
-	
-	                // Add remove button (always visible)
-	                buttonContainer.append(removeButton.clone(true).data(attachmentData));
-	
-	                // Append button container and update form inputs
-	                object.append(buttonContainer);
-	                object.appendTo("#files");
-	
-	                // Use hash for protected files, original name otherwise
-	                const displayName = isProtected ? file.hash : file.name;
-	                $('#kattach-list').append(
-	                    '<input id="kattachs-' + file.id + '" type="hidden" name="attachments[' + file.id + ']" value="1" />' +
-	                    '<input id="kattach-' + file.id + '" placeholder="' + escapeAttr(displayName) + '" type="hidden" name="attachment[' + file.id + ']" value="1" />'
-	                );
-	
-	                if (file.inline) {
-	                    fileeditinline++;
-	                }
-	                if (!isPrivate) {
-	                    allPrivate = false;
-	                }
-	            });
-	
-	            // Update global button visibility
-	            if (fileCount > 0) {
-	                $('#remove-all').show();
-	                
-	                // Show insert-all only if there are non-private and non-inline attachments
-	                if (!allPrivate && !hasInlineAttachments) {
-	                    $('#insert-all').show();
-	                } else {
-	                    $('#insert-all').hide();
-	                }
-	
-	                if (Joomla.getOptions('com_kunena.privateMessage') == 1) {
-	                    if (allPrivate) {
-	                        // If all attachments are private, show secured status
-	                        $('#set-secure-all')
-	                            .removeClass('btn-primary')
-	                            .addClass('btn-success')
-	                            .prop('disabled', true)
-	                            .html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + 
-	                                 Joomla.Text._('COM_KUNENA_EDITOR_ATTACHMENTS_ARE_SECURED'))
-	                            .show();
-	                    } else if (!hasInlineAttachments) {
-	                        // Show set-secure-all if there are non-private attachments
-	                        $('#set-secure-all').show();
-	                    }
-	                }
-	            }
-	        }
-	    }).fail(function () {
-	        //TODO: handle the error of ajax request
-	    });
+			if (!fileId) {
+				console.error('Could not determine file ID');
+
+				return;
+			}
+
+			if (await removeFile(fileId)) {
+				byId('alert_max_file')?.remove();
+
+				const submit = byId('form_submit_button');
+
+				if (submit) {
+					submit.disabled = false;
+				}
+			}
+		});
+
+		return button;
+	};
+
+	// The alert of too many files, above the list of the files.
+	const tooManyFiles = () => {
+		const files = byId('files');
+		const alert = document.createElement('div');
+		const close = document.createElement('button');
+
+		alert.className = 'alert alert-danger alert-dismissible fade show';
+		alert.id = 'alert_max_file';
+		alert.setAttribute('role', 'alert');
+		alert.textContent = text('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES');
+		close.type = 'button';
+		close.className = 'btn-close';
+		close.dataset.bsDismiss = 'alert';
+		close.setAttribute('aria-label', 'Close');
+		alert.append(close);
+		files?.before(alert);
+	};
+
+	const setSubmit = (enabled) => {
+		const submit = byId('form_submit_button');
+
+		if (submit) {
+			submit.disabled = !enabled;
+		}
+	};
+
+	// The item of a file in the list: <div><p>[picture]<br><span>name</span><br></p></div>
+	const fileItem = (name) => {
+		const item = document.createElement('div');
+		const paragraph = document.createElement('p');
+		const span = document.createElement('span');
+
+		span.textContent = name;
+		paragraph.append(span, document.createElement('br'));
+		item.append(paragraph);
+
+		return item;
+	};
+
+	const removeAll = async (e) => {
+		e.preventDefault();
+
+		show(byId('progress'), false);
+
+		const insertAll = byId('insert-all');
+
+		if (insertAll) {
+			insertAll.classList.remove('btn-success');
+			insertAll.classList.add('btn-outline-primary');
+			setLabel(insertAll, 'com_kunena.icons.upload', 'COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
+		}
+
+		['remove-all', 'insert-all', 'set-secure-all'].forEach((id) => show(byId(id), false));
+
+		// The files of the text, then the files of the list which are not in the text
+		const attachmentRegex = /\[attachment=([0-9]+)\]([^[\]]+)\[\/attachment\]/g;
+		const attachments = [];
+		const content = editorText();
+		let match;
+
+		while ((match = attachmentRegex.exec(content)) !== null) {
+			attachments.push({ id: parseInt(match[1], 10), filename: match[2] });
+		}
+
+		fileButtons().forEach((button) => {
+			const data = buttonData.get(button);
+			const fileId = Number(data?.result?.data?.id || data?.file_id);
+
+			if (Number.isInteger(fileId) && fileId > 0 && !attachments.some((a) => Number(a.id) === fileId)) {
+				attachments.push({ id: fileId, filename: data.result?.data?.filename || data.name });
+			}
+		});
+
+		byId('alert_max_file')?.remove();
+
+		// One after the other: a refused removal stops the others.
+		for (const attachment of attachments) {
+			if (!await removeFile(attachment.id)) {
+				return;
+			}
+		}
+
+		if (attachments.length > 0) {
+			byId('files')?.replaceChildren();
+			fileCount = 0;
+			fileeditinline = 0;
+		}
+	};
+
+	const setSecureAll = async (e) => {
+		e.preventDefault();
+
+		const secureAll = e.currentTarget;
+		const ids = listedFiles().map((file) => file.id);
+
+		if (ids.length === 0) {
+			return;
+		}
+
+		try {
+			const response = await setPrivate(ids);
+
+			if (!response.ok) {
+				return;
+			}
+		} catch {
+			return;
+		}
+
+		fileButtons('private').forEach((button) => {
+			markDone(button, 'com_kunena.icons.secure', 'COM_KUNENA_EDITOR_ATTACHMENT_IS_SECURED', true);
+		});
+		markDone(secureAll, 'com_kunena.icons.secure', 'COM_KUNENA_EDITOR_ATTACHMENTS_ARE_SECURED', true);
+
+		// Private files are not in the text.
+		fileButtons('insert').forEach((button) => show(button, false));
+		show(byId('insert-all'), false);
+		addPrivateIds(ids);
+	};
+
+	const insertAll = (e) => {
+		e.preventDefault();
+
+		const filesId = [];
+		let content = '';
+
+		listedFiles().forEach((file) => {
+			content += '[attachment=' + file.id + ']' + file.name + '[/attachment]';
+
+			fileButtons('insert')
+				.filter((button) => button.classList.contains('btn-primary') && String(fileIdOf(buttonData.get(button))) === String(file.id))
+				.forEach((button) => {
+					markDone(button, 'com_kunena.icons.upload', 'COM_KUNENA_EDITOR_IN_MESSAGE');
+					siblingsOf(button, 'private').forEach((other) => show(other, false));
+				});
+
+			filesId.push(file.id);
+		});
+
+		markDone(e.currentTarget, 'com_kunena.icons.upload', 'COM_KUNENA_EDITOR_IN_MESSAGE');
+		// The files are in the text, so they are not private.
+		show(byId('set-secure-all'), false);
+
+		// The files of the edited message which are not in the text yet
+		(filesedit || []).forEach((file) => {
+			if (file.inline !== true) {
+				content += '[attachment=' + file.id + ']' + file.name + '[/attachment]';
+				filesId.push(file.id);
+			}
+		});
+
+		if (byId('message')) {
+			insertInEditor(content);
+		}
+
+		setInline(filesId);
+		filesedit = null;
+	};
+
+	// The files of the message which is edited, with their state (in the text, private).
+	const preload = async () => {
+		const messageId = parseInt(byId('kmessageid')?.value, 10);
+
+		if (!(messageId > 0)) {
+			return;
+		}
+
+		let answer;
+
+		try {
+			answer = await postJson(Joomla.getOptions('com_kunena.kunena_upload_files_preload'), { mes_id: messageId });
+		} catch {
+			return;
+		}
+
+		const files = answer?.files ? Object.values(answer.files) : [];
+
+		if (files.length === 0) {
+			return;
+		}
+
+		fileCount = files.length;
+		filesedit = files;
+
+		let allPrivate = true;
+		let hasInlineAttachments = false;
+
+		files.forEach((file) => {
+			const isPrivate = Boolean(file.private) || file.protected === 32;
+			const isProtected = file.protected === 1 || file.protected === 32;
+			const item = fileItem(file.name);
+			const paragraph = item.firstElementChild;
+
+			// The picture of an image, or the icon of a file
+			if (file.image) {
+				const img = document.createElement('img');
+
+				img.alt = '';
+				img.width = 100;
+				img.height = 100;
+				img.src = file.path;
+				paragraph.prepend(img, document.createElement('br'));
+			} else {
+				const icon = document.createElement('span');
+
+				icon.innerHTML = Joomla.getOptions('com_kunena.icons.attach') || '';
+				paragraph.prepend(...icon.childNodes, document.createElement('br'));
+			}
+
+			const data = {
+				file_id: file.id,
+				uploaded: true,
+				name: file.name,
+				hash: file.hash,
+				inline: Boolean(file.inline),
+				private: isPrivate,
+				protected: isProtected,
+				result: { data: { id: file.id, filename: isProtected ? file.hash : file.name } }
+			};
+
+			const group = document.createElement('div');
+			const insert = insertButton(data);
+
+			group.className = 'btn-group mt-2';
+
+			if (isPrivate) {
+				show(insert, false);
+			} else if (file.inline) {
+				markDone(insert, 'com_kunena.icons.upload', 'COM_KUNENA_EDITOR_IN_MESSAGE');
+				hasInlineAttachments = true;
+			}
+
+			group.append(insert);
+
+			if (privateMessages()) {
+				const privateBtn = privateButton(data);
+
+				if (isPrivate) {
+					markDone(privateBtn, 'com_kunena.icons.secure', 'COM_KUNENA_EDITOR_ATTACHMENT_IS_SECURED', true);
+				} else if (file.inline) {
+					show(privateBtn, false);
+				}
+
+				group.append(privateBtn);
+			}
+
+			group.append(removeButton(data));
+			item.append(group);
+			byId('files')?.append(item);
+
+			// The hash for a protected file, the name otherwise
+			addHiddenFields(file.id, isProtected ? file.hash : file.name);
+
+			if (file.inline) {
+				fileeditinline++;
+			}
+
+			if (!isPrivate) {
+				allPrivate = false;
+			}
+		});
+
+		show(byId('remove-all'));
+		// Insert all: only when no file is private nor in the text yet
+		show(byId('insert-all'), !allPrivate && !hasInlineAttachments);
+
+		if (privateMessages()) {
+			const secureAll = byId('set-secure-all');
+
+			if (allPrivate && secureAll) {
+				markDone(secureAll, 'com_kunena.icons.secure', 'COM_KUNENA_EDITOR_ATTACHMENTS_ARE_SECURED', true);
+				show(secureAll);
+			} else if (!hasInlineAttachments) {
+				show(secureAll);
+			}
+		}
+	};
+
+	const init = () => {
+		byId('remove-all')?.addEventListener('click', removeAll);
+		byId('set-secure-all')?.addEventListener('click', setSecureAll);
+		byId('insert-all')?.addEventListener('click', insertAll);
+
+		const input = byId('fileupload');
+
+		if (!input || !window.KunenaUploader) {
+			return;
+		}
+
+		// The uploads (uploader.js): a file which is chosen or dropped is sent at once, the list shows it with its buttons.
+		KunenaUploader.attach(input, {
+			url: () => byId('kunena_upload_files_url')?.value,
+			params: (file) => ({
+				catid: byId('kunena_upload')?.value ?? '',
+				filename: file.name,
+				size: file.size,
+				mime: file.type
+			}),
+			// An image larger than the images of the forum is made smaller before it is sent.
+			resize: {
+				maxWidth: Joomla.getOptions('com_kunena.imageWidth'),
+				maxHeight: Joomla.getOptions('com_kunena.imageHeight')
+			},
+			previewWidth: 100,
+			previewHeight: 100,
+			accept: (files) => {
+				setSubmit(false);
+				show(byId('remove-all'));
+				show(byId('insert-all'));
+
+				if (privateMessages()) {
+					show(byId('set-secure-all'));
+				}
+
+				show(byId('kattach_form'));
+
+				const fileCountTotal = files.length + fileCount;
+
+				if (fileCountTotal > Joomla.getOptions('com_kunena.kunena_upload_files_maxfiles')) {
+					tooManyFiles();
+					setSubmit(true);
+
+					return false;
+				}
+
+				fileCount = fileCountTotal;
+			},
+			add: (file) => {
+				const bar = byId('progress-bar');
+
+				if (bar) {
+					bar.style.width = '0%';
+				}
+
+				show(byId('progress'));
+
+				const item = fileItem(file.name);
+
+				byId('files')?.append(item);
+
+				return item;
+			},
+			preview: (canvas, file, item) => {
+				item.firstElementChild.prepend(canvas, document.createElement('br'));
+			},
+			progress: (loaded, total) => {
+				const progress = total ? Math.floor(loaded / total * 100) : 0;
+
+				document.querySelectorAll('.progress-bar').forEach((bar) => {
+					bar.style.width = progress + '%';
+					bar.setAttribute('aria-valuenow', progress);
+				});
+			},
+			done: (result, item) => {
+				const span = item.querySelector('span');
+
+				if (result.success === true) {
+					setSubmit(true);
+
+					if (span) {
+						const link = document.createElement('a');
+
+						link.target = '_blank';
+						link.href = result.location;
+						span.replaceWith(link);
+						link.append(span);
+					}
+
+					addHiddenFields(result.data.id, result.data.filename);
+
+					const group = document.createElement('div');
+					const data = { result };
+
+					group.className = 'btn-group mt-2';
+					group.append(insertButton(data));
+
+					if (privateMessages()) {
+						group.append(privateButton(data));
+					}
+
+					group.append(removeButton(data));
+					item.append(group);
+				} else if (result.message) {
+					setSubmit(true);
+
+					const error = document.createElement('div');
+
+					error.className = 'alert alert-danger';
+					error.setAttribute('role', 'alert');
+					error.textContent = result.message;
+					span?.append(document.createElement('br'), error);
+				}
+			},
+			fail: (message, item) => {
+				const error = document.createElement('span');
+
+				setSubmit(true);
+				error.className = 'text-danger';
+				error.textContent = message || 'Upload failed';
+				item.firstElementChild.append(document.createElement('br'), error);
+			}
+		});
+
+		preload();
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
 	}
-});
+})();

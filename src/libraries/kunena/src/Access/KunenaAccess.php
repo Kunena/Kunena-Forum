@@ -259,24 +259,24 @@ class KunenaAccess
             $enabled = true;
             Factory::getApplication()->getDocument()->addScriptDeclaration(
                 "function kShowAccessType(htmlclass, el) {
-	var selectedvalue = el.find(\":selected\").val();
+	// The list of the access types (a jQuery object of a template override, or the element): the rows of the chosen type only.
+	var select = el && el.jquery ? el[0] : el;
 
-	name = selectedvalue.replace(/[^\\w\\d]+/, '-');
-
-$('.'+htmlclass).each(function() {
-  $( this ).hide();
-});
-
-$('.'+htmlclass+'-'+name).each(function() {
-  $( this ).show();
-});
-
-}
-jQuery(document).ready(function ($) {
-	var item = $('#accesstype');
-	if (item) {
-		kShowAccessType('kaccess', item);
+	if (!select) {
+		return;
 	}
+
+	var name = String(select.value).replace(/[^\\w\\d]+/, '-');
+
+	document.querySelectorAll('.' + htmlclass).forEach(function (row) {
+		row.style.display = 'none';
+	});
+	document.querySelectorAll('.' + htmlclass + '-' + name).forEach(function (row) {
+		row.style.display = '';
+	});
+}
+document.addEventListener('DOMContentLoaded', function () {
+	kShowAccessType('kaccess', document.getElementById('accesstype'));
 });"
             );
         }
@@ -308,7 +308,7 @@ jQuery(document).ready(function ($) {
             $accesstypes[$string] = HTMLHelper::_('select.option', $category->accesstype, $string);
         }
 
-        return HTMLHelper::_('select.genericlist', $accesstypes, 'accesstype', 'class="form-select" onchange="kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype);
+        return HTMLHelper::_('select.genericlist', $accesstypes, 'accesstype', 'class="form-select" onchange="kShowAccessType(\'kaccess\', this)"', 'value', 'text', $category->accesstype);
     }
 
     /**

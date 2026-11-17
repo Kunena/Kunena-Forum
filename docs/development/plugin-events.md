@@ -291,19 +291,6 @@ These events let a plugin see or change what Kunena shows.
 - Dispatched in: `src/libraries/kunena/src/BBCode/KunenaBBCode.php`, on the dispatcher of the application.
 - Event class: `Kunena\Forum\Libraries\Event\KunenaBbcodeConstructEvent`.
 
-### onKunenaBBCodeEditorInit
-
-- When: when the buttons of the BBCode editor are built from `aurelia_editor.xml` (`KunenaBBCodeEditor::initializeHMVC()`).
-  In Kunena 8.0 that happens in the administrator, on the check-in and the resync of the plugins
-  (`src/admin/src/Controller/PluginsController.php`).
-- Arguments: argument `0`, the `KunenaBBCodeEditor` object (`$event->getArgument(0)`). A listener adds or moves buttons with
-  `insertElement()` and `insertElements()`.
-- Context: none.
-- Result: nothing is read back; Kunena builds the javascript of the editor from the elements of the object.
-- Dispatched in: `src/libraries/kunena/src/BBCode/KunenaBBCodeEditor.php`, through `Factory::getApplication()->triggerEvent()`.
-  Mind the case: `BBCode` here, `Bbcode` in `onKunenaBbcodeConstruct`.
-- Event class: none: `triggerEvent` with a plain array (`[$this]`), so the listener gets a `Joomla\Event\Event`.
-
 ## User interface hooks
 
 ### onKunenaGetButtons

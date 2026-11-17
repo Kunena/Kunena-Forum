@@ -7,11 +7,29 @@
  * @link https://www.kunena.org
  **/
 
-jQuery(document).ready(function () {
-	const avatartab = jQuery.parseJSON(Joomla.getOptions('com_kunena.avatartab'));
+// The form of the profile opens on the tab of the avatar when the page asks for it (after an upload of the avatar).
+(function () {
+	'use strict';
 
-	if (avatartab) {
-		jQuery('.nav-tabs a[href="#editavatar"]').tab('show');
+	const init = () => {
+		let avatartab = false;
+
+		try {
+			avatartab = JSON.parse(Joomla.getOptions('com_kunena.avatartab') || 'false');
+		} catch (error) {
+			avatartab = false;
+		}
+
+		const link = document.querySelector('.nav-tabs a[href="#editavatar"]');
+
+		if (avatartab && link && window.bootstrap && window.bootstrap.Tab) {
+			window.bootstrap.Tab.getOrCreateInstance(link).show();
+		}
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
 	}
-    }
-);
+})();

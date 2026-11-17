@@ -7,114 +7,116 @@
  * @link https://www.kunena.org
  **/
 
-jQuery(document).ready(function ($) {
+(function () {
+	'use strict';
 
-	/* To hide or open spoiler on click */
-	$(document).on('click', '.kspoiler-expand', function (e) {
-		e.preventDefault()
-		const show = $(this.children[0]).val() === Joomla.Text._('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND');
-		$(this.children[0]).val(show ? Joomla.Text._('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE') : Joomla.Text._('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'));
-		$(this).parent().children('.kspoiler-wrapper').toggle()
-	});
+	// The sibling just before or after an element, when it matches the selector (as prev() and next() of jQuery).
+	const sibling = (element, selector, after) => {
+		const next = after ? element.nextElementSibling : element.previousElementSibling;
 
-	/* To allow to close or open the quick-reply modal box */
-	$('.openmodal').click(function () {
-		const boxToOpen = $(this).attr('href');
-		$(boxToOpen).css('visibility', 'visible');
-	});
+		return next && next.matches(selector) ? next : null;
+	};
 
-	/* Button to show more info on profilebox */
-	$(".heading").click(function () {
-		if (!$(this).hasClass('heading-less')) {
-			$(this).prev(".heading").show();
-			$(this).hide();
-			$(this).next(".content").slideToggle(500);
+	const show = (element, shown) => {
+		if (element) {
+			element.style.display = shown ? '' : 'none';
 		}
-		else {
-			const content = $(this).next(".heading").show();
-			$(this).hide();
-			content.next(".content").slideToggle(500);
+	};
+
+	const isHidden = (element) => getComputedStyle(element).display === 'none';
+
+	document.addEventListener('click', (e) => {
+		/* To hide or open spoiler on click */
+		const spoiler = e.target.closest('.kspoiler-expand');
+
+		if (spoiler) {
+			e.preventDefault();
+
+			const button = spoiler.children[0];
+			const open = button.value === Joomla.Text._('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND');
+
+			button.value = Joomla.Text._(open ? 'COM_KUNENA_LIB_BBCODE_SPOILER_HIDE' : 'COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND');
+
+			[...spoiler.parentElement.children].filter((child) => child.matches('.kspoiler-wrapper')).forEach((wrapper) => {
+				wrapper.style.display = isHidden(wrapper) ? 'block' : 'none';
+			});
+
+			return;
 		}
-	});
 
-	$('[id^="login-link"]').click(function () {
-		$(this).ready(function () {
-			const userDropdown = $('#userdropdown');
+		/* Button to show more info on profilebox: "more" opens the details, "less" closes them, each button replaces the other */
+		const heading = e.target.closest('.heading');
 
-			if (userDropdown.is(":visible")) {
-				$(this).addClass('kdelay');
+		if (heading) {
+			const less = heading.classList.contains('heading-less');
+			const other = less ? sibling(heading, '.heading', true) : sibling(heading, '.heading', false);
+			const content = sibling(less ? other || heading : heading, '.content', true);
+
+			show(other, true);
+			show(heading, false);
+
+			if (content) {
+				content.style.display = isHidden(content) ? 'block' : 'none';
 			}
-			else {
-				userDropdown.css('display', 'inline-block');
-				userDropdown.css('visibility', 'visible').delay(500).queue(function () {
-					$(this).addClass('kdelay');
-				});
-			}
-		});
-	});
-
-	$(document).click(function () {
-		$('.kdelay').css('display', 'none').removeClass('kdelay');
-	});
-
-	$('#userdropdown').click(function (e) {
-		e.stopPropagation();
+		}
 	});
 
 	/* On moderate page display subject or field to enter manually the topic ID */
-	$('#kmod_topics').change(function () {
-		const id_item_selected = $(this).val();
+	const topicChosen = (select) => {
+		const value = parseInt(select.value, 10);
 
-		if (id_item_selected == 0) {
-			$('#kmod_subject').hide();
-		}
-		else {
-			$('#kmod_subject').show();
-		}
-
-		if (id_item_selected == -1) {
-			$('#kmod_targetid').show();
-		}
-		else {
-			$('#kmod_targetid').hide();
-		}
+		show(document.getElementById('kmod_subject'), value !== 0);
+		show(document.getElementById('kmod_targetid'), value === -1);
 
 		// "- Do not move -": the subject and move options do nothing, so do not show them.
-		if (id_item_selected == -2) {
-			$('.kmod-moveoption').hide();
-		}
-		else {
-			$('.kmod-moveoption').not('#kmod_subject').show();
-		}
-	});
-
-	$('#kmod_categories').change(function () {
-		$.getJSON(
-			kunena_url_ajax, {catid: $(this).val()}
-		).done(function (json) {
-			const first_item = $('#kmod_topics option:nth-child(1)').clone();
-			const second_item = $('#kmod_topics option:nth-child(2)').clone();
-			// Keep the fixed options (do not move, new topic, enter an id): their values are 0 or below, topics are above.
-			const fixed_items = $('#kmod_topics option').filter(function () {
-				return parseInt($(this).val(), 10) <= 0;
-			}).clone();
-
-			$('#kmod_topics').empty();
-			fixed_items.appendTo('#kmod_topics');
-
-			// Another category is a move: a message which would not move goes into a new topic there.
-			if ($('#kmod_topics').val() == -2) {
-				$('#kmod_topics').val(0).trigger('change');
+		document.querySelectorAll('.kmod-moveoption').forEach((option) => {
+			if (value === -2 || option.id !== 'kmod_subject') {
+				show(option, value !== -2);
 			}
+		});
+	};
 
-			$.each(json, function (index, object) {
-				$.each(object, function (key, element) {
-					$('#kmod_topics').append($('<option>').val(element['id']).text(element['subject']));
-				});
-			});
-		})
-			.fail(function () {
-				//TODO: handle the error of ajax request
-			});
-	});
-});
+	// The topics of the category which is chosen: the fixed options (do not move, new topic, enter an id: 0 or below) are kept.
+	const categoryChosen = async (select) => {
+		const topics = document.getElementById('kmod_topics');
+
+		if (!topics || typeof kunena_url_ajax === 'undefined') {
+			return;
+		}
+
+		const url = new URL(kunena_url_ajax, window.location.href);
+		url.searchParams.set('catid', select.value);
+
+		let json;
+
+		try {
+			const response = await fetch(url, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+			json = await response.json();
+		} catch {
+			return;
+		}
+
+		[...topics.options].filter((option) => parseInt(option.value, 10) > 0).forEach((option) => option.remove());
+
+		// Another category is a move: a message which would not move goes into a new topic there.
+		if (parseInt(topics.value, 10) === -2) {
+			topics.value = '0';
+			topics.dispatchEvent(new Event('change', { bubbles: true }));
+		}
+
+		(Array.isArray(json?.topiclist) ? json.topiclist : []).forEach((topic) => {
+			topics.append(new Option(topic.subject, topic.id));
+		});
+	};
+
+	const init = () => {
+		document.getElementById('kmod_topics')?.addEventListener('change', (e) => topicChosen(e.target));
+		document.getElementById('kmod_categories')?.addEventListener('change', (e) => categoryChosen(e.target));
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
+	}
+})();

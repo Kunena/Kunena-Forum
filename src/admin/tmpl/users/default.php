@@ -37,7 +37,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 $language  = $app->getLanguage();
 $language->load('com_users');
 
-$this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tmpl\users\batchmoderators.js');
+$this->document->addScript(Uri::root() . 'administrator/components/com_kunena/tmpl/users/batchmoderators.js');
 ?>
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users'); ?>" method="post" id="adminForm" name="adminForm">
     <div class="row">

@@ -15,94 +15,122 @@ function kunenatableOrdering(order, dir, task, form) {
 	formElement.submit(task);
 }
 
-jQuery(document).ready(function ($) {
-	/* To check or uncheck boxes to select items: the boxes of the same list (a page can show several lists, as the tabs of a
-	 * profile), or of the page when the box is not in a form. */
-	$('input.kcheckall').click(function () {
-		const form = $(this).closest('form');
+(function () {
+	'use strict';
 
-		(form.length ? form : $(document)).find('.kcheck').prop('checked', $(this).prop("checked"));
-	});
+	// The boxes and the lists of the same list of items: its form, or the page when there is no form.
+	const scopeOf = (element) => element.closest('form') || document;
 
 	/* Allow to make working drop-down choose destination. Each list has its own actions: their ids get a number after the
 	 * first list (kchecktask-2, kchecktarget-2), so they are looked for in the form of the list. */
-	const bulkOptions = function (select) {
-		const form = $(select).closest('form');
-		const scope = form.length ? form : $(document);
-		const task = $(select).val();
-		const move = task === 'move';
-		const target = scope.find('[id^="kchecktarget"]');
-		const status = scope.find('[id^="kcheckstatus"]');
+	const bulkOptions = (select) => {
+		const scope = scopeOf(select);
+		const task = select.value;
 
 		/* The destination and the status (topic icon) are only shown for their action */
-		target.attr('disabled', !move).toggleClass('d-none', !move);
+		const toggle = (selector, shown) => scope.querySelectorAll(selector).forEach((field) => {
+			field.disabled = !shown;
+			field.classList.toggle('d-none', !shown);
+		});
 
-		if (move) {
-			target.trigger("list:updated");
-		}
-
-		status.attr('disabled', task !== 'status').toggleClass('d-none', task !== 'status');
+		toggle('[id^="kchecktarget"]', task === 'move');
+		toggle('[id^="kcheckstatus"]', task === 'status');
 	};
 
-	$('select.kchecktask, select[id^="kchecktask"]').each(function () {
-		$(this).change(() => bulkOptions(this));
-		bulkOptions(this);
-	});
+	// The avatars of a gallery (the profile edit): the names come from the server, so they are set as attributes, never written
+	// into the markup.
+	const showGallery = async (select) => {
+		const list = document.getElementById('gallery_list');
 
-	$("input.kcatcheckall").click(function () {
-		$("input.kcatcheckall:checkbox").not(this).prop('checked', this.checked);
-	});
+		if (!list) {
+			return;
+		}
 
-	$("input.kcheckallcategories").click(function () {
-		$("input.kcheckallcategory:checkbox").not(this).prop('checked', this.checked);
-	});
+		list.replaceChildren();
 
-	const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-	const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-  		return new bootstrap.Popover(popoverTriggerEl)
-	})
+		const url = new URL(Joomla.getOptions('com_kunena.avatar_gallery_url'), window.location.href);
+		url.searchParams.set('gallery_name', select.value);
 
-	$('#avatar_gallery_select').change(function () {
-		const gallery_selected = $("#avatar_gallery_select").val();
+		try {
+			const response = await fetch(url, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+			const images = await response.json();
 
-		const gallery_list = $('#gallery_list');
-
-		// We remove avatar which exist in td tag to allow us to put new one items
-		gallery_list.empty();
-
-		// Get the list of images from the gallery selected drop-down above
-		$.ajax({
-			dataType: "json",
-			url: Joomla.getOptions('com_kunena.avatar_gallery_url'),
-			data: {gallery_name: gallery_selected}
-		}).done(function (response) {
-			if (!Array.isArray(response)) {
+			if (!Array.isArray(images)) {
 				return;
 			}
 
-			// The names come from the server: they are set as attributes, never written into the markup.
-			$.each(response, function (key, item) {
+			images.forEach((item, key) => {
 				const id = 'kavatar-gallery-' + key;
+				const li = document.createElement('li');
+				const input = document.createElement('input');
+				const label = document.createElement('label');
+				const img = document.createElement('img');
 
-				$('<li>', {'class': 'col-md-2'})
-					.append($('<input>', {type: 'radio', name: 'avatar_gallery', id: id}).val(item.value))
-					.append($('<label>', {'class': 'radio thumbnail', 'for': id})
-						.append($('<img>', {loading: 'lazy', alt: 'avatar'}).attr('src', item.url)))
-					.appendTo(gallery_list);
+				li.className = 'col-md-2';
+				input.type = 'radio';
+				input.name = 'avatar_gallery';
+				input.id = id;
+				input.value = item.value;
+				label.className = 'radio thumbnail';
+				label.htmlFor = id;
+				img.loading = 'lazy';
+				img.alt = 'avatar';
+				img.src = item.url;
+
+				label.append(img);
+				li.append(input, label);
+				list.append(li);
 			});
-		}).fail(function () {
-			gallery_list.empty();
+		} catch {
+			list.replaceChildren();
+		}
+	};
+
+	const init = () => {
+		document.querySelectorAll('select.kchecktask, select[id^="kchecktask"]').forEach((select) => {
+			select.addEventListener('change', () => bulkOptions(select));
+			bulkOptions(select);
 		});
+
+		if (window.bootstrap?.Popover) {
+			document.querySelectorAll('[data-bs-toggle="popover"]').forEach((trigger) => {
+				bootstrap.Popover.getOrCreateInstance(trigger);
+			});
+		}
+
+		document.getElementById('avatar_gallery_select')?.addEventListener('change', (e) => showGallery(e.target));
+
+		document.getElementById('modaldeteleallsubmit')?.addEventListener('click', () => {
+			document.getElementById('adminForm')?.submit();
+		});
+	};
+
+	document.addEventListener('click', (e) => {
+		const box = e.target.closest('input[type="checkbox"]');
+
+		if (!box) {
+			return;
+		}
+
+		/* To check or uncheck boxes to select items: the boxes of the same list (a page can show several lists, as the tabs
+		 * of a profile), or of the page when the box is not in a form. */
+		if (box.matches('input.kcheckall')) {
+			scopeOf(box).querySelectorAll('.kcheck').forEach((item) => {
+				item.checked = box.checked;
+			});
+		}
+
+		// All the categories of the list of categories.
+		if (box.matches('input.kcheckallcategories')) {
+			document.querySelectorAll('input.kcheckallcategory[type="checkbox"]').forEach((item) => {
+				item.checked = box.checked;
+			});
+		}
 	});
 
-	const clearcache = $('#clearcache');
-	clearcache.on('click', function (e) {
-		e.preventDefault();
-		clearcache.addClass('btn-success');
-		clearcache.html('<span class="glyphicon glyphicon-ok-sign"></span> ' + Joomla.Text._('COM_KUNENA_CLEARED'));
-	});
-
-	$('#modaldeteleallsubmit').click(function() {
-		$('#adminForm').submit();
-	});
-});
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
+	}
+})();

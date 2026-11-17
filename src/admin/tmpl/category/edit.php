@@ -29,12 +29,12 @@ HTMLHelper::_('bootstrap.framework');
 /** @var WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('core')
-        ->useScript('jquery')
         ->useScript('multiselect');
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
-$this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tmpl\categories\edit.js');
+// The check of the aliases, the same script as the form of a category in the forum.
+$this->document->addScript(Uri::root() . 'media/kunena/core/js/category-edit.js');
 ?>
 
 <div id="kunena" class="container-fluid">

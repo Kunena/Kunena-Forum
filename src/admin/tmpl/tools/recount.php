@@ -15,24 +15,9 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
-Text::script('COM_KUNENA_MODAL_CLOSE');
-Text::script('COM_KUNENA_AJAXMODAL_START_HEADER');
-Text::script('COM_KUNENA_AJAXMODAL_START_BODY');
-Text::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER');
-Text::script('COM_KUNENA_AJAXMODAL_ERROR_RESPONSE_BODY');
-Text::script('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_HEADER');
-Text::script('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_BODY');
-Text::script('COM_KUNENA_AJAXMODAL_ERROR_CANCEL_HEADER');
-Text::script('COM_KUNENA_AJAXMODAL_ERROR_ABORT_BODY');
-Text::script('COM_KUNENA_AJAXMODAL_ERROR_ABORT_HEADER');
-Text::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER');
-Text::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
-
-$this->document->addScript(Uri::root() . 'administrator\components\com_kunena\template\tools\recount.js');
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -84,26 +69,5 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\te
     </div>
     <div class="float-end small">
         <?php echo KunenaVersion::getLongVersionHTML(); ?>
-    </div>
-</div>
-
-<!-- Modal -->
-<div id="recountModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="recountModalLabel"
-     aria-hidden="true"
-     data-backdrop="static" data-keyboard="false">
-    <div class="modal-header">
-        <button type="button" class="btn-close recount-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        <h3></h3>
-    </div>
-    <div class="modal-body">
-        <p></p>
-        <div class="progress progress-striped">
-            <div class="bar"></div>
-        </div>
-        <div class="modal-error"></div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn recount-close" data-bs-dismiss="modal"
-                aria-hidden="true"><?php echo Text::_('COM_KUNENA_MODAL_CLOSE'); ?></button>
     </div>
 </div>

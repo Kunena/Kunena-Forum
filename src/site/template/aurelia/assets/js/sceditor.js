@@ -7,7 +7,39 @@
  * @link https://www.kunena.org
  **/
  
-jQuery(document).ready(function ($) {
+(function () {
+	'use strict';
+
+	// A piece of markup of a dialog of a button: its element.
+	var kunenaHtml = function (html) {
+		var template = document.createElement('template');
+
+		template.innerHTML = html.trim();
+
+		return template.content.firstElementChild;
+	};
+
+	// A JSON answer of the forum.
+	var kunenaGetJSON = function (url) {
+		return fetch(url, {headers: {Accept: 'application/json'}, credentials: 'same-origin'}).then(function (response) {
+			if (!response.ok) {
+				throw new Error('HTTP ' + response.status);
+			}
+
+			return response.json();
+		});
+	};
+
+	// The send button of the form.
+	var kunenaSubmit = function (enabled) {
+		var button = document.getElementById('form_submit_button');
+
+		if (button) {
+			button.disabled = !enabled;
+		}
+	};
+
+	var kunenaInit = function () {
 	if (Joomla.getOptions('com_kunena.editor_type') == 'sceditor') {
 		var kunenaCmd = {
 			align: ['left', 'center', 'right', 'justify'],
@@ -142,7 +174,7 @@ jQuery(document).ready(function ($) {
 			_dropDown: function (editor, caller) {
 				var $content;
 	
-				$content = jQuery(
+				$content = kunenaHtml(
 					'<div>' +
 					'<div>' +
 					'<label for="soundcloud_id">Soundcloud id:</label> ' +
@@ -154,8 +186,8 @@ jQuery(document).ready(function ($) {
 					'</div>'
 				);
 	
-				$content.find('.button').on('click', function (e) {
-					var soundcloud_id = $content.find('#soundcloud_id').val();
+				$content.querySelector('.button').addEventListener('click', function (e) {
+					var soundcloud_id = $content.querySelector('#soundcloud_id').value;
 	
 					if (soundcloud_id)
 						editor.insert('[soundcloud]' + soundcloud_id + '[/soundcloud]');
@@ -164,7 +196,7 @@ jQuery(document).ready(function ($) {
 					e.preventDefault();
 				});
 	
-				editor.createDropDown(caller, 'insertmap', $content.get(0));
+				editor.createDropDown(caller, 'insertmap', $content);
 			},
 			exec: function (caller) {
 				sceditor.command.get('soundcloud')._dropDown(this, caller);
@@ -196,7 +228,7 @@ jQuery(document).ready(function ($) {
 			_dropDown: function (editor, caller) {
 				var $content;
 	
-				$content = jQuery(
+				$content = kunenaHtml(
 					'<div>' +
 					'<div>' +
 					'<label for="ebay_id">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_EBAY_ITEM_ID') + '</label> ' +
@@ -208,8 +240,8 @@ jQuery(document).ready(function ($) {
 					'</div>'
 				);
 	
-				$content.find('.button').on('click', function (e) {
-					var ebay_id = $content.find('#ebay_id').val();
+				$content.querySelector('.button').addEventListener('click', function (e) {
+					var ebay_id = $content.querySelector('#ebay_id').value;
 	
 					if (ebay_id)
 						editor.insert('[ebay]' + ebay_id + '[/ebay]');
@@ -218,7 +250,7 @@ jQuery(document).ready(function ($) {
 					e.preventDefault();
 				});
 	
-				editor.createDropDown(caller, 'insertmap', $content.get(0));
+				editor.createDropDown(caller, 'insertmap', $content);
 			},
 			exec: function (caller) {
 				sceditor.command.get('ebay')._dropDown(this, caller);
@@ -250,7 +282,7 @@ jQuery(document).ready(function ($) {
 			_dropDown: function (editor, caller) {
 				var $content;
 	
-				$content = jQuery(
+				$content = kunenaHtml(
 					'<div>' +
 					'<div>' +
 					'<label for="instagram_id">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_INSTAGRAM_ID') + '</label> ' +
@@ -262,8 +294,8 @@ jQuery(document).ready(function ($) {
 					'</div>'
 				);
 	
-				$content.find('.button').on('click', function (e) {
-					var instagram_id = $content.find('#instagram_id').val();
+				$content.querySelector('.button').addEventListener('click', function (e) {
+					var instagram_id = $content.querySelector('#instagram_id').value;
 	
 					if (instagram_id)
 						editor.insert('[instagram]' + instagram_id + '[/instagram]');
@@ -272,7 +304,7 @@ jQuery(document).ready(function ($) {
 					e.preventDefault();
 				});
 	
-				editor.createDropDown(caller, 'insertmap', $content.get(0));
+				editor.createDropDown(caller, 'insertmap', $content);
 			},
 			exec: function (caller) {
 				sceditor.command.get('instagram')._dropDown(this, caller);
@@ -304,7 +336,7 @@ jQuery(document).ready(function ($) {
 			_dropDown: function (editor, caller) {
 				var $content;
 	
-				$content = jQuery(
+				$content = kunenaHtml(
 					'<div>' +
 					'<div>' +
 					'<label for="tweet_id">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_X_SOCIAL') + '</label> ' +
@@ -316,8 +348,8 @@ jQuery(document).ready(function ($) {
 					'</div>'
 				);
 	
-				$content.find('.button').on('click', function (e) {
-					var tweet_id = $content.find('#tweet_id').val();
+				$content.querySelector('.button').addEventListener('click', function (e) {
+					var tweet_id = $content.querySelector('#tweet_id').value;
 	
 					if (tweet_id)
 						editor.insert('[tweet]' + tweet_id + '[/tweet]');
@@ -326,7 +358,7 @@ jQuery(document).ready(function ($) {
 					e.preventDefault();
 				});
 	
-				editor.createDropDown(caller, 'inserttweet', $content.get(0));
+				editor.createDropDown(caller, 'inserttweet', $content);
 			},
 			exec: function (caller) {
 				sceditor.command.get('x_social')._dropDown(this, caller);
@@ -376,7 +408,7 @@ jQuery(document).ready(function ($) {
 			_dropDown: function (editor, caller) {
 				var $content;
 	
-				$content = jQuery(
+				$content = kunenaHtml(
 					'<div>' +
 					'<div>' +
 					'<label for="type-select">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE') + '</label> ' +
@@ -410,10 +442,10 @@ jQuery(document).ready(function ($) {
 					'</div>'
 				);
 	
-				$content.find('.button').on('click', function (e) {
-					var city = $content.find('#city').val(),
-						type = $content.find('#type-select').val(),
-						zoom = $content.find('#zoom-select').val()
+				$content.querySelector('.button').addEventListener('click', function (e) {
+					var city = $content.querySelector('#city').value,
+						type = $content.querySelector('#type-select').value,
+						zoom = $content.querySelector('#zoom-select').value
 					;
 	
 					var attrs = ' type=' + type + ' zoom=' + zoom;
@@ -425,7 +457,7 @@ jQuery(document).ready(function ($) {
 					e.preventDefault();
 				});
 	
-				editor.createDropDown(caller, 'insertmap', $content.get(0));
+				editor.createDropDown(caller, 'insertmap', $content);
 			},
 			exec: function (caller) {
 				sceditor.command.get('map')._dropDown(this, caller);
@@ -446,7 +478,7 @@ jQuery(document).ready(function ($) {
 				}
 			},
 			format: function ($element, content) {
-				return '[video=' + $($element).data('kunena-vt') + ']' + $($element).data('kunena-vsrc') + '[/video]';
+				return '[video=' + $element.getAttribute('data-kunena-vt') + ']' + $element.getAttribute('data-kunena-vsrc') + '[/video]';
 			},
 			html: function (token, attrs, content) {
 				var provider = Object.keys(kunenaCmd.video).find(key => key.toLowerCase() === attrs.defaultattr);
@@ -482,10 +514,10 @@ jQuery(document).ready(function ($) {
 			_dropDown: function (editor, caller) {
 				var $content, videourl, videotype, videoOpts = '';
 	
-				jQuery.each(kunenaCmd.video, function (provider, data) {
+				Object.keys(kunenaCmd.video).forEach(function (provider) {
 					videoOpts += '<option value="' + provider.toLowerCase() + '">' + editor._(provider) + '</option>';
 				});
-				$content = $(
+				$content = kunenaHtml(
 					'<div>' +
 					'<div>' +
 					'<label for="videotype">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_TYPE') + '</label> ' +
@@ -511,9 +543,9 @@ jQuery(document).ready(function ($) {
 					'</div>'
 				);
 	
-				$content.find('.button').on('click', function (e) {
-					videourl = $content.find('#videourl').val();
-					videotype = $content.find('#videotype').val();
+				$content.querySelector('.button').addEventListener('click', function (e) {
+					videourl = $content.querySelector('#videourl').value;
+					videotype = $content.querySelector('#videotype').value;
 	
 					if (videourl !== '' && videourl !== 'http://')
 						editor.insert('[video=' + videotype + ']' + videourl + '[/video]');
@@ -522,7 +554,7 @@ jQuery(document).ready(function ($) {
 					e.preventDefault();
 				});
 	
-				editor.createDropDown(caller, 'insertvideo', $content.get(0));
+				editor.createDropDown(caller, 'insertvideo', $content);
 			},
 			exec: function (caller) {
 				sceditor.command.get('video')._dropDown(this, caller);
@@ -539,7 +571,7 @@ jQuery(document).ready(function ($) {
 			_dropDown: function (editor, caller) {
 				var $content;
 	
-				$content = $(
+				$content = kunenaHtml(
 					'<div>' +
 					'<div>' +
 					'<label for="polltitle">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_POLL_TITLE') + '</label> ' +
@@ -568,75 +600,99 @@ jQuery(document).ready(function ($) {
 
 					return /^\d{4}-\d{2}-\d{2}$/.test(value) && value !== '1000-01-01' ? value : '';
 				};
-				var $sceditor_poll_options = $content.find('#sceditor_poll_options');
+				var sceditor_poll_options = $content.querySelector('#sceditor_poll_options');
+				var field = function (selector) {
+					return $content.querySelector(selector);
+				};
 
 				// A field of an existing option keeps the id of that option, a field without id is a new option.
 				var addPollOption = function (text, optionId) {
 					poll_number_option++;
 
-					var poll_option_label = jQuery('<label>').attr('for', 'poll_option' + poll_number_option).attr('id', 'poll_option_label' + poll_number_option).text('Poll option ' + poll_number_option);
-					var poll_option = jQuery('<input type="text">').attr('id', 'poll_option' + poll_number_option);
+					var poll_option_label = document.createElement('label');
+					var poll_option = document.createElement('input');
+
+					poll_option_label.htmlFor = 'poll_option' + poll_number_option;
+					poll_option_label.id = 'poll_option_label' + poll_number_option;
+					poll_option_label.textContent = 'Poll option ' + poll_number_option;
+					poll_option.type = 'text';
+					poll_option.id = 'poll_option' + poll_number_option;
 
 					if (text !== undefined) {
-						poll_option.val(text);
+						poll_option.value = text;
 					}
 
 					if (optionId !== undefined) {
-						poll_option.attr('data-poll-option-id', optionId);
+						poll_option.setAttribute('data-poll-option-id', optionId);
 					}
 
-					$sceditor_poll_options.append(poll_option_label);
-					$sceditor_poll_options.append(poll_option);
+					sceditor_poll_options.append(poll_option_label, poll_option);
 				};
 
 				// Prefill: the poll inserted before on this page, else the poll of the edited topic.
-				var $inserted_title = jQuery('#poll_options input[name="poll_title"]');
+				var inserted_title = document.querySelector('#poll_options input[name="poll_title"]');
+				var pageValue = function (selector) {
+					var element = document.querySelector(selector);
 
-				if ($inserted_title.length) {
-					$content.find('#polltitle').val($inserted_title.val());
-					$content.find('#polllifespan').val(pollDate(jQuery('#poll_options input[name="poll_time_to_live"]').val()));
+					return element ? element.value : '';
+				};
 
-					jQuery('#poll_options input[name^="polloptionsID["]').each(function () {
-						var key = this.name.slice('polloptionsID['.length, -1);
+				if (inserted_title) {
+					field('#polltitle').value = inserted_title.value;
+					field('#polllifespan').value = pollDate(pageValue('#poll_options input[name="poll_time_to_live"]'));
 
-						addPollOption(jQuery(this).val(), /^\d+$/.test(key) ? key : undefined);
+					document.querySelectorAll('#poll_options input[name^="polloptionsID["]').forEach(function (input) {
+						var key = input.name.slice('polloptionsID['.length, -1);
+
+						addPollOption(input.value, /^\d+$/.test(key) ? key : undefined);
 					});
-				} else if (jQuery('#poll_exist_edit').length) {
-					$content.find('#polltitle').val(jQuery('#ckeditor_dialog_polltitle').val());
-					$content.find('#polllifespan').val(pollDate(jQuery('#ckeditor_dialog_polltimetolive').val()));
+				} else if (document.getElementById('poll_exist_edit')) {
+					field('#polltitle').value = pageValue('#ckeditor_dialog_polltitle');
+					field('#polllifespan').value = pollDate(pageValue('#ckeditor_dialog_polltimetolive'));
 
-					jQuery('.ckeditor_dialog_polloption').each(function () {
-						addPollOption(jQuery(this).val(), this.id.replace('ckeditor_dialog_polloption', ''));
+					document.querySelectorAll('.ckeditor_dialog_polloption').forEach(function (input) {
+						addPollOption(input.value, input.id.replace('ckeditor_dialog_polloption', ''));
 					});
 				}
 
-				$content.find('.addpolloption').on('click', function (e) {
+				field('.addpolloption').addEventListener('click', function () {
 					addPollOption();
 				});
 
-				$content.find('.removepolloption').on('click', function (e) {
+				field('.removepolloption').addEventListener('click', function () {
 					if (poll_number_option > 0) {
-						$content.find('#poll_option' + poll_number_option).remove();
-						$content.find('#poll_option_label' + poll_number_option).remove();
+						field('#poll_option' + poll_number_option)?.remove();
+						field('#poll_option_label' + poll_number_option)?.remove();
 						poll_number_option--;
 					}
 				});
 
-				$content.find('.button').on('click', function (e) {
-					var $poll_options = jQuery('#poll_options').empty();
-					var poll_title = jQuery('<input type="hidden" name="poll_title">').val($content.find('#polltitle').val());
-					var poll_lifespan = jQuery('<input type="hidden" name="poll_time_to_live">').val($content.find('#polllifespan').val());
+				// The poll is kept in hidden fields of the form (#poll_options), which are sent with the message.
+				field('.button').addEventListener('click', function (e) {
+					var poll_options = document.getElementById('poll_options');
+					var hidden = function (name, value) {
+						var input = document.createElement('input');
 
-					if (poll_number_option > 0) {
-						$poll_options.append(poll_title);
-						$poll_options.append(poll_lifespan);
+						input.type = 'hidden';
+						input.name = name;
+						input.value = value;
 
-						for (var i = 1; i <= poll_number_option; i++) {
-							var $field = $content.find('#poll_option' + i);
-							var optionId = $field.attr('data-poll-option-id');
-							var key = optionId !== undefined ? optionId : 'new' + i;
+						return input;
+					};
 
-							$poll_options.append(jQuery('<input type="hidden">').attr('name', 'polloptionsID[' + key + ']').val($field.val()));
+					if (poll_options) {
+						poll_options.replaceChildren();
+
+						if (poll_number_option > 0) {
+							poll_options.append(hidden('poll_title', field('#polltitle').value), hidden('poll_time_to_live', field('#polllifespan').value));
+
+							for (var i = 1; i <= poll_number_option; i++) {
+								var option = field('#poll_option' + i);
+								var optionId = option.getAttribute('data-poll-option-id');
+								var key = optionId !== null ? optionId : 'new' + i;
+
+								poll_options.append(hidden('polloptionsID[' + key + ']', option.value));
+							}
 						}
 					}
 
@@ -644,7 +700,7 @@ jQuery(document).ready(function ($) {
 					e.preventDefault();
 				});
 
-				editor.createDropDown(caller, 'insertpoll', $content.get(0));
+				editor.createDropDown(caller, 'insertpoll', $content);
 			},
 			exec: function (caller) {
 				sceditor.command.get('poll')._dropDown(this, caller);
@@ -690,18 +746,13 @@ jQuery(document).ready(function ($) {
 
 		// The poll button: when polls are possible (a category which allows polls, or a topic which has a poll). It is enabled
 		// or disabled while the category is chosen.
-		if (Joomla.getOptions('com_kunena.pollcategoriesid') !== undefined || jQuery('#poll_exist_edit').length > 0)
+		if (Joomla.getOptions('com_kunena.pollcategoriesid') !== undefined || document.getElementById('poll_exist_edit'))
 		{
 			toolbar_buttons += '|poll';
 		}
 
 		var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');
-		var obj = jQuery.parseJSON( emoticons );
-		var list_emoticons = [];
-
-		jQuery.each(obj, function( index, value ) {
-			list_emoticons.push(value);
-		});
+		var obj = emoticons ? JSON.parse(emoticons) : null;
 
 		var userlang = Joomla.getOptions('com_kunena.sceditor_userdefaultlanguage');
 		userlang = (typeof userlang == 'undefined') ? Joomla.getOptions('com_kunena.sceditor_joomladefaultlanguage') : userlang;
@@ -764,7 +815,7 @@ jQuery(document).ready(function ($) {
 
 		if (sceditor.instance(textarea).val().length > 0)
 		{
-			$('#form_submit_button').removeAttr("disabled");
+			kunenaSubmit(true);
 		} else {
 			if (Joomla.getOptions('com_kunena.localstorage')) {
 				const cat = localStorage.getItem('copyKunenaeditor');
@@ -779,13 +830,13 @@ jQuery(document).ready(function ($) {
 		sceditor.instance(textarea).bind('valuechanged', function(e) {
 			if (sceditor.instance(textarea).val().length > 0)
 			{
-				$('#form_submit_button').removeAttr("disabled");
+				kunenaSubmit(true);
 			}
 
 			// Only when the other editor (the text for a private message) is empty too: it can send the message by itself.
 			if (sceditor.instance(textarea).val().length == 0 && sceditor.instance(textarea_private).val().length == 0)
 			{
-				$('#form_submit_button').prop("disabled", true);
+				kunenaSubmit(false);
 			}
 		});
 
@@ -815,18 +866,18 @@ jQuery(document).ready(function ($) {
 
 		if (sceditor.instance(textarea_private).val().length > 0)
 		{
-			$('#form_submit_button').removeAttr("disabled");
+			kunenaSubmit(true);
 		}
 
 		sceditor.instance(textarea_private).bind('valuechanged', function(e) {
 			if (sceditor.instance(textarea_private).val().length > 0)
 			{
-				$('#form_submit_button').removeAttr("disabled");
+				kunenaSubmit(true);
 			}
 
 			if (sceditor.instance(textarea_private).val().length == 0 && sceditor.instance(textarea).val().length == 0)
 			{
-				$('#form_submit_button').prop("disabled", true);
+				kunenaSubmit(false);
 			}
 		});
 
@@ -843,11 +894,10 @@ jQuery(document).ready(function ($) {
 			}
 
 			var pollcategoriesidOption = Joomla.getOptions('com_kunena.pollcategoriesid');
-			var pollcategoriesid = pollcategoriesidOption !== undefined ? jQuery.parseJSON(pollcategoriesidOption) : undefined;
-			var pollexist = jQuery('#poll_exist_edit');
-			var catid = jQuery('#postcatid').val() || jQuery('#poll_catid').val();
+			var pollcategoriesid = pollcategoriesidOption !== undefined ? JSON.parse(pollcategoriesidOption) : undefined;
+			var catid = (document.getElementById('postcatid') || {}).value || (document.getElementById('poll_catid') || {}).value;
 
-			if (pollexist.length > 0) {
+			if (document.getElementById('poll_exist_edit')) {
 				return true;
 			}
 
@@ -855,11 +905,16 @@ jQuery(document).ready(function ($) {
 		};
 
 		var kunenaPollButtonUpdate = function () {
-			jQuery('.sceditor-button-poll').toggleClass('disabled', !kunenaPollAllowed());
+			var allowed = kunenaPollAllowed();
 
-			if (kunenaPollEditRefused !== undefined) {
-				jQuery('.sceditor-button-poll').attr({'title': kunenaPollEditRefused, 'aria-describedby': 'poll-edit-refused'});
-			}
+			document.querySelectorAll('.sceditor-button-poll').forEach(function (button) {
+				button.classList.toggle('disabled', !allowed);
+
+				if (kunenaPollEditRefused !== undefined) {
+					button.setAttribute('title', kunenaPollEditRefused);
+					button.setAttribute('aria-describedby', 'poll-edit-refused');
+				}
+			});
 		};
 
 		// The poll command works only where a poll is allowed. The editor has its own copy of the commands.
@@ -893,7 +948,7 @@ jQuery(document).ready(function ($) {
 		};
 
 		kunenaPollButtonUpdate();
-		jQuery('#postcatid').on('change', kunenaPollButtonUpdate);
+		document.getElementById('postcatid')?.addEventListener('change', kunenaPollButtonUpdate);
 
 		// The mentions: typing @ shows the users of the topic (the same list as of the CKEditor). The list is made here and
 		// not with a library, because the editor is an iframe.
@@ -905,10 +960,10 @@ jQuery(document).ready(function ($) {
 			// A new topic has no users yet: the users are searched with the typed text, for the category.
 			var kunenaMentionSearch = function (query, cb) {
 				var request = ++kunenaMentionRequest;
-				var catid = jQuery('#postcatid').val() || jQuery('#poll_catid').val() || '';
+				var catid = (document.getElementById('postcatid') || {}).value || (document.getElementById('poll_catid') || {}).value || '';
 				var url = Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions') + '&catid=' + encodeURIComponent(catid) + '&q=' + encodeURIComponent(query);
 
-				jQuery.getJSON(url).done(function (json) {
+				kunenaGetJSON(url).then(function (json) {
 					var users = [];
 
 					try {
@@ -921,7 +976,7 @@ jQuery(document).ready(function ($) {
 					if (request === kunenaMentionRequest) {
 						cb(users);
 					}
-				}).fail(function () {
+				}).catch(function () {
 					if (request === kunenaMentionRequest) {
 						cb([]);
 					}
@@ -935,7 +990,7 @@ jQuery(document).ready(function ($) {
 					return;
 				}
 
-				jQuery.getJSON(Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions')).done(function (json) {
+				kunenaGetJSON(Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions')).then(function (json) {
 					try {
 						kunenaMentionUsers = typeof json === 'string' ? JSON.parse(json) : json;
 					} catch (e) {
@@ -943,7 +998,7 @@ jQuery(document).ready(function ($) {
 					}
 
 					cb(kunenaMentionUsers);
-				}).fail(function () {
+				}).catch(function () {
 					// New topic: there are no users to mention yet.
 					kunenaMentionUsers = [];
 					cb(kunenaMentionUsers);
@@ -956,31 +1011,47 @@ jQuery(document).ready(function ($) {
 
 			if (kunenaMentionFrame && kunenaMentionBody) {
 				var kunenaMentionWin = kunenaMentionFrame.contentWindow;
-				var kunenaMentionMenu = jQuery('<ul class="kmention-menu list-group shadow"></ul>').css({
+				var kunenaMentionMenu = document.createElement('ul');
+
+				kunenaMentionMenu.className = 'kmention-menu list-group shadow';
+				Object.assign(kunenaMentionMenu.style, {
 					position: 'absolute', zIndex: 2000, display: 'none', maxHeight: '240px', overflowY: 'auto', minWidth: '180px'
-				}).appendTo(document.body);
+				});
+				document.body.append(kunenaMentionMenu);
 				var kunenaMention = {items: [], index: 0, node: null, start: 0, end: 0};
 
 				var kunenaMentionHide = function () {
-					kunenaMentionMenu.hide();
+					kunenaMentionMenu.style.display = 'none';
 					kunenaMention.items = [];
 				};
 
 				var kunenaMentionDraw = function () {
-					kunenaMentionMenu.empty();
+					kunenaMentionMenu.replaceChildren();
 
-					jQuery.each(kunenaMention.items, function (i, user) {
-						var item = jQuery('<li class="list-group-item list-group-item-action py-1" style="cursor:pointer"></li>')
-							.toggleClass('active', i === kunenaMention.index);
+					kunenaMention.items.forEach(function (user, i) {
+						var item = document.createElement('li');
+						var name = document.createElement('strong');
+
+						item.className = 'list-group-item list-group-item-action py-1';
+						item.style.cursor = 'pointer';
+						item.classList.toggle('active', i === kunenaMention.index);
 
 						if (user.avatar) {
-							jQuery('<img width="24" height="24" alt="" class="me-2 rounded-circle">').attr('src', user.avatar).appendTo(item);
+							var avatar = document.createElement('img');
+
+							avatar.width = 24;
+							avatar.height = 24;
+							avatar.alt = '';
+							avatar.className = 'me-2 rounded-circle';
+							avatar.src = user.avatar;
+							item.append(avatar);
 						}
 
-						jQuery('<strong></strong>').text(user.username).appendTo(item);
+						name.textContent = user.username;
+						item.append(name);
 
 						// mousedown: the editor keeps the focus.
-						item.on('mousedown', function (e) {
+						item.addEventListener('mousedown', function (e) {
 							e.preventDefault();
 							kunenaMentionSelect(i);
 						});
@@ -1007,7 +1078,7 @@ jQuery(document).ready(function ($) {
 
 					kunenaMentionEditor.wysiwygEditorInsertHtml(
 						'<span class="kmention" data-kmention-userid="' + parseInt(user.userid, 10) + '">'
-						+ jQuery('<div>').text(user.username).html() + '</span>&nbsp;'
+						+ sceditor.escapeEntities(String(user.username)) + '</span>&nbsp;'
 					);
 
 					kunenaMentionHide();
@@ -1037,7 +1108,7 @@ jQuery(document).ready(function ($) {
 
 					var kunenaMentionDone = function (users) {
 						// The users of a new topic were searched by the server (on any of the names of the user).
-						var items = Joomla.getOptions('com_kunena.mentions_search') ? users.slice(0, 8) : jQuery.grep(users, function (user) {
+						var items = Joomla.getOptions('com_kunena.mentions_search') ? users.slice(0, 8) : users.filter(function (user) {
 							return user.username.toLowerCase().indexOf(query) !== -1;
 						}).slice(0, 8);
 
@@ -1058,10 +1129,9 @@ jQuery(document).ready(function ($) {
 						var rect = selection.getRangeAt(0).getClientRects()[0] || kunenaMentionBody.getBoundingClientRect();
 						var frameRect = kunenaMentionFrame.getBoundingClientRect();
 
-						kunenaMentionMenu.css({
-							left: Math.round(frameRect.left + window.pageXOffset + rect.left),
-							top: Math.round(frameRect.top + window.pageYOffset + rect.bottom + 4)
-						}).show();
+						kunenaMentionMenu.style.left = Math.round(frameRect.left + window.pageXOffset + rect.left) + 'px';
+						kunenaMentionMenu.style.top = Math.round(frameRect.top + window.pageYOffset + rect.bottom + 4) + 'px';
+						kunenaMentionMenu.style.display = '';
 					};
 
 					if (Joomla.getOptions('com_kunena.mentions_search')) {
@@ -1071,7 +1141,7 @@ jQuery(document).ready(function ($) {
 					}
 				};
 
-				jQuery(kunenaMentionBody).on('keydown', function (e) {
+				kunenaMentionBody.addEventListener('keydown', function (e) {
 					if (!kunenaMention.items.length) {
 						return;
 					}
@@ -1087,17 +1157,30 @@ jQuery(document).ready(function ($) {
 						kunenaMentionHide();
 						e.preventDefault();
 					}
-				}).on('keyup click input', function (e) {
-					// The keys of the list do not start a new search.
-					if (e.type === 'keyup' && jQuery.inArray(e.which, [13, 9, 27, 38, 40]) !== -1) {
-						return;
-					}
+				});
 
-					kunenaMentionCheck();
-				}).on('blur', function () {
+				['keyup', 'click', 'input'].forEach(function (type) {
+					kunenaMentionBody.addEventListener(type, function (e) {
+						// The keys of the list do not start a new search.
+						if (e.type === 'keyup' && [13, 9, 27, 38, 40].indexOf(e.which) !== -1) {
+							return;
+						}
+
+						kunenaMentionCheck();
+					});
+				});
+
+				kunenaMentionBody.addEventListener('blur', function () {
 					window.setTimeout(kunenaMentionHide, 150);
 				});
 			}
 		}
 	}
-});
+};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', kunenaInit);
+	} else {
+		kunenaInit();
+	}
+})();

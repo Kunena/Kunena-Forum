@@ -7,334 +7,325 @@
  * @link https://www.kunena.org
  **/
 
-jQuery(document).ready(function ($) {
-    const qreply = $('.qreply');
-    const editor = $('#editor');
-    const submitButton = $('#form_submit_button');
+(function () {
+	'use strict';
 
-    let pollcategoriesid;
+	const byId = (id) => document.getElementById(id);
 
-    if(Joomla.getOptions('com_kunena.pollcategoriesid') != undefined){
-		pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
-    }
+	// An option of the page which holds JSON (a text), or null.
+	const jsonOption = (name) => {
+		const value = Joomla.getOptions(name);
 
-    const pollexist = $('#poll_exist_edit');
-    const pollcatid = jQuery('#poll_catid').val();
-    const polliconstatus = false;
-    // The poll of the edited topic may not be edited: the button only shows it, the save checks it again
-    const pollEditRefused = Joomla.getOptions('com_kunena.pollEditRefused');
+		if (value === undefined || value === null) {
+			return null;
+		}
 
-    // Check is anynomous options can be displayed on newtopic page
-    const catiddefault = $('#postcatid').val();
+		try {
+			return typeof value === 'string' ? JSON.parse(value) : value;
+		} catch {
+			return null;
+		}
+	};
 
-    let arrayanynomousbox = null;
+	const hasCkeditor = () => Joomla.getOptions('com_kunena.ckeditor_config') !== undefined;
+	const messageEditor = () => window.KunenaEditor?.get('message');
 
-    if(Joomla.getOptions('com_kunena.arrayanynomousbox') != undefined){
-		arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
+	// A POST of form fields, answered with JSON.
+	const postJson = async (url, fields) => {
+		const response = await fetch(url, {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: { Accept: 'application/json' },
+			body: new URLSearchParams(fields)
+		});
 
-		if (arrayanynomousbox !== null) {
-            if (arrayanynomousbox[catiddefault] == 1) {
-                $('#kanonymous').prop('checked', true);
-            }
-        }
-    }
+		return response.json();
+	};
 
-    $('#reset').on('click', function () {
-        localStorage.removeItem('copyKunenaeditor');
-    });
+	// The users which can be mentioned: a promise of the list (the editor asks for it while @name is typed).
+	const dataFeed = async (query) => {
+		let url = Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions');
 
-    /* To enabled emojis in kunena textera feature like on github */
-    if ($('#kemojis_allowed').val() == 1) {
-        let item = '';
-        if (editor.length > 0 && qreply.length == 0) {
-            item = '#editor';
-        } else if (qreply.length > 0) {
-            item = '.qreply';
-        }
-    }
+		// A new topic has no users yet: the users are searched with the typed text, for the category.
+		if (Joomla.getOptions('com_kunena.mentions_search')) {
+			const catid = byId('postcatid')?.value || byId('poll_catid')?.value || '';
 
-    /* "Recover the form" of the template: what is written in the form is kept in the browser until it is sent (form-recover.js) */
-    if (window.KunenaFormRecover !== undefined) {
-        window.KunenaFormRecover.protect(document.getElementById('postform'), {timeout: 5});
-    }
+			url += '&catid=' + encodeURIComponent(catid) + '&q=' + encodeURIComponent(query || '');
+		}
 
-    $('#kshow_attach_form').click(function () {
-        $('#kattach_form').toggle();
-    });
+		try {
+			const response = await fetch(url, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+			let users = await response.json();
 
-    submitButton.click(function () {
-        $("#subject").attr('required', 'required');
-        $("#editor").attr('required', 'required');
-        localStorage.removeItem('copyKunenaeditor');
-    });
+			// The server sends the list as a JSON text inside the JSON.
+			if (typeof users === 'string') {
+				users = JSON.parse(users);
+			}
 
-    // Needed to open and close quickreply from template
-    $('.Kreplyclick').click(function () {
-        const name = '#' + $(this).attr('data-related');
-        if ($(name).is(":visible")) {
-            $(name).hide();
-        } else {
-            $(name).show();
-        }
-    });
+			const text = String(query || '').toLowerCase();
 
-    $('.kreply-cancel').click(function () {
-        const name = '#' + $(this).attr('data-related');
-        $(name).hide();
-    });
+			return (Array.isArray(users) ? users : [])
+				.filter((user) => String(user.username || '').toLowerCase().includes(text))
+				.slice(0, 10);
+		} catch (error) {
+			console.error('Request Failed: ' + error);
 
-    let category_template_text = null;
-    $('#postcatid').change(function () {
-        const catid = $('#postcatid').val();
-        const kurl_topicons_request = $('#kurl_topicons_request').val();
-        const pollcategoriesidOption = Joomla.getOptions('com_kunena.pollcategoriesid');
-        const pollcategoriesid = pollcategoriesidOption !== undefined ? jQuery.parseJSON(pollcategoriesidOption) : undefined;
-        const pollexist = jQuery('#poll_exist_edit');
-        const pollcatid = jQuery('#poll_catid').val();
-        const polliconstatus = true;
+			return [];
+		}
+	};
 
-        if (pollEditRefused !== undefined) {
-            if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                window.KunenaEditor.get('message')?.setCommandEnabled('polls', false);
-            }
-        } else if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
-            if (pollcatid !== undefined) {
-                const catid = jQuery('#kcategory_poll').val();
-            }
+	// The topic icons of a category, the same markup as the layout of the form. The chosen icon stays chosen when the icons of
+	// the new category have it.
+	const showTopicIcons = (icons) => {
+		const checked = document.querySelector('input[name="topic_emoticon"]:checked')?.value;
+		const icontype = Joomla.getOptions('com_kunena.kunena_topicicontype');
+		const iconLabels = Joomla.getOptions('com_kunena.topicIconLabels');
+		const list = document.createElement('div');
 
-            if (pollcategoriesid[catid] !== undefined) {
-                if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                    window.KunenaEditor.get('message')?.setCommandEnabled('polls', true);
-                }
+		list.id = 'iconset_topicList';
+		byId('iconset_topicList')?.remove();
+		byId('iconset_inject')?.append(list);
 
-            } else {
-				if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                    window.KunenaEditor.get('message')?.setCommandEnabled('polls', false);
-                }
+		Object.values(icons || {}).forEach((value, index) => {
+			const id = 'radio' + value.id;
+			const input = document.createElement('input');
+			const label = document.createElement('label');
+			const empty = document.createElement('label');
 
-            }
-        } else if (pollexist.length > 0) {
-			if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                window.KunenaEditor.get('message')?.setCommandEnabled('polls', true);
-            }
+			input.type = 'radio';
+			input.id = id;
+			input.name = 'topic_emoticon';
+			input.value = value.id;
+			label.className = 'radio inline';
+			label.htmlFor = id;
+			empty.htmlFor = id;
 
-        } else {
-			if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                window.KunenaEditor.get('message')?.setCommandEnabled('polls', false);
-            }
+			if (icontype === 'svg') {
+				// The SVG of the icon set of the forum.
+				const svg = document.createElement('template');
 
-        }
+				svg.innerHTML = String(value.svg || '').trim();
+				label.append(svg.content);
+			} else if (icontype === 'fa') {
+				const i = document.createElement('i');
 
-        if ($('#kanynomous-check').length > 0 && arrayanynomousbox !== null) {
-            if (arrayanynomousbox[catid] !== undefined) {
-                $('#kanynomous-check').show();
-                $('#kanonymous').prop('checked', true);
-            } else {
-                $('#kanynomous-check').hide();
-                $('#kanonymous').prop('checked', false);
-            }
-        }
+				i.className = 'fa fa-' + value.fa + ' glyphicon-topic fa-2x';
+				label.append(i);
+			} else {
+				const img = document.createElement('img');
 
-        // Load topic icons by ajax request
-      $.ajax({
-    type: 'POST',
-    url: kurl_topicons_request,
-    async: true,
-    dataType: 'json',
-    data: {catid: catid}
-})
-.done(function (data) {
-    // Keep the chosen icon when the icons of the new category have it
-    const checked = $('input[name="topic_emoticon"]:checked').val();
+				img.loading = 'lazy';
+				img.src = value.path;
+				img.alt = value.name;
+				img.style.border = '0';
+				label.append(img);
+			}
 
-    $('#iconset_topicList').remove();
+			if (iconLabels) {
+				const span = document.createElement('span');
 
-    const div_object = $('<div>', {'id': 'iconset_topicList'});
-    $('#iconset_inject').append(div_object);
+				span.className = 'd-block small text-center';
+				span.textContent = value.label;
+				label.append(span);
+			}
 
-    const icontype = Joomla.getOptions('com_kunena.kunena_topicicontype');
-    const iconLabels = Joomla.getOptions('com_kunena.topicIconLabels');
+			// A space between the icons, as between the lines of the layout
+			if (index > 0) {
+				list.append(document.createTextNode(' '));
+			}
 
-    // The same markup as the layout of the form
-    $.each(data, function (index, value) {
-        const input = $('<input>', {
-            type: 'radio',
-            id: 'radio' + value.id,
-            name: 'topic_emoticon',
-            value: value.id
-        });
+			list.append(empty, input, label);
+		});
 
-        const label = $('<label>', {
-            'class': 'radio inline',
-            'for': 'radio' + value.id
-        });
+		const radios = [...list.querySelectorAll('input[name="topic_emoticon"]')];
+		const chosen = radios.find((radio) => radio.value === checked) || radios[0];
 
-        if (icontype === 'svg') {
-            label.append($(value.svg));
-        } else if (icontype === 'fa') {
-            label.append($('<i>', {'class': 'fa fa-' + value.fa + ' glyphicon-topic fa-2x'}));
-        } else {
-            label.append($('<img>', {'loading': 'lazy', 'src': value.path, 'alt': value.name, 'style': 'border:0;'}));
-        }
+		if (chosen) {
+			chosen.checked = true;
+		}
+	};
 
-        if (iconLabels) {
-            label.append($('<span>', {'class': 'd-block small text-center'}).text(value.label));
-        }
+	const init = () => {
+		const submitButton = byId('form_submit_button');
+		const pollcategoriesid = jsonOption('com_kunena.pollcategoriesid');
+		const pollexist = byId('poll_exist_edit');
+		const pollcatid = byId('poll_catid')?.value;
+		// The poll of the edited topic may not be edited: the button only shows it, the save checks it again
+		const pollEditRefused = Joomla.getOptions('com_kunena.pollEditRefused');
+		// The categories in which a message is anonymous by default
+		const arrayanynomousbox = jsonOption('com_kunena.arrayanynomousbox');
+		const templateModal = byId('modal_confirm_template_category');
+		// The template text of the category which was chosen last
+		let categoryTemplate = '';
 
-        // A space between the icons, as between the lines of the layout
-        if (index > 0) {
-            div_object.append(document.createTextNode(' '));
-        }
+		if (arrayanynomousbox && arrayanynomousbox[byId('postcatid')?.value] == 1 && byId('kanonymous')) {
+			byId('kanonymous').checked = true;
+		}
 
-        div_object.append($('<label>', {'for': 'radio' + value.id}), input, label);
-    });
+		/* "Recover the form" of the template: what is written in the form is kept in the browser until it is sent (form-recover.js) */
+		if (window.KunenaFormRecover !== undefined) {
+			window.KunenaFormRecover.protect(byId('postform'), { timeout: 5 });
+		}
 
-    const radios = div_object.find('input[name="topic_emoticon"]');
-    const previous = radios.filter(function () {
-        return this.value === checked;
-    });
+		submitButton?.addEventListener('click', () => {
+			byId('subject')?.setAttribute('required', 'required');
+			byId('editor')?.setAttribute('required', 'required');
+			localStorage.removeItem('copyKunenaeditor');
+		});
 
-    (previous.length ? previous : radios.first()).prop('checked', true);
-})
-.fail(function () {
-    //TODO: handle the error of ajax request
-});
-        // Load template text for the category by ajax request
-        category_template_text = function cat_template_text() {
-            return $.ajax({
-                type: 'POST',
-                url: $('#kurl_category_template_text').val(),
-                async: true,
-                dataType: 'json',
-                data: {catid: catid}
-            })
-                .done(function (data) {
-                    if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                        const editor_text = (window.KunenaEditor.get('message')?.getData() ?? '');
+		const showTemplateModal = (shown) => {
+			if (templateModal && window.bootstrap?.Modal) {
+				const modal = bootstrap.Modal.getOrCreateInstance(templateModal);
 
-                        if (editor_text.length > 1) {
-                            if (editor_text.length > 1) {
-                                $('#modal_confirm_template_category').modal('show');
-                            } else {
-                                window.KunenaEditor.get('message')?.setData(category_template_text);
-                            }
-                        } else {
-                            if (data.length > 1) {
-                                $('#modal_confirm_template_category').modal('show');
-                            } else {
-                                window.KunenaEditor.get('message')?.setData(data.data);
-                            }
-                        }
-                    }
-                })
-                .fail(function () {
-                    //TODO: handle the error of ajax request
-                });
-        }();
-    });
+				shown ? modal.show() : modal.hide();
+			}
+		};
 
-    $('#modal_confirm_erase').click(function () {
-        $('#modal_confirm_template_category').modal('hide');
-        const textarea = $("#editor").next();
-        textarea.empty();
-        window.KunenaEditor.get('message')?.setData(category_template_text?.responseJSON?.data);
-    });
+		byId('postcatid')?.addEventListener('change', async (e) => {
+			const catid = e.target.value;
 
-    $('#modal_confirm_erase_keep_old').click(function () {
-        $('#modal_confirm_template_category').modal('hide');
-        const existing_content = (window.KunenaEditor.get('message')?.getData() ?? '');
-        const textarea = $("#editor").next();
-        textarea.empty();
-        window.KunenaEditor.get('message')?.setData(category_template_text?.responseJSON?.data + ' ' + existing_content);
-    });
+			// The poll button: only in a category with polls, and not when the poll cannot be changed any more.
+			if (hasCkeditor()) {
+				let polls = false;
 
-	$('#gotoeditor').click(function () {
-		localStorage.setItem("copyKunenaeditor", $('#editor').val());
-	});
+				if (pollEditRefused !== undefined) {
+					polls = false;
+				} else if (pollcategoriesid && !pollexist) {
+					polls = pollcategoriesid[catid] !== undefined;
+				} else {
+					polls = !!pollexist;
+				}
 
-    if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-        // The submit button: enabled when one of the editors has a text.
-        const updateSubmit = function () {
-            const length = ['message', 'message_private'].reduce(function (total, id) {
-                const instance = window.KunenaEditor.get(id);
+				messageEditor()?.setCommandEnabled('polls', polls);
+			}
 
-                return total + (instance ? instance.getData().length : 0);
-            }, 0);
+			const anonymous = byId('kanynomous-check');
 
-            if (length > 0) {
-                submitButton.removeAttr('disabled');
-            } else if (submitButton.disabled === undefined) {
-                submitButton.prop('disabled', true);
-            }
-        };
+			if (anonymous && arrayanynomousbox) {
+				const shown = arrayanynomousbox[catid] !== undefined;
 
-        // The poll button: only in a category with polls, and not when the poll cannot be changed any more.
-        const updatePollButton = function (instance) {
-            if (pollEditRefused !== undefined) {
-                instance.setCommandEnabled('polls', false);
-                $(instance.editor.ui.view.element).find('[data-kunena-button="polls"]').attr({'title': pollEditRefused, 'aria-describedby': 'poll-edit-refused'});
-            } else if (pollcatid !== undefined && typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
-                instance.setCommandEnabled('polls', pollcategoriesid[$('#kcategory_poll').val()] !== undefined);
-            } else {
-                instance.setCommandEnabled('polls', pollexist.length > 0);
-            }
-        };
+				anonymous.style.display = shown ? '' : 'none';
 
-        // A text which was copied from the quick reply to the full editor.
-        const restoreCopy = function (instance) {
-            const copy = localStorage.getItem('copyKunenaeditor');
+				if (byId('kanonymous')) {
+					byId('kanonymous').checked = shown;
+				}
+			}
 
-            if (copy) {
-                instance.setData(copy);
-                localStorage.removeItem('copyKunenaeditor');
-            }
-        };
+			// Load topic icons by ajax request
+			const iconsUrl = byId('kurl_topicons_request')?.value;
 
-        window.KunenaEditor.create('message', {mentions: dataFeed}).then(function (instance) {
-            restoreCopy(instance);
-            updatePollButton(instance);
-            updateSubmit();
-            instance.on('change', updateSubmit);
-        });
+			if (iconsUrl) {
+				postJson(iconsUrl, { catid }).then(showTopicIcons).catch(() => {});
+			}
 
-        if (document.getElementById('message_private')) {
-            window.KunenaEditor.create('message_private').then(function (instance) {
-                if (Joomla.getOptions('com_kunena.localstorage')) {
-                    restoreCopy(instance);
-                }
+			// The template text of the category: into an empty editor, or after the question when the editor has a text
+			const templateUrl = byId('kurl_category_template_text')?.value;
 
-                instance.setCommandEnabled('polls', false);
-                updateSubmit();
-                instance.on('change', updateSubmit);
-            });
-        }
-    }
+			if (!templateUrl || !hasCkeditor()) {
+				return;
+			}
 
-// The users which can be mentioned: a promise of the list (the editor asks for it while @name is typed).
-function dataFeed(query) {
-    let url = Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions');
+			try {
+				const answer = await postJson(templateUrl, { catid });
 
-    // A new topic has no users yet: the users are searched with the typed text, for the category.
-    if (Joomla.getOptions('com_kunena.mentions_search')) {
-        const catid = jQuery('#postcatid').val() || jQuery('#poll_catid').val() || '';
+				categoryTemplate = typeof answer?.data === 'string' ? answer.data : '';
+			} catch {
+				return;
+			}
 
-        url += '&catid=' + encodeURIComponent(catid) + '&q=' + encodeURIComponent(query || '');
-    }
+			if (categoryTemplate === '') {
+				return;
+			}
 
-    return new Promise(function (resolve) {
-        $.getJSON(url)
-            .done(function (json) {
-                const users = JSON.parse(json) || [];
-                const text = String(query || '').toLowerCase();
+			if ((messageEditor()?.getData() ?? '').length > 1) {
+				showTemplateModal(true);
+			} else {
+				messageEditor()?.setData(categoryTemplate);
+			}
+		});
 
-                resolve(users.filter(function (user) {
-                    return String(user.username || '').toLowerCase().indexOf(text) !== -1;
-                }).slice(0, 10));
-            })
-            .fail(function (jqxhr, textStatus, error) {
-                console.error('Request Failed: ' + textStatus + ', ' + error);
-                resolve([]);
-            });
-    });
-}
-});
+		byId('modal_confirm_erase')?.addEventListener('click', () => {
+			showTemplateModal(false);
+			messageEditor()?.setData(categoryTemplate);
+		});
+
+		byId('modal_confirm_erase_keep_old')?.addEventListener('click', () => {
+			showTemplateModal(false);
+
+			const existing = messageEditor()?.getData() ?? '';
+
+			messageEditor()?.setData(categoryTemplate + ' ' + existing);
+		});
+
+		byId('gotoeditor')?.addEventListener('click', () => {
+			localStorage.setItem('copyKunenaeditor', byId('editor')?.value ?? '');
+		});
+
+		if (!hasCkeditor() || !window.KunenaEditor) {
+			return;
+		}
+
+		// The submit button: enabled when one of the editors has a text.
+		const updateSubmit = () => {
+			const length = ['message', 'message_private'].reduce((total, id) => {
+				const instance = window.KunenaEditor.get(id);
+
+				return total + (instance ? instance.getData().length : 0);
+			}, 0);
+
+			if (submitButton) {
+				submitButton.disabled = length === 0;
+			}
+		};
+
+		// The poll button: only in a category with polls, and not when the poll cannot be changed any more.
+		const updatePollButton = (instance) => {
+			if (pollEditRefused !== undefined) {
+				instance.setCommandEnabled('polls', false);
+				instance.editor.ui.view.element.querySelectorAll('[data-kunena-button="polls"]').forEach((button) => {
+					button.setAttribute('title', pollEditRefused);
+					button.setAttribute('aria-describedby', 'poll-edit-refused');
+				});
+			} else if (pollcatid !== undefined && pollcategoriesid && !pollexist) {
+				instance.setCommandEnabled('polls', pollcategoriesid[byId('kcategory_poll')?.value] !== undefined);
+			} else {
+				instance.setCommandEnabled('polls', !!pollexist);
+			}
+		};
+
+		// A text which was copied from the quick reply to the full editor.
+		const restoreCopy = (instance) => {
+			const copy = localStorage.getItem('copyKunenaeditor');
+
+			if (copy) {
+				instance.setData(copy);
+				localStorage.removeItem('copyKunenaeditor');
+			}
+		};
+
+		window.KunenaEditor.create('message', { mentions: dataFeed }).then((instance) => {
+			restoreCopy(instance);
+			updatePollButton(instance);
+			updateSubmit();
+			instance.on('change', updateSubmit);
+		});
+
+		if (byId('message_private')) {
+			window.KunenaEditor.create('message_private').then((instance) => {
+				if (Joomla.getOptions('com_kunena.localstorage')) {
+					restoreCopy(instance);
+				}
+
+				instance.setCommandEnabled('polls', false);
+				updateSubmit();
+				instance.on('change', updateSubmit);
+			});
+		}
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
+	}
+})();

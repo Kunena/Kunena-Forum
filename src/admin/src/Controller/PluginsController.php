@@ -24,7 +24,6 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\BBCode\KunenaBBCodeEditor;
 
 /**
  * Kunena Plugins Controller
@@ -321,30 +320,10 @@ class PluginsController extends AdminController
             return false;
         }
 
-        $editor = KunenaBBCodeEditor::getInstance();
-        $editor->initializeHMVC();
-
         // Checkin succeeded.
         $message = Text::plural($this->textPrefix . '_N_ITEMS_CHECKED_IN', \count($ids));
         $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false), $message);
 
         return true;
-    }
-
-    /**
-     * Regenerate editor file
-     *
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 5.0.2
-     */
-    public function resync(): void
-    {
-        $editor = KunenaBBCodeEditor::getInstance();
-        $editor->initializeHMVC();
-
-        $message = 'Sync done';
-        $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false), $message);
     }
 }

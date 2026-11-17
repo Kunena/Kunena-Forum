@@ -47,8 +47,6 @@ Each of them must replace a layout of Aurelia of the same name (tested by `Agora
   the ones of the build of Bootstrap of Cassiopeia (without prefix) get the same colours.
 - `base.scss`: type, links, buttons, badges, forms, dropdowns, modals, pagination, tabs and tables.
 - `navigation.scss`, `forum.scss`, `topic.scss`, `profile.scss`, `editor.scss`: the parts of the forum.
-- `datepicker.scss`: the calendar of the date fields, which is outside `#kunena` (at the end of the page): it gets the
-  tokens in `tokens.scss` and the accent of the options in `template.php`.
 - `mobile.scss`: small screens (tables as lists of cards, the author above a message, no horizontal scrolling at 360px).
 - `custom.scss`: your own styles (kept during an upgrade).
 

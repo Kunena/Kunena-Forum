@@ -1,5 +1,8 @@
 # Template overrides
 
+Upgrading a template or overrides from Kunena 7: see [Upgrading a template to Kunena 8.0](upgrading-to-8.0.md), the scripts,
+layouts, helpers, settings and strings which Kunena 8.0 removed, and what replaces them.
+
 ## HMVC templates
 
 Template file overrides are searched in the following order (assuming they extend Aurelia):

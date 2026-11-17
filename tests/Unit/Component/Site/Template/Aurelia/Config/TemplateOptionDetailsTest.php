@@ -44,7 +44,6 @@ class TemplateOptionDetailsTest extends UnitTestCase
         'disableEmoticons',
         'menu_showall',
         'menu_levels',
-        'editor',
         'socialsharetag',
     ];
 

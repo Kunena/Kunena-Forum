@@ -50,7 +50,6 @@ if (KunenaFactory::getTemplate()->params->get('formRecover')) {
 
 $template = KunenaTemplate::getInstance();
 $quick    = $template->params->get('quick');
-$editor   = $template->params->get('editor');
 
 if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
     $this->captchaDisplay = $template->getCaptcha();
@@ -121,11 +120,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             <label class="col-md-12 control-label" style="padding:0;">
                                 <?php echo Text::_('COM_KUNENA_MESSAGE'); ?>:
                             </label>
-                            <?php if ($editor == 1) {
-                                echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $config);
-                            } else {
-                                echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
-                            } ?>
+                            <?php echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>'; ?>
                         </div>
 
                         <?php if ($topic->isAuthorised('subscribe')) :
@@ -242,11 +237,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                 <div class="col-md-12 control-label" style="padding:0;">
                                     <?php echo Text::_('COM_KUNENA_MESSAGE'); ?>:
                                 </div>
-                                <?php if ($editor == 1) {
-                                    echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $config);
-                                } else {
-                                    echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
-                                } ?>
+                                <?php echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>'; ?>
                             </div>
 
                             <?php if ($topic->isAuthorised('subscribe')) :

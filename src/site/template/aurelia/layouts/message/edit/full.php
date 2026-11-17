@@ -47,8 +47,6 @@ if (KunenaFactory::getTemplate()->params->get('formRecover')) {
     $this->addScript('form-recover.js');
 }
 
-$editor = $template->params->get('editor');
-
 if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
     $this->captchaDisplay = $template->getCaptcha();
     $this->captchaEnabled = true;
@@ -111,11 +109,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                 <label class="form-label" for="editor">
                     <?php echo Text::_('COM_KUNENA_MESSAGE'); ?>:
                 </label>
-                <?php if ($editor == 1) {
-                    echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $config);
-                } else {
-                    echo '<textarea class="form-control qreply qrlocalstorage' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
-                } ?>
+                <?php echo '<textarea class="form-control qreply qrlocalstorage' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>'; ?>
             </div>
             <?php if (!empty($this->captchaEnabled)) : ?>
                 <div class="mb-3">

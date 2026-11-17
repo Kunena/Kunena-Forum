@@ -88,10 +88,21 @@ describe('Kunena attachments: the pictures of a message with the protection on',
       cy.get(`.kattach img[alt="${name}"]`).then(($img) => {
         const $link = $img.closest('a');
 
-        expect($link.attr('data-fancybox')).to.eq('gallery');
-        expect($link.attr('data-type')).to.eq('image');
+        expect($link.attr('data-kunena-lightbox')).to.eq('gallery');
         expect($link.attr('href'), 'the link of the picture').to.eq($img.attr('src'));
       });
+      // The address of a protected attachment has no extension of an image: the lightbox shows it as an image all the same.
+      cy.get(`.kattach img[alt="${name}"]`).closest('a').click();
+      cy.get('dialog.kunena-lightbox').should('have.attr', 'open');
+      cy.get('dialog.kunena-lightbox .kunena-lightbox__image').should(($image) => {
+        expect($image[0].naturalWidth, 'the image is loaded').to.be.greaterThan(0);
+      });
+      // The download button takes the address which the forum sends as a file, with the name of the picture.
+      cy.get('dialog.kunena-lightbox .kunena-lightbox__download')
+        .should('have.attr', 'href').and('contain', 'download=1');
+      cy.get('dialog.kunena-lightbox .kunena-lightbox__download').should('have.attr', 'download', name);
+      cy.get('dialog.kunena-lightbox .kunena-lightbox__close').click();
+      cy.get('dialog.kunena-lightbox').should('not.have.attr', 'open');
     });
   });
 

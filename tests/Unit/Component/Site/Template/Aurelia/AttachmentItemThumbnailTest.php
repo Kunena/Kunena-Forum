@@ -122,7 +122,10 @@ class AttachmentItemThumbnailTest extends UnitTestCase
 
             public function getUrl($thumb = false, $inline = true, $escape = true): string
             {
-                return $inline ? $this->inline : $this->download;
+                $url = $inline ? $this->inline : $this->download;
+
+                // The addresses of the test are escaped, as getUrl() gives them by default.
+                return $escape ? $url : htmlspecialchars_decode($url);
             }
 
             public function getShortName($start, $end): string
@@ -130,7 +133,7 @@ class AttachmentItemThumbnailTest extends UnitTestCase
                 return $this->image ? 'picture.png' : 'notes.txt';
             }
 
-            public function getFilename(): string
+            public function getFilename($escape = true): string
             {
                 return $this->image ? 'picture.png' : 'notes.txt';
             }
@@ -179,7 +182,7 @@ class AttachmentItemThumbnailTest extends UnitTestCase
 
         $this->assertStringContainsString('href="' . self::DOWNLOAD . '"', $output);
         $this->assertStringNotContainsString('<img', $output);
-        $this->assertStringNotContainsString('data-fancybox', $output);
+        $this->assertStringNotContainsString('data-kunena-lightbox', $output);
     }
 
     #[DataProvider('layouts')]
@@ -187,7 +190,10 @@ class AttachmentItemThumbnailTest extends UnitTestCase
     {
         $output = $this->render($layoutFile, true, true);
 
-        $this->assertStringContainsString(' data-fancybox="gallery" data-type="image"', $output);
+        $this->assertStringContainsString(' data-kunena-lightbox="gallery"', $output);
+        // The download button of the lightbox takes the address which the forum sends as a file, with the name of the picture.
+        $this->assertStringContainsString(' data-kunena-download="' . self::DOWNLOAD . '"', $output);
+        $this->assertStringContainsString(' data-kunena-filename="picture.png"', $output);
     }
 
     #[DataProvider('layouts')]
@@ -195,7 +201,7 @@ class AttachmentItemThumbnailTest extends UnitTestCase
     {
         $output = $this->render($layoutFile, true, false);
 
+        $this->assertStringNotContainsString('data-kunena-lightbox', $output);
         $this->assertStringNotContainsString('data-fancybox', $output);
-        $this->assertStringNotContainsString('data-type', $output);
     }
 }

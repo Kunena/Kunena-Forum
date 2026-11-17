@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Html\KunenaLightbox;
 
 $attachment = $this->attachment;
 
@@ -27,11 +28,11 @@ if (!$attachment->isImage()) {
 
 $config = KunenaConfig::getInstance();
 
-// Load FancyBox library if enabled in configuration
+// The lightbox of Kunena, when the configuration enables it
 if ($config->lightbox == 1) {
     echo $this->subLayout('Widget/Lightbox');
 
-    $attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
+    $attributesLink = KunenaLightbox::attributes('gallery', $attachment->getUrl(false, false, false), $attachment->getFilename(false));
     $attributesImg  = ' style="max-height:' . (int) $config->imageHeight . 'px;"';
     ?>
     <a href="<?php echo $attachment->getUrl(); ?>"

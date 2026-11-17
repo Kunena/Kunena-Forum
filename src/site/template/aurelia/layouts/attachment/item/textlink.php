@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site;
 use Joomla\CMS\HTML\HTMLHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Html\KunenaLightbox;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
 $attachment = $this->attachment;
@@ -28,7 +29,7 @@ if (!$attachment->getPath()) {
 
 $config = KunenaConfig::getInstance();
 
-$attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="none"' : '';
+$attributesLink = $attachment->isImage() ? KunenaLightbox::attributes('none', $attachment->getUrl(false, false, false), $attachment->getFilename(false)) : '';
 ?>
 
 <a class="btn btn-outline-primary border btn-sm" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover"

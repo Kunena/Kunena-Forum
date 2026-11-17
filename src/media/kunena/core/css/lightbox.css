@@ -1,0 +1,204 @@
+/**
+ * Kunena Component
+ * @package     Kunena.Media
+ *
+ * @copyright   Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
+ *
+ * The lightbox of Kunena (js/lightbox.js): the image over a dark backdrop in every colour scheme, so the image is seen as it is.
+ **/
+
+.kunena-lightbox {
+	--kunena-lightbox-text: #f5f5f5;
+	--kunena-lightbox-muted: rgba(245, 245, 245, 0.75);
+	--kunena-lightbox-button: rgba(30, 30, 30, 0.7);
+	--kunena-lightbox-button-hover: rgba(70, 70, 70, 0.9);
+	--kunena-lightbox-focus: #8ab4ff;
+
+	box-sizing: border-box;
+	width: 100vw;
+	max-width: 100vw;
+	height: 100vh;
+	height: 100dvh;
+	max-height: 100dvh;
+	padding: 3.5rem 4rem;
+	margin: 0;
+	color: var(--kunena-lightbox-text);
+	background: transparent;
+	border: 0;
+	overflow: hidden;
+}
+
+.kunena-lightbox[open] {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.kunena-lightbox::backdrop {
+	background: rgba(0, 0, 0, 0.88);
+}
+
+html.kunena-lightbox-open {
+	overflow: hidden;
+}
+
+.kunena-lightbox__figure {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.75rem;
+	max-width: 100%;
+	max-height: 100%;
+	margin: 0;
+}
+
+.kunena-lightbox__image {
+	display: block;
+	max-width: 100%;
+	max-height: calc(100dvh - 9rem);
+	object-fit: contain;
+	background: #fff;
+	box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.5);
+	touch-action: pan-y pinch-zoom;
+}
+
+.kunena-lightbox.is-loading .kunena-lightbox__image,
+.kunena-lightbox.is-error .kunena-lightbox__image {
+	visibility: hidden;
+}
+
+.kunena-lightbox__caption {
+	max-width: 60rem;
+	font-size: 0.95rem;
+	line-height: 1.4;
+	color: var(--kunena-lightbox-muted);
+	text-align: center;
+	overflow-wrap: anywhere;
+}
+
+.kunena-lightbox__status {
+	position: absolute;
+	inset: 50% 0 auto;
+	margin: 0;
+	text-align: center;
+	transform: translateY(-50%);
+	pointer-events: none;
+}
+
+.kunena-lightbox__counter {
+	position: absolute;
+	top: 1rem;
+	inset-inline-start: 1.25rem;
+	margin: 0;
+	font-size: 0.9rem;
+	color: var(--kunena-lightbox-muted);
+}
+
+.kunena-lightbox__button {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	padding: 0;
+	margin: 0;
+	line-height: 0;
+	color: var(--kunena-lightbox-text);
+	cursor: pointer;
+	background: var(--kunena-lightbox-button);
+	border: 0;
+	border-radius: 50%;
+}
+
+/* Every icon is an SVG of 20 × 20 drawn around its middle: as a block, no line of text adds space above or below it. */
+.kunena-lightbox__button svg {
+	display: block;
+	flex: none;
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+.kunena-lightbox__button:hover:not(:disabled) {
+	background: var(--kunena-lightbox-button-hover);
+}
+
+.kunena-lightbox__button:focus-visible {
+	outline: 2px solid var(--kunena-lightbox-focus);
+	outline-offset: 2px;
+}
+
+.kunena-lightbox__button:disabled {
+	cursor: default;
+	opacity: 0.3;
+}
+
+.kunena-lightbox__button[hidden] {
+	display: none;
+}
+
+.kunena-lightbox__close {
+	top: 0.5rem;
+	inset-inline-end: 0.75rem;
+}
+
+/* The download is a link which looks like the buttons, beside the close button. */
+.kunena-lightbox__download {
+	top: 0.5rem;
+	inset-inline-end: 4rem;
+	text-decoration: none;
+}
+
+.kunena-lightbox__download:hover,
+.kunena-lightbox__download:focus {
+	color: var(--kunena-lightbox-text);
+	background: var(--kunena-lightbox-button-hover);
+}
+
+.kunena-lightbox__previous,
+.kunena-lightbox__next {
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.kunena-lightbox__previous {
+	inset-inline-start: 0.75rem;
+}
+
+.kunena-lightbox__next {
+	inset-inline-end: 0.75rem;
+}
+
+/* The arrows point the way of the reading. */
+[dir="rtl"] .kunena-lightbox__previous svg,
+[dir="rtl"] .kunena-lightbox__next svg {
+	transform: scaleX(-1);
+}
+
+@media (max-width: 575.98px) {
+	.kunena-lightbox {
+		padding: 3.5rem 0.5rem 4.5rem;
+	}
+
+	.kunena-lightbox__previous,
+	.kunena-lightbox__next {
+		top: auto;
+		bottom: 1rem;
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.kunena-lightbox[open],
+	.kunena-lightbox[open]::backdrop {
+		animation: kunena-lightbox-in 0.15s ease-out;
+	}
+
+	@keyframes kunena-lightbox-in {
+		from {
+			opacity: 0;
+		}
+	}
+}

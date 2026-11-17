@@ -33,17 +33,8 @@ HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
 // Add assets
-$this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.css')
-    ->registerAndUseScript('jquery.ui.widget', 'media/kunena/core/js/jquery.ui.widget.js')
-    ->registerAndUseScript('load-image', 'media/kunena/core/js/load-image.all.min.js')
-    ->registerAndUseScript('canvas-to-blob', 'media/kunena/core/js/canvas-to-blob.min.js')
-    ->registerAndUseScript('jquery.fileupload', 'media/kunena/core/js/jquery.fileupload.js')
-    ->registerAndUseScript('jquery.fileupload-process', 'media/kunena/core/js/jquery.fileupload-process.js')
-    ->registerAndUseScript('jquery.iframe-transport', 'media/kunena/core/js/jquery.iframe-transport.js')
-    ->registerAndUseScript('jquery.fileupload-image', 'media/kunena/core/js/jquery.fileupload-image.js')
-    ->registerAndUseScript('jquery.fileupload-audio', 'media/kunena/core/js/jquery.fileupload-audio.js')
-    ->registerAndUseScript('jquery.fileupload-video', 'media/kunena/core/js/jquery.fileupload-video.js')
-    ->registerAndUseScript('jquery.fileupload-validate', 'media/kunena/core/js/jquery.fileupload-validate.js')
+$this->wa->registerAndUseStyle('kunena.upload', 'media/kunena/core/css/upload.css')
+    ->registerAndUseScript('kunena.uploader', 'media/kunena/core/js/uploader.js')
     ->registerAndUseScript('upload.main', 'media/kunena/core/js/upload.main.js')
     ->registerAndUseScript('edit', 'components/com_kunena/template/aurelia/assets/js/edit.js')
     ->registerAndUseScript('submitonce', 'components/com_kunena/template/aurelia/assets/js/submitonce.js')

@@ -25,15 +25,9 @@ Text::script('COM_KUNENA_GEN_REMOVE_AVATAR');
 Text::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR');
 
 // Add assets
-$this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.css')
-    ->registerAndUseScript('jquery.ui.widget', 'media/kunena/core/js/jquery.ui.widget.js')
-    ->registerAndUseScript('load-image', 'media/kunena/core/js/load-image.all.min.js')
-    ->registerAndUseScript('canvas-to-blob', 'media/kunena/core/js/canvas-to-blob.min.js')
-    ->registerAndUseScript('jquery.fileupload', 'media/kunena/core/js/jquery.fileupload.js')
-    ->registerAndUseScript('jquery.fileupload-process', 'media/kunena/core/js/jquery.fileupload-process.js')
-    ->registerAndUseScript('jquery.iframe-transport', 'media/kunena/core/js/jquery.iframe-transport.js')
-    ->registerAndUseScript('jquery.fileupload-image', 'media/kunena/core/js/jquery.fileupload-image.js')
-    ->registerAndUseScript('upload.main', 'media/kunena/core/js/upload.avatar.js');
+$this->wa->registerAndUseStyle('kunena.upload', 'media/kunena/core/css/upload.css')
+    ->registerAndUseScript('kunena.uploader', 'media/kunena/core/js/uploader.js')
+    ->registerAndUseScript('upload.avatar', 'media/kunena/core/js/upload.avatar.js');
 
 $this->doc->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->doc->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
@@ -62,7 +56,7 @@ $this->doc->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
                         <?php echo KunenaIcons::plus(); ?>
                         <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_ADD_AVATAR_BUTTON') ?></span>
                         <!-- The file input field used as target for the file upload widget -->
-                        <input id="fileupload" type="file" name="file" multiple>
+                        <input id="fileupload" type="file" name="file" accept="image/*">
                         </span>
 
                 <div id="files" class="files"></div>

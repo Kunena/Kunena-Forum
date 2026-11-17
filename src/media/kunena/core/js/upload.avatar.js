@@ -11,7 +11,6 @@ jQuery(function ($) {
 	'use strict';
 
 	let fileCount = null;
-	const filesedit = null;
 	const max_avatar = 1;
 
 	const removeButton = $('<button/>')
@@ -25,13 +24,8 @@ jQuery(function ($) {
 			let userid;
 			let avatar;
 
-			if (data['files'] !== undefined) {
-				userid = data['files'].userid;
-				avatar = data['files'].filename;
-			} else {
-				userid = data.userid;
-				avatar = data.filename;
-			}
+			userid = data.userid;
+			avatar = data.filename;
 
 			fileCount = fileCount - 1;
 
@@ -48,124 +42,68 @@ jQuery(function ($) {
 				});
 		});
 
-	$('#fileupload').fileupload({
+	// The upload of the avatar (uploader.js): the file is sent as soon as it is chosen or dropped; one avatar, so one file.
+	KunenaUploader.attach(document.getElementById('fileupload'), {
 		url: Joomla.getOptions('com_kunena.avatar_upload_url'),
-		dataType: 'json',
-		autoUpload: true,
-		// Enable image resizing, except for Android and Opera,
-		// which actually support image resizing, but fail to
-		// send Blob objects via XHR requests:
-		disableImageResize: /Android(?!.*Chrome)|Opera/
-			.test(window.navigator.userAgent),
-		// Never draw an SVG on a canvas: the original file is sent and cleaned on the server.
-		loadImageFileTypes: /^image\/(gif|jpeg|png)$/,
-		previewMaxWidth: 100,
-		previewMaxHeight: 100,
-		previewCrop: true
-	}).bind('fileuploadsubmit', function (e, data) {
-		let params = {};
-		$.each(data.files, function (index, file) {
-			params = {
+		params: function (file) {
+			return {
 				'userid': $('#kunena_userid').val(),
 				'filename': file.name,
 				'size': file.size,
 				'mime': file.type
 			};
-		});
+		},
+		// A photo larger than this is made smaller before it is sent (the forum makes the sizes of the avatars itself).
+		resize: {maxWidth: 1920, maxHeight: 1080},
+		previewWidth: 100,
+		previewHeight: 100,
+		accept: function (files) {
+			fileCount = 1;
 
-		data.formData = params;
-	})
-		.bind('fileuploaddrop', function (e, data) {
-			const filecoutntmp = Object.keys(data['files']).length + fileCount;
-
-			fileCount = Object.keys(data['files']).length + fileCount;
-		})
-		.bind('fileuploadchange', function (e, data) {
-			const filecoutntmp = Object.keys(data['files']).length + fileCount;
-
-			fileCount = Object.keys(data['files']).length + fileCount;
-		})
-		.on('fileuploadadd', function (e, data) {
-			$('#progress .bar').css(
-				'width',
-				'0%'
-			);
-
+			return files.slice(0, max_avatar);
+		},
+		add: function (file) {
+			$('#progress .bar').css('width', '0%');
 			$('#files').empty();
 
-			data.context = $('<div/>').appendTo('#files');
+			const context = $('<div/>').appendTo('#files');
 
-			$.each(data.files, function (index, file) {
-				const node = $('<p/>')
-					.append($('<span/>').text(file.name));
-				if (!index) {
-					node
-						.append('<br>');
-				}
-				node.appendTo(data.context);
-			});
-		}).on('fileuploadprocessalways', function (e, data) {
-		const index = data.index,
-			file = data.files[index],
-			node = $(data.context.children()[index]);
-		if (file.preview) {
-			node
-				.prepend('<br>')
-				.prepend(file.preview);
-		}
-		if (file.error) {
-			node
-				.append('<br>')
-				.append($('<span class="text-danger"/>').text(file.error));
-		}
-		if (index + 1 === data.files.length) {
-			data.context.find('button.btn-primary')
-				.text('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON')
-				.prop('disabled', !!data.files.error);
-		}
-	}).on('fileuploaddone', function (e, data) {
-		// $.each(data.result.data, function (index, file)
+			$('<p/>').append($('<span/>').text(file.name)).append('<br>').appendTo(context);
 
-		const link = $('<a>')
-			.attr('target', '_blank')
-			.prop('href', data.result.location);
-
-		data.context.find('span')
-			.wrap(link);
-
-		if (data.result.success === true) {
-			$('#form_submit_button').prop('disabled', false);
-
-			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
-			$('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
-			$('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
-
-			data.uploaded = true;
-
-			if (data.context.find('button').hasClass('btn-danger')) {
-				data.context.find('button.btn-danger').remove();
+			return context;
+		},
+		preview: function (canvas, file, context) {
+			$(context.children()[0]).prepend('<br>').prepend(canvas);
+		},
+		progress: function (loaded, total) {
+			$('#progress .bar').css('width', (total ? parseInt(loaded / total * 100, 10) : 0) + '%');
+		},
+		done: function (result, context, file) {
+			if (result.location) {
+				context.find('span').wrap($('<a>').attr('target', '_blank').prop('href', result.location));
 			}
-			data.context.append(removeButton.clone(true).data(data));
-		} else if (data.result.message) {
-			$('#form_submit_button').prop('disabled', false);
 
-			data.uploaded = false;
-			data.context.append(removeButton.clone(true).data(data));
+			context.find('button.btn-danger').remove();
+			// The button removes the avatar of the user (the server takes the user of the session).
+			context.append(removeButton.clone(true).data({
+				userid: $('#kunena_userid').val(),
+				filename: file.name
+			}));
 
-			const error = $('<div class="alert alert-danger" role="alert" />').text(data.result.message);
-				data.context.find('span')
-					.append('<br>')
-					.append(error);
+			if (result.success === true) {
+				$('#form_submit_button').prop('disabled', false);
+			} else if (result.message) {
+				$('#form_submit_button').prop('disabled', false);
+
+				const error = $('<div class="alert alert-danger" role="alert" />').text(result.message);
+
+				context.find('span').append('<br>').append(error);
+			}
+		},
+		fail: function (message, context) {
+			$(context.children()[0]).append('<br>').append($('<span class="text-danger"/>').text(message));
 		}
-	}).on('fileuploadfail', function (e, data) {
-		$.each(data.files, function (index, file) {
-			const error = $('<span class="text-danger"/>').text(file.error);
-			$(data.context.children()[index])
-				.append('<br>')
-				.append(error);
-		});
-	}).prop('disabled', !$.support.fileInput)
-		.parent().addClass($.support.fileInput ? undefined : 'disabled');
+	});
 
 	if ($('#kunena_userid').val() > 0) {
 		$.ajax({

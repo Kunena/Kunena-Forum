@@ -22,9 +22,19 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 if ($this->category->allowRatings) :
     $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-    $wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/rating.css')
-        ->registerAndUseScript('rating', 'media/kunena/core/js/rating.js')
-        ->registerAndUseScript('krating', 'media/kunena/core/js/krating.js'); ?>
+    $wa->registerAndUseStyle('kunena.rating', 'media/kunena/core/css/rating.css')
+        ->registerAndUseScript('krating', 'media/kunena/core/js/krating.js');
+
+    // The texts of the stars and of the answers of the server (the keys of KunenaRate::save()).
+    foreach (
+        [
+            'COM_KUNENA_RATING_LABEL', 'COM_KUNENA_RATING_STAR', 'COM_KUNENA_RATING_WARNING_LABEL', 'COM_KUNENA_RATE_LOGIN',
+            'COM_KUNENA_RATE_NOT_YOURSELF', 'COM_KUNENA_RATE_NOT_ALLOWED_WHEN_BANNED', 'COM_KUNENA_RATE_ALLREADY',
+            'COM_KUNENA_RATE_SUCCESSFULLY_SAVED',
+        ] as $key
+    ) {
+        Text::script($key);
+    } ?>
 
     <input id="topic_id" type="hidden" value="<?php echo $this->topic->id; ?>"/>
     <input id="krating-catid" type="hidden" value="<?php echo $this->category->id; ?>"/>

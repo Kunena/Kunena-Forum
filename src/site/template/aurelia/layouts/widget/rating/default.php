@@ -18,12 +18,8 @@ namespace Kunena\Forum\Site;
 use Joomla\CMS\Language\Text;
 
 if ($this->config->ratingEnabled && $this->category->allowRatings) :
+    // The rating of a topic of a list, shown only: the stars to rate are on the page of the topic (krating.js).
     $this->addStyleSheet('rating.css');
-    $this->addScript('rating.js');
-    $this->addScript('krating.js');
-
-    Text::script('COM_KUNENA_RATING_SUCCESS_LABEL');
-    Text::script('COM_KUNENA_RATING_WARNING_LABEL');
 
     if ($this->topic->rating) :
         ?>

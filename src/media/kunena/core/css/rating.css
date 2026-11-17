@@ -49,6 +49,13 @@
 	background-position: -24px 0;
 }
 
+/* The star which the keyboard is on (krating.js: the arrows move between the stars). */
+#kunena .c-rating__item:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
 #ktopicsform [class*='category'] .c-rating__item {
 	-webkit-box-flex: 0;
 	-webkit-flex: 0 0 14px;

@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site\Layout\Search;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
 /**
@@ -245,7 +246,9 @@ class SearchForm extends KunenaLayout
     {
         switch ($name) {
             case 'searchatdate':
-                return '<input type="text" class="form-select" name="searchatdate" data-date-format="' . $this->config->datePickerFormat . '" placeholder="' . $this->config->datePickerFormat . '" value="' . $this->state->get('query.searchatdate') . '">' . $attributes;
+                // The date field of the browser: it shows its calendar and sends yyyy-mm-dd.
+                return '<input type="date" class="form-control" name="searchatdate" value="'
+                    . htmlspecialchars(KunenaDate::toPicker((string) $this->state->get('query.searchatdate'), 'yyyy-mm-dd'), ENT_QUOTES, 'UTF-8') . '">' . $attributes;
         }
 
         return '';

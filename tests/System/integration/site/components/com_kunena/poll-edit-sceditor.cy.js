@@ -127,8 +127,12 @@ describe('Kunena polls: the poll dialog of the SCEditor edits the existing poll'
     openEdit();
     openDialog();
     cy.get('#polltitle').should('have.value', 'The poll of the owner');
+    // The life span is a date field of the browser (yyyy-mm-dd): the empty date of the base (no end) is an empty field.
+    cy.get('#polllifespan').should('have.attr', 'type', 'date');
     cy.get('#ckeditor_dialog_polltimetolive').invoke('val').then((value) => {
-      cy.get('#polllifespan').should('have.value', value);
+      const day = String(value).slice(0, 10);
+
+      cy.get('#polllifespan').should('have.value', day === '1000-01-01' ? '' : day);
     });
     cy.get('#poll_option1').should('have.value', 'Yes').and('have.attr', 'data-poll-option-id', String(ids.options[0]));
     cy.get('#poll_option2').should('have.value', htmlText).and('have.attr', 'data-poll-option-id', String(ids.options[1]));

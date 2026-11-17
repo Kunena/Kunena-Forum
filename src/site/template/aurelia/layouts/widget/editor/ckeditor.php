@@ -96,7 +96,6 @@ HTMLHelper::_('bootstrap.tab');
 
 // $this->addScript('edit.js');
 
-// Echo $this->subLayout('Widget/Datepicker');
 
 $topictemplate = !$this->config->pickupCategory;
 $this->doc->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(KunenaParser::getEmoticons(0, 1, 0)));

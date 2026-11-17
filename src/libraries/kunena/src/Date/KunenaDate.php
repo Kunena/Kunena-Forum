@@ -50,6 +50,15 @@ class KunenaDate extends Date
             return null;
         }
 
+        // The date field of the browser (<input type="date">) always sends yyyy-mm-dd, whatever the user sees: it is read first, and
+        // a day which does not exist (2026-02-31) is no date.
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+            $date   = DateTime::createFromFormat('!Y-m-d', $value);
+            $errors = DateTime::getLastErrors();
+
+            return $date && (!$errors || (!$errors['warning_count'] && !$errors['error_count'])) ? $date->format('Y-m-d') : null;
+        }
+
         if ($format === '') {
             $format = (string) KunenaFactory::getConfig()->datePickerFormat;
         }
@@ -238,6 +247,60 @@ class KunenaDate extends Date
         }
 
         return $format === '' ? $value->format('Y-m-d') : $value->format(self::pickerToPhp($format));
+    }
+
+    /**
+     * Writes a date and time of the database (Y-m-d H:i:s) for a date and time field of the browser (<input type="datetime-local">,
+     * the dates of an announcement): Y-m-dTH:i.
+     *
+     * @param   string|null  $datetime  The date and time of the database (the value which means "no date" gives an empty text).
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function toDateTimeLocal(?string $datetime): string
+    {
+        $datetime = trim((string) $datetime);
+
+        if ($datetime === '' || str_starts_with($datetime, '1000-01-01') || str_starts_with($datetime, '0000-00-00')) {
+            return '';
+        }
+
+        $value = DateTime::createFromFormat('!Y-m-d H:i:s', $datetime) ?: DateTime::createFromFormat('!Y-m-d H:i', $datetime)
+            ?: DateTime::createFromFormat('!Y-m-d', $datetime);
+
+        return $value ? $value->format('Y-m-d\TH:i') : '';
+    }
+
+    /**
+     * Reads the value of a date and time field of the browser (Y-m-dTH:i, with or without seconds) as a date and time of the
+     * database (Y-m-d H:i:s). The format of the database itself is read too (a form sent by an older page).
+     *
+     * @param   string|null  $value  The value of the field.
+     *
+     * @return  string|null  The date and time as Y-m-d H:i:s, null for an empty field or a text which is no date and time.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function fromDateTimeLocal(?string $value): ?string
+    {
+        $value = trim((string) $value);
+
+        if ($value === '') {
+            return null;
+        }
+
+        foreach (['!Y-m-d\TH:i', '!Y-m-d\TH:i:s', '!Y-m-d H:i:s', '!Y-m-d H:i'] as $format) {
+            $date   = DateTime::createFromFormat($format, $value);
+            $errors = DateTime::getLastErrors();
+
+            if ($date && (!$errors || (!$errors['warning_count'] && !$errors['error_count']))) {
+                return $date->format('Y-m-d H:i:s');
+            }
+        }
+
+        return null;
     }
 
     /**

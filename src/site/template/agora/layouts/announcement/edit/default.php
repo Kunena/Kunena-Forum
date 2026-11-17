@@ -17,14 +17,10 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-echo $this->subLayout('Widget/Datepicker');
-
-// The calendar beside each date, joined to its field (the datepicker opens on the element .input-group.date).
-$calendar = '<span class="input-group-text" aria-hidden="true">' . KunenaIcons::calendar() . '</span>';
-$dates    = [
+// The dates of the announcement: date and time fields of the browser, with their own calendar.
+$dates = [
     ['created', 'COM_KUNENA_ANN_DATE', 'addcreated'],
     ['publish_up', 'COM_KUNENA_ANN_DATE_UP', 'publish_up'],
     ['publish_down', 'COM_KUNENA_ANN_DATE_DOWN', 'publish_down'],
@@ -61,9 +57,7 @@ $dates    = [
             <?php foreach ($dates as [$field, $label, $id]) : ?>
                 <div class="col-md-4">
                     <label class="form-label d-block" for="<?php echo $id; ?>"><?php echo Text::_($label); ?></label>
-                    <div class="input-group date">
-                        <?php echo $this->displayInput($field, $calendar, $id); ?>
-                    </div>
+                    <?php echo $this->displayInput($field, '', $id); ?>
                 </div>
             <?php endforeach; ?>
         </div>

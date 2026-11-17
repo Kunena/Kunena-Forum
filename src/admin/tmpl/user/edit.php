@@ -194,12 +194,10 @@ $template = KunenaTemplate::getInstance();
                                                             </td>
                                                             <td>
                                                                 <div id="birthdate">
-                                                                    <div class="input-group date">
-                                                                        <input type="text" name="birthdate" id="birthdate-input"
-                                                                            class="inputbox form-control"
-                                                                            data-date-format="<?php echo $this->config->datePickerFormat; ?>"
-                                                                            value="<?php echo htmlspecialchars(KunenaDate::toPicker((string) $this->user->birthdate), ENT_QUOTES, 'UTF-8'); ?>">
-                                                                    </div>
+                                                                    <?php // The date field of the browser: its calendar; it sends yyyy-mm-dd. ?>
+                                                                    <input type="date" name="birthdate" id="birthdate-input"
+                                                                        class="inputbox form-control" max="<?php echo date('Y-m-d'); ?>"
+                                                                        value="<?php echo htmlspecialchars(KunenaDate::toPicker((string) $this->user->birthdate, 'yyyy-mm-dd'), ENT_QUOTES, 'UTF-8'); ?>">
                                                                 </div>
                                                             </td>
                                                         </tr>

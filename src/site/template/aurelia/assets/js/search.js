@@ -20,11 +20,4 @@ jQuery(document).ready(function ($) {
 	if ($('.kunena-search-result').first().is(':visible')) {
 		$('#search').collapse("hide");
 	}
-
-	if (jQuery.fn.datepicker !== undefined) {
-		jQuery("#searchatdate.input-group.date").datepicker({
-			orientation: "top auto",
-			language: "kunena",
-		});
-	}
 });

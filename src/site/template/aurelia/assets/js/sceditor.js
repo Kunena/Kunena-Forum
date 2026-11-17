@@ -555,13 +555,19 @@ jQuery(document).ready(function ($) {
 					'</div>' +
 					'<div>' +
 					'<label for="polllifespan">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_POLL_LIFE_SPAN') + '</label> ' +
-					'<input type="text" id="polllifespan" />' +
+					'<input type="date" id="polllifespan" />' +
 					'</div>' +
 					'<div><input type="button" class="button" value="' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL') + '" /></div>' +
 					'</div>'
 				);
 
 				var poll_number_option = 0;
+				// The date field of the browser takes yyyy-mm-dd: the date of a stored end (Y-m-d H:i:s), none for the empty date.
+				var pollDate = function (value) {
+					value = String(value || '').slice(0, 10);
+
+					return /^\d{4}-\d{2}-\d{2}$/.test(value) && value !== '1000-01-01' ? value : '';
+				};
 				var $sceditor_poll_options = $content.find('#sceditor_poll_options');
 
 				// A field of an existing option keeps the id of that option, a field without id is a new option.
@@ -588,7 +594,7 @@ jQuery(document).ready(function ($) {
 
 				if ($inserted_title.length) {
 					$content.find('#polltitle').val($inserted_title.val());
-					$content.find('#polllifespan').val(jQuery('#poll_options input[name="poll_time_to_live"]').val());
+					$content.find('#polllifespan').val(pollDate(jQuery('#poll_options input[name="poll_time_to_live"]').val()));
 
 					jQuery('#poll_options input[name^="polloptionsID["]').each(function () {
 						var key = this.name.slice('polloptionsID['.length, -1);
@@ -597,7 +603,7 @@ jQuery(document).ready(function ($) {
 					});
 				} else if (jQuery('#poll_exist_edit').length) {
 					$content.find('#polltitle').val(jQuery('#ckeditor_dialog_polltitle').val());
-					$content.find('#polllifespan').val(jQuery('#ckeditor_dialog_polltimetolive').val());
+					$content.find('#polllifespan').val(pollDate(jQuery('#ckeditor_dialog_polltimetolive').val()));
 
 					jQuery('.ckeditor_dialog_polloption').each(function () {
 						addPollOption(jQuery(this).val(), this.id.replace('ckeditor_dialog_polloption', ''));

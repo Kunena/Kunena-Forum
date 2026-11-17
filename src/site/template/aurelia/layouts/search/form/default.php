@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -33,7 +34,6 @@ if ($bootstrap) {
     HTMLHelper::_('dropdown.init');
 }
 
-echo $this->subLayout('Widget/Datepicker');
 
 // The names of the users while a name is typed in the user field (search.js attaches it)
 $this->addScript('user-autocomplete.js');
@@ -123,16 +123,11 @@ KunenaFactory::getTemplate()->addScriptOptions('com_kunena.usersearch_url', Kune
                                         <legend class="fs-6 fw-semibold">
                                             <?php echo Text::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
                                         </legend>
-                                        <div id="searchatdate" class="input-group date" data-date-format="<?php echo $this->config->datePickerFormat; ?>">
+                                        <div id="searchatdate">
                                             <label for="searchatdate-input" class="visually-hidden"><?php echo Text::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?></label>
-                                            <input type="text" class="form-control" id="searchatdate-input" name="searchatdate" data-date-format="<?php echo $this->config->datePickerFormat; ?>">
-                                            <button
-                                                class="btn btn-outline-secondary"
-                                                type="button"
-                                                id="button-searchatdate"
-                                                aria-label="<?php echo Text::_('COM_KUNENA_SEARCH_LABEL_SELECT_DATE'); ?>">
-                                                <?php echo KunenaIcons::calendar(); ?>
-                                            </button>
+                                            <?php // The date field of the browser (its calendar, in the format of the language of the user): yyyy-mm-dd. ?>
+                                            <input type="date" class="form-control" id="searchatdate-input" name="searchatdate"
+                                                value="<?php echo $this->escape(KunenaDate::toPicker((string) $this->state->get('query.searchatdate'), 'yyyy-mm-dd')); ?>">
                                         </div>
                                     </fieldset>
                                 </div>

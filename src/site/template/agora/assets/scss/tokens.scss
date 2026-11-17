@@ -18,9 +18,7 @@
  *   texts of all the cards start at the same edge; cards are --agora-gap apart.
  * - Shape: one radius for everything which is not round (cards, buttons, fields, menus, badges), 1px borders, soft shadows.
  */
-/* The calendar of the date fields is put at the end of the page, outside #kunena: it gets the same colours. */
-#kunena.layout.agora,
-body:has(#kunena.layout.agora) .datepicker.dropdown-menu {
+#kunena.layout.agora {
   --agora-accent: #3d5afe;
   --agora-accent-strong: color-mix(in srgb, var(--agora-accent) 82%, #000);
   --agora-accent-soft: color-mix(in srgb, var(--agora-accent) 10%, transparent);
@@ -92,8 +90,7 @@ body:has(#kunena.layout.agora) .datepicker.dropdown-menu {
   --link-hover-color: var(--agora-accent);
 }
 
-#kunena.layout.agora[data-bs-theme="dark"],
-body:has(#kunena.layout.agora[data-bs-theme="dark"]) .datepicker.dropdown-menu {
+#kunena.layout.agora[data-bs-theme="dark"] {
   --agora-accent-strong: color-mix(in srgb, var(--agora-accent) 55%, #fff);
   --agora-accent-soft: color-mix(in srgb, var(--agora-accent) 22%, transparent);
   --agora-link: var(--agora-accent-strong);

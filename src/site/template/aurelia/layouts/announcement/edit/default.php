@@ -17,10 +17,8 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-echo $this->subLayout('Widget/Datepicker');
 ?>
 <h2>
     <?php echo Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>:
@@ -66,9 +64,7 @@ echo $this->subLayout('Widget/Datepicker');
                 <?php echo Text::_('COM_KUNENA_ANN_DATE'); ?>
             </label>
             <div class="controls" id="ann-date">
-                <div class="input-group date">
-                    <?php echo $this->displayInput('created', '<span class="input-group-addon">' . KunenaIcons::calendar() . '</span>', 'addcreated'); ?>
-                </div>
+                <?php echo $this->displayInput('created', '', 'addcreated'); ?>
             </div>
         </div>
 
@@ -77,9 +73,7 @@ echo $this->subLayout('Widget/Datepicker');
                 <?php echo Text::_('COM_KUNENA_ANN_DATE_UP'); ?>
             </label>
             <div class="controls" id="ann-date2">
-                <div class="input-group date">
-                    <?php echo $this->displayInput('publish_up', '<span class="input-group-addon">' . KunenaIcons::calendar() . '</span>', 'publish_up'); ?>
-                </div>
+                <?php echo $this->displayInput('publish_up', '', 'publish_up'); ?>
             </div>
         </div>
 
@@ -88,9 +82,7 @@ echo $this->subLayout('Widget/Datepicker');
                 <?php echo Text::_('COM_KUNENA_ANN_DATE_DOWN'); ?>
             </label>
             <div class="controls" id="ann-date3">
-                <div class="input-group date">
-                    <?php echo $this->displayInput('publish_down', '<span class="input-group-addon">' . KunenaIcons::calendar() . '</span>', 'publish_down'); ?>
-                </div>
+                <?php echo $this->displayInput('publish_down', '', 'publish_down'); ?>
             </div>
         </div>
 

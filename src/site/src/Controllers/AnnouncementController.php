@@ -22,6 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 
@@ -314,9 +315,10 @@ class AnnouncementController extends KunenaController
         $fields['title']        = $this->app->getInput()->getString('title', '');
         $fields['description']  = $this->app->getInput()->getString('description', '');
         $fields['sdescription'] = $this->app->getInput()->getString('sdescription', '');
-        $fields['created']      = $this->app->getInput()->getString('created');
-        $fields['publish_up']   = $this->app->getInput()->getString('publish_up');
-        $fields['publish_down'] = $this->app->getInput()->getString('publish_down');
+        // The date and time fields of the browser send Y-m-dTH:i: as Y-m-d H:i:s for the table (null: empty or no date and time).
+        $fields['created']      = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('created'));
+        $fields['publish_up']   = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('publish_up'));
+        $fields['publish_down'] = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('publish_down'));
         $fields['published']    = $this->app->getInput()->getInt('published', 1);
         $fields['showdate']     = $this->app->getInput()->getInt('showdate', 1);
 

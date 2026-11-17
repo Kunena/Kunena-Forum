@@ -19,10 +19,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
-echo $this->subLayout('Widget/Datepicker');
 $this->addScript('assets/js/profile.js');
 
 $template = KunenaTemplate::getInstance();
@@ -51,20 +49,16 @@ $template = KunenaTemplate::getInstance();
         <?php endif; ?>
         <tr>
             <td>
-                <label for="birthdate">
+                <label for="birthdate-input">
                     <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>
                 </label>
             </td>
             <td>
                 <div id="birthdate">
-                    <div class="input-group date" data-date-format="<?php echo $this->escape($this->config->datePickerFormat); ?>">
-                        <input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="<?php echo $this->config->datePickerFormat; ?>"
-                            value="<?php echo $this->escape(KunenaDate::toPicker((string) $this->profile->birthdate)); ?>"
-                            data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC', $this->config->datePickerFormat ?: 'yyyy-mm-dd')) ?>">
-                        <button class="btn btn-outline-secondary" type="button" aria-label="<?php echo Text::_('COM_KUNENA_SEARCH_LABEL_SELECT_DATE'); ?>">
-                            <?php echo KunenaIcons::calendar(); ?>
-                        </button>
-                    </div>
+                    <?php // The date field of the browser: its calendar, in the format of the language of the user; it sends yyyy-mm-dd. ?>
+                    <input class="form-control" type="date" id="birthdate-input" name="birthdate"
+                        max="<?php echo date('Y-m-d'); ?>"
+                        value="<?php echo $this->escape(KunenaDate::toPicker((string) $this->profile->birthdate, 'yyyy-mm-dd')); ?>">
                 </div>
             </td>
         </tr>

@@ -248,13 +248,6 @@ jQuery(document).ready(function ($) {
         window.KunenaEditor.get('message')?.setData(category_template_text?.responseJSON?.data + ' ' + existing_content);
     });
 
-    if ($.fn.datepicker !== undefined) {
-        // Load datepicker for poll
-        $('#datepoll-container .input-append.date').datepicker({
-            orientation: "top auto"
-        });
-    }
-
 	$('#gotoeditor').click(function () {
 		localStorage.setItem("copyKunenaeditor", $('#editor').val());
 	});

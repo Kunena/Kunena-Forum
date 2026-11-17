@@ -2237,6 +2237,16 @@ class TopicController extends KunenaController
             return null;
         }
 
+        // A day without a time (the date field of the browser sends yyyy-mm-dd) is the end of that day, as a date of the date
+        // picker is: PHP reads it as the start of the day, and the poll ended a day early.
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+            $date = KunenaDate::fromPicker($value);
+
+            if ($date !== null) {
+                return (new Date($date . ' 23:59:59'))->toSql();
+            }
+        }
+
         try {
             return (new Date($value))->toSql();
         } catch (Exception $e) {

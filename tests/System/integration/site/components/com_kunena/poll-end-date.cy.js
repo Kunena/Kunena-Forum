@@ -78,6 +78,13 @@ describe('Kunena polls: the end date of a new poll', () => {
     endOf('picker').then((ending) => expect(ending, 'the end of the poll').to.eq('2030-10-23 23:59:59'));
   });
 
+  // The date field of the poll dialog (<input type="date">) sends the day as yyyy-mm-dd: PHP read it as the start of the day.
+  it('takes the day of the date field as the end of that day', () => {
+    cy.doFrontendLogin(user.name, user.password, false);
+    newTopic('field', '2030-10-23');
+    endOf('field').then((ending) => expect(ending, 'the end of the poll').to.eq('2030-10-23 23:59:59'));
+  });
+
   it('takes an end which PHP reads as it is', () => {
     cy.doFrontendLogin(user.name, user.password, false);
     newTopic('iso', '2030-10-23 18:00:00');

@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site\Layout\Announcement;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
@@ -66,11 +67,12 @@ class AnnouncementEdit extends KunenaLayout
             case 'description':
                 return '<textarea name="description" ' . $attributes . '>' . $this->escape($this->announcement->description) . '</textarea>';
             case 'created':
-                return '<input type="text" class="span12"' . ($id ? ' id="' . $this->escape($id) . '"' : '') . ' name="created" data-date-format="' . $this->config->datePickerFormat . '" value="' . $this->escape($this->announcement->created) . '">' . $attributes;
             case 'publish_up':
-                return '<input type="text" class="span12"' . ($id ? ' id="' . $this->escape($id) . '"' : '') . ' name="publish_up" data-date-format="' . $this->config->datePickerFormat . '" value="' . $this->escape($this->announcement->publish_up) . '">' . $attributes;
             case 'publish_down':
-                return '<input type="text" class="span12"' . ($id ? ' id="' . $this->escape($id) . '"' : '') . ' name="publish_down" data-date-format="' . $this->config->datePickerFormat . '" value="' . $this->escape($this->announcement->publish_down) . '">' . $attributes;
+                // The date and time field of the browser (its calendar and its clock, in the format of the language of the user):
+                // it sends Y-m-dTH:i, which the controller reads with KunenaDate::fromDateTimeLocal().
+                return '<input type="datetime-local" class="form-control"' . ($id ? ' id="' . $this->escape($id) . '"' : '') . ' name="' . $name
+                    . '" value="' . $this->escape(KunenaDate::toDateTimeLocal((string) $this->announcement->{$name})) . '">' . $attributes;
             case 'showdate':
                 $options   = [];
                 $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));

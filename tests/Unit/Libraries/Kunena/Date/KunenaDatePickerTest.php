@@ -47,15 +47,19 @@ class KunenaDatePickerTest extends UnitTestCase
     public static function read(): array
     {
         return [
-            'day first'                           => ['23/10/2026', 'dd/mm/yyyy', '2026-10-23'],
-            'month first'                         => ['10/23/2026', 'mm/dd/yyyy', '2026-10-23'],
-            'no leading zeros'                    => ['5.3.2026', 'd.m.yyyy', '2026-03-05'],
-            'spaces around'                       => ['  23/10/2026 ', 'dd/mm/yyyy', '2026-10-23'],
-            'a date PHP knows in another format'  => ['2026-10-23', 'dd/mm/yyyy', '2026-10-23'],
-            'day and month swapped: read by PHP'  => ['10/23/2026', 'dd/mm/yyyy', '2026-10-23'],
-            'the 31st of February'                => ['31/02/2026', 'dd/mm/yyyy', null],
-            'not a date'                          => ['someday', 'dd/mm/yyyy', null],
-            'empty'                               => ['', 'dd/mm/yyyy', null],
+            'day first'                          => ['23/10/2026', 'dd/mm/yyyy', '2026-10-23'],
+            'month first'                        => ['10/23/2026', 'mm/dd/yyyy', '2026-10-23'],
+            'no leading zeros'                   => ['5.3.2026', 'd.m.yyyy', '2026-03-05'],
+            'spaces around'                      => ['  23/10/2026 ', 'dd/mm/yyyy', '2026-10-23'],
+            'a date PHP knows in another format' => ['2026-10-23', 'dd/mm/yyyy', '2026-10-23'],
+            'day and month swapped: read by PHP' => ['10/23/2026', 'dd/mm/yyyy', '2026-10-23'],
+            'the 31st of February'               => ['31/02/2026', 'dd/mm/yyyy', null],
+            // The date field of the browser sends yyyy-mm-dd, which is read first: also when the format of the forum would read it
+            // the other way round.
+            'the date field of the browser'      => ['2026-03-05', 'yyyy-dd-mm', '2026-03-05'],
+            'a day of the browser which is none' => ['2026-02-31', 'dd/mm/yyyy', null],
+            'not a date'                         => ['someday', 'dd/mm/yyyy', null],
+            'empty'                              => ['', 'dd/mm/yyyy', null],
         ];
     }
 
@@ -63,6 +67,54 @@ class KunenaDatePickerTest extends UnitTestCase
     public function testFromPicker(string $value, string $format, ?string $expected): void
     {
         $this->assertSame($expected, KunenaDate::fromPicker($value, $format));
+    }
+
+    public static function dateTimes(): array
+    {
+        return [
+            'a date and time'     => ['2026-11-17 21:30:00', '2026-11-17T21:30'],
+            'without seconds'     => ['2026-11-17 21:30', '2026-11-17T21:30'],
+            'a date only'         => ['2026-11-17', '2026-11-17T00:00'],
+            'the empty date'      => ['1000-01-01 00:00:00', ''],
+            'the zero date'       => ['0000-00-00 00:00:00', ''],
+            'nothing'             => [null, ''],
+            'not a date and time' => ['someday', ''],
+        ];
+    }
+
+    /**
+     * The dates of an announcement in the date and time field of the browser (<input type="datetime-local">).
+     */
+    #[DataProvider('dateTimes')]
+    public function testToDateTimeLocal(?string $datetime, string $expected): void
+    {
+        $this->assertSame($expected, KunenaDate::toDateTimeLocal($datetime));
+    }
+
+    public static function dateTimeFields(): array
+    {
+        return [
+            'the field of the browser'    => ['2026-11-17T21:30', '2026-11-17 21:30:00'],
+            'with seconds'                => ['2026-11-17T21:30:15', '2026-11-17 21:30:15'],
+            'the format of the database'  => ['2026-11-17 21:30:00', '2026-11-17 21:30:00'],
+            'spaces around'               => [' 2026-11-17T21:30 ', '2026-11-17 21:30:00'],
+            'a time which does not exist' => ['2026-11-17T25:61', null],
+            'a day which does not exist'  => ['2026-02-31T10:00', null],
+            'not a date and time'         => ['someday', null],
+            'empty'                       => ['', null],
+            'nothing'                     => [null, null],
+        ];
+    }
+
+    #[DataProvider('dateTimeFields')]
+    public function testFromDateTimeLocal(?string $value, ?string $expected): void
+    {
+        $this->assertSame($expected, KunenaDate::fromDateTimeLocal($value));
+    }
+
+    public function testADateAndTimeComesBackTheSame(): void
+    {
+        $this->assertSame('2026-11-17 21:30:00', KunenaDate::fromDateTimeLocal(KunenaDate::toDateTimeLocal('2026-11-17 21:30:00')));
     }
 
     public static function formats(): array

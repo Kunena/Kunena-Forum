@@ -45,7 +45,7 @@ $this->addScript('assets/js/quickreply.js');
 $this->addScript('assets/js/submitonce.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover')) {
-    $this->addScript('sisyphus.js');
+    $this->addScript('form-recover.js');
 }
 
 $template = KunenaTemplate::getInstance();

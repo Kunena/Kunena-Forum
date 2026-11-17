@@ -63,7 +63,7 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 echo $this->subLayout('Widget/Lightbox');
 
 if ($this->ktemplate->params->get('formRecover')) {
-    $this->wa->registerAndUseScript('sisyphus', 'media/kunena/core/js/sisyphus.js');
+    $this->wa->registerAndUseScript('kunena.form-recover', 'media/kunena/core/js/form-recover.js');
 }
 
 $this->doc->addScriptOptions('com_kunena.editor_type', $this->editorType);

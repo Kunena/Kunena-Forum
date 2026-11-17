@@ -32,6 +32,19 @@ Submit. The drafts are listed on a **My Drafts** page, with a button to continue
 | --- | --- | --- |
 | Enable Drafts | Kunena configuration, tab *Look and Feel* | No |
 
+## Recovering an unsent text in the browser
+
+The template option **Recover crash and store fields** (`formRecover`, off by default) is a different, smaller safety net. It keeps
+what is written in the posting form in the storage of the browser, and puts it back when the form is opened again after a crash,
+a closed tab or a lost connection.
+
+- **What is kept:** the subject, the text in CKEditor 5 or SCEditor, and the other fields, half a second after a change and every
+  five seconds. Hidden fields, such as the token of the form, are never kept.
+- **When it is removed:** when the form is sent or reset.
+- **Where it is kept:** only in that browser, on that device, for that page. Nothing goes to the server, unlike a draft.
+- **The code:** Kunena's own `media/kunena/core/js/form-recover.js` (`window.KunenaFormRecover`), in place of the Sisyphus library.
+  It uses the same keys, so a text kept before an update of Kunena is still recovered after it.
+
 ---
 
 [← All the new features of Kunena 8.0](../README.md)

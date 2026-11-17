@@ -53,12 +53,9 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    /* Store form data into localstorage every 1 second */
-    if ($.fn.sisyphus !== undefined) {
-        $("#postform").sisyphus({
-            locationBased: true,
-            timeout: 5
-        });
+    /* "Recover the form" of the template: what is written in the form is kept in the browser until it is sent (form-recover.js) */
+    if (window.KunenaFormRecover !== undefined) {
+        window.KunenaFormRecover.protect(document.getElementById('postform'), {timeout: 5});
     }
 
     $('#kshow_attach_form').click(function () {

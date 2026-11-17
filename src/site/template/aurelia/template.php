@@ -17,7 +17,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Notification\KunenaPopupNotification;
@@ -125,10 +124,6 @@ class KunenaTemplateAurelia extends KunenaTemplate
         }
 
         $doc = Factory::getApplication()->getDocument();
-
-        /** @var WebAssetManager $wa */
-        $wa = $doc->getWebAssetManager();
-        $wa->useScript('jquery');
 
         $this->addScript('assets/js/main.js');
         $this->addScript('assets/js/tooltips.js');

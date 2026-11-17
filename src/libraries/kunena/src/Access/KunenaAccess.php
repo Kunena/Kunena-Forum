@@ -259,7 +259,7 @@ class KunenaAccess
             $enabled = true;
             Factory::getApplication()->getDocument()->addScriptDeclaration(
                 "function kShowAccessType(htmlclass, el) {
-	// The list of the access types (a jQuery object of a template override, or the element): the rows of the chosen type only.
+	// The list of the access types (the element, or a jQuery object of an old template override): the rows of the chosen type only.
 	var select = el && el.jquery ? el[0] : el;
 
 	if (!select) {

@@ -26,8 +26,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 /** @var WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('table.columns')
-    ->useScript('multiselect')
-    ->useScript('jquery');
+    ->useScript('multiselect');
 $inlineScript = <<<INLINESCRIPT
 let showExtraData = document.querySelectorAll('.show-extradata');
 let extraData = document.querySelectorAll('.extradata');

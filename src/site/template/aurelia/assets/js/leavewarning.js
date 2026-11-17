@@ -158,7 +158,7 @@
 			});
 		}
 
-		// After the ready handlers of jQuery, which create the editors and put a copied text into them.
+		// After the other handlers of DOMContentLoaded, which create the editors and put a copied text into them.
 		setTimeout(function () {
 			guards.forEach(takeBaselines);
 		}, 0);

@@ -99,7 +99,7 @@ describe('Kunena writing: a posting form is sent only once', () => {
 
     recordPosts();
     cy.visit(`${base}&view=topic&catid=3&id=${topicId}`);
-    cy.get(`[data-bs-target="#kreply${firstMessage}_form"]`).first().click({ force: true });
+    cy.get(`[data-kunena-dialog-toggle="kreply${firstMessage}_form"]`).first().click({ force: true });
     cy.get(`#postform-${firstMessage}`).should('have.attr', 'data-kunena-submit-once');
     cy.get(`#postform-${firstMessage} textarea[name="message"]`).invoke('val', text);
     cy.get(`#postform-${firstMessage} input.kreply-submit`).then(($button) => {

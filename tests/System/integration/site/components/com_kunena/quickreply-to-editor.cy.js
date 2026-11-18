@@ -22,7 +22,7 @@ describe('Kunena quick reply: the text goes to the full editor', () => {
   const goToEditor = (text) => {
     cy.doFrontendLogin(Cypress.expose('username'), Cypress.expose('password'), false);
     cy.visit(`${base}&view=topic&catid=3&id=${ids.topic}`);
-    cy.get(`[data-bs-target="#kreply${ids.message}_form"]`).filter(':visible').first().click();
+    cy.get(`[data-kunena-dialog-toggle="kreply${ids.message}_form"]`).filter(':visible').first().click();
     cy.get(`#editor${ids.message}`).should('be.visible').type(text);
     cy.get(`#qrlocalstorage${ids.message}`).click();
     cy.location('pathname').should('include', '/reply');

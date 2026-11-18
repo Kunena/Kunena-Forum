@@ -161,11 +161,11 @@ describe('Kunena pages for an administrator', () => {
   it('shows the administrator the ban button of a message', () => {
     cy.visit(`${base}&view=topic&catid=${topic.category_id}&id=${topic.id}`);
 
-    // The box of the ban is on the page for each message of another user (the modal with the duration and the reason).
+    // The box of the ban is on the page for each message of another user (the dialog with the duration and the reason).
     cy.get('body').then(($body) => {
-      if ($body.find('[id^="ban"].modal').length) {
-        cy.get('[id^="ban"].modal select[name="ban_days"]').first().should('exist');
-        cy.get('[id^="ban"].modal textarea[name="reason_public"]').first().should('exist');
+      if ($body.find('dialog[id^="ban"]').length) {
+        cy.get('dialog[id^="ban"] select[name="ban_days"]').first().should('exist');
+        cy.get('dialog[id^="ban"] textarea[name="reason_public"]').first().should('exist');
       }
     });
   });

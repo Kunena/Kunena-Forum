@@ -59,7 +59,8 @@ $uid = $this->message ? (int) $this->message->id : 0;
             <div class="controls">
                 <input class="btn btn-outline-primary" type="submit" name="Submit"
                        value="<?php echo Text::_('COM_KUNENA_REPORT_SEND'); ?>"/>
-                <button type="button" class="btn btn-secondary border" data-bs-dismiss="modal" aria-hidden="true">
+                <?php // In the dialog of a message: the form closes its dialog and is not sent (the page of the report has no dialog). ?>
+                <button type="submit" class="btn btn-secondary border" formmethod="dialog" formnovalidate>
                     <?php echo Text::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
             </div>
         </div>

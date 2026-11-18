@@ -29,7 +29,10 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $bootstrap = $this->ktemplate->params->get('bootstrap');
 
 if ($bootstrap) {
-    HTMLHelper::_('bootstrap.framework');
+    // The components of Bootstrap which the page uses (its tabs, the popovers of the attachments), not all of them: the dialogs
+    // are native (dialog.js).
+    HTMLHelper::_('bootstrap.tab');
+    HTMLHelper::_('bootstrap.popover');
 }
 
 $this->profile = KunenaFactory::getUser($this->user->id);

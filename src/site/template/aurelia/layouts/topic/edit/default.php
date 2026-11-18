@@ -189,24 +189,24 @@ Text::script('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS');
 Text::script('COM_KUNENA_POLL_TITLE');
 Text::script('COM_KUNENA_POST_CANCEL_CONFIRM');
 ?>
-<div id="modal_confirm_template_category" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                <h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_TITLE'); ?></h3>
-            </div>
-            <div class="modal-body">
-                <p><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_DESC'); ?></p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline-primary border" data-bs-dismiss="modal" aria-hidden="true"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_CLOSE'); ?></button>
-                <button class="btn btn-outline-primary border" id="modal_confirm_erase"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE'); ?></button>
-                <button class="btn btn-outline-primary border" id="modal_confirm_erase_keep_old"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE_KEEP'); ?></button>
-            </div>
+<dialog id="modal_confirm_template_category" class="kunena-dialog" aria-labelledby="myModalLabel" closedby="any">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="myModalLabel"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_TITLE'); ?></h3>
+            <button type="button" class="btn-close" command="close" commandfor="modal_confirm_template_category"
+                    aria-label="<?php echo Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>"></button>
+        </div>
+        <div class="modal-body">
+            <p><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_DESC'); ?></p>
+        </div>
+        <div class="modal-footer">
+            <?php // The safe choice has the focus: the text of the message stays as it is. ?>
+            <button type="button" class="btn btn-outline-primary border" command="close" commandfor="modal_confirm_template_category" autofocus><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_CLOSE'); ?></button>
+            <button type="button" class="btn btn-outline-primary border" id="modal_confirm_erase"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE'); ?></button>
+            <button type="button" class="btn btn-outline-primary border" id="modal_confirm_erase_keep_old"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE_KEEP'); ?></button>
         </div>
     </div>
-</div>
+</dialog>
 
 <h1>
     <?php echo $this->escape($this->headerText) ?>

@@ -594,7 +594,8 @@ label {
   }
 }
 
-.modal {
+.modal,
+.kunena-dialog {
   --bs-modal-bg: var(--agora-surface);
   --bs-modal-color: var(--agora-text);
   --bs-modal-border-color: var(--agora-border);

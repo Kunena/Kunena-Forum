@@ -38,7 +38,7 @@ class IconOnlyControlsTest extends UnitTestCase
             'aurelia section pencil' => [self::AURELIA . 'category/index/default.php', "(int) \$section->id . '&layout=manage", "Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', \$section->name)"],
             'aurelia section toggle' => [self::AURELIA . 'category/index/default.php', 'data-bs-target="#section<?php echo $section->id', "Text::sprintf('COM_KUNENA_TOGGLE_NAMED', \$section->name)"],
             'aurelia user e-mail'    => [self::AURELIA . 'user/item/summary/default.php', 'href="mailto:', "Text::_('COM_KUNENA_MYPROFILE_EMAIL')"],
-            'aurelia user delete'    => [self::AURELIA . 'user/attachments/default.php', 'href="#modaldelete<?php echo $i ?>"', "\$this->escape(Text::sprintf('COM_KUNENA_FILES_DELETE_NAMED', \$attachment->getFilename(false)))"],
+            'aurelia user delete'    => [self::AURELIA . 'user/attachments/default.php', 'commandfor="modaldelete<?php echo $i ?>"', "\$this->escape(Text::sprintf('COM_KUNENA_FILES_DELETE_NAMED', \$attachment->getFilename(false)))"],
             'aurelia category top'   => [self::AURELIA . 'category/item/default.php', 'href="#forumtop"', "Text::_('COM_KUNENA_GEN_GOTOTOP')"],
             'aurelia message top'    => [self::AURELIA . 'message/list/default.php', self::TOP_OF_LIST, "Text::_('COM_KUNENA_GEN_GOTOTOP')"],
             'aurelia topic top'      => [self::AURELIA . 'topic/list/default.php', self::TOP_OF_LIST, "Text::_('COM_KUNENA_GEN_GOTOTOP')"],
@@ -72,7 +72,7 @@ class IconOnlyControlsTest extends UnitTestCase
     public function testTheDeleteLabelEscapesTheFileNameOnce(): void
     {
         $layout  = self::AURELIA . 'user/attachments/default.php';
-        $control = $this->control(Files::read($layout), 'href="#modaldelete<?php echo $i ?>"', $layout);
+        $control = $this->control(Files::read($layout), 'commandfor="modaldelete<?php echo $i ?>"', $layout);
 
         $this->assertStringNotContainsString('$attachment->getFilename()', $control, $layout . ': the file name is escaped twice.');
     }

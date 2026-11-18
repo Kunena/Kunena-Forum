@@ -59,33 +59,148 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
 
 <?php if ($quick == 1) :
 ?>
-    <div class="modal fade" style="pointer-events: none;" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" data-bs-focus="false" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">
-                        <?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
-                    </h3>
-                    <button type="button" class="btn-close kreply-cancel" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+    <dialog class="kunena-dialog kunena-quickreply-window" id="kreply<?php echo $message->displayField('id'); ?>_form" aria-labelledby="kreply<?php echo $message->displayField('id'); ?>_title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="kreply<?php echo $message->displayField('id'); ?>_title">
+                    <?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
+                </h3>
+                <button type="button" class="btn-close kreply-cancel" data-kunena-dialog-close="kreply<?php echo $message->displayField('id'); ?>_form" aria-label="<?php echo Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>"></button>
+            </div>
 
-                <div class="card-body">
-                    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform-<?php echo $message->id; ?>" class="form-horizontal" data-kunena-submit-once>
-                        <input type="hidden" name="task" value="post" />
-                        <input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
-                        <input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
-                        <?php
-                        if (!$config->allowChangeSubject || $me->isModerator()) :
-                        ?>
-                            <input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
-                        <?php endif; ?>
-                        <?php
-                        if ($me->exists()) :
-                        ?>
-                            <input type="hidden" id="kurl_users<?php echo (int) $message->id; ?>" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
-                        <?php endif; ?>
-                        <?php echo HTMLHelper::_('form.token'); ?>
+            <div class="card-body">
+                <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform-<?php echo $message->id; ?>" class="form-horizontal" data-kunena-submit-once>
+                    <input type="hidden" name="task" value="post" />
+                    <input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
+                    <input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
+                    <?php
+                    if (!$config->allowChangeSubject || $me->isModerator()) :
+                    ?>
+                        <input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
+                    <?php endif; ?>
+                    <?php
+                    if ($me->exists()) :
+                    ?>
+                        <input type="hidden" id="kurl_users<?php echo (int) $message->id; ?>" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
+                    <?php endif; ?>
+                    <?php echo HTMLHelper::_('form.token'); ?>
 
+                    <?php if (!$me->exists()) :
+                    ?>
+                        <div class="form-group">
+                            <label class="col-md-12 control-label" style="padding:0;">
+                                <?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>:
+                            </label>
+                            <label>
+                                <input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
+                            </label>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($config->askEmail && !$me->exists()) :
+                    ?>
+                        <div class="form-group">
+                            <?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+                            <label for="email<?php echo (int) $message->id; ?>"></label><input type="text" id="email<?php echo (int) $message->id; ?>" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="form-group">
+                        <label for="subject<?php echo \intval($message->id); ?>" class="col-md-12 control-label" style="padding:0;">
+                            <?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>:
+                        </label>
+                        <input type="text" id="subject<?php echo \intval($message->id); ?>" name="subject" class="form-control" maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>" <?php
+                                                                                                                                                                                                            if (!$config->allowChangeSubject && !$me->isModerator()) :
+                                                                                                                                                                                                            ?>disabled<?php
+                                                                                                                                                                                                            endif; ?> value="<?php echo $message->displayField('subject'); ?>" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-12 control-label" style="padding:0;">
+                            <?php echo Text::_('COM_KUNENA_MESSAGE'); ?>:
+                        </label>
+                        <?php echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>'; ?>
+                    </div>
+
+                    <?php if ($topic->isAuthorised('subscribe')) :
+                    ?>
+                        <div class="clearfix"></div>
+                        <div class="control-group">
+                            <div class="form-check mesubscribe">
+                                <input class="form-check-input" type="checkbox" name="subscribeMe" id="subscribeMe<?php echo (int) $message->id; ?>" value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1) {
+                                                                                                                                                    echo 'checked="checked"';
+                                                                                                                                                } ?> />
+                                <label class="form-check-label" for="subscribeMe<?php echo (int) $message->id; ?>"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($me->exists() && $category->allowAnonymous) :
+                    ?>
+                        <div class="control-group">
+                            <div class="controls">
+                                <label for="kanonymous<?php echo $message->displayField('id'); ?>"></label><input style="float: left; margin-right: 10px;" type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous" value="1" <?php if ($category->postAnonymous) {
+                                                                                                                                                                                            echo 'checked="checked"';
+                                                                                                                                                                                        } ?> />
+                                <label for="kanonymous<?php echo \intval($message->id); ?>">
+                                    <?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>" role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor" rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
+                    <br />
+
+                    <?php if (!empty($this->captchaEnabled)) :
+                    ?>
+                        <div class="control-group">
+                            <?php echo $this->captchaDisplay; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="k-footer">
+                        <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
+                        <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit" value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
+                                                                                                                                                                                                    ?>" />
+                        <?php if (!empty($config->enableDrafts) && $me->exists()) : ?>
+                            <button type="submit" class="btn btn-outline-secondary border" name="savedraft" value="1" formnovalidate><?php echo Text::_('COM_KUNENA_DRAFT_SAVE'); ?></button>
+                        <?php endif; ?>
+                        <?php // TODO: remove data on cancel.
+                        ?>
+                        <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-kunena-dialog-close="kreply<?php echo $message->displayField('id'); ?>_form" />
+                    </div>
+                    <input type="hidden" id="kurl_emojis<?php echo (int) $message->id; ?>" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
+                    <input type="hidden" id="kemojis_allowed<?php echo (int) $message->id; ?>" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
+                </form>
+            </div>
+        </div>
+    </dialog>
+<?php elseif ($quick == 0) :
+?>
+    <dialog class="kunena-dialog kunena-quickreply" id="kreply<?php echo $message->displayField('id'); ?>_form" aria-labelledby="staticBackdropLabel<?php echo $message->displayField('id'); ?>">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="staticBackdropLabel<?php echo $message->displayField('id'); ?>"><?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?></h3>
+                <button type="button" class="btn-close" data-kunena-dialog-close="kreply<?php echo $message->displayField('id'); ?>_form" aria-label="<?php echo Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>"></button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform-<?php echo $message->id; ?>" class="form-horizontal" data-kunena-submit-once>
+                    <input type="hidden" name="task" value="post" />
+                    <input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
+                    <input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
+                    <?php
+                    if (!$config->allowChangeSubject || $me->isModerator()) :
+                    ?>
+                        <input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
+                    <?php endif; ?>
+                    <?php
+                    if ($me->exists()) :
+                    ?>
+                        <input type="hidden" id="kurl_users<?php echo (int) $message->id; ?>" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
+                    <?php endif; ?>
+                    <?php echo HTMLHelper::_('form.token'); ?>
+
+                    <div class="card-body">
                         <?php if (!$me->exists()) :
                         ?>
                             <div class="form-group">
@@ -115,11 +230,10 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                                                                                                                                                                                                 ?>disabled<?php
                                                                                                                                                                                                                 endif; ?> value="<?php echo $message->displayField('subject'); ?>" />
                         </div>
-
                         <div class="form-group">
-                            <label class="col-md-12 control-label" style="padding:0;">
+                            <div class="col-md-12 control-label" style="padding:0;">
                                 <?php echo Text::_('COM_KUNENA_MESSAGE'); ?>:
-                            </label>
+                            </div>
                             <?php echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>'; ?>
                         </div>
 
@@ -128,15 +242,15 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             <div class="clearfix"></div>
                             <div class="control-group">
                                 <div class="form-check mesubscribe">
-                                    <input class="form-check-input" type="checkbox" name="subscribeMe" id="subscribeMe<?php echo (int) $message->id; ?>" value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1) {
+                                    <input class="form-check-input" type="checkbox" name="subscribeMe" id="subscribeMe<?php echo (int) $message->id; ?>" value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1 || $category->getSubscribed($me->userid)) {
                                                                                                                                                         echo 'checked="checked"';
                                                                                                                                                     } ?> />
                                     <label class="form-check-label" for="subscribeMe<?php echo (int) $message->id; ?>"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
                                 </div>
                             </div>
                         <?php endif; ?>
-
-                        <?php if ($me->exists() && $category->allowAnonymous) :
+                        <?php
+                        if ($me->exists() && $category->allowAnonymous) :
                         ?>
                             <div class="control-group">
                                 <div class="controls">
@@ -151,146 +265,28 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         <?php endif; ?>
                         <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>" role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor" rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
                         <br />
-
-                        <?php if (!empty($this->captchaEnabled)) :
-                        ?>
-                            <div class="control-group">
-                                <?php echo $this->captchaDisplay; ?>
-                            </div>
-                        <?php endif; ?>
-
-                        <div class="k-footer">
-                            <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
-                            <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit" value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
-                                                                                                                                                                                                        ?>" />
-                            <?php if (!empty($config->enableDrafts) && $me->exists()) : ?>
-                                <button type="submit" class="btn btn-outline-secondary border" name="savedraft" value="1" formnovalidate><?php echo Text::_('COM_KUNENA_DRAFT_SAVE'); ?></button>
-                            <?php endif; ?>
-                            <?php // TODO: remove data on cancel.
-                            ?>
-                            <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />
+                    </div>
+                    <?php if (!empty($this->captchaEnabled)) :
+                    ?>
+                        <div class="control-group">
+                            <?php echo $this->captchaDisplay; ?>
                         </div>
-                        <input type="hidden" id="kurl_emojis<?php echo (int) $message->id; ?>" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
-                        <input type="hidden" id="kemojis_allowed<?php echo (int) $message->id; ?>" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
-                    </form>
-                </div>
+                    <?php endif; ?>
+                    <div class="card-footer">
+                        <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
+                        <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit" value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
+                                                                                                                                                                                                    ?>" />
+                        <?php if (!empty($config->enableDrafts) && $me->exists()) : ?>
+                            <button type="submit" class="btn btn-outline-secondary border" name="savedraft" value="1" formnovalidate><?php echo Text::_('COM_KUNENA_DRAFT_SAVE'); ?></button>
+                        <?php endif; ?>
+                        <?php // TODO: remove data on cancel.
+                        ?>
+                        <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-kunena-dialog-close="kreply<?php echo $message->displayField('id'); ?>_form" />
+                    </div>
+                    <input type="hidden" id="kurl_emojis<?php echo (int) $message->id; ?>" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
+                    <input type="hidden" id="kemojis_allowed<?php echo (int) $message->id; ?>" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
+                </form>
             </div>
         </div>
-    </div>
-<?php elseif ($quick == 0) :
-?>
-    <div class="modal fade" style="position: relative; top: 10px; right: -10px; z-index: 1; width: 100%;display: none;" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" data-bs-focus="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel<?php echo $message->displayField('id'); ?>" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title fs-5" id="staticBackdropLabel<?php echo $message->displayField('id'); ?>"><?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?></h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform-<?php echo $message->id; ?>" class="form-horizontal" data-kunena-submit-once>
-                        <input type="hidden" name="task" value="post" />
-                        <input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
-                        <input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
-                        <?php
-                        if (!$config->allowChangeSubject || $me->isModerator()) :
-                        ?>
-                            <input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
-                        <?php endif; ?>
-                        <?php
-                        if ($me->exists()) :
-                        ?>
-                            <input type="hidden" id="kurl_users<?php echo (int) $message->id; ?>" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
-                        <?php endif; ?>
-                        <?php echo HTMLHelper::_('form.token'); ?>
-
-                        <div class="card-body">
-                            <?php if (!$me->exists()) :
-                            ?>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label" style="padding:0;">
-                                        <?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>:
-                                    </label>
-                                    <label>
-                                        <input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
-                                    </label>
-                                </div>
-                            <?php endif; ?>
-
-                            <?php if ($config->askEmail && !$me->exists()) :
-                            ?>
-                                <div class="form-group">
-                                    <?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-                                    <label for="email<?php echo (int) $message->id; ?>"></label><input type="text" id="email<?php echo (int) $message->id; ?>" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
-                                </div>
-                            <?php endif; ?>
-
-                            <div class="form-group">
-                                <label for="subject<?php echo \intval($message->id); ?>" class="col-md-12 control-label" style="padding:0;">
-                                    <?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>:
-                                </label>
-                                <input type="text" id="subject<?php echo \intval($message->id); ?>" name="subject" class="form-control" maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>" <?php
-                                                                                                                                                                                                                    if (!$config->allowChangeSubject && !$me->isModerator()) :
-                                                                                                                                                                                                                    ?>disabled<?php
-                                                                                                                                                                                                                    endif; ?> value="<?php echo $message->displayField('subject'); ?>" />
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12 control-label" style="padding:0;">
-                                    <?php echo Text::_('COM_KUNENA_MESSAGE'); ?>:
-                                </div>
-                                <?php echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>'; ?>
-                            </div>
-
-                            <?php if ($topic->isAuthorised('subscribe')) :
-                            ?>
-                                <div class="clearfix"></div>
-                                <div class="control-group">
-                                    <div class="form-check mesubscribe">
-                                        <input class="form-check-input" type="checkbox" name="subscribeMe" id="subscribeMe<?php echo (int) $message->id; ?>" value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1 || $category->getSubscribed($me->userid)) {
-                                                                                                                                                            echo 'checked="checked"';
-                                                                                                                                                        } ?> />
-                                        <label class="form-check-label" for="subscribeMe<?php echo (int) $message->id; ?>"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                            <?php
-                            if ($me->exists() && $category->allowAnonymous) :
-                            ?>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <label for="kanonymous<?php echo $message->displayField('id'); ?>"></label><input style="float: left; margin-right: 10px;" type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous" value="1" <?php if ($category->postAnonymous) {
-                                                                                                                                                                                                    echo 'checked="checked"';
-                                                                                                                                                                                                } ?> />
-                                        <label for="kanonymous<?php echo \intval($message->id); ?>">
-                                            <?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
-                                        </label>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                            <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>" role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor" rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
-                            <br />
-                        </div>
-                        <?php if (!empty($this->captchaEnabled)) :
-                        ?>
-                            <div class="control-group">
-                                <?php echo $this->captchaDisplay; ?>
-                            </div>
-                        <?php endif; ?>
-                        <div class="card-footer">
-                            <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
-                            <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit" value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
-                                                                                                                                                                                                        ?>" />
-                            <?php if (!empty($config->enableDrafts) && $me->exists()) : ?>
-                                <button type="submit" class="btn btn-outline-secondary border" name="savedraft" value="1" formnovalidate><?php echo Text::_('COM_KUNENA_DRAFT_SAVE'); ?></button>
-                            <?php endif; ?>
-                            <?php // TODO: remove data on cancel.
-                            ?>
-                            <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />
-                        </div>
-                        <input type="hidden" id="kurl_emojis<?php echo (int) $message->id; ?>" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
-                        <input type="hidden" id="kemojis_allowed<?php echo (int) $message->id; ?>" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    </dialog>
 <?php endif;

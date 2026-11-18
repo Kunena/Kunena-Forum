@@ -23,7 +23,8 @@ use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
-HTMLHelper::_('bootstrap.framework');
+// The tabs of the page: the component of Bootstrap which it uses, not all of them (the dialogs are native: dialog.js).
+HTMLHelper::_('bootstrap.tab');
 
 $this->addScriptDeclaration(
     "// <![CDATA[

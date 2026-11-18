@@ -1,5 +1,6 @@
-// The links of the page work while a quick reply is open (issue #8820): the quick reply is a modal of Bootstrap without a
-// backdrop, whose focus trap pulled the focus (and the page) back to the form and whose layer over the window took the clicks.
+// The links of the page work while a quick reply is open (issue #8820): the quick reply was a modal of Bootstrap without a
+// backdrop, whose focus trap pulled the focus (and the page) back to the form and whose layer over the window took the clicks. It is
+// now a native <dialog> which is not modal (dialog.js): the page stays usable.
 // For the settings "Default" and "Modal" of the template Aurelia, a breadcrumb link outside the open quick reply is clicked and
 // the browser lands on its page. The spec switches the setting in the file of the options and puts the file back.
 describe('Kunena quick reply: the links outside an open quick reply', () => {
@@ -20,7 +21,7 @@ describe('Kunena quick reply: the links outside an open quick reply', () => {
   };
 
   // A breadcrumb link to another page, beside the dialog of the quick reply (a link under the dialog is rightly covered by it).
-  const outsideLink = () => cy.get(`#kreply${ids.message}_form .modal-dialog`).then(($dialog) => {
+  const outsideLink = () => cy.get(`#kreply${ids.message}_form`).then(($dialog) => {
     const dialog = $dialog[0].getBoundingClientRect();
 
     return cy.get('.mod-kunena-breadcrumbs a[itemprop="item"]').then(($links) => {
@@ -41,8 +42,8 @@ describe('Kunena quick reply: the links outside an open quick reply', () => {
     useQuick(quick);
     cy.doFrontendLogin(user.name, user.password, false);
     cy.visit(`${base}&view=topic&catid=3&id=${ids.topic}`);
-    cy.get(`[data-bs-target="#kreply${ids.message}_form"]`).filter(':visible').first().click();
-    cy.get(`#kreply${ids.message}_form`).should('be.visible').and('have.class', 'show');
+    cy.get(`[data-kunena-dialog-toggle="kreply${ids.message}_form"]`).filter(':visible').first().click();
+    cy.get(`#kreply${ids.message}_form`).should('be.visible').and('have.attr', 'open');
     cy.get(`#postform-${ids.message}`).should('be.visible');
     cy.window().then((win) => {
       win.quickReplyLinksMarker = true;
@@ -52,7 +53,7 @@ describe('Kunena quick reply: the links outside an open quick reply', () => {
       const target = new URL($link[0].href);
 
       if (quick === 1) {
-        // Nothing of the modal layer lies over the link.
+        // Nothing of the window of the quick reply lies over the link.
         cy.wrap($link).scrollIntoView();
         cy.wrap($link).then(($a) => {
           const rect = $a[0].getBoundingClientRect();

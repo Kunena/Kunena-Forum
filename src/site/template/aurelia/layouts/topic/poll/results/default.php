@@ -119,34 +119,33 @@ if ($this->show_title && $this->poll->polltimetolive != '1000-01-01 00:00:00') {
 
                 <?php if ($moderator) :
                     ?>
-                <a href="#resetVotes" role="button" class="btn btn-outline-primary border" data-bs-toggle="modal">
+                <button type="button" class="btn btn-outline-primary border" command="show-modal" commandfor="resetVotes">
                     <?php echo Text::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?>
-                </a>
-                <div id="resetVotes" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                                <h3>
-                                    <?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?>
-                                </h3>
-                            </div>
-                            <div class="modal-body">
-                                <p><?php echo Text::_('COM_KUNENA_TOPIC_MODAL_DESC_VOTE_RESET'); ?></p>
-                            </div>
-                            <div class="modal-footer">
-                                <a data-bs-dismiss="modal" aria-hidden="true" class="btn btn-outline-primary border">
-                                    <?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
-                                </a>
-                                <a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . Session::getFormToken() . '=1') ?>"
-                                   class="btn btn-outline-primary">
-                                    <?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?>
-                                </a>
-                            </div>
+                </button>
+                <dialog id="resetVotes" class="kunena-dialog" aria-labelledby="resetVotesLabel" closedby="any">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="resetVotesLabel">
+                                <?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?>
+                            </h3>
+                            <button type="button" class="btn-close" command="close" commandfor="resetVotes"
+                                    aria-label="<?php echo Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><?php echo Text::_('COM_KUNENA_TOPIC_MODAL_DESC_VOTE_RESET'); ?></p>
+                        </div>
+                        <div class="modal-footer">
+                            <?php // The safe choice has the focus: the votes stay. ?>
+                            <button type="button" class="btn btn-outline-primary border" command="close" commandfor="resetVotes" autofocus>
+                                <?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
+                            </button>
+                            <a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . Session::getFormToken() . '=1') ?>"
+                               class="btn btn-outline-primary">
+                                <?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?>
+                            </a>
                         </div>
                     </div>
-                </div>
+                </dialog>
                 <?php endif; ?>
             </td>
         </tr>

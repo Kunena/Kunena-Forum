@@ -456,17 +456,8 @@ pre.bbcode_code_body:has(> code.hljs) {
   margin: 0.5rem 0 0;
 }
 
-/* The quick reply under a message. */
-.row.message .modal[id^="kreply"] {
-  position: static !important;
-  width: 100% !important;
-  margin-top: 1rem;
-
-  .modal-dialog {
-    max-width: 100%;
-    margin: 0;
-  }
-
+/* The quick reply under a message (a <dialog> in the page, Aurelia gives it its place). */
+.kunena-quickreply {
   .modal-content {
     border: 1px solid var(--agora-border);
     box-shadow: none;

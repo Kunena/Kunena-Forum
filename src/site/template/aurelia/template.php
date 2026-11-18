@@ -117,7 +117,6 @@ class KunenaTemplateAurelia extends KunenaTemplate
             HTMLHelper::_('bootstrap.loadCss');
             HTMLHelper::_('bootstrap.dropdown');
             HTMLHelper::_('bootstrap.tooltip');
-            HTMLHelper::_('bootstrap.renderModal');
             HTMLHelper::_('bootstrap.collapse');
             HTMLHelper::_('bootstrap.offcanvas');
             HTMLHelper::_('bootstrap.alert');
@@ -125,6 +124,9 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
         $doc = Factory::getApplication()->getDocument();
 
+        // The dialogs of the forum are native <dialog> elements (not the modals of Bootstrap): also without the Bootstrap of the
+        // template, which the site template may give without its modal script.
+        $this->addScript('dialog.js');
         $this->addScript('assets/js/main.js');
         $this->addScript('assets/js/tooltips.js');
 

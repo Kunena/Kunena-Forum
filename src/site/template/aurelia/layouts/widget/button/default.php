@@ -25,7 +25,8 @@ if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG") {
     $title = '';
 }
 
-$modal         = isset($this->modal) ? 'data-bs-toggle="modal" data-backdrop="false"' : '';
+// A button which opens a dialog of the page (its url is "#" and the id of the dialog): a button with an invoker command.
+$dialog        = isset($this->modal) ? ltrim((string) $this->url, '#') : '';
 $right         = isset($this->pullright) ? ' float-end' : '';
 $id            = isset($this->id) ? ' ' . $this->id : '';
 $success       = !empty($this->success) ? ' btn-outline-success' : '';
@@ -35,12 +36,23 @@ $icon          = $this->icon;
 $confirm       = !empty($this->confirm) ? ' onclick="return confirm(' . htmlspecialchars(json_encode((string) $this->confirm), ENT_QUOTES, 'UTF-8') . ');"' : '';
 ?>
 
+<?php if ($dialog !== '') : ?>
+<button type="button" class="<?php echo $normal . $primary . $success . $right . ' kbutton-' . $this->name . $id; ?>"
+        command="show-modal" commandfor="<?php echo htmlspecialchars($dialog, ENT_QUOTES, 'UTF-8'); ?>"
+        title="<?php echo $title; ?>"<?php echo $confirm; ?>>
+    <?php if (!empty($icon)) : ?>
+        <?php echo $icon; ?>
+    <?php endif; ?>
+    <?php echo $label; ?>
+</button>
+<?php else : ?>
 <a class="<?php echo $normal . $primary . $success . $right . ' kbutton-' . $this->name . $id; ?>"
                       href="<?php echo $this->url; ?>" rel="nofollow"
-                      title="<?php echo $title; ?>" <?php echo $modal . $confirm; ?>>
+                      title="<?php echo $title; ?>" <?php echo $confirm; ?>>
     <?php
     if (!empty($icon)) : ?>
         <?php echo $icon; ?>
     <?php endif; ?>
     <?php echo $label; ?>
 </a>
+<?php endif; ?>

@@ -98,11 +98,10 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
                        <div class="dropdown-divider"></div>
 
                         <div id="statustext">
-                            <?php HTMLHelper::_('bootstrap.renderModal', 'statusText'); ?>
-                            <a data-bs-toggle="modal" data-bs-target="#statusTextModal" class="btn btn-link">
+                            <button type="button" class="btn btn-link" command="show-modal" commandfor="statusTextModal">
                                 <?php echo KunenaIcons::edit(); ?>
                                 <?php echo Text::_('COM_KUNENA_STATUS') ?>
-                            </a>
+                            </button>
                         </div>
                         <div class="dropdown-divider"></div>
                         <?php endif; ?>

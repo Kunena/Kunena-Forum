@@ -173,11 +173,16 @@
 			localStorage.removeItem('copyKunenaeditor');
 		});
 
+		// The question about the template text of the category: a native <dialog> (dialog.js).
 		const showTemplateModal = (shown) => {
-			if (templateModal && window.bootstrap?.Modal) {
-				const modal = bootstrap.Modal.getOrCreateInstance(templateModal);
+			if (!(templateModal instanceof HTMLDialogElement)) {
+				return;
+			}
 
-				shown ? modal.show() : modal.hide();
+			if (shown && !templateModal.open) {
+				templateModal.showModal();
+			} else if (!shown && templateModal.open) {
+				templateModal.close();
 			}
 		};
 

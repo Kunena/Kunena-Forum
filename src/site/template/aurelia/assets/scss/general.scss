@@ -1719,3 +1719,108 @@ button.kreaction:hover {
 .ktopic-new-replies[hidden] {
   display: none;
 }
+
+/* The dialogs of the forum: native <dialog> elements (dialog.js) with the classes of the modals of Bootstrap (.modal-content,
+   .modal-header, .modal-body, .modal-footer). Kunena styles them itself: Bootstrap and the site templates which compile it (Cassiopeia,
+   with variables without "bs-") read their variables on .modal only, and a dialog outside a .modal had no background and no border.
+   The variables keep the names of Bootstrap: a template (Agora) gives them its colours. */
+.kunena-dialog {
+  --bs-modal-width: 500px;
+  --bs-modal-padding: 1rem;
+  --bs-modal-margin: 0.5rem;
+  --bs-modal-color: var(--bs-body-color, var(--body-color, #212529));
+  --bs-modal-bg: var(--bs-body-bg, var(--body-bg, #fff));
+  --bs-modal-border-color: var(--bs-border-color-translucent, rgb(0 0 0 / 0.175));
+  --bs-modal-border-width: var(--bs-border-width, 1px);
+  --bs-modal-border-radius: var(--bs-border-radius-lg, 0.5rem);
+  --bs-modal-box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.25);
+  --bs-modal-header-border-color: var(--bs-border-color, #dee2e6);
+  --bs-modal-footer-border-color: var(--bs-border-color, #dee2e6);
+
+  width: min(var(--bs-modal-width), calc(100% - 2 * var(--bs-modal-margin)));
+  max-width: none;
+  padding: 0;
+  color: var(--bs-modal-color);
+  background: transparent;
+  border: 0;
+
+  > .modal-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--bs-modal-color);
+    background-color: var(--bs-modal-bg);
+    background-clip: padding-box;
+    border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
+    border-radius: var(--bs-modal-border-radius);
+    box-shadow: var(--bs-modal-box-shadow);
+  }
+
+  .modal-header {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--bs-modal-padding);
+    border-bottom: var(--bs-modal-border-width) solid var(--bs-modal-header-border-color);
+  }
+
+  .modal-title {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: var(--bs-modal-padding);
+  }
+
+  .modal-footer {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-end;
+    padding: calc(var(--bs-modal-padding) * 0.75) var(--bs-modal-padding);
+    border-top: var(--bs-modal-border-width) solid var(--bs-modal-footer-border-color);
+  }
+
+  /* A modal stays in the window, with a margin: a long form scrolls inside it. */
+  &:modal {
+    max-height: calc(100% - 2 * var(--bs-modal-margin));
+    margin-top: 1.75rem;
+    overflow-y: auto;
+    /* The page under the backdrop does not scroll with the dialog (no overflow on html or body: the scroll bar would go). */
+    overscroll-behavior: contain;
+  }
+
+  &::backdrop {
+    overflow: hidden;
+    background: rgb(0 0 0 / 0.5);
+    overscroll-behavior: contain;
+  }
+}
+
+/* The quick reply in the page (the default of the template): the panel under the message, as wide as the message. */
+.kunena-dialog.kunena-quickreply {
+  position: static;
+  width: 100%;
+  margin: 1rem 0 0;
+
+  > .modal-content {
+    box-shadow: none;
+  }
+}
+
+/* The quick reply in a window: over the page, which stays usable (no backdrop, the page is not inert). */
+.kunena-dialog.kunena-quickreply-window {
+  position: fixed;
+  inset: 1.75rem 0 auto;
+  z-index: 1055;
+  max-height: calc(100% - 3.5rem);
+  margin: 0 auto;
+  overflow-y: auto;
+}

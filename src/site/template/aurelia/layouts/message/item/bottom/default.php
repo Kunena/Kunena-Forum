@@ -135,21 +135,19 @@ if ($this->config->orderingSystem == 'mesid') {
                 ]); ?>
         </div>
         <?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->userReport || !$this->config->userReport && $this->me->userid != $this->message->userid) : ?>
-            <div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel<?php echo $this->message->id; ?>" aria-hidden="true" data-backdrop="false" style="display: none;">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-5" id="reportModalLabel<?php echo $this->message->id; ?>">
-                                <?php echo Text::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
-                            </h2>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
-                        </div>
+            <dialog id="report<?php echo $this->message->id; ?>" class="kunena-dialog" aria-labelledby="reportModalLabel<?php echo $this->message->id; ?>">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="reportModalLabel<?php echo $this->message->id; ?>">
+                            <?php echo Text::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
+                        </h2>
+                        <button type="button" class="btn-close" command="close" commandfor="report<?php echo $this->message->id; ?>" aria-label="<?php echo Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>"></button>
+                    </div>
+                    <div class="modal-body">
+                        <?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
                     </div>
                 </div>
-            </div>
+            </dialog>
             <div class="clearfix"></div>
         <?php endif; ?>
     <?php endif; ?>

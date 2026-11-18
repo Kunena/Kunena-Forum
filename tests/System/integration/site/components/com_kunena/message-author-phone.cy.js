@@ -47,7 +47,7 @@ describe('Kunena Aurelia: the author of a message on a phone', () => {
 
   // The visible links with the name of the author, outside the text and the signature of the message and the forms.
   const visibleNames = ($message, name) => $message.find('a:visible').filter((i, el) => el.textContent.trim() === name
-    && !el.closest('.kmsg, .ksig, form, .modal'));
+    && !el.closest('.kmsg, .ksig, form, dialog'));
 
   const dateAndNumber = ($message) => {
     const $small = $message.find('small.float-end');

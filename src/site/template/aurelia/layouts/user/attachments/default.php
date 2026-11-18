@@ -139,31 +139,29 @@ $attachments = $this->attachments;
                                 <?php if ($canDelete) :
                                 ?>
                                     <td class="center">
-                                        <a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
-                                            data-bs-toggle="modal" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_FILES_DELETE_NAMED', $attachment->getFilename(false))); ?>"><?php echo KunenaIcons::delete(); ?></a>
+                                        <button type="button" class="btn center" command="show-modal" commandfor="modaldelete<?php echo $i ?>"
+                                            aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_FILES_DELETE_NAMED', $attachment->getFilename(false))); ?>"><?php echo KunenaIcons::delete(); ?></button>
 
-                                        <div class="modal fade" id="modaldelete<?php echo $i ?>" tabindex="-1" role="dialog"
-                                            aria-labelledby="modaldelete<?php echo $i ?>Label">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        <h4 class="modal-title"
-                                                            id="modaldelete<?php echo $i ?>Label"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL') ?></h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p><?php echo Text::sprintf('COM_KUNENA_FILES_DELETE_MODAL_DESCRIPTION', $attachment->getFilename(), HTMLHelper::_('kunenaforum.formatfilesize', $attachment->size, 2)); ?></p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-outline-primary border"
-                                                            onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','delfile');"
-                                                            data-bs-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
-                                                        <button type="button" data-bs-dismiss="modal"
-                                                            class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
-                                                    </div>
+                                        <dialog id="modaldelete<?php echo $i ?>" class="kunena-dialog" aria-labelledby="modaldelete<?php echo $i ?>Label" closedby="any">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title"
+                                                        id="modaldelete<?php echo $i ?>Label"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL') ?></h4>
+                                                    <button type="button" class="btn-close" command="close" commandfor="modaldelete<?php echo $i ?>"
+                                                        aria-label="<?php echo Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p><?php echo Text::sprintf('COM_KUNENA_FILES_DELETE_MODAL_DESCRIPTION', $attachment->getFilename(), HTMLHelper::_('kunenaforum.formatfilesize', $attachment->size, 2)); ?></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-primary border"
+                                                        onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','delfile');"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+                                                    <?php // The safe choice has the focus: the file stays. ?>
+                                                    <button type="button" command="close" commandfor="modaldelete<?php echo $i ?>" autofocus
+                                                        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </dialog>
                                     </td>
                                 <?php endif; ?>
                             </tr>
@@ -174,28 +172,27 @@ $attachments = $this->attachments;
         </table>
         <?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && KunenaUserHelper::getMyself()->isModerator()) :
         ?>
-            <a href="#modaldeleteall" class="btn btn-outline-primary border float-end"
-                data-bs-toggle="modal"><?php echo Text::_('COM_KUNENA_FILES_DELETE'); ?></a>
+            <button type="button" class="btn btn-outline-primary border float-end" command="show-modal"
+                commandfor="modaldeleteall"><?php echo Text::_('COM_KUNENA_FILES_DELETE'); ?></button>
 
-            <div class="modal fade" id="modaldeleteall" tabindex="-1" role="dialog" aria-labelledby="modaldeleteallLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            <h4 class="modal-title"
-                                id="modaldeleteallLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL') ?></h4>
-                        </div>
-                        <div class="modal-body">
-                            <p><?php echo Text::_('COM_KUNENA_FILES_DELETE_SELECTED_MODAL_DESCRIPTION'); ?></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-primary border"
-                                id="modaldeteleallsubmit"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
-                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
-                        </div>
+            <dialog id="modaldeleteall" class="kunena-dialog" aria-labelledby="modaldeleteallLabel" closedby="any">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"
+                            id="modaldeleteallLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL') ?></h4>
+                        <button type="button" class="btn-close" command="close" commandfor="modaldeleteall"
+                            aria-label="<?php echo Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><?php echo Text::_('COM_KUNENA_FILES_DELETE_SELECTED_MODAL_DESCRIPTION'); ?></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary border"
+                            id="modaldeteleallsubmit"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+                        <button type="button" class="btn btn-outline-primary" command="close" commandfor="modaldeleteall" autofocus><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
                     </div>
                 </div>
-            </div>
+            </dialog>
         <?php endif; ?>
     </form>
 </div>

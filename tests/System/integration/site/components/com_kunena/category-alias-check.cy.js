@@ -51,9 +51,17 @@ describe('Kunena categories: the alias check of the category form on the site', 
     cy.get('#jform_aliases').should('not.have.class', 'invalid-border');
     cy.get('#aliascheck select').should('exist');
 
-    // The alias of another category is taken.
+    // The alias of another category is taken: a message, and the form is not sent. The list of the aliases stays.
     typeAlias(`cypress-alias-other-${stamp}`);
-    cy.get('#jform_aliases').should('have.class', 'invalid-border');
+    cy.get('#jform_aliases').should('have.class', 'invalid-border').and('have.attr', 'aria-invalid', 'true');
+    cy.get('#aliasinfo').should('be.visible').and('not.be.empty');
+    cy.get('#jform_aliases').closest('form').find('[type="submit"]').should('be.disabled');
+    cy.get('#aliascheck select').should('exist');
+
+    // A free alias again: the message goes, the form can be sent.
+    typeAlias(`cypress-alias-free-again-${stamp}`);
+    cy.get('#aliasinfo').should('be.empty');
+    cy.get('#jform_aliases').closest('form').find('[type="submit"]').should('not.be.disabled');
   });
 
   it('answers only the users who may manage the categories', () => {

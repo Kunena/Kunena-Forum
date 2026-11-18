@@ -19,9 +19,23 @@
 			return;
 		}
 
-		const box = document.getElementById('aliascheck');
-		const info = document.getElementById('aliasinfo');
-		const buttons = () => document.querySelectorAll('.button-apply, .button-save, .button-save-new, .button-save-copy');
+		// The message of a taken alias: the place of the backend form, or one after the field (the form of the forum has none). The
+		// list of the aliases of the category (#aliascheck) stays as it is.
+		let info = document.getElementById('aliasinfo');
+
+		if (!info) {
+			info = document.createElement('span');
+			info.id = 'aliasinfo';
+			input.after(info);
+		}
+
+		info.setAttribute('role', 'status');
+
+		// The buttons which save: the toolbar of the backend, and the buttons of the form of the field in the forum.
+		const buttons = () => [
+			...document.querySelectorAll('.button-apply, .button-save, .button-save-new, .button-save-copy'),
+			...(input.form ? input.form.querySelectorAll('[type="submit"]') : []),
+		];
 		let request = null;
 
 		input.addEventListener('input', () => {
@@ -44,21 +58,15 @@
 
 					input.classList.add('inputbox');
 					input.classList.toggle('invalid-border', !free);
+					input.setAttribute('aria-invalid', String(!free));
 
-					if (box) {
-						buttons().forEach((button) => {
-							button.disabled = !free;
-						});
-					}
+					// A taken alias is not saved: the server refuses it, so the form says so before.
+					buttons().forEach((button) => {
+						button.disabled = !free;
+					});
 
-					if (!free && box) {
-						box.classList.remove('valid', 'icon-ok');
-						box.classList.add('invalid', 'icon', 'icon-remove');
-						box.textContent = Joomla.Text._('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
-					} else if (free && box && info) {
-						info.classList.add('valid', 'icon', 'icon-ok');
-						info.textContent = '';
-					}
+					info.className = free ? '' : 'invalid text-danger small d-block';
+					info.textContent = free ? '' : Joomla.Text._('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 				})
 				.catch(() => {
 					// An aborted check (a newer alias), or no answer: the form stays as it is.

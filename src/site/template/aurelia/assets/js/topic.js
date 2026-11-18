@@ -104,8 +104,13 @@
 			topics.dispatchEvent(new Event('change', { bubbles: true }));
 		}
 
+		// The topic which is moderated is no target of itself (the server refuses it), as in the list of the page.
+		const own = String(topics.form?.querySelector('input[name="id"]')?.value ?? '');
+
 		(Array.isArray(json?.topiclist) ? json.topiclist : []).forEach((topic) => {
-			topics.append(new Option(topic.subject, topic.id));
+			if (String(topic.id) !== own) {
+				topics.append(new Option(topic.subject, topic.id));
+			}
 		});
 	};
 

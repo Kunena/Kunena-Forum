@@ -163,7 +163,7 @@ $template = KunenaTemplate::getInstance();
                 <td>
                     <span class="hasTooltip" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_SIGNATURE')
                                                                                     . '::' . Text::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
-                        <textarea class="input-xxlarge form-control" maxlength="<?php echo (int) $this->config->maxSig; ?>"
+                        <textarea class="input-xxlarge form-control"<?php echo (int) $this->config->maxSig > 0 ? ' maxlength="' . (int) $this->config->maxSig . '"' : ''; ?>
                             name="signature" id="signature" rows="10"
                             cols="30"><?php echo $this->escape($this->profile->signature); ?></textarea>
                     </span>

@@ -21,31 +21,19 @@
 		const goResults = document.getElementById('kpoll_go_results');
 		const hideResults = document.getElementById('kpoll_hide_results');
 
+		// The results shown or hidden, with the one button which does the other (hiding them brings "View results" back).
+		const showResults = (shown) => {
+			(shown ? show : hide)(results);
+			(shown ? show : hide)(hideResults);
+			(shown ? hide : show)(goResults);
+		};
+
 		if (goResults) {
-			goResults.addEventListener('click', () => {
-				if (visible(results)) {
-					hide(results);
-					hide(hideResults);
-				} else {
-					show(results);
-					show(hideResults);
-					hide(goResults);
-				}
-			});
+			goResults.addEventListener('click', () => showResults(!visible(results)));
 		}
 
 		if (hideResults) {
-			hideResults.addEventListener('click', () => {
-				if (visible(results)) {
-					hide(results);
-					show(hideResults);
-					hide(hideResults);
-				} else {
-					show(results);
-					show(hideResults);
-					hide(goResults);
-				}
-			});
+			hideResults.addEventListener('click', () => showResults(!visible(results)));
 		}
 
 		/* Under a poll: all the users who voted, or fewer of them. */

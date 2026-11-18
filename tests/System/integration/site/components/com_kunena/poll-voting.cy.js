@@ -87,6 +87,22 @@ describe('Kunena polls: the votes', () => {
     });
   });
 
+  it('shows the results again after they were hidden (poll.js)', () => {
+    cy.doFrontendLogin(user.name, user.password, false);
+    cy.visit(`${base}&view=topic&catid=3&id=${ids.open.topic}`);
+    cy.get('#poll-results').should('not.be.visible');
+
+    // View, hide, and view again: hiding the results brings the button which shows them back.
+    cy.get('#kpoll_go_results').should('be.visible').click();
+    cy.get('#poll-results').should('be.visible');
+    cy.get('#kpoll_go_results').should('not.be.visible');
+    cy.get('#kpoll_hide_results').should('be.visible').click();
+    cy.get('#poll-results').should('not.be.visible');
+    cy.get('#kpoll_hide_results').should('not.be.visible');
+    cy.get('#kpoll_go_results').should('be.visible').click();
+    cy.get('#poll-results').should('be.visible');
+  });
+
   it('does not count the vote of a guest', () => {
     vote(ids.open, ids.open.first);
     totalVotes(ids.open.poll).should('eq', 0);

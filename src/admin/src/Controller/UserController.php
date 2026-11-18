@@ -120,6 +120,13 @@ class UserController extends FormController
             $user = KunenaFactory::getUser($uid);
 
             // Prepare variables
+            // The maximum length of the option, as on the site (the field stops typing, a request can send more).
+            $maxSig = (int) KunenaFactory::getConfig()->maxSig;
+
+            if ($maxSig > 0 && mb_strlen((string) $signature) > $maxSig) {
+                $signature = mb_substr((string) $signature, 0, $maxSig);
+            }
+
             if ($deleteSig === 1) {
                 $user->signature = '';
             } else {

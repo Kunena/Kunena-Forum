@@ -29,27 +29,25 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('multiselect');
 
 $this->document->addScriptDeclaration(
-    ' var max_count = ' . (int) $this->config->maxSig . ';
-document.addEventListener(\'DOMContentLoaded\', function () {
-	// The signature: no key beyond the limit, and the characters which are left in the counter.
-	var signature = document.getElementById(\'user-signature\');
-	var counter = document.getElementById(\'current_count\');
+    "document.addEventListener('DOMContentLoaded', function () {
+	// The characters of the signature which are left, after every change: typing, deleting, pasting (the maxlength of the field
+	// stops the text at the limit; no limit when the option is 0).
+	var signature = document.getElementById('user-signature');
+	var counter = document.getElementById('current_count');
+	var max = parseInt(signature ? signature.getAttribute('maxlength') : '', 10);
 
-	if (!signature) {
+	if (!signature || !counter || !(max > 0)) {
 		return;
 	}
 
-	signature.addEventListener(\'keypress\', function (e) {
-		var len = signature.value.length;
+	var update = function () {
+		counter.value = max - signature.value.length;
+	};
 
-		if (len > max_count) {
-			e.preventDefault();
-		} else if (counter) {
-			counter.value = max_count - len;
-		}
-	});
+	signature.addEventListener('input', update);
+	update();
 });
-'
+"
 );
 
 $template = KunenaTemplate::getInstance();
@@ -151,7 +149,7 @@ $template = KunenaTemplate::getInstance();
                                                 <div class="mb-2">
                                                     <label for="user-signature" class="visually-hidden"><?php echo Text::_('COM_KUNENA_GEN_SIGNATURE'); ?></label>
                                                     <textarea id="user-signature" class="inputbox form-control w-100"
-                                                        name="signature"
+                                                        name="signature"<?php echo (int) $this->config->maxSig > 0 ? ' maxlength="' . (int) $this->config->maxSig . '"' : ''; ?>
                                                         rows="6"><?php echo $this->escape($this->user->signature); ?></textarea>
                                                 </div>
                                                 <div class="form-check mb-2">

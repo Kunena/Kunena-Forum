@@ -718,23 +718,23 @@
 		// The buttons are not configured (the option is empty): the basic toolbar is used.
 		if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined && Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== null)
 		{
-			var toolbar_buttons_config = Joomla.getOptions('com_kunena.template_editor_buttons_configuration');
+			// The buttons which the template keeps (the backend saves them: bold,italic,...,table,horizontalrule,maximize; undo, redo,
+			// cut, copy, pastetext and source always).
+			var toolbar_buttons_config = String(Joomla.getOptions('com_kunena.template_editor_buttons_configuration')).split(',')
+				.map(function (name) { return name.trim(); })
+				.filter(Boolean);
 
-			//list in config:         bold,italic,underline,strike,superscript,subscript, right,left,justify,center, font,size,color,removeformat, bulletlist,orderedlist,table,horizontalrule, confidential,hidetext,spoiler, emoticon,quote,image,video,link,unlink,code, map,x_social,instagram,ebay,soundcloud,maximize,
-			//not in config:          fix: undo,redo,cut,copy,pastetext,source,  date,time,print  br?
-			//lists of all buttons (with spacers)   TODO: need to change the values(bold, italic) from template parameters to be handled here
-					          
-			var toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript,|left,center,right,justify,|font,size,color,removeformat,|bulletlist,orderedlist,table,|confidential,hidetext,spoiler,|emoticon,quote,image,video,link,unlink,code,|map,x_social,instagram,ebay,soundcloud,|undo,redo,cut,copy,pastetext,horizontalrule,source,maximize';
-
-			var button_match = toolbar_buttons.split(',');
-			button_match.forEach(function(buttonmatch) {
-				buttonmatch = buttonmatch.replace('|','');
-
-				if (toolbar_buttons_config.indexOf(buttonmatch) ==-1 && buttonmatch.length > 1)
-				{
-					toolbar_buttons = toolbar_buttons.replace(buttonmatch + ',','');
-				}
-			});
+			// All the buttons, in groups (|). Each button is kept by its name (a search in the text of the list found "link" in "unlink",
+			// and a removal of "name," never removed the last button, maximize); a group without buttons goes away.
+			var toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|bulletlist,orderedlist,table|confidential,hidetext,spoiler|emoticon,quote,image,video,link,unlink,code|map,x_social,instagram,ebay,soundcloud|undo,redo,cut,copy,pastetext,horizontalrule,source,maximize'
+				.split('|')
+				.map(function (group) {
+					return group.split(',').filter(function (name) {
+						return toolbar_buttons_config.indexOf(name) !== -1;
+					}).join(',');
+				})
+				.filter(Boolean)
+				.join('|');
 		}
 		else
 		{	//basic setting

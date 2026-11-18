@@ -350,7 +350,16 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        Maximize
+        <field name="Table" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_TABLE"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_TABLE_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="Horizontalrule" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_HR"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_HR_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
         <field name="Map" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MAPS"
                description="COM_KUNENA_TEMPLATE_DISPLAY_MAPS_DESC">
             <option value="0">COM_KUNENA_NO</option>

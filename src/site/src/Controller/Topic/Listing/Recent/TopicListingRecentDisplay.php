@@ -91,7 +91,7 @@ class TopicListingRecentDisplay extends ListDisplay
                     'Itemid' => $itemid,
                 ];
 
-                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
@@ -370,14 +370,17 @@ class TopicListingRecentDisplay extends ListDisplay
                 $title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
                 $this->setTitle($title);
             } else {
-                $this->setTitle($headerText);
+                // The title of Open Graph and Twitter too (it was empty).
+                $title = $headerText;
+                $this->setTitle($title);
             }
 
             if (!empty($params_description)) {
                 $description = $params->get('menu-meta_description') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
                 $this->setDescription($description);
             } else {
-                $description = Text::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->boardTitle . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+                // A sentence of its own, not the title again ("Recent Topics: Board title"), with the list which the page shows.
+                $description = Text::sprintf('COM_KUNENA_VIEW_TOPICS_META_DESCRIPTION', $this->headerText, $this->config->boardTitle) . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
                 $this->setDescription($description);
             }
 
@@ -395,6 +398,11 @@ class TopicListingRecentDisplay extends ListDisplay
                 $this->setMetaData('twitter:image', $image, 'name');
             }
             $this->setMetaData('twitter:description', $description);
+        }
+
+        // An empty list (no topic in this mode or this period, a page past the last one) is a thin page.
+        if (empty($this->topics)) {
+            $this->keepOutOfIndex();
         }
     }
 }

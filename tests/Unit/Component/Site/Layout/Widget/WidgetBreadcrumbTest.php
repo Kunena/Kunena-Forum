@@ -251,4 +251,25 @@ class WidgetBreadcrumbTest extends UnitTestCase
         $this->assertSame([0, 1], array_keys($result));
         $this->assertSame([0, 1], array_keys(WidgetBreadcrumb::withoutDefaultPageCrumb([4 => self::forum(), 8 => self::recent()], $this->standardMenu())));
     }
+
+    public static function responses(): array
+    {
+        return [
+            'no status'        => [[], false],
+            'ok'               => [[['name' => 'Status', 'value' => '200 OK']], false],
+            'not found'        => [[['name' => 'Status', 'value' => '404 Not Found']], true],
+            'gone, lower case' => [[['name' => 'status', 'value' => '410 Gone']], true],
+            'other headers'    => [[['name' => 'Content-Type', 'value' => '500']], false],
+            'the last status'  => [[['name' => 'Status', 'value' => '404 Not Found'], ['name' => 'Status', 'value' => '200 OK']], false],
+        ];
+    }
+
+    /**
+     * The breadcrumb of an error page has no structured data.
+     */
+    #[DataProvider('responses')]
+    public function testAnErrorPageIsKnownByItsStatus(array $headers, bool $expected): void
+    {
+        $this->assertSame($expected, WidgetBreadcrumb::isErrorPage($headers));
+    }
 }

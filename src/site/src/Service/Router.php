@@ -101,6 +101,40 @@ class Router extends RouterView
     }
 
     /**
+     * The menu item of an address without one, before it is built (Route::_() of Joomla, the redirect of the system plugin SEF
+     * from a non-SEF address): the menu item of the forum, as the redirect of Kunena for a missing menu item takes it. Without it
+     * the address was /component/kunena/..., which Kunena redirected again (a chain of a 301 and a 303). KunenaRoute::getItemID()
+     * needs the document, which does not exist yet while Joomla routes.
+     *
+     * @param   array  $query  The variables of the address.
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    public function preprocess($query)
+    {
+        $query = parent::preprocess($query);
+
+        // A topic, a category and a profile have the same address under any menu item of the forum. A list (the index, the recent
+        // topics, the search...) has the address of its own menu item: Kunena redirects to it (permanently).
+        $view    = $query['view'] ?? '';
+        $ownPage = ($view === 'topic' && !empty($query['id']) && empty($query['layout']))
+            || ($view === 'category' && !empty($query['catid']) && empty($query['layout']))
+            || ($view === 'user' && !empty($query['userid']) && empty($query['layout']));
+
+        if ($ownPage && empty($query['Itemid']) && ($query['option'] ?? '') === 'com_kunena') {
+            $itemid = KunenaRoute::fixMissingItemID();
+
+            if ($itemid > 0) {
+                $query['Itemid'] = $itemid;
+            }
+        }
+
+        return $query;
+    }
+
+    /**
      * Build SEF URL
      *
      * All SEF URLs are formatted like this:

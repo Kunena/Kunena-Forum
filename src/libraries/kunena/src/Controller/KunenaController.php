@@ -160,7 +160,8 @@ class KunenaController extends BaseController
                 $route    = KunenaRoute::_(null, false);
                 $activeId = !empty($active->id) ? $active->id : 0;
                 Log::add("Redirect from " . Uri::getInstance()->toString(['path', 'query']) . " ({$activeId}) to {$route} ($routed->id)", Log::DEBUG, 'kunena');
-                $this->app->redirect($route);
+                // Permanent: the address of the page is the address of its menu item (a 303 is a redirect for this time only).
+                $this->app->redirect($route, 301);
             }
 
             // Joomla 2.5+ multi-language support

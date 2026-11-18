@@ -25,6 +25,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -49,7 +50,6 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
-use stdClass;
 
 /**
  * Class ComponentTopicControllerItemDisplay
@@ -159,7 +159,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
                     'Itemid' => $itemid,
                 ];
 
-                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
@@ -372,15 +372,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $data['dateModified'] = (new KunenaDate($first->modified_time))->toISO8601();
         }
 
-        $author = $this->topic->getFirstPostAuthor();
-        // The name which the forum shows: the username is the name with which the user logs in, and the forum may keep it for itself.
-        $data['author'] = ['@type' => 'Person', 'name' => $author->getName('', false)];
-        // No address for a guest, nor for a profile which the viewer may not see.
-        $profile = $author->getURL(false);
-
-        if ($profile) {
-            $data['author']['url'] = preg_match('#^https?://#i', $profile) ? $profile : $host . $profile;
-        }
+        $data['author'] = $this->getStructuredAuthor($this->topic->getFirstPostAuthor());
 
         $data['interactionStatistic'] = [
             '@type'                => 'InteractionCounter',
@@ -403,13 +395,120 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         $data['mainEntityOfPage'] = ['@type' => 'WebPage', '@id' => $url];
 
-        $image = $this->docImage();
+        // The image of the topic (an image of its first message), else the avatar of its author or the image of the forum.
+        $image = $this->topicImage();
 
         if ($image) {
             $data['image'] = $image;
         }
 
+        // The replies of this page, as the search engines read a discussion: the replies of the other pages are on their own page.
+        $comments = [];
+
+        foreach ($this->messages ?: [] as $message) {
+            // Not the first message (it is the posting itself), nor a deleted or unapproved message which a moderator sees.
+            if ((int) $message->id === (int) $this->topic->first_post_id || (int) $message->hold !== 0) {
+                continue;
+            }
+
+            $comment = [
+                '@type'         => 'Comment',
+                'url'           => $this->absoluteUrl($message->getPermaUrl(null, false)),
+                'datePublished' => $message->getTime()->toISO8601(),
+                'author'        => $this->getStructuredAuthor($message->getAuthor()),
+            ];
+
+            if (!empty($message->modified_time)) {
+                $comment['dateModified'] = (new KunenaDate($message->modified_time))->toISO8601();
+            }
+
+            $text = trim(preg_replace('/\s+/', ' ', (string) KunenaParser::stripBBCode((string) $message->message, 500, false)));
+
+            if ($text !== '') {
+                $comment['text'] = $text;
+            }
+
+            $comments[] = $comment;
+        }
+
+        if ($comments) {
+            $data['comment'] = $comments;
+        }
+
         return $data;
+    }
+
+    /**
+     * The author of a message for the structured data: the name which the forum shows (the username is the name with which the user
+     * logs in, and the forum may keep it for itself) and the address of the profile, which a guest has not, nor a profile which the
+     * viewer may not see.
+     *
+     * @param   KunenaUser  $author  The author.
+     *
+     * @return  array
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected function getStructuredAuthor(KunenaUser $author): array
+    {
+        $person  = ['@type' => 'Person', 'name' => $author->getName('', false)];
+        $profile = $author->getURL(false);
+
+        if ($profile) {
+            $person['url'] = $this->absoluteUrl($profile);
+        }
+
+        return $person;
+    }
+
+    /**
+     * An address with the scheme and the host of the site: the routes of Joomla are relative.
+     *
+     * @param   string  $url  An address, relative or absolute.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected function absoluteUrl(string $url): string
+    {
+        return preg_match('#^https?://#i', $url) ? $url : Uri::getInstance()->toString(['scheme', 'host', 'port']) . $url;
+    }
+
+    /**
+     * The image of the topic, for Open Graph, Twitter and the structured data: the first image attached to the first message which
+     * everybody may see, else the first [img] of that message outside its hidden parts, else the avatar of its author or the image
+     * of the forum.
+     *
+     * @return  string  An absolute address.
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected function topicImage(): string
+    {
+        if ($this->topic->attachments > 0) {
+            foreach (KunenaAttachmentHelper::getByMessage($this->topic->first_post_id) as $attach) {
+                // A protected file (private, or for some groups) is no image for the visitors of a shared link.
+                if (!$attach->isImage() || (int) $attach->protected > KunenaAttachment::PROTECTION_PUBLIC
+                    || !is_file(JPATH_SITE . '/' . $attach->folder . '/' . $attach->filename)) {
+                    continue;
+                }
+
+                return $this->absoluteUrl($attach->getUrl(false, true, false));
+            }
+        }
+
+        // An image of a hidden part of the message is no image of the page: every visitor and the search engines read the head.
+        // The first image: the address ends at its own [/img] (".*" took everything up to the last [/img] of the message).
+        $message = KunenaParser::removeBlocks((string) $this->topic->first_post_message, ['confidential', 'hide', 'private']);
+
+        if (preg_match('#\[img(?:[\s=][^\]]*)?\]\s*(https?://[^\s\[\]"<>]+)\s*\[/img\]#iu', $message, $match)) {
+            return $match[1];
+        }
+
+        return (string) $this->docImage();
     }
 
     /**
@@ -707,51 +806,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $this->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
         $this->setMetaData('profile:username', $this->topic->getAuthor()->getName('', false), 'property');
 
-        $image = $this->docImage();
-
-        // An image of a hidden part of the message is no image of the page: every visitor and the search engines read the head.
-        $message = KunenaParser::parseText(KunenaParser::removeBlocks((string) $this->topic->first_post_message, ['confidential', 'hide', 'private']));
-        $matches = preg_match("/\[img]http(s?):\/\/.*\/img]/iu", $message, $title);
-
-        if ($matches) {
-            $image = substr($title[0], 5, -6);
-        }
-
-        if ($this->topic->attachments > 0) {
-            $attachments = KunenaAttachmentHelper::getByMessage($this->topic->first_post_id);
-            $item        = [];
-
-            foreach ($attachments as $attach) {
-                // Use the first image, not just the last attachment which can be any kind of file.
-                if (!$attach->isImage()) {
-                    continue;
-                }
-
-                $object           = new stdClass();
-                $object->path     = $attach->getUrl();
-                $object->image    = true;
-                $object->filename = $attach->filename;
-                $object->folder   = $attach->folder;
-                $item             = $object;
-                break;
-            }
-
-            $attach = $item;
-
-            if ($attach) {
-                if (is_file(JPATH_SITE . '/' . $attach->folder . '/' . $attach->filename)) {
-                    if ($attach->image) {
-                        if ($this->config->attachmentProtection) {
-                            $url      = $attach->path;
-                            $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
-                            $image    = $protocol . $_SERVER['SERVER_NAME'] . $url;
-                        } else {
-                            $image = $attach->path;
-                        }
-                    }
-                }
-            }
-        }
+        $image = $this->topicImage();
 
         $multispaces_replaced = '';
         if (!empty($this->topic->first_post_message)) {
@@ -812,7 +867,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $this->params = $menu_item->getParams();
             $subject      = $this->topic->subject;
 
-            $this->setTitle($subject);
+            // Each page of a long topic its own title (as the pages of a category): "Subject - Pages 2".
+            $this->setTitle($subject . ($total > 1 && $page > 1 ? ' - ' . Text::_('COM_KUNENA_PAGES') . " {$page}" : ''));
 
             $multispaces_replaced_desc = preg_replace('/\s+/', ' ', $this->topic->first_post_message);
 

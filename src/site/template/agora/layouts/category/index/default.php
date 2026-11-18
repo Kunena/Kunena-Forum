@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 // Display time it took to create the entire page in the footer.
 $kunena_profiler = KunenaProfiler::instance();
@@ -55,7 +56,11 @@ $firstSection = !empty($this->sections) ? reset($this->sections) : null;
 $newItemid    = $firstSection ? (int) KunenaRoute::getCategoryItemid($firstSection) : $activeId;
 
 // The button for a new section belongs to the index of the forum, not to the page of a category.
-$newSection = $isAdmin && !Factory::getApplication()->getInput()->getInt('catid', 0);
+$catid      = Factory::getApplication()->getInput()->getInt('catid', 0);
+$newSection = $isAdmin && !$catid;
+
+// One h1 per page: the name of the category on the page of a category, the name of the page on the index (its sections are h2).
+$sectionTag = $catid ? 'h1' : 'h2';
 $forumJump  = (bool) $this->config->enableForumJump;
 
 // The jump to a category and the button for a new section on one row: the jump on the left, the button on the right.
@@ -72,6 +77,10 @@ if ($forumJump || $newSection) : ?>
     </div>
 <?php endif;
 
+if (!$catid) : ?>
+    <h1 class="visually-hidden"><?php echo $this->escape(KunenaTemplate::pageHeading()); ?></h1>
+<?php endif;
+
 foreach ($this->sections as $section) :
     $Itemid      = KunenaRoute::getCategoryItemid($section);
 
@@ -81,12 +90,12 @@ foreach ($this->sections as $section) :
     <div class="kfrontend section agora-section">
         <div class="agora-section-head">
             <div class="agora-section-title">
-                <h2 id="category-header<?php echo (int) $section->id; ?>">
+                <<?php echo $sectionTag; ?> id="category-header<?php echo (int) $section->id; ?>">
                     <?php echo $this->getCategoryLink($section, $this->escape($section->name), null, $this->ktemplate->tooltips(), true, false); ?>
                     <small class="nowrap" id="ksection-count<?php echo $section->id; ?>">
                         <?php echo KunenaCategory::getInstance()->totalCount($section->getTopics()); ?>
                     </small>
-                </h2>
+                </<?php echo $sectionTag; ?>>
                 <?php if (!empty($section->description)) : ?>
                     <div class="agora-section-desc"><?php echo $section->displayField('description'); ?></div>
                 <?php endif; ?>

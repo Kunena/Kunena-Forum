@@ -102,4 +102,25 @@ class KunenaTemplateTest extends UnitTestCase
 
         $this->assertSame($labelid, self::invoke($template, 'getTopicLabelId', $topic, $topiclabels));
     }
+
+    public static function headings(): array
+    {
+        return [
+            'the page heading of the menu item' => ['Our forum', 'Forum', 'Board', 'Our forum'],
+            'else the title of the menu item'   => ['', 'Forum', 'Board', 'Forum'],
+            'else the name of the board'        => ['', '', 'Board', 'Board'],
+            'spaces only are no text'           => ['  ', ' ', 'Board', 'Board'],
+            'the text without its spaces'       => [' Our forum ', '', '', 'Our forum'],
+            'nothing'                           => ['', '', '', ''],
+        ];
+    }
+
+    /**
+     * The h1 of the index of the forum (its sections are h2): the page heading of the menu item, its title, the name of the board.
+     */
+    #[DataProvider('headings')]
+    public function testTheHeadingOfThePage(string $pageHeading, string $menuTitle, string $boardTitle, string $expected): void
+    {
+        $this->assertSame($expected, KunenaTemplate::headingFrom($pageHeading, $menuTitle, $boardTitle));
+    }
 }

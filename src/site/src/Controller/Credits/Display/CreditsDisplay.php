@@ -89,7 +89,7 @@ class CreditsDisplay extends KunenaControllerDisplay
                     'Itemid' => $itemid,
                 ];
 
-                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
@@ -159,10 +159,8 @@ class CreditsDisplay extends KunenaControllerDisplay
                 $description = $params->get('menu-meta_description');
                 $this->setDescription($description);
             } else {
-                // TODO: translate at some point...
-                $description = 'Kunena is the ideal forum extension for Joomla. It\'s free and fully integrated. "
-			. "For more information, please visit www.kunena.org.';
-                $this->setDescription($description);
+                // A text of the language files (the text in the code mixed its quotes: the description had a line break, tabs and ". ").
+                $this->setDescription(Text::_('COM_KUNENA_VIEW_CREDITS_META_DESCRIPTION'));
             }
         }
     }

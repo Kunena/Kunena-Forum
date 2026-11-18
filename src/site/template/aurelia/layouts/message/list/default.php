@@ -24,6 +24,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 $view    = Factory::getApplication()->getInput()->getWord('view');
+// In the tabs of a profile the list is a part of the page, whose h1 is the name of the user: one h1 per page (the input of
+// a tab has no view, the request of the page has).
+$heading = Factory::getApplication()->getInput()->getWord('view') === 'user' ? 'h2' : 'h1';
 
 // A page can show this list more than once (in the tabs of a profile): the ids of its elements stay unique on the page.
 $ids = [
@@ -44,7 +47,7 @@ $ids = [
 <div class="row">
     <div class="col-md-12">
         <div class="float-start">
-            <h1>
+            <<?php echo $heading; ?>>
                 <?php echo $this->escape($this->headerText); ?>
                 <small class="d-none d-sm-block">
                     (<?php echo Text::sprintf($this->messagemore, $this->formatLargeNumber($this->pagination->total)); ?>
@@ -53,7 +56,7 @@ $ids = [
 
                 <?php // ToDo:: <span class="badge bg-success"> <?php echo $this->topics->count->unread; ?/></span>
                 ?>
-            </h1>
+            </<?php echo $heading; ?>>
         </div>
 
 <div class="float-end" id="<?php echo $ids['time']; ?>">

@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 // Display time it took to create the entire page in the footer.
 $kunena_profiler = KunenaProfiler::instance();
@@ -72,6 +73,14 @@ if ($isAdmin && !Factory::getApplication()->getInput()->getInt('catid', 0)) : ?>
     </div>
 <?php endif;
 
+// One h1 per page: the name of the category on the page of a category, the name of the page on the index (its sections are h2).
+$catid      = Factory::getApplication()->getInput()->getInt('catid', 0);
+$sectionTag = $catid ? 'h1' : 'h2';
+
+if (!$catid) : ?>
+    <h1 class="visually-hidden"><?php echo $this->escape(KunenaTemplate::pageHeading()); ?></h1>
+<?php endif;
+
 foreach ($this->sections as $section) :
     $Itemid      = KunenaRoute::getCategoryItemid($section);
 
@@ -90,12 +99,12 @@ foreach ($this->sections as $section) :
             <?php endif; ?>
         </h2>
 
-        <h1 class="card-header" id="category-header<?php echo (int) $section->id; ?>">
+        <<?php echo $sectionTag; ?> class="card-header" id="category-header<?php echo (int) $section->id; ?>">
             <?php echo $this->getCategoryLink($section, $this->escape($section->name), null, $this->ktemplate->tooltips(), true, false); ?>
             <small class="d-none d-sm-inline nowrap" id="ksection-count<?php echo $section->id; ?>">
                 <?php echo KunenaCategory::getInstance()->totalCount($section->getTopics()); ?>
             </small>
-        </h1>
+        </<?php echo $sectionTag; ?>>
 
         <div class="<?php if (!empty($section->class_sfx)) :
                     ?>section<?php echo $this->escape($section->class_sfx); ?><?php

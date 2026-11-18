@@ -110,7 +110,7 @@ class UserListingDisplay extends KunenaControllerDisplay
                     'Itemid' => $itemid,
                 ];
 
-                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
@@ -179,9 +179,15 @@ class UserListingDisplay extends KunenaControllerDisplay
                 $description = $params->get('menu-meta_description') . $pagesText;
                 $this->setDescription($description);
             } else {
-                $description = Text::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->boardTitle . $pagesText;
+                // A sentence of its own, not the title again ("User List: Board title").
+                $description = Text::sprintf('COM_KUNENA_VIEW_USER_LIST_META_DESCRIPTION', (int) $this->pagination->total, $this->config->boardTitle) . $pagesText;
                 $this->setDescription($description);
             }
+
+            // A shared link of the list has a title and a description, as the other lists of the forum.
+            $this->setMetaData('og:type', 'website', 'property');
+            $this->setMetaData('og:title', $title, 'property');
+            $this->setMetaData('og:description', $description, 'property');
         }
     }
 }

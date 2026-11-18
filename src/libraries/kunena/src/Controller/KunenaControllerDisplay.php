@@ -482,6 +482,33 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
     }
 
     /**
+     * Keeps a thin page (an empty list, a profile without a post) out of the index of the search engines: its links are still
+     * followed, unless the robots of the page (of the site or of the menu item) already say "nofollow".
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    protected function keepOutOfIndex(): void
+    {
+        $this->setMetaData('robots', self::robotsOutOfIndex((string) $this->document->getMetaData('robots')));
+    }
+
+    /**
+     * The robots of a page kept out of the index: "noindex", with the "nofollow" of the robots it had.
+     *
+     * @param   string  $robots  The robots of the page, as "index, follow".
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function robotsOutOfIndex(string $robots): string
+    {
+        return preg_match('/\bnofollow\b/i', $robots) ? 'noindex, nofollow' : 'noindex, follow';
+    }
+
+    /**
      * @internal
      *
      * @return  KunenaControllerDisplay

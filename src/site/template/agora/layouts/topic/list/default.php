@@ -31,6 +31,9 @@ $cols            = !empty($this->actions) ? 6 : 7;
 $colspan         = !empty($this->actions) ? 4 : 3;
 $view            = $this->input->getWord('view');
 $layout          = $this->input->getWord('layout');
+// In the tabs of a profile the list is a part of the page, whose h1 is the name of the user: one h1 per page (the input of
+// a tab has no view, the request of the page has).
+$heading = Factory::getApplication()->getInput()->getWord('view') === 'user' ? 'h2' : 'h1';
 $this->ktemplate = KunenaFactory::getTemplate();
 $me              = KunenaUserHelper::getMyself();
 
@@ -77,13 +80,13 @@ $ids = [
 <header class="agora-list-head">
     <div class="agora-list-title">
         <span class="agora-stats-head-icon" aria-hidden="true"><?php echo KunenaIcons::file(); ?></span>
-        <h1>
+        <<?php echo $heading; ?>>
             <?php echo $this->escape($this->headerText); ?>
 
             <?php if ($layout != 'unread') : ?>
                 <small data-ktopics-count><?php echo KunenaCategory::getInstance()->totalCount($this->pagination->total); ?></small>
             <?php endif; ?>
-        </h1>
+        </<?php echo $heading; ?>>
     </div>
 
     <div class="agora-list-actions">

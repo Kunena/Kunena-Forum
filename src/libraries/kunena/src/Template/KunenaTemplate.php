@@ -1325,6 +1325,48 @@ HTML;
     }
 
     /**
+     * The heading of a page which has no heading of its own (the index of the forum, in an h1): the page heading of the active menu
+     * item, else the title of that menu item, else the name of the board.
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public static function pageHeading(): string
+    {
+        $menuItem = Factory::getApplication()->getMenu()->getActive();
+
+        return self::headingFrom(
+            $menuItem ? (string) $menuItem->getParams()->get('page_heading', '') : '',
+            $menuItem ? (string) $menuItem->title : '',
+            (string) KunenaFactory::getConfig()->boardTitle
+        );
+    }
+
+    /**
+     * The first text which is not empty: the page heading of the menu item, its title, the name of the board.
+     *
+     * @param   string  $pageHeading  The page heading of the menu item.
+     * @param   string  $menuTitle    The title of the menu item.
+     * @param   string  $boardTitle   The name of the board.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function headingFrom(string $pageHeading, string $menuTitle, string $boardTitle): string
+    {
+        foreach ([$pageHeading, $menuTitle, $boardTitle] as $text) {
+            if (trim($text) !== '') {
+                return trim($text);
+            }
+        }
+
+        return '';
+    }
+
+    /**
      * Returns the global KunenaTemplate object, only creating it if it doesn't already exist.
      *
      * @access  public

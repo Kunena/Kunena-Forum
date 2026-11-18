@@ -28,6 +28,30 @@ class WidgetBreadcrumb extends KunenaLayout
     public mixed $breadcrumb = null;
 
     /**
+     * Is the page an error page (its status 400 or more)? Its breadcrumb is shown, without the structured data: the search engines
+     * read no BreadcrumbList of a page which is missing or forbidden.
+     *
+     * @param   array  $headers  The headers of the response (each with a name and a value), as getHeaders() of the application.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isErrorPage(array $headers): bool
+    {
+        $status = 0;
+
+        foreach ($headers as $header) {
+            // The last status counts: setHeader('Status', ..., true) replaces it, setHeader('Status', ...) adds one.
+            if (strtolower((string) ($header['name'] ?? '')) === 'status') {
+                $status = (int) ($header['value'] ?? 0);
+            }
+        }
+
+        return $status >= 400;
+    }
+
+    /**
      * Leave out the crumb of the default page of a Kunena home menu item when it directly follows the home crumb: both
      * crumbs open the same page. Only the menu item crumb of the default page itself (its link as SitePathway builds it,
      * or an alias to it) is left out, not another page which is routed to the same Itemid.

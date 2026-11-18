@@ -31,6 +31,9 @@ $cols            = !empty($this->actions) ? 6 : 7;
 $colspan         = !empty($this->actions) ? 4 : 3;
 $view            = $this->input->getWord('view');
 $layout          = $this->input->getWord('layout');
+// In the tabs of a profile the list is a part of the page, whose h1 is the name of the user: one h1 per page (the input of
+// a tab has no view, the request of the page has).
+$heading = Factory::getApplication()->getInput()->getWord('view') === 'user' ? 'h2' : 'h1';
 $this->ktemplate = KunenaFactory::getTemplate();
 $me              = KunenaUserHelper::getMyself();
 
@@ -65,7 +68,7 @@ $ids = [
 <div class="row">
     <div class="col-md-12">        
         <div class="float-start">
-            <h1>
+            <<?php echo $heading; ?>>
                 <?php echo $this->escape($this->headerText); ?>
 
                 <?php if ($layout != 'unread') : ?>
@@ -74,7 +77,7 @@ $ids = [
                     </small>
                 <?php endif; ?>
                 <?php // ToDo:: <span class="badge bg-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-            </h1>
+            </<?php echo $heading; ?>>
         </div>
 
         <?php if ($view != 'user') : ?>

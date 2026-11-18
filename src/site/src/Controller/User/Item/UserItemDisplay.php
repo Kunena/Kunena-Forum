@@ -187,7 +187,7 @@ class UserItemDisplay extends KunenaControllerDisplay
                     $params['userid'] = $userid;
                 }
 
-                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
@@ -272,6 +272,11 @@ class UserItemDisplay extends KunenaControllerDisplay
             if (!empty($params_robots)) {
                 $this->setMetaData('robots', $params_robots);
             }
+        }
+
+        // A profile without a post is a thin page (a name and a date), one for each user who registered.
+        if ((int) $this->profile->posts < 1) {
+            $this->keepOutOfIndex();
         }
     }
 }

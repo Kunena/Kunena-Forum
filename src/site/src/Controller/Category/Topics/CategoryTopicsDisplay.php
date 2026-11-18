@@ -123,7 +123,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
                     'Itemid' => $itemid,
                 ];
 
-                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
@@ -300,10 +300,9 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
             $doc->addHeadLink($pagdata->next->link, 'next');
         }
 
-        if ($page > 1) {
-            $canonicalUri = $this->getCanonicalUri(['option', 'view', 'catid', 'Itemid'], ($page - 1) * $this->pagination->limit);
-            $this->setCanonicalLink($doc, KunenaRoute::_($canonicalUri));
-        }
+        // Every page has its canonical, the first one too: its address with ?start=0, a sorting or a tracking parameter is the same page.
+        $canonicalUri = $this->getCanonicalUri(['option', 'view', 'catid', 'Itemid'], ($page - 1) * $this->pagination->limit);
+        $this->setCanonicalLink($doc, KunenaRoute::_($canonicalUri));
 
         $this->setDescription(
             static::getMetaDescription(

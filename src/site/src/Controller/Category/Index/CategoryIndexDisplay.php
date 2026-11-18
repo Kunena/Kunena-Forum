@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site\Controller\Category\Index;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -144,7 +145,7 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
                     }
                 }
 
-                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
@@ -378,20 +379,12 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
             }
         }
 
+        // The canonical of the index of the forum. The page of a category has the canonical of its topics (CategoryTopicsDisplay):
+        // the canonical which was there was replaced by the current route, which was the home of the site on a section.
         $doc = $this->app->getDocument();
 
-        foreach ($doc->_links as $key => $value) {
-            if (\is_array($value)) {
-                if (\array_key_exists('relation', $value)) {
-                    if ($value['relation'] == 'canonical') {
-                        $canonicalUrl               = KunenaRoute::_();
-                        $canonicalUrl               = str_replace('?limitstart=0', '', $canonicalUrl);
-                        $doc->_links[$canonicalUrl] = $value;
-                        unset($doc->_links[$key]);
-                        break;
-                    }
-                }
-            }
+        if (!$catid && $doc instanceof HtmlDocument) {
+            $this->setCanonicalLink($doc, KunenaRoute::_($this->getCanonicalUri(['option', 'view', 'layout', 'Itemid'], 0)));
         }
 
         KunenaParser::prepareContent($content, 'index_top');
@@ -453,7 +446,8 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
                 $description = $params->get('menu-meta_description');
                 $this->setDescription($description);
             } else {
-                $description = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->boardTitle;
+                // A sentence of its own, not the title again ("Index - Board title").
+                $description = Text::sprintf('COM_KUNENA_VIEW_CATEGORIES_META_DESCRIPTION', $this->config->boardTitle);
                 $this->setDescription($description);
             }
 

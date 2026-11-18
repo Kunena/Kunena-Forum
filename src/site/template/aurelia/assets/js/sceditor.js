@@ -789,6 +789,15 @@
 			};
 		};
 
+		// The text which "Go to editor" of the quick reply copied: into the textarea, which SCEditor reads when it is made. A value
+		// set into the editor just after it is made was lost: its frame loads afterwards, with an empty document.
+		var kunenaCopy = localStorage.getItem('copyKunenaeditor');
+
+		if (kunenaCopy && textarea && textarea.value === '') {
+			textarea.value = kunenaCopy;
+			localStorage.removeItem('copyKunenaeditor');
+		}
+
 		sceditor.create(textarea, {
 			plugins: 'undo,autoyoutube,kunenapaste',
 			format: 'bbcode',
@@ -816,15 +825,6 @@
 		if (sceditor.instance(textarea).val().length > 0)
 		{
 			kunenaSubmit(true);
-		} else {
-			if (Joomla.getOptions('com_kunena.localstorage')) {
-				const cat = localStorage.getItem('copyKunenaeditor');
-	
-				if (cat) {
-					sceditor.instance(textarea).val(cat);
-					localStorage.removeItem('copyKunenaeditor');
-				}
-			}
 		}
 
 		sceditor.instance(textarea).bind('valuechanged', function(e) {

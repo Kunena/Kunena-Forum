@@ -311,11 +311,8 @@
 		});
 
 		if (byId('message_private')) {
+			// The text of the quick reply goes into the message only: the private part (its own tab) took it when it was ready first.
 			window.KunenaEditor.create('message_private').then((instance) => {
-				if (Joomla.getOptions('com_kunena.localstorage')) {
-					restoreCopy(instance);
-				}
-
 				instance.setCommandEnabled('polls', false);
 				updateSubmit();
 				instance.on('change', updateSubmit);

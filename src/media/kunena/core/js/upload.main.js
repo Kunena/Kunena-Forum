@@ -733,7 +733,8 @@
 				if (result.success === true) {
 					setSubmit(true);
 
-					if (span) {
+					// The name links to the file which was sent (an answer without its address: no link to "null").
+					if (span && result.location) {
 						const link = document.createElement('a');
 
 						link.target = '_blank';

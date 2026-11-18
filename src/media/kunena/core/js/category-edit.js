@@ -26,7 +26,10 @@
 
 		input.addEventListener('input', () => {
 			const catid = (document.querySelector('input[name="catid"]') || {}).value || 0;
-			const url = `index.php?option=com_kunena&view=category&task=category.chkaliases&alias=${encodeURIComponent(input.value)}&catid=${encodeURIComponent(catid)}&format=json`;
+			// From the root of the site or of the backend: on a page of the forum with addresses of the router (/forum/category/...),
+			// a relative "index.php" is a path under the page.
+			const base = (window.Joomla && Joomla.getOptions('system.paths') || {}).base || '';
+			const url = `${base}/index.php?option=com_kunena&view=category&task=category.chkaliases&alias=${encodeURIComponent(input.value)}&catid=${encodeURIComponent(catid)}&format=json`;
 
 			// Only the answer of the last alias counts.
 			if (request) {

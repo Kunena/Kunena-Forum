@@ -27,6 +27,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use RuntimeException;
 
 /**
  * Kunena Category Controller
@@ -159,6 +160,25 @@ class CategoryController extends CategoriesController
 
         $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_DELETED', htmlspecialchars($name, ENT_QUOTES, 'UTF-8')), 'success');
         $this->setRedirect($parent ? KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . $parent, false) : $list);
+    }
+
+    /**
+     * Whether an alias is free for a category, while it is typed in the form of a category of the forum (category-edit.js): the
+     * answer of the backend, {"msg": 1} when no other category has it. Only for the users who may manage the categories in the
+     * forum, as the form itself.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function chkaliases(): void
+    {
+        if (!KunenaUserHelper::getMyself()->isAdmin()) {
+            throw new RuntimeException(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+        }
+
+        (new AdminCategoryController())->ChkAliases();
     }
 
     /**

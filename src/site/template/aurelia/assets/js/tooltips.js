@@ -11,7 +11,9 @@
 
 // The titles of the forum become the tooltips of Bootstrap (option Tooltips of the template on), or are removed (off). Only the
 // elements of the forum (#kunena): the menus and modules of the site template keep their own titles. An element which already
-// toggles something else (a dropdown, a collapse, a modal) keeps its title as it is: Bootstrap has one data-bs-toggle.
+// toggles something else (a dropdown, a collapse, a modal) keeps its title as it is: Bootstrap has one data-bs-toggle. The editors
+// (SCEditor, CKEditor 5) keep the titles of their own buttons: they may be made before this script runs, and the poll button
+// explains with its title why it is disabled.
 document.addEventListener("DOMContentLoaded", function () {
 	if (typeof Joomla === "undefined") {
 		return;
@@ -38,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	forum.querySelectorAll("[title]").forEach((element) => {
 		const toggle = element.getAttribute("data-bs-toggle");
 
-		if ((toggle !== null && toggle !== "tooltip") || !element.title) {
+		if ((toggle !== null && toggle !== "tooltip") || !element.title || element.closest(".sceditor-container, .ck-editor")) {
 			return;
 		}
 

@@ -852,6 +852,9 @@ class TopicController extends KunenaController
         }
 
         $upload = KunenaUpload::getInstance();
+        // The address of the attachment which the upload made (the location of the answer): the name of the file in the list of
+        // the form links to it.
+        $location = null;
 
         // We are converting all exceptions into JSON.
         try {
@@ -1003,9 +1006,14 @@ class TopicController extends KunenaController
                 $response->mime     = $attachment->filetype;
                 $response->filename = $attachment->filename_real;
                 $response->inline   = $attachment->inline;
+
+                if ($attachment->id) {
+                    $location = $attachment->getUrl(false, true, false);
+                }
             }
         } catch (Exception $response) {
             $upload->cleanup();
+            $location = null;
 
             // Use the exception as the response.
         }
@@ -1020,7 +1028,10 @@ class TopicController extends KunenaController
         while (@ob_end_clean()) {
         }
 
-        echo new KunenaResponseJson($response);
+        $json           = new KunenaResponseJson($response);
+        $json->location = $location;
+
+        echo $json;
 
         jexit();
     }

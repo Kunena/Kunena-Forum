@@ -68,10 +68,11 @@ describe('Kunena lightbox: the images of a message', () => {
     });
     cy.focused().should('have.class', 'kunena-lightbox__close');
     // An image of the site is downloaded by the browser (an image of another site would open in a new tab).
+    // have.attr without a value makes the value the subject of the next assertion: it comes last.
     cy.get('dialog.kunena-lightbox .kunena-lightbox__download')
       .should('have.attr', 'href', image('rank2.gif'))
-      .and('have.attr', 'download')
-      .and('have.attr', 'aria-label', 'Download');
+      .and('have.attr', 'aria-label', 'Download')
+      .and('have.attr', 'download');
     cy.get('dialog.kunena-lightbox .kunena-lightbox__download').should('not.have.attr', 'target');
 
     dialog().trigger('keydown', { key: 'ArrowRight' });
@@ -92,9 +93,16 @@ describe('Kunena lightbox: the images of a message', () => {
 
   it('shows the words of [img alt=...] as text only', () => {
     openTopic();
-    cy.get('#kunena b').filter(`:contains("alt-probe-${stamp}")`).should('have.length', 0);
+    // No <b> of the alt in the page (cy.get('#kunena b') would fail on a page without any <b>).
+    cy.get('#kunena').should(($forum) => {
+      expect($forum.find(`b:contains("alt-probe-${stamp}")`), 'a <b> made of the alt').to.have.length(0);
+    });
     links().eq(1).should('have.attr', 'data-bs-original-title', `"><b>alt-probe-${stamp}</b>`);
-    links().eq(0).should('not.have.attr', 'title').and('not.have.attr', 'data-bs-original-title');
+    // Each attribute in its own assertion: (not.)have.attr makes the value the subject of the next one.
+    links().eq(0).should(($link) => {
+      expect($link.attr('title'), 'the title').to.eq(undefined);
+      expect($link.attr('data-bs-original-title'), 'the tooltip').to.eq(undefined);
+    });
 
     links().eq(1).click();
     cy.get('dialog.kunena-lightbox figcaption').should('have.text', `"><b>alt-probe-${stamp}</b>`).find('b').should('have.length', 0);

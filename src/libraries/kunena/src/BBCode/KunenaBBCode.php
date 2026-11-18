@@ -418,6 +418,53 @@ class KunenaBBCode extends BBCode
     }
 
     /**
+     * The words of the alt of an image tag, from the tag as it was written: also several words without quotes (alt=my words, issue
+     * #6751); a value in quotes without them. Null when the tag has no alt.
+     *
+     * @param   string  $tag  The opening tag, for example [img alt="my words" size=200].
+     *
+     * @return  string|null
+     *
+     * @since   Kunena 8.0
+     */
+    public static function imageAlt(string $tag): ?string
+    {
+        if (!preg_match('/\balt=([^\]=]*?)(?=\s+\w+=|\s*\]|$)/u', $tag, $matches)) {
+            return null;
+        }
+
+        $alt = trim($matches[1]);
+
+        // A value in quotes: the words between them, not the quotes.
+        if (preg_match('/^(["\'])(.*)\1$/su', $alt, $quoted)) {
+            $alt = trim($quoted[2]);
+        }
+
+        return $alt;
+    }
+
+    /**
+     * Whether an address is an absolute address of the site itself: it starts with the root of the site (Uri::root(), the scheme,
+     * the host, the port and the folder), followed by a slash. The images and the links of the site work on a host without a domain
+     * too (localhost, a name of an intranet), which the pattern of IsValidURL() refuses.
+     *
+     * @param   string  $url   The address.
+     * @param   string  $root  The root of the site, with or without a trailing slash.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isSiteUrl(string $url, string $root): bool
+    {
+        if (!preg_match('#^https?://[^/\s]+#i', $root) || preg_match('/\s/u', $url)) {
+            return false;
+        }
+
+        return stripos($url, rtrim($root, '/') . '/') === 0;
+    }
+
+    /**
      * Get global instance from BBCode parser.
      *
      * @param   bool  $relative  relative
@@ -477,6 +524,11 @@ class KunenaBBCode extends BBCode
 
         if ($local_too && $string[0] == '/') {
             $string = 'http://www.domain.com' . $string;
+        }
+
+        // An address of the site itself: the pattern needs a domain, which a site on localhost or a name of an intranet has not.
+        if ($local_too && self::isSiteUrl($string, Uri::root())) {
+            return true;
         }
 
         if ($email_too && substr($string, 0, 7) == "mailto:") {
@@ -903,10 +955,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
+        // The alt of an image is any text (several words, punctuation): the layout escapes it. A pattern of word characters only
+        // refused the whole tag, which stayed as BBCode in the message.
         'img' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoImage',
-            'allow'         => ['size' => '/^\d*x?\d*$/', 'alt' => '/^[\w]*$/', 'float' => '/\bleft\b|\bright\b/' ],
+            'allow'         => ['size' => '/^\d*x?\d*$/', 'alt' => '/^[^\[\]]*$/u', 'float' => '/\bleft\b|\bright\b/' ],
             'class'         => 'block',
             'allow_in'      => ['listitem', 'block', 'columns', 'link'],
             'content'       => BBCode::BBCODE_VERBATIM,
@@ -1981,13 +2035,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             }
         }
 
-        // Get the words set on alt params when alt is used like that : alt=my words; see issue #6751
-        $matches = [];
-        $altText = null;
-        preg_match('/\balt=([^\]=]*?)(?=\s+\w+=|\s*\]|$)/', $params['_tag'], $matches);
-        if (\count($matches) > 0) {
-            $altText = trim($matches[1]);
-        }
+        // The words of alt=..., also several words without quotes (alt=my words, issue #6751).
+        $altText = KunenaBBCode::imageAlt((string) $params['_tag']);
 
         $layout = KunenaLayout::factory('BBCode/Image')
             ->set('title', Text::_('COM_KUNENA_FILEATTACH'))
@@ -1995,7 +2044,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             ->set('filename', null)
             ->set('size', isset($params['size']) ? $params['size'] : 0)
             ->set('float', isset($params['float']) ? $params['float'] : 0)
-            ->set('alt', \count($matches) > 0 ? $altText : 0)
+            ->set('alt', $altText ?? 0)
             ->set('canLink', $bbcode->autoLink_disable == 0);
 
         // When image is set to don't show to guest, it should display the smilies

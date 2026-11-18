@@ -5,18 +5,48 @@ describe('Kunena editor: brackets in the URL of the link button', () => {
   const create = '/index.php?option=com_kunena&view=topic&layout=create&catid=3';
   const url = 'http://translate.limesurvey.org/projects/limesurvey2/el/default?filters[term]=Only+integer+values';
   const encoded = 'http://translate.limesurvey.org/projects/limesurvey2/el/default?filters%5Bterm%5D=Only+integer+values';
+  const params = `${Cypress.expose('cmsPath')}/components/com_kunena/template/aurelia/config/params.ini`;
   let oldDebug;
+  let oldTemplate;
+  let templateSaved = false;
+  let original;
 
   before(() => {
     // Read here rather than with kunena_getOption: a missing option gives undefined, and a then() which gives undefined yields the
     // rows of the query instead.
     cy.task('queryDB', "SELECT params FROM #__extensions WHERE element = 'com_kunena' AND type = 'component'").then((rows) => {
-      oldDebug = JSON.parse(rows[0].params || '{}').debug;
+      const options = JSON.parse(rows[0].params || '{}');
+
+      oldDebug = options.debug;
+      oldTemplate = options.template;
+      templateSaved = true;
     });
+
+    // The form of the template Aurelia with the SCEditor: the site may run another template (Agora by default) or editor.
+    cy.kunena_setOption('template', 'aurelia');
+    cy.readFile(params).then((content) => {
+      original = content;
+
+      const line = 'editorType="sceditor"';
+
+      cy.writeFile(params, /^editorType=.*$/m.test(content) ? content.replace(/^editorType=.*$/m, line) : `${content.trimEnd()}\n${line}\n`);
+    });
+    cy.task('deleteRelativePath', 'cache/com_kunena_template');
   });
 
   after(() => {
     cy.kunena_setOption('debug', oldDebug === undefined ? null : oldDebug);
+    cy.then(() => {
+      if (original !== undefined) {
+        cy.writeFile(params, original);
+      }
+    });
+    cy.then(() => {
+      if (templateSaved) {
+        cy.kunena_setOption('template', oldTemplate === undefined ? null : oldTemplate);
+      }
+    });
+    cy.task('deleteRelativePath', 'cache/com_kunena_template');
   });
 
   const editor = () => cy.window().its('sceditor').then((sceditor) => sceditor.instance(Cypress.$('#message')[0]));

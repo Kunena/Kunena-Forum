@@ -80,6 +80,15 @@ class KunenaBBCodeImageAltTest extends UnitTestCase
         ];
     }
 
+    public function testHidetextIsTheTagHide(): void
+    {
+        // The button "Hide text" of SCEditor wrote [hidetext], which was no tag: the text was shown to everyone.
+        $rules = (new ReflectionClass(KunenaBBCodeLibrary::class))->getDefaultProperties()['default_tag_rules'];
+
+        $this->assertArrayHasKey('hidetext', $rules);
+        $this->assertSame($rules['hide'], $rules['hidetext']);
+    }
+
     #[DataProvider('allowedAlts')]
     public function testTheRuleOfTheTagAllowsAnyAltText(string $alt, bool $allowed): void
     {

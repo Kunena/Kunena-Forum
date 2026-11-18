@@ -25,18 +25,26 @@ class KunenaParserRemoveBlocksTest extends UnitTestCase
     public static function texts(): array
     {
         return [
-            'a block'                          => ['open [confidential]secret[/confidential] end', 'open  end'],
-            'the name in capitals'             => ['open [CONFIDENTIAL]secret[/Confidential] end', 'open  end'],
-            'a block in a block'               => ['open [confidential]a[confidential]b[/confidential]secret[/confidential] end', 'open  end'],
-            'three levels'                     => ['[hide]a[hide]b[hide]c[/hide]d[/hide]secret[/hide]open', 'open'],
-            'two tags in each other'           => ['[hide]a[confidential]b[/confidential]secret[/hide]open', 'open'],
-            'over several lines'               => ["open [hide]line 1\nsecret[/hide] end", 'open  end'],
-            'two blocks'                       => ['[hide]x[/hide] open [hide]secret[/hide]', ' open '],
-            'a space in the closing tag'       => ['open [hide]secret[/hide ] end', 'open  end'],
-            'another tag is kept'              => ['open [b]bold[/b] [hide]secret[/hide]', 'open [b]bold[/b] '],
-            'a tag with a similar name stays'  => ['open [hidden]text[/hidden]', 'open [hidden]text[/hidden]'],
-            'an unclosed tag stays as text'    => ['open [hide]text', 'open [hide]text'],
+            'a block'                         => ['open [confidential]secret[/confidential] end', 'open  end'],
+            'the name in capitals'            => ['open [CONFIDENTIAL]secret[/Confidential] end', 'open  end'],
+            'a block in a block'              => ['open [confidential]a[confidential]b[/confidential]secret[/confidential] end', 'open  end'],
+            'three levels'                    => ['[hide]a[hide]b[hide]c[/hide]d[/hide]secret[/hide]open', 'open'],
+            'two tags in each other'          => ['[hide]a[confidential]b[/confidential]secret[/hide]open', 'open'],
+            'over several lines'              => ["open [hide]line 1\nsecret[/hide] end", 'open  end'],
+            'two blocks'                      => ['[hide]x[/hide] open [hide]secret[/hide]', ' open '],
+            'a space in the closing tag'      => ['open [hide]secret[/hide ] end', 'open  end'],
+            'another tag is kept'             => ['open [b]bold[/b] [hide]secret[/hide]', 'open [b]bold[/b] '],
+            'a tag with a similar name stays' => ['open [hidden]text[/hidden]', 'open [hidden]text[/hidden]'],
+            'an unclosed tag stays as text'   => ['open [hide]text', 'open [hide]text'],
+            // [hidetext] is [hide] (the button "Hide text" of SCEditor wrote it).
+            '[hidetext] goes with [hide]' => ['open [hidetext]secret[/hidetext] end', 'open  end'],
+            '[hidetext] in [hide]'        => ['[hide]a[hidetext]b[/hidetext]secret[/hide]open', 'open'],
         ];
+    }
+
+    public function testHidetextStaysWithoutHide(): void
+    {
+        $this->assertSame('a [hidetext]b[/hidetext] ', KunenaParser::removeBlocks('a [hidetext]b[/hidetext] [confidential]c[/confidential]', ['confidential']));
     }
 
     #[DataProvider('texts')]

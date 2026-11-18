@@ -343,6 +343,11 @@ abstract class KunenaParser
      */
     public static function removeBlocks(string $txt, array $tags): string
     {
+        // [hidetext] is [hide] for the parser (the button "Hide text" of SCEditor wrote it): it goes with it.
+        if (\in_array('hide', $tags, true) && !\in_array('hidetext', $tags, true)) {
+            $tags[] = 'hidetext';
+        }
+
         $names   = implode('|', array_map(static fn ($tag) => preg_quote($tag, '/'), $tags));
         $pattern = '/\[(' . $names . ')(?:[\s=][^\]]*)?\](?:(?!\[\/?(?:' . $names . ')\b).)*\[\/\1\s*\]/isu';
 

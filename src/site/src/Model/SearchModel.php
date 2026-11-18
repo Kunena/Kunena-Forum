@@ -187,7 +187,8 @@ class SearchModel extends KunenaModel
         }
 
         // The text of [private] is shown to nobody but its author.
-        $tags = $this->me->exists() ? 'confidential|private' : 'hide|confidential|private';
+        // [hidetext] is [hide] (the button "Hide text" of SCEditor wrote it); "[/hide" of the test below finds it too.
+        $tags = $this->me->exists() ? 'confidential|private' : 'hide|hidetext|confidential|private';
 
         // The innermost blocks (with no tag of these kinds in them) go first, several times: a block in a block of the same
         // tag is taken out completely, like the parser hides it (one pattern up to the first closing tag left the text after

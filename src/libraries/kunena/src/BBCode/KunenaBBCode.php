@@ -898,6 +898,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'content'       => BBCode::BBCODE_REQUIRED,
             'plain_content' => [],
         ],
+        // [hidetext] is [hide]: the button "Hide text" of SCEditor wrote it, and the forum showed the text to everyone.
+        'hidetext' => [
+            'mode'          => BBCode::BBCODE_MODE_LIBRARY,
+            'method'        => 'DoHide',
+            'class'         => 'block',
+            'allow_in'      => ['listitem', 'block', 'columns'],
+            'content'       => BBCode::BBCODE_REQUIRED,
+            'plain_content' => [],
+        ],
         'confidential' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoConfidential',

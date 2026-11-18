@@ -124,10 +124,11 @@
 			return '[' + tag + attrs + ']' + content + '[/' + tag + ']';
 		};
 
-		// Add Hidetext
+		// Add Hidetext: the tag [hide] of the forum, as in the source mode and in CKEditor ([hidetext] was no tag of the forum, so
+		// the text was shown to everyone).
 		sceditor.command.set('hidetext', {
 			exec: function () {
-				this.insert('\n[hidetext] ','[/hidetext]');
+				this.insert('\n[hide] ','[/hide]');
 			},
 			txtExec: ['[hide]', '[/hide]'],
 		}),

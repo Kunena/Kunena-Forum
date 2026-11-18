@@ -39,13 +39,23 @@
     width: auto;
 }
 
+/* A click gives no ring; the keyboard does (it removed the ring for the keyboard too, and nothing showed where the focus was). */
 a:active,
-a:focus,
-select:focus,
-input[type="file"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus {
+a:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+input[type="file"]:focus:not(:focus-visible),
+input[type="radio"]:focus:not(:focus-visible),
+input[type="checkbox"]:focus:not(:focus-visible) {
     outline: 0 !important;
+}
+
+a:focus-visible,
+select:focus-visible,
+input[type="file"]:focus-visible,
+input[type="radio"]:focus-visible,
+input[type="checkbox"]:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
 }
 
 h1 {
@@ -265,8 +275,10 @@ hr {
     background-color: transparent;
 }
 
-a:focus,
-.btn:focus {
+/* A button has the focus shadow of Bootstrap; a link has the ring above. */
+a:focus:not(:focus-visible),
+.btn:focus:not(:focus-visible),
+.btn:focus-visible {
     outline: none !important;
 }
 

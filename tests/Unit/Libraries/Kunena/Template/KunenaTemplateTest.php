@@ -123,4 +123,24 @@ class KunenaTemplateTest extends UnitTestCase
     {
         $this->assertSame($expected, KunenaTemplate::headingFrom($pageHeading, $menuTitle, $boardTitle));
     }
+
+    public static function scripts(): array
+    {
+        return [
+            'nothing chosen'   => [[], ['defer' => true]],
+            'other attributes' => [['id' => 'x'], ['id' => 'x', 'defer' => true]],
+            'not deferred'     => [['defer' => false], ['defer' => false]],
+            'async'            => [['async' => true], ['async' => true]],
+            'module'           => [['type' => 'module'], ['type' => 'module']],
+        ];
+    }
+
+    /**
+     * A script of the forum is deferred (it stopped the rendering of the page in the head), unless the caller chose otherwise.
+     */
+    #[DataProvider('scripts')]
+    public function testAScriptIsDeferred(array $attribs, array $expected): void
+    {
+        $this->assertSame($expected, KunenaTemplate::scriptAttributes($attribs));
+    }
 }

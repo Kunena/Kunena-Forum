@@ -183,6 +183,13 @@
 			} else if (event.key === 'Enter' && open && active >= 0) {
 				// The name is taken; the form is sent with the next Enter.
 				event.preventDefault();
+
+				// The Enter which confirms the characters of an input method (Japanese, Chinese, Korean) takes no name: the name is still
+				// being written. keyCode 229 catches Safari, which has already ended the composition when this keydown arrives.
+				if (event.isComposing || event.keyCode === 229) {
+					return;
+				}
+
 				choose(active);
 			} else if (event.key === 'Escape' && open) {
 				event.preventDefault();

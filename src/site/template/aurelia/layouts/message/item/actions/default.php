@@ -122,12 +122,11 @@ endif; ?>
                 $this->messageButtons->get('delete_dropdown')
             ) : ?>
                 <div class="btn-group">
-                    <button class="btn btn-outline-primary border" data-bs-toggle="dropdown">
+                    <button type="button" class="btn btn-outline-primary border" data-bs-toggle="dropdown" aria-expanded="false">
                         <?php echo KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
                     </button>
-                    <button type="button" class="btn btn-outline-primary border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN'); ?></span>
-                    </button>
+                    <button type="button" class="btn btn-outline-primary border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"
+                            tabindex="-1" aria-hidden="true"></button>
                     <ul class="dropdown-menu">
                         <li><?php echo $this->messageButtons->get('reply_dropdown'); ?></li>
                         <li><?php echo $this->messageButtons->get('quote_dropdown'); ?></li>
@@ -142,12 +141,11 @@ endif; ?>
 
             <?php if ($this->messageButtons->get('moderate')) : ?>
                 <div class="btn-group">
-                    <button class="btn btn-outline-primary border" data-bs-toggle="dropdown">
+                    <button type="button" class="btn btn-outline-primary border" data-bs-toggle="dropdown" aria-expanded="false">
                         <?php echo KunenaIcons::shuffle() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
                     </button>
-                    <button type="button" class="btn btn-outline-primary border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOGGLE_DROPDOWN'); ?></span>
-                    </button>
+                    <button type="button" class="btn btn-outline-primary border dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"
+                            tabindex="-1" aria-hidden="true"></button>
                     <ul class="dropdown-menu">
                         <li><?php echo $this->messageButtons->get('moderate_dropdown'); ?></li>
                         <li><?php echo $this->messageButtons->get('delete_dropdown'); ?></li>

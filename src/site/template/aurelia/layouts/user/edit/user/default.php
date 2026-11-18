@@ -30,7 +30,7 @@ use Kunena\Forum\Libraries\User\KunenaUserName;
                 <label for="username"><?php echo Text::_('COM_KUNENA_UNAME'); ?></label>
             </td>
             <td>
-                <input type="text" name="username" id="username" class="form-control"
+                <input type="text" name="username" id="username" class="form-control" autocomplete="username"
                        value="<?php echo $this->escape($this->user->get('username')); ?>"
                     <?php
                     if (!$this->changeUsername) {
@@ -43,7 +43,7 @@ use Kunena\Forum\Libraries\User\KunenaUserName;
                 <label for="name"><?php echo Text::_('COM_KUNENA_REALNAME'); ?></label>
             </td>
             <td>
-                <input class="required form-control" type="text" id="name" name="name"
+                <input class="required form-control" type="text" id="name" name="name" autocomplete="name"
                        value="<?php echo $this->escape($this->user->get('name')); ?>" size="40"/>
             </td>
         </tr>
@@ -53,7 +53,7 @@ use Kunena\Forum\Libraries\User\KunenaUserName;
                     <label for="nickname"><?php echo Text::_('COM_KUNENA_NICKNAME'); ?></label>
                 </td>
                 <td>
-                    <input class="form-control" type="text" id="nickname" name="nickname" maxlength="100"
+                    <input class="form-control" type="text" id="nickname" name="nickname" maxlength="100" autocomplete="nickname"
                            value="<?php echo $this->escape(KunenaUserName::getDisplayName((int) $this->user->get('id'))); ?>" size="40"/>
                 </td>
             </tr>
@@ -63,7 +63,7 @@ use Kunena\Forum\Libraries\User\KunenaUserName;
                 <label for="email"><?php echo Text::_('COM_KUNENA_USRL_EMAIL'); ?></label>
             </td>
             <td>
-                <input class="required validate-email form-control" type="email" id="email" name="email"
+                <input class="required validate-email form-control" type="email" id="email" name="email" autocomplete="email"
                        value="<?php echo $this->escape($this->user->get('email')); ?>" size="40"/>
             </td>
         </tr>
@@ -74,7 +74,9 @@ use Kunena\Forum\Libraries\User\KunenaUserName;
                     <label for="password"><?php echo Text::_('COM_KUNENA_PASS'); ?></label>
                 </td>
                 <td>
-                    <input class="validate-password form-control" type="password" id="password" name="password"
+                    <?php // A new password: a password manager fills both fields or none (it filled the saved password in the first one only, and the
+                    // profile was not saved: the passwords did not match). ?>
+                    <input class="validate-password form-control" type="password" id="password" name="password" autocomplete="new-password"
                            value="" size="40"/>
                 </td>
             </tr>
@@ -83,7 +85,7 @@ use Kunena\Forum\Libraries\User\KunenaUserName;
                     <label for="password2"><?php echo Text::_('COM_KUNENA_VPASS'); ?></label>
                 </td>
                 <td>
-                    <input class="validate-passverify form-control" type="password" id="password2" name="password2"
+                    <input class="validate-passverify form-control" type="password" id="password2" name="password2" autocomplete="new-password"
                            value="" size="40"/>
                 </td>
             </tr>

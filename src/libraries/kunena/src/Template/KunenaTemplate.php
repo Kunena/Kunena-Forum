@@ -515,7 +515,28 @@ class KunenaTemplate
             $filename = Uri::root(false) . $filename;
         }
 
-        return HTMLHelper::_('script', $filename, $options, $attribs);
+        return HTMLHelper::_('script', $filename, $options, self::scriptAttributes((array) $attribs));
+    }
+
+    /**
+     * The attributes of a script of the forum: deferred, unless it is async or a module (deferred already) or the caller chose. A
+     * script in the head without them stops the rendering of the page until it is loaded and run; a deferred script runs when the
+     * page is parsed, before DOMContentLoaded, in the order of the page: the scripts of the forum wait for DOMContentLoaded, and the
+     * inline scripts of the page only set variables or wait for it too.
+     *
+     * @param   array  $attribs  The attributes which the caller gave.
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    public static function scriptAttributes(array $attribs): array
+    {
+        if (!\array_key_exists('defer', $attribs) && empty($attribs['async']) && ($attribs['type'] ?? '') !== 'module') {
+            $attribs['defer'] = true;
+        }
+
+        return $attribs;
     }
 
     /**

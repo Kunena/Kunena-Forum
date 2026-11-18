@@ -418,6 +418,31 @@ class KunenaBBCode extends BBCode
     }
 
     /**
+     * The parameters of a map tag as the layouts read them: the zoom which the map dialog of CKEditor wrote as mode=, and the
+     * type satellite which both map dialogs wrote as satelite. A map tag of a message which was posted with them shows as chosen.
+     *
+     * @param   array  $params  The parameters of the tag.
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    public static function mapParams(array $params): array
+    {
+        // The map dialog of CKEditor wrote the zoom as mode=, which nothing read.
+        if (!isset($params['zoom']) && isset($params['mode'])) {
+            $params['zoom'] = $params['mode'];
+        }
+
+        // Both map dialogs offered SATELITE, which Google Maps does not know (it showed the road map).
+        if (isset($params['type']) && strtolower((string) $params['type']) === 'satelite') {
+            $params['type'] = 'satellite';
+        }
+
+        return $params;
+    }
+
+    /**
      * The words of the alt of an image tag, from the tag as it was written: also several words without quotes (alt=my words, issue
      * #6751); a value in quotes without them. Null when the tag has no alt.
      *
@@ -915,11 +940,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'content'       => BBCode::BBCODE_REQUIRED,
             'plain_content' => [],
         ],
+        // The parameter mode: the zoom as the map dialog of CKEditor wrote it (see mapParams()).
         'map' => [
             'mode'     => BBCode::BBCODE_MODE_LIBRARY,
             'method'   => 'DoMap',
             'class'    => 'block',
-            'allow'    => ['type' => '/^[\w\d.-_]*$/', 'zoom' => '/^\d*$/', 'control' => '/^\d*$/'],
+            'allow'    => ['type' => '/^[\w\d.-_]*$/', 'zoom' => '/^\d*$/', 'mode' => '/^\d*$/', 'control' => '/^\d*$/'],
             'allow_in' => ['listitem', 'block', 'columns'],
             'content'  => BBCode::BBCODE_VERBATIM,
         ],
@@ -2228,7 +2254,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return (string) $layout
                 ->set('content', $content)
                 ->set('mapid', $this->mapid)
-                ->set('params', $params)
+                ->set('params', KunenaBBCode::mapParams((array) $params))
                 ->set('config', $this->config);
         }
 

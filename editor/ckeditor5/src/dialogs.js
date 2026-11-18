@@ -186,7 +186,7 @@ export function openPollDialog() {
 /* The map, the video, the emoticons ------------------------------------------------------------------------------------------ */
 
 function openMapDialog(insert) {
-	const type = element('select', {}, ['HYBRID', 'ROADMAP', 'TERRAIN', 'SATELITE'].map((value) => element('option', { value, text: value })));
+	const type = element('select', {}, ['HYBRID', 'ROADMAP', 'TERRAIN', 'SATELLITE'].map((value) => element('option', { value, text: value })));
 	const zoom = element('select', {}, ['2', '4', '6', '8', '10', '12', '14', '16', '18'].map((value) => element('option', { value, text: value })));
 	const place = element('input', { type: 'text' });
 
@@ -206,7 +206,8 @@ function openMapDialog(insert) {
 				return false;
 			}
 
-			insert(`[map type=${type.value} mode=${zoom.value}]${place.value.trim()}[/map]`);
+			// zoom: the parameter which the tag reads (mode was ignored, every map had the zoom by default).
+			insert(`[map type=${type.value} zoom=${zoom.value}]${place.value.trim()}[/map]`);
 		},
 	});
 }

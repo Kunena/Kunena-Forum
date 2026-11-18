@@ -417,7 +417,7 @@
 					'<option value="hybrid">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_HYBRID') + '</option>' +
 					'<option value="roadmap">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_ROADMAP') + '</option>' +
 					'<option value="terrain">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_TERRAIN') + '</option>' +
-					'<option value="satelite">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_SATELITE') + '</option>' +
+					'<option value="satellite">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_SATELITE') + '</option>' +
 					'</select>' +
 					'</div>' +
 					'<div>' +

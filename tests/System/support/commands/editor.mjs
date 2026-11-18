@@ -11,6 +11,14 @@
  *   cy.editor_selectAll(id)          selects the whole text
  *   cy.editor_execute(command, ...)  runs a command of CKEditor on the selection (bold, subscript, link...)
  *   cy.editor_button(name, id)       a button of the toolbar: a button of Kunena by its name (spoiler, polls...), else by its label
+ *
+ * For a spec which types in SCEditor (its frame), whatever template and editor the test site runs:
+ *
+ *   cy.editor_useSceditor()          the template Aurelia with SCEditor; the template and its settings are kept to put back
+ *   cy.editor_restore()              puts the template and the settings of Aurelia back
+ *
+ *   before(() => cy.editor_useSceditor());
+ *   after(() => cy.editor_restore());
  */
 
 const instance = (win, id) => (win.KunenaEditor ? win.KunenaEditor.get(id) : null);
@@ -54,3 +62,45 @@ Cypress.Commands.add('editor_button', (name, id = 'message') => cy.window().then
   // A button of CKEditor: by its label (the tooltip of the button), as in English.
   return Cypress.$([...root.querySelectorAll('.ck-toolbar button')].filter((button) => button.getAttribute('data-cke-tooltip-text')?.startsWith(name) || button.querySelector('.ck-button__label')?.textContent === name));
 }));
+
+// The template and the settings of Aurelia before cy.editor_useSceditor(), for cy.editor_restore().
+let sceditorSaved = null;
+
+const aureliaParams = () => `${Cypress.expose('cmsPath')}/components/com_kunena/template/aurelia/config/params.ini`;
+
+Cypress.Commands.add('editor_useSceditor', () => {
+  // Called twice (nested hooks): the first saved state stays.
+  if (sceditorSaved) {
+    return;
+  }
+
+  sceditorSaved = {};
+  cy.kunena_setOption('template', 'aurelia').then((value) => {
+    sceditorSaved.template = value;
+  });
+  cy.readFile(aureliaParams()).then((text) => {
+    const line = 'editorType="sceditor"';
+
+    sceditorSaved.params = text;
+
+    return cy.writeFile(aureliaParams(), /^editorType=.*$/m.test(text) ? text.replace(/^editorType=.*$/m, line) : `${text.trimEnd()}\n${line}\n`);
+  });
+  cy.task('deleteRelativePath', 'cache/com_kunena_template');
+});
+
+Cypress.Commands.add('editor_restore', () => {
+  if (!sceditorSaved) {
+    return;
+  }
+
+  const saved = sceditorSaved;
+
+  sceditorSaved = null;
+
+  if (saved.params !== undefined) {
+    cy.writeFile(aureliaParams(), saved.params);
+  }
+
+  cy.kunena_setOption('template', saved.template === undefined ? null : saved.template);
+  cy.task('deleteRelativePath', 'cache/com_kunena_template');
+});

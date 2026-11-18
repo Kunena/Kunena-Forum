@@ -2,6 +2,10 @@
 // subscription, the status solved, and what a moderator does (sticky, lock, delete, undelete, move). The answer is checked in the
 // database, and the afterEach of the support file fails a test for a PHP notice or warning on a page.
 describe('Kunena writing: the life of a topic', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const admin = { id: 797 };
   const user = { name: 'ci-user', password: 'ci-user-17082005-x', id: 798 };

@@ -2,6 +2,10 @@
 // must not get it: it would show him the title of a topic and the link of a post which he may not see. The check of the right to read
 // was made for the user who posts (the first user of the request) and not for the user who is mentioned.
 describe('Kunena permissions: a mention', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
   const user = { name: 'ci-user', id: 798 };

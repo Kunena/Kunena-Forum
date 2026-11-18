@@ -2,6 +2,10 @@
 // it is in no list and no count; after the approval it is a topic like the others. A change of an approved message by its author
 // (who is no moderator) sends the message back to the moderators.
 describe('Kunena review: topics and messages which wait for a moderator', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
   const subject = `Cypress waiting topic ${stamp}`;

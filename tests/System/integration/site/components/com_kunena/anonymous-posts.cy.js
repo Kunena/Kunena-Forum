@@ -1,6 +1,10 @@
 // A topic and a reply which are written as anonymous must not show who wrote them: not on the topic page, not in the lists, the
 // search, the feeds and the data for search engines, and not in the list of the posts of the user. The moderators see the author.
 describe('Kunena anonymous: the author stays hidden', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
   const subject = `Cypress anonymous ${stamp}`;

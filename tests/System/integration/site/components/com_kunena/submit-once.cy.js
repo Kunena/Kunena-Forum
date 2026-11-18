@@ -2,6 +2,10 @@
 // assets/js/submitonce.js, the draft button still sends savedraft=1, and a submit which the browser's validation blocks leaves the
 // form usable. The answer is checked in the database.
 describe('Kunena writing: a posting form is sent only once', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const prefix = `Cypress submit once ${Date.now()}`;
   const old = {};

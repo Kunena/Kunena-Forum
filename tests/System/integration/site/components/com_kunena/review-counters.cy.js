@@ -2,6 +2,10 @@
 // waits, the approval counts it, a change of the author takes it back until the next approval, a change of a moderator keeps a
 // waiting message waiting, and the topics and replies of a moderator count at once. No recount of the category is needed.
 describe('Kunena review: the numbers of a category with review', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
   const user = { name: 'ci-user', password: 'ci-user-17082005-x' };

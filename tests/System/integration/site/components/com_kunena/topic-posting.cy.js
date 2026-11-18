@@ -1,5 +1,9 @@
 // A logged-in user writes a topic and a reply with a link. It needs the login of the test site (cy.doFrontendLogin).
 describe('Kunena topic posting', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const stamp = Date.now();
   const subject = `Cypress topic ${stamp}`;
 

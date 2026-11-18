@@ -2,6 +2,10 @@
 // may not read; a topic without a new message for the days of the category option is closed for the replies of the users (the
 // moderators can still reply); and the private part of a message is for its author and the moderators, not for a visitor.
 describe('Kunena notifications, old topics and private parts', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
   const user = { name: 'ci-user', password: 'ci-user-17082005-x', id: 798 };

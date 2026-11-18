@@ -1,6 +1,10 @@
 // What a user has not read yet: a new topic of another user is unread, it is read after the user has opened it, a new reply makes it
 // unread again, and "mark as read" of the category clears it. The list of the unread topics is what the user sees.
 describe('Kunena unread: the topics a user has not read', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
   const subject = `Cypress unread ${stamp}`;

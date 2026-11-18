@@ -1,6 +1,10 @@
 // The forum keeps numbers in the rows of the topics and the categories (the number of posts, the first and the last post, the number of
 // topics and posts of a category). After every action of a user or a moderator the numbers must be what a count of the messages gives.
 describe('Kunena counters: the numbers of topics and categories', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
   const ids = {};

@@ -2,6 +2,10 @@
 // deleted, +1 when it is brought back, and nothing more when a deleted message is removed for ever. A deleted topic takes the posts
 // of its messages with it.
 describe('Kunena counters: the posts of a user', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
   const user = { name: 'ci-user', password: 'ci-user-17082005-x', id: 798 };

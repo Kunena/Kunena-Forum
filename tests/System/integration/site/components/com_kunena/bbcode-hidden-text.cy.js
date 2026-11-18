@@ -3,6 +3,10 @@
 // feeds, the search or a JSON answer for a visitor who may not read it. The topic is written with the form of the forum, so the start
 // of the message is made as it is made on a real forum.
 describe('Kunena BBCode: text for some readers', () => {
+  // The form is typed in SCEditor: the template Aurelia with SCEditor, whatever the test site runs, put back afterwards.
+  before(() => cy.editor_useSceditor());
+  after(() => cy.editor_restore());
+
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
   const subject = `Cypress hidden ${stamp}`;

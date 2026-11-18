@@ -847,6 +847,21 @@ class KunenaUser
     }
 
     /**
+     * Is the content of a link an image (an avatar: an <img>, a <picture>, a span around the image (the avatar of the icon set
+     * SVG), or the icon of a user without avatar, span.kavatar)? A name in a span (span.profile) is text.
+     *
+     * @param   string  $content  The HTML of the content of the link.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isImageContent(string $content): bool
+    {
+        return (bool) preg_match('/^\s*(<img\b|<picture\b|<span\b[^>]*>\s*<img\b|<span\b[^>]*\bclass="[^"]*\bkavatar\b)/i', $content);
+    }
+
+    /**
      * @param   null|string  $name        name
      * @param   null|string  $title       title
      * @param   string       $rel         rel
@@ -887,6 +902,12 @@ class KunenaUser
 
             if (KunenaTemplate::getInstance()->tooltips()) {
                 $class = $class . ' ' . KunenaTemplate::getInstance()->tooltips();
+            }
+
+            // A link around an avatar: a box around the whole image (kunena-imagelink), so that its tooltip is above the image. Inline,
+            // its box was one line of text inside the image, the tooltip came over the image under the pointer and flickered.
+            if (self::isImageContent((string) $name)) {
+                $class = trim($class . ' kunena-imagelink');
             }
 
             if ($this->userid == Factory::getApplication()->getIdentity()->id && $avatarLink) {

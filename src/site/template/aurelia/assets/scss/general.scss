@@ -1825,10 +1825,11 @@ button.kreaction:hover {
   overflow-y: auto;
 }
 
-/* The link around the image of an attachment. Inline, its box was one line of text inside the image: Bootstrap put the tooltip
+/* The link around the image of an attachment, and around an avatar (KunenaUser::getLink()). Inline, its box was one line of text inside the image: Bootstrap put the tooltip
    above that line, over the image under the pointer, which then left the link (the tooltip went) and came back (it came back): the
    tooltip flickered. As a block in the line its box is the image, and the tooltip is above the image. */
-.kattach-imagelink {
+.kattach-imagelink,
+.kunena-imagelink {
   display: inline-block;
   max-width: 100%;
   vertical-align: top;

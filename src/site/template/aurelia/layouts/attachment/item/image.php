@@ -36,7 +36,8 @@ if ($config->lightbox == 1) {
     $attributesImg  = ' style="max-height:' . (int) $config->imageHeight . 'px;"';
 
     ?>
-    <a href="<?php echo $attachment->getUrl(); ?>"
+    <?php // A box around the whole image (kattach-imagelink): the tooltip goes above the image, not over it. ?>
+    <a href="<?php echo $attachment->getUrl(); ?>" class="kattach-imagelink"
        data-bs-toggle="tooltip" title="<?php echo $attachment->getShortName($config->attachStart, $config->attachEnd); ?>"<?php echo $attributesLink; ?>>
         <img loading=lazy src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?>
              width="<?php echo $attachment->width; ?>"
@@ -46,7 +47,7 @@ if ($config->lightbox == 1) {
     <?php
 } else {
     ?>
-    <a href="<?php echo $name; ?>"
+    <a href="<?php echo $name; ?>" class="kattach-imagelink"
        data-bs-toggle="tooltip" title="<?php echo $attachment->getShortName($config->attachStart, $config->attachEnd); ?>">
         <img loading=lazy class="kmsimage" src="<?php echo $name; ?>"
              width="<?php echo $config->thumbWidth; ?>"

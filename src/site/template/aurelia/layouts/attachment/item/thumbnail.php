@@ -33,7 +33,8 @@ $name = $attachment->getUrl();
 if ($attachment->isImage()) {
     if ($attachment->getPath()) :
         ?>
-        <a href="<?php echo $name; ?>"
+        <?php // A box around the whole image (kattach-imagelink): the tooltip goes above the image, not over it. ?>
+        <a href="<?php echo $name; ?>" class="kattach-imagelink"
            data-bs-toggle="tooltip" title="<?php echo $attachment->getShortName($config->attachStart, $config->attachEnd); ?>"<?php echo $attributesLink; ?>>
             <?php echo $config->displayFilenameAttachment ? $attachment->getShortName($config->attachStart, $config->attachEnd) : ''; ?>
             <img loading=lazy src="<?php echo $name; ?>"<?php echo $attributesImg; ?>

@@ -479,16 +479,17 @@ Text::script('COM_KUNENA_POST_CANCEL_CONFIRM');
                             <input id="fileupload" type="file" name="file" multiple
                                    aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON')); ?>">
                         </span>
-                        <button id="insert-all" class="btn btn-outline-primary" type="submit" style="display:none;">
+                        <?php // Buttons, not submit buttons: Enter in a field of the form clicked the first one (Insert All) and inserted every file. ?>
+                        <button id="insert-all" class="btn btn-outline-primary" type="button" style="display:none;">
                             <?php echo KunenaIcons::upload(); ?>
                             <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON') ?></span>
                         </button>
-                        <button id="remove-all" class="btn btn-outline-danger" type="submit" style="display:none;">
+                        <button id="remove-all" class="btn btn-outline-danger" type="button" style="display:none;">
                             <?php echo KunenaIcons::cancel(); ?>
                             <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
                         </button>
                         <?php if ($this->config->privateMessage) : ?>
-                            <button id="set-secure-all" class="btn btn-outline-primary" type="submit" style="display:none;">
+                            <button id="set-secure-all" class="btn btn-outline-primary" type="button" style="display:none;">
                                 <?php echo KunenaIcons::secure(); ?>
                                 <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_SET_SECURE_ALL_BUTTON') ?></span>
                             </button>

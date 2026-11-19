@@ -12,6 +12,7 @@
 
 namespace Kunena\Tests\Unit\Libraries\Kunena\Config;
 
+use BadMethodCallException;
 use Exception;
 use Joomla\CMS\Cache\Controller\CallbackController;
 use Joomla\CMS\Component\ComponentHelper;
@@ -239,5 +240,16 @@ class KunenaConfigTest extends UnitTestCase
         $config->boardTitle = 'Other';
 
         $this->assertSame('Other', $config->boardTitle);
+    }
+
+    public function testUnserializationIsRefused(): void
+    {
+        // __unserialize() and not __wakeup() (soft-deprecated since PHP 8.5) refuses it.
+        $serialized = 'O:' . \strlen(KunenaConfig::class) . ':"' . KunenaConfig::class . '":0:{}';
+
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Unserialization of ' . KunenaConfig::class . ' is not allowed.');
+
+        unserialize($serialized);
     }
 }

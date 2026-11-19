@@ -104,8 +104,6 @@ class Easysocial extends CMSPlugin implements SubscriberInterface, DatabaseAware
         KunenaForum::loadApi();
 
         $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
-
-        return true;
     }
 
     /**

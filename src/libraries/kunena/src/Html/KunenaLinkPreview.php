@@ -181,7 +181,7 @@ abstract class KunenaLinkPreview
 
         $charset = '';
 
-        foreach ($http_response_header ?? [] as $header) {
+        foreach (http_get_last_response_headers() ?? [] as $header) {
             if (stripos($header, 'content-type:') === 0) {
                 $type = strtolower(trim(substr($header, 13)));
 

@@ -131,7 +131,7 @@ final class Highlighter
         $urls = [];
         foreach ($highlights as $highlight) {
             $url = $highlight->span->getSourceUrl() ?? new \stdClass();
-            $key = $url instanceof UriInterface ? $url->toString() : spl_object_hash($url);
+            $key = $url instanceof UriInterface ? $url->toString() : '#' . spl_object_id($url);
             $highlightsByUrl[$key][] = $highlight;
             $urls[$key] = $url;
         }

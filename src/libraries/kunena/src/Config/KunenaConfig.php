@@ -415,11 +415,15 @@ class KunenaConfig
      * Public wakeup method to prevent unserialization of this utility class.
      * Throw an exception to make it explicit that unserialization is not allowed.
      *
+     * __unserialize() replaces __wakeup(), which is soft-deprecated since PHP 8.5.
+     *
+     * @param   array  $data  The serialized data
+     *
      * @return  void
      *
      * @since  7.0.0
      */
-    public function __wakeup()
+    public function __unserialize(array $data): void
     {
         throw new BadMethodCallException('Unserialization of ' . __CLASS__ . ' is not allowed.');
     }

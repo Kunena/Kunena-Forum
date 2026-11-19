@@ -34,7 +34,6 @@ class KunenaFile
         if (\function_exists('finfo_open')) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $type  = finfo_file($finfo, $file);
-            finfo_close($finfo);
         } elseif (\function_exists('mime_content_type')) {
             // We have mime magic.
             $type = mime_content_type($file);

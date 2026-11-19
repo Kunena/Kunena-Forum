@@ -115,7 +115,7 @@ class Subject
     {
         $onPath = array();
         foreach ($subjects as $subject) {
-            $onPath[spl_object_hash($subject)] = true;
+            $onPath[spl_object_id($subject)] = true;
         }
 
         return $this->findLoop($onPath, $level);
@@ -128,7 +128,7 @@ class Subject
      * the way back. Copying a path array at every step instead was quadratic in
      * memory on long chains of nested identified elements.
      *
-     * @param array<string, bool> $onPath Subjects on the current path
+     * @param array<int, bool> $onPath Subjects on the current path
      * @param int $level The current level of nesting
      * @return bool
      * @throws \enshrined\svgSanitize\Exceptions\NestingException
@@ -139,7 +139,7 @@ class Subject
             throw new \enshrined\svgSanitize\Exceptions\NestingException('Nesting level too high, aborting', 1570713498, null, $this->getElement());
         }
 
-        $key = spl_object_hash($this);
+        $key = spl_object_id($this);
         if (isset($onPath[$key])) {
             return true;
         }

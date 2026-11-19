@@ -234,8 +234,12 @@ class KunenaBan
         $table = $this->getTable();
 
         // Load the KunenaTableUser object based on the user id
+        $exists = false;
+
         try {
-            $exists = $table->load($id);
+            if (!empty($id)) {
+                $exists = (bool) $table->load($id);
+            }
         } catch (Exception $e) {
             KunenaError::displayDatabaseError($e);
         }

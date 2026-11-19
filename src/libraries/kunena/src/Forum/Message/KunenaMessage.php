@@ -1115,7 +1115,18 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         // Create message
-        if (!parent::save()) {
+        try {
+            $saved = parent::save();
+        } catch (Exception $e) {
+            // Do not delete a topic whose message was already stored (e.g. an after-save error).
+            if ($newTopic && !$this->exists()) {
+                $topic->delete();
+            }
+
+            throw $e;
+        }
+
+        if (!$saved) {
             // If we created a new topic, remember to delete it too.
             if ($newTopic) {
                 $topic->delete();

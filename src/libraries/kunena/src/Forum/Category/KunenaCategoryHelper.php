@@ -901,9 +901,14 @@ abstract class KunenaCategoryHelper
 
         $query
             ->update($db->quoteName('#__kunena_categories', 'c'))
-            ->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0')
+            ->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0 AND ' . $db->quoteName('tt.moved_id') . ' = 0')
             ->set($fields)
             ->where($db->quoteName('tt.id') . ' IS NULL');
+
+        if ($categoryIds) {
+            $query->where($db->quoteName('c.id') . ' IN (' . $categoryList . ')');
+        }
+
         $db->setQuery($query);
 
         try {

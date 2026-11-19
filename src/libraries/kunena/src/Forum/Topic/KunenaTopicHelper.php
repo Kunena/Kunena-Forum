@@ -537,7 +537,8 @@ abstract class KunenaTopicHelper
         $query = $db->createQuery();
         $query->delete('#__kunena_topics')
               ->where('id IN (' . $idlist . ')');
-        self::executeQuery($db, $query);
+        $db->setQuery($query); 
+        $db->execute();
         
         foreach ($queries as $query) {
             $db->setQuery($query);

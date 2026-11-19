@@ -25,7 +25,7 @@ jobs:
     - name: Composer & Npm Install
       run: |
        composer validate --no-check-all --strict
-       composer install --no-progress --no-suggest --no-interaction --optimize-autoloader
+       composer install --no-progress --no-interaction --optimize-autoloader --ignore-platform-req=php+
        pwd
     - name: Check the code style (php-cs-fixer)
       continue-on-error: true

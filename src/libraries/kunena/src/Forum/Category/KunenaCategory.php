@@ -102,8 +102,8 @@ class KunenaCategory extends KunenaDatabaseObject
         'moderate'                          => ['Read', 'NotBanned', 'Moderate'],
         'admin'                             => ['NotBanned', 'Admin'],
         'topic.read'                        => ['Read'],
-        'topic.create'                      => ['Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked', 'Channel'],
-        'topic.reply'                       => ['Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'],
+        'topic.create'                      => ['Read', 'GuestWrite', 'NotBanned', 'NotIpBanned', 'NotSection', 'Unlocked', 'Channel'],
+        'topic.reply'                       => ['Read', 'GuestWrite', 'NotBanned', 'NotIpBanned', 'NotSection', 'Unlocked'],
         'topic.edit'                        => ['Read', 'NotBanned', 'Unlocked'],
         'topic.move'                        => ['Read', 'NotBanned', 'Moderate', 'Channel'],
         'topic.approve'                     => ['Read', 'NotBanned', 'Moderate'],
@@ -120,7 +120,7 @@ class KunenaCategory extends KunenaDatabaseObject
         'topic.poll.delete'                 => ['Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'],
         'topic.poll.vote'                   => ['Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'],
         'topic.post.read'                   => ['Read'],
-        'topic.post.reply'                  => ['Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'],
+        'topic.post.reply'                  => ['Read', 'GuestWrite', 'NotBanned', 'NotIpBanned', 'NotSection', 'Unlocked'],
         'topic.post.thankyou'               => ['Read', 'NotBanned'], 'Unlocked',
         'topic.post.unthankyou'             => ['Read', 'NotBanned'], 'Unlocked',
         'topic.post.edit'                   => ['Read', 'NotBanned', 'Unlocked'],
@@ -2055,6 +2055,39 @@ class KunenaCategory extends KunenaDatabaseObject
         }
 
         return;
+    }
+
+    /**
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|null
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    protected function authoriseNotIpBanned(KunenaUser $user)
+    {
+        if ($user->userid !== KunenaUserHelper::getMyself()->userid) {
+            return null;
+        }
+
+        $ip = KunenaUserHelper::getUserIp();
+
+        if ($ip === '') {
+            return null;
+        }
+
+        $ban = new KunenaBan();
+
+        if (!$ban->loadByIP($ip)) {
+            return null;
+        }
+
+        if (!$ban->isLifetime()) {
+            return new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($ban->expiration)->toKunena()), 403);
+        }
+
+        return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
     }
 
     /**

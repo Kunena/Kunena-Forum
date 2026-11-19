@@ -194,7 +194,7 @@ class KunenaUserBans extends KunenaTable
      * @param   mixed  $data    data
      * @param   array  $ignore  ignore
      *
-     * @return  void
+     * @return  boolean
      *
      * @since   Kunena 6.0
      */
@@ -208,7 +208,7 @@ class KunenaUserBans extends KunenaTable
             $data['params'] = !\is_string($data['params']) ? json_encode($data['params']) : $data['params'];
         }
 
-        parent::bind($data, $ignore);
+        return parent::bind($data, $ignore);
     }
 
     /**

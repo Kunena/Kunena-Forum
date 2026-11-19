@@ -537,19 +537,18 @@ abstract class KunenaTopicHelper
         $query = $db->createQuery();
         $query->delete('#__kunena_topics')
               ->where('id IN (' . $idlist . ')');
-        $db->setQuery($query); 
-        $db->execute();
-        
+        $queries [] = $query;
+              
         foreach ($queries as $query) {
-            $db->setQuery($query);
-            
-            try {
-                $db->execute();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-                
-                return false;
-            }
+              $db->setQuery($query);
+                  
+              try {
+                    $db->execute();
+              } catch (ExecutionFailureException $e) {
+                    KunenaError::displayDatabaseError($e);
+                      
+                    return false;
+              }
         }
 
         return $db->getAffectedRows();

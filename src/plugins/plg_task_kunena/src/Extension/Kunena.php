@@ -433,9 +433,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 unset($attachment);
             }
 
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSSUCCESS', $countDeleted));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEAN_PENDING_ATTACHMENTS_SUCCESS', $countDeleted));
         } catch (\Exception $e) {
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSERROR', $e->getMessage()));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEAN_PENDING_ATTACHMENTS_ERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
         }

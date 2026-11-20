@@ -131,7 +131,109 @@ class Router extends RouterView
             }
         }
 
+        // A menu item of another view (a list: the index, the recent topics...) cannot carry the view of the address: build() puts
+        // the name of the view in the path, which parse() reads as a layout of the view of the menu item, and the page was a 404
+        // (index.php?option=com_kunena&view=topics&mode=replies&Itemid=<index> was redirected to /forum/index/topics/mode-replies).
+        // Such an address is built under the home menu item of the forum, which carries any view.
+        if (($query['option'] ?? '') === 'com_kunena' && !empty($query['Itemid']) && $view !== '') {
+            $item = $this->menu->getItem((int) $query['Itemid']);
+
+            if ($item && $item->component === 'com_kunena' && !self::canCarry((array) $item->query, $query)) {
+                $query = self::withoutMenuItemVariables((array) $item->query, $query);
+                $home  = $this->homeItemid((string) $item->language);
+
+                if ($home > 0) {
+                    $query['Itemid'] = $home;
+                } else {
+                    unset($query['Itemid']);
+                }
+            }
+        }
+
         return $query;
+    }
+
+    /**
+     * Whether an address can be built under a menu item of the forum so that parse() gives its view back: the home menu item
+     * carries any view, a menu item carries its own view, and a category or a topic with its category (the alias of the category
+     * is the first segment) goes under a menu item which reads that alias (a category or a topic). Any other view is a segment
+     * which the menu item of another view reads as a layout.
+     *
+     * @param   array  $menuQuery  The variables of the link of the menu item.
+     * @param   array  $query      The variables of the address.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function canCarry(array $menuQuery, array $query): bool
+    {
+        $menuView = (string) ($menuQuery['view'] ?? '');
+        $view     = (string) ($query['view'] ?? '');
+
+        if ($view === '' || \in_array($menuView, ['', 'home', 'entrypage'], true) || $view === $menuView) {
+            return true;
+        }
+
+        // The alias of the category in the path is read only under the menu items of these views (KunenaRoute::$sefviews).
+        if ($view === 'category' || $view === 'topic') {
+            return \in_array($menuView, ['category', 'topic'], true) && !empty($query['catid']);
+        }
+
+        return false;
+    }
+
+    /**
+     * The address without the variables of the menu item which it leaves: Joomla gives the variables of the active menu item to
+     * the request (layout=list of the index, mode=replies of the recent topics), and they belong to the view of that menu item.
+     *
+     * @param   array  $menuQuery  The variables of the link of the menu item.
+     * @param   array  $query      The variables of the address.
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    public static function withoutMenuItemVariables(array $menuQuery, array $query): array
+    {
+        foreach ($menuQuery as $name => $value) {
+            if ($name !== 'option' && $name !== 'view' && isset($query[$name]) && (string) $query[$name] === (string) $value) {
+                unset($query[$name]);
+            }
+        }
+
+        return $query;
+    }
+
+    /**
+     * The home menu item of the forum (view home), in the language of a menu item when there is one in it, else in all languages,
+     * else any.
+     *
+     * @param   string  $language  The language of the menu item which is replaced.
+     *
+     * @return  integer  0 when the forum has no home menu item.
+     *
+     * @since   Kunena 8.0
+     */
+    protected function homeItemid(string $language): int
+    {
+        $best = [];
+
+        foreach ((array) $this->menu->getItems('component', 'com_kunena') as $item) {
+            if (!\in_array((string) ($item->query['view'] ?? ''), ['home', 'entrypage'], true)) {
+                continue;
+            }
+
+            $rank = $item->language === $language ? 0 : ($item->language === '*' ? 1 : 2);
+
+            if (!isset($best[$rank])) {
+                $best[$rank] = (int) $item->id;
+            }
+        }
+
+        ksort($best);
+
+        return (int) (reset($best) ?: 0);
     }
 
     /**

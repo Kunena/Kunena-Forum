@@ -16,6 +16,8 @@ namespace Kunena\Forum\Site\Controllers;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -50,6 +52,22 @@ class MiscController extends KunenaController
      */
     public function template()
     {
+        // The choice of a template is kept in a cookie of the visitor, so a link or a form of another site must not set it.
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));
+
+            return;
+        }
+
+        // Only for the server: no script of the page needs the cookie.
+        $options = [
+            'path'     => Uri::root(true) . '/',
+            'secure'   => Uri::getInstance()->isSsl(),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ];
+
         $name = $this->input->getString(
             'name',
             $this->input->cookie->getString('kunena_template', '')
@@ -65,9 +83,9 @@ class MiscController extends KunenaController
             }
 
             // The name of an existing folder of the templates ([\w-] only), checked above (psalm.xml, TaintedCookie).
-            setcookie('kunena_template', $name, 0, Uri::root(true) . '/', '', true);
+            setcookie('kunena_template', $name, ['expires' => 0] + $options);
         } else {
-            setcookie('kunena_template', '', time() - 3600, Uri::root(true) . '/', '', true);
+            setcookie('kunena_template', '', ['expires' => time() - 3600] + $options);
         }
 
         $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));

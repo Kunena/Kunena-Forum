@@ -1234,6 +1234,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         $upload->splitFilename($fileInput['name']);
 
+        // What the user has called the file: this is shown, and never a path of the server.
+        $clientName = KunenaAttachmentHelper::getClientFilename($fileInput['name']);
+        $protected  = (bool) $config->attachmentProtection;
+
         $fileInput['name'] = preg_replace('/[[:space:]]/', '', $fileInput['name']);
 
         $fileNameWithoutExt = File::stripExt($fileInput['name']);
@@ -1245,7 +1249,12 @@ class KunenaAttachment extends KunenaDatabaseObject
         $fileNameWithExt = $fileInput['name'];
         $fileNameWithExt = strtolower($fileNameWithExt);
 
-        if (file_exists($uploadBasePath . $fileInput['name'])) {
+        if ($protected) {
+            // The file is served by Kunena after the permissions were checked, so nobody may be able to guess its address:
+            // the name on the disk is random, as it is for the files of the ajax upload.
+            $fileNameWithoutExt = KunenaAttachmentHelper::getAvailableFilename($userFolder, $fileNameWithoutExt, $fileExt, true);
+            $fileNameWithExt    = $fileNameWithoutExt . '.' . $fileExt;
+        } elseif (file_exists($uploadBasePath . $fileInput['name'])) {
             for ($i = 2; file_exists($uploadBasePath . $fileNameWithoutExt . '.' . $fileExt); $i++) {
                 $fileNameWithoutExt = $fileNameWithoutExt . "-$i";
                 $fileNameWithExt    = $fileNameWithoutExt . '.' . $fileExt;
@@ -1305,12 +1314,12 @@ class KunenaAttachment extends KunenaDatabaseObject
                 $this->filetype = $imageInfo->mime;
             }
 
-            $this->protected     = (bool) $config->attachmentProtection;
+            $this->protected     = $protected;
             $this->hash          = md5_file($uploadBasePath . $fileNameWithExt);
             $this->size          = $file->size;
             $this->folder        = $userFolder;
             $this->filename      = $fileInput['name'];
-            $this->filename_real = $uploadBasePath . $fileNameWithExt;
+            $this->filename_real = $clientName !== '' ? $clientName : $fileInput['name'];
             $this->caption       = '';
             $this->inline        = 0;
             $this->status        = 0;

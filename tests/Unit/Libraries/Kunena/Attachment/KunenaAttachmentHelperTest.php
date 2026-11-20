@@ -55,6 +55,29 @@ class KunenaAttachmentHelperTest extends UnitTestCase
         ];
     }
 
+    /**
+     * The name of an uploaded file as it is shown: never a folder which the browser has sent, no control characters.
+     */
+    public static function clientNames(): array
+    {
+        return [
+            'a plain name'           => ['photo.png', 'photo.png'],
+            'a folder of Windows'    => ['C:\\Users\\me\\photo.png', 'photo.png'],
+            'a folder'               => ['/var/www/photo.png', 'photo.png'],
+            'up a folder'            => ['../../config.php', 'config.php'],
+            'control characters'     => ["pho\x00to\x1f.png", 'photo.png'],
+            'only dots'              => ['..', ''],
+            'not a text'             => [['photo.png'], ''],
+            'too long'               => [str_repeat('a', 300) . '.png', str_repeat('a', 190)],
+        ];
+    }
+
+    #[DataProvider('clientNames')]
+    public function testGetClientFilename(mixed $name, string $expected): void
+    {
+        $this->assertSame($expected, KunenaAttachmentHelper::getClientFilename($name));
+    }
+
     #[DataProvider('names')]
     public function testShortenFilename(string $name, string $expected): void
     {

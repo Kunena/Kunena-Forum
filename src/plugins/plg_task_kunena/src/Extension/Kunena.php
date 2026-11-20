@@ -30,6 +30,7 @@ use Joomla\Component\Scheduler\Administrator\Traits\TaskPluginTrait;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\ParameterType;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Administrator\Model\TrashsModel;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
@@ -40,7 +41,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageSchedule;
-use Kunena\Forum\Libraries\User\KunenaBan;
 
 /**
  * A task plugin.
@@ -156,13 +156,25 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 $profile->banned = \null;
                 $profile->save(\true);
 
-                // Update ban record
-                $banInstance = KunenaBan::getInstance($ban->id);
-                if ($banInstance->exists()) {
-                    $banInstance->addComment(Text::_('PLG_TASK_KUNENA_REMOVEEXPIREDBANSCOMMENT'));
-                    $banInstance->modified_time = $now->toSql();
-                    $banInstance->save(\true);
-                }
+                // Mark the ban as handled with a comment, directly in the table: KunenaBan::save() needs a moderator, which
+                // the scheduler is not, so the ban was never stamped and came back at every run.
+                $comments   = json_decode((string) $ban->comments) ?: [];
+                $comments   = \is_array($comments) ? $comments : [];
+                $comments[] = (object) ['userid' => 0, 'time' => $now->toSql(), 'comment' => Text::_('PLG_TASK_KUNENA_REMOVEEXPIREDBANSCOMMENT')];
+                $comments   = json_encode($comments);
+                $handledAt  = $now->toSql();
+                $banId      = (int) $ban->id;
+
+                $db->setQuery(
+                    $db->createQuery()
+                        ->update($db->quoteName('#__kunena_users_banned'))
+                        ->set($db->quoteName('modified_time') . ' = :handled')
+                        ->set($db->quoteName('comments') . ' = :comments')
+                        ->where($db->quoteName('id') . ' = :id')
+                        ->bind(':handled', $handledAt)
+                        ->bind(':comments', $comments)
+                        ->bind(':id', $banId, ParameterType::INTEGER)
+                )->execute();
             }
 
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVEEXPIREDBANSSUCCESS', $countExpiredbans));
@@ -293,8 +305,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
 
             // Table to store the IDs of the notifications which are processed
             $processedIds = [];
-            $deliveryFailed = false;
-            
+
             foreach($mailsToSend as $mail) {
                 $message = KunenaMessageHelper::get($mail->messageId);
 
@@ -364,12 +375,6 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 }
             }
 
-            if ($deliveryFailed) {
-                $this->logTask(Text::_('PLG_TASK_SENDNOTIFICATIONSKUNENA_DELIVERY_FAILED'));
-
-                return Status::KNOCKOUT;
-            }
-            
             // If the batch is full, there may be more notifications left to process.
             // Exit now and let the task be resumed on the next run instead of looping forever.
             if (\count($mailsToSend) >= $batchSize) {
@@ -386,7 +391,12 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         if ($processedCount > 0) {
             $this->logTask(Text::sprintf('PLG_TASK_SENDNOTIFICATIONSKUNENA_PROCESSED', $processedCount));
         }
-        
+
+        // The failed ones stay in the queue for the next run: the task itself went on with the others.
+        if (!empty($failedIds)) {
+            $this->logTask(Text::_('PLG_TASK_SENDNOTIFICATIONSKUNENA_DELIVERY_FAILED'), 'warning');
+        }
+
         return Status::OK;
     }
 

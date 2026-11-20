@@ -278,8 +278,12 @@ class KunenaBan
             }
         }
 
-        $this->comments = !empty($data['comments']) ? json_decode((string) $data['comments']) : [];
-        $this->params   = !empty($data['params']) ? json_decode($data['params']) : [];
+        // Both are arrays: a JSON object ("{}", or parameters with keys) decoded as an object was a TypeError, and the ban
+        // could not be loaded at all.
+        $comments       = !empty($data['comments']) ? json_decode((string) $data['comments']) : [];
+        $params         = !empty($data['params']) ? json_decode((string) $data['params'], true) : [];
+        $this->comments = \is_array($comments) ? $comments : [];
+        $this->params   = \is_array($params) ? $params : [];
     }
 
     /**
@@ -729,7 +733,10 @@ class KunenaBan
         $exists = false;
 
         try {
-            $exists = $table->load($id);
+            // KunenaTable::load() gives true for an empty id (nothing to load), which is no ban.
+            if (!empty($id)) {
+                $exists = (bool) $table->load($id);
+            }
         } catch (Exception $e) {
             KunenaError::displayDatabaseError($e);
         }

@@ -444,7 +444,7 @@ Text::script('COM_KUNENA_POST_CANCEL_CONFIRM');
                     <input class="form-control" name="modified_reason"
                         maxlength="200"
                         type="text"
-                        value="<?php echo $this->modified_reason; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"
+                        value="<?php echo $this->escape($this->modified_reason); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"
                         placeholder="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>" />
 
                 </div>

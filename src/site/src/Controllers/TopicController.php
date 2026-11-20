@@ -1921,8 +1921,9 @@ class TopicController extends KunenaController
             'params'            => '',
         ];
 
+        // A request without a valid token may come from another site: nothing of it is kept for the edit form, so a
+        // forged request cannot put its own values in the form of the user (as in post()).
         if (!Session::checkToken('post')) {
-            $this->app->setUserState('com_kunena.postfields', $fields);
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirectBack();
 
@@ -3482,13 +3483,7 @@ class TopicController extends KunenaController
             $target = KunenaCategoryHelper::get($targetCategory);
         }
 
-        $targetobject = null;
-        
-        if ($targetobject) {
-            $redirect = $targetobject->getUrl($this->return, false, 'last');
-        } else {
-            $redirect = $topic->getUrl($this->return, false, 'first');
-        }
+        $redirect = $topic->getUrl($this->return, false, 'first');
 
         try {
             $object->tryAuthorise('move');
@@ -3551,12 +3546,11 @@ class TopicController extends KunenaController
         try {
             $targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
         } catch (Exception $e) {
+            // Nothing was moved: only the error is shown (it was followed by the message of success) and nothing is logged.
             $this->app->enqueueMessage($e->getMessage(), 'error');
-        }
+            $this->setRedirect($redirect);
 
-        // Show the moved topic (or the topic which received the posts) instead of the place where they came from.
-        if ($targetobject) {
-            $redirect = $targetobject->getUrl($this->return, false, 'last');
+            return;
         }
 
         if ($this->config->logModeration) {

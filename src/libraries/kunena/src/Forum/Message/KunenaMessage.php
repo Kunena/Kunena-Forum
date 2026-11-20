@@ -59,6 +59,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaGuestName;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -984,7 +985,8 @@ class KunenaMessage extends KunenaDatabaseObject
 
         // Check username
         if (!$this->userid) {
-            $this->name = trim($this->name);
+            // Without invisible characters and other spaces, which would let the name of an account through below.
+            $this->name = KunenaGuestName::clean((string) $this->name);
 
             // Unregistered or anonymous users: Do not allow existing username, nor the real name of a user (the forum can show
             // the real names instead of the usernames, and the post of a guest would look like a post of that user).
@@ -2913,21 +2915,24 @@ class KunenaMessage extends KunenaDatabaseObject
                 }
             }
 
-            $attachment->mesid = $this->id;
+            // An attachment which is new to this message needs the right to attach it in the category of the message: it
+            // may have been uploaded in another category. The result of the check was thrown away before.
+            if ($attachment->mesid != $this->id) {
+                $denied = $this->getCategory()->tryAuthorise(
+                    $attachment->IsImage() ? 'topic.post.attachment.createimage' : 'topic.post.attachment.createfile',
+                    null,
+                    false
+                );
 
-            if ($attachment->IsImage()) {
-                try {
-                    $attachment->tryAuthorise('createimage', null, false);
-                } catch (Exception $e) {
-                    $app->enqueueMessage($e->getMessage(), 'error');
-                }
-            } else {
-                try {
-                    $attachment->tryAuthorise('createfile', null, false);
-                } catch (Exception $e) {
-                    $app->enqueueMessage($e->getMessage(), 'error');
+                if ($denied) {
+                    $app->enqueueMessage($denied->getMessage(), 'error');
+
+                    // Not attached: the attachment is left as it was.
+                    continue;
                 }
             }
+
+            $attachment->mesid = $this->id;
 
             try {
                 $attachment->save();

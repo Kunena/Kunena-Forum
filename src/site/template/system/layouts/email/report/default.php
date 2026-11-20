@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -21,6 +22,15 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 $config            = KunenaConfig::getInstance();
 $user              = $this->message->getAuthor();
 $this->messageLink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->message->getUrl(null, false);
+
+// The address of the site for the header image: from the command line (a queued mail) there is no request to take it from,
+// so the live site of the configuration is used when it is set.
+if (PHP_SAPI === 'cli') {
+    $liveSite   = trim((string) Factory::getApplication()->get('live_site', ''));
+    $headerBase = $liveSite !== '' ? rtrim($liveSite, '/') : rtrim(Uri::root(), '/');
+} else {
+    $headerBase = rtrim(Uri::root(), '/');
+}
 
 // Report moderator email (HTML)
 if (!$config->plainEmail) :
@@ -133,7 +143,7 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 16px; font-weight: bold; line-height: 130%;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;" class="header">
-                            <?php echo Text::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})"; ?>
+                            <?php echo Text::_('COM_KUNENA_REPORT_RSENDER') . ' ' . $this->escape($this->me->username . ' (' . $this->me->name . ')'); ?>
                         </td>
                     </tr>
 
@@ -143,7 +153,7 @@ if (!$config->plainEmail) :
                                 style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;"
                                 class="hero"><a target="_blank" style="text-decoration: none;"
                                                 href="#"><img border="0" vspace="0" hspace="0"
-                                                              src="<?php echo Uri::base() . KunenaConfig::getInstance()->emailHeader; ?>"
+                                                              src="<?php echo htmlspecialchars($headerBase . '/' . ltrim($config->emailHeader, '/'), ENT_QUOTES, 'UTF-8'); ?>"
                                                               alt="Please enable images to view this content"
                                                               title="Forum"
                                                               width="560" style="
@@ -157,11 +167,11 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_RREASON') . " " . $this->title; ?></div>
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_RMESSAGE') . " " . $this->content; ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_RREASON') . ' ' . $this->escape($this->title); ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_RMESSAGE') . ' ' . $this->escape($this->content); ?></div>
 
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_POSTER') . " {$user->username} ({$user->name})"; ?></div>
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_SUBJECT') . ": " . $this->message->getTopic()->subject; ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_POSTER') . ' ' . $this->escape($user->username . ' (' . $user->name . ')'); ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_SUBJECT') . ': ' . $this->escape($this->message->getTopic()->subject); ?></div>
                             <br/>
                             <div><?php echo Text::_('COM_KUNENA_REPORT_POST_MESSAGE'); ?></div>
                             <hr/>

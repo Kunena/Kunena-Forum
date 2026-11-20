@@ -50,7 +50,7 @@ class AllPhpFilesTest extends UnitTestCase
     /**
      * Files whose class is not where its namespace says (found by the first run of this test). A new file like this fails; a file
      * which is put right is taken out of the list. Why they are different:
-     * - the views for a format (view.raw.php, view.json.php) are found by Joomla by the name of the file;
+     * - the views for a format (view.raw.php) are found by Joomla by the name of the file;
      * - attachment.php is a standalone entry point, and KunenaInstaller is loaded by the installer;
      * - View/Default is a folder with the name of a keyword;
      * - the other ones differ in the case of a letter (item/Item, ForumJump/Forumjump), which an autoloader on Linux does not accept.
@@ -63,9 +63,7 @@ class AllPhpFilesTest extends UnitTestCase
         'src/site/src/Layout/Widget/WidgetForumjump.php',
         'src/site/src/View/Category/view.raw.php',
         'src/site/src/View/Default/HtmlView.php',
-        'src/site/src/View/Topic/view.json.php',
         'src/site/src/View/Topic/view.raw.php',
-        'src/site/src/View/Topics/view.json.php',
         'src/site/src/View/User/view.raw.php',
     ];
 

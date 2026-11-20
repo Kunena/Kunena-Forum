@@ -371,6 +371,52 @@ abstract class KunenaTopicHelper
     }
 
     /**
+     * The ids of the categories whose topics a list shows: the given categories (with their channels) which the user may
+     * read, or with $exclude every category the user may read except the given ones.
+     *
+     * @param   mixed    $categories  The ids of the categories, false for all.
+     * @param   boolean  $exclude     True: the categories are left out of the readable ones.
+     * @param   mixed    $reverse     As KunenaCategoryHelper::getCategories().
+     *
+     * @return  integer[]  Empty when the list shows nothing.
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function listedCategoryIds($categories, bool $exclude, $reverse): array
+    {
+        // No category asked means all the readable ones (the RSS feed with no category set), not none.
+        if (!$exclude && !$reverse && !array_filter((array) $categories)) {
+            $categories = false;
+        }
+
+        if (!$exclude) {
+            $categories = KunenaCategoryHelper::getCategories($categories, $reverse);
+        } else {
+            $categories = KunenaCategoryHelper::getCategories($categories, 0);
+        }
+
+        $catlist = [];
+
+        foreach ($categories as $category) {
+            $catlist += $category->getChannels();
+        }
+
+        if ($exclude) {
+            // Every category the user may read except the given ones. A plain NOT IN would also let through the
+            // categories which the user is not allowed to read.
+            $readable = [];
+
+            foreach (KunenaCategoryHelper::getCategories(false) as $category) {
+                $readable += $category->getChannels();
+            }
+
+            $catlist = array_diff_key($readable, $catlist);
+        }
+
+        return array_map('intval', array_keys($catlist));
+    }
+
+    /**
      * @param   mixed  $categories  categories
      * @param   int    $limitstart  limitstart
      * @param   int    $limit       limit
@@ -413,40 +459,17 @@ abstract class KunenaTopicHelper
         } else {
             $post_time_field = $db->quoteName('tt.last_post_time');
         }
-        
-        // No category asked means all the readable ones (the RSS feed with no category set), not none.
-        if (!$exclude && !$reverse && !array_filter((array) $categories)) {
-            $categories = false;
-        }
 
-        if (!$exclude) {
-            $categories = KunenaCategoryHelper::getCategories($categories, $reverse);
-        } else {
-            $categories = KunenaCategoryHelper::getCategories($categories, 0);
-        }
+        $catlist = static::listedCategoryIds($categories, (bool) $exclude, $reverse);
 
-        $catlist = [];
-
-        foreach ($categories as $category) {
-            $catlist += $category->getChannels();
-        }
-
-        if (\count($catlist) > 0) {
-            $catlist = implode(',', array_keys($catlist));
-
-            if ($exclude) {
-                $catlist = 'AND ' . $db->quoteName('tt.category_id') . ' NOT IN (' . $catlist . ')';
-            } else {
-                $catlist = 'AND ' . $db->quoteName('tt.category_id') . ' IN (' . $catlist . ')';
-            }
-        } elseif (!$exclude) {
+        if (!$catlist) {
             // No readable category: the topics of other categories must not be listed.
             KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
             return [0, []];
-        } else {
-            $catlist = '';
         }
+
+        $catlist = 'AND ' . $db->quoteName('tt.category_id') . ' IN (' . implode(',', $catlist) . ')';
 
         $whereuser = [];
 

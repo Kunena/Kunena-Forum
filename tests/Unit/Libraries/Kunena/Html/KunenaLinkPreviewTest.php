@@ -158,6 +158,32 @@ class KunenaLinkPreviewTest extends UnitTestCase
         ];
     }
 
+    /**
+     * The addresses of web pages which may be read: http and https on the usual ports, without a user and a password.
+     */
+    public static function webAddresses(): array
+    {
+        return [
+            'https'                    => ['https://example.com/page', true],
+            'http'                     => ['http://example.com/', true],
+            'the port 8443'            => ['https://example.com:8443/', true],
+            'the port 8080'            => ['http://example.com:8080/', true],
+            'a user'                   => ['https://user@example.com/', false],
+            'a user and a password'    => ['https://user:secret@example.com/', false],
+            'the port of SSH'          => ['http://example.com:22/', false],
+            'the port of a database'   => ['http://example.com:3306/', false],
+            'ftp'                      => ['ftp://example.com/file', false],
+            'a file'                   => ['file:///etc/passwd', false],
+            'no host'                  => ['https:///path', false],
+        ];
+    }
+
+    #[DataProvider('webAddresses')]
+    public function testOnlyWebAddressesAreRead(string $url, bool $allowed): void
+    {
+        $this->assertSame($allowed, $this->call('isWebAddress', parse_url($url)));
+    }
+
     #[DataProvider('addresses')]
     public function testOnlyPublicAddressesAreRead(string $ip, bool $public): void
     {

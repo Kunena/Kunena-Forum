@@ -118,7 +118,7 @@ if (!$config->plainEmail) :
 
         </style>
 
-        <title><?php echo $msg1; ?></title>
+        <title><?php echo htmlspecialchars((string) $msg1, ENT_QUOTES, 'UTF-8'); ?></title>
 
     </head>
 
@@ -155,7 +155,7 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 16px; font-weight: bold; line-height: 130%;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;" class="header">
-                            <?php echo $msg1; ?>
+                            <?php echo htmlspecialchars((string) $msg1, ENT_QUOTES, 'UTF-8'); ?>
                         </td>
                     </tr>
 
@@ -165,7 +165,7 @@ if (!$config->plainEmail) :
                                 style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;"
                                 class="hero"><a target="_blank" style="text-decoration: none;"
                                                 href="#"><img border="0" vspace="0" hspace="0"
-                                                              src="<?php echo htmlspecialchars($headerBase . '/' . ltrim(KunenaConfig::getInstance()->emailheader, '/'), ENT_QUOTES, 'UTF-8'); ?>"
+                                                              src="<?php echo htmlspecialchars($headerBase . '/' . ltrim($config->emailHeader, '/'), ENT_QUOTES, 'UTF-8'); ?>"
                                                               alt="Please enable images to view this content"
                                                               title="Forum"
                                                               width="560" style="
@@ -180,9 +180,9 @@ if (!$config->plainEmail) :
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
                             <div>
-                                <p><?php echo Text::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . $subject; ?></p>
-                                <p><?php echo Text::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
-                                <p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
+                                <p><?php echo Text::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . htmlspecialchars((string) $subject, ENT_QUOTES, 'UTF-8'); ?></p>
+                                <p><?php echo Text::_('COM_KUNENA_CATEGORY') . " : " . htmlspecialchars((string) $this->message->getCategory()->name, ENT_QUOTES, 'UTF-8'); ?></p>
+                                <p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . htmlspecialchars((string) $author->getName('???', false), ENT_QUOTES, 'UTF-8'); ?></p>
 
                                 <p><?php echo Text::_('COM_KUNENA_EMAIL_MESSAGE_LINK_URL');?> :
                                     <a href="<?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?>"><b><?php echo htmlspecialchars((string) $this->messageLink, ENT_QUOTES, 'UTF-8'); ?></b></a>
@@ -235,7 +235,7 @@ if (!$config->plainEmail) :
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 13px; font-weight: 400; line-height: 150%;
             padding: 20px 6.25%;color: #999999;font-family: sans-serif;" class="footer">
                             <?php echo Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?><br/>
-                            <?php echo $msg2; ?>
+                            <?php echo htmlspecialchars((string) $msg2, ENT_QUOTES, 'UTF-8'); ?>
                         </td>
                     </tr>
                 </table>

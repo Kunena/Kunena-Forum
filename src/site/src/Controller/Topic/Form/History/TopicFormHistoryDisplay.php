@@ -103,7 +103,13 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
                 $registry = new Registry($pm->params);
                 $posts    = $registry->get('receivers.posts');
 
-                foreach ($posts as $post) {
+                // A private message can also be about posts which are not in the history: those are left out (writing to
+                // a missing post was a fatal error).
+                foreach ((array) $posts as $post) {
+                    if (!isset($messages[$post])) {
+                        continue;
+                    }
+
                     if (!isset($messages[$post]->pm)) {
                         $messages[$post]->pm = [];
                     }

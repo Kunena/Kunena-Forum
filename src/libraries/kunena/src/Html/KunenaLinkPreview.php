@@ -132,8 +132,7 @@ abstract class KunenaLinkPreview
     {
         $parts = parse_url($url);
 
-        // Only fetch web pages. Other schemes (file:, php:, ftp: ...) are never read.
-        if (!$parts || empty($parts['host']) || !\in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true)) {
+        if (!static::isWebAddress($parts)) {
             return null;
         }
 
@@ -209,6 +208,30 @@ abstract class KunenaLinkPreview
         }
 
         return $body;
+    }
+
+    /**
+     * Is the address (parsed by parse_url()) one of a web page which may be read? Only http and https (never file:, php:,
+     * ftp: ...), no user and password, and only the usual ports of the web: the server must not be used to probe other
+     * services of a host.
+     *
+     * @param   array|false  $parts  The parts of the address.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function isWebAddress(array|false $parts): bool
+    {
+        if (!$parts || empty($parts['host']) || !\in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true)) {
+            return false;
+        }
+
+        if (isset($parts['user']) || isset($parts['pass'])) {
+            return false;
+        }
+
+        return !isset($parts['port']) || \in_array((int) $parts['port'], [80, 443, 8080, 8443], true);
     }
 
     /**

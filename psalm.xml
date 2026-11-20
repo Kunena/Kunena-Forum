@@ -124,7 +124,6 @@
             <errorLevel type="suppress">
                 <file name="src/site/src/Controllers/TopicController.php" />
                 <file name="src/site/src/Controllers/UserController.php" />
-                <file name="src/site/src/View/Topic/view.json.php" />
                 <file name="src/site/src/Controller/Application/Category/Raw/CategoryDisplay.php" />
                 <!-- The tools answer the AJAX of the recount in JSON; the other texts of the file are escaped. -->
                 <file name="src/admin/src/Controller/ToolsController.php" />

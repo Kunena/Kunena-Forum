@@ -1265,10 +1265,12 @@ class UserController extends KunenaController
             }
             // Report failed or refused
             $reasons = [];
-            preg_match('/<p>.*<\/p>/', $result ? (string) $result->getBody() : '', $reasons);
+            preg_match('/<p\b[^>]*>(.*?)<\/p>/is', $result ? (string) $result->getBody() : '', $reasons);
 
-            // Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-            $reason = isset($reasons[0]) ? strip_tags($reasons[0]) : ($result ? 'HTTP ' . $result->getStatusCode() : 'no answer');
+            // StopForumSpam gives one reason in a paragraph (which may have attributes or span lines). It is text of
+            // another site, so it is shown without its tags and escaped.
+            $reason = isset($reasons[1]) ? trim(strip_tags($reasons[1])) : '';
+            $reason = $reason !== '' ? htmlspecialchars($reason, ENT_QUOTES, 'UTF-8') : ($result ? 'HTTP ' . $result->getStatusCode() : 'no answer');
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', $reason), 'error');
 
             return false;

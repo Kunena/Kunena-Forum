@@ -16,15 +16,13 @@ namespace Kunena\Forum\Libraries\Event;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Event\Finder\FinderEventInterface;
-use Joomla\CMS\Event\Model\DeleteEvent;
+use Joomla\CMS\Event\Model\AfterSaveEvent;
 
 /**
  * Class for Model event.
  * Example:
- *  new KunenaAterSaveEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
- *
- * Joomla Core doesn't have a Finder\BeforeDeleteEvent
+ *  new KunenaAfterSaveEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToSave, 'isNew' => $isNew]);
  *
  * @since  7.0.0
  */
-class KunenaAfterSaveEvent extends DeleteEvent implements FinderEventInterface {}
+class KunenaAfterSaveEvent extends AfterSaveEvent implements FinderEventInterface {}

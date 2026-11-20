@@ -156,9 +156,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 )->execute();
             }
 
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVEEXPIREDBANSSUCCESS', $countExpiredbans));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVE_EXPIRED_BANS_SUCCESS', $countExpiredbans));
         } catch (\Exception $e) {
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVEEXPIREDBANSERROR', $e->getMessage()));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVE_EXPIRED_BANS_ERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
         }

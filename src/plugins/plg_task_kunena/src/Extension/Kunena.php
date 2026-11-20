@@ -493,9 +493,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             $db->execute();
             $count = $db->getAffectedRows();
 
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_UNSUBSCRIBEINACTIVESUCCESS', $count));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_UNSUBSCRIBE_INACTIVE_SUCCESS', $count));
         } catch (\Exception $e) {
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_UNSUBSCRIBEINACTIVEERROR', $e->getMessage()));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_UNSUBSCRIBE_INACTIVE_ERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
         }

@@ -29,6 +29,8 @@ class KunenaBBCodeOwnDomainTest extends UnitTestCase
 
     private const LAYOUT = 'src/site/template/aurelia/layouts/bbcode/url/default.php';
 
+    private const CARD = 'src/site/template/aurelia/layouts/bbcode/linkcard/default.php';
+
     protected function setUp(): void
     {
         // The parser is in the folder External of the library, and the library of the tags is in the file of KunenaBBCode.
@@ -69,7 +71,7 @@ class KunenaBBCodeOwnDomainTest extends UnitTestCase
     /**
      * The layout of the template with its variables (the contract of KunenaLayout: properties, and escape()).
      */
-    private function layout(array $properties): string
+    private function layout(array $properties, string $layout = self::LAYOUT): string
     {
         $view = new #[AllowDynamicProperties] class () {
             public function escape($text)
@@ -84,7 +86,7 @@ class KunenaBBCodeOwnDomainTest extends UnitTestCase
             $view->$name = $value;
         }
 
-        $path = Files::path(self::LAYOUT);
+        $path = Files::path($layout);
 
         ob_start();
         (function () use ($path) {
@@ -166,5 +168,23 @@ class KunenaBBCodeOwnDomainTest extends UnitTestCase
 
         $this->assertFalse($link->hasAttribute('rel'));
         $this->assertFalse($link->hasAttribute('target'));
+    }
+
+    /**
+     * A pasted link gets a card (link preview): the card of a link to an own domain kept rel="nofollow noopener noreferrer".
+     */
+    public function testCardOfALinkToAnOwnDomainHasNoRel(): void
+    {
+        $link = $this->link($this->layout(['ownDomain' => true, 'title' => 'Page', 'site' => 'example.com'], self::CARD));
+
+        $this->assertFalse($link->hasAttribute('rel'));
+        $this->assertSame('_blank', $link->getAttribute('target'));
+    }
+
+    public function testCardOfALinkToAnotherDomainKeepsRel(): void
+    {
+        $link = $this->link($this->layout(['ownDomain' => false, 'title' => 'Page', 'site' => 'example.org'], self::CARD));
+
+        $this->assertSame('nofollow noopener noreferrer', $link->getAttribute('rel'));
     }
 }

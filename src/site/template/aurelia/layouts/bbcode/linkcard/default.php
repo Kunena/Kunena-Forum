@@ -15,10 +15,12 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
-// The card of a link in a message: the picture, the title and the description of the page (of the other site).
+// The card of a link in a message: the picture, the title and the description of the page (of the other site). A link to an own
+// domain of the site (configuration) gets no rel, as the plain link.
+$rel = empty($this->ownDomain) ? ' rel="nofollow noopener noreferrer"' : '';
 ?>
 <div class="card mb-2 kbbcode-linkcard" style="max-width: 32rem;">
-    <a class="text-decoration-none text-reset" href="<?php echo $this->escape($this->url); ?>" target="_blank" rel="nofollow noopener noreferrer">
+    <a class="text-decoration-none text-reset" href="<?php echo $this->escape($this->url); ?>" target="_blank"<?php echo $rel; ?>>
         <?php if (!empty($this->image)) : ?>
             <img src="<?php echo $this->escape($this->image); ?>" alt="" class="card-img-top" style="max-height: 14rem; object-fit: cover;"
                 loading="lazy" referrerpolicy="no-referrer">

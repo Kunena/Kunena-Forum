@@ -747,7 +747,8 @@ class KunenaBBCode extends BBCode
                     ->set('title', $card['title'])
                     ->set('description', $card['description'])
                     ->set('image', $card['image'])
-                    ->set('site', $card['site']);
+                    ->set('site', $card['site'])
+                    ->set('ownDomain', KunenaBBCode::isOwnDomain($url, (string) $this->config->ownDomains));
             }
         }
 

@@ -203,7 +203,10 @@ abstract class KunenaUserName
     }
 
     /**
-     * The SQL condition to find the users by any of their names.
+     * The SQL condition to find the users by the name which the forum shows of them (as get(): the choice of the user when he may
+     * choose, else the setting of the forum, and the same fallbacks). A user was found by any of his names: when the forum shows the
+     * real names, a part of a username (the name with which he logs in, which the forum keeps for itself) still found him, and
+     * searching letter by letter gave the username of each member; the same for the real names when it shows the usernames.
      *
      * @param   string  $search  The text to look for.
      * @param   string  $alias   The alias of the table of the Joomla users in the query.
@@ -214,17 +217,51 @@ abstract class KunenaUserName
      */
     public static function getSearchCondition(string $search, string $alias = 'a'): string
     {
-        $db         = Factory::getContainer()->get(DatabaseInterface::class);
-        $like       = $db->quote('%' . $db->escape($search, true) . '%', false);
-        $conditions = [
-            $db->quoteName($alias . '.username') . ' LIKE ' . $like,
-            $db->quoteName($alias . '.name') . ' LIKE ' . $like,
-        ];
+        $db       = Factory::getContainer()->get(DatabaseInterface::class);
+        $like     = $db->quote('%' . $db->escape($search, true) . '%', false);
+        $username = $db->quoteName($alias . '.username');
+        $name     = $db->quoteName($alias . '.name');
+
+        // The real name, or the username when the real name is empty.
+        $realName = '((TRIM(' . $name . ') <> ' . $db->quote('') . ' AND ' . $name . ' LIKE ' . $like . ')'
+            . ' OR (TRIM(' . $name . ') = ' . $db->quote('') . ' AND ' . $username . ' LIKE ' . $like . '))';
+
+        // The nickname, or the real name when the user has none.
+        $displayName = $realName;
 
         if ($field = self::getDisplayNameField()) {
-            $conditions[] = $db->quoteName($alias . '.id') . ' IN (SELECT ' . $db->quoteName('item_id') . ' FROM '
-                . $db->quoteName('#__fields_values') . ' WHERE ' . $db->quoteName('field_id') . ' = ' . $field
-                . ' AND ' . $db->quoteName('value') . ' LIKE ' . $like . ')';
+            $values = static fn (string $where): string => $db->quoteName($alias . '.id') . ' IN (SELECT ' . $db->quoteName('item_id')
+                . ' FROM ' . $db->quoteName('#__fields_values') . ' WHERE ' . $db->quoteName('field_id') . ' = ' . $field
+                . ' AND ' . $where . ')';
+
+            $displayName = '(' . $values($db->quoteName('value') . ' LIKE ' . $like) . ' OR (NOT '
+                . $values('TRIM(' . $db->quoteName('value') . ') <> ' . $db->quote('')) . ' AND ' . $realName . '))';
+        }
+
+        $shown = [
+            self::REALNAME    => $realName,
+            self::USERNAME    => $username . ' LIKE ' . $like,
+            self::DISPLAYNAME => $displayName,
+        ];
+        $global = self::getGlobalType();
+
+        if (!self::userCanChoose()) {
+            return '(' . $shown[$global] . ')';
+        }
+
+        // The choice of the user is in the parameters of his Joomla account ({"kunena_name":1}); without one, the setting of the forum.
+        $params = 'COALESCE(' . $db->quoteName($alias . '.params') . ', ' . $db->quote('') . ')';
+        $chose  = static function (int $type) use ($db, $params): string {
+            $patterns = ['"' . self::PARAM . '":' . $type . ',', '"' . self::PARAM . '":' . $type . '}', '"' . self::PARAM . '":"' . $type . '"'];
+
+            return '(' . implode(' OR ', array_map(static fn ($pattern) => $params . ' LIKE ' . $db->quote('%' . $pattern . '%'), $patterns)) . ')';
+        };
+        $noChoice   = 'NOT (' . $chose(self::REALNAME) . ' OR ' . $chose(self::USERNAME) . ' OR ' . $chose(self::DISPLAYNAME) . ')';
+        $conditions = [];
+
+        foreach ($shown as $type => $condition) {
+            $who          = $type === $global ? '(' . $chose($type) . ' OR ' . $noChoice . ')' : $chose($type);
+            $conditions[] = '(' . $who . ' AND ' . $condition . ')';
         }
 
         return '(' . implode(' OR ', $conditions) . ')';

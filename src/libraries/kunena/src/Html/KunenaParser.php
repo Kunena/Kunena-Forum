@@ -381,7 +381,8 @@ abstract class KunenaParser
         // The text of [private] is shown to nobody: the block goes in any case of the name of the tag (the parser in the plain
         // mode drops it, not after the opening tag [PRIVATE] was taken out below).
         $txt = self::removeBlocks($txt, ['confidential', 'hide', 'private']);
-        $txt = preg_replace('/\[color(.*?)\](.*?)\[\/color\]/s', '', $txt);
+        // The text in [color] stays (the parser in the plain mode drops the tag): it was taken out with the tag, and a message
+        // written in colour had no text in the tooltips, the description of the page or the index of the search of the site.
         $txt = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $txt);
         $txt = preg_replace('/\[code(.*?)\](.*?)\[\/code]/s', '', $txt);
         $txt = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $txt);

@@ -32,7 +32,7 @@ jobs:
       with:
         user: auto
         config: crowdin.yml
-        upload_sources: false
+        upload_sources: true
         upload_translations: false
         download_translations: true
         push_translations: false

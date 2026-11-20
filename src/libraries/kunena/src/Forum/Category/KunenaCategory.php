@@ -33,6 +33,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUser;
@@ -1090,11 +1091,17 @@ class KunenaCategory extends KunenaDatabaseObject
             }
 
             try {
-                $this->checkAlias($this->alias);
+                $free = $this->checkAlias($this->alias);
             } catch (Exception $e) {
                 KunenaError::displayDatabaseError($e);
 
                 return false;
+            }
+
+            // An alias of another category or a reserved word (the name of a view or a layout): the category was saved with it, its
+            // address opened the other category or the view, and the alias table still named the other one.
+            if ($free === false) {
+                throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_FORUM_CATEGORY_ERROR_ALIAS_RESERVED', $this->alias));
             }
         }
 

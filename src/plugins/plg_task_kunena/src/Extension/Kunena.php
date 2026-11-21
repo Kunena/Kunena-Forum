@@ -177,9 +177,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 )->execute();
             }
 
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVEEXPIREDBANSSUCCESS', $countExpiredbans));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVE_EXPIRED_BANS_SUCCESS', $countExpiredbans));
         } catch (Exception $e) {
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVEEXPIREDBANSERROR', $e->getMessage()));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVE_EXPIRED_BANS_ERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
         }
@@ -457,9 +457,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 unset($attachment);
             }
 
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSSUCCESS', $countDeleted));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEAN_PENDING_ATTACHMENTS_SUCCESS', $countDeleted));
         } catch (Exception $e) {
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSERROR', $e->getMessage()));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEAN_PENDING_ATTACHMENTS_ERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
         }
@@ -583,9 +583,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             $db->execute();
             $count = $db->getAffectedRows();
 
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_UNSUBSCRIBEINACTIVESUCCESS', $count));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_UNSUBSCRIBE_INACTIVE_SUCCESS', $count));
         } catch (\Exception $e) {
-            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_UNSUBSCRIBEINACTIVEERROR', $e->getMessage()));
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_UNSUBSCRIBE_INACTIVE_ERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
         }

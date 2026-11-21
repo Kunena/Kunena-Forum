@@ -16,17 +16,17 @@ namespace Kunena\Forum\Libraries\Event;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Event\Finder\FinderEventInterface;
-use Joomla\CMS\Event\Model\DeleteEvent;
+use Joomla\CMS\Event\Model\BeforeSaveEvent;
 
 /**
  * Class for Model event.
  * Example:
- *  new KunenaBeforeSaveEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
+ *  new KunenaBeforeSaveEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToSave, 'isNew' => $isNew]);
  *
- * Joomla Core doesn't have a Finder\BeforeDeleteEvent
+ * A save event of Joomla: the listeners typed for it get the event, and the third argument (isNew) is kept (a delete event drops it).
  *
  * @since  7.0.0
  */
-class KunenaBeforeSaveEvent extends DeleteEvent implements FinderEventInterface
+class KunenaBeforeSaveEvent extends BeforeSaveEvent implements FinderEventInterface
 {
 }

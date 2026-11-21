@@ -34,7 +34,7 @@ describe('Documentation: topics and messages', () => {
   it('the menu of a topic with the action Mark as solved', () => {
     open(`${base}&id=4`);
 
-    cy.get('#topic-actions-toolbar .btn-group').first().find('a.dropdown-toggle').click();
+    cy.get('#topic-actions-toolbar .btn-group').first().find('button[data-bs-toggle="dropdown"]').first().click();
     cy.get('#topic-actions-toolbar .dropdown-menu.show').should('be.visible');
     forum('topic-mark-as-solved', ['#topic-actions-toolbar', '#topic-actions-toolbar .dropdown-menu.show'], { padding: 10 });
   });

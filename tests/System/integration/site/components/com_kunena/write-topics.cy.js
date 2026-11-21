@@ -91,24 +91,24 @@ describe('Kunena writing: the life of a topic', () => {
 
     it('makes the topic sticky and locks it', () => {
       openTopic();
-      cy.get('#topic-actions-toolbar .btn-group').eq(1).find('a.dropdown-toggle').click();
+      cy.get('#topic-actions-toolbar .btn-group').eq(1).find('button[data-bs-toggle="dropdown"]').first().click();
       cy.contains('#topic-actions-toolbar .dropdown-menu.show a', /^\s*Sticky/i).click();
       topicRow().then((row) => expect(Number(row.ordering), 'sticky').to.be.greaterThan(0));
 
       openTopic();
-      cy.get('#topic-actions-toolbar .btn-group').eq(1).find('a.dropdown-toggle').click();
+      cy.get('#topic-actions-toolbar .btn-group').eq(1).find('button[data-bs-toggle="dropdown"]').first().click();
       cy.contains('#topic-actions-toolbar .dropdown-menu.show a', /^\s*Lock/i).click();
       topicRow().then((row) => expect(Number(row.locked), 'locked').to.eq(1));
     });
 
     it('unlocks the topic and takes the sticky away', () => {
       openTopic();
-      cy.get('#topic-actions-toolbar .btn-group').eq(1).find('a.dropdown-toggle').click();
+      cy.get('#topic-actions-toolbar .btn-group').eq(1).find('button[data-bs-toggle="dropdown"]').first().click();
       cy.contains('#topic-actions-toolbar .dropdown-menu.show a', /Unlock/i).click();
       topicRow().then((row) => expect(Number(row.locked), 'unlocked').to.eq(0));
 
       openTopic();
-      cy.get('#topic-actions-toolbar .btn-group').eq(1).find('a.dropdown-toggle').click();
+      cy.get('#topic-actions-toolbar .btn-group').eq(1).find('button[data-bs-toggle="dropdown"]').first().click();
       cy.contains('#topic-actions-toolbar .dropdown-menu.show a', /Unsticky|Remove sticky|Un-?sticky/i).click();
       topicRow().then((row) => expect(Number(row.ordering), 'not sticky').to.eq(0));
     });
@@ -141,7 +141,7 @@ describe('Kunena writing: the life of a topic', () => {
 
     it('makes the topic a favorite, and stops and starts the subscription', () => {
       openTopic();
-      cy.get('#topic-actions-toolbar .btn-group').first().find('a.dropdown-toggle').click();
+      cy.get('#topic-actions-toolbar .btn-group').first().find('button[data-bs-toggle="dropdown"]').first().click();
       cy.contains('#topic-actions-toolbar .dropdown-menu.show a', /Favorite/i).click();
       cy.task('queryDB', `SELECT favorite FROM #__kunena_user_topics WHERE topic_id = ${topicId} AND user_id = ${user.id}`).then((rows) => {
         expect(rows.length, 'a row of the user for the topic').to.eq(1);
@@ -154,14 +154,14 @@ describe('Kunena writing: the life of a topic', () => {
       });
 
       openTopic();
-      cy.get('#topic-actions-toolbar .btn-group').first().find('a.dropdown-toggle').click();
+      cy.get('#topic-actions-toolbar .btn-group').first().find('button[data-bs-toggle="dropdown"]').first().click();
       cy.contains('#topic-actions-toolbar .dropdown-menu.show a', /Unsubscribe/i).click();
       cy.task('queryDB', `SELECT subscribed FROM #__kunena_user_topics WHERE topic_id = ${topicId} AND user_id = ${user.id}`).then((rows) => {
         expect(Number(rows[0].subscribed), 'not subscribed').to.eq(0);
       });
 
       openTopic();
-      cy.get('#topic-actions-toolbar .btn-group').first().find('a.dropdown-toggle').click();
+      cy.get('#topic-actions-toolbar .btn-group').first().find('button[data-bs-toggle="dropdown"]').first().click();
       cy.contains('#topic-actions-toolbar .dropdown-menu.show a', /^\s*Subscribe/i).click();
       cy.task('queryDB', `SELECT subscribed FROM #__kunena_user_topics WHERE topic_id = ${topicId} AND user_id = ${user.id}`).then((rows) => {
         expect(Number(rows[0].subscribed), 'subscribed again').to.eq(1);

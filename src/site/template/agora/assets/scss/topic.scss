@@ -477,8 +477,11 @@ pre.bbcode_code_body:has(> code.hljs) {
   list-style: none;
   border-top: 1px dashed var(--agora-border);
 
-  li,
-  .thumbnail {
+  /* One frame per attachment (the item), not a second one inside it: the picture and the button of its details side by side. */
+  /* Aurelia floats the items with a width of 23 %: here they are flex items as wide as their content. */
+  li {
+    float: none;
+    width: auto;
     max-width: 180px;
     padding: 0.5rem;
     font-size: 0.8rem;
@@ -487,9 +490,38 @@ pre.bbcode_code_body:has(> code.hljs) {
     border-radius: var(--agora-radius);
   }
 
+  .thumbnail {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .kattach-imagelink {
+    display: block;
+    flex: none;
+  }
+
+  /* The size of the thumbnail comes from the options (its width, height and max-height): not the max-width: 100% of the pictures of a
+     message, which shrinks it to nothing in an item as wide as its content. */
   img {
+    display: block;
+    max-width: none;
+    object-fit: cover;
     border-radius: var(--agora-radius);
   }
+}
+
+/* The attachments of a message are already in a card (Aurelia): no dashed line and no space above the body of the card, nor above
+   the list in it. */
+.card > .kattach,
+.kattach > .thumbnails {
+  margin-top: 0;
+  border-top: 0;
+}
+
+.kattach > .thumbnails {
+  padding-top: 0;
 }
 
 /* The poll of a topic. */

@@ -1,0 +1,73 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The layout Profile (layoutsets/profile): the profile in two columns, the card of the user beside the tabs (above them when there is
+ * no room), and the posts and the topics of a profile as cards. Only tokens, so for every style.
+ */
+#kunena.layout.agora[data-agora-layout="profile"] {
+  /* The topics of the profile as cards (layoutsets/profile/layouts/topic/row/user.php, _card-grid.scss). */
+  @include agora-topic-cards;
+
+  /* The profile in two columns (layoutsets/profile/layouts/user/item): the card of the user, then the tabs; one under the other on a
+     small screen. In the narrow card the avatar stands above the name, the numbers are tiles. */
+  .agora-profile-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--agora-gap-section);
+    align-items: flex-start;
+  }
+
+  .agora-profile-columns > .agora-profile {
+    flex: 1 1 300px;
+    min-width: 0;
+    margin: 0;
+  }
+
+  /* The tabs hold tables (the topics, the posts of the user): the card comes on top unless they have room beside it. */
+  .agora-profile-main {
+    display: flex;
+    flex: 999 1 640px;
+    flex-direction: column;
+    gap: var(--agora-gap);
+    min-width: 0;
+
+    .tab-content {
+      overflow-x: auto;
+    }
+  }
+
+  .agora-profile-columns {
+    .agora-profile-head {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .agora-profile-hero {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .agora-profile-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .agora-profile-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.5rem;
+      padding: 0 var(--agora-pad) var(--agora-pad);
+
+      > small {
+        grid-column: 1 / -1;
+        text-align: center;
+      }
+    }
+  }
+}

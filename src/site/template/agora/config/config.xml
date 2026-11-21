@@ -202,6 +202,26 @@
                description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_DESC"/>
         <field name="IconColorNew" type="color" default="#48a348" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW"
                description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW_DESC"/>
+        <field name="style" type="list" default="default" label="COM_KUNENA_TEMPLATE_AGORA_STYLE"
+               description="COM_KUNENA_TEMPLATE_AGORA_STYLE_DESC">
+            <option value="default">COM_KUNENA_TEMPLATE_AGORA_STYLE_DEFAULT</option>
+            <option value="soft">COM_KUNENA_TEMPLATE_AGORA_STYLE_SOFT</option>
+            <option value="midnight">COM_KUNENA_TEMPLATE_AGORA_STYLE_MIDNIGHT</option>
+            <option value="compact">COM_KUNENA_TEMPLATE_AGORA_STYLE_COMPACT</option>
+            <option value="conversation">COM_KUNENA_TEMPLATE_AGORA_STYLE_CONVERSATION</option>
+            <option value="nordic">COM_KUNENA_TEMPLATE_AGORA_STYLE_NORDIC</option>
+            <option value="tonal">COM_KUNENA_TEMPLATE_AGORA_STYLE_TONAL</option>
+        </field>
+        <field name="layoutSet" type="list" default="default" label="COM_KUNENA_TEMPLATE_AGORA_LAYOUT"
+               description="COM_KUNENA_TEMPLATE_AGORA_LAYOUT_DESC">
+            <option value="default">COM_KUNENA_TEMPLATE_AGORA_LAYOUT_DEFAULT</option>
+            <option value="cards">COM_KUNENA_TEMPLATE_AGORA_LAYOUT_CARDS</option>
+            <option value="columns">COM_KUNENA_TEMPLATE_AGORA_LAYOUT_COLUMNS</option>
+            <option value="dense">COM_KUNENA_TEMPLATE_AGORA_LAYOUT_DENSE</option>
+            <option value="chat">COM_KUNENA_TEMPLATE_AGORA_LAYOUT_CHAT</option>
+            <option value="profile">COM_KUNENA_TEMPLATE_AGORA_LAYOUT_PROFILE</option>
+            <option value="app">COM_KUNENA_TEMPLATE_AGORA_LAYOUT_APP</option>
+        </field>
         <field name="colorScheme" type="list" default="auto" label="COM_KUNENA_TEMPLATE_AGORA_COLOR_SCHEME"
                description="COM_KUNENA_TEMPLATE_AGORA_COLOR_SCHEME_DESC">
             <option value="auto">COM_KUNENA_TEMPLATE_AGORA_COLOR_SCHEME_AUTO</option>

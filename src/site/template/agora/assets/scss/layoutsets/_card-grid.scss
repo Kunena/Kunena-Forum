@@ -1,0 +1,182 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The topics and the posts as cards (the rows of layoutsets/cards and layoutsets/profile), for the layouts which use them: Cards in
+ * every list, Profile in the lists of a profile. Included inside the selector of the layout; only tokens, so for every style.
+ */
+@mixin agora-topic-cards {
+  /* The lists of topics as a grid of cards (layoutsets/cards/layouts/topic/row): the table and its rows become blocks, the body a grid;
+     the head of the table is not needed, a row which is not a card (a spacer, an empty list) takes the whole width. The white cards
+     lie on the tint of the forum, not in the white box of the list. */
+  .kfrontend:has(.agora-row-card) {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  /* Important: the list of a category styles its table with two ids (#categoryactions). */
+  table:has(> tbody > .agora-row-card) {
+    display: block;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+
+    > thead {
+      display: none;
+    }
+
+    > tbody {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+      gap: var(--agora-gap);
+    }
+
+    /* Important: on a small screen Agora makes each row a box (padding, the tint of a sticky topic) with two ids. */
+    > tbody > tr {
+      display: block;
+      padding: 0 !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+
+      &:not(.agora-row-card) {
+        grid-column: 1 / -1;
+      }
+
+      /* Important: the lists of Agora give the first cell a fixed width with two ids (#categoryactions). */
+      > td {
+        display: block;
+        width: auto !important;
+        max-width: none;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+      }
+    }
+  }
+
+  .agora-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    padding: 1rem;
+    background: var(--agora-surface);
+    border-radius: var(--agora-radius);
+    box-shadow: var(--agora-shadow);
+
+    &.topic-item-unread {
+      box-shadow: 0 0 0 2px var(--agora-accent-soft), var(--agora-shadow);
+    }
+  }
+
+  .agora-card-head {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .agora-card-avatar img {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: min(var(--agora-radius), 12px);
+  }
+
+  .agora-card-who {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    font-size: 0.85rem;
+    font-weight: 650;
+    line-height: 1.3;
+  }
+
+  .agora-card-time {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--agora-text-muted);
+  }
+
+  .agora-card-marks {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    margin-inline-start: auto;
+    color: var(--agora-text-muted);
+  }
+
+  .agora-badge-sticky {
+    color: var(--agora-accent-strong);
+    background: var(--agora-accent-soft);
+  }
+
+  .agora-badge-new {
+    font-size: 0.7rem;
+    vertical-align: middle;
+    color: var(--agora-accent-text);
+    background: var(--agora-accent);
+  }
+
+  .agora-card-title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.35;
+
+    a {
+      color: var(--agora-text);
+    }
+  }
+
+  .agora-card .ktopic-category {
+    font-size: 0.8rem;
+    color: var(--agora-text-muted);
+  }
+
+  .agora-card-foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    padding-top: 0.5rem;
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: var(--agora-text-muted);
+    border-top: 1px solid var(--agora-border);
+
+    .repliesnum,
+    .viewsnum {
+      font-weight: 700;
+      color: var(--agora-text);
+    }
+
+    .lastpostlink {
+      margin-inline-start: auto;
+    }
+  }
+
+  .agora-card-check {
+    align-self: flex-end;
+  }
+
+  /* A message as a card (layoutsets/profile/layouts/message/row): where and when, the title, the start of the text. */
+  .agora-post-card > .agora-card-time a {
+    color: inherit;
+  }
+
+  .agora-post-excerpt {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--agora-text-muted);
+  }
+}

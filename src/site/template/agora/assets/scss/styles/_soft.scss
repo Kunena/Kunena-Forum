@@ -1,0 +1,50 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The style Soft: white surfaces without borders on a light lavender tint, an indigo accent, large radii, pill badges and a rounded
+ * type when the device has one.
+ */
+#kunena.layout.agora[data-agora-style="soft"] {
+  --agora-accent: #4f46e5;
+
+  --agora-bg: #f3f4fa;
+  --agora-surface: #fff;
+  --agora-surface-2: #f7f7fc;
+  --agora-surface-hover: #eeeef7;
+  --agora-border: #ececf5;
+  --agora-border-strong: #d5d5e6;
+  --agora-text: #1e1b3a;
+  --agora-text-muted: #5b5878;
+
+  --agora-radius: 16px;
+  --agora-shadow: 0 1px 3px rgb(30 27 58 / 0.06);
+  --agora-shadow-raised: 0 8px 24px rgb(30 27 58 / 0.1);
+  --agora-font: ui-rounded, "SF Pro Rounded", "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+
+  .row.message,
+  .card {
+    border-color: transparent;
+  }
+
+  .badge {
+    border-radius: 999px;
+  }
+}
+
+#kunena.layout.agora[data-agora-style="soft"][data-bs-theme="dark"] {
+  --agora-bg: #12111f;
+  --agora-surface: #1b1a2c;
+  --agora-surface-2: #212036;
+  --agora-surface-hover: #28273f;
+  --agora-border: #2e2d45;
+  --agora-border-strong: #3d3b5a;
+  --agora-text: #ecebf7;
+  --agora-text-muted: #a3a1bd;
+}

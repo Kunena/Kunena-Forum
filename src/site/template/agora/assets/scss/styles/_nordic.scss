@@ -1,0 +1,52 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The style Nordic: calm. Warm stone greys, a sage green accent, no shadows, large radii and more room inside and between the cards.
+ */
+#kunena.layout.agora[data-agora-style="nordic"] {
+  --agora-accent: #3d5547;
+
+  --agora-bg: #f4f2ee;
+  --agora-surface: #fbfaf8;
+  --agora-surface-2: #f0ede8;
+  --agora-surface-hover: #ebe7e0;
+  --agora-border: #e5e1da;
+  --agora-border-strong: #cfc9bf;
+  --agora-text: #2a2e2b;
+  --agora-text-muted: #5c635e;
+
+  --agora-radius: 16px;
+  --agora-shadow: none;
+  --agora-shadow-raised: 0 8px 24px rgb(42 46 43 / 0.08);
+  --agora-pad: 1.5rem;
+  --agora-gap: 1.5rem;
+  --agora-gap-section: 2rem;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+  }
+}
+
+#kunena.layout.agora[data-agora-style="nordic"][data-bs-theme="dark"] {
+  --agora-bg: #161816;
+  --agora-surface: #1e201e;
+  --agora-surface-2: #232623;
+  --agora-surface-hover: #2a2d2a;
+  --agora-border: #313431;
+  --agora-border-strong: #404440;
+  --agora-text: #eceae5;
+  --agora-text-muted: #a6aba5;
+  --agora-shadow-raised: 0 8px 24px rgb(0 0 0 / 0.36);
+}

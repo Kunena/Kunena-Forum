@@ -1,0 +1,56 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The style Compact: smaller type and spaces, tighter table cells, thin grey borders, no shadows and a green accent, for busy forums.
+ * The buttons and the links keep their size for touch (--agora-touch).
+ */
+#kunena.layout.agora[data-agora-style="compact"] {
+  --agora-accent: #1f883d;
+
+  --agora-bg: #fff;
+  --agora-surface: #fff;
+  --agora-surface-2: #f6f8fa;
+  --agora-surface-hover: #eff2f5;
+  --agora-border: #d0d7de;
+  --agora-border-strong: #b8c0c8;
+  --agora-text: #1f2328;
+  --agora-text-muted: #59636e;
+
+  --agora-radius: 6px;
+  --agora-shadow: none;
+  --agora-shadow-raised: 0 4px 12px rgb(31 35 40 / 0.12);
+  --agora-pad: 0.75rem;
+  --agora-gap: 0.5rem;
+  --agora-gap-section: 1rem;
+
+  font-size: 0.9rem;
+  line-height: 1.45;
+
+  .table {
+    --bs-table-cell-padding-y: 0.25rem;
+    --bs-table-cell-padding-x: 0.5rem;
+  }
+
+  .row.message > .col-md-2 {
+    padding: 0.5rem;
+  }
+}
+
+#kunena.layout.agora[data-agora-style="compact"][data-bs-theme="dark"] {
+  --agora-bg: #0d1117;
+  --agora-surface: #0d1117;
+  --agora-surface-2: #161b22;
+  --agora-surface-hover: #1c2129;
+  --agora-border: #30363d;
+  --agora-border-strong: #3d444d;
+  --agora-text: #e6edf3;
+  --agora-text-muted: #9198a1;
+  --agora-shadow-raised: 0 4px 12px rgb(0 0 0 / 0.4);
+}

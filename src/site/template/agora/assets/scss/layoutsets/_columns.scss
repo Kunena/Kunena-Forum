@@ -1,0 +1,160 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The layout Columns (layoutsets/columns): the head of a topic (the accepted answer, the lock and the tags as chips, the title, one
+ * line of numbers) and the topic in two columns, with a side column for its numbers, the search, the moderators and the forum jump.
+ * Only tokens, so for every style.
+ */
+#kunena.layout.agora[data-agora-layout="columns"] {
+  /* The head of the topic: the chips, the title, one line of numbers. */
+  .agora-topic-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: var(--agora-gap-section);
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  .agora-topic-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+
+    .badge,
+    .agora-topic-tags a,
+    .agora-topic-tags span {
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--agora-text-muted);
+      background: var(--agora-surface-2);
+      border-radius: min(var(--agora-radius), 6px);
+    }
+
+    .agora-chip-solved {
+      color: var(--agora-accent-text);
+      background: var(--agora-accent);
+    }
+  }
+
+  .agora-topic-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: center;
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--agora-text-muted);
+
+    > span + span::before {
+      margin-inline-end: 0.5rem;
+      content: "·";
+    }
+  }
+
+  /* The topic in two columns (layoutsets/columns/layouts/topic/item): the side column goes under the messages on a small screen. */
+  .agora-topic-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--agora-gap-section);
+    align-items: flex-start;
+  }
+
+  .agora-topic-main {
+    flex: 999 1 560px;
+    min-width: 0;
+  }
+
+  .agora-topic-aside {
+    position: sticky;
+    top: 1rem;
+    display: flex;
+    flex: 1 1 260px;
+    flex-direction: column;
+    gap: var(--agora-gap);
+    min-width: 0;
+  }
+
+  .agora-aside-card {
+    padding: var(--agora-pad);
+    background: var(--agora-surface);
+    border: 1px solid var(--agora-border);
+    border-radius: var(--agora-radius);
+
+    &.kunena-search-widget {
+      float: none;
+    }
+
+    .input-group,
+    form {
+      width: 100%;
+    }
+
+    /* The forum jump has the widths of a column of the page (col-lg-4): the whole card here. */
+    #jumpto .selector {
+      width: 100%;
+      margin-bottom: 0 !important;
+
+      > select {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+    }
+  }
+
+  .agora-aside-title {
+    margin: 0 0 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--agora-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .agora-topic-numbers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 0 0 1rem;
+
+    dt {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--agora-text-muted);
+    }
+
+    dd {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+  }
+
+  .agora-topic-dates {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--agora-text-muted);
+  }
+
+  @media (max-width: 767.98px) {
+    .agora-topic-aside {
+      position: static;
+    }
+  }
+}

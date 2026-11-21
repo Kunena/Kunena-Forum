@@ -1,0 +1,278 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The layout Chat (layoutsets/chat): a topic in three panes (the latest topics of the category, the conversation, the people) and its
+ * messages as speech bubbles beside a small avatar, the own messages on the other side tinted with the accent. Only tokens, so for
+ * every style.
+ */
+#kunena.layout.agora[data-agora-layout="chat"] {
+  --agora-bubble-radius: 20px;
+  --agora-own-bubble: color-mix(in oklab, var(--agora-accent) 9%, var(--agora-surface));
+  --agora-own-border: color-mix(in oklab, var(--agora-accent) 28%, var(--agora-border));
+
+  .topic-item-messages {
+    gap: 0.75rem;
+  }
+
+  /* Three panes (layoutsets/chat/layouts/topic/item): the topics of the category, the conversation, the people. The
+     conversation comes first in the page, so on a small screen it is on top; on a large one the topics move to the left. */
+  .agora-chat-panes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--agora-gap);
+    align-items: flex-start;
+  }
+
+  .agora-chat-thread {
+    flex: 999 1 480px;
+    min-width: 0;
+  }
+
+  .agora-chat-topics,
+  .agora-chat-people {
+    flex: 1 1 220px;
+    min-width: 0;
+    padding: 0.5rem;
+    background: var(--agora-surface);
+    border: 1px solid var(--agora-border);
+    border-radius: var(--agora-radius);
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .agora-chat-topics {
+      position: sticky;
+      top: 1rem;
+      order: -1;
+    }
+
+    .agora-chat-people {
+      position: sticky;
+      top: 1rem;
+    }
+  }
+
+  .agora-chat-pane-title {
+    padding: 0.5rem;
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--agora-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    a {
+      color: inherit;
+    }
+  }
+
+  .agora-chat-topic {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    min-height: var(--agora-touch);
+    padding: 0.5rem;
+    color: var(--agora-text);
+    text-decoration: none;
+    border-radius: var(--agora-radius);
+
+    &:hover {
+      background: var(--agora-surface-hover);
+    }
+
+    &.active {
+      background: var(--agora-own-bubble);
+    }
+  }
+
+  .agora-chat-topic-avatar {
+    flex: none;
+  }
+
+  .agora-chat-topic-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .agora-chat-topic-title,
+  .agora-chat-topic-meta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .agora-chat-topic-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .agora-chat-topic-meta {
+    font-size: 0.8rem;
+    color: var(--agora-text-muted);
+  }
+
+  .agora-chat-unread {
+    color: var(--agora-accent-text);
+    background: var(--agora-accent);
+    border-radius: 999px;
+  }
+
+  .agora-chat-people li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .agora-chat-person-count {
+    margin-inline-start: auto;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--agora-text-muted);
+  }
+
+  .agora-chat-head {
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--agora-border);
+
+    h1 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+  }
+
+  .agora-chat-head-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: center;
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+    color: var(--agora-text-muted);
+
+    > span + span::before {
+      margin-inline-end: 0.5rem;
+      content: "·";
+    }
+  }
+
+  .agora-chat {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: flex-start;
+    max-width: min(100%, 52rem);
+  }
+
+  .agora-chat-own {
+    flex-direction: row-reverse;
+    margin-inline-start: auto;
+  }
+
+  .agora-chat-avatar {
+    flex: none;
+    width: 40px;
+
+    img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  .agora-chat-bubble {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+    background: var(--agora-surface);
+    border: 1px solid var(--agora-border);
+    border-radius: var(--agora-bubble-radius);
+    border-start-start-radius: 4px;
+    box-shadow: var(--agora-shadow);
+
+    > small.float-end {
+      margin: 0 0 0.25rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    /* The bubble has the author on top: not again for small screens. */
+    .kmsg-author-phone {
+      display: none !important;
+    }
+  }
+
+  .agora-chat-own .agora-chat-bubble {
+    background: var(--agora-own-bubble);
+    border-color: var(--agora-own-border);
+    border-start-start-radius: var(--agora-bubble-radius);
+    border-start-end-radius: 4px;
+  }
+
+  .agora-chat:has(.kmsg-answer) .agora-chat-bubble {
+    border-color: var(--agora-success);
+  }
+
+  .agora-chat-who {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: baseline;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .agora-chat-starter {
+    color: var(--agora-accent-strong);
+    background: var(--agora-accent-soft);
+  }
+
+  .agora-chat-rank {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--agora-text-muted);
+  }
+
+  @media (max-width: 575.98px) {
+    .agora-chat-avatar {
+      width: 32px;
+
+      img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .agora-chat-bubble {
+      padding: 0.5rem 0.75rem;
+    }
+  }
+}

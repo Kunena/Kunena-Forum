@@ -1,0 +1,45 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The style Tonal: the surfaces are tinted with the accent (a burnt orange unless the options choose another), large radii and round
+ * buttons, like the tonal palettes of an app.
+ */
+#kunena.layout.agora[data-agora-style="tonal"] {
+  --agora-accent: #9a3f00;
+
+  --agora-bg: color-mix(in oklab, var(--agora-accent) 4%, #fffaf8);
+  --agora-surface: #fff;
+  --agora-surface-2: color-mix(in oklab, var(--agora-accent) 10%, #fff);
+  --agora-surface-hover: color-mix(in oklab, var(--agora-accent) 16%, #fff);
+  --agora-border: color-mix(in oklab, var(--agora-accent) 14%, #f1ebe8);
+  --agora-border-strong: color-mix(in oklab, var(--agora-accent) 22%, #ddd3ce);
+  --agora-text: color-mix(in oklab, var(--agora-accent) 10%, #201a17);
+  --agora-text-muted: color-mix(in oklab, var(--agora-accent) 12%, #52443d);
+
+  --agora-radius: 20px;
+  --agora-font: "Roboto Flex", Roboto, system-ui, -apple-system, "Segoe UI", "Noto Sans", Arial, sans-serif;
+
+  /* Round, except a button joined to a field or to another button: Bootstrap squares the joined sides of those. */
+  .btn:not(.btn-group > .btn, .input-group > .btn),
+  .badge {
+    border-radius: 999px;
+  }
+}
+
+#kunena.layout.agora[data-agora-style="tonal"][data-bs-theme="dark"] {
+  --agora-bg: color-mix(in oklab, var(--agora-accent) 6%, #15110f);
+  --agora-surface: color-mix(in oklab, var(--agora-accent) 6%, #1d1816);
+  --agora-surface-2: color-mix(in oklab, var(--agora-accent) 16%, #1d1816);
+  --agora-surface-hover: color-mix(in oklab, var(--agora-accent) 22%, #1d1816);
+  --agora-border: color-mix(in oklab, var(--agora-accent) 16%, #2c2522);
+  --agora-border-strong: color-mix(in oklab, var(--agora-accent) 22%, #3c3430);
+  --agora-text: color-mix(in oklab, var(--agora-accent) 6%, #f1e6e1);
+  --agora-text-muted: color-mix(in oklab, var(--agora-accent) 10%, #c9b8b0);
+}

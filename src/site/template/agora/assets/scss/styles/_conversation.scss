@@ -1,0 +1,37 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The style Conversation: a teal accent on a cool grey, made for the layout Chat but good with every layout.
+ */
+#kunena.layout.agora[data-agora-style="conversation"] {
+  --agora-accent: #0f766e;
+
+  --agora-bg: #eef2f5;
+  --agora-surface: #fff;
+  --agora-surface-2: #f5f7f9;
+  --agora-surface-hover: #e9eef2;
+  --agora-border: #dce3e9;
+  --agora-border-strong: #c5ced6;
+  --agora-text: #17212b;
+  --agora-text-muted: #55636f;
+
+  --agora-radius: 12px;
+}
+
+#kunena.layout.agora[data-agora-style="conversation"][data-bs-theme="dark"] {
+  --agora-bg: #0f1418;
+  --agora-surface: #1a2127;
+  --agora-surface-2: #20282f;
+  --agora-surface-hover: #263038;
+  --agora-border: #2a333b;
+  --agora-border-strong: #38434d;
+  --agora-text: #e8edf1;
+  --agora-text-muted: #9aa6b0;
+}

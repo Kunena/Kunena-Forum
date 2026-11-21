@@ -29,4 +29,26 @@
   @import "base";
 }
 
+/*
+ * The styles of the option style (data-agora-style of #kunena), the look: their tokens and rules are stronger than the ones above.
+ */
+@import "styles/soft";
+@import "styles/midnight";
+@import "styles/compact";
+@import "styles/conversation";
+@import "styles/nordic";
+@import "styles/tonal";
+
+/*
+ * The layouts of the option layoutSet (data-agora-layout of #kunena), the arrangement of the pages (layoutsets/<layout>): their
+ * rules only use the tokens, so every layout goes with every style.
+ */
+@import "layoutsets/card-grid";
+@import "layoutsets/cards";
+@import "layoutsets/columns";
+@import "layoutsets/dense";
+@import "layoutsets/chat";
+@import "layoutsets/profile";
+@import "layoutsets/app";
+
 @import "custom";

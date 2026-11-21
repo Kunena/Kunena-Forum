@@ -1,0 +1,181 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The layout Dense (layoutsets/dense): a topic in one dense row (a dot for its state, the title, one line of meta, the numbers)
+ * and the lists of topics with a side column of filters. Only tokens, so for every style.
+ */
+#kunena.layout.agora[data-agora-layout="dense"] {
+  /* A topic in one dense row (layoutsets/dense/layouts/topic/row). */
+  .agora-row-compact {
+    > th,
+    > td {
+      padding-block: 0.5rem;
+      vertical-align: middle;
+    }
+
+    > .agora-state-cell {
+      width: 32px;
+    }
+  }
+
+  .agora-state {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    border: 2px solid var(--agora-success);
+    border-radius: 50%;
+  }
+
+  .agora-state-unread {
+    background: var(--agora-accent);
+    border-color: var(--agora-accent);
+  }
+
+  .agora-state-sticky {
+    background: var(--agora-warning);
+    border-color: var(--agora-warning);
+  }
+
+  .agora-state-locked {
+    background: var(--agora-text-muted);
+    border-color: var(--agora-text-muted);
+  }
+
+  .agora-row-title {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: baseline;
+
+    .topictitle {
+      font-weight: 600;
+    }
+  }
+
+  .agora-row-icons {
+    display: inline-flex;
+    gap: 0.25rem;
+    color: var(--agora-text-muted);
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .agora-row-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.5rem;
+    font-family: var(--agora-font-mono);
+    font-size: 0.78rem;
+    color: var(--agora-text-muted);
+
+    > span + span::before {
+      margin-inline-end: 0.5rem;
+      content: "·";
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+
+  .agora-row-numbers,
+  .agora-row-last {
+    font-size: 0.8rem;
+    white-space: nowrap;
+
+    > span {
+      display: block;
+    }
+  }
+
+  .agora-row-numbers {
+    font-family: var(--agora-font-mono);
+
+    .agora-row-label {
+      font-family: var(--agora-font);
+      color: var(--agora-text-muted);
+    }
+  }
+
+  .agora-row-by {
+    color: var(--agora-text-muted);
+  }
+
+  /* The lists of topics with a side column of filters (layoutsets/dense/pages/topics/default). */
+  .agora-list-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--agora-gap-section);
+    align-items: flex-start;
+  }
+
+  .agora-list-filters-side {
+    display: flex;
+    flex: 1 1 200px;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    a:not(.btn) {
+      display: flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0.25rem 0.5rem;
+      color: var(--agora-text);
+      text-decoration: none;
+      border-radius: var(--agora-radius);
+
+      &:hover {
+        background: var(--agora-surface-hover);
+      }
+
+      &.active {
+        font-weight: 600;
+        background: var(--agora-surface-2);
+        box-shadow: inset 2px 0 0 var(--agora-accent);
+      }
+    }
+  }
+
+  .agora-list-main {
+    flex: 999 1 560px;
+    min-width: 0;
+  }
+
+  /* Small screens: the filters are one row above the list, which scrolls sideways. */
+  @media (max-width: 767.98px) {
+    .agora-list-filters-side {
+      flex-direction: row;
+      align-items: center;
+      overflow-x: auto;
+
+      ul {
+        flex-direction: row;
+      }
+
+      a:not(.btn) {
+        white-space: nowrap;
+      }
+    }
+  }
+}

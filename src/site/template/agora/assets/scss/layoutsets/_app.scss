@@ -1,0 +1,196 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The layout App (layoutsets/app): the index starts like the home of an app (a greeting, tiles, the latest activity) and the menu is
+ * always open as tabs, a bar fixed at the bottom of the screen on a phone. Only tokens, so for every style.
+ */
+#kunena.layout.agora[data-agora-layout="app"] {
+  /* The menu always open (layoutsets/app/layouts/widget/menubar): tonal tabs, the current one filled. */
+  .agora-tonal-nav {
+    > .container-fluid {
+      flex-wrap: wrap;
+    }
+
+    .navbar-nav {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      padding-inline: 1rem !important;
+      border-radius: 999px;
+    }
+
+    .nav-item.active > .nav-link,
+    .nav-link.active {
+      color: var(--agora-accent-strong);
+      background: color-mix(in oklab, var(--agora-accent) 18%, var(--agora-surface));
+    }
+  }
+
+  /* The home of the forum (layoutsets/app/pages/category/list): a greeting, tiles, the latest activity. */
+  .agora-home {
+    display: flex;
+    flex-direction: column;
+    gap: var(--agora-gap-section);
+    margin-bottom: var(--agora-gap-section);
+  }
+
+  .agora-home-head {
+    h1 {
+      margin: 0.25rem 0 0;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 600;
+    }
+  }
+
+  .agora-home-site {
+    margin: 0;
+    color: var(--agora-text-muted);
+  }
+
+  .agora-home-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--agora-gap);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .agora-home-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    height: 100%;
+    padding: 1.25rem;
+    color: var(--agora-text);
+    text-decoration: none;
+    background: var(--agora-surface-2);
+    border-radius: calc(var(--agora-radius) * 1.5);
+
+    &:hover {
+      background: var(--agora-surface-hover);
+    }
+  }
+
+  .agora-home-tile-main {
+    color: var(--agora-accent-strong);
+    background: color-mix(in oklab, var(--agora-accent) 18%, var(--agora-surface));
+  }
+
+  .agora-home-number {
+    font-size: 2.25rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .agora-home-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .agora-home-activity {
+    padding: 0.75rem;
+    background: var(--agora-surface);
+    border-radius: calc(var(--agora-radius) * 1.5);
+
+    h2 {
+      padding: 0.5rem 0.75rem;
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+  }
+
+  .agora-home-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.75rem;
+    color: var(--agora-text);
+    text-decoration: none;
+    border-radius: var(--agora-radius);
+
+    &:hover {
+      background: var(--agora-surface-hover);
+    }
+
+    b {
+      font-weight: 600;
+    }
+  }
+
+  .agora-home-item-unread {
+    background: var(--agora-surface-2);
+  }
+
+  .agora-home-avatar img {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .agora-home-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  .agora-home-meta {
+    font-size: 0.85rem;
+    color: var(--agora-text-muted);
+  }
+
+  .agora-tonal-tabs {
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  /* Small screens: the tabs are a bar fixed at the bottom of the screen; the forum keeps room for it. */
+  @media (max-width: 767.98px) {
+    padding-bottom: 5.5rem;
+
+    .agora-tonal-tabs {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 0;
+      z-index: 1030;
+      padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom));
+      background: var(--agora-surface-2);
+      border-top: 1px solid var(--agora-border);
+      box-shadow: 0 -4px 16px color-mix(in srgb, var(--agora-text) 8%, transparent);
+
+      .navbar-nav {
+        justify-content: space-around;
+        min-width: max-content;
+      }
+    }
+  }
+}
+
+/* On dark colours the filled tab and the main tile need a stronger tint to stand out. */
+#kunena.layout.agora[data-agora-layout="app"][data-bs-theme="dark"] {
+  .agora-home-tile-main,
+  .agora-tonal-nav .nav-item.active > .nav-link,
+  .agora-tonal-nav .nav-link.active {
+    background: color-mix(in oklab, var(--agora-accent) 28%, var(--agora-surface));
+  }
+}

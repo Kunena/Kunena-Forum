@@ -48,10 +48,10 @@ class AgoraColorSchemeTest extends UnitTestCase
     public static function attributes(): array
     {
         return [
-            'auto is light without JavaScript' => ['auto', ' data-agora-scheme="auto" data-bs-theme="light"'],
-            'light'                            => ['light', ' data-agora-scheme="light" data-bs-theme="light"'],
-            'dark'                             => ['dark', ' data-agora-scheme="dark" data-bs-theme="dark"'],
-            'an unknown value is auto'         => ['purple', ' data-agora-scheme="auto" data-bs-theme="light"'],
+            'auto is light without JavaScript' => ['auto', ' data-agora-style="default" data-agora-layout="default" data-agora-scheme="auto" data-bs-theme="light"'],
+            'light'                            => ['light', ' data-agora-style="default" data-agora-layout="default" data-agora-scheme="light" data-bs-theme="light"'],
+            'dark'                             => ['dark', ' data-agora-style="default" data-agora-layout="default" data-agora-scheme="dark" data-bs-theme="dark"'],
+            'an unknown value is auto'         => ['purple', ' data-agora-style="default" data-agora-layout="default" data-agora-scheme="auto" data-bs-theme="light"'],
         ];
     }
 

@@ -1,0 +1,35 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Agora
+*
+* $copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * The layout Cards (layoutsets/cards): every list of topics is a grid of cards; on a small screen the button for a new topic floats at
+ * the bottom right. Only tokens, so for every style.
+ */
+#kunena.layout.agora[data-agora-layout="cards"] {
+  @include agora-topic-cards;
+
+  /* In the list of a category every card is of that category. */
+  #categoryactions .agora-card .ktopic-category {
+    display: none;
+  }
+
+  /* Small screens: the button for a new topic floats at the bottom right, within reach of the thumb. */
+  @media (max-width: 767.98px) {
+    .kbutton-create {
+      position: fixed;
+      inset-inline-end: 1rem;
+      bottom: calc(1rem + env(safe-area-inset-bottom));
+      z-index: 1030;
+      min-height: 56px;
+      padding-inline: 1.25rem;
+      border-radius: max(var(--agora-radius), 16px);
+      box-shadow: 0 8px 20px color-mix(in srgb, var(--agora-accent) 35%, transparent);
+    }
+  }
+}

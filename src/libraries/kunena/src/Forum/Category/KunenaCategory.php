@@ -838,7 +838,7 @@ class KunenaCategory extends KunenaDatabaseObject
             $exception = $this->authoriseRead($user);
 
             if ($throw && $exception) {
-                throw new $exception();
+                throw $exception;
             }
 
             return $exception;

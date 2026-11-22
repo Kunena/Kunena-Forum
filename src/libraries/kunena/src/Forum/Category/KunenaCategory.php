@@ -1099,13 +1099,41 @@ class KunenaCategory extends KunenaDatabaseObject
             }
 
             // An alias of another category or a reserved word (the name of a view or a layout): the category was saved with it, its
-            // address opened the other category or the view, and the alias table still named the other one.
+            // address opened the other category or the view, and the alias table still named the other one. An alias which the
+            // administrator typed is refused; an alias made from the name (a second category "General") takes the next free one.
             if ($free === false) {
-                throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_FORUM_CATEGORY_ERROR_ALIAS_RESERVED', $this->alias));
+                if (!$this->autoAlias) {
+                    throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_FORUM_CATEGORY_ERROR_ALIAS_RESERVED', $this->alias));
+                }
+
+                $this->alias = $this->freeAlias($this->alias);
             }
         }
 
         return true;
+    }
+
+    /**
+     * The first free alias after the one given (general-2, general-3...), for an alias made from the name which is taken.
+     *
+     * @param   string  $alias  The alias which is taken.
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected function freeAlias(string $alias): string
+    {
+        for ($i = 0; $i < 100; $i++) {
+            $alias = StringHelper::increment($alias, 'dash');
+
+            if ($this->checkAlias($alias) !== false) {
+                return $alias;
+            }
+        }
+
+        throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_FORUM_CATEGORY_ERROR_ALIAS_RESERVED', $alias));
     }
 
     /**

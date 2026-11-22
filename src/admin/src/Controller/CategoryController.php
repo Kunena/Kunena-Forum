@@ -23,7 +23,6 @@ use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -277,7 +276,9 @@ class CategoryController extends KunenaController
                         $this->app->enqueueMessage($e->getMessage(), 'warning');
                     }
                 }
-            } catch (KunenaException $e) {
+            } catch (Exception $e) {
+                // Not only a KunenaException: the table refuses a parent which is the category itself or one of its children, and a
+                // name of spaces, with a RuntimeException. That one left the save before the check-in of the category.
                 if (!empty($e->getMessage())) {
                     $this->app->enqueueMessage(
                         Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $e->getMessage()),
@@ -291,19 +292,16 @@ class CategoryController extends KunenaController
                 }
             }
 
-            $aliasesInput = $this->app->getInput()->getString('aliases_all');
+            // The old aliases which the administrator unticked are removed (deleteAlias() keeps the alias of the category). The
+            // ticked ones were read with getArray(['aliases' => []]), which gives an empty list: no alias was ever removed.
+            if ($success) {
+                $removed = self::removedAliases(
+                    (string) $this->input->post->getString('aliases_all', ''),
+                    $this->input->post->get('aliases', [], 'array')
+                );
 
-            if (!empty($aliasesInput)) {
-                $aliases_all = explode(',', $aliasesInput);
-
-                $aliases = $this->app->getInput()->post->getArray(['aliases' => []]);
-
-                if ($aliases_all && \count($aliases['aliases']) > 1) {
-                    $aliases = array_diff($aliases_all, $aliases['aliases']);
-
-                    foreach ($aliases_all as $alias) {
-                        $category->deleteAlias($alias);
-                    }
+                foreach ($removed as $alias) {
+                    $category->deleteAlias($alias);
                 }
             }
 
@@ -340,6 +338,27 @@ class CategoryController extends KunenaController
         }
 
         return $category;
+    }
+
+    /**
+     * The aliases of the list of the form which are no longer ticked.
+     *
+     * @param   string  $all     The aliases of the list, separated by commas (the field aliases_all).
+     * @param   mixed   $ticked  The ticked aliases (the field aliases[]).
+     *
+     * @return  string[]
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function removedAliases(string $all, mixed $ticked): array
+    {
+        if ($all === '') {
+            return [];
+        }
+
+        $ticked = array_filter((array) $ticked, 'is_string');
+
+        return array_values(array_diff(array_filter(explode(',', $all), 'strlen'), $ticked));
     }
 
     /**
@@ -426,7 +445,9 @@ class CategoryController extends KunenaController
      */
     protected function internalGenerateNewTitle(int $categoryId, string $alias, string $name): array
     {
-        while (KunenaCategoryHelper::getAlias($categoryId, $alias)) {
+        // The alias of the copy must be free, not only different from the alias of the category which is copied: a second copy got
+        // the alias of the first copy (general-2), which the save of the copy refuses.
+        while (KunenaCategoryHelper::getAlias($categoryId, $alias) || ($alias !== '' && KunenaRoute::resolveAlias($alias))) {
             $name  = StringHelper::increment($name);
             $alias = StringHelper::increment($alias, 'dash');
         }

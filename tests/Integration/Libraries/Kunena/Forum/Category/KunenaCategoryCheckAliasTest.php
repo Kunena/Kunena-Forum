@@ -59,11 +59,15 @@ class KunenaCategoryCheckAliasTest extends IntegrationTestCase implements DBTest
         $application->method('isClient')->willReturn(true);
         $application->method('get')->willReturnCallback(static fn ($name, $default = null) => $name === 'unicodeslugs' ? 1 : $default);
 
+        // The configuration: the alias made from the name does not start with the id of the category.
+        $config = (new ReflectionClass(KunenaConfig::class))->newInstanceWithoutConstructor();
+        (new ReflectionProperty(KunenaConfig::class, 'config'))->setValue($config, ['categoryAliasId' => 0]);
+
         $this->saved = [
             'container'   => Factory::$container,
             'application' => Factory::$application,
             'language'    => Factory::$language,
-            'config'      => $this->replace(KunenaConfig::class, 'instance', (new ReflectionClass(KunenaConfig::class))->newInstanceWithoutConstructor()),
+            'config'      => $this->replace(KunenaConfig::class, 'instance', $config),
         ];
 
         Factory::$container   = $container;
@@ -110,6 +114,18 @@ class KunenaCategoryCheckAliasTest extends IntegrationTestCase implements DBTest
         $this->expectException(KunenaException::class);
 
         $this->category(2, 'search')->check();
+    }
+
+    /**
+     * An empty alias is made from the name: a second category "General" was refused, it takes the next free alias instead.
+     */
+    public function testAnAliasMadeFromTheNameTakesTheNextFreeOne(): void
+    {
+        $category       = $this->category(2, '');
+        $category->name = 'General';
+
+        $this->assertTrue($category->check());
+        $this->assertSame('general-2', $category->alias);
     }
 
     public function testAFreeAliasAndTheOwnAliasAreTaken(): void

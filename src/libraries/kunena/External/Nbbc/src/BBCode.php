@@ -1853,6 +1853,13 @@ REGEX;
             $output .= $chunk;
         }
         $output = rtrim($output);
+        // Change made by Kunena: chop at $limit when there is nowhere to break, as said above (the output was empty, so a text
+        // without a space, in Chinese or Japanese or a long address, became "..." only). mb_strcut() does not cut a character
+        // of UTF-8 in two.
+        if ($output === '') {
+            $output = rtrim(mb_strcut($string, 0, $limit, 'UTF-8'));
+        }
+        // End of change made by Kunena
         if ($this->debug)
             Debugger::debug("<b>Internal_LimitText:</b> resulting string is length ".strlen($output).".<br>\n");
         return $output;

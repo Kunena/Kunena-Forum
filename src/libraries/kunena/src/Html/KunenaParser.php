@@ -381,22 +381,14 @@ abstract class KunenaParser
         // The text of [private] is shown to nobody: the block goes in any case of the name of the tag (the parser in the plain
         // mode drops it, not after the opening tag [PRIVATE] was taken out below).
         $txt = self::removeBlocks($txt, ['confidential', 'hide', 'private']);
-        // The text in [color] stays (the parser in the plain mode drops the tag): it was taken out with the tag, and a message
-        // written in colour had no text in the tooltips, the description of the page or the index of the search of the site.
-        $txt = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $txt);
-        $txt = preg_replace('/\[code(.*?)\](.*?)\[\/code]/s', '', $txt);
-        $txt = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $txt);
-        $txt = preg_replace('/\[attachment]/s', '', $txt);
-        $txt = preg_replace('/\[article\](.*?)\[\/article]/s', '', $txt);
-        $txt = preg_replace('/\[video(.*?)\](.*?)\[\/video]/s', '', $txt);
-        $txt = preg_replace('/\[img(.*?)\](.*?)\[\/img]/s', '', $txt);
-        $txt = preg_replace('/\[image]/s', '', $txt);
-        $txt = preg_replace('/\[url(.*?)\](.*?)\[\/url]/s', '', $txt);
-        $txt = preg_replace('/\[quote(.*?)\](.*?)\[\/quote]/s', '', $txt);
-        $txt = preg_replace('/\[spoiler(.*?)\](.*?)\[\/spoiler]/s', '', $txt);
-        $txt = preg_replace('/\[tweet(.*?)\](.*?)\[\/tweet]/s', '', $txt);
-        $txt = preg_replace('/\[instagram(.*?)\](.*?)\[\/instagram]/s', '', $txt);
-        $txt = preg_replace('/\[soundcloud(.*?)\](.*?)\[\/soundcloud]/s', '', $txt);
+
+        // The blocks which an excerpt leaves out: quotes, code, spoilers and the media. The text in [color] and [url] is shown on
+        // the page, so it stays (the parser in the plain mode keeps the text, or the address of a link without text): taking the
+        // whole block out left the tooltip and the description of a topic empty when the post was in colour or started with a
+        // link. removeBlocks() takes the names in any case and a block in a block of the same tag (the regular expressions here
+        // left the text of [QUOTE] and [SPOILER], and the text after a quote in a quote).
+        $txt = self::removeBlocks($txt, ['spoiler', 'code', 'attachment', 'article', 'video', 'img', 'quote', 'tweet', 'instagram', 'soundcloud']);
+        $txt = preg_replace('/\[(?:attachment|image)\]/i', '', $txt);
         $txt = preg_replace('/\[PRIVATE(.*?)\]/s', '', $txt);
 
         if (PluginHelper::isEnabled('content', 'emailcloak')) {

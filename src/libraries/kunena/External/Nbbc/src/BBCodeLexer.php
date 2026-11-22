@@ -211,29 +211,27 @@ class BBCodeLexer {
                 $state = self::BBCODE_LEXSTATE_TAG;
                 $length += strlen($text);
             } else {
-                // Hack by Kunena : to remove the deprected message with Php 8.5
-                if (!empty(substr($this->text, 0, 1))) {
-                //    
-                    switch (ord(substr($this->text, 0, 1))) {
-                        case 10:
-                        case 13:
-                            $state = self::BBCODE_LEXSTATE_TEXT;
-                            $length++;
-                            break;
-                        default:
-                            $state = self::BBCODE_LEXSTATE_TEXT;
-                            $length += strlen($text);
-                            break;
-                        case 40:
-                        case 60:
-                        case 91:
-                        case 123:
-                            $state = self::BBCODE_LEXSTATE_TEXT;
-                            break;
-                    }
-                // End Hack by Kunena : to remove the deprected message with Php 8.5
+                // Change made by Kunena: the first character of the delimiter ($text), not of $this->text, which is empty before
+                // the lexing (ord('') is deprecated in PHP 8.5, and a check of the empty $this->text, made for that, left the
+                // state at TAG: only the text before the first tag, newline or space next to a bracket was counted, and a
+                // message which starts with a tag or a space was never cut to the limit of an excerpt).
+                $state = self::BBCODE_LEXSTATE_TEXT;
+
+                switch ($text === '' ? 0 : ord($text[0])) {
+                    case 10:
+                    case 13:
+                        $length++;
+                        break;
+                    default:
+                        $length += strlen($text);
+                        break;
+                    case 40:
+                    case 60:
+                    case 91:
+                    case 123:
+                        break;
                 }
-                //
+                // End of change made by Kunena
             }
         }
 

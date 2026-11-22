@@ -26,6 +26,9 @@ namespace Kunena\Forum\Libraries\Forum\Message;
  * Kunena 8.0, the nickname of the custom field), the messages of a guest (user id 0) by the name which was typed, unless that
  * name is one of an account: such a message was written by a guest who signed with a name which is not theirs.
  *
+ * In Kunena 8.0 the search of the messages gives the accounts (KunenaUserName::getSearchCondition()): only the name which the
+ * forum shows of a member finds him, not a name which it keeps for itself.
+ *
  * @since   Kunena 7.1
  */
 abstract class KunenaSearchUserFilter
@@ -34,19 +37,26 @@ abstract class KunenaSearchUserFilter
      * @param   string  $like           The quoted LIKE operand, e.g. '%jelle%' (already escaped for the database).
      * @param   int     $nicknameField  The id of the custom field of the nicknames (KunenaUserName), 0 for none.
      * @param   string  $prefix         The prefix of the tables.
+     * @param   string|null  $accounts  The condition which finds the accounts (alias su of the users table), e.g. the one of
+     *                                  KunenaUserName::getSearchCondition(): the accounts whose shown name matches. Without it
+     *                                  an account is found by any of its names, also by the ones which the forum keeps for
+     *                                  itself (the login name when it shows the real names).
      *
      * @return  string  A condition for the alias m of the messages table.
      *
      * @since   Kunena 7.1
      */
-    public static function condition(string $like, int $nicknameField = 0, string $prefix = '#__'): string
+    public static function condition(string $like, int $nicknameField = 0, string $prefix = '#__', ?string $accounts = null): string
     {
-        $users    = $prefix . 'users';
-        $accounts = 'su.name LIKE ' . $like . ' OR su.username LIKE ' . $like;
+        $users = $prefix . 'users';
 
-        if ($nicknameField > 0) {
-            $accounts .= ' OR su.id IN (SELECT fv.item_id FROM ' . $prefix . 'fields_values AS fv WHERE fv.field_id = ' . $nicknameField
-                . ' AND fv.value LIKE ' . $like . ')';
+        if ($accounts === null) {
+            $accounts = 'su.name LIKE ' . $like . ' OR su.username LIKE ' . $like;
+
+            if ($nicknameField > 0) {
+                $accounts .= ' OR su.id IN (SELECT fv.item_id FROM ' . $prefix . 'fields_values AS fv WHERE fv.field_id = ' . $nicknameField
+                    . ' AND fv.value LIKE ' . $like . ')';
+            }
         }
 
         return '(m.userid IN (SELECT su.id FROM ' . $users . ' AS su WHERE ' . $accounts . ')'

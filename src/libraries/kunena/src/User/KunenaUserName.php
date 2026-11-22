@@ -210,15 +210,17 @@ abstract class KunenaUserName
      *
      * @param   string  $search  The text to look for.
      * @param   string  $alias   The alias of the table of the Joomla users in the query.
+     * @param   bool    $exact   The whole name (the option "exact name" of the search of the messages), not a part of it.
      *
      * @return  string  The condition (without AND).
      *
      * @since   Kunena 8.0
      */
-    public static function getSearchCondition(string $search, string $alias = 'a'): string
+    public static function getSearchCondition(string $search, string $alias = 'a', bool $exact = false): string
     {
         $db       = Factory::getContainer()->get(DatabaseInterface::class);
-        $like     = $db->quote('%' . $db->escape($search, true) . '%', false);
+        $wildcard = $exact ? '' : '%';
+        $like     = $db->quote($wildcard . $db->escape($search, true) . $wildcard, false);
         $username = $db->quoteName($alias . '.username');
         $name     = $db->quoteName($alias . '.name');
 

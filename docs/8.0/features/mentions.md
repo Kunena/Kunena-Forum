@@ -9,7 +9,7 @@ Mentioning a user (`[mention userid=..]name[/mention]`) is improved in three way
 ## Search while you type
 
 A new topic has no users yet, so the list of users to mention was empty there. Typing `@` and some letters now searches the users (by
-username, real name or nickname) who may read the category. It works in the CKEditor and in the SCEditor. Users who are blocked, who
+the name which the forum shows of them) who may read the category. It works in the CKEditor and in the SCEditor. Users who are blocked, who
 ignore the author, or who may not read the category are left out.
 
 ![The list of users while @ci is typed](../images/mention-suggestions.png)

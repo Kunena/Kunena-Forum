@@ -91,11 +91,10 @@ class KunenaUserFinder extends KunenaFinder
      */
     public function filterByName(string $search): KunenaFinder
     {
-        $search = '%' . $search . '%';
-
-        if ($search) {
-            // The user is found by the username, the real name or the display name.
-            $this->query->where(KunenaUserName::getSearchCondition(trim($search, '%')));
+        // No search, no condition (the search of the names reads the users whose names match: an empty text matches them all).
+        if (trim($search) !== '') {
+            // The user is found by the name which the forum shows of him, not by the names which it keeps for itself.
+            $this->query->where(KunenaUserName::getSearchCondition($search));
         }
 
         return $this;

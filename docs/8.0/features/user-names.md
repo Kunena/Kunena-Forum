@@ -12,7 +12,9 @@ The option *Name of a user* is now a choice of **Username**, **Real name** or **
   deleted is ignored. Make the field editable by the users in the profile.
 - When the chosen name is empty the next one is shown (nickname, real name, username).
 - With **Users choose their name** the users choose in their forum settings which of their names the others see.
-- The names are used everywhere (also in the mention list); the user list and the user search find users by any of the three names.
+- The names are used everywhere (also in the mention list). The user list, the user search, the mentions and the search of the
+  messages of a user find a user by the name which the forum shows of him only: a name which it keeps for itself (the username
+  when it shows the real names, the real name of a user who shows his nickname) would tell which member has that name.
 
 ## Options
 

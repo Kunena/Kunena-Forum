@@ -261,7 +261,10 @@ class SearchModel extends KunenaModel
                 // The messages of the account, and of guests who signed with that name; not the ones of a guest who signed with the
                 // name of somebody else (see KunenaSearchUserFilter, Kunena 7.1).
                 $like           = $this->getState('query.exactname') == '1' ? "'" . $escapedUsername . "'" : "'%" . $escapedUsername . "%'";
-                $querystrings[] = KunenaSearchUserFilter::condition($like, KunenaUserName::getDisplayNameField());
+                // The accounts by the name which the forum shows of them: a search by a login name (or a real name) which the forum
+                // keeps for itself found the messages of its member, and so told which member has that name.
+                $accounts       = KunenaUserName::getSearchCondition($username, 'su', $this->getState('query.exactname') == '1');
+                $querystrings[] = KunenaSearchUserFilter::condition($like, 0, '#__', $accounts);
             }
         }
 

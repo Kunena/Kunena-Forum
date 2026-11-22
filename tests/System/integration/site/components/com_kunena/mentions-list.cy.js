@@ -56,6 +56,23 @@ describe('Kunena mentions: the users of a topic', () => {
     });
   });
 
+  // The search for a new topic (topicid 0) keeps the users who may read the category of the form. With a category which the user
+  // himself may not read (a staff category), the answer told him who reads it.
+  it('does not tell who may read a category which the user may not read', () => {
+    const search = (catid, token) => cy.request({ url: `${base}&view=user&task=getusersmentions&format=json&topicid=0&q=ci-&catid=${catid}&${token}=1`, failOnStatusCode: false });
+
+    cy.doFrontendLogin(user.name, user.password, false);
+    tokenOf().then((token) => {
+      search(2, token).then((response) => {
+        expect(usersIn(response.body), 'a user of a category he may read').to.include(797);
+      });
+      search(ids.category, token).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(usersIn(response.body), 'the users of a category he may not read').to.deep.eq([]);
+      });
+    });
+  });
+
   it('gives nothing to a guest, and nothing of a topic which the user may not read', () => {
     tokenOf().then((token) => list(9, token).its('status').should('eq', 403));
 

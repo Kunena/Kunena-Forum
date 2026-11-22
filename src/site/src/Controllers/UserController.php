@@ -1830,6 +1830,12 @@ class UserController extends KunenaController
 
         $category = KunenaCategoryHelper::get($this->input->getInt('catid', 0));
 
+        // The users are kept who may read the category of the form: with a category which the user himself may not read (a staff
+        // category), the answer told him who reads it.
+        if ($category->exists() && !$category->isAuthorised('read', $me)) {
+            return $list;
+        }
+
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery()
             ->select($db->quoteName('a.id'))

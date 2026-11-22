@@ -95,6 +95,11 @@ class Dispatcher extends ComponentDispatcher
 
         $app   = Factory::getApplication();
         $input = $app->getInput();
+
+        if ($app->getDocument()->getType() === 'feed') {
+            KunenaFactory::loadLanguage('com_kunena.views');
+        }
+
         $input->set('limitstart', $input->getInt('limitstart', $input->getInt('start')));
         $view    = $input->getWord('func', $input->getWord('view', 'home'));
         $subview = $input->getWord('layout', 'default');

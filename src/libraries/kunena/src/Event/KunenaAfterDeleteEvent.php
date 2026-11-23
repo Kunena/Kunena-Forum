@@ -15,17 +15,18 @@ namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\Event\Content\ContentPrepareEvent;
+use Joomla\CMS\Event\Model\AfterDeleteEvent;
 
 /**
  * Class for Model event.
  * Example:
  *  new KunenaAterDeleteEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
  *
- * Joomla Core doesn't have a Finder\BeforeDeleteEvent
+ * A delete event of the models of Joomla, as the save events: the listeners typed for it get the event (plg_kunena_finder). It was
+ * a content event, so they got a TypeError after every delete while that plugin was on.
  *
  * @since  7.1.0
  */
-class KunenaAfterDeleteEvent extends ContentPrepareEvent
+class KunenaAfterDeleteEvent extends AfterDeleteEvent
 {
 }

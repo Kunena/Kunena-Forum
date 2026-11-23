@@ -10,10 +10,8 @@
 (function () {
 	'use strict';
 
-	// The files of the message: how many there are, those of the edited message (from the server), and how many of those are in
-	// the text.
+	// The files of the message: how many there are, and how many of the files of the edited message are in the text.
 	let fileCount = 0;
-	let filesedit = null;
 	let fileeditinline = 0;
 
 	// The data of each button of a file (the answer of the upload, or the file of the edited message).
@@ -499,8 +497,16 @@
 
 		const filesId = [];
 		let content = '';
+		// The list of the form has the files of the edited message too (preload()), so it gives every file once; a file which is
+		// already in the text is not put in again. The files of the edited message were added a second time after this list, so
+		// each of them came twice into the text.
+		const text = editorText();
 
 		listedFiles().forEach((file) => {
+			if (new RegExp('\\[attachment=' + file.id + '\\]').test(text)) {
+				return;
+			}
+
 			content += '[attachment=' + file.id + ']' + file.name + '[/attachment]';
 
 			fileButtons('insert')
@@ -517,20 +523,11 @@
 		// The files are in the text, so they are not private.
 		show(byId('set-secure-all'), false);
 
-		// The files of the edited message which are not in the text yet
-		(filesedit || []).forEach((file) => {
-			if (file.inline !== true) {
-				content += '[attachment=' + file.id + ']' + file.name + '[/attachment]';
-				filesId.push(file.id);
-			}
-		});
-
 		if (byId('message')) {
 			insertInEditor(content);
 		}
 
 		setInline(filesId);
-		filesedit = null;
 	};
 
 	// The files of the message which is edited, with their state (in the text, private).
@@ -556,7 +553,6 @@
 		}
 
 		fileCount = files.length;
-		filesedit = files;
 
 		let allPrivate = true;
 		let hasInlineAttachments = false;

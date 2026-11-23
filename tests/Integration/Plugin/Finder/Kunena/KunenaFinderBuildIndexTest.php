@@ -32,6 +32,7 @@ use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Event\KunenaBeforeDeleteEvent;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -334,6 +335,39 @@ class KunenaFinderBuildIndexTest extends IntegrationTestCase implements DBTestIn
             $db->setQuery('DROP TABLE IF EXISTS #__finder_taxonomy')->execute();
             $db->setQuery('DROP TABLE IF EXISTS #__finder_taxonomy_map')->execute();
         }
+    }
+
+    /**
+     * A topic or a category is deleted: its messages leave the index first. The list of the messages was read from a cache with an
+     * index which was not there yet ("Undefined array key", a warning with every deletion).
+     */
+    public function testATopicAndACategoryAreDeletedWithoutWarnings(): void
+    {
+        $db     = $this->getDBDriver();
+        $plugin = (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor();
+        $plugin->setDatabase($db);
+
+        // A topic and a category without messages: nothing to remove from the index.
+        $topic = new TableKunenaTopics($db);
+        $topic->id = 99;
+        $category = new TableKunenaCategories($db);
+        $category->id = 99;
+
+        $warnings = [];
+        set_error_handler(static function (int $level, string $message) use (&$warnings): bool {
+            $warnings[] = $message;
+
+            return true;
+        }, E_WARNING);
+
+        try {
+            $plugin->onFinderBeforeDelete(new KunenaBeforeDeleteEvent('onFinderBeforeDelete', ['context' => 'com_kunena.topic', 'subject' => $topic]));
+            $plugin->onFinderBeforeDelete(new KunenaBeforeDeleteEvent('onFinderBeforeDelete', ['context' => 'com_kunena.category', 'subject' => $category]));
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame([], $warnings);
     }
 
     /**

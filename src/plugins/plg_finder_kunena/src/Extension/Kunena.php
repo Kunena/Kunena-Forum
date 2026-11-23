@@ -774,7 +774,8 @@ final class Kunena extends Adapter implements SubscriberInterface
     {
         static $messages = [];
 
-        if (!$messages[$cat_id]) {
+        // empty(): the first call of a request has no entry yet ("Undefined array key" with every deletion).
+        if (empty($messages[$cat_id])) {
             $db    = $this->getDatabase();
             $query = $db->createQuery();
             $query->select('m.id');
@@ -802,7 +803,7 @@ final class Kunena extends Adapter implements SubscriberInterface
     {
         static $messages = [];
 
-        if (!$messages[$topic_id]) {
+        if (empty($messages[$topic_id])) {
             $db    = $this->getDatabase();
             $query = $db->createQuery();
             $query->select('m.*, t.message');

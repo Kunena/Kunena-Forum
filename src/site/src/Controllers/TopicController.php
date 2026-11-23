@@ -3448,7 +3448,9 @@ class TopicController extends KunenaController
         // Only email if message wasn't modified by the author before approval
         // TODO: this is just a workaround for #1862, we need to find better solution.
 
-        $modifiedByAuthor = ($message->modified_by == $message->userid);
+        // A member who changed his message: a message of a visitor (or an anonymous one) has userid 0 and no modified_by (0 or NULL),
+        // which were equal, so its approval never told the subscribers.
+        $modifiedByAuthor = (int) $message->modified_by > 0 && (int) $message->modified_by === (int) $message->userid;
 
         if (!$modifiedByAuthor) {
             // A topic sends the notification of its first post; a message (a reply) sends its own (KunenaMessage has no

@@ -1464,14 +1464,8 @@ class UserController extends KunenaController
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
 
-        $upload       = KunenaUpload::getInstance();
-        $joomlaUserId = Factory::getApplication()->getIdentity()->id;
-        $user         = KunenaFactory::getUser($joomlaUserId);
-
-        // The rule of the profile form: a guest has no avatar, and a banned user may not change his profile.
-        if (!$user->exists() || !$user->isAuthorised('edit')) {
-            throw new RuntimeException(Text::_('Forbidden'), 403);
-        }
+        $upload = KunenaUpload::getInstance();
+        $user   = $this->getAvatarUser();
 
         // We are converting all exceptions into JSON.
         try {
@@ -1559,6 +1553,36 @@ class UserController extends KunenaController
     }
 
     /**
+     * The user whose avatar the upload or the remove button of the profile form changes: the user of the profile which is edited
+     * (the field kunena_userid of the form, sent as userid), with the rule of the profile form ("edit": the user himself, or a
+     * moderator who may edit the profile; a guest has no avatar, and a banned user may not change a profile). The avatar of the
+     * user of the session was changed whatever profile was edited: a moderator who uploaded or removed the avatar of a member
+     * changed his own avatar, and the member kept his.
+     *
+     * @return  KunenaUser
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected function getAvatarUser(): KunenaUser
+    {
+        $userid = $this->input->getInt('userid', 0);
+
+        // A list in the request (userid[]=1) is no user.
+        if (\is_array($userid) || !$userid) {
+            $userid = (int) Factory::getApplication()->getIdentity()->id;
+        }
+
+        $user = KunenaFactory::getUser($userid);
+
+        if (!$user->exists() || !$user->isAuthorised('edit')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
+        return $user;
+    }
+
+    /**
      * Delete previoulsy uploaded avatars from filesystem
      *
      * @param   KunenaUser   $user   KunenaUser object
@@ -1616,22 +1640,13 @@ class UserController extends KunenaController
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
 
-        $success      = [];
-        $joomlaUserId = Factory::getApplication()->getIdentity()->id;
-        $kuser        = KunenaFactory::getUser($joomlaUserId);
+        $kuser = $this->getAvatarUser();
 
-        if (
-            KunenaUserHelper::getMyself()->userid == $kuser->userid || KunenaUserHelper::getMyself()->isAdmin()
-            || KunenaUserHelper::getMyself()->isModerator()
-        ) {
-            $this->deleteOldAvatars($kuser);
+        $this->deleteOldAvatars($kuser);
 
-            // Save in the table \Kunena\Forum\Libraries\User\KunenaUser
-            $kuser->avatar = '';
-            $success       = $kuser->save();
-        } else {
-            throw new RuntimeException(Text::_('Forbidden'), 403);
-        }
+        // Save in the table \Kunena\Forum\Libraries\User\KunenaUser
+        $kuser->avatar = '';
+        $success       = $kuser->save();
 
         header('Content-type: application/json');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

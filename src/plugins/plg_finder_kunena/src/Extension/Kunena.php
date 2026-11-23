@@ -351,6 +351,13 @@ final class Kunena extends Adapter implements SubscriberInterface
             throw $e;
         }
 
+        // The buffer of getItems() is closed here too (it stayed open after every batch, and its output went to com_finder).
+        $stray = trim(ob_get_clean());
+
+        if ($stray !== '') {
+            Log::add("Finder Kunena plugin: getItems({$lastId}, {$limit}) produced output: " . substr($stray, 0, 3000), Log::ERROR);
+        }
+
         foreach ($items as $item) {
             ob_start();
 
@@ -365,8 +372,12 @@ final class Kunena extends Adapter implements SubscriberInterface
             $stray = trim(ob_get_clean());
 
             if ($stray !== '') {
-                Log::add("Finder Kunena plugin: getItems({$lastId}, {$limit}) produced output: " . substr($stray, 0, 3000), Log::ERROR);
+                Log::add("Finder Kunena plugin: index of message {$item->id} produced output: " . substr($stray, 0, 3000), Log::ERROR);
             }
+
+            // The next batch starts after this message (the cursor was never moved, so every batch read the first messages again
+            // and the messages after the first batch were never indexed).
+            $lastId = max($lastId, (int) $item->id);
 
             // Adjust the offsets.
             $offset++;
@@ -520,7 +531,7 @@ final class Kunena extends Adapter implements SubscriberInterface
     /**
      * Method to get a list of content items to index.
      *
-     * @param   integer         $offset  The list offset.
+     * @param   integer         $offset  The id of the last message of the batch before (onBuildIndex() walks the message ids).
      * @param   integer         $limit   The list limit.
      * @param   QueryInterface  $sql     A QueryInterface object. [optional]
      *
@@ -533,9 +544,9 @@ final class Kunena extends Adapter implements SubscriberInterface
     {
         Log::add("FinderIndexerAdapter::getItems({$offset}, {$limit})", Log::INFO);
 
-        // Get the list query.
+        // Get the list query: the messages after the last one of the batch before, by id.
         $sql = $this->db->createQuery();
-        $sql->select('id')->from('#__kunena_messages')->setLimit($limit, $offset);
+        $sql->select('id')->from('#__kunena_messages')->where('id > ' . (int) $offset)->order('id ASC')->setLimit($limit);
 
         // Get the content items to index.
         $this->db->setQuery($sql);

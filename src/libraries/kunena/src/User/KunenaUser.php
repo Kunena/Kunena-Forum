@@ -1780,7 +1780,10 @@ class KunenaUser
      */
     public function isBanned()
     {
-        if (!$this->banned) {
+        // No ban: the column has the null date of the database by default. Only an empty value counted as no ban, so a user who
+        // is blocked in Joomla (waiting for his activation, or blocked by an administrator) was banned too: the backend list
+        // showed him banned and its switch sent "unban", which had no ban to lift, and his type was never "blocked".
+        if (!$this->banned || $this->banned === '1000-01-01 00:00:00') {
             return false;
         }
 

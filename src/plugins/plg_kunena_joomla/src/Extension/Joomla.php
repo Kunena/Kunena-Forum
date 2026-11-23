@@ -121,6 +121,12 @@ class Joomla extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      */
     public function onKunenaGetLogin(KunenaGetLoginEvent $event)
     {
+        // The option "Enable Joomla Login" (No: the forum uses the login of another integration). It was not read: the forum, which
+        // takes the first login it gets, could keep the login of Joomla.
+        if (!$this->params->get('login', 1)) {
+            return;
+        }
+
         $event->addResult(new KunenaLoginJoomla($this->params));
     }
 }

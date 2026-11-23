@@ -40,6 +40,27 @@ class UpgradeXmlTest extends UnitTestCase
         return rtrim(trim((string) preg_replace('/\s+/', ' ', $sql)), ';');
     }
 
+    public function testTheNewTablesAndMailTemplatesOfTheUpdateFileAreInTheUpgradeOf8(): void
+    {
+        $xml    = new SimpleXMLElement(Files::read(self::UPGRADE));
+        $blocks = $xml->xpath("//upgrade/version[@version='8.0.0-DEV']");
+
+        $this->assertCount(1, $blocks);
+
+        $queries = array_map(static fn ($query) => self::normalise((string) $query), $blocks[0]->xpath('query'));
+        $missing = [];
+
+        foreach (explode(';', (string) preg_replace('/--[^\n]*/', '', Files::read(self::UPDATE))) as $statement) {
+            $statement = self::normalise($statement);
+
+            if (preg_match('/^(CREATE TABLE|INSERT)/i', $statement) && !\in_array($statement, $queries, true)) {
+                $missing[] = substr($statement, 0, 80);
+            }
+        }
+
+        $this->assertSame([], $missing);
+    }
+
     public function testEveryVersionBlockIsAChildOfTheUpgrade(): void
     {
         $xml = new SimpleXMLElement(Files::read(self::UPGRADE));

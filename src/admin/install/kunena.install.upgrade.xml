@@ -698,6 +698,126 @@
             <!-- The title and the image of a rank are 255 characters, as in the schema: the install file of the first versions of 6.x made them 250 -->
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` MODIFY `rankTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` MODIFY `rankImage` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL</query>
+            <!-- The tables of 8.0 and its mail templates: the upgrade runs this file, not the update file of Joomla, so a forum upgraded
+                 from 7.x had none of these tables (deleting a message for good stopped halfway) -->
+            <query mode="silenterror">CREATE TABLE IF NOT EXISTS `#__kunena_drafts` (
+                `id`            int(11)      NOT NULL AUTO_INCREMENT,
+                `user_id`       int(11)      NOT NULL,
+                `catid`         int(11)      NOT NULL DEFAULT 0,
+                `parent_id`     int(11)      NOT NULL DEFAULT 0,
+                `topic_id`      int(11)      NOT NULL DEFAULT 0,
+                `message_id`    int(11)      NOT NULL DEFAULT 0,
+                `subject`       varchar(255) NOT NULL DEFAULT '',
+                `message`       mediumtext   NOT NULL,
+                `fields`        mediumtext   NOT NULL,
+                `created_time`  int(11)      NOT NULL DEFAULT 0,
+                `modified_time` int(11)      NOT NULL DEFAULT 0,
+                PRIMARY KEY (`id`),
+                KEY `user_modified` (`user_id`, `modified_time`)
+                )
+                ENGINE = InnoDB
+                DEFAULT CHARSET = utf8mb4
+                DEFAULT COLLATE = utf8mb4_unicode_ci</query>
+            <query mode="silenterror">CREATE TABLE IF NOT EXISTS `#__kunena_user_ignore` (
+                `user_id`      int(11) NOT NULL,
+                `ignored_id`   int(11) NOT NULL,
+                `created_time` int(11) NOT NULL DEFAULT 0,
+                PRIMARY KEY (`user_id`, `ignored_id`),
+                KEY `ignored_id` (`ignored_id`)
+                )
+                ENGINE = InnoDB
+                DEFAULT CHARSET = utf8mb4
+                DEFAULT COLLATE = utf8mb4_unicode_ci</query>
+            <query mode="silenterror">CREATE TABLE IF NOT EXISTS `#__kunena_user_follow` (
+                `user_id`      int(11) NOT NULL,
+                `followed_id`  int(11) NOT NULL,
+                `created_time` int(11) NOT NULL DEFAULT 0,
+                PRIMARY KEY (`user_id`, `followed_id`),
+                KEY `followed_id` (`followed_id`)
+                )
+                ENGINE = InnoDB
+                DEFAULT CHARSET = utf8mb4
+                DEFAULT COLLATE = utf8mb4_unicode_ci</query>
+            <query mode="silenterror">CREATE TABLE IF NOT EXISTS `#__kunena_categories_translations` (
+                `category_id` int(11)      NOT NULL,
+                `language`    varchar(7)   NOT NULL,
+                `name`        tinytext     NULL,
+                `description` text         NULL,
+                `headerdesc`  text         NULL,
+                PRIMARY KEY (`category_id`, `language`)
+                )
+                ENGINE = InnoDB
+                DEFAULT CHARSET = utf8mb4
+                DEFAULT COLLATE = utf8mb4_unicode_ci</query>
+            <query mode="silenterror">INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+                VALUES ('com_kunena.subscription', 'com_kunena', '', 'COM_KUNENA_MAILTPL_NOTIFICATION_SUBJECT', 'COM_KUNENA_MAILTPL_NOTIFICATION_BODY', 'COM_KUNENA_MAILTPL_NOTIFICATION_HTMLBODY', '', '{"tags":["sitename","boardtitle","heading","subject","topic","category","author","url","message","more","footer","unsubscribe"]}')</query>
+            <query mode="silenterror">INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+                VALUES ('com_kunena.moderator', 'com_kunena', '', 'COM_KUNENA_MAILTPL_NOTIFICATION_SUBJECT', 'COM_KUNENA_MAILTPL_NOTIFICATION_BODY', 'COM_KUNENA_MAILTPL_NOTIFICATION_HTMLBODY', '', '{"tags":["sitename","boardtitle","heading","subject","topic","category","author","url","message","more","footer","unsubscribe"]}')</query>
+            <query mode="silenterror">INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+                VALUES ('com_kunena.mention', 'com_kunena', '', 'COM_KUNENA_MAILTPL_MENTION_SUBJECT', 'COM_KUNENA_MAILTPL_MENTION_BODY', 'COM_KUNENA_MAILTPL_MENTION_HTMLBODY', '', '{"tags":["sitename","author","topic","url"]}')</query>
+            <query mode="silenterror">INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+                VALUES ('com_kunena.reportmessage', 'com_kunena', '', 'COM_KUNENA_MAILTPL_REPORT_SUBJECT', 'COM_KUNENA_MAILTPL_REPORT_BODY', 'COM_KUNENA_MAILTPL_REPORT_HTMLBODY', '', '{"tags":["sitename","boardtitle","title","sender","reason","report","poster","subject","message","url"]}')</query>
+            <query mode="silenterror">CREATE TABLE IF NOT EXISTS `#__kunena_warnings` (
+                `id`           int(11)      NOT NULL AUTO_INCREMENT,
+                `user_id`      int(11)      NOT NULL,
+                `moderator_id` int(11)      NOT NULL DEFAULT 0,
+                `message_id`   int(11)      NOT NULL DEFAULT 0,
+                `points`       tinyint(4)   NOT NULL DEFAULT 1,
+                `reason`       varchar(255) NOT NULL DEFAULT '',
+                `created_time` int(11)      NOT NULL DEFAULT 0,
+                `expires_time` int(11)      NOT NULL DEFAULT 0,
+                PRIMARY KEY (`id`),
+                KEY `user_id` (`user_id`)
+                )
+                ENGINE = InnoDB
+                DEFAULT CHARSET = utf8mb4
+                DEFAULT COLLATE = utf8mb4_unicode_ci</query>
+            <query mode="silenterror">CREATE TABLE IF NOT EXISTS `#__kunena_bookmarks` (
+                `user_id`      int(11) NOT NULL,
+                `message_id`   int(11) NOT NULL,
+                `created_time` int(11) NOT NULL DEFAULT 0,
+                PRIMARY KEY (`user_id`, `message_id`),
+                KEY `message_id` (`message_id`)
+                )
+                ENGINE = InnoDB
+                DEFAULT CHARSET = utf8mb4
+                DEFAULT COLLATE = utf8mb4_unicode_ci</query>
+            <query mode="silenterror">CREATE TABLE IF NOT EXISTS `#__kunena_digest` (
+                `user_id`      int(11) NOT NULL,
+                `message_id`   int(11) NOT NULL,
+                `created_time` int(11) NOT NULL DEFAULT 0,
+                PRIMARY KEY (`user_id`, `message_id`),
+                KEY `message_id` (`message_id`)
+                )
+                ENGINE = InnoDB
+                DEFAULT CHARSET = utf8mb4
+                DEFAULT COLLATE = utf8mb4_unicode_ci</query>
+            <query mode="silenterror">CREATE TABLE IF NOT EXISTS `#__kunena_messages_history` (
+                `id`          int(11)      NOT NULL AUTO_INCREMENT,
+                `message_id`  int(11)      NOT NULL,
+                `edited_by`   int(11)      NOT NULL DEFAULT 0,
+                `edited_time` int(11)      NOT NULL DEFAULT 0,
+                `reason`      varchar(255) NOT NULL DEFAULT '',
+                `subject`     varchar(255) NOT NULL DEFAULT '',
+                `message`     mediumtext   NOT NULL,
+                PRIMARY KEY (`id`),
+                KEY `message_id` (`message_id`),
+                KEY `edited_by` (`edited_by`)
+                )
+                ENGINE = InnoDB
+                DEFAULT CHARSET = utf8mb4
+                DEFAULT COLLATE = utf8mb4_unicode_ci</query>
+            <query mode="silenterror">CREATE TABLE IF NOT EXISTS `#__kunena_reactions` (
+                `message_id`   int(11)       NOT NULL,
+                `user_id`      int(11)       NOT NULL,
+                `reaction`     varbinary(64) NOT NULL,
+                `created_time` int(11)       NOT NULL DEFAULT 0,
+                PRIMARY KEY (`message_id`, `user_id`),
+                KEY `user_id` (`user_id`)
+                )
+                ENGINE = InnoDB
+                DEFAULT CHARSET = utf8mb4
+                DEFAULT COLLATE = utf8mb4_unicode_ci</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

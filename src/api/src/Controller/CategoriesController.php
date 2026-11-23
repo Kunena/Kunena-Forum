@@ -26,6 +26,8 @@ use RuntimeException;
  */
 class CategoriesController extends ApiController
 {
+    use ForumOpenTrait;
+
     /**
      * @var    string
      * @since  Kunena 8.0

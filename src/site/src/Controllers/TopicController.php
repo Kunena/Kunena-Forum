@@ -1422,8 +1422,9 @@ class TopicController extends KunenaController
             KunenaTopicTags::save((int) $topic->id, $this->app->getInput()->post->get('topic_tags', [], 'array'));
         }
 
-        // Save IP address of user
-        if ($this->config->ipTracking) {
+        // Save IP address of user. Not the empty address of an anonymous post (it is removed so that nobody can tell the author):
+        // it replaced the address which the profile had kept.
+        if ($this->config->ipTracking && $message->ip) {
             $this->me->ip = $message->ip;
             $this->me->save();
         }

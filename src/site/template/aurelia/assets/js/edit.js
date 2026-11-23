@@ -211,8 +211,10 @@
 
 				anonymous.style.display = shown ? '' : 'none';
 
+				// Checked where the category makes the messages anonymous by default (postAnonymous), as when the form is opened
+				// in it: a category which only allows them checked the box too.
 				if (byId('kanonymous')) {
-					byId('kanonymous').checked = shown;
+					byId('kanonymous').checked = arrayanynomousbox[catid] == 1;
 				}
 			}
 

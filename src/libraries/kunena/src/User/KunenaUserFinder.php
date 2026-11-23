@@ -149,8 +149,10 @@ class KunenaUserFinder extends KunenaFinder
         } elseif ($usertype == 'user') {
             $this->query->where($this->db->quoteName('ku.moderator') . ' =0');
             $this->query->where('(' . $this->db->quoteName('ku.banned') . ' = ' . $this->db->quote('1000-01-01 00:00:00') . ' OR ' . $this->db->quoteName('ku.banned') . '<=' . $this->db->quote($dateNow) . ')');
-            $this->query->innerJoin('#__user_usergroup_map AS uum', 'ku.userid=uum.user_id');
-            $this->query->where($this->db->quoteName('uum.group_id') . ' !=8');
+            // Not a super user. The join of the groups gave a row for each group of a user, so a user of two groups was counted
+            // twice (the total and the pages of the list were wrong), and a super user who is in another group too was listed.
+            $this->query->where('NOT EXISTS (SELECT 1 FROM ' . $this->db->quoteName('#__user_usergroup_map', 'uum') . ' WHERE ' . $this->db->quoteName('uum.user_id')
+                . ' = ' . $this->db->quoteName('a.id') . ' AND ' . $this->db->quoteName('uum.group_id') . ' = 8)');
         }
 
         return $this;

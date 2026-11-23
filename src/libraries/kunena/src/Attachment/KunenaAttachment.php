@@ -544,7 +544,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      */
     public function getExtension($escape = true): string
     {
-        $filename  = $this->protected ? $this->filename_real : $this->filename;
+        $filename  = $this->shownName();
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
         return $escape ? htmlspecialchars($extension, ENT_COMPAT, 'UTF-8') : $extension;
@@ -561,9 +561,27 @@ class KunenaAttachment extends KunenaDatabaseObject
      */
     public function getFilename($escape = true): string
     {
-        $filename = $this->protected ? $this->filename_real : $this->filename;
+        $filename = $this->shownName();
 
         return $escape ? htmlspecialchars($filename, ENT_COMPAT, 'UTF-8') : $filename;
+    }
+
+    /**
+     * The name of the file for the users: the name of the upload for a protected file, and for a file with a random name on the
+     * disk (the file of an anonymous message, see save()). The forum showed that random name without protection (the default):
+     * 32 hexadecimal characters, and the download had no extension.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected function shownName(): string
+    {
+        if ($this->protected || ($this->filename_real && preg_match('/^[0-9a-f]{32}$/', (string) $this->filename))) {
+            return (string) $this->filename_real;
+        }
+
+        return (string) $this->filename;
     }
 
     /**

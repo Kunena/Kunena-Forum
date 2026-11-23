@@ -21,9 +21,13 @@ namespace Kunena\Forum\Site;
 
 // The names are inside attributes with single quotes: these are encoded too.
 $name = htmlspecialchars($this->vizualization . '/' . $this->vizualizationTab, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+// The id of this visualization: a page with two of them (two messages of a topic) had the same id twice, so the script of the
+// second one sized the first one again and left the second one without its size.
+$id = 'viz' . bin2hex(random_bytes(6));
 ?>
 
-<div class='tableauPlaceholder' id='viz748596' style='position: relative'>
+<div class='tableauPlaceholder' id='<?php echo $id; ?>' style='position: relative'>
     <noscript>
         <a href='https://www.tableau.com/'>
             <img alt=' ' src='https://public.tableau.com/static/images/VG/<?php echo $name; ?>/1_rss.png' style='border: none' />
@@ -46,7 +50,7 @@ $name = htmlspecialchars($this->vizualization . '/' . $this->vizualizationTab, E
     </object>
 </div>
 <script type='text/javascript'>
-    var divElement = document.getElementById('viz748596');
+    var divElement = document.getElementById('<?php echo $id; ?>');
     var vizElement = divElement.getElementsByTagName('object')[0];
     vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
     var scriptElement = document.createElement('script');

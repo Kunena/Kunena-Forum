@@ -1564,6 +1564,12 @@ class TopicController extends KunenaController
      */
     protected function removeOrphanedAttachments()
     {
+        // Not for a guest: user 0 are all the guests, and their pending uploads are all of his kind (the uploads of every guest who
+        // was writing were deleted).
+        if (!$this->me->exists()) {
+            return;
+        }
+
         $params['file']  = '1';
         $params['image'] = '1';
         $params['mesid'] = '0';
@@ -1572,6 +1578,15 @@ class TopicController extends KunenaController
 
         if (!empty($attachments)) {
             foreach ($attachments as $attachment) {
+                // An upload of the last day may belong to another form which is still being written (another tab, another topic):
+                // it stays, as the scheduled task of the pending uploads leaves it. Every pending upload of the user was deleted.
+                $path     = $attachment->getPath();
+                $fileTime = $path && is_file($path) ? (int) filemtime($path) : null;
+
+                if (!KunenaPendingAttachment::mayRemove($fileTime, time())) {
+                    continue;
+                }
+
                 $attachment->delete();
             }
         }

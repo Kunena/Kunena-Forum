@@ -807,7 +807,10 @@ abstract class KunenaTopicHelper
         $query->update($db->quoteName('#__kunena_topics', 'tt'))
             ->join('INNER', '(' . $subQuery . ') AS ' . $db->quoteName('c') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('c.thread'))
             ->set($db->quoteName('tt.hold') . ' = ' . $db->quoteName('c.hold'))
-            ->where($db->quoteName('tt.moved_id') . ' = 0 ' . $topics);
+            ->where($db->quoteName('tt.moved_id') . ' = 0 ' . $topics)
+            // A deleted topic keeps the replies which wait for approval as they were (they come back with the topic): they do not
+            // bring it back. The recount made such a topic "waiting for approval" again, with the reply as its first post.
+            ->where('NOT (' . $db->quoteName('tt.hold') . ' IN (2,3) AND ' . $db->quoteName('c.hold') . ' = 1)');
         $db->setQuery($query);
 
         try {

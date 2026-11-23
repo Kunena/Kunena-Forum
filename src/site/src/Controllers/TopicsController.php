@@ -110,6 +110,9 @@ class TopicsController extends KunenaController
                 $query = $this->db->createQuery()->select(['a.id'])
                     ->from($this->db->quoteName('#__kunena_attachments', 'a'))
                     ->leftJoin($this->db->quoteName('#__kunena_messages', 'm') . ' ON ' . $this->db->quoteName('a.mesid') . '=' . $this->db->quoteName('m.id'))
+                    // Not the uploads which wait for their message (mesid 0), as KunenaAttachmentHelper::cleanup(): the pending
+                    // uploads of every user who was writing a post were removed.
+                    ->where($this->db->quoteName('a.mesid') . ' > 0')
                     ->where($this->db->quoteName('m.id') . ' IS NULL');
                 $this->db->setQuery($query);
 

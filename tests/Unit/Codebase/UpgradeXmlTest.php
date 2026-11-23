@@ -67,4 +67,12 @@ class UpgradeXmlTest extends UnitTestCase
 
         $this->assertSame([], array_map(static fn ($version) => (string) $version['version'], $xml->xpath('//version/version')));
     }
+
+    public function testTheUninstallDropsEveryTableOfTheInstall(): void
+    {
+        preg_match_all('/CREATE TABLE IF NOT EXISTS `#__(\w+)`/', Files::read(self::INSTALL), $created);
+        preg_match_all('/DROP TABLE IF EXISTS `#__(\w+)`/', Files::read(self::UNINSTALL), $dropped);
+
+        $this->assertSame([], array_values(array_diff($created[1], $dropped[1])));
+    }
 }

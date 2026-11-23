@@ -116,4 +116,23 @@ class PopupCandidatesTest extends IntegrationTestCase implements DBTestInterface
         // Messages 2, 3 and 4 never count; 1 is his own.
         $this->assertSame([5 => 'reply', 6 => 'reply'], $this->found());
     }
+
+    /**
+     * More than 100 new messages: the newest 100 count, the oldest first. The oldest 100 were taken, so the popups showed the
+     * newest of those and never the messages after them.
+     */
+    public function testWithMoreThanAHundredMessagesTheNewestHundredAreFound(): void
+    {
+        $this->topic(1, self::USER);
+        $this->message(1, 1, 0, self::USER);
+
+        for ($id = 2; $id <= 121; $id++) {
+            $this->message($id, 1, 1, 7);
+        }
+
+        $found = array_keys($this->found(0, 200));
+
+        $this->assertSame([22, 121], [reset($found), end($found)]);
+        $this->assertCount(100, $found);
+    }
 }

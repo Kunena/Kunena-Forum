@@ -104,11 +104,13 @@ abstract class KunenaPopupNotification
                 . ' OR (' . $db->quoteName('m.parent') . ' = 0 AND ' . $db->quoteName('uc.subscribed') . ' = 1)'
                 . ' OR ' . $db->quoteName('mt.message') . ' LIKE ' . $db->quote($mention) . ')'
             )
-            ->order($db->quoteName('m.id') . ' ASC');
+            // The newest ones, given the oldest first: with the oldest 100 the popups showed the newest of those, and the messages
+            // after them were never shown (the cursor of the browser moves past them).
+            ->order($db->quoteName('m.id') . ' DESC');
         $query->setLimit(100);
         $db->setQuery($query);
 
-        return (array) $db->loadObjectList();
+        return array_reverse((array) $db->loadObjectList());
     }
 
     /**

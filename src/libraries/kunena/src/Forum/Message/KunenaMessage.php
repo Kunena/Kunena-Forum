@@ -2226,7 +2226,8 @@ class KunenaMessage extends KunenaDatabaseObject
                 (int) $this->id,
                 (int) $useridfromparent,
                 (string) KunenaUserHelper::get($useridfromparent)->getName(),
-                (string) $this->message
+                (string) $this->message,
+                !KunenaUserHelper::getMyself()->exists()
             );
         } else {
             if (\is_array($safefields)) {

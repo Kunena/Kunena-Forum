@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Forum\Message;
 \defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * The quotes of a reply: the [quote] block of a message, and the blocks of several messages which the user chose with Multi-quote
@@ -78,16 +79,18 @@ abstract class KunenaMessageQuotes
      * @param   int     $userid  The author.
      * @param   string  $name    The name of the author.
      * @param   string  $text    The text of the message.
+     * @param   bool    $guest   The quote is for a visitor: the text of [hide] is for the members only, and the editor of a visitor
+     *                           got it (the parser shows a visitor "hidden text" in its place).
      *
      * @return  string
      *
      * @since   Kunena 8.0
      */
-    public static function block(int $id, int $userid, string $name, string $text): string
+    public static function block(int $id, int $userid, string $name, string $text, bool $guest = false): string
     {
         $name = trim(str_replace(['"', '[', ']'], '', $name));
         $name = $name !== '' ? $name : 'anonymous';
-        $text = KunenaParser::removeBlocks($text, ['confidential', 'private']);
+        $text = KunenaParser::removeBlocks($text, $guest ? ['confidential', 'private', 'hide'] : ['confidential', 'private']);
 
         return "[quote=\"{$name} post={$id} userid={$userid}\"]" . $text . '[/quote]';
     }
@@ -105,6 +108,8 @@ abstract class KunenaMessageQuotes
      */
     public static function build(array $messages, int $topicId): string
     {
+        $guest = !KunenaUserHelper::getMyself()->exists();
+
         $quoted = array_filter(
             $messages,
             static fn ($message): bool => $message instanceof KunenaMessage && $message->exists() && (int) $message->thread === $topicId
@@ -118,7 +123,8 @@ abstract class KunenaMessageQuotes
                 (int) $message->id,
                 (int) $message->userid,
                 (string) $message->getAuthor()->getName(),
-                (string) $message->message
+                (string) $message->message,
+                $guest
             ),
             $quoted
         );

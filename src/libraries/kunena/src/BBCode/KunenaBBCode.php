@@ -2884,6 +2884,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return true;
         }
 
+        // The links come back after the video, as after [url] and [tableau]: the counter stayed raised, and every [img] after a
+        // [video] skipped the security check of the images (bbcodeImgSecure) and lost its link to the full picture.
+        $bbcode->autoLink_disable--;
+
         if (!$content || KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Video')) {
             return '';
         }

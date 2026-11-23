@@ -417,24 +417,8 @@ abstract class KunenaMessageThankyouHelper
      */
     public static function recountThankyou()
     {
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
-        // Users who have no thank yous, set thankyou count to 0
-        $query = $db->createQuery();
-        $query->update($db->quoteName('#__kunena_users', 'u'))
-            ->leftJoin($db->quoteName('#__kunena_thankyou', 't') . ' ON ' . $db->quoteName('t.targetuserid') . ' = ' . $db->quoteName('u.userid'))
-            ->set($db->quoteName('u.thankyou') . ' = 0')
-            ->where($db->quoteName('t.targetuserid') . ' IS NULL');
-        $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-
-            return false;
-        }
-
-        return $db->getAffectedRows();
+        // The whole count (the recount of the users in the Tools): only the users without any thank you were set to 0, so a count
+        // which was wrong (two "unthank" requests at once took 2 off) was never repaired.
+        return self::recount();
     }
 }

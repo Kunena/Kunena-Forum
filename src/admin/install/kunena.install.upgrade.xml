@@ -566,12 +566,13 @@
                  versiondate="2025-07-31"
                  versionname="Internal">
             <phpfile name="6.4.5-2025-07-30_remove_columns_users_table"/>
+        </version>
+        <!-- A block of its own: it was inside the block of 6.4.5, so it never ran (and that block reported it as a failed action) -->
         <version version="6.4.7-DEV"
                  versiondate="2025-11-04"
                  versionname="Internal">
-        <query mode="silenterror">UPDATE `#__kunena_polls` SET `polltimetolive` = '1000-01-01 00:00:00' WHERE `polltimetolive` IS NULL;</query>
-        <query mode="silenterror">ALTER TABLE `#__kunena_polls` CHANGE `polltimetolive` `polltimetolive` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
-        </version> 
+            <query mode="silenterror">UPDATE `#__kunena_polls` SET `polltimetolive` = '1000-01-01 00:00:00' WHERE `polltimetolive` IS NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_polls` CHANGE `polltimetolive` `polltimetolive` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
         </version>
                 <version version="7.0.0-DEV"
                  versiondate="2025-07-29"

@@ -757,20 +757,28 @@
 
 					group.append(removeButton(data));
 					item.append(group);
-				} else if (result.message) {
-					setSubmit(true);
+				} else {
+					// A file which the server refused is no file of the message: it does not count against the limit (with a
+					// limit of one file, the file after a refused one was "too many").
+					fileCount = Math.max(0, fileCount - 1);
 
-					const error = document.createElement('div');
+					if (result.message) {
+						setSubmit(true);
 
-					error.className = 'alert alert-danger';
-					error.setAttribute('role', 'alert');
-					error.textContent = result.message;
-					span?.append(document.createElement('br'), error);
+						const error = document.createElement('div');
+
+						error.className = 'alert alert-danger';
+						error.setAttribute('role', 'alert');
+						error.textContent = result.message;
+						span?.append(document.createElement('br'), error);
+					}
 				}
 			},
 			fail: (message, item) => {
 				const error = document.createElement('span');
 
+				// No answer: the file is not on the server, so it is no file of the message either.
+				fileCount = Math.max(0, fileCount - 1);
 				setSubmit(true);
 				error.className = 'text-danger';
 				error.textContent = message || 'Upload failed';

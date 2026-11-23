@@ -15,6 +15,8 @@ namespace Kunena\Forum\Libraries\Forum;
 
 \defined('_JEXEC') or die();
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Exception;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
@@ -334,8 +336,12 @@ class KunenaStatistics
     public function loadLastDays(): void
     {
         if ($this->todayTopicCount === null) {
-            $todaystart     = strtotime(date('Y-m-d'));
-            $yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
+            // The days of the site: they start at midnight in the time zone of the site. They started at midnight of the server
+            // (UTC), so east of UTC the topics of the evening were counted for the next day, and west of it the ones of the morning
+            // for the day before.
+            $zone           = new DateTimeZone((string) Factory::getApplication()->get('offset', 'UTC') ?: 'UTC');
+            $todaystart     = (new DateTimeImmutable('today', $zone))->getTimestamp();
+            $yesterdaystart = (new DateTimeImmutable('yesterday', $zone))->getTimestamp();
 
             $query = $this->_db->createQuery();
             $query->select(

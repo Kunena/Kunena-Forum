@@ -1741,9 +1741,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return true;
         }
 
-        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
-            return "[{$name}]{$content}";
-        }
+        // No shortcut for a lost tag here ("[name]" and the content as text): after an earlier block of the same tag which was left
+        // open, every block of it gave its hidden text so, to every reader, in the e-mails and in the activity stream.
 
         // Display nothing in activity streams etc..
         if (!empty($bbcode->parent->forceSecure)) {
@@ -1989,9 +1988,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return true;
         }
 
-        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
-            return "[{$name}]{$content}";
-        }
+        // No shortcut for a lost tag here ("[name]" and the content as text): after an earlier block of the same tag which was left
+        // open, every block of it gave its hidden text so, to every reader, in the e-mails and in the activity stream.
 
         // Display nothing in activity streams etc..
         if (!empty($bbcode->parent->forceSecure)) {
@@ -2344,9 +2342,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return true;
         }
 
-        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
-            return "[{$name}]{$content}";
-        }
+        // No shortcut for a lost tag here ("[name]" and the content as text): after an earlier block of the same tag which was left
+        // open, every block of it gave its hidden text so, to every reader, in the e-mails and in the activity stream.
 
         // Display nothing in activity streams etc..
         if (!empty($bbcode->parent->forceSecure)) {

@@ -38,6 +38,7 @@ $kunenaLoader = require $root . '/vendor/autoload.php';
 $kunenaLoader->addPsr4('Kunena\\Forum\\Libraries\\', $root . '/src/libraries/kunena/src/');
 $kunenaLoader->addPsr4('Kunena\\Forum\\Site\\', $root . '/src/site/src/');
 $kunenaLoader->addPsr4('Kunena\\Forum\\Administrator\\', $root . '/src/admin/src/');
+$kunenaLoader->addPsr4('Kunena\\Forum\\Api\\', $root . '/src/api/src/');
 
 // The tests themselves: Kunena\Tests\Unit\Libraries\Kunena\Html\KunenaMapTest is tests/Unit/Libraries/Kunena/Html/KunenaMapTest.php.
 $kunenaLoader->addPsr4('Kunena\\Tests\\Unit\\', $root . '/tests/Unit/');

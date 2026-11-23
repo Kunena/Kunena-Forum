@@ -64,6 +64,10 @@ abstract class ApiListModel extends ListModel
             $limit = (int) $this->getState('list.limit', 20);
             $limit = $limit > 0 ? min($limit, 100) : 20;
 
+            // The pagination of Joomla (the links next and last) reads the limit of the state: with page[limit]=500 it pointed to
+            // the offset 500 after a page of 100 items, and with 0 it took the whole list for one page.
+            $this->setState('list.limit', $limit);
+
             [$this->apiItems, $this->apiTotal] = $this->load(max(0, (int) $this->getState('list.start', 0)), $limit);
         }
 

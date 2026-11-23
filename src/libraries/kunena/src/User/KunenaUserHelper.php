@@ -182,7 +182,9 @@ abstract class KunenaUserHelper
     {
         $id = (int) $id;
 
-        if ($id && !empty(self::$_instances[$id])) {
+        // A user who is not there any more (deleted) is known by the name of the message: loadUsers() keeps him in memory without a
+        // name, and he was given back so, so the lists of topics showed his posts without an author.
+        if ($id && !empty(self::$_instances[$id]) && (self::$_instances[$id]->exists() || (string) self::$_instances[$id]->username !== '')) {
             return self::$_instances[$id];
         }
 

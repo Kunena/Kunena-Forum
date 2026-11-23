@@ -75,7 +75,11 @@ class TopicsController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
             $this->setRedirectBack();
         } else {
-            $messages = KunenaMessageHelper::getMessagesByTopics($ids);
+            // The files of the topics which the user may delete for good, read before they are deleted. They were read for all the
+            // ids of the request: the files of a topic whose delete was refused were deleted too (any member could delete the
+            // files of the posts of others).
+            $allowed  = array_filter($topics, static fn ($topic) => !$topic->tryAuthorise('permdelete', null, false));
+            $messages = KunenaMessageHelper::getMessagesByTopics(array_map(static fn ($topic) => (int) $topic->id, array_values($allowed))) ?: [];
 
             foreach ($topics as $topic) {
                 try {
@@ -94,7 +98,7 @@ class TopicsController extends KunenaController
 
             // Delete attachments in each message
             $finder = new KunenaAttachmentFinder();
-            $finder->where('mesid', 'IN', array_keys($messages));
+            $finder->where('mesid', 'IN', array_keys($messages) ?: [0]);
             $attachments = $finder->find();
 
             if ($finder->count() > 0) {

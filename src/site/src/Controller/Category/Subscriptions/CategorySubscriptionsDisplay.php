@@ -106,7 +106,8 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
             $limitstart = 0;
         }
 
-        list($total, $this->categories) = KunenaCategoryHelper::getLatestSubscriptions($this->state->get('user'));
+        // The page of the list: without the start and the limit every page showed the first categories again.
+        list($total, $this->categories) = KunenaCategoryHelper::getLatestSubscriptions($this->state->get('user'), $limitstart, $limit);
 
         $topicIds = [];
         $userIds  = [];

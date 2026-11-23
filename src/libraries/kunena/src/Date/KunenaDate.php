@@ -188,30 +188,24 @@ class KunenaDate extends Date
             trigger_error('Kunena: Timezone issue!');
         }
 
-        // Today and Yesterday?
+        // Today and Yesterday? The days are the days of the time zone of the user, the one of the time which is shown: getdate() gave
+        // the days of the server (UTC), and around midnight a post of yesterday was "Today" (and one of today "Yesterday").
         if (end($modearr) == 'today') {
             $now = Factory::getDate('now');
 
-            if ($offset) {
+            if ($offset instanceof DateTimeZone) {
                 $now->setTimezone($offset);
             }
 
-            $now  = @getdate($now->toUnix());
-            $then = @getdate($this->toUnix());
+            $then      = $this->format('Y-m-d', true);
+            $today     = $now->format('Y-m-d', true);
+            $yesterday = (clone $now)->modify('-1 day')->format('Y-m-d', true);
 
-            // Same day of the year, same year.... Today!
-            if (
-                $then ['yday'] == $now ['yday']
-                && $then ['year'] == $now ['year']
-            ) {
+            if ($then === $today) {
                 return trim(Text::sprintf('COM_KUNENA_LIB_DATE_TODAY', $time ? $this->format(Text::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
             }
 
-            // Day-of-year is one less and same year, or it's the first of the year and that's the last of the year...
-            if (
-                ($then ['yday'] == $now ['yday'] - 1 && $then ['year'] == $now ['year'])
-                || ($now ['yday'] == 0 && $then ['year'] == $now ['year'] - 1) && $then ['mon'] == 12 && $then ['mday'] == 31
-            ) {
+            if ($then === $yesterday) {
                 return trim(Text::sprintf('COM_KUNENA_LIB_DATE_YESTERDAY', $time ? $this->format(Text::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
             }
         }

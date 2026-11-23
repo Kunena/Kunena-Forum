@@ -15,6 +15,8 @@ namespace Kunena\Tests\Integration\Plugin\Finder\Kunena;
 use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Event\Finder\AfterSaveEvent;
+use Joomla\CMS\Event\Finder\BeforeSaveEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Language;
 use Joomla\CMS\Menu\AbstractMenu;
@@ -33,6 +35,8 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
+use Kunena\Forum\Libraries\Tables\TableKunenaTopics;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Plugin\Finder\Kunena\Extension\Kunena;
 use Kunena\Tests\Integration\DBTestInterface;
@@ -198,6 +202,152 @@ class KunenaFinderBuildIndexTest extends IntegrationTestCase implements DBTestIn
         }
 
         $this->assertSame([1, 4, 9], $this->indexed);
+    }
+
+    /**
+     * A topic is moved into another category, or deleted: KunenaTopic::move() and publish() change the category and the state of
+     * its messages in the database and save the topic. The messages are indexed again with their new access level and state; they
+     * were not, and the posts of a topic moved into a closed category or deleted stayed in the results of the search of the site.
+     */
+    public function testTheMessagesOfATopicAreIndexedAgainWhenTheTopicMovesOrIsDeleted(): void
+    {
+        $db = $this->getDBDriver();
+
+        // The adapter loads the constants of Kunena (api.php) before it indexes again: the paths of the test are set already.
+        if (!\defined('KUNENA_LOADED')) {
+            \define('KUNENA_LOADED', 1);
+        }
+
+        // The category 3 is for the level 3 (Special); Smart Search removes the nodes of the taxonomy which are not used any more.
+        $this->insertRow('#__kunena_categories', ['id' => 3, 'parentid' => 1, 'name' => 'Staff', 'alias' => '3-staff', 'published' => 1,
+            'accesstype' => 'joomla.level', 'access' => 3]);
+        $db->setQuery('CREATE TABLE IF NOT EXISTS #__finder_taxonomy (id int unsigned NOT NULL AUTO_INCREMENT, parent_id int unsigned NOT NULL DEFAULT 0,'
+            . ' lft int NOT NULL DEFAULT 0, rgt int NOT NULL DEFAULT 0, level int unsigned NOT NULL DEFAULT 0, path varchar(400) NOT NULL DEFAULT \'\','
+            . ' title varchar(255) NOT NULL DEFAULT \'\', alias varchar(400) NOT NULL DEFAULT \'\', state tinyint unsigned NOT NULL DEFAULT 1,'
+            . ' access tinyint unsigned NOT NULL DEFAULT 1, language char(7) NOT NULL DEFAULT \'\', PRIMARY KEY (id))')->execute();
+        $db->setQuery('CREATE TABLE IF NOT EXISTS #__finder_taxonomy_map (link_id int unsigned NOT NULL, node_id int unsigned NOT NULL,'
+            . ' PRIMARY KEY (link_id, node_id))')->execute();
+
+        try {
+            $plugin = (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor();
+            $plugin->setDatabase($db);
+            (new ReflectionProperty(Kunena::class, 'db'))->setValue($plugin, $db);
+            (new ReflectionProperty(Kunena::class, 'viewLevels'))->setValue($plugin, [1 => [1], 3 => [6]]);
+
+            $items   = [];
+            $indexer = $this->createStub(Indexer::class);
+            $indexer->method('index')->willReturnCallback(static function ($item) use (&$items) {
+                $items[] = [(int) $item->id, (int) $item->access, (int) $item->state];
+
+                return 1;
+            });
+            (new ReflectionProperty(Kunena::class, 'indexer'))->setValue($plugin, $indexer);
+
+            // The messages of the topic are read in this request (the page of the topic) before it moves.
+            KunenaMessageHelper::getMessages([1, 4, 9], 'none');
+
+            // The topic moves into the category 3 (as KunenaTopic::move() does it).
+            $this->saveTopic($plugin, static function () use ($db) {
+                $db->setQuery('UPDATE #__kunena_messages SET catid = 3 WHERE thread = 1')->execute();
+                $db->setQuery('UPDATE #__kunena_topics SET category_id = 3 WHERE id = 1')->execute();
+            });
+            $this->assertSame([[1, 3, 1], [4, 3, 1], [9, 3, 1]], $items);
+
+            // The topic is deleted (as KunenaTopic::publish() does it).
+            $items = [];
+            $this->saveTopic($plugin, static function () use ($db) {
+                $db->setQuery('UPDATE #__kunena_messages SET hold = 2 WHERE thread = 1')->execute();
+                $db->setQuery('UPDATE #__kunena_topics SET hold = 2 WHERE id = 1')->execute();
+            });
+            $this->assertSame([[1, 3, 0], [4, 3, 0], [9, 3, 0]], $items);
+
+            // A topic which is saved without a change of its category or state (a new reply, a hit) is not indexed again.
+            $items = [];
+            $this->saveTopic($plugin, static function () {
+            });
+            $this->assertSame([], $items);
+
+            // The topic is restored, and moved into the category 2 again with a shadow: the messages go to a new topic (2), the
+            // topic 1 stays as the shadow which points to it (as KunenaTopic::move() does it).
+            $db->setQuery('UPDATE #__kunena_messages SET hold = 0 WHERE thread = 1')->execute();
+            $db->setQuery('UPDATE #__kunena_topics SET hold = 0 WHERE id = 1')->execute();
+            $this->insertRow('#__kunena_topics', ['id' => 2, 'category_id' => 2, 'subject' => 'Topic', 'hold' => 0, 'posts' => 3,
+                'first_post_id' => 1, 'last_post_id' => 9]);
+            KunenaCategoryHelper::get(2);
+            $items = [];
+            $this->saveTopic($plugin, static function () use ($db) {
+                $db->setQuery('UPDATE #__kunena_messages SET catid = 2, thread = 2 WHERE thread = 1')->execute();
+                $db->setQuery('UPDATE #__kunena_topics SET moved_id = 2 WHERE id = 1')->execute();
+            });
+            $this->assertSame([[1, 1, 1], [4, 1, 1], [9, 1, 1]], $items);
+        } finally {
+            $db->setQuery('DROP TABLE IF EXISTS #__finder_taxonomy')->execute();
+            $db->setQuery('DROP TABLE IF EXISTS #__finder_taxonomy_map')->execute();
+        }
+    }
+
+    /**
+     * A section is unpublished (Categories > Unpublish): the messages of its categories are hidden with it. The adapter indexed the
+     * messages of a category again only when the access level of a category of levels changed: they stayed in the results.
+     */
+    public function testTheMessagesOfTheCategoriesOfAnUnpublishedSectionAreIndexedAgain(): void
+    {
+        $db = $this->getDBDriver();
+
+        if (!\defined('KUNENA_LOADED')) {
+            \define('KUNENA_LOADED', 1);
+        }
+
+        $db->setQuery('CREATE TABLE IF NOT EXISTS #__finder_taxonomy (id int unsigned NOT NULL AUTO_INCREMENT, parent_id int unsigned NOT NULL DEFAULT 0,'
+            . ' lft int NOT NULL DEFAULT 0, rgt int NOT NULL DEFAULT 0, level int unsigned NOT NULL DEFAULT 0, path varchar(400) NOT NULL DEFAULT \'\','
+            . ' title varchar(255) NOT NULL DEFAULT \'\', alias varchar(400) NOT NULL DEFAULT \'\', state tinyint unsigned NOT NULL DEFAULT 1,'
+            . ' access tinyint unsigned NOT NULL DEFAULT 1, language char(7) NOT NULL DEFAULT \'\', PRIMARY KEY (id))')->execute();
+        $db->setQuery('CREATE TABLE IF NOT EXISTS #__finder_taxonomy_map (link_id int unsigned NOT NULL, node_id int unsigned NOT NULL,'
+            . ' PRIMARY KEY (link_id, node_id))')->execute();
+
+        try {
+            $plugin = (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor();
+            $plugin->setDatabase($db);
+            (new ReflectionProperty(Kunena::class, 'db'))->setValue($plugin, $db);
+            (new ReflectionProperty(Kunena::class, 'viewLevels'))->setValue($plugin, [1 => [1]]);
+
+            $items   = [];
+            $indexer = $this->createStub(Indexer::class);
+            $indexer->method('index')->willReturnCallback(static function ($item) use (&$items) {
+                $items[] = [(int) $item->id, (int) $item->state];
+
+                return 1;
+            });
+            (new ReflectionProperty(Kunena::class, 'indexer'))->setValue($plugin, $indexer);
+
+            // The section 1 is unpublished as KunenaCategory::save() does it: the object of the category and its row.
+            $table = new TableKunenaCategories($db);
+            $table->load(1);
+            $plugin->onFinderBeforeSave(new BeforeSaveEvent('onFinderBeforeSave', ['context' => 'com_kunena.category', 'subject' => $table, 'isNew' => false]));
+            KunenaCategoryHelper::get(1)->published = 0;
+            $db->setQuery('UPDATE #__kunena_categories SET published = 0 WHERE id = 1')->execute();
+            $table->load(1);
+            $plugin->onFinderAfterSave(new AfterSaveEvent('onFinderAfterSave', ['context' => 'com_kunena.category', 'subject' => $table, 'isNew' => false]));
+
+            $this->assertSame([[1, 0], [4, 0], [9, 0]], $items);
+        } finally {
+            $db->setQuery('DROP TABLE IF EXISTS #__finder_taxonomy')->execute();
+            $db->setQuery('DROP TABLE IF EXISTS #__finder_taxonomy_map')->execute();
+        }
+    }
+
+    /**
+     * Save the topic 1 as KunenaDatabaseObject::save() does: the events before and after, with the table of the topic; $change
+     * writes the change to the database in between.
+     */
+    private function saveTopic(Kunena $plugin, callable $change): void
+    {
+        $table = new TableKunenaTopics($this->getDBDriver());
+        $table->load(1);
+        $plugin->onFinderBeforeSave(new BeforeSaveEvent('onFinderBeforeSave', ['context' => 'com_kunena.topic', 'subject' => $table, 'isNew' => false]));
+        $change();
+        $table->load(1);
+        $plugin->onFinderAfterSave(new AfterSaveEvent('onFinderAfterSave', ['context' => 'com_kunena.topic', 'subject' => $table, 'isNew' => false]));
     }
 
     /**

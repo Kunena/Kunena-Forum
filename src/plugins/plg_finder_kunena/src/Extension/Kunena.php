@@ -28,6 +28,7 @@ use Joomla\Component\Finder\Administrator\Indexer\Result;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\QueryInterface;
 use Joomla\Event\SubscriberInterface;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaFinderAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Event\KunenaBeforeDeleteEvent;
@@ -112,6 +113,22 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @since  Kunena 7.1
      */
     protected ?array $viewLevels = \null;
+
+    /**
+     * The category and the state of the topics which are being saved (id => [category, hold]), from onFinderBeforeSave().
+     *
+     * @var    array
+     * @since  Kunena 8.0
+     */
+    protected array $oldTopics = [];
+
+    /**
+     * What the index took from the categories which are being saved (id => categoryIndexState()), from onFinderBeforeSave().
+     *
+     * @var    array
+     * @since  Kunena 8.0
+     */
+    protected array $oldCategories = [];
 
     /**
      * The table name.
@@ -199,11 +216,20 @@ final class Kunena extends Adapter implements SubscriberInterface
         $isNew   = $event->getIsNew();
 
         // If a category will be change, we want to see, if the accesstype and access level has changed
-        if (($row instanceof TableKunenaCategories) && !$isNew) {
+        if (($row instanceof TableKunenaCategories) && !$isNew && $row->id) {
             $old_table = clone $row;
             $old_table->load();
-            $this->old_cataccess     = $old_table->access;
-            $this->old_cataccesstype = $old_table->accesstype;
+            $this->old_cataccess                 = $old_table->access;
+            $this->old_cataccesstype             = $old_table->accesstype;
+            $this->oldCategories[(int) $row->id] = $this->categoryIndexState($old_table);
+        }
+
+        // The category and the state of a topic before it is saved: a topic is moved, deleted, restored or approved with its
+        // messages changed in the database directly (KunenaTopic::move(), publish()), the messages are not saved one by one.
+        if (($row instanceof TableKunenaTopics) && !$isNew && $row->id) {
+            $old_table = clone $row;
+            $old_table->load();
+            $this->oldTopics[(int) $row->id] = [(int) $old_table->category_id, (int) $old_table->hold, (int) $old_table->moved_id];
         }
     }
 
@@ -224,23 +250,49 @@ final class Kunena extends Adapter implements SubscriberInterface
         $isNew   = $event->getIsNew();
 
         // If a category has been changed, we want to check if the access has been changed
-        if (($row instanceof TableKunenaCategories) && !$isNew) {
-            // Access type of Category is still not the joomla access level system.
-            // We didn't show them before and we don't show them now. No reindex necessary
-            if ($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level') {
-                return;
+        // The messages of a category are indexed again when what the index takes from the category changed: its access (a level, or a
+        // user group since Kunena 7.1), its state and "own topics only". Only a change of the level of a category of levels did it:
+        // the posts of a category which was unpublished, made "own topics only" or given to another group stayed in the results
+        // of the search. An unpublished category hides its subcategories too: their messages are indexed again with it.
+        if (($row instanceof TableKunenaCategories) && isset($this->oldCategories[(int) $row->id])) {
+            $old = $this->oldCategories[(int) $row->id];
+            $new = $this->categoryIndexState($row);
+            unset($this->oldCategories[(int) $row->id]);
+
+            if ($old !== $new) {
+                $catids = $old['published'] !== $new['published'] ? $this->getCategoryTree((int) $row->id) : [(int) $row->id];
+
+                foreach ($this->getMessageIdsByCategories($catids) as $id) {
+                    $this->reindex($id);
+                }
+            }
+        }
+
+        // A topic which moved to another category or was deleted, restored or approved: its messages are indexed again with their
+        // new category (its access level) and state. They kept the old ones: the posts of a topic moved into a closed category or
+        // deleted stayed in the results of the search of the site.
+        if (($row instanceof TableKunenaTopics) && isset($this->oldTopics[(int) $row->id])) {
+            [$oldCategory, $oldHold, $oldMoved] = $this->oldTopics[(int) $row->id];
+            unset($this->oldTopics[(int) $row->id]);
+
+            $topicIds = [];
+
+            if ($oldCategory !== (int) $row->category_id || $oldHold !== (int) $row->hold) {
+                $topicIds[] = (int) $row->id;
             }
 
-            // Access level did not change. We do not need to reindex
-            if ($row->accesstype == 'joomla.level' && $this->old_cataccesstype == 'joomla.level' && $row->access == $this->old_cataccess) {
-                return;
+            // A topic which became the shadow of a moved topic (moved with a shadow, or merged into another topic): its messages are
+            // in the topic it points to now, maybe in another category.
+            if ((int) $row->moved_id > 0 && $oldMoved !== (int) $row->moved_id) {
+                $topicIds[] = (int) $row->moved_id;
             }
 
-            // Well, seems like an access level change has occured. So we need to reindex all messages within this category
-            $messages = $this->getMessagesByCategory($row->id);
-
-            foreach ($messages as $message) {
-                $this->reindex($message->id);
+            foreach ($topicIds as $topicId) {
+                foreach ($this->getMessageIdsByTopic($topicId) as $id) {
+                    // The message as it is in the database now (an object of this request has the category and state before).
+                    KunenaMessageHelper::get($id, true);
+                    $this->reindex($id);
+                }
             }
         }
 
@@ -769,6 +821,101 @@ final class Kunena extends Adapter implements SubscriberInterface
         }
 
         return $messages[$topic_id];
+    }
+
+    /**
+     * What the index takes from a category (createIndexerResult(), getAccessLevel()).
+     *
+     * @param   TableKunenaCategories  $table  The table of the category.
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected function categoryIndexState(TableKunenaCategories $table): array
+    {
+        $params = new Registry($table->params);
+
+        return [
+            'accesstype'    => (string) $table->accesstype,
+            'access'        => (int) $table->access,
+            'pubAccess'     => (int) $table->pubAccess,
+            'published'     => (int) $table->published,
+            'ownTopicsOnly' => (int) $params->get('ownTopicsOnly', 0),
+        ];
+    }
+
+    /**
+     * The id of a category and of all the categories under it.
+     *
+     * @param   int  $catid  The id of the category.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getCategoryTree(int $catid): array
+    {
+        $db      = $this->getDatabase();
+        $tree    = [$catid => $catid];
+        $parents = [$catid];
+
+        // One level at a time (the depth is limited as in createIndexerResult()).
+        for ($depth = 0; $parents && $depth < 100; $depth++) {
+            $query = $db->createQuery()
+                ->select($db->quoteName('id'))
+                ->from($db->quoteName('#__kunena_categories'))
+                ->whereIn($db->quoteName('parentid'), $parents);
+            $parents = array_diff(array_map('intval', (array) $db->setQuery($query)->loadColumn()), $tree);
+
+            foreach ($parents as $id) {
+                $tree[$id] = $id;
+            }
+        }
+
+        return array_values($tree);
+    }
+
+    /**
+     * The ids of the messages of categories.
+     *
+     * @param   int[]  $catids  The ids of the categories.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getMessageIdsByCategories(array $catids): array
+    {
+        $db    = $this->getDatabase();
+        $query = $db->createQuery()
+            ->select($db->quoteName('id'))
+            ->from($db->quoteName('#__kunena_messages'))
+            ->whereIn($db->quoteName('catid'), array_map('intval', $catids))
+            ->order($db->quoteName('id') . ' ASC');
+
+        return array_map('intval', (array) $db->setQuery($query)->loadColumn());
+    }
+
+    /**
+     * The ids of the messages of a topic, read now (not cached: the messages of a topic change while it is saved).
+     *
+     * @param   int  $topicId  The id of the topic.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getMessageIdsByTopic(int $topicId): array
+    {
+        $db    = $this->getDatabase();
+        $query = $db->createQuery()
+            ->select($db->quoteName('id'))
+            ->from($db->quoteName('#__kunena_messages'))
+            ->where($db->quoteName('thread') . ' = ' . $topicId)
+            ->order($db->quoteName('id') . ' ASC');
+
+        return array_map('intval', (array) $db->setQuery($query)->loadColumn());
     }
 
     /**

@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHistory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -103,19 +104,39 @@ class TopicHistoryDisplay extends KunenaControllerDisplay
         $this->topic    = $this->message->getTopic();
         $this->category = $this->topic->getCategory();
 
-        $me = KunenaUserHelper::getMyself();
+        $me        = KunenaUserHelper::getMyself();
+        $moderator = $me->isModerator($this->category);
 
-        if (!KunenaMessageHistory::canSee($setting, $me->isModerator($this->category), true)) {
+        if (!KunenaMessageHistory::canSee($setting, $moderator, true)) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $me->exists() ? 403 : 401);
         }
+
+        // The versions are the text as it was typed: the blocks which the message hides from this reader are left out, as on the
+        // message. The text in [confidential] is for the author and the moderators, the one in [private] for nobody and the one in
+        // [hide] for the members who are logged in; the history showed them to every reader who may see it.
+        $hidden = [];
+
+        if (!$moderator && !($me->exists() && (int) $me->userid === (int) $this->message->userid)) {
+            $hidden = ['confidential', 'private'];
+        }
+
+        if (!$me->exists()) {
+            $hidden[] = 'hide';
+        }
+
+        $text = static fn (string $message): string => $hidden ? KunenaParser::removeBlocks($message, $hidden) : $message;
 
         $versions = KunenaMessageHistory::getVersions((int) $this->message->id);
         $count    = \count($versions);
 
+        foreach ($versions as $version) {
+            $version->message = $text((string) $version->message);
+        }
+
         // Each edit changed its version into the next one (the last edit into the message as it is now).
         for ($i = $count - 1; $i >= 0; $i--) {
             $version = $versions[$i];
-            $next    = $versions[$i + 1] ?? (object) ['subject' => (string) $this->message->subject, 'message' => (string) $this->message->message];
+            $next    = $versions[$i + 1] ?? (object) ['subject' => (string) $this->message->subject, 'message' => $text((string) $this->message->message)];
 
             $this->edits[] = (object) [
                 'editor'  => KunenaUserHelper::get((int) $version->edited_by),

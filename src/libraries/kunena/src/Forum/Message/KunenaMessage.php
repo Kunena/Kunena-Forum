@@ -2197,7 +2197,9 @@ class KunenaMessage extends KunenaDatabaseObject
             }
         }
 
-        if (KunenaConfig::getInstance()->allowChangeSubject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator()) {
+        // The author of the topic: a member. A guest (0) was the author of every topic of a guest or of an anonymous member, so any
+        // visitor who may write renamed such a topic with a reply.
+        if (KunenaConfig::getInstance()->allowChangeSubject && (int) $message->userid > 0 && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator()) {
             if (isset($fields['subject'])) {
                 $topic->subject = $fields['subject'];
             }

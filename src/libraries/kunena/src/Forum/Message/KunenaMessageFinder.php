@@ -227,7 +227,10 @@ class KunenaMessageFinder extends KunenaFinder
                 $this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $this->db->quoteName('th.postid') . ' = a.id AND ' . $this->db->quoteName('th.userid') . ' != ' . (int) $user->userid);
                 break;
             case 'thankee':
-                $this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $this->db->quoteName('th.postid') . ' = a.id AND ' . $this->db->quoteName('th.targetuserid') . ' = ' . (int) $user->userid);
+                // A message once, however many members thanked for it: the join gave a row for each of them, so the list of the
+                // thank yous which the user received counted a message that often, and its pages were short or empty.
+                $this->query->where('EXISTS (SELECT 1 FROM ' . $this->db->quoteName('#__kunena_thankyou', 'th') . ' WHERE ' . $this->db->quoteName('th.postid') . ' = '
+                    . $this->db->quoteName('a.id') . ' AND ' . $this->db->quoteName('th.targetuserid') . ' = ' . (int) $user->userid . ')');
                 break;
             case '!thankee':
                 $this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $this->db->quoteName('th.postid') . ' = a.id AND ' . $this->db->quoteName('th.targetuserid') . ' != ' . (int) $user->userid);

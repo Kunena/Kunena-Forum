@@ -745,10 +745,12 @@ abstract class KunenaTopicHelper
             }
 
             $threads = 'AND ' . $db->quoteName('m.thread') . ' IN (' . implode(',', $ids) . ')';
+            $empty   = 'AND ' . $db->quoteName('tt.id') . ' IN (' . implode(',', $ids) . ')';
         } elseif ((int) $ids) {
             $threads = 'AND ' . $db->quoteName('m.thread') . ' = ' . $db->quote((int) $ids);
+            $empty   = 'AND ' . $db->quoteName('tt.id') . ' = ' . $db->quote((int) $ids);
         } else {
-            $threads = '';
+            $threads = $empty = '';
         }
 
         if ($end) {
@@ -778,7 +780,9 @@ abstract class KunenaTopicHelper
             ->set($db->quoteName('tt.last_post_userid') . ' = 0')
             ->set($db->quoteName('tt.last_post_message') . ' =  \'\'')
             ->set($db->quoteName('tt.last_post_guest_name') . ' =  \'\'')
-            ->where($db->quoteName('tt.moved_id') . '=0 AND ' . $db->quoteName('tt.hold') . '!=4 AND ' . $db->quoteName('m.id') . ' IS NULL ' . $topics . ' ' . $threads);
+            // The topics by their own id: a topic without messages has no m.thread, so the condition on m.thread found none of
+            // them when the recount had a list of topics (the purge of the trash), and they kept their old posts and last post.
+            ->where($db->quoteName('tt.moved_id') . '=0 AND ' . $db->quoteName('tt.hold') . '!=4 AND ' . $db->quoteName('m.id') . ' IS NULL ' . $topics . ' ' . $empty);
         $db->setQuery($query);
 
         try {

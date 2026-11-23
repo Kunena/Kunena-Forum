@@ -103,6 +103,20 @@ class KunenaTopicHelperRecountDeletedTest extends IntegrationTestCase implements
     }
 
     /**
+     * A topic whose messages were all deleted for ever (the purge of the trash recounts its topics by their ids) is marked empty
+     * (hold 4, no posts). The recount of a list of topics found no empty topic, so it kept its posts and its last post.
+     */
+    public function testTheRecountOfAListOfTopicsMarksATopicWithoutMessagesEmpty(): void
+    {
+        $this->insertRow('#__kunena_topics', ['id' => 7, 'category_id' => self::CATEGORY, 'subject' => 'Purged', 'hold' => 3, 'posts' => 2,
+            'first_post_id' => 70, 'last_post_id' => 71]);
+
+        KunenaTopicHelper::recount([7]);
+
+        $this->assertSame([['hold' => 4, 'first_post_id' => 0]], $this->topic(7));
+    }
+
+    /**
      * The state and the first post of a topic, as they are in the database.
      */
     private function topic(int $id): array

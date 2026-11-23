@@ -1084,11 +1084,18 @@ class KunenaMessage extends KunenaDatabaseObject
 
         // Flood protection
 
-        if ($this->_config->floodProtection && !$this->getCategory()->isAuthorised('moderate') && !$this->exists()) {
+        // The last post of the member (as the API checks), or of the address of a guest. The posts were found by the address only:
+        // without IP tracking (and for anonymous posts) every address is empty, so any post of anybody counted, and a member was
+        // refused because another member had posted in the last seconds.
+        $floodUser = (int) $this->userid > 0;
+
+        if ($this->_config->floodProtection && !$this->getCategory()->isAuthorised('moderate') && !$this->exists() && ($floodUser || (string) $this->ip !== '')) {
             $query = $this->_db->createQuery();
             $query->select('MAX(time)')
                 ->from($this->_db->quoteName('#__kunena_messages'))
-                ->where($this->_db->quoteName('ip') . ' = ' . $this->_db->quote($this->ip));
+                ->where($floodUser
+                    ? $this->_db->quoteName('userid') . ' = ' . (int) $this->userid
+                    : $this->_db->quoteName('userid') . ' = 0 AND ' . $this->_db->quoteName('ip') . ' = ' . $this->_db->quote($this->ip));
             $this->_db->setQuery($query);
 
             try {

@@ -764,6 +764,15 @@ abstract class KunenaCategoryHelper
             ->where('(' . $db->quoteName('uc.allreadtime') . ' IS NULL OR ' . $db->quoteName('t.last_post_time') . ' > ' . $db->quoteName('uc.allreadtime') . ')')
             ->where('(' . $db->quoteName('ur.topic_id') . ' IS NULL OR ' . $db->quoteName('t.last_post_id') . ' != ' . $db->quoteName('ur.message_id') . ')')
             ->group($db->quoteName('category_id'));
+
+        // In the categories where the users see their own topics only, the topics of the others are never new for the user: the
+        // count showed them as new topics which no list gave him.
+        $own = self::getOwnTopicsOnlyWhere($user, $db->quoteName('t.category_id'), $db->quoteName('t.first_post_userid'));
+
+        if ($own) {
+            $query->where($own);
+        }
+
         $db->setQuery($query);
 
         try {

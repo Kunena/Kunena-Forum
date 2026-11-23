@@ -210,16 +210,26 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         $params      = $event->getArgument('params');
         $params      = (object) $params;
         // Define $age to default value else if empty
-        $age         = $params->age ?? 31;
+        $age         = (int) ($params->age ?? 31);
         $app         = Factory::getApplication();
         $trashsModel = new TrashsModel();
 
-        $app->input->set('layout', 'messages');
-        $messages  = $trashsModel->getItems();
-        $cid       = [];
+        // The messages in the trash for longer than the age, the oldest first (500 a run). They were taken from the list of the
+        // backend: one page of it (the list limit of the site, 20 by default, in the order of the ids, with the search of the
+        // session which ran the task), so the rest of the trash was never purged while a lately trashed message was on that page.
+        $db    = $this->getDatabase();
+        $date  = (new Date('now - ' . $age . ' days'))->toUnix();
+        $query = $db->createQuery()
+            ->select($db->quoteName('id'))
+            ->from($db->quoteName('#__kunena_messages'))
+            ->whereIn($db->quoteName('hold'), [KunenaForum::DELETED, KunenaForum::TOPIC_DELETED])
+            ->where($db->quoteName('deleted_time') . ' < :date')
+            ->order($db->quoteName('deleted_time') . ' ASC, ' . $db->quoteName('id') . ' ASC')
+            ->bind(':date', $date, ParameterType::INTEGER)
+            ->setLimit(500);
+        $cid = array_map('intval', (array) $db->setQuery($query)->loadColumn());
 
-        if (!empty($messages)) {
-            $cid    = array_column($messages, 'id');
+        if (!empty($cid)) {
             $result = $trashsModel->purgeMessages($cid, $age);
 
             if (!$result) {

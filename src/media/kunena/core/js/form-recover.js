@@ -97,6 +97,7 @@
 		syncEditors(state.form);
 
 		const lists = new Set();
+		const checkedKeys = new Set();
 
 		fieldsOf(state.form).forEach((field) => {
 			const key = keyOf(state, field);
@@ -115,8 +116,14 @@
 					storage.set(key, String(field.checked));
 				}
 			} else if (type === 'radio') {
+				// Each button of a group has its own key (its id): only the checked one keeps its value. The value of a button which
+				// was checked before stayed, and the restore checked the last of those buttons on the page, not the one chosen last.
+				// Buttons without an id share the key of their name: the checked one of those is not removed by the others.
 				if (field.checked) {
 					storage.set(key, field.value);
+					checkedKeys.add(key);
+				} else if (!checkedKeys.has(key)) {
+					storage.remove(key);
 				}
 			} else if (field instanceof HTMLSelectElement && field.multiple) {
 				storage.set(key, [...field.selectedOptions].map((option) => option.value).join(','));

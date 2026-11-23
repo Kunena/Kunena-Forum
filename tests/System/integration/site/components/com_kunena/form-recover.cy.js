@@ -126,6 +126,23 @@ describe('Kunena posting form: the text is recovered after a reload', () => {
     cy.get('#subject').should('have.value', '');
   });
 
+  // The radio buttons of a name (the topic icons) have an id each: the one chosen last is brought back, also when it comes before
+  // a button chosen earlier (each checked button was kept under its own key, and the last one of the page won).
+  it('brings back the topic icon chosen last', () => {
+    useOptions({ formRecover: 1, editorType: 'sceditor' });
+    openForm();
+    cy.get('input[name="topic_emoticon"]').should('have.length.greaterThan', 2);
+    cy.get('input[name="topic_emoticon"]').eq(2).check({ force: true });
+    cy.wait(800);
+    cy.get('input[name="topic_emoticon"]').eq(1).check({ force: true });
+    cy.wait(800);
+
+    cy.reload();
+    cy.window().should('have.property', 'KunenaFormRecover');
+    cy.get('input[name="topic_emoticon"]').eq(1).should('be.checked');
+    cy.get('input[name="topic_emoticon"]').eq(2).should('not.be.checked');
+  });
+
   it('keeps nothing when the option is off', () => {
     useOptions({ formRecover: 0, editorType: 'sceditor' });
     cy.visit(`${base}&view=topic&layout=create&catid=3`);

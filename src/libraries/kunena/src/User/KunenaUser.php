@@ -551,8 +551,12 @@ class KunenaUser
                 return true;
             }
 
+            // A user without a Kunena profile (he never logged in since the forum was installed) has no setting: hidden, as the
+            // default of the column. "Nothing" counted as 0, and his address was shown to everybody.
+            $hide = (int) ($profile->hideEmail ?? 1);
+
             if ($profile->email) {
-                if ($profile->hideEmail == 0 || $profile->hideEmail == 2 && KunenaUserHelper::getMyself()->exists()) {
+                if ($hide === 0 || $hide === 2 && KunenaUserHelper::getMyself()->exists()) {
                     return true;
                 }
             }
@@ -751,11 +755,14 @@ class KunenaUser
         }
 
         if ($this->_config->showEmail && $profile->email) {
-            if ($profile->hideEmail == 0) {
+            // No setting (no Kunena profile yet) is hidden, as the default of the column (see canDisplayEmail()).
+            $hide = (int) ($profile->hideEmail ?? 1);
+
+            if ($hide === 0) {
                 return true;
             }
 
-            if ($profile->hideEmail == 2 && $me->exists()) {
+            if ($hide === 2 && $me->exists()) {
                 return true;
             }
         }
@@ -778,7 +785,7 @@ class KunenaUser
 
             $this->_email = '';
 
-            if ($this->email && (($this->_config->showEmail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin())) {
+            if ($this->email && (($this->_config->showEmail && (!($this->hideEmail ?? 1) || $me->isModerator())) || $me->isAdmin())) {
                 $this->_email = HTMLHelper::_('email.cloak', $this->email);
             }
         }

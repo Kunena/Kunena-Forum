@@ -464,11 +464,18 @@ class KunenaUpload
      */
     public function cleanup(): void
     {
-        if (!$this->filename || !is_file($this->filename)) {
+        if (!$this->filename) {
             return;
         }
 
-        @unlink($this->filename);
+        // The temporary file of the upload, in the upload folder. The name of the upload comes from the request: removing the file
+        // of that name removed any file of the site which a failing upload named (a path from the root of the site), and left
+        // the temporary file behind.
+        $file = $this->getProtectedFile();
+
+        if (is_file($file)) {
+            @unlink($file);
+        }
     }
 
     /**

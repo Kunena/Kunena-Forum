@@ -84,4 +84,46 @@ class KunenaDiagnosticsRepairsTest extends IntegrationTestCase implements DBTest
 
         $this->assertSame([['id' => 1]], $this->fetchAll('SELECT id FROM #__kunena_attachments ORDER BY id'));
     }
+
+    public function testATopicWhosePollIsMissingForgetsThePollAndStays(): void
+    {
+        $this->insertRow('#__kunena_topics', ['id' => 10, 'category_id' => 2, 'subject' => 'Poll gone', 'poll_id' => 3]);
+
+        $this->assertFalse(KunenaDiagnostics::canDelete('topicMissingPoll'));
+        $this->assertTrue(KunenaDiagnostics::fix('topicMissingPoll'));
+
+        $this->assertSame([['id' => 10, 'poll_id' => 0]], $this->fetchAll('SELECT id, poll_id FROM #__kunena_topics'));
+    }
+
+    public function testAPollWhichItsTopicDoesNotUseGoesToTheTopicWhichUsesIt(): void
+    {
+        // A split gave the poll 4 to the new topic 21; the poll still names the topic 20, which has no poll any more.
+        $this->insertRows('#__kunena_topics', [
+            ['id' => 20, 'category_id' => 2, 'subject' => 'Source', 'poll_id' => 0],
+            ['id' => 21, 'category_id' => 2, 'subject' => 'New', 'poll_id' => 4],
+        ]);
+        $this->insertRow('#__kunena_polls', ['id' => 4, 'title' => 'Poll', 'threadid' => 20]);
+
+        $this->assertFalse(KunenaDiagnostics::canDelete('topicPollMismatch'));
+        $this->assertTrue(KunenaDiagnostics::fix('topicPollMismatch'));
+
+        $this->assertSame([['threadid' => 21]], $this->fetchAll('SELECT threadid FROM #__kunena_polls'));
+        $this->assertSame([['id' => 20, 'poll_id' => 0], ['id' => 21, 'poll_id' => 4]], $this->fetchAll('SELECT id, poll_id FROM #__kunena_topics ORDER BY id'));
+        $this->assertSame(0, KunenaDiagnostics::count('topicPollMismatch'));
+    }
+
+    public function testATopicWhichNamesThePollOfAnotherTopicForgetsIt(): void
+    {
+        // The poll 5 is of the topic 30, which uses it; the topic 31 names it too.
+        $this->insertRows('#__kunena_topics', [
+            ['id' => 30, 'category_id' => 2, 'subject' => 'Owner', 'poll_id' => 5],
+            ['id' => 31, 'category_id' => 2, 'subject' => 'Other', 'poll_id' => 5],
+        ]);
+        $this->insertRow('#__kunena_polls', ['id' => 5, 'title' => 'Poll', 'threadid' => 30]);
+
+        KunenaDiagnostics::fix('topicPollMismatch');
+
+        $this->assertSame([['threadid' => 30]], $this->fetchAll('SELECT threadid FROM #__kunena_polls'));
+        $this->assertSame([['id' => 30, 'poll_id' => 5], ['id' => 31, 'poll_id' => 0]], $this->fetchAll('SELECT id, poll_id FROM #__kunena_topics ORDER BY id'));
+    }
 }

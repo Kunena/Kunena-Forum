@@ -363,26 +363,6 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function delete_topicMissingPoll(): string
-    {
-        return "DELETE a FROM #__kunena_topics AS a LEFT JOIN #__kunena_polls AS p ON p.id=a.poll_id WHERE a.moved_id=0 AND a.poll_id>0 AND p.id IS NULL";
-    }
-
-    /**
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
-    protected static function delete_topicPollMismatch(): string
-    {
-        return "DELETE a FROM #__kunena_topics AS a INNER JOIN #__kunena_polls AS p ON p.id=a.poll_id LEFT JOIN #__kunena_topics AS t ON p.threadid=t.id WHERE a.moved_id=0 AND a.poll_id>0 AND p.threadid!=a.id";
-    }
-
-    /**
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
     protected static function delete_userCategoryOrphaned(): string
     {
         return "DELETE a FROM #__kunena_user_categories AS a LEFT JOIN #__kunena_categories AS c ON c.id=a.category_id WHERE a.category_id>0 AND c.id IS NULL";
@@ -1030,6 +1010,33 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
+    /**
+     * A topic whose poll is missing: the topic forgets the poll. The topic was deleted (its messages then were orphans).
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fix_topicMissingPoll(): QueryInterface
+    {
+        return self::query_topicMissingPoll()->update('#__kunena_topics AS a')->set('a.poll_id=0');
+    }
+
+    /**
+     * A topic whose poll belongs to another topic: when that topic does not use the poll (a split gave the poll to the new topic
+     * without moving it), the poll goes to this topic; when it does, this topic forgets the poll. The topic was deleted.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fix_topicPollMismatch(): QueryInterface
+    {
+        return self::query_topicPollMismatch()->update('#__kunena_topics AS a')
+            ->set('p.threadid=IF(t.id IS NULL OR t.poll_id!=p.id, a.id, p.threadid)')
+            ->set('a.poll_id=IF(t.id IS NOT NULL AND t.poll_id=p.id, 0, a.poll_id)');
+    }
+
     protected static function fix_userAvatarOrphaned(): QueryInterface
     {
         return self::query_useravatarOrphaned()->update('#__kunena_users')->set("avatar=NULL")->where("avatar=''");

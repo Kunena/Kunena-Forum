@@ -1719,6 +1719,10 @@ class KunenaTopic extends KunenaDatabaseObject
         // Clear authentication cache
         $this->_authfcache = $this->_authccache = $this->_authcache = [];
 
+        // The categories count the topics which are published only (see save()): a topic which waits for approval or is deleted
+        // changes no count when it is moved. It took its topic and posts from the old category and gave them to the new one.
+        $published = (int) $this->hold === KunenaForum::PUBLISHED;
+
         // Cleanup input
         if (!($ids instanceof Date)) {
             if (!\is_array($ids)) {
@@ -2007,33 +2011,39 @@ class KunenaTopic extends KunenaDatabaseObject
             // TODO: do we need this?
             // \Kunena\Forum\Libraries\Forum\Topic\\Kunena\Forum\Libraries\Forum\Topic\User\Read\Helper::move($this, $target);
             // Remove topic and posts from the old category
-            $categoryFrom->update($this, -1, -$this->posts);
+            $categoryFrom->update($this, $published ? -1 : 0, $published ? -$this->posts : 0);
 
             // Add topic and posts into the new category
-            $categoryTarget->update($target, 1, $this->posts);
+            $categoryTarget->update($target, $published ? 1 : 0, $published ? $this->posts : 0);
         } elseif (!$ids) {
             // Moving topic into another topic
 
-            // Add new posts, hits and attachments into the target topic
-            $target->posts += $this->posts;
+            // Add hits into the target topic
             $target->hits += $this->hits;
-            $target->attachments += $this->attachments;
 
-            // Update first and last post information into the target topic
-            $target->updatePostInfo(
-                $this->first_post_id,
-                $this->first_post_time,
-                $this->first_post_userid,
-                $this->first_post_message,
-                $this->first_post_guest_name
-            );
-            $target->updatePostInfo(
-                $this->last_post_id,
-                $this->last_post_time,
-                $this->last_post_userid,
-                $this->last_post_message,
-                $this->last_post_guest_name
-            );
+            // The messages of a topic which waits for approval or is deleted keep their state in the target topic: they are not
+            // its posts and none of them is its first or last post (the last post of the topic showed a message waiting for approval).
+            if ($published) {
+                // Add new posts and attachments into the target topic
+                $target->posts += $this->posts;
+                $target->attachments += $this->attachments;
+
+                // Update first and last post information into the target topic
+                $target->updatePostInfo(
+                    $this->first_post_id,
+                    $this->first_post_time,
+                    $this->first_post_userid,
+                    $this->first_post_message,
+                    $this->first_post_guest_name
+                );
+                $target->updatePostInfo(
+                    $this->last_post_id,
+                    $this->last_post_time,
+                    $this->last_post_userid,
+                    $this->last_post_message,
+                    $this->last_post_guest_name
+                );
+            }
 
             // Save target topic
             try {
@@ -2048,10 +2058,10 @@ class KunenaTopic extends KunenaDatabaseObject
             // TODO: do we need this?
             // \Kunena\Forum\Libraries\Forum\Topic\\Kunena\Forum\Libraries\Forum\Topic\User\Read\Helper::merge($this, $target);
             // Remove topic and posts from the old category
-            $this->getCategory()->update($this, -1, -$this->posts);
+            $this->getCategory()->update($this, $published ? -1 : 0, $published ? -$this->posts : 0);
 
             // Add posts into the new category
-            $target->getCategory()->update($target, 0, $this->posts);
+            $target->getCategory()->update($target, 0, $published ? $this->posts : 0);
         } else {
             // Both topics have changed and we have no idea how much: force full recount
             // TODO: we can do this faster..

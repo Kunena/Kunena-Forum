@@ -149,7 +149,11 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
                 $body .= "\n\n[b]" . Text::sprintf('PLG_KUNENA_REPORTS_HELD', \count($reporters)) . '[/b]';
             }
 
-            if ($reportTopic && $reportTopic->exists()) {
+            // A topic of the reports which a moderator deleted (in the trash) is no place for a new report: nobody sees it there, the
+            // report starts a new topic (and replaces the row below).
+            $deleted = $reportTopic && \in_array((int) $reportTopic->hold, [KunenaForum::DELETED, KunenaForum::TOPIC_DELETED], true);
+
+            if ($reportTopic && $reportTopic->exists() && !$deleted) {
                 // A report of the post exists already: this one is a reply in the topic.
                 $reply          = $reportTopic->newReply(['message' => '[b]' . Text::sprintf('PLG_KUNENA_REPORTS_SUBJECT_AGAIN', $name) . "[/b]\n" . $body], $reporter);
                 $reply->hold    = 0;

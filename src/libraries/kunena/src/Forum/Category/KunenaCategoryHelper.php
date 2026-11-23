@@ -765,6 +765,8 @@ abstract class KunenaCategoryHelper
             ->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('t.id') . ' AND ' . $db->quoteName('ur.user_id') . ' = ' . $db->quote($user->userid))
             ->where($db->quoteName('t.category_id') . ' IN (' . $catlist . ')')
             ->where($db->quoteName('t.hold') . ' = 0')
+            // Not the shadow of a moved topic: opening it opens the moved topic, so the shadow was never read and stayed new.
+            ->where($db->quoteName('t.moved_id') . ' = 0')
             ->where($db->quoteName('t.last_post_time') . ' > ' . $db->quote($session->getAllReadTime()))
             ->where('(' . $db->quoteName('uc.allreadtime') . ' IS NULL OR ' . $db->quoteName('t.last_post_time') . ' > ' . $db->quoteName('uc.allreadtime') . ')')
             ->where('(' . $db->quoteName('ur.topic_id') . ' IS NULL OR ' . $db->quoteName('t.last_post_id') . ' != ' . $db->quoteName('ur.message_id') . ')')

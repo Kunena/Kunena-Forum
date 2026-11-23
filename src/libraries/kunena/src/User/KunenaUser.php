@@ -1795,7 +1795,9 @@ class KunenaUser
             return false;
         }
 
-        if ($this->blocked || $this->banned == '9999-12-31 23:59:59') {
+        // The end of the ban decides, not the block of Joomla: the column keeps the end of the last ban, so a user whom an
+        // administrator blocked after his ban ended was banned again (the same effects as above).
+        if ($this->banned == '9999-12-31 23:59:59') {
             return true;
         }
 

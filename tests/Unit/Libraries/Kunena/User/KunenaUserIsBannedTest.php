@@ -30,4 +30,23 @@ class KunenaUserIsBannedTest extends UnitTestCase
 
         $this->assertFalse($user->isBanned());
     }
+
+    public function testAUserBlockedInJoomlaAfterHisBanEndedIsNotBanned(): void
+    {
+        $this->requireJoomla();
+
+        // The column keeps the end of the last ban. An administrator who blocked the user later made him banned again.
+        $user = self::bare(KunenaUser::class, ['userid' => 42, 'blocked' => 1, 'banned' => '2020-01-01 00:00:00']);
+
+        $this->assertFalse($user->isBanned());
+    }
+
+    public function testABanWhichHasNotEndedBans(): void
+    {
+        $this->requireJoomla();
+
+        $user = self::bare(KunenaUser::class, ['userid' => 42, 'blocked' => 1, 'banned' => '2999-01-01 00:00:00']);
+
+        $this->assertTrue($user->isBanned());
+    }
 }

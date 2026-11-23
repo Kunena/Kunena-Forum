@@ -2941,6 +2941,9 @@ class KunenaMessage extends KunenaDatabaseObject
                 }
             }
 
+            // The edit form sends the files which the message has already: they are counted in the topic already. They were
+            // counted again on every edit.
+            $new               = (int) $attachment->mesid !== (int) $this->id;
             $attachment->mesid = $this->id;
 
             try {
@@ -2950,7 +2953,9 @@ class KunenaMessage extends KunenaDatabaseObject
             }
 
             // Update attachments count and fix attachment name inside message
-            $this->getTopic()->attachments++;
+            if ($new) {
+                $this->getTopic()->attachments++;
+            }
             $this->message = preg_replace('/\[attachment\:' . $tmpid . '\].*?\[\/attachment\]/u', "[attachment={$attachment->id}]{$attachment->filename}[/attachment]", $this->message);
         }
 

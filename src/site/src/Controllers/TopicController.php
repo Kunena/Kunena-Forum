@@ -2037,8 +2037,12 @@ class TopicController extends KunenaController
             $text = trim(OutputFilter::cleanText($text));
         }
 
-        if (!$text && $this->config->userDeleteMessage == 1) {
+        // Emptying the text deletes the message: only for a user who may delete it (userDeleteMessage, or a moderator). Only the
+        // setting "when there are no replies" refused here, so with "never" or "all except the first message" a user deleted his
+        // message, or the first message of his topic, by emptying its text.
+        if (!$text && !trim((string) $fields['private']) && !$message->isAuthorised('delete')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
+            $this->setRedirectBack();
 
             return;
         } elseif (!$text) {

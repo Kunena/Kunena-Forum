@@ -2394,6 +2394,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if ($userid > 0) {
             $username = KunenaUserHelper::get($userid)->getName();
+        } elseif ($default && preg_match('/^(.*?)\s+post=\d+/', $default, $guest)) {
+            // A message of a guest (userid=0): the name is the one in the tag (escaped above). The quote showed " wrote:" alone.
+            $username = trim($guest[1]);
         }
 
         $matches_post = [];

@@ -285,11 +285,15 @@ class ToolsController extends FormController
         }
 
         if ($userDelLife) {
-            // Lifetime bans are stored with the maximum expiration date; temporary bans must be kept
+            // Lifetime bans are stored with the maximum expiration date; temporary bans must be kept. Only the members whose Joomla
+            // account is blocked are deleted, the account and the profile: the profiles of all the members banned for life were
+            // deleted, also of those whose account stays (a ban of the forum does not block it), and the ban is in the profile.
             $query = $db->createQuery()
-                ->select($db->quoteName('userid'))
-                ->from($db->quoteName('#__kunena_users'))
-                ->where($db->quoteName('banned') . ' = ' . $db->quote('9999-12-31 23:59:59'));
+                ->select($db->quoteName('ku.userid'))
+                ->from($db->quoteName('#__kunena_users', 'ku'))
+                ->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'))
+                ->where($db->quoteName('ku.banned') . ' = ' . $db->quote('9999-12-31 23:59:59'))
+                ->where($db->quoteName('u.block') . ' = 1');
             $db->setQuery($query);
 
             try {
@@ -341,6 +345,13 @@ class ToolsController extends FormController
                 }
 
                 $deleted = $db->getAffectedRows();
+
+                // The groups of the deleted accounts (they stayed in the table of the groups of the users).
+                $db->setQuery(
+                    $db->createQuery()
+                        ->delete($db->quoteName('#__user_usergroup_map'))
+                        ->where($db->quoteName('user_id') . ' IN (' . $idList . ')')
+                )->execute();
             }
 
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $deleted), 'success');

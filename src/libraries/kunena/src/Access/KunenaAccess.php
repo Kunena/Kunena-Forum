@@ -650,6 +650,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             $subsList = array_diff($allow, $deny);
 
+            // An unpublished category, or a category in an unpublished section or category, is hidden from the members (see
+            // getAllowedCategories()): the access of the category does not say it, and its subscribers got the notifications (the
+            // inbox gave them the subject of the topic). Its moderators and administrators are added below.
+            for ($parent = $category, $depth = 0; $subsList && $parent && $parent->exists() && $depth < 100; $depth++) {
+                if ((int) $parent->published !== 1) {
+                    $subsList = [];
+                }
+
+                $parent = $parent->parentid ? KunenaCategoryHelper::get($parent->parentid) : null;
+            }
+
             // Category administrators and moderators override ACL
             $subsList += array_intersect_key($adminlist, array_flip($subscribers));
             $subsList += array_intersect_key($modlist, array_flip($subscribers));

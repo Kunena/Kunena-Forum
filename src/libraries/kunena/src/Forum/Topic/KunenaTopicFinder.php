@@ -79,6 +79,12 @@ class KunenaTopicFinder extends KunenaFinder
             $query->where($this->db->quoteName('a.hold') . ' IN (' . $hold . ')');
         }
 
+        // The shadows of moved topics (filterByMoved): the filter was kept but never applied, so the lists which leave the shadows
+        // out (recent topics, the topics of a user, the similar topics) showed a moved topic twice.
+        if ($this->moved !== null) {
+            $query->where($this->db->quoteName('a.moved_id') . ($this->moved ? ' > 0' : ' = 0'));
+        }
+
         // Categories where the users only see their own topics: for every list and count, whatever filter was used.
         $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere(null, $this->db->quoteName('a.category_id'), $this->db->quoteName('a.first_post_userid'));
 

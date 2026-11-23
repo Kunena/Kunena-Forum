@@ -2225,7 +2225,9 @@ class KunenaMessage extends KunenaDatabaseObject
             $message->message = KunenaMessageQuotes::block(
                 (int) $this->id,
                 (int) $useridfromparent,
-                (string) KunenaUserHelper::get($useridfromparent)->getName(),
+                // The author of the message, as Multi-quote names him: the name of the user (userid) was empty for the message of
+                // a visitor, and the quote was "anonymous wrote:".
+                (string) $this->getAuthor()->getName(),
                 (string) $this->message,
                 !KunenaUserHelper::getMyself()->exists()
             );

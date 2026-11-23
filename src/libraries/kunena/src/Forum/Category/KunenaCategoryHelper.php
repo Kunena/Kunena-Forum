@@ -742,6 +742,11 @@ abstract class KunenaCategoryHelper
         foreach ($categories as $category) {
             $channels = $category->getChannels();
             $channels += $category->getChildren(-1);
+
+            // Only the categories which the user may read: the subcategories keep a hidden category which has a readable
+            // subcategory, and its topics were counted as new for a user who may not read them.
+            $channels = array_filter($channels, static fn ($channel) => $channel->isAuthorised('read'));
+
             $channelMap[$category->id] = $channels;
             $catlist += $channels;
         }

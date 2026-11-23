@@ -2981,7 +2981,9 @@ class KunenaMessage extends KunenaDatabaseObject
             $this->getTopic()->attachments--;
 
             $this->message = preg_replace('/\[attachment\=' . $attachment->id . '\].*?\[\/attachment\]/u', '', $this->message);
-            $this->message = preg_replace('/\[attachment\]' . $attachment->filename . '\[\/attachment\]/u', '', $this->message);
+            // The name is text, not a pattern: a bracket in it (the upload without JavaScript keeps the name as it was) made the
+            // expression invalid, and the whole text of the message was saved empty.
+            $this->message = preg_replace('/\[attachment\]' . preg_quote((string) $attachment->filename, '/') . '\[\/attachment\]/u', '', $this->message);
         }
 
         // Remove missing temporary attachments from the message text

@@ -101,7 +101,8 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
         foreach ($users as $userid => $usertime) {
             $user = KunenaUserHelper::get($userid);
 
-            if (!$user->showOnline) {
+            // A member who does not show that he is online, or who chose the status "Invisible" (as the login widget treats them).
+            if (!$user->showOnline || (int) $user->status === 3) {
                 if ($moderator) {
                     $this->hiddenList[$user->getName()] = $user;
                 }

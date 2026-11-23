@@ -1960,7 +1960,22 @@ class KunenaTopic extends KunenaDatabaseObject
                 }
 
                 if ($movesFirstPost) {
-                    $this->poll_id = 0;
+                    // The poll goes with the first message, and the poll names its new topic: it still named this topic, so the
+                    // diagnostics found a topic whose poll belongs to another one (and the topic of a merge got no poll at all).
+                    $target->poll_id = $this->poll_id;
+                    $this->poll_id   = 0;
+
+                    $query = $this->_db->createQuery();
+                    $query->update($this->_db->quoteName('#__kunena_polls'))
+                        ->set($this->_db->quoteName('threadid') . ' = ' . (int) $target->id)
+                        ->where($this->_db->quoteName('id') . ' = ' . (int) $target->poll_id);
+                    $this->_db->setQuery($query);
+
+                    try {
+                        $this->_db->execute();
+                    } catch (RuntimeException $e) {
+                        Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+                    }
                 } elseif ($newTarget) {
                     // The first message stays here, so the poll must stay here as well (the target is a clone of this topic).
                     $target->poll_id = 0;

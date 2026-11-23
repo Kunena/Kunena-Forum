@@ -49,27 +49,47 @@ class KunenaDateTodayTest extends UnitTestCase
     }
 
     /**
-     * Yesterday 23:30 in the time zone of the user, in a zone where that moment and now are the same day in UTC (so that the days of
-     * the server called it today). There is always one among the zones from UTC-11 to UTC+14.
+     * A post of the last two days whose day in the time zone of the user is not its day in UTC: today for the user and yesterday
+     * for the server, or the other way. At any hour of the day one of the zones from UTC-12 to UTC+14 has one (a list of a few named
+     * zones had none at some hours, so the test depended on the time it ran).
      */
-    public function testAPostOfLateYesterdayIsYesterdayInTheTimeZoneOfTheUser(): void
+    public function testAPostIsTodayOrYesterdayInTheTimeZoneOfTheUser(): void
     {
+        $now = time();
         $utc = new DateTimeZone('UTC');
 
-        foreach (['Pacific/Kiritimati', 'Pacific/Auckland', 'Asia/Tokyo', 'Asia/Kolkata', 'Europe/Amsterdam', 'America/New_York', 'Pacific/Honolulu', 'Pacific/Pago_Pago'] as $name) {
-            $zone = new DateTimeZone($name);
-            $now  = new DateTimeImmutable('now', $zone);
-            $post = $now->setTime(0, 0)->modify('-30 minutes');
+        foreach (range(-12, 14) as $hours) {
+            $zone = new DateTimeZone(\sprintf('%+03d:00', $hours));
 
-            if ($post->setTimezone($utc)->format('Y-m-d') === $now->setTimezone($utc)->format('Y-m-d')) {
-                $date = KunenaDate::getInstance($post->setTimezone($utc)->format('Y-m-d H:i:s'));
+            for ($step = 1; $step <= 96; $step++) {
+                $time  = $now - $step * 900;
+                $local = $this->day($time, $now, $zone);
+                $day   = $this->day($time, $now, $utc);
 
-                $this->assertSame('Yesterday 23:30', $date->toKunena('datetime_today', $name), $name);
+                if ($local && $day && $local !== $day) {
+                    $post = new DateTimeImmutable('@' . $time);
+                    $date = KunenaDate::getInstance($post->format('Y-m-d H:i:s'));
 
-                return;
+                    $expected = ($local === 'today' ? 'Today ' : 'Yesterday ') . $post->setTimezone($zone)->format('H:i');
+                    $this->assertSame($expected, $date->toKunena('datetime_today', $zone->getName()), $zone->getName());
+
+                    return;
+                }
             }
         }
 
-        $this->fail('No time zone where yesterday 23:30 is today in UTC.');
+        $this->fail('No time of the last two days with another day in UTC.');
+    }
+
+    private function day(int $time, int $now, DateTimeZone $zone): ?string
+    {
+        $then  = (new DateTimeImmutable('@' . $time))->setTimezone($zone)->format('Y-m-d');
+        $today = (new DateTimeImmutable('@' . $now))->setTimezone($zone);
+
+        return match ($then) {
+            $today->format('Y-m-d')                   => 'today',
+            $today->modify('-1 day')->format('Y-m-d') => 'yesterday',
+            default                                   => null,
+        };
     }
 }

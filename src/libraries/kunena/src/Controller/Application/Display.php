@@ -269,11 +269,12 @@ class Display extends KunenaControllerDisplay
 
                     $bannedtime = KunenaBan::getInstanceByUserid(KunenaUserHelper::getMyself()->userid, true);
 
+                    // A ban for life has no end to give (as the warning of before() tells): its end is the 31st of December 9999.
                     $this->content = KunenaLayout::factory('Widget/Custom')
                         ->set('header', Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
                         ->set(
                             'body',
-                            Text::sprintf(
+                            $bannedtime->isLifetime() ? '' : Text::sprintf(
                                 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
                                 KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
                             )

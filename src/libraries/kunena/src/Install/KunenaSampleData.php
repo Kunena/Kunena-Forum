@@ -236,15 +236,20 @@ class KunenaSampleData
 
         $queries[] = ['kunena_topics', $query];
 
-        foreach ($queries as $query) {
-            // Only insert sample/default data if table is empty
-            $checkQuery = $db->createQuery();
-            $checkQuery->select('*')->from($db->quoteName($db->getPrefix() . $query[0]));
-            $checkQuery->setLimit(1);
-            $db->setQuery($checkQuery);
-            $filled = $db->loadObject();
+        // Only insert sample/default data if table is empty: before the first insert into it. The check ran for each insert, so of the
+        // three categories only the section went in (the table was not empty any more), and the welcome topic had no category.
+        $empty = [];
 
-            if (!$filled) {
+        foreach ($queries as $query) {
+            if (!isset($empty[$query[0]])) {
+                $checkQuery = $db->createQuery();
+                $checkQuery->select('*')->from($db->quoteName($db->getPrefix() . $query[0]));
+                $checkQuery->setLimit(1);
+                $db->setQuery($checkQuery);
+                $empty[$query[0]] = !$db->loadObject();
+            }
+
+            if ($empty[$query[0]]) {
                 $db->setQuery($query[1]);
 
                 try {

@@ -1264,19 +1264,26 @@ class KunenaAttachment extends KunenaDatabaseObject
         $fileExt = File::getExt($fileInput['name']);
         $fileExt = strtolower($fileExt);
 
-        $fileNameWithExt = $fileInput['name'];
-        $fileNameWithExt = strtolower($fileNameWithExt);
+        // Only the last dot starts the extension, as in the upload of the editor (getAvailableFilename()): a name as x.php.txt was
+        // stored as it is, and some web servers run such a file as a script.
+        $fileNameWithoutExt = str_replace('.', '_', $fileNameWithoutExt);
+        $fileNameWithExt    = $fileNameWithoutExt . '.' . $fileExt;
 
         if ($protected) {
             // The file is served by Kunena after the permissions were checked, so nobody may be able to guess its address:
             // the name on the disk is random, as it is for the files of the ajax upload.
             $fileNameWithoutExt = KunenaAttachmentHelper::getAvailableFilename($userFolder, $fileNameWithoutExt, $fileExt, true);
             $fileNameWithExt    = $fileNameWithoutExt . '.' . $fileExt;
-        } elseif (file_exists($uploadBasePath . $fileInput['name'])) {
-            for ($i = 2; file_exists($uploadBasePath . $fileNameWithoutExt . '.' . $fileExt); $i++) {
-                $fileNameWithoutExt = $fileNameWithoutExt . "-$i";
-                $fileNameWithExt    = $fileNameWithoutExt . '.' . $fileExt;
+        } elseif (file_exists($uploadBasePath . $fileNameWithExt)) {
+            // The name which is stored (lowercase, the dots of the name changed): the name of the request was checked, so a file of
+            // the same stored name was overwritten (on a file system which tells the case apart, Photo.JPG overwrote photo.jpg).
+            $base = $fileNameWithoutExt;
+
+            for ($i = 2; file_exists($uploadBasePath . $base . "-$i." . $fileExt); $i++) {
             }
+
+            $fileNameWithoutExt = $base . "-$i";
+            $fileNameWithExt    = $fileNameWithoutExt . '.' . $fileExt;
         }
 
         $fileInput['name'] = $fileNameWithExt;

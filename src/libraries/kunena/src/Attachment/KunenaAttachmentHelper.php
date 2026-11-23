@@ -805,7 +805,9 @@ abstract class KunenaAttachmentHelper
         $len = mb_strlen($filename);
 
         if ($len > ($front + \strlen($filler) + $back)) {
-            $output = substr($filename, 0, $front) . $filler . substr($filename, $len - $back, $back);
+            // In characters, as the length: a cut in bytes fell inside a character of a name which is not in ASCII (invalid UTF-8,
+            // which the escaping of the page made an empty name).
+            $output = mb_substr($filename, 0, $front) . $filler . mb_substr($filename, $len - $back, $back);
         } else {
             $output = $filename;
         }

@@ -84,6 +84,18 @@ class KunenaAttachmentHelperTest extends UnitTestCase
         $this->assertSame($expected, KunenaAttachmentHelper::shortenFilename($name));
     }
 
+    /**
+     * A long name in Cyrillic (two bytes a character): the name was cut in bytes where it was counted in characters, so a cut
+     * fell inside a character, and the name was invalid UTF-8 (htmlspecialchars() made it empty on the page).
+     */
+    public function testShortenFilenameCutsCharactersNotBytes(): void
+    {
+        $short = KunenaAttachmentHelper::shortenFilename('Отчёт_за_декабрь_2025_года.pdf');
+
+        $this->assertTrue(mb_check_encoding($short, 'UTF-8'), $short);
+        $this->assertSame('Отчёт_за_д...года.pdf', $short);
+    }
+
     public function testShortenFilenameWithOwnLengths(): void
     {
         $this->assertSame('abc~xyz', KunenaAttachmentHelper::shortenFilename('abcdefghijklmnopqrstuvwxyz', 3, 3, '~'));

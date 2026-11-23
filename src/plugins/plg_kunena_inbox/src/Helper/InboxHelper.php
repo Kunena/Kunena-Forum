@@ -390,8 +390,9 @@ class InboxHelper
             ->order($db->quoteName('created_time') . ' DESC')
             ->bind(':user', $userid, ParameterType::INTEGER);
 
+        // The names as text: the script of the page escapes every value (escaped here too, "&" read "&amp;").
         return array_map(
-            static fn ($id) => ['id' => (int) $id, 'name' => KunenaUserHelper::get((int) $id)->getName()],
+            static fn ($id) => ['id' => (int) $id, 'name' => KunenaUserHelper::get((int) $id)->getName('', false)],
             $db->setQuery($query)->loadColumn()
         );
     }
@@ -634,7 +635,8 @@ class InboxHelper
      */
     protected static function toArray(object $row, int $userid, bool $sent, bool $full = false): array
     {
-        $name  = KunenaUserHelper::get((int) $row->sender_id)->getName();
+        // The names and the texts as text: the script of the page escapes every value (escaped here too, "&" read "&amp;").
+        $name  = KunenaUserHelper::get((int) $row->sender_id)->getName('', false);
         $url   = '';
 
         if ($row->type !== 'message') {
@@ -660,7 +662,7 @@ class InboxHelper
             'from'    => $name,
             'from_id' => (int) $row->sender_id,
             'to_id'   => (int) $row->user_id,
-            'to'      => $row->type === 'message' ? KunenaUserHelper::get((int) $row->user_id)->getName() : '',
+            'to'      => $row->type === 'message' ? KunenaUserHelper::get((int) $row->user_id)->getName('', false) : '',
             'mine'    => (int) $row->sender_id === $userid && $row->type === 'message',
             'subject' => (string) $row->subject,
             'text'    => $text,

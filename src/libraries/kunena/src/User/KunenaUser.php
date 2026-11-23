@@ -1045,7 +1045,8 @@ class KunenaUser
             return $name;
         }
 
-        return $profile->getProfileName($this, $visitorname);
+        // The profile escapes the name only when asked: without $escape it escaped the name as text too (e-mails, popups, JSON).
+        return $profile->getProfileName($this, $visitorname, $escape);
     }
 
     /**

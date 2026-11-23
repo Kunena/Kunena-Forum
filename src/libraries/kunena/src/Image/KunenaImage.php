@@ -222,10 +222,8 @@ class KunenaImage extends Image
             imagealphablending($handle, false);
             imagesavealpha($handle, true);
 
-            if ($this->isTransparent()) {
-                $transparent = imagecolorallocatealpha($this->handle, 255, 255, 255, 127);
-                imagefilledrectangle($this->handle, 0, 0, $width, $height, $transparent);
-            }
+            // No transparent rectangle on the original here: the new picture is filled with the transparent colour below. It was
+            // drawn on the original (a PNG with a palette has no alpha blending), and the top-left part of the picture was erased.
         }
 
         if ($this->isTransparent()) {

@@ -147,7 +147,7 @@ abstract class KunenaApi
             'category_id'     => (int) $topic->category_id,
             'subject'         => (string) $topic->subject,
             'author_id'       => (int) $topic->first_post_userid,
-            'author'          => (string) $topic->first_post_guest_name ?: (string) $topic->getAuthor()->getName(),
+            'author'          => self::author((int) $topic->first_post_userid, (string) $topic->first_post_guest_name, $topic->getAuthor()),
             'first_post_id'   => (int) $topic->first_post_id,
             'first_post_time' => self::date($topic->first_post_time),
             'replies'         => max(0, (int) $topic->posts - 1),
@@ -184,7 +184,7 @@ abstract class KunenaApi
             'parent_id'     => (int) $message->parent,
             'subject'       => (string) $message->subject,
             'author_id'     => (int) $message->userid,
-            'author'        => (string) $message->name ?: (string) $message->getAuthor()->getName(),
+            'author'        => self::author((int) $message->userid, (string) $message->name, $message->getAuthor()),
             'time'          => self::date($message->time),
             'modified_time' => self::date($message->modified_time),
             'message'       => $text,
@@ -193,6 +193,33 @@ abstract class KunenaApi
                 'index.php?option=com_kunena&view=topic&catid=' . (int) $message->catid . '&id=' . (int) $message->thread . '&mesid=' . (int) $message->id
             ),
         ];
+    }
+
+    /**
+     * The name of the author of a topic or a post, as text (JSON is not HTML). A member is shown by the name the forum shows of him
+     * now, as on the site: the message keeps the name he had when he posted, HTML-escaped (KunenaMessage::check()), which gave
+     * his login name after a switch to the real names, and "Tom &amp; Jerry". A guest (or an anonymous post) has the name of the
+     * message, and a deleted member the name of the message without the escaping.
+     *
+     * @param   int         $userid  The user of the message (0: a guest).
+     * @param   string      $name    The name stored with the message.
+     * @param   KunenaUser  $author  The author of the message.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    private static function author(int $userid, string $name, KunenaUser $author): string
+    {
+        if ($userid > 0 && $author->exists()) {
+            return $author->getName('', false);
+        }
+
+        if ($userid > 0) {
+            $name = htmlspecialchars_decode($name, ENT_QUOTES);
+        }
+
+        return $name !== '' ? $name : $author->getName('', false);
     }
 
     /**

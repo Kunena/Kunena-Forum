@@ -147,6 +147,21 @@ class ReportsTest extends IntegrationTestCase implements DBTestInterface
     }
 
     /**
+     * The names in the topic of a report are text in BBCode (the parser escapes them when the topic is shown): they were
+     * HTML-escaped already, and "Tom & Jerry" read "Tom &amp; Jerry" in the subject and in the text of the report.
+     */
+    public function testTheNamesInTheReportAreText(): void
+    {
+        $this->report(11, 'Ann & Bob', 'Tom & Jerry');
+
+        $this->assertSame(['topic'], $this->done);
+        $this->assertStringContainsString('Tom & Jerry', $this->fields['subject']);
+        $this->assertStringContainsString(']Tom & Jerry[/url]', $this->fields['message']);
+        $this->assertStringContainsString('[quote="Ann & Bob post=11', $this->fields['message']);
+        $this->assertStringNotContainsString('&amp;', $this->fields['subject'] . $this->fields['message']);
+    }
+
+    /**
      * The plugin gets the report of the message $id (in the category 2) of $authorName by $reporterName. The names are given by
      * getName() as the forum does: HTML-escaped unless asked for text.
      */

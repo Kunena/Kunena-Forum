@@ -114,9 +114,13 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
         }
 
         try {
-            $name    = $reporter->getName();
-            $profile = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $reporter->getURL(false);
-            $author  = $message->getAuthor();
+            // The names as text in the BBCode (the parser escapes them when the topic is shown; they were escaped here too, and "&"
+            // read "&amp;"), without the characters which end a tag or the name of a quote (as KunenaMessageQuotes::block()).
+            $plain      = static fn (string $name): string => trim(str_replace(['"', '[', ']'], '', $name));
+            $name       = $plain($reporter->getName('', false));
+            $profile    = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $reporter->getURL(false);
+            $author     = $message->getAuthor();
+            $authorName = $plain($author->getName((string) $message->name, false));
 
             $quoted = KunenaParser::removeBlocks((string) $message->message, ['confidential']);
             $body   = Text::_('PLG_KUNENA_REPORTS_REPORTED_BY') . ' [url=' . $profile . ']' . $name . '[/url]';
@@ -130,8 +134,8 @@ class Reports extends CMSPlugin implements SubscriberInterface, DatabaseAwareInt
             }
 
             $body .= "\n\n[hr]\n[b][url=" . $url . ']' . Text::_('PLG_KUNENA_REPORTS_POST') . '[/url][/b] '
-                . Text::sprintf('PLG_KUNENA_REPORTS_POST_BY', $author->getName((string) $message->name)) . "\n"
-                . '[quote="' . $author->getName((string) $message->name) . ' post=' . (int) $message->id . ' userid=' . (int) $message->userid . '"]' . $quoted . '[/quote]';
+                . Text::sprintf('PLG_KUNENA_REPORTS_POST_BY', $authorName) . "\n"
+                . '[quote="' . $authorName . ' post=' . (int) $message->id . ' userid=' . (int) $message->userid . '"]' . $quoted . '[/quote]';
 
             $db          = Factory::getContainer()->get(DatabaseInterface::class);
             $existing    = $this->getReportTopicId($db, (int) $message->id);

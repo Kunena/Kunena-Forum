@@ -3305,11 +3305,6 @@ class TopicController extends KunenaController
             $message = $target = KunenaMessageHelper::get($this->mesid);
             $log     = KunenaLog::LOG_POST_DESTROY;
             $topic   = KunenaTopicHelper::get($target->getTopic());
-
-            if ($topic->attachments > 0) {
-                $topic->attachments = $topic->attachments - 1;
-                $topic->save(false);
-            }
         } else {
             // Delete topic
             $topic = $target = KunenaTopicHelper::get($this->id);
@@ -3325,6 +3320,17 @@ class TopicController extends KunenaController
             $this->setRedirectBack();
 
             return; // -- abort
+        }
+
+        // The files of the message go with it: the topic counts them no more. One file was taken off the topic before the check
+        // of the rights (also when the delete was refused), and whether the message had a file or not.
+        if (isset($message)) {
+            $files = \count($message->getAttachments(false, 'none'));
+
+            if ($files) {
+                $topic->attachments = max(0, (int) $topic->attachments - $files);
+                $topic->save(false);
+            }
         }
 
         try {

@@ -2586,7 +2586,9 @@ class KunenaCategory extends KunenaDatabaseObject
                 ->where($db->quoteName('category_id') . ' = ' . $db->quote($this->id))
                 ->andWhere($db->quoteName('hold') . ' = 0')
                 ->andWhere($db->quoteName('moved_id') . ' = 0')
-                ->order([$db->quoteName('moved_id') . ' DESC', $db->quoteName('last_post_id') . ' DESC']);
+                // The newest post by its time, as above and in the recount: the id of a post is not its order in time (a scheduled
+                // reply keeps its id and gets the time when it is published).
+                ->order([$db->quoteName('last_post_time') . ' DESC', $db->quoteName('last_post_id') . ' DESC']);
             $query->setLimit(1);
             $db->setQuery($query);
 

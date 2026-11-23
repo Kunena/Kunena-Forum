@@ -1112,10 +1112,12 @@ abstract class KunenaCategoryHelper
 
         // TODO: remove this by adding level into table
         self::buildTree($cat_instances);
-        $heap = [null];
+        // From the top of the tree (the parent 0 of the sections). The heap started with null, which ended the loop at once: every
+        // category had level 0, and the lists of the categories (search, new topic, move, the jump menu, the backend) were flat.
+        $heap = [0];
 
         while (($parent = array_shift($heap)) !== null) {
-            foreach (self::$_tree [$parent] as $id => $children) {
+            foreach (self::$_tree [$parent] ?? [] as $id => $children) {
                 if (!empty($children)) {
                     array_push($heap, $id);
                 }

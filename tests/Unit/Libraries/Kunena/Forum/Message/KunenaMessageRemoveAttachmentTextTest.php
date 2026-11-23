@@ -75,6 +75,31 @@ class KunenaMessageRemoveAttachmentTextTest extends UnitTestCase
         return $message->message;
     }
 
+    public function testTheNameOfAnAddedFileIsWrittenAsItIs(): void
+    {
+        // The tag of an upload ([attachment:5]) becomes the tag of the file with its name. The name was a replacement of
+        // preg_replace: $0 in it (the upload without JavaScript keeps the name) was replaced by the whole tag.
+        $attachment = $this->createPartialMock(KunenaAttachment::class, ['exists', 'save']);
+        $attachment->method('exists')->willReturn(true);
+        $attachment->expects($this->atLeastOnce())->method('save')->willReturn(true);
+        $attachment->id       = 7;
+        $attachment->mesid    = 10;
+        $attachment->filename = 'price$0.jpg';
+
+        $message = self::bare(KunenaMessage::class, [
+            'id'               => 10,
+            'message'          => 'See [attachment:5]price$0.jpg[/attachment]',
+            '_config'          => self::bare(KunenaConfig::class, ['config' => ['attachmentLimit' => 0]]),
+            '_topic'           => self::bare(KunenaTopic::class, ['attachments' => 1]),
+            '_attachments_add' => [5 => $attachment],
+            '_attachments_del' => [],
+        ]);
+
+        self::invoke($message, 'updateAttachments');
+
+        $this->assertSame('See [attachment=7]price$0.jpg[/attachment]', $message->message);
+    }
+
     public function testTheTextStaysWhenTheNameOfTheFileHasABracket(): void
     {
         $this->assertSame(

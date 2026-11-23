@@ -2956,7 +2956,10 @@ class KunenaMessage extends KunenaDatabaseObject
             if ($new) {
                 $this->getTopic()->attachments++;
             }
-            $this->message = preg_replace('/\[attachment\:' . $tmpid . '\].*?\[\/attachment\]/u', "[attachment={$attachment->id}]{$attachment->filename}[/attachment]", $this->message);
+            // The tag is written by a callback: the name of the file is text, and as a replacement a $0 or \1 in it (the upload
+            // without JavaScript keeps the name) was read as a part of the match.
+            $tag           = "[attachment={$attachment->id}]{$attachment->filename}[/attachment]";
+            $this->message = preg_replace_callback('/\[attachment\:' . (int) $tmpid . '\].*?\[\/attachment\]/u', static fn () => $tag, $this->message);
         }
 
         // Delete removed attachments and update attachments count and message text

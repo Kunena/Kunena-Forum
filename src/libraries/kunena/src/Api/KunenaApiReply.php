@@ -212,6 +212,12 @@ abstract class KunenaApiReply
             throw new RuntimeException(Text::_('COM_KUNENA_API_ERROR_GUEST'), 403);
         }
 
+        // Read-only mode: the site hides the reply buttons (isAuthorised()), but tryAuthorise() below does not know the mode, and a
+        // reply through the API was saved.
+        if ($config->readOnly) {
+            throw new RuntimeException(Text::_('COM_KUNENA_API_ERROR_READONLY'), 403);
+        }
+
         // The message to reply to: the one asked for, or the first message of the topic.
         $topic  = KunenaTopicHelper::get($fields['topic_id'] ?: null);
         $parent = KunenaMessageHelper::get($fields['parent_id'] ?: ($topic->exists() ? (int) $topic->first_post_id : null));

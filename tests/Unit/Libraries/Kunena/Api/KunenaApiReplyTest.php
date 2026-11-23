@@ -13,8 +13,12 @@
 namespace Kunena\Tests\Unit\Libraries\Kunena\Api;
 
 use Kunena\Forum\Libraries\Api\KunenaApiReply;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use ReflectionClass;
+use ReflectionProperty;
 use RuntimeException;
 
 /**
@@ -148,5 +152,29 @@ class KunenaApiReplyTest extends UnitTestCase
 
         $this->assertSame(2, KunenaApiReply::externalLinks($message, 'forum.example.org'));
         $this->assertSame(0, KunenaApiReply::externalLinks('no links', 'forum.example.org'));
+    }
+
+    public function testNoReplyInReadOnlyMode(): void
+    {
+        $this->requireJoomla();
+
+        // The site hides the reply buttons in read-only mode (isAuthorised()), but reply() checked tryAuthorise() only, which does
+        // not know the mode: a member with an API token posted his reply. It is refused before anything is read or saved.
+        $config = (new ReflectionClass(KunenaConfig::class))->newInstanceWithoutConstructor();
+        (new ReflectionProperty(KunenaConfig::class, 'config'))->setValue($config, ['readOnly' => 1]);
+        $instance = new ReflectionProperty(KunenaConfig::class, 'instance');
+        $saved    = $instance->getValue();
+        $instance->setValue(null, $config);
+
+        try {
+            KunenaApiReply::reply(self::bare(KunenaUser::class, ['userid' => 50, '_exists' => true]), [
+                'topic_id' => 99999999, 'parent_id' => 0, 'message' => 'Hello', 'subscribe' => false,
+            ]);
+            $this->fail('no exception');
+        } catch (RuntimeException $e) {
+            $this->assertSame(403, $e->getCode());
+        } finally {
+            $instance->setValue(null, $saved);
+        }
     }
 }

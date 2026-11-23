@@ -1332,7 +1332,9 @@ class KunenaAttachment extends KunenaDatabaseObject
                 $this->filetype = $imageInfo->mime;
             }
 
-            $this->protected     = $protected;
+            // A number, as the column: false was given to the query as '', and the post failed ("Incorrect integer value") whenever
+            // the attachments were not protected (the default).
+            $this->protected     = $protected ? 1 : 0;
             $this->hash          = md5_file($uploadBasePath . $fileNameWithExt);
             $this->size          = $file->size;
             $this->folder        = $userFolder;

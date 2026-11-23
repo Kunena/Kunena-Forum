@@ -70,13 +70,11 @@ function kunena_640_2024_11_02_move_users_socials($parent)
         $listSocialsColumns = $columsSocialsByDefault;
     }
 
-    // Get the number of lines in table #__kunena_users
+    // Get the number of lines in table #__kunena_users: all the users. Only the users without a ban date were moved, so the
+    // socials of a user who was ever banned were lost when the next step removed the columns.
     $query  = $db->createQuery()
         ->select(['userid', 'banned'])
-        ->from($db->quoteName('#__kunena_users'))
-        ->where(
-            $db->quoteName('banned') . '= ' . $db->quote('1000-01-01 00:00:00')
-        );
+        ->from($db->quoteName('#__kunena_users'));
 
     $db->setQuery($query);
     $db->execute();
@@ -87,16 +85,14 @@ function kunena_640_2024_11_02_move_users_socials($parent)
 
         $query  = $db->createQuery()
             ->select($db->quoteName($listSocialsColumns))
-            ->from($db->quoteName('#__kunena_users'))
-            ->where(
-                $db->quoteName('banned') . '= ' . $db->quote('1000-01-01 00:00:00')
-            );
+            ->from($db->quoteName('#__kunena_users'));
 
         $db->setQuery($query);
         $db->execute();
         $dataResults = (array) $db->loadAssocList();
 
-        foreach (chunk($dataResults, $numRows, 100) as $line) {
+        // Every user: chunk() gave the first 100 rows only, so the socials of the other users were lost.
+        foreach ($dataResults as $line) {
             $result  = ArrayHelper::toObject($line);
             $socials = KunenaUserSocials::getInstance($result->userid, false);
 

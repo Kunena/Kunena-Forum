@@ -405,6 +405,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
         // The replies of this page, as the search engines read a discussion: the replies of the other pages are on their own page.
         $comments = [];
 
+        // A guest reads no reply where the replies are hidden for guests (the teaser): the page shows him a note in their place,
+        // and the structured data gave him their text.
+        $hideReplies = $this->me && !$this->me->userid && $category->hidesRepliesForGuests();
+
         foreach ($this->messages ?: [] as $message) {
             // Not the first message (it is the posting itself), nor a deleted or unapproved message which a moderator sees.
             if ((int) $message->id === (int) $this->topic->first_post_id || (int) $message->hold !== 0) {
@@ -422,7 +426,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
                 $comment['dateModified'] = (new KunenaDate($message->modified_time))->toISO8601();
             }
 
-            $text = trim(preg_replace('/\s+/', ' ', (string) KunenaParser::stripBBCode((string) $message->message, 500, false)));
+            $text = $hideReplies ? '' : trim(preg_replace('/\s+/', ' ', (string) KunenaParser::stripBBCode((string) $message->message, 500, false)));
 
             if ($text !== '') {
                 $comment['text'] = $text;

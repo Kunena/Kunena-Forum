@@ -1049,13 +1049,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_content' => ['_content', '_default'],
             'plain_link'    => ['_default', '_content'],
         ],
+        // The address of the plain mode is escaped (/h): it is the text of the tag, and a quote in it closed the attribute (the log
+        // of the backend shows its data in the plain mode).
         'email' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'doEmail',
             'class'         => 'link',
             'allow_in'      => ['listitem', 'block', 'columns', 'inline'],
             'content'       => BBCode::BBCODE_REQUIRED,
-            'plain_start'   => "<a href=\"mailto:{\$link}\">",
+            'plain_start'   => "<a href=\"mailto:{\$link/h}\">",
             'plain_end'     => "</a>",
             'plain_content' => ['_content', '_default'],
             'plain_link'    => ['_default', '_content'],

@@ -164,7 +164,7 @@ abstract class KunenaDiagnostics
      */
     protected static function delete_attachmentOrphaned(): string
     {
-        return "DELETE a FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
+        return "DELETE a FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE a.mesid>0 AND m.id IS NULL";
     }
 
     /**
@@ -1250,10 +1250,11 @@ abstract class KunenaDiagnostics
      */
     protected static function query_attachmentOrphaned(): QueryInterface
     {
-        // Query to find attachments which do not belong in any existing message
+        // Query to find attachments which do not belong in any existing message. An upload which waits for its message (mesid 0:
+        // the editor of a post, a private message) is no orphan: it was listed and deleted, and the post then lost its file.
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
-        $query->from("#__kunena_attachments AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("m.id IS NULL");
+        $query->from("#__kunena_attachments AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("a.mesid>0 AND m.id IS NULL");
 
         return $query;
     }

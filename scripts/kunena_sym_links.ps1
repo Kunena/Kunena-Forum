@@ -470,7 +470,11 @@ while ($true) {
                 Remove-Links
                 Read-Host "Press Enter to continue..."
             }
-            6 { exit }  # Exit the loop when 'Exit' is selected
+            6 {
+                # The exit code tells a failure of an earlier choice, as without the menu
+                if ($script:failures -gt 0) { exit 1 }
+                exit 0
+            }
         }
     }
     else {

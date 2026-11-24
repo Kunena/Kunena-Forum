@@ -121,6 +121,14 @@ class CategoryModel extends CategoriesModel
         }
 
         $value = Factory::getApplication()->getInput()->getInt('catid');
+
+        // New in the list of the categories gives the ticked category as catid of the layout create: the parent of the new
+        // category. It opened the ticked category itself, and the save of the form changed that category.
+        if ($layout === 'create') {
+            $this->setState('item.parent_id', $value);
+            $value = 0;
+        }
+
         $this->setState($this->getName() . '.id', $value);
     }
 }

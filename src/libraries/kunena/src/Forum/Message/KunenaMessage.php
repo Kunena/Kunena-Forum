@@ -818,8 +818,10 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         if (\intval($this->_config->userEditTime) != 0) {
-            // Check whether edit is in time
-            $modtime = $this->modified_time ? $this->modified_time : $this->time;
+            // Check whether edit is in time: from the post or from the last edit of its author. The edit of a moderator gave the
+            // author a new time for his old post (also to undo the correction).
+            $ownEdit = $this->modified_time && (int) $this->modified_by === (int) $this->userid;
+            $modtime = $ownEdit ? $this->modified_time : $this->time;
 
             if ($modtime + \intval($this->_config->userEditTime) < Factory::getDate()->toUnix() && \intval($this->_config->userEditTimeGrace) == 0) {
                 return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);

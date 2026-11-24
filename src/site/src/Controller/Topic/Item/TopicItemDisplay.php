@@ -238,12 +238,15 @@ class TopicItemDisplay extends KunenaControllerDisplay
         }
 
         // Load messages from the current page and set the pagination.
-        $hold   = KunenaAccess::getInstance()->getAllowedHold($this->me, $this->category->id, false);
-        $finder = new KunenaMessageFinder();
+        // The states which the user may see in the category of the topic: the category of the address may be one which shows
+        // the topic as a channel, and its moderator got the unapproved replies in the count (pages without messages).
+        $topicCategory = $this->topic->getCategory();
+        $hold          = KunenaAccess::getInstance()->getAllowedHold($this->me, $topicCategory->id, false);
+        $finder        = new KunenaMessageFinder();
         $finder->where('thread', '=', $this->topic->id);
 
         // The author of a topic which waits for approval sees his own unapproved messages in it.
-        if ($this->topic->isUnapprovedOf($this->me) && !$this->me->isModerator($this->category)) {
+        if ($this->topic->isUnapprovedOf($this->me) && !$this->me->isModerator($topicCategory)) {
             $finder->filterByHoldOrOwnUnapproved($hold, $this->me);
         } else {
             $finder->filterByHold($hold);

@@ -44,9 +44,12 @@ if ($config->lightbox == 1) {
     </a>
     <?php
 } else {
+    // The lightbox of the site template when the configuration chooses it (2): its attributes, as the thumbnails have them
+    // (the value 2 gave a plain link). Nothing when the lightbox is off.
+    $attributesLink = KunenaLightbox::attributes('gallery', $attachment->getUrl(false, false, false), $attachment->getFilename(false));
     ?>
     <a href="<?php echo $name; ?>"
-       data-bs-toggle="tooltip" title="<?php echo $attachment->getShortName($config->attachStart, $config->attachEnd); ?>">
+       data-bs-toggle="tooltip" title="<?php echo $attachment->getShortName($config->attachStart, $config->attachEnd); ?>"<?php echo $attributesLink; ?>>
         <img loading=lazy class="kmsimage" src="<?php echo $name; ?>"
              width="<?php echo $config->thumbWidth; ?>"
              height="<?php echo $config->thumbHeight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>

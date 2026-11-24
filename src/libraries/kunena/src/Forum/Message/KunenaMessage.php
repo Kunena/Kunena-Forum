@@ -538,7 +538,8 @@ class KunenaMessage extends KunenaDatabaseObject
         $topic    = $this->getTopic();
         $category = $this->getCategory();
 
-        // A header is one line, and a value with other characters than ASCII is encoded.
+        // A header is one line, and a value with other characters than ASCII is encoded. It is text: the name of the author is not
+        // escaped for HTML ("Tom &amp; Jerry").
         $clean = static function ($value) use ($mail): string {
             $value = trim(preg_replace('/\s+/', ' ', strip_tags((string) $value)));
 
@@ -555,7 +556,7 @@ class KunenaMessage extends KunenaDatabaseObject
             'X-Forum-Topic-Id'    => (int) $topic->id,
             'X-Forum-Post-Id'     => (int) $this->id,
             'X-Forum-Type'        => $this->parent ? 'reply' : 'new-topic',
-            'X-Forum-Who'         => $this->getAuthor()->getName($this->name),
+            'X-Forum-Who'         => $this->getAuthor()->getName($this->name, false),
         ];
 
         foreach ($headers as $name => $value) {

@@ -25,21 +25,10 @@ Joomla
 Copyright:  2005 - 2014 Open Source Matters, Inc. All rights reserved.
 License:    GPLv2 or later; https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-Bootstrap
----------
-Copyright:  Copyright 2012 Twitter, Inc.
-License:    Apache License v2.0: https://www.apache.org/licenses/LICENSE-2.0
-
-mooboo
-------
-Copyright:  Copyright 2012 Twitter, Inc.
-            Modified for MooTools by GP Technology Solutions Pty Ltd, darrennolan
-License:    Apache License v2.0: https://www.apache.org/licenses/LICENSE-2.0
-
-Nawte
------
-Copyright:  2008 Jean-Nicolas Jolivet (www.silverscripting.com)
-License:    MIT license; http://www.opensource.org/licenses/mit-license.php
+Bootstrap Icons
+---------------
+Copyright:  The Bootstrap Authors
+License:    MIT license; https://github.com/twbs/icons/blob/main/LICENSE
 
 NBBC
 ----
@@ -53,10 +42,39 @@ Copyright:  Daryll Doyle
 License:    GPLv2 or later; https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Link:       https://github.com/darylldoyle/svg-sanitizer
 
-mediaboxAdvanced
-----------------
-Copyright:  2007-2011 John Einselen - http://iaian7.com
-            2007-2008 Christophe Beyls - http://www.digitalia.be
-License:    MIT license; http://www.opensource.org/licenses/mit-license.php
+scssphp
+-------
+Copyright:  2015 Leaf Corcoran; 2024-present the Scssphp project authors (source-span)
+License:    MIT license; https://github.com/scssphp/scssphp/blob/main/LICENSE.md
+
+league/uri, league/uri-interfaces
+---------------------------------
+Copyright:  2015 ignace nyamagana butera
+License:    MIT license; https://github.com/thephpleague/uri/blob/master/LICENSE
+
+symfony/filesystem
+------------------
+Copyright:  2004-present Fabien Potencier
+License:    MIT license; https://github.com/symfony/filesystem/blob/7.3/LICENSE
+
+Composer (the class loader of the bundled libraries)
+----------------------------------------------------
+Copyright:  Nils Adermann, Jordi Boggiano
+License:    MIT license; https://github.com/composer/composer/blob/main/LICENSE
+
+SCEditor
+--------
+Copyright:  2011-2017 Sam Clarke (with changes of Kunena)
+License:    MIT license; https://www.sceditor.com/license
+
+CKEditor 5
+----------
+Copyright:  2003-present CKSource Holding sp. z o.o.
+License:    GPLv2 or later; https://ckeditor.com/legal/ckeditor-oss-license/
+
+highlight.js
+------------
+Copyright:  2006 Ivan Sagalaev
+License:    BSD 3-Clause license; https://github.com/highlightjs/highlight.js/blob/main/LICENSE
 
  -->

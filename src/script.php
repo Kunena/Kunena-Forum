@@ -223,12 +223,14 @@ return new class () implements ServiceProviderInterface {
                         return false;
                     }
 
-                    // The custom styles of the templates of Kunena are kept during the upgrade.
+                    // The custom styles of the templates of Kunena are kept during the upgrade, in the folder for temporary files of
+                    // the Joomla configuration: the folder tmp of the site is not there on a site which keeps its temporary files
+                    // elsewhere, and the failed copy stopped every update of Kunena.
                     foreach (['aurelia', 'agora'] as $template) {
                         $custom = JPATH_SITE . "/components/com_kunena/template/{$template}/assets/scss/custom.scss";
 
                         if (file_exists($custom)) {
-                            File::copy($custom, JPATH_SITE . "/tmp/custom-{$template}.scss");
+                            File::copy($custom, $this->temporaryFolder() . "/custom-{$template}.scss");
                         }
                     }
 
@@ -422,8 +424,10 @@ return new class () implements ServiceProviderInterface {
                     }
 
                     foreach (['aurelia', 'agora'] as $template) {
-                        if (file_exists(JPATH_SITE . "/tmp/custom-{$template}.scss")) {
-                            File::copy(JPATH_SITE . "/tmp/custom-{$template}.scss", JPATH_SITE . "/components/com_kunena/template/{$template}/assets/scss/custom.scss");
+                        $saved = $this->temporaryFolder() . "/custom-{$template}.scss";
+
+                        if (file_exists($saved)) {
+                            File::copy($saved, JPATH_SITE . "/components/com_kunena/template/{$template}/assets/scss/custom.scss");
                         }
                     }
 
@@ -468,6 +472,17 @@ return new class () implements ServiceProviderInterface {
                             }
                         }
                     }
+                }
+
+                /**
+                 * The folder for temporary files of the Joomla configuration (the folder tmp of the site when none is set).
+                 *
+                 * @return  string
+                 * @since   8.0
+                 */
+                private function temporaryFolder(): string
+                {
+                    return rtrim((string) $this->app->get('tmp_path', JPATH_SITE . '/tmp'), '/\\');
                 }
 
                 /**

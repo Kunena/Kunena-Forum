@@ -314,6 +314,9 @@ class TopicsController extends KunenaController
 
                     $message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
                     $topic->sendNotification(null, $wasUnapproved);
+
+                    // The users mentioned in its first post: a message which waits for approval tells none of them.
+                    KunenaMessageHelper::get($topic->first_post_id, true)->sendMentionNotifications();
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
@@ -635,6 +638,9 @@ class TopicsController extends KunenaController
                     $message->publish(KunenaForum::PUBLISHED);
 
                     $message->processNotification(null, $wasUnapproved);
+
+                    // The users mentioned in it: a message which waits for approval tells none of them.
+                    $message->sendMentionNotifications();
                     $success++;
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');

@@ -3478,6 +3478,9 @@ class TopicController extends KunenaController
             }
         }
 
+        // The users mentioned in the message: a message which waits for approval tells none of them (sendMentionNotifications()).
+        KunenaMessageHelper::get($message->id, true)->sendMentionNotifications();
+
         $this->setRedirect($target->getUrl($this->return, false));
     }
 

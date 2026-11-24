@@ -324,7 +324,8 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
                 $title = $params->get('page_title') . $pagesText;
                 $this->setTitle($title);
             } else {
-                $title = Text::sprintf("{$categoryText}{$pagesText}");
+                // The name is text, not the format of sprintf(): a name with a "%" (100% Free) gave an error page.
+                $title = $categoryText . $pagesText;
                 $this->setTitle($title);
             }
 

@@ -450,7 +450,8 @@ class HtmlView extends KunenaView
                     $title = $params->get('page_title');
                     $this->setTitle($title);
                 } else {
-                    $title = Text::sprintf($this->topic->subject) . " ({$page}/{$pages})";
+                    // The subject is text, not the format of sprintf(): a subject with a "%" (100% Free) gave an error page.
+                    $title = $this->topic->subject . " ({$page}/{$pages})";
                     $this->setTitle($title);
                 }
 

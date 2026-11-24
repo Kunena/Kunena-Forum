@@ -27,7 +27,7 @@ describe('Kunena upload without JavaScript: a name with two extensions', () => {
       rows.forEach((row) => cy.task('deleteRelativePath', `${row.folder}/${row.filename}`));
     });
     cy.task('queryDB', `DELETE FROM #__kunena_attachments WHERE filename_real = '${name}'`);
-    cy.task('queryDB', `SELECT id FROM #__kunena_topics WHERE subject = '${subject}'`).then((rows) => {
+    cy.task('queryDB', `SELECT id FROM #__kunena_topics WHERE subject LIKE '${subject}%'`).then((rows) => {
       rows.forEach(({ id }) => {
         cy.task('queryDB', `DELETE x FROM #__kunena_messages_text AS x INNER JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.thread = ${id}`);
         cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE thread = ${id}`);
@@ -52,7 +52,7 @@ describe('Kunena upload without JavaScript: a name with two extensions', () => {
 
         body.append('catid', 3);
         body.append('subject', title);
-        body.append('message', `A post with a file ${stamp}.`);
+        body.append('message', `A post with a file ${stamp}: ${content}`);
         body.append(token, '1');
         body.append('kattachment-1', new win.Blob([content], { type: 'text/plain' }), name);
 
@@ -78,7 +78,8 @@ describe('Kunena upload without JavaScript: a name with two extensions', () => {
     // The name which is stored was checked against the name of the request: the second file overwrote the first.
     cy.doFrontendLogin(user.name, user.password, false);
     postWithFile(subject, 'The first file.');
-    postWithFile(subject, 'The second file.');
+    // Another text: the same text again is refused as a duplicate post.
+    postWithFile(`${subject} 2`, 'The second file.');
     cy.task('queryDB', `SELECT a.folder, a.filename FROM #__kunena_attachments AS a WHERE a.filename_real = '${name}' ORDER BY a.id`).then((rows) => {
       expect(rows, 'both files are stored').to.have.length(2);
       expect(rows[1].filename, 'the name of the second file').to.not.eq(rows[0].filename);

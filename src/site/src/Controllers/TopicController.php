@@ -1304,20 +1304,6 @@ class TopicController extends KunenaController
             }
         }
 
-        // Mark attachments being attached to this message as active.
-        foreach ($message->getAttachmentsToAdd() as $attachmentToAdd) {
-            $attachmentToAdd->status = 1;
-
-            try {
-                $attachmentToAdd->save();
-            } catch (Exception $e) {
-                $this->app->enqueueMessage($e->getMessage(), 'error');
-                $this->setRedirectBack();
-
-                return;
-            }
-        }
-
         if ($this->config->urlSubjectTopic) {
             $url_subject = $this->checkURLInSubject($message->subject);
 
@@ -1415,6 +1401,22 @@ class TopicController extends KunenaController
             $this->setRedirectBack();
 
             return;
+        }
+
+        // The uploads which the saved message took are active now. They were marked before the checks of the post: a refused post
+        // left them active without a message, and the scheduled task, which removes the pending uploads (status 0), never did.
+        foreach ($message->getAttachmentsToAdd() as $attachmentToAdd) {
+            if ((int) $attachmentToAdd->mesid !== (int) $message->id || $attachmentToAdd->status) {
+                continue;
+            }
+
+            $attachmentToAdd->status = 1;
+
+            try {
+                $attachmentToAdd->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+            }
         }
 
         // The tags of a new topic.
@@ -2001,20 +2003,6 @@ class TopicController extends KunenaController
             }
         }
 
-        // Mark attachments being attached to this message as active.
-        foreach ($message->getAttachmentsToAdd() as $attachmentToAdd) {
-            $attachmentToAdd->status = 1;
-
-            try {
-                $attachmentToAdd->save();
-            } catch (Exception $e) {
-                $this->app->enqueueMessage($e->getMessage(), 'error');
-                $this->setRedirectBack();
-
-                return;
-            }
-        }
-
         $url_subject = $this->checkURLInSubject($message->subject);
 
         if ($url_subject && $this->config->urlSubjectTopic) {
@@ -2108,6 +2096,22 @@ class TopicController extends KunenaController
             $this->setRedirectBack();
 
             return;
+        }
+
+        // The uploads which the saved message took are active now. They were marked before the checks of the post: a refused post
+        // left them active without a message, and the scheduled task, which removes the pending uploads (status 0), never did.
+        foreach ($message->getAttachmentsToAdd() as $attachmentToAdd) {
+            if ((int) $attachmentToAdd->mesid !== (int) $message->id || $attachmentToAdd->status) {
+                continue;
+            }
+
+            $attachmentToAdd->status = 1;
+
+            try {
+                $attachmentToAdd->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+            }
         }
 
         // The mentions of the saved text (after the message was made anonymous: the e-mail names the author of the message). They were

@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
@@ -980,17 +981,23 @@ abstract class KunenaTopicHelper
 
         $db        = Factory::getContainer()->get('DatabaseDriver');
 
-        // Create prepared query for messages
+        // As the delete of a topic (KunenaTopic::publish(TOPIC_DELETED)): the messages in the state of their topic become "deleted
+        // with the topic", the others keep theirs. Every message was set to deleted, so a restore of the topic (which brings back the
+        // messages deleted with it) published the replies which waited for approval and the replies which were deleted before.
         $query1 = $db->createQuery();
-        $query1->update($db->quoteName('#__kunena_messages'))
-               ->set($db->quoteName('hold') . ' = ' . $db->quote('2'))
-               ->where($db->quoteName('thread') . ' IN (' . $idlist . ')');
+        $query1->update($db->quoteName('#__kunena_messages', 'm'))
+               ->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('m.thread'))
+               ->set($db->quoteName('m.hold') . ' = ' . KunenaForum::TOPIC_DELETED)
+               ->set($db->quoteName('m.deleted_time') . ' = ' . time())
+               ->where($db->quoteName('m.thread') . ' IN (' . $idlist . ')')
+               ->where($db->quoteName('m.hold') . ' = ' . $db->quoteName('t.hold'))
+               ->where($db->quoteName('t.hold') . ' != ' . KunenaForum::TOPIC_DELETED);
         $queries[] = $query1;
 
         // Create prepared query for topics
         $query2 = $db->createQuery();
         $query2->update($db->quoteName('#__kunena_topics'))
-               ->set($db->quoteName('hold') . ' = ' . $db->quote('2'))
+               ->set($db->quoteName('hold') . ' = ' . KunenaForum::TOPIC_DELETED)
                ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
         $queries[] = $query2;
 

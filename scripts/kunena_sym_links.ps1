@@ -438,7 +438,8 @@ Show-ChoicesMenu
 
 # Start the menu loop
 while ($true) {
-    $choice = Read-Host "Select an operation (1-6):"
+    # Read-Host adds the colon
+    $choice = Read-Host "Select an operation (1-6)"
 
     # Validate user input
     if ($choice -match '^[1-6]$') {

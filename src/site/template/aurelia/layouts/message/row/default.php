@@ -143,7 +143,8 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
             <?php if ($config->avatarOnCategory) :
             ?>
                 <div class="col-6 col-md-3">
-                    <?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avatarEdit); ?>
+                    <?php // The avatar is the one of the last poster: the link goes to him (it went to the author of the listed post). ?>
+                    <?php echo $topic->getLastPostAuthor()->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avatarEdit); ?>
                 </div>
                 <div class="col-6 col-md-9">
                 <?php else :

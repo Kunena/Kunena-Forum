@@ -22,7 +22,8 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  * @var \Kunena\Forum\Libraries\Forum\Topic\Topic $topic
  */
 $topic  = $this->category->getLastTopic();
-$avatar = $this->config->avatarOnCategory ? $topic->getAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
+// The avatar of the last poster, whose profile its link opens (it was the picture of the author of the topic).
+$avatar = $this->config->avatarOnCategory ? $topic->getLastPostAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
 ?>
 
 <tr>

@@ -248,12 +248,13 @@ class KunenaDate extends Date
      * the dates of an announcement): Y-m-dTH:i.
      *
      * @param   string|null  $datetime  The date and time of the database (the value which means "no date" gives an empty text).
+     * @param   string       $timezone  The time zone of the user: the database keeps UTC, the field shows his own time.
      *
      * @return  string
      *
      * @since   Kunena 8.0
      */
-    public static function toDateTimeLocal(?string $datetime): string
+    public static function toDateTimeLocal(?string $datetime, string $timezone = 'UTC'): string
     {
         $datetime = trim((string) $datetime);
 
@@ -261,23 +262,26 @@ class KunenaDate extends Date
             return '';
         }
 
-        $value = DateTime::createFromFormat('!Y-m-d H:i:s', $datetime) ?: DateTime::createFromFormat('!Y-m-d H:i', $datetime)
-            ?: DateTime::createFromFormat('!Y-m-d', $datetime);
+        $utc   = new DateTimeZone('UTC');
+        $value = DateTime::createFromFormat('!Y-m-d H:i:s', $datetime, $utc) ?: DateTime::createFromFormat('!Y-m-d H:i', $datetime, $utc)
+            ?: DateTime::createFromFormat('!Y-m-d', $datetime, $utc);
 
-        return $value ? $value->format('Y-m-d\TH:i') : '';
+        return $value ? $value->setTimezone(self::zone($timezone))->format('Y-m-d\TH:i') : '';
     }
 
     /**
      * Reads the value of a date and time field of the browser (Y-m-dTH:i, with or without seconds) as a date and time of the
      * database (Y-m-d H:i:s). The format of the database itself is read too (a form sent by an older page).
      *
-     * @param   string|null  $value  The value of the field.
+     * @param   string|null  $value     The value of the field.
+     * @param   string       $timezone  The time zone of the user, in which he wrote the time: the database keeps UTC. It was read
+     *                                  as UTC, so an announcement of a moderator in UTC+1 was published an hour late.
      *
-     * @return  string|null  The date and time as Y-m-d H:i:s, null for an empty field or a text which is no date and time.
+     * @return  string|null  The date and time as Y-m-d H:i:s (UTC), null for an empty field or a text which is no date and time.
      *
      * @since   Kunena 8.0
      */
-    public static function fromDateTimeLocal(?string $value): ?string
+    public static function fromDateTimeLocal(?string $value, string $timezone = 'UTC'): ?string
     {
         $value = trim((string) $value);
 
@@ -286,15 +290,33 @@ class KunenaDate extends Date
         }
 
         foreach (['!Y-m-d\TH:i', '!Y-m-d\TH:i:s', '!Y-m-d H:i:s', '!Y-m-d H:i'] as $format) {
-            $date   = DateTime::createFromFormat($format, $value);
+            $date   = DateTime::createFromFormat($format, $value, self::zone($timezone));
             $errors = DateTime::getLastErrors();
 
             if ($date && (!$errors || (!$errors['warning_count'] && !$errors['error_count']))) {
-                return $date->format('Y-m-d H:i:s');
+                return $date->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
             }
         }
 
         return null;
+    }
+
+    /**
+     * A time zone by its name; UTC for an unknown one.
+     *
+     * @param   string  $timezone  The name of the time zone.
+     *
+     * @return  DateTimeZone
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function zone(string $timezone): DateTimeZone
+    {
+        try {
+            return new DateTimeZone($timezone !== '' ? $timezone : 'UTC');
+        } catch (Exception $e) {
+            return new DateTimeZone('UTC');
+        }
     }
 
     /**

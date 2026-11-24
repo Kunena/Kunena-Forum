@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site\Layout\Announcement;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -70,9 +71,12 @@ class AnnouncementEdit extends KunenaLayout
             case 'publish_up':
             case 'publish_down':
                 // The date and time field of the browser (its calendar and its clock, in the format of the language of the user):
-                // it sends Y-m-dTH:i, which the controller reads with KunenaDate::fromDateTimeLocal().
+                // it sends Y-m-dTH:i, which the controller reads with KunenaDate::fromDateTimeLocal(). In the time zone of the user.
+                $app      = Factory::getApplication();
+                $timezone = (string) $app->getIdentity()->getParam('timezone', $app->get('offset', 'UTC'));
+
                 return '<input type="datetime-local" class="form-control"' . ($id ? ' id="' . $this->escape($id) . '"' : '') . ' name="' . $name
-                    . '" value="' . $this->escape(KunenaDate::toDateTimeLocal((string) $this->announcement->{$name})) . '">' . $attributes;
+                    . '" value="' . $this->escape(KunenaDate::toDateTimeLocal((string) $this->announcement->{$name}, $timezone)) . '">' . $attributes;
             case 'showdate':
                 $options   = [];
                 $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));

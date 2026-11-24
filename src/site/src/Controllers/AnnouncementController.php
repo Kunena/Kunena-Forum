@@ -315,10 +315,12 @@ class AnnouncementController extends KunenaController
         $fields['title']        = $this->app->getInput()->getString('title', '');
         $fields['description']  = $this->app->getInput()->getString('description', '');
         $fields['sdescription'] = $this->app->getInput()->getString('sdescription', '');
-        // The date and time fields of the browser send Y-m-dTH:i: as Y-m-d H:i:s for the table (null: empty or no date and time).
-        $fields['created']      = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('created'));
-        $fields['publish_up']   = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('publish_up'));
-        $fields['publish_down'] = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('publish_down'));
+        // The date and time fields of the browser send Y-m-dTH:i, in the time zone of the user: as Y-m-d H:i:s in UTC for the table
+        // (null: empty or no date and time).
+        $timezone               = (string) $this->app->getIdentity()->getParam('timezone', $this->app->get('offset', 'UTC'));
+        $fields['created']      = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('created'), $timezone);
+        $fields['publish_up']   = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('publish_up'), $timezone);
+        $fields['publish_down'] = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('publish_down'), $timezone);
         // Yes or no, as the selects of the form: another number (published=200) was an error of the database, the announcement was
         // lost.
         $fields['published']    = $this->app->getInput()->getInt('published', 1) === 0 ? 0 : 1;

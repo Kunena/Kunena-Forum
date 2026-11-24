@@ -112,6 +112,20 @@ class KunenaDatePickerTest extends UnitTestCase
         $this->assertSame($expected, KunenaDate::fromDateTimeLocal($value));
     }
 
+    /**
+     * The field shows and sends the time of the user; the database keeps UTC. The time of the field was read as UTC: an announcement
+     * which a moderator in UTC+1 set for 10:00 was published at 11:00 of his clock, and the form showed it at 9:00.
+     */
+    public function testTheFieldIsInTheTimeZoneOfTheUser(): void
+    {
+        // Amsterdam is UTC+1 in November.
+        $this->assertSame('2026-11-17 09:30:00', KunenaDate::fromDateTimeLocal('2026-11-17T10:30', 'Europe/Amsterdam'));
+        $this->assertSame('2026-11-17T10:30', KunenaDate::toDateTimeLocal('2026-11-17 09:30:00', 'Europe/Amsterdam'));
+        // Without a time zone, or an unknown one: UTC.
+        $this->assertSame('2026-11-17 10:30:00', KunenaDate::fromDateTimeLocal('2026-11-17T10:30'));
+        $this->assertSame('2026-11-17 10:30:00', KunenaDate::fromDateTimeLocal('2026-11-17T10:30', 'Mars/Olympus_Mons'));
+    }
+
     public function testADateAndTimeComesBackTheSame(): void
     {
         $this->assertSame('2026-11-17 21:30:00', KunenaDate::fromDateTimeLocal(KunenaDate::toDateTimeLocal('2026-11-17 21:30:00')));

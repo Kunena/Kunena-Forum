@@ -341,7 +341,10 @@ abstract class KunenaUserName
      */
     public static function isTaken(string $nickname, int $userid): bool
     {
+        // The nickname as setDisplayName() saves it (cut to 100 characters): the 100 characters of the name of another member plus
+        // one more passed the check, and were saved as his name.
         $nickname = trim(preg_replace('/\s+/', ' ', strip_tags($nickname)));
+        $nickname = trim(\function_exists('mb_substr') ? mb_substr($nickname, 0, 100) : substr($nickname, 0, 100));
 
         if ($nickname === '') {
             return false;

@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -49,13 +50,18 @@ if ($me->isModerator()) {
     $modes['deleted']    = 'COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED';
 }
 
+// The button for a new topic only when the visitor may start one in a category: a guest got it, then a page which refused him.
+$canCreate = (bool) KunenaCategoryHelper::getCategories(false, false, 'topic.create');
+
 if (!isset($modes[$current]) && $current === 'replies') {
     $current = 'default';
 }
 ?>
 <div class="agora-list-columns">
     <aside class="agora-list-filters-side">
-        <a class="btn btn-primary agora-side-create" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=create'); ?>"><?php echo Text::_('COM_KUNENA_NEW_TOPIC'); ?></a>
+        <?php if ($canCreate) : ?>
+            <a class="btn btn-primary agora-side-create" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=create'); ?>"><?php echo Text::_('COM_KUNENA_NEW_TOPIC'); ?></a>
+        <?php endif; ?>
         <nav aria-label="<?php echo Text::_('COM_KUNENA_TEMPLATE_AGORA_LIST_MODES'); ?>">
             <ul>
                 <?php foreach ($modes as $mode => $label) : ?>

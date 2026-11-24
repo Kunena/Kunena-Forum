@@ -46,6 +46,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Event\KunenaCheckSpamEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
 use Kunena\Forum\Libraries\Forum\KunenaFloodPolicy;
@@ -1122,6 +1123,10 @@ class TopicController extends KunenaController
                 return;
             }
 
+            if (!$this->isTopicIconOfForm($category, $fields['icon_id'])) {
+                $fields['icon_id'] = null;
+            }
+
             list($topic, $message) = $category->newTopic($fields);
 
             // On a multilingual site a topic has a language: that of its category when the category has one, else the
@@ -1167,6 +1172,10 @@ class TopicController extends KunenaController
 
             list($topic, $message) = $parent->newReply($fields);
             $category              = $topic->getCategory();
+
+            if (!$this->isTopicIconOfForm($category, $fields['icon_id'])) {
+                $fields['icon_id'] = null;
+            }
         }
 
         if ($this->me->canDoCaptcha()) {
@@ -2025,6 +2034,10 @@ class TopicController extends KunenaController
         }
 
         // Set topic icon if permitted
+        if (!$this->isTopicIconOfForm($topic->getCategory(), $fields['icon_id'])) {
+            $fields['icon_id'] = null;
+        }
+
         if ($this->config->topicIcons && isset($fields['icon_id']) && $topic->isAuthorised('edit', null)) {
             $topic->icon_id = $fields['icon_id'];
         }
@@ -3950,6 +3963,50 @@ class TopicController extends KunenaController
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS'), 'success');
         $this->setRedirect($topic->getUrl($this->return, false));
+    }
+
+    /**
+     * Is the icon one which the form of a topic may give.
+     *
+     * @param   KunenaCategory  $category  The category of the topic.
+     * @param   int|null        $iconId    The posted icon (null: none).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    protected function isTopicIconOfForm(KunenaCategory $category, ?int $iconId): bool
+    {
+        // The icon of a topic is one which the forms offer (topicicons()): a published icon of the users of the set of icons of the
+        // category. Any number was taken: the icon of a system state (500-505: moved, deleted, locked...) or a number larger than
+        // the column, a database error.
+        if ($iconId === null || $iconId === 0) {
+            return true;
+        }
+
+        $iconset = (string) $category->iconset;
+        $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $iconset . '/topicicons.xml';
+
+        // As KunenaTemplate::getTopicIcon() shows them: without a set of its own, the default one.
+        if ($iconset === '' || preg_match('/^[\w\-]+$/', $iconset) !== 1 || !is_file($xmlfile)) {
+            $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
+        }
+
+        $xml = is_file($xmlfile) ? simplexml_load_file($xmlfile) : false;
+
+        foreach ($xml ? $xml->icons : [] as $icons) {
+            $type = (string) $icons->attributes()->type;
+
+            foreach ($icons->icon as $icon) {
+                $attributes = $icon->attributes();
+
+                if ((int) $attributes->id === $iconId && (int) $attributes->published && ((string) $attributes->type ?: $type) === 'user') {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

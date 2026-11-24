@@ -1446,7 +1446,9 @@ class TopicController extends KunenaController
         $poll_title   = $fields['poll_title'];
         $poll_options = $fields['poll_options'];
 
-        $pollAllowed = !empty($poll_options) && !empty($poll_title);
+        // A poll is created, never changed here: the poll of the topic is edited with the first post (poll.edit). A reply which sent
+        // the fields of a poll wrote them over the poll of the topic and its votes, with the right to create a poll only.
+        $pollAllowed = !empty($poll_options) && !empty($poll_title) && !(int) $topic->poll_id;
 
         if ($pollAllowed) {
             try {

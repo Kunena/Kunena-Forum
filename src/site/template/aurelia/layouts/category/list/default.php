@@ -53,7 +53,8 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
                     </div>
                 <?php endif; ?>
 
-                <?php if (!empty($this->embedded)) : ?>
+                <?php // The other pages: they were linked only in the tab of the profile, the page of the list had no links to them. ?>
+                <?php if ($this->pagination->pagesTotal > 1) : ?>
                     <div class="float-end">
                         <?php echo $this->subLayout('Widget/Pagination/List')
                             ->set('pagination', $this->pagination)

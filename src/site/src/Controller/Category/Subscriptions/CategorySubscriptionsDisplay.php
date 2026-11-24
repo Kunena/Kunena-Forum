@@ -18,12 +18,12 @@ namespace Kunena\Forum\Site\Controller\Category\Subscriptions;
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Pagination\Pagination;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
 
@@ -140,7 +140,8 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 
         $this->actions = $this->getActions();
 
-        $this->pagination = new Pagination($total, $limitstart, $limit);
+        // The pagination of the forum: its links keep the address of the list (Joomla's lost the user and the layout).
+        $this->pagination = new KunenaPagination($total, $limitstart, $limit);
 
         $this->headerText = Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
     }

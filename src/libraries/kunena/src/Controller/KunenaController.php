@@ -198,6 +198,13 @@ class KunenaController extends BaseController
             throw new RouteNotFoundException(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404);
         }
 
+        // A template with pages (HMVC) has a page for every layout of the site; an HTML layout without one which comes here is a
+        // helper of the old views (layout=message, threadhistory, view=common...), which needs data of a page and gave an error
+        // 500: it is no page.
+        if ($view && $this->app->isClient('site') && $vFormat == 'html' && KunenaFactory::getTemplate()->isHmvc()) {
+            throw new RouteNotFoundException(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404);
+        }
+
         if ($view) {
             if ($this->app->isClient('site') && $vFormat == 'html') {
                 $common = $this->getView('common', $vFormat, 'site', $config);

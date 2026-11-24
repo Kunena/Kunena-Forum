@@ -76,25 +76,28 @@ class WidgetLoginLogin extends KunenaLayout
         $moduleId = KunenaFactory::getTemplate()->params->get('moduleIdWebauthn');
 
         if ($moduleId > 0) {
-            $checkModule = ModuleHelper::getModuleById($moduleId);
+            // The module of the option when it is a login module, else the first login module of the site. The test was the wrong
+            // way round: the module of the option was never shown, only a module id which did not exist showed one (between
+            // apostrophes).
+            $checkModule = ModuleHelper::getModuleById((string) $moduleId);
 
-            if ($checkModule->id == 0 && $checkModule->module != "mod_login") {
-                $module = ModuleHelper::getModule('mod_login');
+            if (empty($checkModule->id) || $checkModule->module !== 'mod_login') {
+                $checkModule = ModuleHelper::getModule('mod_login');
+            }
 
-                if (!isset($module->id)) {
-                    $moduleId = null;
-                    Factory::getApplication()->enqueueMessage('<b>Error</b> display login menu failed - no login module found', 'error');
-                } else {
-                    $moduleId = $module->id;
+            if (empty($checkModule->id)) {
+                Factory::getApplication()->enqueueMessage('<b>Error</b> display login menu failed - no login module found', 'error');
 
-                    echo HTMLHelper::_('content.prepare', "'{loadmoduleid " . $moduleId . "}'");
-                }
+                return;
             }
 
             if (!PluginHelper::isEnabled('content', 'loadmodule')) {
-                $moduleId = null;
                 Factory::getApplication()->enqueueMessage('<b>Error</b> display login menu failed - loadmodule content plugin is disabled', 'error');
+
+                return;
             }
+
+            echo HTMLHelper::_('content.prepare', '{loadmoduleid ' . (int) $checkModule->id . '}');
         }
     }
 }

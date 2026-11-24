@@ -40,6 +40,9 @@ describe('Kunena moderation: approving a reply', () => {
   });
 
   afterEach(() => {
+    // The messages of the topic too: left behind, they were orphan messages which other checks of the site report.
+    cy.task('queryDB', `DELETE x FROM #__kunena_messages_text AS x INNER JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.thread = ${ids.topic}`);
+    cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE thread = ${ids.topic}`);
     cy.task('queryDB', `DELETE FROM #__kunena_user_topics WHERE topic_id = ${ids.topic}`);
     cy.task('queryDB', `DELETE FROM #__kunena_user_read WHERE topic_id = ${ids.topic}`);
     cy.task('queryDB', `DELETE FROM #__kunena_topics WHERE id = ${ids.topic}`);

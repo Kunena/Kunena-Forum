@@ -305,10 +305,13 @@ class CategoryController extends CategoriesController
                 // The subcategories are included, each one only when the user may subscribe to it.
                 $count = KunenaCategoryHelper::subscribe(array_keys($category->getSubscribableChildren($this->me)), 1, $this->me);
 
+                // The message is printed as html: the name of the category is text in it (as in the messages of delete()).
+                $name = htmlspecialchars((string) $category->name, ENT_QUOTES, 'UTF-8');
+
                 if ($count > 0) {
-                    $this->app->enqueueMessage(Text::plural('COM_KUNENA_CATEGORY_USER_SUBCRIBED_WITH_CHILDREN', $count, $category->name), 'success');
+                    $this->app->enqueueMessage(Text::plural('COM_KUNENA_CATEGORY_USER_SUBCRIBED_WITH_CHILDREN', $count, $name), 'success');
                 } else {
-                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_USER_SUBCRIBED', $category->name), 'success');
+                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_USER_SUBCRIBED', $name), 'success');
                 }
             }
         }
@@ -364,10 +367,13 @@ class CategoryController extends CategoriesController
             if ($this->me->exists()) {
                 $success = $category->subscribe(0, $userid);
 
+                // The message is printed as html: the name of the category is text in it.
+                $name = htmlspecialchars((string) $category->name, ENT_QUOTES, 'UTF-8');
+
                 if ($success && $userid == $me->userid) {
-                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $category->name), 'success');
+                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $name), 'success');
                 } else {
-                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_NAME_MODERATOR_UNSUBCRIBED_USER', $category->name), 'success');
+                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_NAME_MODERATOR_UNSUBCRIBED_USER', $name), 'success');
                 }
             }
         }

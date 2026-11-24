@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserName;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicFinder
@@ -111,10 +112,13 @@ class KunenaTopicFinder extends KunenaFinder
         }
 
         $like  = $this->db->quote('%' . $this->db->escape($text, true) . '%', false);
+        // The name which the forum shows of each user, as the other searches of users: the username and the real name were both
+        // searched, so anybody could find out the login of a member (or the real name, when the forum shows the usernames) by
+        // trying it in the filter of a topic list.
         $query = $this->db->createQuery()
-            ->select($this->db->quoteName('id'))
-            ->from($this->db->quoteName('#__users'))
-            ->where('(' . $this->db->quoteName('username') . ' LIKE ' . $like . ' OR ' . $this->db->quoteName('name') . ' LIKE ' . $like . ')');
+            ->select($this->db->quoteName('u.id'))
+            ->from($this->db->quoteName('#__users', 'u'))
+            ->where(KunenaUserName::getSearchCondition($text, 'u'));
 
         $query->setLimit(200);
         $ids = ArrayHelper::toInteger((array) $this->db->setQuery($query)->loadColumn());

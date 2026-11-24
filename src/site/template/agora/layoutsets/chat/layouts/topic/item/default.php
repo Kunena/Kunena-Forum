@@ -85,6 +85,9 @@ $txt             = '';
 // The left pane: the latest topics of the category which the user may read (KunenaTopicHelper checks it).
 [, $paneTopics] = KunenaTopicHelper::getLatestTopics([(int) $this->category->id], 0, 8);
 
+// Their unread messages, which the pane shows (the query of the list does not know them: the number was never shown).
+KunenaTopicHelper::fetchNewStatus($paneTopics);
+
 // The right pane: the users who wrote the messages of this page, with their number of messages here.
 $people = [];
 

@@ -292,7 +292,7 @@ if ($this->topic->locked) {
                             <span class="agora-chat-topic-avatar" aria-hidden="true"><?php echo $paneAvatar; ?></span>
                             <span class="agora-chat-topic-text">
                                 <span class="agora-chat-topic-title"><?php echo $this->escape($paneTopic->subject); ?></span>
-                                <span class="agora-chat-topic-meta"><?php echo $this->escape($lastAuthor->getName()) . ' · ' . $paneTopic->getLastPostTime()->toKunena('config_postDateFormat'); ?></span>
+                                <span class="agora-chat-topic-meta"><?php echo $this->escape($lastAuthor->getName('', false)) . ' · ' . $paneTopic->getLastPostTime()->toKunena('config_postDateFormat'); ?></span>
                             </span>
                             <?php if ($paneTopic->unread) : ?>
                                 <span class="badge agora-chat-unread"><?php echo (int) $paneTopic->unread; ?><span class="visually-hidden"> <?php echo Text::_('COM_KUNENA_A_GEN_NEWCHAR'); ?></span></span>

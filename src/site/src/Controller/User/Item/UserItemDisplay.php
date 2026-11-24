@@ -206,7 +206,10 @@ class UserItemDisplay extends KunenaControllerDisplay
      */
     protected function prepareDocument()
     {
-        $this->setMetaData('profile:username', $this->profile->getName(), 'property');
+        // The name as text: the title and the meta tags are escaped by Joomla (the HTML name showed as "Tom &amp; Jerry").
+        $name = $this->profile->getName('', false);
+
+        $this->setMetaData('profile:username', $name, 'property');
 
         if ($this->profile->getGender() == 1) {
             $this->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'), 'property');
@@ -247,12 +250,12 @@ class UserItemDisplay extends KunenaControllerDisplay
                 $title = $params->get('page_title');
                 $this->setTitle($title);
             } else {
-                $title = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+                $title = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $name);
                 $this->setTitle($title);
             }
 
             $this->setMetaData('og:description', $title, 'property');
-            $this->setMetaData('og:title', $this->profile->getName(), 'property');
+            $this->setMetaData('og:title', $name, 'property');
 
             if (!empty($params_description)) {
                 $description = $params->get('menu-meta_description');
@@ -260,9 +263,9 @@ class UserItemDisplay extends KunenaControllerDisplay
             } else {
                 $description = Text::sprintf(
                     'COM_KUNENA_META_PROFILE',
-                    $this->profile->getName(),
+                    $name,
                     $this->config->boardTitle,
-                    $this->profile->getName(),
+                    $name,
                     $this->config->boardTitle
                 );
                 $this->setDescription($description);

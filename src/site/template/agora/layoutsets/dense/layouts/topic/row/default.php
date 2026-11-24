@@ -97,7 +97,7 @@ if (!empty($this->spacing)) : ?>
             ?>
             <span class="agora-row-icons">
                 <?php if (KunenaUserFollow::isFollowing(KunenaUserHelper::getMyself()->userid, (int) $topic->first_post_userid)) : ?>
-                    <span class="kfollowed" title="<?php echo Text::sprintf('COM_KUNENA_FOLLOW_MARKER', $this->escape($topic->getAuthor()->getName())); ?>"><?php echo KunenaIcons::bookmark(); ?></span>
+                    <span class="kfollowed" title="<?php echo Text::sprintf('COM_KUNENA_FOLLOW_MARKER', $this->escape($topic->getAuthor()->getName('', false))); ?>"><?php echo KunenaIcons::bookmark(); ?></span>
                 <?php endif; ?>
                 <?php if ($userTopic->favorite) : ?>
                     <span title="<?php echo Text::_('COM_KUNENA_FAVORITE'); ?>"><?php echo KunenaIcons::star(); ?></span>

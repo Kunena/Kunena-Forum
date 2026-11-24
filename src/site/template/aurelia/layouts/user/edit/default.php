@@ -41,7 +41,7 @@ $tabs          = $this->getTabsEdit();
 $avatar        = KunenaFactory::getAvatarIntegration();
 ?>
 <h2>
-    <?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName())); ?>
+    <?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName('', false))); ?>
 
     <?php echo $this->profile->getLink(
         KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),

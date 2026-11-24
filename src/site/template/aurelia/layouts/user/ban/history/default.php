@@ -144,7 +144,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 
         <tr>
             <td colspan="6">
-                <?php echo Text::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape($this->profile->getName())); ?>
+                <?php echo Text::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape($this->profile->getName('', false))); ?>
             </td>
         </tr>
     <?php endif; ?>

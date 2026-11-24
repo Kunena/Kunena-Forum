@@ -46,7 +46,7 @@ if (!isset($durations[$days])) {
             <?php echo HTMLHelper::_('form.token'); ?>
             <div class="modal-header">
                 <h2 class="modal-title fs-5" id="banModalLabel<?php echo $id; ?>">
-                    <?php echo Text::sprintf('COM_KUNENA_BAN_QUICK_TITLE', $this->escape($author->getName())); ?>
+                    <?php echo Text::sprintf('COM_KUNENA_BAN_QUICK_TITLE', $this->escape($author->getName('', false))); ?>
                 </h2>
                 <button type="button" class="btn-close" command="close" commandfor="ban<?php echo $id; ?>" aria-label="<?php echo Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>"></button>
             </div>

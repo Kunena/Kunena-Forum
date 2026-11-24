@@ -36,7 +36,7 @@ $tabs = $this->getTabs();
 ?>
 
 <h1 class="float-start">
-    <?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName())); ?>
+    <?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName('', false))); ?>
 </h1>
 
 <div class="float-end kunena-profile-actions">

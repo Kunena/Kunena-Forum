@@ -38,7 +38,7 @@ $tabs = $this->getTabs();
 <section class="agora-profile kfrontend">
     <header class="agora-profile-head">
         <h1>
-            <?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName())); ?>
+            <?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName('', false))); ?>
         </h1>
 
 <div class="agora-profile-actions">

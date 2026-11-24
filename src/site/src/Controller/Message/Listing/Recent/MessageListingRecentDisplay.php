@@ -280,7 +280,8 @@ class MessageListingRecentDisplay extends ListDisplay
                 $view = $this->input->get('view');
 
                 if ($view == 'user') {
-                    $userName              = $user->getName();
+                    // The name as text: the layout escapes the header.
+                    $userName              = $user->getName('', false);
                     $charMapApostropheOnly = ['s', 'S', 'z', 'Z'];
 
                     if (\in_array(substr($userName, -1), $charMapApostropheOnly)) {

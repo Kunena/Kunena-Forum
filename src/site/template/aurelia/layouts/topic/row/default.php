@@ -87,7 +87,7 @@ if (!empty($this->spacing)) : ?>
             echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->set('reviewCount', $this->topic->getReviewCount())->setLayout('default');
             echo ' ' . KunenaTopicTags::render((int) $topic->id, 'd-inline-block mt-1'); ?>
             <?php if (KunenaUserFollow::isFollowing(KunenaUserHelper::getMyself()->userid, (int) $topic->first_post_userid)) : ?>
-                <span class="kfollowed" <?php echo KunenaTemplate::getInstance()->tooltips(true); ?> data-bs-toggle="tooltip" title="<?php echo Text::sprintf('COM_KUNENA_FOLLOW_MARKER', $this->escape($topic->getAuthor()->getName())); ?>"><?php echo KunenaIcons::bookmark(); ?></span>
+                <span class="kfollowed" <?php echo KunenaTemplate::getInstance()->tooltips(true); ?> data-bs-toggle="tooltip" title="<?php echo Text::sprintf('COM_KUNENA_FOLLOW_MARKER', $this->escape($topic->getAuthor()->getName('', false))); ?>"><?php echo KunenaIcons::bookmark(); ?></span>
             <?php endif; ?>
         </div>
         <div class="float-end">

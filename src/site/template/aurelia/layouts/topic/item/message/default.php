@@ -108,7 +108,7 @@ if ($ignoredAuthor) :
     ?>
     <details class="kignored-message mb-3">
         <summary class="p-2 border rounded text-muted">
-            <?php echo Text::sprintf('COM_KUNENA_IGNORE_HIDDEN_MESSAGE', $this->escape($this->profile->getName())); ?>
+            <?php echo Text::sprintf('COM_KUNENA_IGNORE_HIDDEN_MESSAGE', $this->escape($this->profile->getName('', false))); ?>
             &mdash; <span class="link-primary"><?php echo Text::_('COM_KUNENA_IGNORE_SHOW'); ?></span>
         </summary>
         <?php echo $messageHtml; ?>

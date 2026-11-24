@@ -62,7 +62,7 @@ if ($me->exists()) {
     <header class="agora-home-head">
         <p class="agora-home-site"><?php echo $this->escape($config->boardTitle); ?></p>
         <h1><?php echo $me->exists()
-            ? Text::sprintf('COM_KUNENA_TEMPLATE_AGORA_GREETING', $this->escape($me->getName()))
+            ? Text::sprintf('COM_KUNENA_TEMPLATE_AGORA_GREETING', $this->escape($me->getName('', false)))
             : Text::_('COM_KUNENA_TEMPLATE_AGORA_GREETING_GUEST'); ?></h1>
     </header>
 
@@ -89,7 +89,7 @@ if ($me->exists()) {
                         <a class="agora-home-item<?php echo $topic->unread ? ' agora-home-item-unread' : ''; ?>" href="<?php echo $topic->getUrl(null, true, 'last'); ?>">
                             <span class="agora-home-avatar" aria-hidden="true"><?php echo $avatar; ?></span>
                             <span class="agora-home-text">
-                                <span><?php echo Text::sprintf('COM_KUNENA_TEMPLATE_AGORA_ACTIVITY_REPLY', '<b>' . $this->escape($author->getName()) . '</b>', $this->escape($topic->subject)); ?></span>
+                                <span><?php echo Text::sprintf('COM_KUNENA_TEMPLATE_AGORA_ACTIVITY_REPLY', '<b>' . $this->escape($author->getName('', false)) . '</b>', $this->escape($topic->subject)); ?></span>
                                 <span class="agora-home-meta"><?php echo $this->escape($topic->getCategory()->name) . ' · ' . $topic->getLastPostTime()->toKunena('config_postDateFormat'); ?></span>
                             </span>
                         </a>

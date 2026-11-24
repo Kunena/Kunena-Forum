@@ -30,6 +30,7 @@ Settings, in the environment or in factory/checks.env:
   KUNENA_TEST_SITE_URL   its address (default: http://localhost/tests/, as in cypress.config.js)
 """
 
+import glob
 import json
 import os
 import shutil
@@ -291,6 +292,21 @@ def changed_specs(checkout):
     return [name for name in out.stdout.splitlines() if name.endswith(".cy.js")]
 
 
+def install_specs(specs, checkout):
+    """The patterns of `specs` (separated by commas) which name or match an install spec. Only the name of their folder was
+    refused: a wider glob (all the specs of tests/System/integration) matched them, and they ran. A pattern with braces can't
+    be expanded here, so it counts as one."""
+    hits = []
+    for pattern in filter(None, (p.strip() for p in specs.replace("\\", "/").split(","))):
+        if FORBIDDEN in pattern or "{" in pattern or "}" in pattern:
+            hits.append(pattern)
+            continue
+        matches = glob.glob(pattern, root_dir=checkout, recursive=True)
+        if any(under(checkout / match, checkout / FORBIDDEN) for match in matches):
+            hits.append(pattern)
+    return hits
+
+
 def main(argv):
     specs = None
     if argv == ["--restore"]:
@@ -306,14 +322,17 @@ def main(argv):
         specs = SPECS
     elif argv:
         die(__doc__.strip())
-    if specs and FORBIDDEN in specs.replace("\\", "/"):
-        die("the install specs never run here: uninstall.cy.js deletes the checkout through the links of the site.")
-
-    site, url = settings()
     top = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True)
     if top.returncode != 0:
         die("run this in a checkout of Kunena.")
     checkout = Path(top.stdout.strip())
+
+    refused = install_specs(specs, checkout) if specs else []
+    if refused:
+        die("the install specs never run here: uninstall.cy.js deletes the checkout through the links of the site. "
+            f"These specs match them: {', '.join(refused)}")
+
+    site, url = settings()
 
     if specs is None:
         changed = changed_specs(checkout)

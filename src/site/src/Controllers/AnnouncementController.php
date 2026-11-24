@@ -319,8 +319,10 @@ class AnnouncementController extends KunenaController
         $fields['created']      = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('created'));
         $fields['publish_up']   = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('publish_up'));
         $fields['publish_down'] = KunenaDate::fromDateTimeLocal($this->app->getInput()->getString('publish_down'));
-        $fields['published']    = $this->app->getInput()->getInt('published', 1);
-        $fields['showdate']     = $this->app->getInput()->getInt('showdate', 1);
+        // Yes or no, as the selects of the form: another number (published=200) was an error of the database, the announcement was
+        // lost.
+        $fields['published']    = $this->app->getInput()->getInt('published', 1) === 0 ? 0 : 1;
+        $fields['showdate']     = $this->app->getInput()->getInt('showdate', 1) === 0 ? 0 : 1;
 
         $id           = $this->app->getInput()->getInt('id');
         $announcement = KunenaAnnouncementHelper::get($id);

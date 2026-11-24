@@ -1986,6 +1986,7 @@ class TopicController extends KunenaController
 
         // Update message contents (the old text: a user who was mentioned before does not get a second e-mail)
         $oldMessageText = (string) $message->message;
+        $oldSubject     = (string) $message->subject;
         $message->edit($fields);
 
         // If requested: Make message to be anonymous
@@ -2042,8 +2043,11 @@ class TopicController extends KunenaController
             $topic->icon_id = $fields['icon_id'];
         }
 
-        // Check if we are editing first post and update topic if we are!
-        if ($topic->first_post_id == $message->id || $this->config->allowChangeSubject && $topic->first_post_userid == $message->userid || $this->me->isModerator()) {
+        // The edit of the first post sets the subject of the topic; the edit of a reply only when its subject was changed: a reply
+        // keeps the subject the topic had when it was written, and the fix of a typo in an old reply renamed the topic back.
+        $subjectChanged = trim((string) $message->subject) !== trim($oldSubject);
+
+        if ($topic->first_post_id == $message->id || $subjectChanged && ($this->config->allowChangeSubject && $topic->first_post_userid == $message->userid || $this->me->isModerator())) {
             $topic->subject = $fields['subject'];
         }
 

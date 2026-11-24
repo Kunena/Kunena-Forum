@@ -752,6 +752,9 @@
         <key name="PRIMARY"
              unique="1"
              columns="id"/>
+        <key name="topic_user"
+             unique="1"
+             columns="topic_id,userid"/>
     </table>
     <table name="kunena_sessions">
         <field primary_key="yes"

@@ -101,6 +101,17 @@ class KunenaSchemaTest extends IntegrationTestCase implements DBTestInterface
         $this->insertRow('#__kunena_aliases', ['alias' => 'general', 'type' => 'catid', 'item' => '3']);
     }
 
+    public function testAUserRatesATopicOnce(): void
+    {
+        $this->insertRow('#__kunena_rate', ['topic_id' => 7, 'userid' => 42, 'rate' => 4, 'time' => '2026-11-23 00:00:00']);
+
+        // The key (topic_id, userid) keeps one rating of a user for a topic, also for two requests at the same time (7.2). A new
+        // install had it, the schema of the installer did not: a table which the installer makes had no such key.
+        $this->expectException(Exception::class);
+
+        $this->insertRow('#__kunena_rate', ['topic_id' => 7, 'userid' => 42, 'rate' => 5, 'time' => '2026-11-23 00:00:01']);
+    }
+
     public function testTheStartValuesOfTheSchemaAreUsed(): void
     {
         $this->insertRow('#__kunena_announcement', ['title' => 'Title', 'sdescription' => '', 'description' => '']);

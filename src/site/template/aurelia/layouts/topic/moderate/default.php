@@ -275,7 +275,7 @@ $labels          = $this->ktemplate->params->get('labels');
                     <?php if (isset($this->message) && $this->message->getAuthor()->id != 0) :
                     ?>
                         <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-                            <?php echo $this->subLayout('User/Ban/History')->set('profile', $this->message->getAuthor())->set('headerText', Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'))->set('banHistory', $this->banHistory)->set('me', $this->me); ?>
+                            <?php echo $this->subLayout('User/Ban/History')->set('profile', $this->message->getAuthor())->set('headerText', Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'))->set('banHistory', $this->banHistory)->set('me', KunenaUserHelper::getMyself()); // The forum user: the history asks isModerator() (the Joomla user of $this->me gave a fatal error). ?>
                         </div>
 
                         <!-- FIXME: This adds a form which cause an issue, because there will be nested forms

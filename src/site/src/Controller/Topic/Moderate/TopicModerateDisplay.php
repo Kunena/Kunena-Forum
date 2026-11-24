@@ -143,7 +143,8 @@ class TopicModerateDisplay extends KunenaControllerDisplay
                     'kunenaforum.link',
                     'index.php?option=com_kunena&view=user&userid=' . $this->message->userid,
                     $username . ' (' . $this->message->userid . ')',
-                    $username . ' (' . $this->message->userid . ')'
+                    // The title as text: the link escapes it (the HTML name showed "Tom &amp; Jerry").
+                    $user->getName('', false) . ' (' . $this->message->userid . ')'
                 )
                     : null;
             }

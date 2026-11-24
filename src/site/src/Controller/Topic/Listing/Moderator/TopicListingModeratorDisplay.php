@@ -132,14 +132,20 @@ class TopicListingModeratorDisplay extends ListDisplay
         // Filters of the filter bar.
         $this->applyFilters($finder);
 
-        $this->topics = $finder
+        $finder
             ->filterByCategories($categories)
             ->filterByMoved(false)
             ->filterTopicNotIn($threadSearch)
-            ->where('locked', '=', 0)->order('last_post_time', -1)
-            ->find();
+            ->where('locked', '=', 0);
 
+        // The topics of the page: they were read without the start and the length of the page, every page showed the first one.
         $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+
+        $this->topics = $finder
+            ->order('last_post_time', -1)
+            ->start($this->pagination->limitstart)
+            ->limit($this->pagination->limit)
+            ->find();
 
         if ($this->topics) {
             $this->prepareTopics();

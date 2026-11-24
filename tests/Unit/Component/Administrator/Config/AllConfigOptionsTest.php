@@ -288,6 +288,30 @@ class AllConfigOptionsTest extends UnitTestCase
         $this->assertSame(trim($default), $default);
     }
 
+    /**
+     * The offline message is shown as HTML on the page of a forum which is offline. Its start value had a closing tag "</di>>"
+     * (the page showed a stray ">") and a "
+" which XML does not turn into a new line (the page showed the two characters).
+     */
+    public function testTheStartValueOfTheOfflineMessageIsWellFormedHtml(): void
+    {
+        $default = (string) self::fields()['offlineMessage']['default'];
+
+        $this->assertStringNotContainsString('\n', $default);
+
+        $document = new \DOMDocument();
+        $previous = libxml_use_internal_errors(true);
+        $loaded   = $document->loadXML('<root>' . $default . '</root>');
+        libxml_use_internal_errors($previous);
+
+        $this->assertTrue($loaded, 'The start value of the offline message is no well-formed HTML: ' . $default);
+        $this->assertSame(
+            'The Forum is currently offline for maintenance.' . "
+" . 'Check back soon!',
+            $document->documentElement->textContent
+        );
+    }
+
     public function testEveryPropertyOfTheConfigurationClassIsAnOption(): void
     {
         preg_match_all('/@property\s+\S+\s+\$(\w+)/', Files::read('src/libraries/kunena/src/Config/KunenaConfig.php'), $matches);

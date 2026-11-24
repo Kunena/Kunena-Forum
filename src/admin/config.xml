@@ -59,7 +59,7 @@
             <field
                 name="offlineMessage"
                 type="textarea"
-                default="&lt;h2&gt;The Forum is currently offline for maintenance.&lt;/h2&gt;\n&lt;div&gt;Check back soon!&lt;/di&gt;>"
+                default="&lt;h2&gt;The Forum is currently offline for maintenance.&lt;/h2&gt;&#10;&lt;div&gt;Check back soon!&lt;/div&gt;"
                 label="COM_KUNENA_A_BOARD_OFFLINE_MES"
                 description="COM_KUNENA_A_BOARD_OFFLINE_MES_DESC"
                 showon="boardOffline:1" />

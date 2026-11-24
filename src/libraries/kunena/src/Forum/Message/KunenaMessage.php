@@ -2605,6 +2605,15 @@ class KunenaMessage extends KunenaDatabaseObject
                 continue;
             }
 
+            // The e-mail is in the language of the user who gets it (as the e-mails of the subscriptions), not in that of the poster.
+            $language        = Factory::getApplication()->getLanguage();
+            $currentLanguage = $language->getTag();
+            $mailLanguage    = (string) ($recipient->language ?? '');
+
+            if ($mailLanguage !== '' && $mailLanguage !== $currentLanguage) {
+                KunenaFactory::loadLanguageMail('com_kunena', 'site', $mailLanguage);
+            }
+
             try {
                 $subject = MailHelper::cleanSubject(Text::sprintf('COM_KUNENA_MENTION_EMAIL_SUBJECT', $authorName, $topic->subject));
                 $body    = '<p>' . Text::sprintf('COM_KUNENA_MENTION_EMAIL_BODY', htmlspecialchars($authorName, ENT_QUOTES, 'UTF-8'), htmlspecialchars($topic->subject, ENT_QUOTES, 'UTF-8')) . '</p>'
@@ -2638,6 +2647,10 @@ class KunenaMessage extends KunenaDatabaseObject
                 }
             } catch (Exception $e) {
                 // A mention e-mail which fails must not stop the post.
+            } finally {
+                if ($mailLanguage !== '' && $mailLanguage !== $currentLanguage) {
+                    $language->load('com_kunena', KPATH_SITE, $currentLanguage, true, false);
+                }
             }
         }
 

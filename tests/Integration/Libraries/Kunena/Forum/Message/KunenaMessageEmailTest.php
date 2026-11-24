@@ -378,6 +378,18 @@ class KunenaMessageEmailTest extends IntegrationTestCase implements DBTestInterf
         $this->assertSame([], $this->mails);
     }
 
+    /**
+     * The e-mail is in the language of the user who gets it, as the e-mails of the subscriptions, not in that of the poster.
+     */
+    public function testTheMentionEmailIsInTheLanguageOfTheMentionedUser(): void
+    {
+        $this->seed('Hello ' . $this->mention());
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_users SET language = ' . $this->getDBDriver()->quote('nl-NL') . ' WHERE userid = ' . self::MENTIONED)->execute();
+
+        KunenaMessageHelper::get(self::REPLY)->sendMentionNotifications('', false);
+
+        $this->assertContains(['com_kunena', 'nl-NL'], $this->loaded);
+    }
 
 
     /**

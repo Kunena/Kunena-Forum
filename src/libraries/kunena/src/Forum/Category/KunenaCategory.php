@@ -1265,6 +1265,19 @@ class KunenaCategory extends KunenaDatabaseObject
         ];
         $queries = [];
 
+        // The files of the messages go with them (their row, and the file on the disk when the row is gone): they stayed, as rows
+        // without a message and as files which the site serves without the protection.
+        $mesids = $db->setQuery(
+            $db->createQuery()
+                ->select($db->quoteName('id'))
+                ->from($db->quoteName('#__kunena_messages'))
+                ->where($db->quoteName('catid') . ' = ' . $catid)
+        )->loadColumn();
+
+        foreach (KunenaAttachmentHelper::getByMessage(array_map('intval', $mesids), 'none') as $attachment) {
+            $attachment->delete();
+        }
+
         // The ratings of the topics and their Joomla tags (7.2): the rows would stay for topics which are gone.
         $topicIds = $db->createQuery();
         $topicIds->select($db->quoteName('tr.id'))
@@ -1355,7 +1368,6 @@ class KunenaCategory extends KunenaDatabaseObject
             ->where($db->quoteName('catid') . ' = ' . $catid);
         $queries[] = $query;
 
-        // TODO: delete attachments
         // Delete topics
         $query = $db->createQuery();
         $query->delete($db->quoteName('#__kunena_topics'))

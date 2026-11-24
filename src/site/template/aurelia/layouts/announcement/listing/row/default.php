@@ -87,13 +87,8 @@ $announcement = $this->announcement;
             } ?>
         </td>
         <td>
-        <?php if ($this->config->username) :
-            ?>
-                <?php echo $this->escape($announcement->getAuthor()->username); ?>
-            <?php else :
-            ?>
-                <?php echo $this->escape($announcement->getAuthor()->name); ?>
-            <?php endif; ?>
+        <?php // The name which the forum shows (login name, real name or nickname): the login name was taken for the nicknames too. ?>
+        <?php echo $this->escape($announcement->getAuthor()->getName('', false)); ?>
         </td>
     <?php endif; ?>
 

@@ -26,6 +26,7 @@ use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -2596,6 +2597,11 @@ class KunenaMessage extends KunenaDatabaseObject
                 || KunenaUserHelper::getJoomlaParam($userid, 'kunena_mention_email', 1) == 0
                 || !$this->isAuthorised('read', $recipient)
             ) {
+                continue;
+            }
+
+            // "Treat as System Email": only the users who receive the system e-mails of Joomla, as for the e-mails of the subscriptions.
+            if (!empty($this->_config->useSystemEmails) && !Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById((int) $userid)->sendEmail) {
                 continue;
             }
 

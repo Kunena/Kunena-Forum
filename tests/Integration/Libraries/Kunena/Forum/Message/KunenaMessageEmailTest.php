@@ -363,6 +363,20 @@ class KunenaMessageEmailTest extends IntegrationTestCase implements DBTestInterf
         $this->assertSame([], $this->mails);
     }
 
+    /**
+     * "Treat as System Email": the e-mails of the forum go only to the users who receive the system e-mails of Joomla, as the
+     * e-mails of the subscriptions do.
+     */
+    public function testAUserWithoutSystemEmailsGetsNoMentionEmailWhenTheForumSaysSo(): void
+    {
+        $this->option('useSystemEmails', 1);
+        $this->seed('Hello ' . $this->mention());
+        Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById(self::MENTIONED)->sendEmail = 0;
+
+        KunenaMessageHelper::get(self::REPLY)->sendMentionNotifications('', false);
+
+        $this->assertSame([], $this->mails);
+    }
 
 
 

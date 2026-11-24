@@ -155,6 +155,12 @@ else
 	fi
 
 	# Joomla looks for the manifest of the component to install the package again.
+	# Not when the folder is still a link to the git clone (its link could not be removed): the copy would be onto the file itself.
+	if in_git_source "$GIT_TARGET/administrator/components/com_kunena/kunena.xml"; then
+		echo "ERROR: administrator/components/com_kunena is still a link to the git clone, remove it and run this again."
+		exit 1
+	fi
+
 	mkdir -p "$GIT_TARGET/administrator/components/com_kunena"
 	cp "$GIT_SOURCE/src/admin/kunena.xml" "$GIT_TARGET/administrator/components/com_kunena/kunena.xml"
 	echo "Removed development tree from your web site."

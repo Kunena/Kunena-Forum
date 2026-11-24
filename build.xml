@@ -681,14 +681,6 @@
 				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy
-			todir="${tmp_dir}/packages/plg_task_kunena"
-			overwrite="true">
-			<filterchain refid="filter" />
-			<fileset dir="${project_dir}/plugins/plg_task_kunena">
-				<include name="**/*.xml" />
-			</fileset>
-		</copy>
 		<echo message="Building Plugins..DONE!" />
 	</target>
 

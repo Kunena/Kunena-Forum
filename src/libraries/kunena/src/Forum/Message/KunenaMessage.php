@@ -30,7 +30,6 @@ use Joomla\CMS\User\UserHelper;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Event\DispatcherInterface;
-use Joomla\Filesystem\File;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
@@ -1160,12 +1159,12 @@ class KunenaMessage extends KunenaDatabaseObject
 
         $this->hold = 1;
 
-        $attachments = $this->getAttachments();
+        // All the files of the message, whatever the user who deletes may see (the purge task runs as a guest). The attachment removes
+        // its own file from its own folder when its row is deleted: the path made here (the folder of the user) missed the files of
+        // other folders, and File::delete() threw on a missing file after the message row was gone.
+        $attachments = $this->getAttachments(false, 'none');
 
         foreach ($attachments as $attachment) {
-            $file = JPATH_SITE . '/media/kunena/attachments/' . $attachment->userid . '/' . $attachment->filename;
-            File::delete($file);
-
             try {
                 $attachment->delete();
             } catch (Exception $e) {

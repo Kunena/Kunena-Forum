@@ -132,6 +132,12 @@ class UserListingDisplay extends KunenaControllerDisplay
         $this->total      = $finder->count();
         $this->pagination = new KunenaPagination($this->total, $start, $limit);
 
+        // The links to the other pages keep the search: it is posted by the search box, and the address of the links keeps only
+        // the values of the request made of letters and digits ("ci-" was dropped): page 2 was a page of the whole list.
+        if ((string) $this->state->get('list.search') !== '') {
+            $this->pagination->setAdditionalUrlParam('search', (string) $this->state->get('list.search'));
+        }
+
         $alias     = 'ku';
         $aliasList = ['id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate'];
 

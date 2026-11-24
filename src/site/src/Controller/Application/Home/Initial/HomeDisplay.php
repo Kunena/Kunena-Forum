@@ -174,7 +174,8 @@ class HomeDisplay extends KunenaControllerDisplay
         if ($item->query['view'] == 'home') {
             // Menu item is pointing to another Home Page, try to find default menu item from there.
             $visited[$item->id] = 1;
-            $item               = $this->getDefaultMenuItem($menu, $item->query['defaultmenu'], $visited);
+            // The menu item itself: its id gave the next step no menu item, and the chain always ended with nothing.
+            $item               = $this->getDefaultMenuItem($menu, $item, $visited);
         }
 
         return $item;

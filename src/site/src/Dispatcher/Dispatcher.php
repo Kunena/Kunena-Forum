@@ -56,7 +56,8 @@ class Dispatcher extends ComponentDispatcher
      * @since  Kunena 8.0
      */
     protected static array $singleValues = ['view', 'layout', 'task', 'func', 'mode', 'catid', 'id', 'mesid', 'userid', 'topic_id', 'parentid', 'draftid', 'return', 'limit', 'limitstart', 'start', 'sel', 'search', 'query', 'type', 'sig', 'uid',
-        'subject', 'authorname', 'email', 'modified_reason', 'reason_public', 'reason_private', 'comment', 'searchuser', 'searchatdate'];
+        'subject', 'authorname', 'email', 'modified_reason', 'reason_public', 'reason_private', 'comment', 'searchuser', 'searchatdate',
+        'fq', 'fauthor', 'fstatus', 'ftag', 'flang', 'fop', 'fcat', 'fuser'];
 
     /**
      * Dispatch a controller task. Redirecting the user if appropriate.

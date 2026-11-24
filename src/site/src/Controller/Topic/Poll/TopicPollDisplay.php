@@ -26,7 +26,6 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
-use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
@@ -189,6 +188,9 @@ class TopicPollDisplay extends KunenaControllerDisplay
      */
     protected function prepareDocument()
     {
+        // The question as text: the title and the description are escaped by Joomla (the HTML of the parser showed "Q&amp;A").
+        $question = (string) $this->poll->title;
+
         $menu_item = $this->app->getMenu()->getActive();
 
         if ($menu_item) {
@@ -200,14 +202,14 @@ class TopicPollDisplay extends KunenaControllerDisplay
                 $title = $params->get('page_title');
                 $this->setTitle($title);
             } else {
-                $this->setTitle(Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaParser::parseText($this->poll->title));
+                $this->setTitle(Text::_('COM_KUNENA_POLL_NAME') . ' ' . $question);
             }
 
             if (!empty($params_description)) {
                 $description = $params->get('menu-meta_description');
                 $this->setDescription($description);
             } else {
-                $this->setDescription(Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaParser::parseText($this->poll->title));
+                $this->setDescription(Text::_('COM_KUNENA_POLL_NAME') . ' ' . $question);
             }
         }
     }

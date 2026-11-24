@@ -195,8 +195,9 @@ class CategoryDisplay extends KunenaControllerDisplay
         $item->date        = $date->toSql();
         $item->author      = $username;
 
-        // FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
-        if ($this->config->rssAuthorFormat != 'name') {
+        // The address only when the reader may see it (as on the profile: the choice of the member, the option "Show e-mail
+        // addresses"): the feed gave the address of every author to every reader.
+        if ($this->config->rssAuthorFormat != 'name' && $userid && KunenaUserHelper::getMyself()->canDisplayEmail(KunenaUserHelper::get($userid))) {
             $item->authorEmail = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid)->email;
         }
 

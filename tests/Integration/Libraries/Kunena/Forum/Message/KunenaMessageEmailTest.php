@@ -342,7 +342,26 @@ class KunenaMessageEmailTest extends IntegrationTestCase implements DBTestInterf
         return '[mention userid=' . self::MENTIONED . ']anna[/mention]';
     }
 
+    public function testAMentionedUserGetsAnEmail(): void
+    {
+        $this->seed('Hello ' . $this->mention());
 
+        KunenaMessageHelper::get(self::REPLY)->sendMentionNotifications('', false);
+
+        $this->assertSame(['anna@forum.example'], array_column($this->mails, 0));
+    }
+
+    /**
+     * A reply which quotes a post quotes its mentions: the user who was mentioned in the quoted post got the e-mail of each such reply.
+     */
+    public function testAMentionInAQuoteSendsNoEmail(): void
+    {
+        $this->seed('[quote="Author" post=10]Hello ' . $this->mention() . '[/quote] Me too.');
+
+        KunenaMessageHelper::get(self::REPLY)->sendMentionNotifications('', false);
+
+        $this->assertSame([], $this->mails);
+    }
 
 
 

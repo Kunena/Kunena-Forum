@@ -1680,6 +1680,25 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
+     * A text without its [quote] blocks (also the nested ones): what the author wrote himself.
+     *
+     * @param   string  $text  The text of a message.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function withoutQuotes(string $text): string
+    {
+        // The innermost block first, until none is left.
+        do {
+            $text = (string) preg_replace('/\[quote(?:[= ][^\]]*)?\](?:(?!\[quote[\]= ]).)*?\[\/quote\]/is', '', $text, -1, $count);
+        } while ($count);
+
+        return $text;
+    }
+
+    /**
      * The users who get no notification of a message: the current user and the author of the message.
      *
      * @param   int  $currentUserId  The id of the current user (the poster or the approving moderator).
@@ -2513,7 +2532,8 @@ class KunenaMessage extends KunenaDatabaseObject
             return 0;
         }
 
-        $userids = array_diff(self::getMentionedUserIds((string) $this->message), self::getMentionedUserIds($oldText));
+        // A mention inside a quote is the mention of the quoted post: each reply which quoted that post told the user again.
+        $userids = array_diff(self::getMentionedUserIds(self::withoutQuotes((string) $this->message)), self::getMentionedUserIds(self::withoutQuotes($oldText)));
         $userids = \array_slice($userids, 0, 10);
 
         if (!$userids) {

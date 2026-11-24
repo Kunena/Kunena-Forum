@@ -78,12 +78,13 @@ class TopicUnsubscribeDisplay extends KunenaControllerDisplay
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_INVALID'), 404);
         }
 
+        // The name as text: the layout escapes it (the HTML name of a followed member showed "Tom &amp; Jerry").
         $this->unsubscribe = (object) [
             'type' => $type,
             'id'   => $id,
             'uid'  => $uid,
             'sig'  => $sig,
-            'name' => $type === KunenaEmailUnsubscribe::TOPIC ? $item->subject : ($type === KunenaEmailUnsubscribe::FOLLOW ? $item->getName() : $item->name),
+            'name' => $type === KunenaEmailUnsubscribe::TOPIC ? $item->subject : ($type === KunenaEmailUnsubscribe::FOLLOW ? $item->getName('', false) : $item->name),
         ];
     }
 

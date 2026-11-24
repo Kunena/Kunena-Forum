@@ -353,8 +353,8 @@ class MessageListingRecentDisplay extends ListDisplay
             if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user'))) {
                 $this->setTitle($headerText);
             } elseif (!empty($params_title)) {
-                $keywords = $params->get('menu-title');
-                $this->setTitle($keywords);
+                // The "Browser Page Title" of the menu item (menu-title, which was read, is no parameter: the title was empty).
+                $this->setTitle($params_title);
             } else {
                 $title = $this->headerText . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title;
                 $this->setTitle($title);

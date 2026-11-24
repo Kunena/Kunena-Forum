@@ -1,4 +1,4 @@
-[![Kunena](https://www.kunena.org/images/logo.png)](https://www.kunena.org)[![GitHub release](https://img.shields.io/github/release/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/Kunena/Kunena-Forum/total.svg)](https://github.com/Kunena/Kunena-Forum/releases)[![GitHub issues](https://img.shields.io/github/issues/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/issues)[![GitHub contributors](https://img.shields.io/github/contributors/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/graphs/contributors)[![Build Status](https://travis-ci.org/Kunena/Kunena-Forum.svg?branch=K5.1)](https://travis-ci.org/Kunena/Kunena-Forum)[![GitHub license](https://img.shields.io/badge/License-GNU-blue.svg)](https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.1/LICENSE.txt)[![X Follow](https://img.shields.io/twitter/follow/bsdatepicker.svg?style=social&label=Follow)](https://x.com/kunena)
+[![Kunena](https://www.kunena.org/images/logo.png)](https://www.kunena.org)[![GitHub release](https://img.shields.io/github/release/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/Kunena/Kunena-Forum/total.svg)](https://github.com/Kunena/Kunena-Forum/releases)[![GitHub issues](https://img.shields.io/github/issues/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/issues)[![GitHub contributors](https://img.shields.io/github/contributors/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/graphs/contributors)[![GitHub license](https://img.shields.io/badge/License-GNU-blue.svg)](https://github.com/Kunena/Kunena-Forum/blob/K8.0/LICENSE.txt)[![X Follow](https://img.shields.io/twitter/follow/kunena.svg?style=social&label=Follow)](https://x.com/kunena)
 
 ## ABOUT
 
@@ -13,7 +13,7 @@
     PHP: version 8.4.0 or greater (>= 8.5.0 recommended)
     MariaDB: version 10.6 or greater (>= 10.8.6 recommended) or MySQL: version 8.0.16 or greater (>= 8.4.2 recommended)
 
-Our installer will check for minimal version requirements and will abort the install if they are no met.
+Our installer will check for minimal version requirements and will abort the install if they are not met.
 
 In addition we recommend the following PHP settings:
 
@@ -46,7 +46,7 @@ The Joomla installers allows you to directly install *Kunena* via package URL or
 
 As long as the minimum requirements are met, the Kunena install should take only a few moments. We have spent a great amount of time to automate the entire installation process.
 
-Upgrades are performed just like new installs. There is no need to uninstall Kunena to perform an upgrade. We STRONGLY recommend that you perform a backup before and new software install or upgrade. The upgrade procedure is identical to a new install and is performed via the Joomla extension installer. *Kunena* will detect all prior version of Kunena and will perform the necessary upgrade tasks fully automatic.
+Upgrades are performed just like new installs. There is no need to uninstall Kunena to perform an upgrade. We STRONGLY recommend that you perform a backup before any new software install or upgrade. The upgrade procedure is identical to a new install and is performed via the Joomla extension installer. *Kunena* will detect all prior versions of Kunena and will perform the necessary upgrade tasks fully automatic.
 
 
 ## COMMUNITY

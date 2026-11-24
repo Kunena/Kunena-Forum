@@ -138,7 +138,10 @@ class TemplatesController extends KunenaController
                                         File::delete($tmpKunena . $template->sourcedir . '/config/params.ini');
                                     }
 
-                                    File::move($dest . $template->directory . '/config/params.ini', $tmpKunena . $template->sourcedir . 'config/params.ini');
+                                    // The settings of the installed template go into the new one. The sourcedir is the name of the
+                                    // folder of the package, without a slash: "mytemplateconfig/params.ini" does not exist, so the
+                                    // update of a template with settings stopped with "File::move: Rename failed".
+                                    File::move($dest . $template->directory . '/config/params.ini', $tmpKunena . $template->sourcedir . '/config/params.ini');
                                 }
 
                                 if (is_dir($dest . $template->directory . '/assets/images')) {

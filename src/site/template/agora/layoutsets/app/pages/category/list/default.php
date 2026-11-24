@@ -43,6 +43,9 @@ $config   = KunenaFactory::getConfig();
 [$newToday] = KunenaTopicHelper::getLatestTopics(false, 0, 1, ['starttime' => time() - 86400, 'orderby' => 'tt.first_post_time DESC']);
 [, $latest] = KunenaTopicHelper::getLatestTopics(false, 0, 5);
 
+// Which of them the member has not read: the list marks them (the query of the list does not know it, it was never marked).
+KunenaTopicHelper::fetchNewStatus($latest);
+
 $tiles = [
     [
         $newToday,

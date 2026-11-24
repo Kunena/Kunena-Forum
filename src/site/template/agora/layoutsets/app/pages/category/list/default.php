@@ -39,7 +39,8 @@ $template = KunenaFactory::getTemplate();
 $config   = KunenaFactory::getConfig();
 
 // The topics which the visitor may read (KunenaTopicHelper checks it): the number of the last day, the five latest ones.
-[$newToday] = KunenaTopicHelper::getLatestTopics(false, 0, 1, ['starttime' => time() - 86400]);
+// The time of the first post: with the default order the time is the one of the last post, and an old topic with a new reply counted.
+[$newToday] = KunenaTopicHelper::getLatestTopics(false, 0, 1, ['starttime' => time() - 86400, 'orderby' => 'tt.first_post_time DESC']);
 [, $latest] = KunenaTopicHelper::getLatestTopics(false, 0, 5);
 
 $tiles = [

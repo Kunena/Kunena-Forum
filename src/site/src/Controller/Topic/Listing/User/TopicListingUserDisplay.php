@@ -229,6 +229,10 @@ class TopicListingUserDisplay extends ListDisplay
             $finder->filterByCategories($categories);
         }
 
+        // Only the topics which the visitor may read are counted: without a category list (the default) the count had the topics of
+        // the categories he may not read (staff categories), which the list then left out.
+        $finder->filterByUserAccess($this->me);
+
         $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
         if ($this->moreUri) {

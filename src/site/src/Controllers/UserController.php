@@ -682,7 +682,9 @@ class UserController extends KunenaController
 
         $user->birthdate = $birthdate;
         $user->location  = trim($input->$method->get('location', '', 'string'));
-        $user->gender    = $input->$method->get('gender', 0, 'int');
+        // A choice of the form (unknown, male, female): another number was a database error, and the profile was not saved.
+        $gender       = (int) $input->$method->get('gender', 0, 'int');
+        $user->gender = \in_array($gender, [0, 1, 2], true) ? $gender : 0;
 
         $user->websitename = $input->$method->get('websitename', '', 'string');
         $websiteurl        = trim((string) $input->$method->get('websiteurl', '', 'string'));
@@ -729,13 +731,18 @@ class UserController extends KunenaController
             return;
         }
 
-        $this->user->ordering            = $this->app->getInput()->getInt('messageordering', 0);
-        $this->user->hideEmail           = $this->app->getInput()->getInt('hidemail', 1);
-        $this->user->showOnline          = $this->app->getInput()->getInt('showonline', 1);
-        $this->user->canSubscribe        = $this->app->getInput()->getInt('cansubscribe', -1);
-        $this->user->userListtime        = $this->app->getInput()->getInt('userlisttime', -2);
+        // Only the choices of the form, else the default of the setting: another number (hidemail=200) was a database error (the
+        // columns are small) and nothing of the profile was saved.
+        $choice = fn (string $name, array $values, int $default): int => \in_array($this->app->getInput()->getInt($name, $default), $values, true)
+            ? $this->app->getInput()->getInt($name, $default) : $default;
+
+        $this->user->ordering            = $choice('messageordering', [0, 1, 2], 0);
+        $this->user->hideEmail           = $choice('hidemail', [0, 1, 2], 1);
+        $this->user->showOnline          = $choice('showonline', [0, 1], 1);
+        $this->user->canSubscribe        = $choice('cansubscribe', [-1, 0, 1], -1);
+        $this->user->userListtime        = $choice('userlisttime', [-2, -1, 0, 4, 8, 12, 24, 48, 168, 720, 8760], -2);
         // The name of the field of the form (the keys of the request are case sensitive: displayAgeBirthdate was never sent).
-        $this->user->displayAgeBirthdate = $this->app->getInput()->getInt('displayagebirthdate', 1);
+        $this->user->displayAgeBirthdate = $choice('displayagebirthdate', [0, 1], 1);
 
         // The digest of the subscriptions: an e-mail for each post (the default) is stored as no value.
         if ($this->app->getInput()->get('digest', null) !== null) {

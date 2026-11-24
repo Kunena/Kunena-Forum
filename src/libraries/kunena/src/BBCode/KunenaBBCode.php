@@ -3423,16 +3423,23 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         // Because the method renderEbayLayout is called in static way need to keep the call of config class here
         $config = KunenaFactory::getConfig();
 
-        if (empty($config->ebayApiKey) || empty($config->ebayCertId)) {
-            echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
+        // Without a widget (no keys of the eBay API, which is the default, an item which eBay does not give, a failed request) the item
+        // is a link. The error for the administrator was printed into the post for every reader, the link of the member disappeared,
+        // and a failed request ended the page (or the post) with an exception.
+        $link = '<a href="https://www.ebay.com/itm/' . $ItemID . '" target="_blank" rel="nofollow noopener noreferrer">www.ebay.com/itm/' . $ItemID . '</a>';
 
-            return false;
+        if (empty($config->ebayApiKey) || empty($config->ebayCertId)) {
+            return $link;
         }
 
         $layout = KunenaLayout::factory('BBCode/eBay');
 
         if ($layout->getPath()) {
-            $ebay = self::getEbayItemFromCache($ItemID, $config);
+            try {
+                $ebay = self::getEbayItemFromCache($ItemID, $config);
+            } catch (Exception $e) {
+                return $link;
+            }
 
             if (\is_object($ebay)) {
                 return (string) $layout
@@ -3444,13 +3451,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                     ->set('title', $ebay->Title)
                     ->setLayout(is_numeric($ItemID) ? 'default' : 'search');
             }
-            echo '<b>' . $ebay . '</b>';
-
-            return false;
-
         }
 
-        return false;
+        return $link;
     }
 
     /**

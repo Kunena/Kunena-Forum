@@ -265,6 +265,14 @@ function Install-Links {
     if ($toReplace.Count -gt 0) {
         Write-Host "These real folders will be DELETED and replaced by a link:" -ForegroundColor Yellow
         $toReplace | ForEach-Object { Write-Host "  $($_.FullName)" }
+
+        # media\kunena is not only code: the attachments and the avatars which the users of the site uploaded are in it
+        $media = Format-FullPath (Join-Path $script:joomlaInstallDir 'media\kunena')
+        if ($toReplace | Where-Object { (Format-FullPath $_.FullName) -ieq $media }) {
+            Write-Host "WARNING: media\kunena holds the uploaded attachments and avatars of this site. They are deleted with it: copy" -ForegroundColor Red
+            Write-Host "         media\kunena\attachments and media\kunena\avatars first if you want to keep them." -ForegroundColor Red
+        }
+
         if (-not $DryRun -and -not (Confirm-Action "Replace these $($toReplace.Count) folders? (y/N)")) {
             $keep = $toReplace | ForEach-Object { $_.FullName }
         }

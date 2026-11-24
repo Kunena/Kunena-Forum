@@ -22,6 +22,7 @@ use Joomla\Database\Mysqli\MysqliQuery;
 use Joomla\DI\Container;
 use Kunena\Tests\Unit\Support\Files;
 use Kunena\Tests\Unit\UnitTestCase;
+use ReflectionProperty;
 use SimpleXMLElement;
 
 /**
@@ -151,6 +152,11 @@ class PackageScriptTemporaryFolderTest extends UnitTestCase
         $provider = require Files::path('src/script.php');
         $provider->register($container);
         $script = $container->get(InstallerScriptInterface::class);
+
+        // The test is about the temporary folder, not the requirements: any version of Joomla passes (the Joomla of the site of
+        // the tests can be a development version, which is older than the release it leads to for version_compare()).
+        $versions = new ReflectionProperty($script, 'versions');
+        $versions->setValue($script, ['Joomla!' => ['1.0' => '1.0.0', '0' => '1.0.0']] + $versions->getValue($script));
 
         $parent           = $this->createStub(InstallerAdapter::class);
         $parent->manifest = new SimpleXMLElement('<extension><version>8.0.0</version></extension>');

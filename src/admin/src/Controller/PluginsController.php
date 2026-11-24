@@ -242,7 +242,10 @@ class PluginsController extends AdminController
      */
     public function getModel($name = 'Plugin', $prefix = 'Administrator', $config = ['ignore_request' => true])
     {
-        return parent::getModel($name, $prefix, $config);
+        // The plugins are extensions of Joomla: the model of the plugins of Joomla checks them in and orders them, as it publishes
+        // them. Kunena has no model of a plugin, so the check-in (the toolbar and the lock of a row) stopped with "Call to a
+        // member function checkIn() on false".
+        return $this->app->bootComponent('com_plugins')->getMVCFactory()->createModel($name, $prefix, $config) ?: false;
     }
 
     /**

@@ -110,7 +110,7 @@ class CategoryDisplay extends KunenaControllerDisplay
             $date        = new Date($topic->last_post_time);
             $userid      = $topic->last_post_userid;
 
-            $username    = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
+            $username    = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name, false);
 
             $title    = $topic->subject;
             $category = $topic->getCategory();
@@ -162,6 +162,7 @@ class CategoryDisplay extends KunenaControllerDisplay
      */
     public function createItem($title, $url, $description, $category, $date, $userid, $username)
     {
+        // $username is text (the feed escapes the title and the author; the HTML name showed "Tom &amp; Jerry").
         if ($this->config->rssAuthorInTitle) {
             // We want author in item titles
             $title .= ' - ' . Text::_('COM_KUNENA_RSS_BY') . ': ' . $username;

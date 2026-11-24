@@ -165,7 +165,7 @@ class TopicsDisplay extends KunenaControllerDisplay
 
             $date     = new Date($topic->last_post_time);
             $userid   = $topic->last_post_userid;
-            $username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
+            $username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name, false);
 
             $title    = $topic->subject;
             $category = $topic->getCategory();
@@ -193,7 +193,7 @@ class TopicsDisplay extends KunenaControllerDisplay
             $description = $topic->first_post_message;
             $date        = new Date($topic->first_post_time);
             $userid      = $topic->first_post_userid;
-            $username    = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
+            $username    = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name, false);
 
             $title    = $topic->subject;
             $category = $topic->getCategory();
@@ -260,7 +260,7 @@ class TopicsDisplay extends KunenaControllerDisplay
 
             $date     = new Date($message->time);
             $userid   = $message->userid;
-            $username = KunenaFactory::getUser($userid)->getName($message->name);
+            $username = KunenaFactory::getUser($userid)->getName($message->name, false);
 
             $this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
         }
@@ -285,6 +285,7 @@ class TopicsDisplay extends KunenaControllerDisplay
      */
     public function createItem($title, $url, $description, $category, $date, $userid, $username)
     {
+        // $username is text (the feed escapes the title and the author; the HTML name showed "Tom &amp; Jerry").
         if ($this->config->rssAuthorInTitle) {
             // We want author in item titles
             $title .= ' - ' . Text::_('COM_KUNENA_BY') . ': ' . $username;

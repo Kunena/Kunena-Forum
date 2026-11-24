@@ -162,7 +162,11 @@ class SearchModel extends KunenaModel
         KunenaMessageHelper::loadLocation($this->messages);
 
         if (empty($this->messages)) {
-            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', '<strong>' . $text . '</strong>'), 'notice');
+            // The message is printed as html: the words of the search are text in it, whatever the filter of the request let through.
+            $this->app->enqueueMessage(
+                Text::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', '<strong>' . htmlspecialchars((string) $text, ENT_QUOTES, 'UTF-8') . '</strong>'),
+                'notice'
+            );
         }
 
         return $this->messages;

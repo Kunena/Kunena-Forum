@@ -847,7 +847,9 @@ abstract class KunenaTopicHelper
 
         $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_topics', 'tt'))
-            ->join('INNER', '(' . $subQuery . ') AS ' . $db->quoteName('c') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('c.thread'))
+            // The group of the messages in the state of the topic: joined by the topic only, the group of the deleted messages was
+            // taken too when its first or last time was the time of a message of the topic (wrong posts, files, first and last post).
+            ->join('INNER', '(' . $subQuery . ') AS ' . $db->quoteName('c') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('c.thread') . ' AND ' . $db->quoteName('c.hold') . ' = ' . $db->quoteName('tt.hold'))
             ->join('INNER', $db->quoteName('#__kunena_messages', 'mmin') . ' ON ' . $db->quoteName('c.thread') . ' = ' . $db->quoteName('mmin.thread') . ' AND ' . $db->quoteName('mmin.hold') . ' = ' . $db->quoteName('tt.hold') . ' AND ' . $db->quoteName('mmin.time') . ' = ' . $db->quoteName('c.mintime'))
             ->join('INNER', $db->quoteName('#__kunena_messages', 'mmax') . ' ON ' . $db->quoteName('c.thread') . ' = ' . $db->quoteName('mmax.thread') . ' AND ' . $db->quoteName('mmax.hold') . ' = ' . $db->quoteName('tt.hold') . ' AND ' . $db->quoteName('mmax.time') . ' = ' . $db->quoteName('c.maxtime'))
             ->join('INNER', $db->quoteName('#__kunena_messages_text', 'tmin') . ' ON ' . $db->quoteName('tmin.mesid') . ' = ' . $db->quoteName('mmin.id'))

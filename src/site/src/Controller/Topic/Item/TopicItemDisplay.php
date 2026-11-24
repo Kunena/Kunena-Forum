@@ -807,7 +807,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $doc         = $this->app->getDocument();
         $this->setMetaData('og:url', Uri::current(), 'property');
         $this->setMetaData('og:type', 'article', 'property');
-        $this->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
+        // The subject as text: Joomla escapes the meta tags (the HTML of displayField() showed "Q&amp;A" in a share).
+        $this->setMetaData('og:title', (string) $this->topic->subject, 'property');
         $this->setMetaData('profile:username', $this->topic->getAuthor()->getName('', false), 'property');
 
         $image = $this->topicImage();
@@ -825,7 +826,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $this->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toISO8601(), 'property');
         $this->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
         $this->setMetaData('twitter:card', 'summary', 'name');
-        $this->setMetaData('twitter:title', $this->topic->displayField('subject'), 'name');
+        $this->setMetaData('twitter:title', (string) $this->topic->subject, 'name');
         if (!empty($image)) {
             $this->setMetaData('twitter:image', $image, 'name');
         }

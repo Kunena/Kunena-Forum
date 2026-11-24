@@ -204,7 +204,8 @@ class TopicModlogDisplay extends KunenaControllerDisplay
             ->where($where);
         $total = (int) $db->setQuery($count)->loadResult();
 
-        $start            = max(0, $this->input->getInt('start', 0));
+        // The page links carry limitstart (Joomla turns it into ?start= only with SEF addresses): without SEF every page was the first.
+        $start            = max(0, $this->input->getInt('limitstart', $this->input->getInt('start', 0)));
         $this->pagination = new KunenaPagination($total, $start, self::LIMIT);
 
         $query = $db->createQuery()

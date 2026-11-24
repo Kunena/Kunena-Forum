@@ -4046,7 +4046,13 @@ class TopicController extends KunenaController
         $catid = $this->app->getInput()->getInt('catid', 0);
 
         $category        = KunenaCategoryHelper::get($catid);
-        $categoryIconset = $category->iconset;
+        $categoryIconset = (string) $category->iconset;
+
+        // The name of the set becomes a part of the path of a file: it is the name of one folder (as where the icon of a topic
+        // is checked), anything else ("../..", a path) is the default set.
+        if ($categoryIconset !== '' && preg_match('/^[\w\-]+$/D', $categoryIconset) !== 1) {
+            $categoryIconset = 'default';
+        }
 
         if (empty($categoryIconset)) {
             // A category without a set of icons has no icons: an empty list, and nothing more to do.

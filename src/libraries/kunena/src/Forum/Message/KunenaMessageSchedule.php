@@ -86,6 +86,11 @@ abstract class KunenaMessageSchedule
 
         $time = $date->getTimestamp();
 
+        // The column of the time is int(11): a later date (after 2038-01-19) was a raw database error ("Out of range value").
+        if ($time > 2147483647) {
+            return self::INVALID;
+        }
+
         return $time > $now ? $time : self::PAST;
     }
 

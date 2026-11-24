@@ -44,6 +44,10 @@ class KunenaMessageScheduleTest extends UnitTestCase
             'the 30th of February'  => ['2026-02-30T10:00', Schedule::INVALID],
             'the hour 25'           => ['2026-06-02T25:00', Schedule::INVALID],
             'the month 13'          => ['2026-13-02T10:00', Schedule::INVALID],
+            // The column of the time is int(11): a later date was a raw database error ("Out of range value").
+            'the last second of the column' => ['2038-01-19T03:14:07', 2147483647],
+            'after 2038-01-19'              => ['2038-01-19T03:14:08', Schedule::INVALID],
+            'the year 9999'                 => ['9999-12-31T23:59', Schedule::INVALID],
         ];
     }
 

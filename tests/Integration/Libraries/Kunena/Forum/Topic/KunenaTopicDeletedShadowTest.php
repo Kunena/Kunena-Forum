@@ -237,4 +237,31 @@ class KunenaTopicDeletedShadowTest extends IntegrationTestCase implements DBTest
         $this->assertSame([['hold' => 0, 'moved_id' => self::TARGET]], $this->fetchAll('SELECT hold, moved_id FROM #__kunena_topics WHERE id = 10'));
         $this->assertSame($target, $this->target());
     }
+
+    /**
+     * The counts of the category: 1 topic and 2 posts, the target. A shadow counts nothing (the recount leaves the shadows out), but
+     * move() leaves it with the posts of the topic, and its restore or its delete added or took the topic and its posts.
+     */
+    private function categoryCounts(): array
+    {
+        return array_map('intval', $this->fetchAll('SELECT numTopics, numPosts FROM #__kunena_categories WHERE id = ' . self::CATEGORY)[0]);
+    }
+
+    public function testRestoringADeletedShadowChangesNoCountOfTheCategory(): void
+    {
+        $this->topic(10, 3, self::TARGET, 2);
+
+        $this->assertTrue(KunenaTopicHelper::get(10)->publish(KunenaForum::PUBLISHED));
+
+        $this->assertSame(['numTopics' => 1, 'numPosts' => 2], $this->categoryCounts());
+    }
+
+    public function testDeletingAShadowChangesNoCountOfTheCategory(): void
+    {
+        $this->topic(10, 0, self::TARGET, 2);
+
+        $this->assertTrue(KunenaTopicHelper::get(10)->publish(KunenaForum::TOPIC_DELETED));
+
+        $this->assertSame(['numTopics' => 1, 'numPosts' => 2], $this->categoryCounts());
+    }
 }

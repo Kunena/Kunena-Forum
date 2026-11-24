@@ -2297,6 +2297,12 @@ class KunenaTopic extends KunenaDatabaseObject
         $countedAfter  = $this->hold == 0 ? (int) $this->posts : 0;
         $postDelta     = $countedAfter - $countedBefore;
 
+        // A shadow of a moved topic counts nothing in its category (the recount leaves the shadows out, move() took the topic and its
+        // posts from it), but it keeps the posts of the topic: its restore or its delete added or took a topic and those posts.
+        if ($this->moved_id) {
+            $topicDelta = $postDelta = 0;
+        }
+
         if (!parent::save()) {
             return false;
         }

@@ -68,23 +68,45 @@ abstract class KunenaTopicNewReplies
             return ['count' => 0, 'first' => 0];
         }
 
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
+        // After the message in time (the order of the page): a scheduled reply keeps the id it got when it was written and is
+        // published later, so its id is lower than those of the replies before it. The id decides between two of the same time.
+        $afterTime = $db->setQuery(
+            $db->createQuery()
+                ->select($db->quoteName('time'))
+                ->from($db->quoteName('#__kunena_messages'))
+                ->where($db->quoteName('id') . ' = :id')
+                ->bind(':id', $afterId, ParameterType::INTEGER)
+        )->loadResult();
+
         $query = $db->createQuery()
-            ->select(['COUNT(*) AS ' . $db->quoteName('number'), 'MIN(' . $db->quoteName('id') . ') AS ' . $db->quoteName('first')])
+            ->select([$db->quoteName('id')])
             ->from($db->quoteName('#__kunena_messages'))
             ->where($db->quoteName('thread') . ' = :topic')
-            ->where($db->quoteName('id') . ' > :after')
             ->where($db->quoteName('hold') . ' = 0')
             ->bind(':topic', $topicId, ParameterType::INTEGER)
-            ->bind(':after', $afterId, ParameterType::INTEGER);
+            ->order([$db->quoteName('time') . ' ASC', $db->quoteName('id') . ' ASC']);
+
+        if ($afterTime === null) {
+            // The message is gone: the ids still say which replies are newer.
+            $query->where($db->quoteName('id') . ' > :after')
+                ->bind(':after', $afterId, ParameterType::INTEGER);
+        } else {
+            $afterTime = (int) $afterTime;
+            $query->where('(' . $db->quoteName('time') . ' > :time OR (' . $db->quoteName('time') . ' = :sametime AND ' . $db->quoteName('id') . ' > :after))')
+                ->bind(':time', $afterTime, ParameterType::INTEGER)
+                ->bind(':sametime', $afterTime, ParameterType::INTEGER)
+                ->bind(':after', $afterId, ParameterType::INTEGER);
+        }
 
         if ($userid > 0) {
             $query->where($db->quoteName('userid') . ' != :userid')
                 ->bind(':userid', $userid, ParameterType::INTEGER);
         }
 
-        $row = $db->setQuery($query)->loadObject();
+        $ids = array_map('intval', $db->setQuery($query)->loadColumn());
 
-        return ['count' => (int) ($row->number ?? 0), 'first' => (int) ($row->first ?? 0)];
+        return ['count' => \count($ids), 'first' => $ids[0] ?? 0];
     }
 }

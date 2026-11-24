@@ -96,4 +96,15 @@ class KunenaTopicNewRepliesTest extends IntegrationTestCase implements DBTestInt
         $this->assertSame(['count' => 0, 'first' => 0], KunenaTopicNewReplies::find(1, 16, 42));
         $this->assertSame(['count' => 0, 'first' => 0], KunenaTopicNewReplies::find(0, 10, 42));
     }
+
+    /**
+     * A scheduled reply keeps the id it got when it was written and is published later, with the time of its publication: it came
+     * after the last message of the page, but with a lower id, and was never announced.
+     */
+    public function testAScheduledReplyPublishedAfterTheMessageCounts(): void
+    {
+        $this->insertRow('#__kunena_messages', ['id' => 5, 'parent' => 0, 'thread' => 1, 'catid' => 2, 'name' => 'U8', 'userid' => 8, 'email' => '', 'subject' => 'S', 'time' => 100, 'ip' => '', 'hold' => 0]);
+
+        $this->assertSame(['count' => 1, 'first' => 5], KunenaTopicNewReplies::find(1, 14, 42));
+    }
 }

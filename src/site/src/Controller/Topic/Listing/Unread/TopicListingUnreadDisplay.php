@@ -126,17 +126,19 @@ class TopicListingUnreadDisplay extends ListDisplay
             $this->applyFilters($finder, true);
 
             // The unread topics are selected in the query, so the page and the count are on the unread topics only.
-            $this->topics = $finder
-                ->start($start)
-                ->limit($limit)
+            $finder
                 ->filterByTime($time)
                 ->order('id', 0)
                 ->filterByUserAccess($this->me)
-                ->filterByUserUnread($this->me, (int) KunenaFactory::getSession()->getAllReadTime())
-                ->find();
+                ->filterByUserUnread($this->me, (int) KunenaFactory::getSession()->getAllReadTime());
 
+            // The page which the pagination keeps: a start past the end (an old link) gave an empty page.
             $this->mesIds     = [];
             $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+            $this->topics     = $finder
+                ->start($this->pagination->limitstart)
+                ->limit($this->pagination->limit)
+                ->find();
         }
 
         if ($this->topics) {

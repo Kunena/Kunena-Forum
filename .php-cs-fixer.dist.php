@@ -126,7 +126,7 @@ $config = (new Config())
             // A fully qualified class name in the code or in a docblock is imported (use) and written short
             'fully_qualified_strict_types'                     => ['import_symbols' => true, 'leading_backslash_in_global_namespace' => false],
             // Alpha order imports
-            'ordered_imports'                                => ['imports_order' => ['class', 'function', 'const'], 'sort_algorithm' => 'alpha'],
+            'ordered_imports'                                  => ['imports_order' => ['class', 'function', 'const'], 'sort_algorithm' => 'alpha'],
             // The @property lines of a class docblock: the types, the names and the descriptions in columns
             'phpdoc_align'                                     => ['align' => 'vertical', 'tags' => ['property', 'property-read', 'property-write']],
             // There should not be useless else cases

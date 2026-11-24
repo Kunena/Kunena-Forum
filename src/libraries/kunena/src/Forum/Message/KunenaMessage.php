@@ -53,6 +53,7 @@ use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUser;
+use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
@@ -594,8 +595,11 @@ class KunenaMessage extends KunenaDatabaseObject
         $unsubscribeUrl = '';
 
         if ($subscription && $recipientId > 0) {
-            $type = $this->parent ? KunenaEmailUnsubscribe::TOPIC : KunenaEmailUnsubscribe::CATEGORY;
-            $id   = $this->parent ? (int) $this->thread : (int) $this->catid;
+            // A reply also goes to the subscribers of the category (categorySubscriptions "post"): one who did not subscribe to the
+            // topic gets the link of the category (the link of the topic unsubscribed him from nothing, the e-mails kept coming).
+            $topicSubscriber = $this->parent && KunenaTopicUserHelper::get((int) $this->thread, $recipientId)->subscribed;
+            $type            = $topicSubscriber ? KunenaEmailUnsubscribe::TOPIC : KunenaEmailUnsubscribe::CATEGORY;
+            $id              = $topicSubscriber ? (int) $this->thread : (int) $this->catid;
 
             if ($follower) {
                 // The recipient gets this e-mail because he follows the author.

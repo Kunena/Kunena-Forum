@@ -358,7 +358,32 @@ class KunenaMessageEmailTest extends IntegrationTestCase implements DBTestInterf
         return array_column($mail->getCustomHeaders(), 1, 0);
     }
 
+    /**
+     * A reply goes to the subscribers of the category too (categorySubscriptions "post"): the link to unsubscribe of the e-mail of
+     * such a subscriber was the one of the topic, to which he did not subscribe. It unsubscribed nothing, the e-mails kept coming.
+     */
+    public function testTheReplyToASubscriberOfTheCategoryUnsubscribesFromTheCategory(): void
+    {
+        $this->seed('A reply');
+        $this->insertRow('#__kunena_user_categories', ['user_id' => self::MENTIONED, 'category_id' => self::CATEGORY, 'subscribed' => 1]);
 
+        $this->assertSame(
+            '<' . KunenaEmailUnsubscribe::getPostUrl(KunenaEmailUnsubscribe::CATEGORY, self::CATEGORY, self::MENTIONED) . '>',
+            $this->notificationHeaders()['List-Unsubscribe'] ?? null
+        );
+    }
+
+    public function testTheReplyToASubscriberOfTheTopicUnsubscribesFromTheTopic(): void
+    {
+        $this->seed('A reply');
+        $this->insertRow('#__kunena_user_categories', ['user_id' => self::MENTIONED, 'category_id' => self::CATEGORY, 'subscribed' => 1]);
+        $this->insertRow('#__kunena_user_topics', ['user_id' => self::MENTIONED, 'topic_id' => self::TOPIC, 'category_id' => self::CATEGORY, 'subscribed' => 1]);
+
+        $this->assertSame(
+            '<' . KunenaEmailUnsubscribe::getPostUrl(KunenaEmailUnsubscribe::TOPIC, self::TOPIC, self::MENTIONED) . '>',
+            $this->notificationHeaders()['List-Unsubscribe'] ?? null
+        );
+    }
 
     /**
      * A header is text: the name of the author was escaped for HTML ("Tom &amp; Jerry").

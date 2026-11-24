@@ -1062,18 +1062,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_content' => ['_content', '_default'],
             'plain_link'    => ['_default', '_content'],
         ],
-        'wiki' => [
-            'mode'          => BBCode::BBCODE_MODE_LIBRARY,
-            'method'        => "doWiki",
-            'class'         => 'link',
-            'allow_in'      => ['listitem', 'block', 'columns', 'inline'],
-            'end_tag'       => BBCode::BBCODE_PROHIBIT,
-            'content'       => BBCode::BBCODE_PROHIBIT,
-            'plain_start'   => "<b>[",
-            'plain_end'     => "]</b>",
-            'plain_content' => ['title', '_default'],
-            'plain_link'    => ['_default', '_content'],
-        ],
+        // No rule "wiki" (the [[...]] of nbbc): Kunena has no wiki, and text in double brackets became a link to "/?page=..." with
+        // its brackets and commas mangled ([[1,2],[3,4]]).
         'rule' => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => "doRule",

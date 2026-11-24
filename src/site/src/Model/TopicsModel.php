@@ -746,6 +746,8 @@ class TopicsModel extends KunenaModel
 
         // List state information
         $value        = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_limit", 'limit', 0, 'int');
+            // Only a period of the setting: the value goes to new DateTime("<value> ago"), another text of the address (sel=abc)
+            // gave an error page.
         $defaultlimit = $format != 'feed' ? $this->config->threadsPerPage : $this->config->rssLimit;
 
         if ($value < 1 || $value > 100) {

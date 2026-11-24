@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /*
  * The layout Profile: a message in a list of posts (the posts of a profile, the recent posts, the thanks) as a calm card: where and
@@ -38,6 +39,11 @@ $txt             = $topic->getActions();
 $tooltips        = KunenaTemplate::getInstance()->tooltips();
 $excerpt         = trim((string) preg_replace('/\s+/', ' ', (string) KunenaParser::stripBBCode((string) $message->message, 0, false)));
 $excerpt         = mb_strimwidth($excerpt, 0, 180, '…');
+
+// A reply in a category which hides the replies from the guests: no start of its text for a guest (the guests read it here).
+if (!KunenaUserHelper::getMyself()->userid && $category->hidesRepliesForGuests() && (int) $message->id !== (int) $topic->first_post_id) {
+    $excerpt = '';
+}
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?> agora-row-card">
     <td colspan="<?php echo $cols; ?>">

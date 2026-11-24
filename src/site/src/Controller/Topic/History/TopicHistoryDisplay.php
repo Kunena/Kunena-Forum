@@ -176,7 +176,8 @@ class TopicHistoryDisplay extends KunenaControllerDisplay
      */
     protected function prepareDocument()
     {
-        $this->setTitle(Text::sprintf('COM_KUNENA_HISTORY_TITLE', $this->message->displayField('subject')));
+        // The subject as text: Joomla escapes the title (the HTML of displayField() showed "Q&amp;A").
+        $this->setTitle(Text::sprintf('COM_KUNENA_HISTORY_TITLE', (string) $this->message->subject));
         $this->setMetaData('robots', 'noindex, follow');
     }
 }

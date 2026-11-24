@@ -1989,8 +1989,8 @@ class TopicController extends KunenaController
         $oldSubject     = (string) $message->subject;
         $message->edit($fields);
 
-        // If requested: Make message to be anonymous
-        if ($fields['anonymous'] && $message->getCategory()->allowAnonymous) {
+        // If requested by its author: make the message anonymous. A moderator who edited the post of a member made it anonymous.
+        if ($fields['anonymous'] && $message->getCategory()->allowAnonymous && (int) $message->userid === (int) $this->me->userid) {
             $message->makeAnonymous();
         }
 

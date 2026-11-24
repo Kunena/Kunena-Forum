@@ -202,7 +202,8 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
         $this->privateMessage       = $finder->firstOrNew();
         $this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
-        $this->postAnonymous        = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->postAnonymous);
+        // The post exists: "anonymous by default" is for a new post, the edit of a post of a member does not tick the box.
+        $this->postAnonymous        = isset($saved['anonymous']) ? $saved['anonymous'] : false;
         $this->subscriptionsChecked = false;
         $this->canSubscribe         = false;
         $usertopic                  = $this->topic->getUserTopic();

@@ -357,6 +357,13 @@ function Remove-Links {
 function Set-GitVersionName {
     $pkgKunenaPath = Join-Path $script:joomlaInstallDir 'administrator\manifests\packages\pkg_kunena.xml'
     if (-not (Test-Path -LiteralPath $pkgKunenaPath)) { return }
+
+    # A manifest which is a link (git-link.sh links it to src\pkg_kunena.xml) is the file of the git clone: it is not changed
+    if (Test-IsLink (Get-Item -LiteralPath $pkgKunenaPath -Force)) {
+        Write-Host "pkg_kunena.xml is a link to the git clone: its versionname is left as it is"
+        return
+    }
+
     if ($DryRun) { Write-Host "Would set versionname to GIT in pkg_kunena.xml"; return }
 
     $xmlContent = [System.IO.File]::ReadAllText($pkgKunenaPath)

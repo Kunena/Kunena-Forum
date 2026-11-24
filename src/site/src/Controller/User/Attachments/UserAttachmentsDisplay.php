@@ -89,6 +89,12 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
         $start  = $this->input->getInt('limitstart', 0);
         $limit  = $this->input->getInt('limit', 30);
 
+        // A page of at most 100 files, as the other lists: limit=0 or limit=100000 loaded every file of the member, with its message
+        // and topic, for any visitor.
+        if ($limit < 1 || $limit > 100) {
+            $limit = 30;
+        }
+
         $this->template = KunenaFactory::getTemplate();
         $this->me       = KunenaUserHelper::getMyself();
         $this->profile  = KunenaUserHelper::get($userid);

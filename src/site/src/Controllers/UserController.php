@@ -734,7 +734,8 @@ class UserController extends KunenaController
         $this->user->showOnline          = $this->app->getInput()->getInt('showonline', 1);
         $this->user->canSubscribe        = $this->app->getInput()->getInt('cansubscribe', -1);
         $this->user->userListtime        = $this->app->getInput()->getInt('userlisttime', -2);
-        $this->user->displayAgeBirthdate = $this->app->getInput()->getInt('displayAgeBirthdate', 1);
+        // The name of the field of the form (the keys of the request are case sensitive: displayAgeBirthdate was never sent).
+        $this->user->displayAgeBirthdate = $this->app->getInput()->getInt('displayagebirthdate', 1);
 
         // The digest of the subscriptions: an e-mail for each post (the default) is stored as no value.
         if ($this->app->getInput()->get('digest', null) !== null) {

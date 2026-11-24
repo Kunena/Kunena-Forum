@@ -1159,6 +1159,12 @@ class TopicController extends KunenaController
                 return;
             }
 
+            // "Let users edit the subject" set to No: a reply has the subject of the message it answers (newReply()), the form has
+            // no field for it. The posted subject was taken all the same.
+            if (!$this->config->allowChangeSubject && !$this->me->isModerator($parent->getCategory())) {
+                unset($fields['subject']);
+            }
+
             list($topic, $message) = $parent->newReply($fields);
             $category              = $topic->getCategory();
         }
@@ -1962,6 +1968,12 @@ class TopicController extends KunenaController
 
         // Load language file from the template.
         KunenaFactory::getTemplate()->loadLanguage();
+
+        // "Let users edit the subject" set to No: the form shows the subject in a disabled field (or a hidden one), the post keeps it.
+        // The posted subject was taken all the same, also for the topic when the post is its first one.
+        if (!$this->config->allowChangeSubject && !$this->me->isModerator($message->getCategory())) {
+            $fields['subject'] = (string) $message->subject;
+        }
 
         // Update message contents (the old text: a user who was mentioned before does not get a second e-mail)
         $oldMessageText = (string) $message->message;

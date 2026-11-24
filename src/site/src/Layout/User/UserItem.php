@@ -127,13 +127,16 @@ class UserItem extends KunenaLayout
         $showUnapproved     = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
         $showAttachments    = $this->config->showImgFilesManageProfile && ($moderator || $myProfile);
         $showListofBanGiven = $moderator && $myProfile;
-        $showBanUser        = $moderator && !$myProfile;
 
         try {
             $showBanHistory = $banInfo->canBan();
         } catch (Exception $e) {
             $showBanHistory = false;
         }
+
+        // The form of a ban only for a member whom he may ban (the rules of the ban history): a moderator got the tab with a refusal
+        // in it on the profile of an administrator.
+        $showBanUser = $showBanHistory && !$myProfile;
 
         // Define all tabs.
         $tabs = [];

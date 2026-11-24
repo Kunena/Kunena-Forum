@@ -479,9 +479,53 @@ class CategoryController extends KunenaController
      */
     public function checkin()
     {
-        // TODO : need to implement the logic to checkin the category
-
+        // The lock of a checked-out category in the list of the categories. This was an empty task which only went back to the
+        // list: the category stayed checked out. The rule of the lock in the list: the user who checked the category out, or
+        // who may check in everything (com_checkin); and the user has to be administrator of the category.
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+
+            return;
+        }
+
+        $cid = ArrayHelper::toInteger($this->input->get('cid', [], 'array'));
+
+        if (!$cid) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
+
+            return;
+        }
+
+        $identity = $this->app->getIdentity();
+        $count    = 0;
+
+        foreach (KunenaCategoryHelper::getCategories($cid, false, 'none') as $category) {
+            if (!$category->checked_out) {
+                continue;
+            }
+
+            if (!$category->isAuthorised('admin')) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'error');
+
+                continue;
+            }
+
+            if ((int) $category->checked_out !== (int) $identity->id && !$identity->authorise('core.admin', 'com_checkin')) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)), 'notice');
+
+                continue;
+            }
+
+            if ($category->checkIn()) {
+                $count++;
+            }
+        }
+
+        if ($count) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_CHECKED_IN', $count), 'success');
+        }
     }
 
     /**

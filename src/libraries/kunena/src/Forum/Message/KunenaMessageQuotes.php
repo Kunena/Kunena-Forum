@@ -96,6 +96,27 @@ abstract class KunenaMessageQuotes
     }
 
     /**
+     * Whether a reply is hidden from the current user, a guest, by the teaser of its category ("hide the replies from the guests"): its
+     * quote gave a guest who may reply the text which the topic hides from him (the read right does not know the teaser).
+     *
+     * @param   KunenaMessage  $message  The quoted message.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function hiddenForGuest(KunenaMessage $message): bool
+    {
+        if (KunenaUserHelper::getMyself()->exists()) {
+            return false;
+        }
+
+        $topic = $message->getTopic();
+
+        return (int) $message->id !== (int) $topic->first_post_id && $topic->getCategory()->hidesRepliesForGuests();
+    }
+
+    /**
      * The blocks of the messages which a reply quotes: the messages of the topic which the user may read (published, or which he may
      * see), the oldest first, separated by an empty line.
      *
@@ -113,7 +134,7 @@ abstract class KunenaMessageQuotes
         $quoted = array_filter(
             $messages,
             static fn ($message): bool => $message instanceof KunenaMessage && $message->exists() && (int) $message->thread === $topicId
-                && $message->isAuthorised('read')
+                && $message->isAuthorised('read') && !self::hiddenForGuest($message)
         );
 
         usort($quoted, static fn (KunenaMessage $a, KunenaMessage $b): int => (int) $a->id <=> (int) $b->id);

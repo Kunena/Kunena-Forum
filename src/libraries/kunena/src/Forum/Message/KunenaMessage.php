@@ -2219,7 +2219,7 @@ class KunenaMessage extends KunenaDatabaseObject
             $message->hold = $category->review ? (int) !$category->isAuthorised('moderate', $user) : 0;
         }
 
-        if ($fields['quote'] === true) {
+        if ($fields['quote'] === true && !KunenaMessageQuotes::hiddenForGuest($this)) {
             // The [quote] block of the message, without its confidential and private parts (KunenaMessageQuotes::block).
             $message->message = KunenaMessageQuotes::block(
                 (int) $this->id,

@@ -169,6 +169,10 @@ class MessageListingRecentDisplay extends ListDisplay
         $categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
         $finder->filterByCategories($categories);
 
+        // Only the posts which the visitor may read are counted: in the categories with "own topics only" the count had the posts
+        // in the topics of others, which the list then left out.
+        $finder->filterByUserAccess(KunenaUserHelper::getMyself());
+
         $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
         $doc = $this->app->getDocument();

@@ -550,8 +550,10 @@ class SearchModel extends KunenaModel
             $value = Factory::getApplication()->getInput()->get('catids', [0], 'post', 'array');
             $value = ArrayHelper::toInteger($value);
         } else {
-            $value = Factory::getApplication()->getInput()->getString('catids', '0', 'get');
-            $value = explode(' ', $value);
+            // The ids separated by spaces (the links of the results), or a list (catids[]=3, as the form sends them): explode() of a
+            // list was an error page.
+            $value = Factory::getApplication()->getInput()->get('catids', '0', 'raw');
+            $value = \is_array($value) ? $value : explode(' ', (string) $value);
             $value = ArrayHelper::toInteger($value);
         }
 

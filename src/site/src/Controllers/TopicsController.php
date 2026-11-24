@@ -304,6 +304,12 @@ class TopicsController extends KunenaController
                 try {
                     $topic->tryAuthorise('approve');
                     $wasUnapproved = $topic->hold == 1;
+
+                    // Only a topic which waits for approval (a deleted one came back, an approved one notified again).
+                    if (!$wasUnapproved) {
+                        continue;
+                    }
+
                     $topic->publish(KunenaForum::PUBLISHED);
 
                     $message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
@@ -620,6 +626,12 @@ class TopicsController extends KunenaController
                 try {
                     $message->tryAuthorise('approve');
                     $wasUnapproved = $message->hold == 1;
+
+                    // Only a message which waits for approval (a deleted one came back, an approved one notified again).
+                    if (!$wasUnapproved) {
+                        continue;
+                    }
+
                     $message->publish(KunenaForum::PUBLISHED);
 
                     $message->processNotification(null, $wasUnapproved);

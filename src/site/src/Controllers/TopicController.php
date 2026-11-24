@@ -3423,6 +3423,15 @@ class TopicController extends KunenaController
         // Only an unapproved message tells its author that it was approved.
         $wasUnapproved = $target->hold == 1;
 
+        // Only a message which waits for approval is approved: a deleted message came back published (an old link, a stale page),
+        // and an approved one was approved again with its notifications.
+        if (!$wasUnapproved) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_NOT_WAITING'), 'notice');
+            $this->setRedirect($target->getUrl($this->return, false));
+
+            return;
+        }
+
         try {
             $target->publish(KunenaForum::PUBLISHED);
         } catch (Exception $e) {

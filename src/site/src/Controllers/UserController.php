@@ -1143,7 +1143,7 @@ class UserController extends KunenaController
             $response = (object) $upload->ajaxUpload($options);
 
             if (!empty($response->completed)) {
-                $this->deleteOldAvatars(true);
+                $this->deleteOldAvatars($user);
 
                 // We have it all, lets update the avatar in user table
                 $uploadFile = $upload->getProtectedFile();

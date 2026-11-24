@@ -50,21 +50,20 @@ abstract class KunenaFinderAccess
         }
 
         if ($accessType === 'joomla.group') {
-            // The level which is read by the fewest groups, of those which the group belongs to: the visitors of other groups
-            // must not get a level which is wider than the category.
+            // Only a level of that group alone. The level with the fewest groups was taken before: every other group of that
+            // level found the messages of the category in the search (their titles and the start of their text) without being
+            // allowed to read the category. When no level is of the group alone, the messages are not shown in the search.
             $best = self::NOBODY;
-            $size = PHP_INT_MAX;
 
             foreach ($levels as $id => $groups) {
-                $groups = array_map('intval', (array) $groups);
+                $groups = array_values(array_unique(array_map('intval', (array) $groups)));
 
-                if (!\in_array($pubAccess, $groups, true)) {
+                if ($groups !== [$pubAccess]) {
                     continue;
                 }
 
-                if (\count($groups) < $size || (\count($groups) === $size && (int) $id < $best)) {
+                if ($best === self::NOBODY || (int) $id < $best) {
                     $best = (int) $id;
-                    $size = \count($groups);
                 }
             }
 

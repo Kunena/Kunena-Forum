@@ -70,20 +70,30 @@ class FinderAccessLevelTest extends TestCase
         $this->assertSame(0, KunenaFinderAccess::viewLevel('joomla.level', 2, 0, []));
     }
 
-    public function testGroupGetsALevelWhichItBelongsTo(): void
+    public function testGroupGetsALevelOfThatGroupAlone(): void
     {
-        // The group Registered (2) is read by the level Registered.
-        $this->assertSame(2, KunenaFinderAccess::viewLevel('joomla.group', 0, 2, self::LEVELS));
         // The group Public (1): two levels, both of the group alone; the lowest id.
         $this->assertSame(1, KunenaFinderAccess::viewLevel('joomla.group', 0, 1, self::LEVELS));
+        // A level which the site made for one group.
+        $this->assertSame(9, KunenaFinderAccess::viewLevel('joomla.group', 0, 12, self::LEVELS + [9 => [12]]));
+        // The same group written twice is still that group alone.
+        $this->assertSame(9, KunenaFinderAccess::viewLevel('joomla.group', 0, 12, self::LEVELS + [9 => [12, '12']]));
     }
 
-    public function testGroupGetsTheNarrowestLevel(): void
+    /**
+     * The level with the fewest groups was taken: the other groups of that level found the messages of a category which they
+     * may not read.
+     */
+    public function testLevelWithOtherGroupsIsNotUsed(): void
     {
-        // Group 3 (Author) is in the levels Special (3 groups) and 6 (4 groups): the narrower one.
-        $this->assertSame(3, KunenaFinderAccess::viewLevel('joomla.group', 0, 3, self::LEVELS));
-        // Group 4 is only in the level 6.
-        $this->assertSame(6, KunenaFinderAccess::viewLevel('joomla.group', 0, 4, self::LEVELS));
+        // The group Registered (2) is in the level Registered with Manager and Super Users.
+        $this->assertSame(0, KunenaFinderAccess::viewLevel('joomla.group', 0, 2, self::LEVELS));
+        // Group 3 (Author) is in the levels Special (3 groups) and 6 (4 groups).
+        $this->assertSame(0, KunenaFinderAccess::viewLevel('joomla.group', 0, 3, self::LEVELS));
+        // Group 4 is only in the level 6, with three other groups.
+        $this->assertSame(0, KunenaFinderAccess::viewLevel('joomla.group', 0, 4, self::LEVELS));
+        // A level of "Staff" (12) and "Customers" (13): a category of Staff is not for Customers.
+        $this->assertSame(0, KunenaFinderAccess::viewLevel('joomla.group', 0, 12, self::LEVELS + [9 => [12, 13]]));
     }
 
     public function testGroupWithoutALevelIsShownToNobody(): void

@@ -2412,7 +2412,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Support bbcode quote tag done in K5.1 and first versions of K5.2
         if ($userid == 0 && $postid == 0) {
-            $user  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
+            // $default was escaped at the start of the method: escaped again, "Tom & Jerry" showed as "Tom &amp; Jerry".
+            $user  = $default ?: false;
 
             if ($user) {
                 $username = $user . " " . Text::_('COM_KUNENA_POST_WROTE') . ': ';

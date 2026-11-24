@@ -17,8 +17,11 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\Language\Text;
 
+// The message of the exception is text: it can hold a value of the request.
+$header  = htmlspecialchars((string) ($this->header ?? ''), ENT_QUOTES, 'UTF-8');
+$message = htmlspecialchars((string) ($this->message ?? ''), ENT_QUOTES, 'UTF-8');
 ?>
-<h1><?php echo $this->header . ' : ' . $this->message;  ?></h1>
+<h1><?php echo $header . ' : ' . $message; ?></h1>
 <p><strong><?php echo Text::_('JERROR_LAYOUT_NOT_ABLE_TO_VISIT'); ?></strong></p>
 <ol>
     <li><?php echo Text::_('JERROR_LAYOUT_AN_OUT_OF_DATE_BOOKMARK_FAVOURITE'); ?></li>

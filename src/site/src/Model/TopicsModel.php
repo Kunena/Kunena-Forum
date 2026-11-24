@@ -578,7 +578,9 @@ class TopicsModel extends KunenaModel
         $display = $this->getUserStateFromRequest('com_kunena.users_display', 'display', 'topics');
         $this->setState('display', $display);
 
-        $userid = $this->getInt('userid', -1);
+        // Without a userid the lists are the ones of the logged-in user ("my posts"), but a feed is the one of everybody: the posts
+        // feed of a logged-in member had only his own posts.
+        $userid = $this->getInt('userid', $format === 'feed' ? 0 : -1);
 
         if ($userid < 0) {
             $userid = $this->me->userid;

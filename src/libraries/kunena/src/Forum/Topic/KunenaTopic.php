@@ -27,6 +27,7 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\ParameterType;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -808,6 +809,19 @@ class KunenaTopic extends KunenaDatabaseObject
         // NOTE: shadow topic doesn't exist, DO NOT DELETE OR CHANGE ANY EXTERNAL INFORMATION
         if ($this->moved_id == 0) {
             $db = Factory::getContainer()->get('DatabaseDriver');
+
+            // The files of the messages go with them (their row, and the file on the disk when the row is gone): they stayed, as rows
+            // without a message and as files which the site serves without the protection (the purge of the trash in the backend).
+            $mesids = $db->setQuery(
+                $db->createQuery()
+                    ->select($db->quoteName('id'))
+                    ->from($db->quoteName('#__kunena_messages'))
+                    ->where($db->quoteName('thread') . ' = ' . (int) $this->id)
+            )->loadColumn();
+
+            foreach (KunenaAttachmentHelper::getByMessage(array_map('intval', $mesids), 'none') as $attachment) {
+                $attachment->delete();
+            }
 
             // Delete user topics
             $query = $db->createQuery();

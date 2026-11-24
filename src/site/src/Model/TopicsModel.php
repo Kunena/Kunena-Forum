@@ -687,6 +687,12 @@ class TopicsModel extends KunenaModel
                     }
 
                     $latestCategory = $latestCategory;
+
+                    // "Hide the categories" of the menu item is 2 (1 is "Show"): the list is "in" when the value is true, so the
+                    // chosen categories were shown instead of left out.
+                    if ((int) $latestCategoryIn === 2) {
+                        $latestCategoryIn = 0;
+                    }
                 } else {
                     // Make sure that category list is an array when it's different to zero.
                     if ($latestCategory != 0 || !empty($latestCategory)) {
@@ -740,14 +746,19 @@ class TopicsModel extends KunenaModel
             }
         } else {
             // Selection time.
+            // Only a period of the setting: the value goes to new DateTime("<value> ago"), another text of the address (sel=abc)
+            // gave an error page.
             $value = $this->getString('sel', $this->config->rssTimeLimit);
+
+            if (!\in_array($value, ['1 week', '1 month', '1 year'], true)) {
+                $value = $this->config->rssTimeLimit;
+            }
+
             $this->setState('list.time', $value);
         }
 
         // List state information
         $value        = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_limit", 'limit', 0, 'int');
-            // Only a period of the setting: the value goes to new DateTime("<value> ago"), another text of the address (sel=abc)
-            // gave an error page.
         $defaultlimit = $format != 'feed' ? $this->config->threadsPerPage : $this->config->rssLimit;
 
         if ($value < 1 || $value > 100) {

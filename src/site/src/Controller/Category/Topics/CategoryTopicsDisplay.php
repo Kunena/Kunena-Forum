@@ -265,10 +265,13 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
             }
         }
 
+        // The description as text for the social sites: it is stored with its BBCode ("[b]Welcome[/b]" showed in a share).
+        $socialDescription = trim((string) preg_replace('/\s+/u', ' ', (string) KunenaParser::stripBBCode((string) $this->category->description, 0, false)));
+
         $this->setMetaData('og:url', Uri::current(), 'property');
         $this->setMetaData('og:type', 'website', 'property');
         $this->setMetaData('og:title', $this->category->name, 'property');
-        $this->setMetaData('og:description', $this->category->description, 'property');
+        $this->setMetaData('og:description', $socialDescription, 'property');
         if (!empty($image)) {
             $this->setMetaData('og:image', $image, 'property');
         }
@@ -277,7 +280,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         if (!empty($image)) {
             $this->setMetaData('twitter:image', $image, 'name');
         }
-        $this->setMetaData('twitter:description', $this->category->description);
+        $this->setMetaData('twitter:description', $socialDescription);
 
         if ($robots == 'noindex, follow') {
             $this->setMetaData('robots', 'noindex, follow');

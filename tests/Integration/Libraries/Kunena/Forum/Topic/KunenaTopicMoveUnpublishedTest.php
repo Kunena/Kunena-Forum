@@ -84,6 +84,8 @@ class KunenaTopicMoveUnpublishedTest extends IntegrationTestCase implements DBTe
         $application->method('isClient')->willReturnCallback(static fn ($client) => $client === 'cli');
         $language = $this->createStub(Language::class);
         $language->method('transliterate')->willReturnArgument(0);
+        // The refusals of the move are texts with their values (Text::sprintf()).
+        $language->method('_')->willReturnArgument(0);
         $config = (new ReflectionClass(KunenaConfig::class))->newInstanceWithoutConstructor();
         (new ReflectionProperty(KunenaConfig::class, 'config'))->setValue($config, ['threadsPerPage' => 20, 'ratingEnabled' => 0, 'readOnly' => 0]);
 
@@ -184,6 +186,27 @@ class KunenaTopicMoveUnpublishedTest extends IntegrationTestCase implements DBTe
         KunenaTopicHelper::get(self::UNAPPROVED)->move(KunenaCategoryHelper::get(self::OTHER_CATEGORY));
 
         $this->assertSame([[1, 2], [0, 0]], $this->counts());
+    }
+
+    /**
+     * A topic is not merged into the shadow of a moved topic (the move with "targetid" takes any topic): the shadow shows the topic it
+     * points to, so the messages moved into it were seen nowhere.
+     */
+    public function testATopicIsNotMergedIntoAShadow(): void
+    {
+        $this->insertRow('#__kunena_topics', ['id' => 7, 'category_id' => self::CATEGORY, 'subject' => 'Shadow', 'hold' => 0, 'moved_id' => self::TARGET]);
+
+        try {
+            KunenaTopicHelper::get(self::UNAPPROVED)->move(KunenaTopicHelper::get(7));
+            $refused = false;
+        } catch (\Exception $e) {
+            $refused = true;
+        }
+
+        $this->assertSame(
+            ['refused' => true, 'thread' => self::UNAPPROVED],
+            ['refused' => $refused, 'thread' => (int) $this->fetchAll('SELECT thread FROM #__kunena_messages WHERE id = 10')[0]['thread']]
+        );
     }
 
     public function testMergingAnUnapprovedTopicChangesNoPostsOfTheTopicNorOfTheCategory(): void

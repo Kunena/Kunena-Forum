@@ -1804,6 +1804,11 @@ class KunenaTopic extends KunenaDatabaseObject
                 throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_ALREADY_SHADOW', $this->id));
             }
 
+            if ($target->moved_id) {
+                // Nor into a shadow: it shows the topic it points to, so the messages moved into it were seen nowhere.
+                throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_TARGET_SHADOW', $this->id, $target->id));
+            }
+
             if ($this->poll_id && $target->poll_id) {
                 // We cannot currently have 2 polls in one topic -- fail
                 throw new Exception(Text::_('COM_KUNENA_MODERATION_CANNOT_MOVE_TOPIC_WITH_POLL_INTO_ANOTHER_WITH_POLL'));

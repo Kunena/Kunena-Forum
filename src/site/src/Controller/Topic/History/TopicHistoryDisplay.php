@@ -111,6 +111,12 @@ class TopicHistoryDisplay extends KunenaControllerDisplay
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $me->exists() ? 403 : 401);
         }
 
+        // A reply in a category which hides the replies from the guests: a guest logs in to read it (the topic shows him the
+        // teaser text), its history showed him the reply and its old versions.
+        if (!$me->exists() && $this->category->hidesRepliesForGuests() && (int) $this->message->id !== (int) $this->topic->first_post_id) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_TEASER_TEXT'), 401);
+        }
+
         // The versions are the text as it was typed: the blocks which the message hides from this reader are left out, as on the
         // message. The text in [confidential] is for the author and the moderators, the one in [private] for nobody and the one in
         // [hide] for the members who are logged in; the history showed them to every reader who may see it.

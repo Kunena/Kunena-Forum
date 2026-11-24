@@ -131,35 +131,53 @@ def job_dir(job_id):
 
 
 _locks = {}
+# Jobs which another process holds (a `job merge` in the background runs the gate for up to an hour): read, never saved here.
+_busy = set()
 
 
-def lock(f):
-    """Take an exclusive lock on an open file; it is released when the process exits."""
+def lock(f, wait=True):
+    """Take an exclusive lock on an open file; it is released when the process exits. Without `wait`, give up at once when
+    another process holds it: False."""
     if os.name == "nt":
         import msvcrt
         while True:
             try:
-                msvcrt.locking(f.fileno(), msvcrt.LK_LOCK, 1)
-                return
+                msvcrt.locking(f.fileno(), msvcrt.LK_LOCK if wait else msvcrt.LK_NBLCK, 1)
+                return True
             except OSError:
-                pass  # LK_LOCK gives up after ten seconds; keep waiting like flock does
+                if not wait:
+                    return False
+                # LK_LOCK gives up after ten seconds; keep waiting like flock does
     else:
         import fcntl
-        fcntl.flock(f, fcntl.LOCK_EX)
+        try:
+            fcntl.flock(f, fcntl.LOCK_EX if wait else fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return False
+        return True
 
 
-def load(job_id):
-    """Read a job, holding its lock until this process exits."""
+def load(job_id, wait=True):
+    """Read a job, holding its lock until this process exits. Without `wait`, a job whose lock another process holds is read
+    without it and marked busy."""
     path = job_dir(job_id) / "job.json"
     if not path.exists():
         die(f"no job {job_id}")
     if job_id not in _locks:
-        _locks[job_id] = open(job_dir(job_id) / ".lock", "w")
-        lock(_locks[job_id])
+        f = open(job_dir(job_id) / ".lock", "w")
+        if lock(f, wait):
+            _locks[job_id] = f
+            _busy.discard(job_id)
+        else:
+            f.close()
+            _busy.add(job_id)
     return json.loads(path.read_text())
 
 
 def save(job):
+    # A job read without its lock is another process's to write: that process saves its own copy afterwards.
+    if job["id"] in _busy:
+        raise Refused(f"{job['id']} is busy in another process (a merge?); try again when it is done")
     path = job_dir(job["id"]) / "job.json"
     tmp = path.with_suffix(".tmp")
     tmp.write_text(json.dumps(job, indent=2) + "\n")
@@ -176,7 +194,9 @@ def save(job):
 def all_jobs():
     if not JOBS.exists():
         return []
-    return [load(p.name) for p in sorted(JOBS.iterdir()) if (p / "job.json").exists()]
+    # Without waiting for the jobs which another process holds: the lists (queue, summary, the free slots) only read them, and
+    # waiting held up the whole factory while a merge ran its gate.
+    return [load(p.name, wait=False) for p in sorted(JOBS.iterdir()) if (p / "job.json").exists()]
 
 
 def running(jobs):
@@ -195,7 +215,8 @@ def resolve(arg):
         matches = [j for j in all_jobs() if j["issue"] == int(arg)]
         if not matches:
             die(f"no job for issue #{arg}")
-        return matches[0]
+        # The job the command works on: with its lock (waiting for it), read again.
+        return load(matches[0]["id"])
     return load(arg)
 
 
@@ -657,6 +678,9 @@ def cmd_queue():
     jobs = {j["issue"]: j for j in all_jobs()}
     # A job is done once its PR is merged on GitHub, which also closes the issue.
     for j in jobs.values():
+        # A job which another process holds (a merge running its gate) is listed as it is; that process moves it.
+        if j["id"] in _busy:
+            continue
         if j["stage"] not in TERMINAL and not j["pr"]:
             try:
                 if find_pr(j)["pr"]:

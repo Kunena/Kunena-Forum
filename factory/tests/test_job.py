@@ -9,7 +9,9 @@ import importlib.machinery
 import importlib.util
 import json
 import subprocess
+import sys
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 
@@ -78,6 +80,7 @@ class TestCase(unittest.TestCase):
         for f in job._locks.values():
             f.close()
         job._locks.clear()
+        getattr(job, "_busy", set()).clear()
         for name, value in self.saved.items():
             setattr(job, name, value)
         self.tmp.cleanup()
@@ -165,6 +168,42 @@ class QueueTest(TestCase):
         )
         job.cmd_queue()
         self.assertEqual(self.read(j), j)
+
+
+class BusyJobTest(TestCase):
+    """`job merge` runs the gate (Cypress, up to an hour) in the background and holds the lock of its job all that time. `job
+    queue`, `job summary` and `job create` read every job: they waited for that lock, so the factory started nothing new until
+    the merge ended."""
+
+    HOLDER = (
+        "import os, sys, time\n"
+        "f = open(sys.argv[1], 'w')\n"
+        "if os.name == 'nt':\n"
+        "    import msvcrt; msvcrt.locking(f.fileno(), msvcrt.LK_LOCK, 1)\n"
+        "else:\n"
+        "    import fcntl; fcntl.flock(f, fcntl.LOCK_EX)\n"
+        "print('locked', flush=True)\n"
+        "time.sleep(60)\n"
+    )
+
+    def test_queue_does_not_wait_for_a_job_which_another_process_holds(self):
+        j = new_job()
+        job.job_dir(j["id"]).mkdir()
+        job.save(j)
+        holder = subprocess.Popen([sys.executable, "-c", self.HOLDER, str(job.job_dir(j["id"]) / ".lock")],
+                                  stdout=subprocess.PIPE, text=True)
+        self.addCleanup(holder.kill)
+        self.assertEqual(holder.stdout.readline().strip(), "locked")
+        stub = self.stub((["gh", "issue", "list"], []))
+
+        done = threading.Event()
+        threading.Thread(target=lambda: (job.cmd_queue(), done.set()), daemon=True).start()
+
+        self.assertTrue(done.wait(5), "job queue waits for the lock of a job which another process holds")
+        # The busy job is only read: no lookup of its PR, and its file stays as the other process leaves it.
+        self.assertEqual(stub.calls, [["gh", "issue", "list", "--label", job.LABELS["queue"], "--state", "open",
+                                       "--limit", "200", "--json", "number,title"]])
+        self.assertEqual(json.loads((job.job_dir(j["id"]) / "job.json").read_text()), j)
 
 
 if __name__ == "__main__":

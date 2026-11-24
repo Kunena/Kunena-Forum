@@ -1970,9 +1970,6 @@ class TopicController extends KunenaController
             $message->makeAnonymous();
         }
 
-        // After the message was made anonymous: the e-mail of a mention names the author of the message.
-        $message->sendMentionNotifications($oldMessageText, false);
-
         // Prevent user abort from this point in order to maintain data integrity.
         @ignore_user_abort(true);
 
@@ -2112,6 +2109,10 @@ class TopicController extends KunenaController
 
             return;
         }
+
+        // The mentions of the saved text (after the message was made anonymous: the e-mail names the author of the message). They were
+        // sent before the checks of the edit: a refused edit still notified the users, and the corrected one notified them again.
+        $message->sendMentionNotifications($oldMessageText, false);
 
         $isMine = $this->me->userid == $message->userid;
 

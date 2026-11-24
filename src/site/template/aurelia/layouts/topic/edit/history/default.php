@@ -54,11 +54,17 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
                 </small>
                 <div class="badger-left badger-info khistory"
                      data-badger="<?php echo $this->message->displayField('subject'); ?>">
+                    <?php
+                    // A reply in a category which hides the replies from the guests: the teaser text and no files for a guest, as in
+                    // the topic (a guest who may reply read the hidden replies here).
+                    $teaser = !KunenaFactory::getUser()->userid && $this->topic->getCategory()->hidesRepliesForGuests()
+                        && (int) $this->message->id !== (int) $this->topic->first_post_id;
+                    ?>
                     <div class="kmessage">
-                        <p class="kmsg"><?php echo KunenaParser::parseBBCode($this->message->message, $this) ?></p>
+                        <p class="kmsg"><?php echo $teaser ? Text::_('COM_KUNENA_TEASER_TEXT') : KunenaParser::parseBBCode($this->message->message, $this) ?></p>
                     </div>
                     <?php
-                    $attachments = $this->message->getAttachments();
+                    $attachments = $teaser ? [] : $this->message->getAttachments();
                     $hasVisibleAttachments = false;
 
                     // Filter out private attachments

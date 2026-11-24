@@ -20,7 +20,8 @@ use enshrined\svgSanitize\Sanitizer;
 use Exception;
 
 /**
- * Cleans an untrusted SVG file (an uploaded avatar) with the bundled enshrined/svg-sanitize library.
+ * Cleans an untrusted SVG file (an uploaded avatar) with the enshrined/svg-sanitize library of Joomla (libraries/vendor, version
+ * 1.1.1 since Joomla 6.2.1, the minimum of Kunena 8.0). Kunena bundled its own copy while Joomla shipped 0.22.
  *
  * @since   Kunena 8.0
  */

@@ -36,12 +36,6 @@ Copyright:  Copyright (C) 2008-10, Sean Werkema. All rights reserved.
             2016 Vanilla Forums Inc. (changes only)
 License:    BSDv2 license; http://www.opensource.org/licenses/bsd-license.php
 
-svg-sanitizer (enshrined/svg-sanitize 1.1.1)
---------------------------------------------
-Copyright:  Daryll Doyle
-License:    GPLv2 or later; https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-Link:       https://github.com/darylldoyle/svg-sanitizer
-
 scssphp
 -------
 Copyright:  2015 Leaf Corcoran; 2024-present the Scssphp project authors (source-span)

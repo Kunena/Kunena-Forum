@@ -10,8 +10,7 @@
             "KunenaScssPhp\\SourceSpan\\": "External/scssphp/source-span/src/",
             "KunenaScssPhp\\League\\Uri\\": ["External/league/uri/", "External/league/uri-interfaces/"],
             "KunenaScssPhp\\Symfony\\Component\\Filesystem\\": "External/symfony/filesystem/",
-            "Nbbc\\": "External/Nbbc/src/",
-            "enshrined\\svgSanitize\\": "External/enshrined/svg-sanitize/src/"
+            "Nbbc\\": "External/Nbbc/src/"
         },
         "classmap": [
             "External/composer/InstalledVersions.php"

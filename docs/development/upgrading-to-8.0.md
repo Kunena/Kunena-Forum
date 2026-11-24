@@ -15,7 +15,7 @@ schema.
 
 | | Kunena 7.1 | Kunena 8.0 |
 | --- | --- | --- |
-| Joomla | 5.4.10 | 6.2.0 |
+| Joomla | 5.4.10 | 6.2.1 |
 | PHP | 8.3 | 8.4.1 |
 
 Code that still calls an API which Joomla 6 removed (the deprecated parts of Joomla 4 and 5) stops on Kunena 8.0 too, because Kunena
@@ -108,7 +108,8 @@ away in any version.
   addresses with its own `Kunena\Forum\Plugin\Kunena\Gravatar\Helper\GravatarUrl` (SHA-256, https, sizes up to 2048).
 - scssphp, which compiles the style sheets of the templates, goes from 1.10 to 2.1 (namespace `KunenaScssPhp\ScssPhp`, as before).
   Its new dependencies `league/uri` and `symfony/filesystem` are bundled with it.
-- New in 8.0: `enshrined/svg-sanitize`, which cleans the SVG avatars.
+- The SVG avatars are cleaned with `enshrined/svg-sanitize` 1.1.1 of Joomla (`libraries/vendor`). Kunena does not bundle it: that
+  version comes with Joomla 6.2.1, the minimum of Kunena 8.0.
 
 ## The scripts
 

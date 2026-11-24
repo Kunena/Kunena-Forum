@@ -6,7 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'enshrined\\svgSanitize\\' => array($vendorDir . '/enshrined/svg-sanitize/src'),
     'Nbbc\\' => array($vendorDir . '/Nbbc/src'),
     'Kunena\\Forum\\' => array($baseDir . '/src'),
     'KunenaScssPhp\\Symfony\\Component\\Filesystem\\' => array($vendorDir . '/symfony/filesystem'),

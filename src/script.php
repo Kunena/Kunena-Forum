@@ -116,10 +116,10 @@ return new class () implements ServiceProviderInterface {
                     ],
                     'Joomla!' => [
                         '6.3' => '6.3.0-alpha1',
+                        // Joomla 6.2.1 or later only: Kunena uses the svg-sanitize 1.1.1 of Joomla for the SVG avatars, and the
+                        // earlier releases (6.0, 6.1, 6.2.0) ship an older one.
                         '6.2' => '6.2.1',
-                        '6.1' => '6.1.4',
-                        '6.0' => '6.0.4',
-                        '0'   => '6.2.0',  // Preferred version
+                        '0'   => '6.2.1',  // Preferred version
                     ],
                 ];
 

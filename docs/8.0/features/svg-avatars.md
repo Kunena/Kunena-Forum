@@ -16,7 +16,8 @@ To enable it, add `svg` to **Allowed avatar types** in the configuration of Kune
 - SVG avatars are not resized: the same file is shown at every size, in an `<img>` tag.
 - SVG is allowed only for avatars. Attachments, private message files, category icons and the avatar gallery still refuse it.
 
-The cleaning uses the bundled [svg-sanitizer](https://github.com/darylldoyle/svg-sanitizer) library (GPL-2.0-or-later).
+The cleaning uses the [svg-sanitizer](https://github.com/darylldoyle/svg-sanitizer) library which Joomla ships (version 1.1.1 since
+Joomla 6.2.1).
 
 ---
 

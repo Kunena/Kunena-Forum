@@ -29,25 +29,45 @@ class KunenaSvgSanitizerTest extends UnitTestCase
 
     protected function setUp(): void
     {
-        // The sanitiser is bundled in the folder External of the library. Joomla has an older copy in its vendor folder: the loader
-        // of the bundled copy comes first, as the autoloader of External does on the site (it is registered with prepend).
-        spl_autoload_register(static function ($class) {
-            if (strpos($class, 'enshrined\\svgSanitize\\') === 0) {
-                $file = Files::path('src/libraries/kunena/External/enshrined/svg-sanitize/src/'
-                    . str_replace('\\', '/', substr($class, \strlen('enshrined\\svgSanitize\\'))) . '.php');
-
-                if (is_file($file)) {
-                    require_once $file;
-                }
-            }
-        }, true, true);
+        // The sanitiser is the one of Joomla (libraries/vendor): Kunena does not bundle it any more.
+        $this->requireJoomla();
     }
 
-    public function testTheBundledSanitizerIsUsed(): void
+    public function testTheSanitizerOfJoomlaIsUsed(): void
     {
         $file = str_replace('\\', '/', (string) (new ReflectionClass(Sanitizer::class))->getFileName());
 
-        $this->assertStringEndsWith('src/libraries/kunena/External/enshrined/svg-sanitize/src/Sanitizer.php', $file);
+        $this->assertStringEndsWith('libraries/vendor/enshrined/svg-sanitize/src/Sanitizer.php', $file);
+    }
+
+    /**
+     * Kunena bundled version 1.1.1 while Joomla shipped 0.22. A copy of its own would be loaded in front of the one of Joomla (the
+     * loader of External is registered with prepend), and would keep an old version when Joomla updates the library.
+     */
+    public function testKunenaBundlesNoCopy(): void
+    {
+        $this->assertDirectoryDoesNotExist(Files::path('src/libraries/kunena/External/enshrined'));
+
+        foreach (['External/composer/autoload_psr4.php', 'External/composer/autoload_static.php', 'composer.json'] as $file) {
+            $this->assertStringNotContainsString('enshrined', Files::read('src/libraries/kunena/' . $file), $file);
+        }
+    }
+
+    /**
+     * The version which Joomla has must be the one Kunena was written for: the installer refuses a Joomla before 6.2.1.
+     */
+    public function testJoomlaHasAtLeastTheVersionKunenaNeeds(): void
+    {
+        $installed = require JPATH_LIBRARIES . '/vendor/composer/installed.php';
+        $version   = (string) ($installed['versions']['enshrined/svg-sanitize']['pretty_version'] ?? '');
+
+        $this->assertTrue(version_compare(ltrim($version, 'v'), '1.1.1', '>='), 'svg-sanitize of Joomla: ' . $version);
+
+        $script = Files::read('src/script.php');
+
+        $this->assertStringContainsString("'6.2' => '6.2.1',", $script);
+        $this->assertStringNotContainsString("'6.1' =>", $script, 'Joomla 6.1 has the old library.');
+        $this->assertStringNotContainsString("'6.0' =>", $script, 'Joomla 6.0 has the old library.');
     }
 
     public function testAValidSvgKeepsItsRootAndShapes(): void

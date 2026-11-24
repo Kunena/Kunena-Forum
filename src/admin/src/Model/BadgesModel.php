@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\Database\DatabaseInterface;
+use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\User\KunenaUserBadges;
 
 /**
@@ -113,6 +114,10 @@ class BadgesModel extends AdminModel
 
             return false;
         }
+
+        // Joomla keeps the parameters of the components in its cache when the cache of the site is on: without emptying it, the
+        // forum showed the old badges, and the next save of the parameters (the socials, the options) wrote them back.
+        KunenaCacheHelper::clear();
 
         return true;
     }

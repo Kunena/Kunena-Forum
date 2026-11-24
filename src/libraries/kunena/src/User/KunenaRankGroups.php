@@ -20,6 +20,7 @@ use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
+use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 
 /**
  * The ranks which are linked to a Joomla user group: a user in the group gets the rank. The links are kept in the parameters of
@@ -158,6 +159,10 @@ abstract class KunenaRankGroups
             ->where($db->quoteName('type') . ' = ' . $db->quote('component'))
             ->bind(':params', $json);
         $db->setQuery($query)->execute();
+
+        // Joomla keeps the parameters of the components in its cache when the cache of the site is on: without emptying it, the
+        // forum kept the old groups of the ranks, and the next save of the parameters (the badges, the options) wrote them back.
+        KunenaCacheHelper::clear();
 
         self::$userRanks = [];
     }

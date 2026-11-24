@@ -178,7 +178,8 @@ abstract class KunenaMessageSchedule
                 $url = Factory::getApplication()->isClient('site') ? null : Uri::root() . $message->getPermaUri()->toString();
 
                 $message->processNotification($url);
-                $message->sendMentionNotifications();
+                // The mention e-mail gets the same link: its own address of the request was that of the command line.
+                $message->sendMentionNotifications('', true, (string) $url);
             } catch (Throwable $e) {
                 Log::add('Kunena: the notifications of the scheduled reply ' . (int) $message->id . ' failed: ' . $e->getMessage(), Log::ERROR, 'kunena');
             }

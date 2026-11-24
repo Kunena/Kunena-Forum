@@ -391,6 +391,19 @@ class KunenaMessageEmailTest extends IntegrationTestCase implements DBTestInterf
         $this->assertContains(['com_kunena', 'nl-NL'], $this->loaded);
     }
 
+    /**
+     * The scheduled task runs outside of the site (the command line, the administrator): the link of the e-mail is the one on the
+     * site, as for the e-mails of the subscriptions.
+     */
+    public function testTheMentionEmailOfAScheduledReplyLinksToTheSite(): void
+    {
+        $this->seed('Hello ' . $this->mention(), KunenaForum::UNAPPROVED, self::NOW - 60);
+
+        KunenaMessageSchedule::publishDue(self::NOW);
+
+        $this->assertCount(1, $this->mails);
+        $this->assertMatchesRegularExpression('#href="https://forum\.example/[^"]*index\.php\?option=com_kunena#', $this->mails[0][2]);
+    }
 
     /**
      * The headers which the notification of the reply gives to the e-mail of the mentioned user (as a subscriber).

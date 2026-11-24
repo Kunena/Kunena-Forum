@@ -24,6 +24,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -453,6 +454,14 @@ class KunenaStatistics
         $limit = $limit ? $limit : $this->_config->popPollsCount;
 
         if ($this->topPolls === null || \count($this->topPolls) < $limit) {
+            // Only the polls of the published topics which the visitor may read: the list was cut to its length before the topics
+            // he may not read were left out, so a poll of a hidden category took a place (fewer polls, or none).
+            $categories = array_map('intval', array_keys(KunenaAccess::getInstance()->getAllowedCategories()));
+
+            if (!$categories) {
+                return [];
+            }
+
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery();
             $query
@@ -465,6 +474,12 @@ class KunenaStatistics
                     $db->quoteName('#__kunena_polls', 'poll') . ' ON ' .
                         $this->_db->quoteName('poll.id') . ' = ' . $this->_db->quoteName('opt.pollid')
                 )
+                ->innerJoin(
+                    $db->quoteName('#__kunena_topics', 'topic') . ' ON ' .
+                        $this->_db->quoteName('topic.id') . ' = ' . $this->_db->quoteName('poll.threadid')
+                )
+                ->where($this->_db->quoteName('topic.hold') . ' = 0')
+                ->whereIn($this->_db->quoteName('topic.category_id'), $categories)
                 ->group($this->_db->quoteName('pollid'))
                 ->having($this->_db->quoteName('count') . ' > 0')
                 ->order($this->_db->quoteName('count') . ' DESC');

@@ -13,6 +13,8 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -27,6 +29,9 @@ use Kunena\Forum\Libraries\Integration\KunenaPlugins;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
+
+Factory::getApplication()->getDocument()->getWebAssetManager()
+    ->registerAndUseStyle('kunena_dashboard', Uri::base() . 'components/com_kunena/media/css/dashboard.css', ['version' => 'auto']);
 
 // Is there a newer Kunena release, or are there updates for the Kunena add-ons?
 $updateInfo = CpanelController::getUpdateInfo();
@@ -54,509 +59,264 @@ if (!$lastCheck) {
     }
 }
 
+$canDo          = ContentHelper::getActions('com_kunena');
+$canConfigure   = $canDo->get('core.admin') || $canDo->get('core.options');
+$settingsUrl    = 'index.php?option=com_config&view=component&component=com_kunena';
+$sampleChoice   = $_POST['sample_data_choice'] ?? null;
+$hasSampleData  = KunenaForum::versionSampleData();
+$askSampleData  = $sampleChoice === null && !$hasSampleData;
+$offerSampleData = $sampleChoice === 'yes' && !$hasSampleData;
+
+if ($sampleChoice === 'no' && Session::checkToken('post')) {
+    $this->model->setSampleDataFlag(1);
+    $sampleSkipped = true;
+}
+
+// The pages to manage the forum: [view, label, icon, count, description].
+$manage = [
+    ['categories', 'COM_KUNENA_CPANEL_LABEL_CATEGORIES', 'sitemap', $this->categoriesCount, 'COM_KUNENA_CPANEL_TILE_CATEGORIES_DESC'],
+    ['users', 'COM_KUNENA_CPANEL_LABEL_USERS', 'users', KunenaUserHelper::getTotalCount(), 'COM_KUNENA_CPANEL_TILE_USERS_DESC'],
+    ['ranks', 'COM_KUNENA_CPANEL_LABEL_RANKS', 'ranking-star', KunenaUserHelper::getTotalRanks(), 'COM_KUNENA_CPANEL_TILE_RANKS_DESC'],
+    ['smilies', 'COM_KUNENA_CPANEL_LABEL_EMOTICONS', 'face-smile', KunenaStatistics::getTotalEmoticons(), 'COM_KUNENA_CPANEL_TILE_EMOTICONS_DESC'],
+    ['templates', 'COM_KUNENA_CPANEL_LABEL_TEMPLATES', 'palette', round(\count(KunenaTemplate::getInstance()->getTemplatePaths()) / 2) - 1, 'COM_KUNENA_CPANEL_TILE_TEMPLATES_DESC'],
+    ['plugins', 'COM_KUNENA_CPANEL_LABEL_PLUGINS', 'plug', KunenaPlugins::getTotalPlugins(), 'COM_KUNENA_CPANEL_TILE_PLUGINS_DESC'],
+];
+
+$maintenance = [
+    ['attachments', 'COM_KUNENA_CPANEL_LABEL_FILES', 'paperclip', KunenaAttachmentHelper::getTotalAttachments(), 'COM_KUNENA_CPANEL_TILE_FILES_DESC'],
+    ['trashs', 'COM_KUNENA_CPANEL_LABEL_TRASH', 'trash-can', $this->messagesTopicsInTrashBin, 'COM_KUNENA_CPANEL_TILE_TRASH_DESC'],
+    ['mailsqueues', 'COM_KUNENA_CPANEL_LABEL_MAILQUEUES', 'envelope', $this->numberOfMailsqueues, 'COM_KUNENA_CPANEL_TILE_MAILQUEUES_DESC'],
+    ['logs', 'COM_KUNENA_LOG_MANAGER', 'clipboard-list', $this->numberOfLogs, 'COM_KUNENA_CPANEL_TILE_LOGS_DESC'],
+    ['stats', 'COM_KUNENA_STAT_FORUMSTATS', 'chart-column', null, 'COM_KUNENA_CPANEL_TILE_STATS_DESC'],
+    ['tools', 'COM_KUNENA_CPANEL_LABEL_TOOLS', 'wrench', null, 'COM_KUNENA_CPANEL_TILE_TOOLS_DESC'],
+];
+
+// The tabs of the configuration: [tab, label, icon, description]. The tab opens from the hash of the link.
+$settings = [
+    ['general', 'COM_KUNENA_CPANEL_SETTINGS_GENERAL', 'sliders', 'COM_KUNENA_CPANEL_SETTINGS_GENERAL_DESC'],
+    ['frontend', 'COM_KUNENA_A_FRONTEND', 'display', 'COM_KUNENA_CPANEL_SETTINGS_FRONTEND_DESC'],
+    ['users', 'COM_KUNENA_A_USERS', 'user-gear', 'COM_KUNENA_CPANEL_SETTINGS_USERS_DESC'],
+    ['emails', 'COM_KUNENA_SUBSCRIPTIONS', 'bell', 'COM_KUNENA_CPANEL_SETTINGS_EMAILS_DESC'],
+    ['security', 'COM_KUNENA_A_SECURITY', 'shield-halved', 'COM_KUNENA_CPANEL_SETTINGS_SECURITY_DESC'],
+    ['avatars', 'COM_KUNENA_A_AVATARS', 'circle-user', 'COM_KUNENA_CPANEL_SETTINGS_AVATARS_DESC'],
+    ['uploads', 'COM_KUNENA_A_UPLOADS', 'cloud-arrow-up', 'COM_KUNENA_CPANEL_SETTINGS_UPLOADS_DESC'],
+    ['ranking', 'COM_KUNENA_A_RANKING', 'medal', 'COM_KUNENA_CPANEL_SETTINGS_RANKING_DESC'],
+    ['bbcode', 'COM_KUNENA_A_BBCODE', 'pen-to-square', 'COM_KUNENA_CPANEL_SETTINGS_BBCODE_DESC'],
+    ['rss', 'COM_KUNENA_ADMIN_RSS', 'rss', 'COM_KUNENA_CPANEL_SETTINGS_RSS_DESC'],
+    ['extra', 'COM_KUNENA_ADMIN_CONFIG_EXTRA', 'square-poll-vertical', 'COM_KUNENA_CPANEL_SETTINGS_EXTRA_DESC'],
+    ['menu', 'COM_KUNENA_ADMIN_MENU_SETTINGS', 'bars', 'COM_KUNENA_CPANEL_SETTINGS_MENU_DESC'],
+    ['permissions', 'JCONFIG_PERMISSIONS_LABEL', 'key', 'COM_KUNENA_CPANEL_SETTINGS_PERMISSIONS_DESC'],
+];
+
+$tile = function (array $item): void {
+    [$view, $label, $icon, $count, $desc] = $item; ?>
+    <a class="kd-tile" href="<?php echo Route::_('index.php?option=com_kunena&view=' . $view); ?>">
+        <span class="kd-tile__icon fa-solid fa-<?php echo $icon; ?>" aria-hidden="true"></span>
+        <span class="kd-tile__body">
+            <span class="kd-tile__title"><?php echo Text::_($label); ?></span>
+            <span class="kd-tile__desc"><?php echo Text::_($desc); ?></span>
+        </span>
+        <?php if ($count !== null) : ?>
+            <span class="kd-tile__count"><?php echo $this->escape((string) $count); ?></span>
+        <?php endif; ?>
+    </a>
+<?php };
 ?>
 
-<div id="kunena" class="container-fluid">
-    <div class="row">
-        <div id="j-main-container" class="col-md-12" role="main">
-            <?php
-            if (!isset($_POST['sample_data_choice']) && !KunenaForum::versionSampleData()) : ?>
-                <div class="row clearfix">
-                    <div class="col-xl-3 col-md-3">
-                        <div class="card proj-t-card bg-warning">
-                            <div class="card-body">
-                                <div class="row align-items-center mb-30">
-                                    <div class="col-auto">
-                                        <i class="fas fa-database text-white f-30"></i>
-                                    </div>
-                                    <div class="col ps-0">
-                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
-                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_SAMPLE_DATA'); ?></h6>
-                                    </div>
-                                </div>
-                                <div>
-                                    <form method="post" id="sampleDataForm">
-                                        <?php echo HTMLHelper::_('form.token'); ?>
-                                        <ul id="sample-data-wrapper" class="list-group list-group-flush sample-data">
-                                            <li class="list-group-item sampledata-kunena">
-                                                <div class="d-flex flex-column">
-                                                    <div class="sample-data__title mb-3">
-                                                        <?php echo Text::_('COM_KUNENA_CPANEL_SAMPLE_DATA_QUESTION'); ?>
-                                                    </div>
-                                                    <div class="btn-group justify-content-center">
-                                                        <button type="submit" name="sample_data_choice" value="yes" class="btn btn-secondary btn-sm mx-1">
-                                                            <?php echo Text::_('JYES'); ?>
-                                                        </button>
-                                                        <button type="submit" name="sample_data_choice" value="no" class="btn btn-secondary btn-sm mx-1">
-                                                            <?php echo Text::_('JNO'); ?>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </form>
-                                </div>
-                                <h6 class="pt-badge bg-cyan"><i class="fas fa-exclamation text-white f-18"></i></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php else :
-                if (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'no' && Session::checkToken('post')) {
-                    $this->model->setSampleDataFlag(1);
-                    echo '<div class="alert alert-success">' . Text::_('COM_KUNENA_CPANEL_SAMPLE_DATA_SKIPPED') . '</div>';
-                } elseif (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'yes') {
-                    if (!KunenaForum::versionSampleData()) : ?>
-                        <div class="row clearfix">
-                            <div class="col-xl-3 col-md-3">
-                                <div class="card proj-t-card bg-warning">
-                                    <div class="card-body">
-                                        <div class="row align-items-center mb-30">
-                                            <div class="col-auto">
-                                                <i class="fas fa-database text-white f-30"></i>
-                                            </div>
-                                            <div class="col ps-0">
-                                                <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
-                                                <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_SAMPLE_DATA'); ?></h6>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <ul id="sample-data-wrapper" class="list-group list-group-flush sample-data">
-                                                <li class="list-group-item sampledata-kunena">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <div class="sample-data__title me-2">
-                                                            <span class="sample-data__icon icon-comments me-1" aria-hidden="true"></span>
-                                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_FORUM_SAMPLE_DATA'); ?>
-                                                        </div>
-                                                        <button type="button"
-                                                            class="btn btn-secondary btn-sm apply-sample-data"
-                                                            data-type="kunena"
-                                                            data-steps="1">
-                                                            <span class="icon-upload" aria-hidden="true"></span>
-                                                            <?php echo Text::_('COM_KUNENA_CPANEL_BUTTON_INSTALL'); ?>
-                                                        </button>
-                                                    </div>
-                                                    <p class="sample-data__desc small mt-1">
-                                                        <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL_SAMPLE_DATA') ?>
-                                                    </p>
-                                                </li>
-                                                <li class="list-group-item sampledata-progress-kunena d-none">
-                                                    <div class="progress mb-3">
-                                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div id="kunena" class="kd">
 
-
-            <?php endif;
-                }
-            endif; ?>
-            <?php if (!$this->KunenaMenusExists) : ?>
-                <div class="row clearfix">
-                    <div class="col-xl-3 col-md-3">
-                        <div class="card proj-t-card bg-warning">
-                            <div class="card-body">
-                                <div class="row align-items-center mb-30">
-                                    <div class="col-auto">
-                                        <i class="fas fa-database text-white f-30"></i>
-                                    </div>
-                                    <div class="col ps-0">
-                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
-                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU'); ?></h6>
-                                    </div>
-                                </div>
-                                <div>
-                                    <ul class="list-group list-group-flush sample-data">
-                                        <li class="list-group-item sampledata-kunena">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="sample-data__title me-2">
-                                                    <span class="sample-data__icon icon-comments me-1" aria-hidden="true"></span>
-                                                    <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU') ?>
-                                                </div>
-                                                <button type="button" class="btn btn-secondary btn-sm apply-sample-data" data-type="kunena" data-steps="1">
-                                                    <span class="icon-upload" aria-hidden="true"></span> <a href="<?php echo Uri::base() ?>index.php?option=com_kunena&view=tools&layout=menu"><?php echo Text::_('COM_KUNENA_CPANEL_BUTTON_INSTALL') ?></a>
-                                                    <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU') ?></span>
-                                                </button>
-                                            </div>
-                                            <p class="sample-data__desc small mt-1"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL_MENUS'); ?></p>
-                                        </li>
-                                        <li class="list-group-item sampledata-progress-kunena d-none">
-                                            <div class="progress mb-3">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <h6 class="pt-badge bg-cyan"><i class="fas fa-exclamation text-white f-18"></i></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endif; ?>
-            <div class="row clearfix">
-                <!--                <div class="col-xl-4 col-md-12">-->
-                <!--                    <div class="card proj-t-card">-->
-                <!--                        <div class="card-body">-->
-                <!--                            <div class="row align-items-center mb-30">-->
-                <!--                                <div class="col-auto">-->
-                <!--                                    <i class="fas fa-eye text-cyan f-30"></i>-->
-                <!--                                </div>-->
-                <!--                                <div class="col ps-0">-->
-                <!--                                    <h6 class="mb-0">Ticket Answered</h6>-->
-                <!--                                    <h6 class="mb-0 text-cyan">Live Update</h6>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                            <div class="row align-items-center text-center">-->
-                <!--                                <div class="col">-->
-                <!--                                    <h6 class="mb-0">327</h6></div>-->
-                <!--                                <div class="col"><i class="fas fa-exchange-alt text-cyan f-18"></i></div>-->
-                <!--                                <div class="col">-->
-                <!--                                    <h6 class="mb-0">10 Days</h6></div>-->
-                <!--                            </div>-->
-                <!--                            <h6 class="pt-badge bg-cyan"><i class="fas fa-exclamation text-white f-18"></i></h6>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-                <div class="col-xl-12 col-md-12">
-                    <div class="card proj-t-card">
-                        <div class="card-body">
-                            <div class="row align-items-center mb-30">
-                                <div class="col-auto">
-                                    <i class="fas fa-cloud-download-alt text-cyan f-30"></i>
-                                </div>
-                                <div class="col ps-0">
-                                    <h6 class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_VERSION_CHECK'); ?></h6>
-                                    <h6 class="mb-0 text-cyan"<?php echo $lastCheckFull ? ' data-bs-toggle="tooltip" title="' . $this->escape($lastCheckFull) . '"' : ''; ?>><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK'); ?> <?php echo $this->escape($lastCheckText); ?></h6>
-                                </div>
-                            </div>
-                            <div class="row align-items-center">
-                                <div class="col ps-5">
-                                    <?php echo KunenaSvgIcons::loadsvg('kunenalogo'); ?>
-                                </div>
-                                <div class="col">
-                                    <h6 class="mb-0"><?php echo strtoupper(KunenaForum::version()); ?></h6>
-                                    <h6 class="mb-0 text-cyan"><?php echo strtoupper(KunenaForum::versionDate()); ?></h6>
-                                    <?php if ($hasUpdate) : ?>
-                                        <a class="small fw-semibold text-warning" href="<?php echo $updateUrl; ?>">
-                                            <?php echo $newVersion !== null ? Text::sprintf('COM_KUNENA_CPANEL_UPDATE_AVAILABLE', $this->escape($newVersion)) : Text::sprintf('COM_KUNENA_CPANEL_UPDATE_ADDONS_AVAILABLE', $newAddons); ?>
-                                        </a>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            <?php if ($hasUpdate) : ?>
-                                <h6 class="pt-badge bg-warning">
-                                    <a href="<?php echo $updateUrl; ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CPANEL_UPDATE_NOW')); ?>"><i class="fas fa-arrow-circle-up text-white f-18"></i></a>
-                                </h6>
-                            <?php else : ?>
-                                <h6 class="pt-badge bg-cyan"><i class="fas fa-check text-white f-18"></i></h6>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-                <!--                <div class="col-xl-4 col-md-6">-->
-                <!--                    <div class="card proj-t-card">-->
-                <!--                        <div class="card-body">-->
-                <!--                            <div class="row align-items-center mb-30">-->
-                <!--                                <div class="col-auto">-->
-                <!--                                    <i class="fas fa-lightbulb text-cyan f-30"></i>-->
-                <!--                                </div>-->
-                <!--                                <div class="col ps-0">-->
-                <!--                                    <h6 class="mb-0">Unique Innovation</h6>-->
-                <!--                                    <h6 class="mb-0 text-cyan">Last Check</h6>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                            <div class="row align-items-center text-center">-->
-                <!--                                <div class="col">-->
-                <!--                                    <h6 class="mb-0">Today</h6></div>-->
-                <!--                                <div class="col"><i class="fas fa-exchange-alt text-cyan f-18"></i></div>-->
-                <!--                                <div class="col">-->
-                <!--                                    <h6 class="mb-0">248</h6></div>-->
-                <!--                            </div>-->
-                <!--                            <h6 class="pt-badge bg-cyan">73%</h6>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
-                <div class="col-xl-3 col-md-12">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=categories'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan">
-                                        <?php echo $this->categoriesCount; ?>
-                                    </h3>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-list-alt bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=users'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalCount(); ?></h3>
-                                    <p class="mb-0"><?php echo $this->lastUserRegisteredDate; ?></p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-users bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=attachments'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan"><?php echo KunenaAttachmentHelper::getTotalAttachments(); ?></h3>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-photo-video bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=smilies'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan"><?php echo KunenaStatistics::getTotalEmoticons() ?></h3>
-                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_EDITOR_SMILIES') ?></p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-grin-squint-tears bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-12">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_config&view=component&component=com_kunena'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan">&nbsp;</h3>
-                                    <p class="mb-0">&nbsp;</p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-edit bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=stats');
-                                                    ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_STAT_FORUMSTATS')
-                                            ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan">&nbsp;</h3>
-                                    <p class="mb-0">&nbsp;</p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-chart-bar bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=templates'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan"><?php echo round(count(KunenaTemplate::getInstance()->getTemplatePaths()) / 2) - 1; ?></h3>
-                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES_INSTALLED'); ?></p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-palette bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=ranks'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalRanks(); ?></h3>
-                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?></p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-bars bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-12">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=plugins'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan"><?php echo KunenaPlugins::getTotalPlugins(); ?></h3>
-                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?></p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-plug bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=trashs'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan"><?php echo $this->messagesTopicsInTrashBin; ?></h3>
-                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-trash-alt bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=logs'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_LOG_MANAGER') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan"><?php echo $this->numberOfLogs; ?></h3>
-                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-clipboard-list bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=mailsqueues'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_MAILQUEUES') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan"><?php echo $this->numberOfMailsqueues; ?></h3>
-                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-tools bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>
-                                        </a>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan">9</h3>
-                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-tools bg-cyan"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>                
+    <section class="kd-hero" aria-labelledby="kd-hero-title">
+        <div class="kd-hero__brand">
+            <span class="kd-hero__logo" aria-hidden="true"><?php echo KunenaSvgIcons::loadsvg('kunenalogo'); ?></span>
+            <div>
+                <h2 id="kd-hero-title" class="kd-hero__title">Kunena <?php echo $this->escape(KunenaForum::version()); ?></h2>
+                <p class="kd-hero__meta">
+                    <?php echo $this->escape(KunenaForum::versionDate()); ?>
+                    <span aria-hidden="true">·</span>
+                    <span<?php echo $lastCheckFull ? ' title="' . $this->escape($lastCheckFull) . '"' : ''; ?>>
+                        <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK') . ' ' . $this->escape($lastCheckText); ?>
+                    </span>
+                </p>
             </div>
         </div>
+
+        <div class="kd-hero__status">
+            <?php if ($hasUpdate) : ?>
+                <a class="kd-pill kd-pill--warn" href="<?php echo $updateUrl; ?>">
+                    <span class="fa-solid fa-circle-arrow-up" aria-hidden="true"></span>
+                    <?php echo $newVersion !== null ? Text::sprintf('COM_KUNENA_CPANEL_UPDATE_AVAILABLE', $this->escape($newVersion)) : Text::sprintf('COM_KUNENA_CPANEL_UPDATE_ADDONS_AVAILABLE', $newAddons); ?>
+                </a>
+            <?php else : ?>
+                <span class="kd-pill kd-pill--ok">
+                    <span class="fa-solid fa-circle-check" aria-hidden="true"></span>
+                    <?php echo Text::_('COM_KUNENA_CPANEL_UP_TO_DATE'); ?>
+                </span>
+            <?php endif; ?>
+        </div>
+
+        <div class="kd-hero__actions">
+            <a class="kd-btn kd-btn--ghost" href="<?php echo Uri::root(); ?>index.php?option=com_kunena" target="_blank" rel="noopener">
+                <?php echo Text::_('COM_KUNENA_CPANEL_VIEW_FORUM'); ?>
+            </a>
+            <?php if ($canConfigure) : ?>
+                <a class="kd-btn kd-btn--primary" href="<?php echo Route::_($settingsUrl); ?>">
+                    <span class="fa-solid fa-gear" aria-hidden="true"></span>
+                    <?php echo Text::_('COM_KUNENA_CPANEL_ALL_SETTINGS'); ?>
+                </a>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <?php if (!empty($sampleSkipped)) : ?>
+        <div class="alert alert-success"><?php echo Text::_('COM_KUNENA_CPANEL_SAMPLE_DATA_SKIPPED'); ?></div>
+    <?php endif; ?>
+
+    <?php if ($askSampleData || $offerSampleData || !$this->KunenaMenusExists) : ?>
+        <section class="kd-section" aria-labelledby="kd-start-title">
+            <h3 id="kd-start-title" class="kd-section__title"><?php echo Text::_('COM_KUNENA_CPANEL_SECTION_GETSTARTED'); ?></h3>
+            <div class="kd-steps">
+                <?php if ($askSampleData) : ?>
+                    <form method="post" class="kd-step">
+                        <?php echo HTMLHelper::_('form.token'); ?>
+                        <span class="kd-step__icon fa-solid fa-database" aria-hidden="true"></span>
+                        <div class="kd-step__body">
+                            <strong><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_SAMPLE_DATA'); ?></strong>
+                            <span><?php echo Text::_('COM_KUNENA_CPANEL_SAMPLE_DATA_QUESTION'); ?></span>
+                        </div>
+                        <div class="kd-step__actions">
+                            <button type="submit" name="sample_data_choice" value="yes" class="kd-btn kd-btn--primary"><?php echo Text::_('JYES'); ?></button>
+                            <button type="submit" name="sample_data_choice" value="no" class="kd-btn kd-btn--ghost"><?php echo Text::_('JNO'); ?></button>
+                        </div>
+                    </form>
+                <?php elseif ($offerSampleData) : ?>
+                    <div id="sample-data-wrapper" class="kd-step">
+                        <span class="kd-step__icon fa-solid fa-database" aria-hidden="true"></span>
+                        <div class="kd-step__body">
+                            <strong><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_FORUM_SAMPLE_DATA'); ?></strong>
+                            <span><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL_SAMPLE_DATA'); ?></span>
+                            <div class="sampledata-progress-kunena d-none">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kd-step__actions">
+                            <button type="button" class="kd-btn kd-btn--primary apply-sample-data" data-type="kunena" data-steps="1">
+                                <span class="fa-solid fa-download" aria-hidden="true"></span>
+                                <?php echo Text::_('COM_KUNENA_CPANEL_BUTTON_INSTALL'); ?>
+                            </button>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (!$this->KunenaMenusExists) : ?>
+                    <div class="kd-step">
+                        <span class="kd-step__icon fa-solid fa-bars" aria-hidden="true"></span>
+                        <div class="kd-step__body">
+                            <strong><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU'); ?></strong>
+                            <span><?php echo Text::_('COM_KUNENA_CPANEL_MENU_MISSING_DESC'); ?></span>
+                        </div>
+                        <div class="kd-step__actions">
+                            <a class="kd-btn kd-btn--primary" href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=menu'); ?>">
+                                <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL_MENUS'); ?>
+                            </a>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </section>
+    <?php endif; ?>
+
+    <section class="kd-stats" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CPANEL_SECTION_OVERVIEW')); ?>">
+        <div class="kd-stat">
+            <span class="kd-stat__label"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_USERS'); ?></span>
+            <span class="kd-stat__value"><?php echo (int) KunenaUserHelper::getTotalCount(); ?></span>
+            <span class="kd-stat__hint"><?php echo Text::_('COM_KUNENA_CPANEL_LAST_REGISTERED'); ?> <?php echo $this->lastUserRegisteredDate; ?></span>
+        </div>
+        <div class="kd-stat">
+            <span class="kd-stat__label"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES'); ?></span>
+            <span class="kd-stat__value"><?php echo $this->escape($this->categoriesCount); ?></span>
+            <span class="kd-stat__hint"><?php echo Text::_('COM_KUNENA_CPANEL_SECTIONS_CATEGORIES'); ?></span>
+        </div>
+        <div class="kd-stat">
+            <span class="kd-stat__label"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_FILES'); ?></span>
+            <span class="kd-stat__value"><?php echo (int) KunenaAttachmentHelper::getTotalAttachments(); ?></span>
+            <span class="kd-stat__hint"><?php echo Text::_('COM_KUNENA_CPANEL_FILES_HINT'); ?></span>
+        </div>
+        <div class="kd-stat<?php echo $this->numberOfMailsqueues ? ' kd-stat--attention' : ''; ?>">
+            <span class="kd-stat__label"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_MAILQUEUES'); ?></span>
+            <span class="kd-stat__value"><?php echo (int) $this->numberOfMailsqueues; ?></span>
+            <span class="kd-stat__hint"><?php echo Text::_('COM_KUNENA_CPANEL_MAILQUEUE_HINT'); ?></span>
+        </div>
+    </section>
+
+    <div class="kd-columns">
+        <section class="kd-section" aria-labelledby="kd-manage-title">
+            <h3 id="kd-manage-title" class="kd-section__title"><?php echo Text::_('COM_KUNENA_CPANEL_SECTION_MANAGE'); ?></h3>
+            <div class="kd-tiles">
+                <?php foreach ($manage as $item) {
+                    $tile($item);
+                } ?>
+            </div>
+        </section>
+
+        <section class="kd-section" aria-labelledby="kd-maintenance-title">
+            <h3 id="kd-maintenance-title" class="kd-section__title"><?php echo Text::_('COM_KUNENA_CPANEL_SECTION_MAINTENANCE'); ?></h3>
+            <div class="kd-tiles">
+                <?php foreach ($maintenance as $item) {
+                    $tile($item);
+                } ?>
+            </div>
+        </section>
     </div>
-</div>
-<div class="mt-3 text-center small">
-    <?php echo KunenaVersion::getLongVersionHTML(); ?>
+
+    <?php if ($canConfigure) : ?>
+        <section class="kd-section" aria-labelledby="kd-settings-title">
+            <div class="kd-section__head">
+                <div>
+                    <h3 id="kd-settings-title" class="kd-section__title"><?php echo Text::_('COM_KUNENA_CPANEL_SECTION_SETTINGS'); ?></h3>
+                    <p class="kd-section__desc"><?php echo Text::_('COM_KUNENA_CPANEL_SECTION_SETTINGS_DESC'); ?></p>
+                </div>
+                <label class="kd-search">
+                    <span class="fa-solid fa-magnifying-glass" aria-hidden="true"></span>
+                    <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_CPANEL_SETTINGS_FILTER'); ?></span>
+                    <input type="search" id="kd-settings-filter" placeholder="<?php echo $this->escape(Text::_('COM_KUNENA_CPANEL_SETTINGS_FILTER')); ?>" autocomplete="off">
+                </label>
+            </div>
+            <div class="kd-settings" id="kd-settings">
+                <?php foreach ($settings as [$tab, $label, $icon, $desc]) : ?>
+                    <a class="kd-setting" href="<?php echo Route::_($settingsUrl) . '#' . $tab; ?>">
+                        <span class="kd-setting__icon fa-solid fa-<?php echo $icon; ?>" aria-hidden="true"></span>
+                        <span class="kd-setting__title"><?php echo Text::_($label); ?></span>
+                        <span class="kd-setting__desc"><?php echo Text::_($desc); ?></span>
+                    </a>
+                <?php endforeach; ?>
+                <p class="kd-settings__empty" hidden><?php echo Text::_('COM_KUNENA_CPANEL_SETTINGS_NO_MATCH'); ?></p>
+            </div>
+        </section>
+        <script>
+            (function () {
+                var input = document.getElementById('kd-settings-filter');
+                var items = document.querySelectorAll('#kd-settings .kd-setting');
+                var empty = document.querySelector('#kd-settings .kd-settings__empty');
+
+                input.addEventListener('input', function () {
+                    var query = input.value.trim().toLowerCase();
+                    var shown = 0;
+
+                    items.forEach(function (item) {
+                        var match = !query || item.textContent.toLowerCase().indexOf(query) > -1;
+                        item.hidden = !match;
+                        shown += match ? 1 : 0;
+                    });
+
+                    empty.hidden = shown > 0;
+                });
+            })();
+        </script>
+    <?php endif; ?>
+
+    <footer class="kd-footer">
+        <?php echo KunenaVersion::getLongVersionHTML(); ?>
+    </footer>
 </div>

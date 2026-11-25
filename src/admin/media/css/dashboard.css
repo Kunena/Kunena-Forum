@@ -1,0 +1,540 @@
+/**
+ * Kunena Component
+ * @package Kunena.Administrator
+ *
+ * The dashboard of the administration (view cpanel).
+ *
+ * @copyright     Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link https://www.kunena.org
+ **/
+
+#kunena.kd {
+  --kd-bg: #ffffff;
+  --kd-surface: #ffffff;
+  --kd-surface-2: #f5f7fb;
+  --kd-border: #e3e8f0;
+  --kd-text: #1d2433;
+  --kd-muted: #5f6b7d;
+  --kd-accent: #2a69b8;
+  --kd-accent-soft: #e8f0fb;
+  --kd-accent-text: #ffffff;
+  --kd-ok: #1f7a4d;
+  --kd-ok-soft: #e3f4ea;
+  --kd-warn: #8a5300;
+  --kd-warn-soft: #fff1d6;
+  --kd-shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 1px 3px rgba(16, 24, 40, .06);
+  --kd-shadow-hover: 0 6px 16px rgba(16, 24, 40, .10);
+  --kd-radius: 14px;
+  --kd-radius-sm: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  max-width: 1400px;
+  padding: .25rem 0 1rem;
+  color: var(--kd-text);
+  /* The breakpoints follow the width of the dashboard, not of the window: the menu of Joomla takes a part of it. */
+  container-type: inline-size;
+}
+
+[data-bs-theme="dark"] #kunena.kd {
+  --kd-bg: #0f151d;
+  --kd-surface: #172130;
+  --kd-surface-2: #1d2a3b;
+  --kd-border: #2a384b;
+  --kd-text: #e6ebf2;
+  --kd-muted: #9aa8bb;
+  --kd-accent: #6fa8ef;
+  --kd-accent-soft: #1e3352;
+  --kd-accent-text: #0b1220;
+  --kd-ok: #6fd6a0;
+  --kd-ok-soft: #173a2a;
+  --kd-warn: #ffc864;
+  --kd-warn-soft: #3d2c0b;
+  --kd-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+  --kd-shadow-hover: 0 6px 18px rgba(0, 0, 0, .45);
+}
+
+#kunena.kd h2,
+#kunena.kd h3,
+#kunena.kd p {
+  margin: 0;
+}
+
+#kunena.kd a {
+  text-decoration: none;
+}
+
+/* Hero: version, update status and the main actions */
+
+.kd-hero {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 1rem 1.5rem;
+  align-items: center;
+  padding: 1.5rem 1.75rem;
+  background: linear-gradient(135deg, var(--kd-accent-soft), var(--kd-surface) 70%);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius);
+}
+
+.kd-hero__brand {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.kd-hero__logo {
+  display: grid;
+  flex: none;
+  width: 132px;
+  height: 60px;
+  place-items: center;
+  padding: 8px 14px;
+  /* The logo is drawn for a light background, also in the dark mode. */
+  background: #ffffff;
+  border: 1px solid var(--kd-border);
+  border-radius: 14px;
+}
+
+.kd-hero__logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+#kunena.kd .kd-hero__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--kd-text);
+}
+
+.kd-hero__meta {
+  margin-top: .2rem !important;
+  font-size: .875rem;
+  color: var(--kd-muted);
+}
+
+.kd-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+/* Pills and buttons */
+
+.kd-pill {
+  display: inline-flex;
+  gap: .45rem;
+  align-items: center;
+  padding: .4rem .85rem;
+  font-size: .85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-radius: 999px;
+}
+
+.kd-pill--ok {
+  color: var(--kd-ok);
+  background: var(--kd-ok-soft);
+}
+
+#kunena.kd .kd-pill--warn {
+  color: var(--kd-warn);
+  background: var(--kd-warn-soft);
+}
+
+#kunena.kd .kd-pill--warn:hover {
+  text-decoration: underline;
+}
+
+.kd-btn {
+  display: inline-flex;
+  gap: .5rem;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: .5rem 1rem;
+  font-size: .9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--kd-radius-sm);
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+
+#kunena.kd .kd-btn--primary {
+  color: var(--kd-accent-text);
+  background: var(--kd-accent);
+}
+
+#kunena.kd .kd-btn--primary:hover {
+  filter: brightness(1.08);
+}
+
+#kunena.kd .kd-btn--ghost {
+  color: var(--kd-text);
+  background: var(--kd-surface);
+  border-color: var(--kd-border);
+}
+
+#kunena.kd .kd-btn--ghost:hover {
+  border-color: var(--kd-accent);
+}
+
+.kd-btn:focus-visible,
+.kd-tile:focus-visible,
+.kd-setting:focus-visible {
+  outline: 3px solid var(--kd-accent);
+  outline-offset: 2px;
+}
+
+/* Sections */
+
+.kd-section {
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+  min-width: 0;
+}
+
+.kd-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem 1.5rem;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+#kunena.kd .kd-section__title {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--kd-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.kd-section__desc {
+  margin-top: .25rem !important;
+  font-size: .9rem;
+  color: var(--kd-muted);
+}
+
+/* Get started */
+
+.kd-steps {
+  display: grid;
+  gap: .75rem;
+}
+
+.kd-step {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  margin: 0;
+  background: var(--kd-warn-soft);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius);
+}
+
+.kd-step__icon {
+  display: grid;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  font-size: 1.1rem;
+  color: var(--kd-warn);
+  background: var(--kd-surface);
+  border-radius: 12px;
+}
+
+.kd-step__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: .15rem;
+  min-width: 0;
+}
+
+.kd-step__body > span {
+  font-size: .9rem;
+  color: var(--kd-muted);
+}
+
+.kd-step__body .progress {
+  margin-top: .5rem;
+}
+
+.kd-step__actions {
+  display: flex;
+  flex: none;
+  gap: .5rem;
+}
+
+/* At a glance */
+
+.kd-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.kd-stat {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--kd-surface);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius);
+  box-shadow: var(--kd-shadow);
+}
+
+.kd-stat--attention {
+  border-color: var(--kd-warn);
+}
+
+.kd-stat__label {
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--kd-muted);
+}
+
+.kd-stat__value {
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  color: var(--kd-text);
+}
+
+.kd-stat__hint {
+  overflow: hidden;
+  font-size: .8rem;
+  color: var(--kd-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Manage and maintenance */
+
+.kd-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem;
+}
+
+.kd-tiles {
+  display: grid;
+  overflow: hidden;
+  background: var(--kd-surface);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius);
+  box-shadow: var(--kd-shadow);
+}
+
+#kunena.kd .kd-tile {
+  display: flex;
+  gap: .9rem;
+  align-items: center;
+  padding: .85rem 1.1rem;
+  color: var(--kd-text);
+  transition: background-color .15s;
+}
+
+.kd-tile + .kd-tile {
+  border-top: 1px solid var(--kd-border);
+}
+
+#kunena.kd .kd-tile:hover {
+  background: var(--kd-surface-2);
+}
+
+.kd-tile__icon,
+.kd-setting__icon {
+  display: grid;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  font-size: 1rem;
+  color: var(--kd-accent);
+  background: var(--kd-accent-soft);
+  border-radius: 10px;
+}
+
+.kd-tile__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.kd-tile__title {
+  font-weight: 600;
+}
+
+.kd-tile__desc {
+  overflow: hidden;
+  font-size: .82rem;
+  color: var(--kd-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kd-tile__count {
+  flex: none;
+  padding: .15rem .6rem;
+  font-size: .82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--kd-muted);
+  background: var(--kd-surface-2);
+  border-radius: 999px;
+}
+
+/* Settings */
+
+.kd-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: min(100%, 280px);
+  margin: 0;
+}
+
+.kd-search > .fa-solid {
+  position: absolute;
+  left: .85rem;
+  font-size: .85rem;
+  color: var(--kd-muted);
+  pointer-events: none;
+}
+
+#kunena.kd .kd-search input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: .5rem .85rem .5rem 2.3rem;
+  font-size: .9rem;
+  color: var(--kd-text);
+  background: var(--kd-surface);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius-sm);
+}
+
+#kunena.kd .kd-search input:focus {
+  outline: none;
+  border-color: var(--kd-accent);
+  box-shadow: 0 0 0 3px var(--kd-accent-soft);
+}
+
+.kd-settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: .75rem;
+}
+
+#kunena.kd .kd-setting {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  gap: .15rem .85rem;
+  align-items: start;
+  align-content: start;
+  padding: 1rem;
+  color: var(--kd-text);
+  background: var(--kd-surface);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius);
+  box-shadow: var(--kd-shadow);
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+
+#kunena.kd .kd-setting[hidden] {
+  display: none;
+}
+
+#kunena.kd .kd-setting:hover {
+  border-color: var(--kd-accent);
+  box-shadow: var(--kd-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.kd-setting__icon {
+  grid-row: span 2;
+}
+
+.kd-setting__title {
+  font-weight: 600;
+}
+
+.kd-setting__desc {
+  font-size: .82rem;
+  line-height: 1.35;
+  color: var(--kd-muted);
+}
+
+.kd-settings__empty {
+  grid-column: 1 / -1;
+  padding: 1rem;
+  color: var(--kd-muted);
+  text-align: center;
+}
+
+.kd-footer {
+  font-size: .8rem;
+  color: var(--kd-muted);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #kunena.kd * {
+    transition: none !important;
+  }
+
+  #kunena.kd .kd-setting:hover {
+    transform: none;
+  }
+}
+
+/* Narrow screens */
+
+@container (max-width: 1000px) {
+  .kd-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .kd-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (max-width: 680px) {
+  .kd-hero {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+  }
+
+  .kd-step {
+    flex-wrap: wrap;
+  }
+
+  .kd-step__actions {
+    width: 100%;
+  }
+
+  .kd-search {
+    width: 100%;
+  }
+}
+
+@container (max-width: 440px) {
+  .kd-stats {
+    grid-template-columns: 1fr;
+  }
+}

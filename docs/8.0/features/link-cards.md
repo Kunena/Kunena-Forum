@@ -31,7 +31,7 @@ the previews of a chat program.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Link cards | Kunena configuration, tab *BBCode Settings* | Yes |
+| Link cards | Kunena configuration, *Embeds and maps* › *Link cards* | Yes |
 | Most cards in a message | same tab | 3 |
 | Sites without a card | same tab (one domain on each line, subdomains included) | empty |
 

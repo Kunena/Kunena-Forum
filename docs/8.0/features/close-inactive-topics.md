@@ -13,7 +13,7 @@ hidden and a direct reply link gives a clear message. Moderators can still reply
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Close inactive topics after (days) | Kunena configuration, tab *Look and Feel* | 0 (never) |
+| Close inactive topics after (days) | Kunena configuration, *Posting and editing* › *Closing topics* | 0 (never) |
 | Close inactive topics after (days) | the form of a category, tab *Category Settings*: empty uses the global value, 0 never closes the topics of the category | empty |
 
 ![The settings of a category](../images/admin-category-settings.png)

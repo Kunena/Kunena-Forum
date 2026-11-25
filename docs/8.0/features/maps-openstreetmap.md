@@ -30,7 +30,7 @@ a provider too.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Maps | Kunena configuration, tab *BBCode Settings*: Automatic, Google Maps or OpenStreetMap | Automatic |
+| Maps | Kunena configuration, *Embeds and maps* › *Maps*: Automatic, Google Maps or OpenStreetMap | Automatic |
 | Search service for the addresses of the maps | same tab | `https://nominatim.openstreetmap.org/search` |
 
 ---

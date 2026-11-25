@@ -30,7 +30,7 @@ the Joomla action log too when it is on.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Accepted answers | Kunena configuration, tab *Frontend* | Yes |
+| Accepted answers | Kunena configuration, *Posting and editing* › *Closing topics* | Yes |
 
 ---
 

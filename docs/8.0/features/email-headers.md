@@ -14,7 +14,7 @@ mail programs show the e-mails of a topic as one thread.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Extra e-mail headers | Kunena configuration, tab *Mail* | Yes |
+| Extra e-mail headers | Kunena configuration, *E-mails and notifications* › *Sending e-mails* | Yes |
 | Email Batch Size (e-mails for each run of the scheduled task) | tab *Subscriptions* | 50 |
 
 ![Email Batch Size](../images/option-emailBatchSize.png)

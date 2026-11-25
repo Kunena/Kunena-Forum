@@ -26,7 +26,7 @@ without closing it.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Enable Lightbox for Images | Kunena configuration, tab *Frontend*, *Look and Feel* | Yes |
+| Enable Lightbox for Images | Kunena configuration, *Layout and display* › *Topics* | Yes |
 
 - **Yes** uses Kunena's lightbox.
 - **Use existing one** loads no script of Kunena. The image links get `data-fancybox="gallery" data-type="image"` for the lightbox

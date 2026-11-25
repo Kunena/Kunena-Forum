@@ -29,7 +29,7 @@ Topics can be tagged with the tags of the Joomla component **Tags** (Components,
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Tag topics (Joomla Tags) | Kunena configuration, tab *Look and Feel* | No |
+| Tag topics (Joomla Tags) | Kunena configuration, *Posting and editing* › *Writing* | No |
 
 ---
 

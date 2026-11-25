@@ -31,7 +31,7 @@ number of followers.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Enable Follow User | Kunena configuration, tab *Look and Feel* | Yes |
+| Enable Follow User | Kunena configuration, *Community* › *Favorites, bookmarks and messages* | Yes |
 
 ---
 

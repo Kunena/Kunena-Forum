@@ -29,7 +29,7 @@ Moderators and administrators can not be ignored.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Enable Ignore User | Kunena configuration, tab *Look and Feel* | Yes |
+| Enable Ignore User | Kunena configuration, *Community* › *Favorites, bookmarks and messages* | Yes |
 
 ---
 

@@ -23,7 +23,7 @@ Reactions are next to Thank you: both can be used.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Reactions | Kunena configuration, tab *Frontend* | 👍 ❤️ 😂 😮 😢 🎉 |
+| Reactions | Kunena configuration, *Community* › *Thank you, karma and reactions* | 👍 ❤️ 😂 😮 😢 🎉 |
 
 The emoji are separated by spaces, at most 8. An empty field turns the reactions off; the reactions which were given stay in the
 database and come back when the field is filled again. A reaction which is removed from the list stays on the messages (after the

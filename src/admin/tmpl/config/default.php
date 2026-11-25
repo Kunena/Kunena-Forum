@@ -55,6 +55,15 @@ foreach ($this->form->getXml()->xpath('//fieldset[not(ancestor::fieldset)]') as 
 
 $first = array_key_first($sections);
 
+// The list of the sections, under their headings; a section without a heading (a tab added by a newer config.xml) comes last.
+$navGroups = [];
+
+foreach (ConfigHelper::GROUPS as $heading => $names) {
+    $navGroups[$heading] = array_values(array_intersect($names, array_keys($sections)));
+}
+
+$navGroups[''] = array_values(array_diff(array_keys($sections), array_merge(...array_values(ConfigHelper::GROUPS))));
+$navGroups     = array_filter($navGroups);
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_kunena&view=config'); ?>" method="post" name="adminForm" id="adminForm" class="form-validate" autocomplete="off">
@@ -68,12 +77,18 @@ $first = array_key_first($sections);
                 </label>
 
                 <nav class="kd-config__nav" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CONFIG_SECTIONS')); ?>">
-                    <?php foreach ($sections as $name => $section) : ?>
-                        <a class="kd-config__link" href="#<?php echo $name; ?>" data-section="<?php echo $name; ?>">
-                            <span class="kd-config__linkicon fa-solid fa-<?php echo $section['icon']; ?>" aria-hidden="true"></span>
-                            <span class="kd-config__linktext"><?php echo Text::_($section['label']); ?></span>
-                            <span class="kd-config__count" hidden></span>
-                        </a>
+                    <?php foreach ($navGroups as $heading => $names) : ?>
+                        <?php if ($heading) : ?>
+                            <span class="kd-config__navheading"><?php echo Text::_($heading); ?></span>
+                        <?php endif; ?>
+                        <?php foreach ($names as $name) :
+                            $section = $sections[$name]; ?>
+                            <a class="kd-config__link" href="#<?php echo $name; ?>" data-section="<?php echo $name; ?>">
+                                <span class="kd-config__linkicon fa-solid fa-<?php echo $section['icon']; ?>" aria-hidden="true"></span>
+                                <span class="kd-config__linktext"><?php echo Text::_($section['label']); ?></span>
+                                <span class="kd-config__count" hidden></span>
+                            </a>
+                        <?php endforeach; ?>
                     <?php endforeach; ?>
                 </nav>
 
@@ -209,9 +224,12 @@ $first = array_key_first($sections);
 
                 section.querySelectorAll('.kd-config__group').forEach(function (group) {
                     var inGroup = 0;
+                    var title = group.querySelector('.kd-config__grouptitle');
+                    // A group whose title matches ("spam", "warnings") shows all its options.
+                    var groupMatch = title && title.textContent.toLowerCase().indexOf(query) > -1;
 
                     group.querySelectorAll('.kd-row').forEach(function (row) {
-                        var match = row.textContent.toLowerCase().indexOf(query) > -1;
+                        var match = groupMatch || row.textContent.toLowerCase().indexOf(query) > -1;
                         row.classList.toggle('kd-nomatch', !match);
                         inGroup += match ? 1 : 0;
                     });

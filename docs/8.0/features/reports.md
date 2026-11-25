@@ -13,7 +13,7 @@ is only refused for the mail settings when no plugin handles it. The moderators 
 
 | Option | Where | Default |
 | --- | --- | --- |
-| E-mail to moderators for reports | Kunena configuration, tab *Mail* | No |
+| E-mail to moderators for reports | Kunena configuration, *Moderation* › *Reports* | No |
 
 ## The plugin Kunena - Reports in a category
 

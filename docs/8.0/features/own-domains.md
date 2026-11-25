@@ -22,7 +22,7 @@ own, for example the shop or the blog on a subdomain of the forum, should count 
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Own domains | Kunena configuration, tab *BBCode Settings* (one domain on each line, subdomains included) | empty |
+| Own domains | Kunena configuration, *Editor and links* › *Links* (one domain on each line, subdomains included) | empty |
 
 ---
 

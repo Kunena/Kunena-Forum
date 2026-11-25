@@ -34,7 +34,7 @@ no smileys, no formatting, and its line breaks and indentation are kept, also wh
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Enable Code Highlighting | Kunena configuration, tab *BBCode Settings* | No |
+| Enable Code Highlighting | Kunena configuration, *Editor and links* › *Editor* | No |
 
 ---
 

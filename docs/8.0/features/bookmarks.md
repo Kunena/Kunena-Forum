@@ -18,7 +18,7 @@ The bookmarks are private: the list shows only the bookmarks of the user who is 
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Bookmarks of messages | Kunena configuration, tab *Frontend* | Yes |
+| Bookmarks of messages | Kunena configuration, *Community* › *Favorites, bookmarks and messages* | Yes |
 
 With the option off, the button and the link are not shown and the list answers *not found*; the bookmarks stay in the database.
 

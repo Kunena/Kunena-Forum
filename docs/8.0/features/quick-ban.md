@@ -30,7 +30,7 @@ are banned already.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Ban button on messages | Kunena configuration, tab *User Related* | Yes |
+| Ban button on messages | Kunena configuration, *Moderation* › *Bans* | Yes |
 | Ban from | same tab, start value of the box: Forum or Site | Forum |
 | Duration (days) | same tab, 0 is permanent | 7 |
 | Delete the posts too | same tab, start value of the checkbox | No |

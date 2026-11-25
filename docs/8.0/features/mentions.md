@@ -36,7 +36,7 @@ toolbar when polls are possible, and images pasted into the editor are removed w
 
 | Option | Where | Default |
 | --- | --- | --- |
-| E-mail to mentioned users | Kunena configuration, tab *Mail* | No |
+| E-mail to mentioned users | Kunena configuration, *E-mails and notifications* › *Notifications* | No |
 
 ---
 

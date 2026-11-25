@@ -27,7 +27,7 @@ moderation, and the follower of a user, keep getting it at once.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Digest e-mails | Kunena configuration, tab *Frontend* | Yes |
+| Digest e-mails | Kunena configuration, *E-mails and notifications* › *Subscriptions* | Yes |
 
 The digests are sent by the scheduled task **Kunena Send Digests**: add it in *System → Scheduled Tasks* (plugin *Task - Kunena*)
 and run it every hour. With the option off, the users get an e-mail for each post again, and the choice is not in the profile.

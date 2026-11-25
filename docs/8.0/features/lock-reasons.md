@@ -28,8 +28,8 @@ keeps its reason when the list changes. An empty list turns the reasons off: the
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Reasons to lock a topic | Kunena configuration, tab *Look and Feel* | Closed, Solved, Sold (one per line) |
-| Authors can lock their own topics | Kunena configuration, tab *Look and Feel* | No |
+| Reasons to lock a topic | Kunena configuration, *Posting and editing* › *Closing topics* | Closed, Solved, Sold (one per line) |
+| Authors can lock their own topics | Kunena configuration, *Posting and editing* › *Closing topics* | No |
 
 ---
 

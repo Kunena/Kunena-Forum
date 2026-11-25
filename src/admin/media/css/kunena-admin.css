@@ -1155,3 +1155,24 @@ body.com_kunena .kd [data-section="permissions"] joomla-tab[orientation="vertica
   }
 }
 
+/* The headings of the list of the sections */
+
+.kd-config__navheading {
+  padding: .7rem .7rem .25rem;
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--kd-muted);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+
+.kd-config__navheading:first-child {
+  padding-top: .35rem;
+}
+
+@container (max-width: 860px) {
+  .kd-config__navheading {
+    display: none;
+  }
+}
+

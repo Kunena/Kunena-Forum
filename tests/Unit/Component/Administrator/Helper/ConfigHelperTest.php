@@ -56,6 +56,26 @@ class ConfigHelperTest extends UnitTestCase
         }
     }
 
+    public function testEverySectionIsUnderOneHeadingInTheOrderOfTheSections(): void
+    {
+        $this->assertSame(array_keys(ConfigHelper::SECTIONS), array_merge(...array_values(ConfigHelper::GROUPS)));
+
+        $strings = Files::languageFolder('src/admin/language/en-GB');
+
+        foreach (array_keys(ConfigHelper::GROUPS) as $heading) {
+            $this->assertArrayHasKey($heading, $strings, "The heading $heading is missing in the language files.");
+        }
+    }
+
+    public function testEveryOptionIsInAGroupOfASection(): void
+    {
+        $xml = simplexml_load_string(Files::read('src/admin/config.xml'));
+
+        // The fields are two levels down (section, group), the permissions one: no option is left at the top of a section.
+        $this->assertSame([], array_map(static fn ($field) => (string) $field['name'], $xml->xpath('/config/fieldset[@name!="permissions"]/field')));
+        $this->assertCount(\count($xml->xpath('//field')) - 1, $xml->xpath('/config/fieldset/fieldset/field'));
+    }
+
     public function testTheLinkOpensAKnownSectionOnly(): void
     {
         $this->assertSame('index.php?option=com_kunena&view=config', ConfigHelper::link());

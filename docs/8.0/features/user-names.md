@@ -24,7 +24,7 @@ The option *Name of a user* is now a choice of **Username**, **Real name** or **
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Field with the nickname | Kunena configuration, tab *User Related* | none |
+| Field with the nickname | Kunena configuration, *Users and profiles* › *Names* | none |
 | Users choose their name | same tab | No |
 
 ---

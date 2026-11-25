@@ -31,7 +31,7 @@ While a forum page is open, a small popup appears with a link to the message whe
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Popup notifications | Kunena configuration, tab *Mail* | Yes |
+| Popup notifications | Kunena configuration, *E-mails and notifications* › *Notifications* | Yes |
 | Popup check (seconds) | same tab (minimum 10) | 30 |
 
 ---

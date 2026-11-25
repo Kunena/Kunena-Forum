@@ -23,7 +23,7 @@ last 20 versions.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Edit history | Kunena configuration, tab *Frontend* | Moderators |
+| Edit history | Kunena configuration, *Posting and editing* › *Editing and deleting* | Moderators |
 
 - **Off**: no version is kept and nobody sees a history (the versions which were kept stay in the database).
 - **Moderators**: the moderators of the category of the message.

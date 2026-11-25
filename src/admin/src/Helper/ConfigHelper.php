@@ -23,24 +23,41 @@ namespace Kunena\Forum\Administrator\Helper;
 class ConfigHelper
 {
     /**
-     * Tab of config.xml => [label, icon (Font Awesome), description]. In the order of the configuration view.
+     * Tab of config.xml => [label, icon (Font Awesome), description]. In the order of config.xml; the label and the
+     * description are the ones of the tab in config.xml.
      *
      * @since   Kunena 8.0
      */
     public const SECTIONS = [
-        'general'     => ['COM_KUNENA_CPANEL_SETTINGS_GENERAL', 'sliders', 'COM_KUNENA_CPANEL_SETTINGS_GENERAL_DESC'],
-        'frontend'    => ['COM_KUNENA_A_FRONTEND', 'display', 'COM_KUNENA_CPANEL_SETTINGS_FRONTEND_DESC'],
-        'users'       => ['COM_KUNENA_A_USERS', 'user-gear', 'COM_KUNENA_CPANEL_SETTINGS_USERS_DESC'],
-        'emails'      => ['COM_KUNENA_SUBSCRIPTIONS', 'bell', 'COM_KUNENA_CPANEL_SETTINGS_EMAILS_DESC'],
-        'security'    => ['COM_KUNENA_A_SECURITY', 'shield-halved', 'COM_KUNENA_CPANEL_SETTINGS_SECURITY_DESC'],
-        'avatars'     => ['COM_KUNENA_A_AVATARS', 'circle-user', 'COM_KUNENA_CPANEL_SETTINGS_AVATARS_DESC'],
-        'uploads'     => ['COM_KUNENA_A_UPLOADS', 'cloud-arrow-up', 'COM_KUNENA_CPANEL_SETTINGS_UPLOADS_DESC'],
-        'ranking'     => ['COM_KUNENA_A_RANKING', 'medal', 'COM_KUNENA_CPANEL_SETTINGS_RANKING_DESC'],
-        'bbcode'      => ['COM_KUNENA_A_BBCODE', 'pen-to-square', 'COM_KUNENA_CPANEL_SETTINGS_BBCODE_DESC'],
-        'rss'         => ['COM_KUNENA_ADMIN_RSS', 'rss', 'COM_KUNENA_CPANEL_SETTINGS_RSS_DESC'],
-        'extra'       => ['COM_KUNENA_ADMIN_CONFIG_EXTRA', 'square-poll-vertical', 'COM_KUNENA_CPANEL_SETTINGS_EXTRA_DESC'],
-        'menu'        => ['COM_KUNENA_ADMIN_MENU_SETTINGS', 'bars', 'COM_KUNENA_CPANEL_SETTINGS_MENU_DESC'],
+        'general'     => ['COM_KUNENA_CONFIG_TAB_GENERAL', 'sliders', 'COM_KUNENA_CONFIG_TAB_GENERAL_DESC'],
+        'frontend'    => ['COM_KUNENA_CONFIG_TAB_FRONTEND', 'table-columns', 'COM_KUNENA_CONFIG_TAB_FRONTEND_DESC'],
+        'emails'      => ['COM_KUNENA_CONFIG_TAB_EMAILS', 'envelope', 'COM_KUNENA_CONFIG_TAB_EMAILS_DESC'],
+        'rss'         => ['COM_KUNENA_CONFIG_TAB_RSS', 'rss', 'COM_KUNENA_CONFIG_TAB_RSS_DESC'],
+        'statistics'  => ['COM_KUNENA_CONFIG_TAB_STATISTICS', 'chart-column', 'COM_KUNENA_CONFIG_TAB_STATISTICS_DESC'],
+        'posting'     => ['COM_KUNENA_CONFIG_TAB_POSTING', 'pen-to-square', 'COM_KUNENA_CONFIG_TAB_POSTING_DESC'],
+        'bbcode'      => ['COM_KUNENA_CONFIG_TAB_BBCODE', 'code', 'COM_KUNENA_CONFIG_TAB_BBCODE_DESC'],
+        'media'       => ['COM_KUNENA_CONFIG_TAB_MEDIA', 'photo-film', 'COM_KUNENA_CONFIG_TAB_MEDIA_DESC'],
+        'uploads'     => ['COM_KUNENA_CONFIG_TAB_UPLOADS', 'paperclip', 'COM_KUNENA_CONFIG_TAB_UPLOADS_DESC'],
+        'users'       => ['COM_KUNENA_CONFIG_TAB_USERS', 'user-gear', 'COM_KUNENA_CONFIG_TAB_USERS_DESC'],
+        'avatars'     => ['COM_KUNENA_CONFIG_TAB_AVATARS', 'circle-user', 'COM_KUNENA_CONFIG_TAB_AVATARS_DESC'],
+        'community'   => ['COM_KUNENA_CONFIG_TAB_COMMUNITY', 'people-group', 'COM_KUNENA_CONFIG_TAB_COMMUNITY_DESC'],
+        'moderation'  => ['COM_KUNENA_CONFIG_TAB_MODERATION', 'gavel', 'COM_KUNENA_CONFIG_TAB_MODERATION_DESC'],
+        'security'    => ['COM_KUNENA_CONFIG_TAB_SECURITY', 'shield-halved', 'COM_KUNENA_CONFIG_TAB_SECURITY_DESC'],
+        'menu'        => ['COM_KUNENA_CONFIG_TAB_MENU', 'bars', 'COM_KUNENA_CONFIG_TAB_MENU_DESC'],
         'permissions' => ['JCONFIG_PERMISSIONS_LABEL', 'key', 'COM_KUNENA_CPANEL_SETTINGS_PERMISSIONS_DESC'],
+    ];
+
+    /**
+     * The headings of the list of the sections: heading => the sections below it, in the order of SECTIONS.
+     *
+     * @since   Kunena 8.0
+     */
+    public const GROUPS = [
+        'COM_KUNENA_CONFIG_NAV_FORUM'    => ['general', 'frontend', 'emails', 'rss', 'statistics'],
+        'COM_KUNENA_CONFIG_NAV_POSTS'    => ['posting', 'bbcode', 'media', 'uploads'],
+        'COM_KUNENA_CONFIG_NAV_MEMBERS'  => ['users', 'avatars', 'community'],
+        'COM_KUNENA_CONFIG_NAV_SAFETY'   => ['moderation', 'security'],
+        'COM_KUNENA_CONFIG_NAV_ADVANCED' => ['menu', 'permissions'],
     ];
 
     /**

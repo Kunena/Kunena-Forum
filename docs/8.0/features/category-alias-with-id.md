@@ -18,7 +18,7 @@ the category.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Category id in the alias | Kunena configuration, tab *SEO Settings* | No |
+| Category id in the alias | Kunena configuration, *General* › *Search engines and URLs* | No |
 
 ---
 

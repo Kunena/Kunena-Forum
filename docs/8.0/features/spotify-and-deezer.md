@@ -22,7 +22,7 @@ Tracks, albums, playlists, shows and episodes of **Spotify** (`open.spotify.com`
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Auto Embed Spotify items | Kunena configuration, tab *BBCode Settings* | Yes |
+| Auto Embed Spotify items | Kunena configuration, *Embeds and maps* › *Embedded media* | Yes |
 | Auto Embed Deezer items | same tab | Yes |
 
 ---

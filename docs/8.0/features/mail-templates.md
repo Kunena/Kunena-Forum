@@ -28,7 +28,7 @@ The templates come with a modern HTML layout. With the option off, or when a tem
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Use the mail templates of Joomla | Kunena configuration, tab *Mail* | No |
+| Use the mail templates of Joomla | Kunena configuration, *E-mails and notifications* › *Sending e-mails* | No |
 
 ---
 

@@ -28,7 +28,7 @@ part of Kunena.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Date format for datepicker | Kunena configuration | empty |
+| Date format for datepicker | Kunena configuration, *Layout and display* › *Dates* | empty |
 
 The fields no longer use this option: they show the date in the format of the user's language. The server still reads a date in
 this format, so an older link of a search with a date like `15/03/2025` keeps working.

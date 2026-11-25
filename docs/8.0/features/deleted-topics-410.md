@@ -17,7 +17,7 @@ plugin of Joomla never gets the error, and the plugin is not needed.
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Redirect deleted topics with 410 Gone | Kunena configuration, tab *Look and Feel* | No |
+| Redirect deleted topics with 410 Gone | Kunena configuration, *General* › *Search engines and URLs* | No |
 
 ---
 

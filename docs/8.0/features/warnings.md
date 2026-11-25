@@ -35,7 +35,7 @@ The moderation log keeps the warnings which are given and removed (*User Warned*
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Warnings with points | Kunena configuration, tab *Frontend* | Yes |
+| Warnings with points | Kunena configuration, *Moderation* › *Warnings* | Yes |
 | Points expire after (days) | same tab | 30 (0: never) |
 | Ban at (points) | same tab | 10 (0: no automatic ban) |
 | Length of the automatic ban (days) | same tab | 7 (0: permanent) |

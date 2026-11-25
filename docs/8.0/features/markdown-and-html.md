@@ -29,8 +29,8 @@ Existing messages with characters like `*` or `_` can look different when Markdo
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Enable Markdown | Kunena configuration, tab *BBCode Settings* | No |
-| Enable HTML | Kunena configuration, tab *BBCode Settings* | No |
+| Enable Markdown | Kunena configuration, *Editor and links* › *Editor* | No |
+| Enable HTML | Kunena configuration, *Editor and links* › *Editor* | No |
 
 ---
 

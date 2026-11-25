@@ -30,7 +30,7 @@ Submit. The drafts are listed on a **My Drafts** page, with a button to continue
 
 | Option | Where | Default |
 | --- | --- | --- |
-| Enable Drafts | Kunena configuration, tab *Look and Feel* | No |
+| Enable Drafts | Kunena configuration, *Posting and editing* › *Writing* | No |
 
 ## Recovering an unsent text in the browser
 

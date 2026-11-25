@@ -48,6 +48,7 @@ $groups = [
         ['orphanfiles', 'COM_KUNENA_TOOLS_ORPHANS', 'COM_KUNENA_TOOLS_ORPHANS_DESC', 'file-circle-question'],
         ['caches', 'COM_KUNENA_TOOLS_CACHES', 'COM_KUNENA_TOOLS_CACHES_DESC', 'database'],
         ['storage', 'COM_KUNENA_TOOLS_STORAGE', 'COM_KUNENA_TOOLS_STORAGE_DESC', 'hard-drive'],
+        ['optimizeimages', 'COM_KUNENA_TOOLS_IMAGES', 'COM_KUNENA_TOOLS_IMAGES_DESC', 'image'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_SYSTEM' => [
         ['scheduledtasks', 'COM_KUNENA_TOOLS_TASKS', 'COM_KUNENA_TOOLS_TASKS_DESC', 'clock-rotate-left'],

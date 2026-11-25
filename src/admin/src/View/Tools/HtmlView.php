@@ -35,6 +35,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Tools\KunenaBBCodeCheck;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
+use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -69,7 +70,7 @@ class HtmlView extends BaseHtmlView
     public const TOOLS = [
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
-        'duplicates', 'bbcodecheck',
+        'duplicates', 'bbcodecheck', 'optimizeimages',
     ];
 
     /**
@@ -508,6 +509,9 @@ class HtmlView extends BaseHtmlView
             case 'bbcodecheck':
                 // No preview here: the BBCode of Kunena renders with the layouts of the template of the site.
                 return KunenaBBCodeCheck::findOnSite();
+
+            case 'optimizeimages':
+                return KunenaImageOptimizer::findOnSite() + ['webp' => KunenaImageOptimizer::canWebp()];
         }
 
         return [];

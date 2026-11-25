@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
+use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -1786,6 +1787,49 @@ class ToolsController extends FormController
 
         if ($result['skipped']) {
             $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_DUPLICATES_N_SKIPPED', $result['skipped']), 'warning');
+        }
+    }
+
+    /**
+     * Resizes and saves again the chosen images, a batch at a time (tool "Optimize images").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function optimizeImages(): void
+    {
+        if (!$this->toolAllowed('optimizeimages')) {
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_IMAGES_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $result = KunenaImageOptimizer::optimizeOnSite($ids, (bool) $this->input->post->getInt('webp', 0));
+
+        $this->app->enqueueMessage(
+            Text::plural('COM_KUNENA_TOOLS_IMAGES_N_DONE', $result['done'], HTMLHelper::_('number.bytes', $result['saved'])),
+            $result['done'] ? 'success' : 'info'
+        );
+
+        if ($result['kept']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_IMAGES_N_KEPT', $result['kept']), 'info');
+        }
+
+        if ($result['failed']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_IMAGES_N_FAILED', $result['failed']), 'warning');
+        }
+
+        if (\count($ids) > KunenaImageOptimizer::BATCH) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_IMAGES_BATCH', KunenaImageOptimizer::BATCH), 'info');
         }
     }
 

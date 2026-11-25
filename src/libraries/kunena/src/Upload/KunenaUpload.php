@@ -269,6 +269,24 @@ class KunenaUpload
 
         if ($options['completed']) {
             $options['mime'] = KunenaFile::getMime($outFile);
+
+            // While the chunks came in, the limit (the one of images or the one of files) was chosen by the type which the
+            // browser named: a client named the type with the larger limit. The whole file is here now: the limit of what the
+            // file really is decides.
+            if ($options['image_type'] != 'avatar') {
+                $config = KunenaConfig::getInstance();
+                $over   = self::overLimit((string) $options['mime'], (int) $size, (int) $config->imageSize, (int) $config->fileSize);
+
+                if ($over !== null) {
+                    $this->cleanup();
+
+                    throw new RuntimeException(
+                        Text::_($over === 'image' ? 'COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION' : 'COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'),
+                        500
+                    );
+                }
+            }
+
             $options['hash'] = md5_file($outFile);
         } else {
             if ($size) {
@@ -277,6 +295,26 @@ class KunenaUpload
         }
 
         return $options;
+    }
+
+    /**
+     * Is an uploaded attachment larger than the limit of its kind? The kind is the type which was read from the file (an image
+     * or another file), not the one the browser named.
+     *
+     * @param   string   $mime         The type read from the file.
+     * @param   integer  $size         The size of the file in bytes.
+     * @param   integer  $imageSizeKb  The option "Max. image file size" (KB).
+     * @param   integer  $fileSizeKb   The option "Max. file size" (KB).
+     *
+     * @return  string|null  'image' or 'file' when the limit of that kind is exceeded, null when the size is allowed.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function overLimit(string $mime, int $size, int $imageSizeKb, int $fileSizeKb): ?string
+    {
+        $kind = stripos(trim($mime), 'image/') === 0 ? 'image' : 'file';
+
+        return $size > ($kind === 'image' ? $imageSizeKb : $fileSizeKb) * 1024 ? $kind : null;
     }
 
     /**

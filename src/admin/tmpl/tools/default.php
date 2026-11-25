@@ -38,6 +38,7 @@ $groups = [
     ],
     'COM_KUNENA_ADMIN_TOOLS_USERS' => [
         ['spam', 'COM_KUNENA_TOOLS_SPAM', 'COM_KUNENA_TOOLS_SPAM_DESC', 'shield-virus'],
+        ['profilespam', 'COM_KUNENA_TOOLS_PROFILESPAM', 'COM_KUNENA_TOOLS_PROFILESPAM_DESC', 'id-card'],
         ['usercleanup', 'COM_KUNENA_TOOLS_USERCLEANUP', 'COM_KUNENA_TOOLS_USERCLEANUP_DESC', 'user-xmark'],
         ['mergeusers', 'COM_KUNENA_TOOLS_MERGE', 'COM_KUNENA_TOOLS_MERGE_DESC', 'code-merge'],
         ['permissions', 'COM_KUNENA_TOOLS_PERMS', 'COM_KUNENA_TOOLS_PERMS_DESC', 'user-shield'],

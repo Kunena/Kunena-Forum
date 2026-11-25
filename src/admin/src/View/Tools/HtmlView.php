@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUpdateCheck;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
+use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaSecurityAudit;
 use Kunena\Forum\Libraries\Tools\KunenaTranslationCheck;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
@@ -78,7 +79,7 @@ class HtmlView extends BaseHtmlView
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
-        'translations', 'security', 'missingfiles',
+        'translations', 'security', 'missingfiles', 'profilespam',
     ];
 
     /**
@@ -568,6 +569,12 @@ class HtmlView extends BaseHtmlView
 
             case 'missingfiles':
                 return KunenaMissingAttachments::findOnSite();
+
+            case 'profilespam':
+                $maxPosts = $input->getInt('maxposts', KunenaProfileSpam::MAX_POSTS[1]);
+                $maxPosts = \in_array($maxPosts, KunenaProfileSpam::MAX_POSTS, true) ? $maxPosts : KunenaProfileSpam::MAX_POSTS[1];
+
+                return ['maxPosts' => $maxPosts, 'items' => KunenaProfileSpam::findOnSite($maxPosts)];
         }
 
         return [];

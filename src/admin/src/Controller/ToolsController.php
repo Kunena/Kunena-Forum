@@ -46,6 +46,7 @@ use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUserExport;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
+use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -1972,6 +1973,30 @@ class ToolsController extends FormController
 
         if ($result['skipped']) {
             $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_MISSINGFILES_N_SKIPPED', $result['skipped']), 'warning');
+        }
+    }
+
+    /**
+     * Empties the fields with links of the chosen profiles (tool "Signature and profile spam").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function clearProfileSpam(): void
+    {
+        if (!$this->toolAllowed('profilespam&maxposts=' . $this->input->post->getInt('maxposts', 5))) {
+            return;
+        }
+
+        $result = KunenaProfileSpam::clearOnSite(ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array')));
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_PROFILESPAM_N_CLEARED', $result['cleared']), $result['cleared'] ? 'success' : 'info');
+
+        if ($result['skipped']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_PROFILESPAM_N_SKIPPED', $result['skipped']), 'warning');
         }
     }
 

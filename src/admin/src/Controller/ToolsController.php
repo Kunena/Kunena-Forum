@@ -53,6 +53,7 @@ use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaBanReview;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
+use Kunena\Forum\Libraries\Tools\KunenaTopicManager;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
@@ -2438,6 +2439,34 @@ class ToolsController extends FormController
         }
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_RINGS_N_REMOVED', KunenaThankyouRings::removeOnSite($pairs)), 'success');
+    }
+
+    /**
+     * Moves the chosen topics to the trash (tool "Duplicate topic titles").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function trashDuplicateTitles(): void
+    {
+        if (!$this->toolAllowed('duplicatetitles')) {
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_TITLES_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $result = KunenaTopicManager::apply($ids, 'trash');
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_TOPICS_N_TRASH', $result['done']), $result['done'] ? 'success' : 'info');
     }
 
     /**

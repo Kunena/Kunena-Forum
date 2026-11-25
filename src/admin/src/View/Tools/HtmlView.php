@@ -54,6 +54,7 @@ use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
 use Kunena\Forum\Libraries\Tools\KunenaBanReview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryHealth;
+use Kunena\Forum\Libraries\Tools\KunenaDuplicateTitles;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaUnansweredTopics;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
@@ -93,7 +94,7 @@ class HtmlView extends BaseHtmlView
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
-        'unanswered', 'banreview', 'thankyourings', 'categoryhealth',
+        'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles',
     ];
 
     /**
@@ -652,6 +653,9 @@ class HtmlView extends BaseHtmlView
 
             case 'categoryhealth':
                 return KunenaCategoryHealth::checkOnSite($input->getInt('days', KunenaCategoryHealth::PERIODS[1]), time());
+
+            case 'duplicatetitles':
+                return KunenaDuplicateTitles::findOnSite();
         }
 
         return [];

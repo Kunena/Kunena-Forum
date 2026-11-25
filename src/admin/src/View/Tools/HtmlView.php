@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
 use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUpdateCheck;
+use Kunena\Forum\Libraries\Tools\KunenaSecurityAudit;
 use Kunena\Forum\Libraries\Tools\KunenaTranslationCheck;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
@@ -76,7 +77,7 @@ class HtmlView extends BaseHtmlView
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
-        'translations',
+        'translations', 'security',
     ];
 
     /**
@@ -560,6 +561,9 @@ class HtmlView extends BaseHtmlView
                 $tag = \in_array($tag, KunenaTranslationCheck::tagsOnSite(), true) ? $tag : '';
 
                 return ['summary' => KunenaTranslationCheck::summaryOnSite(), 'language' => $tag, 'detail' => $tag !== '' ? KunenaTranslationCheck::checkOnSite($tag) : null];
+
+            case 'security':
+                return ['checks' => KunenaSecurityAudit::checksOnSite()];
         }
 
         return [];

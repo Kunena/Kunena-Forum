@@ -57,6 +57,7 @@ $groups = [
         ['mailtest', 'COM_KUNENA_TOOLS_MAILTEST', 'COM_KUNENA_TOOLS_MAILTEST_DESC', 'envelope-circle-check'],
         ['mailpreview', 'COM_KUNENA_TOOLS_MAILS', 'COM_KUNENA_TOOLS_MAILS_DESC', 'envelope-open-text'],
         ['beforeupdate', 'COM_KUNENA_TOOLS_UPDATE', 'COM_KUNENA_TOOLS_UPDATE_DESC', 'rocket'],
+        ['security', 'COM_KUNENA_TOOLS_SECURITY', 'COM_KUNENA_TOOLS_SECURITY_DESC', 'shield-halved'],
         ['translations', 'COM_KUNENA_TOOLS_TRANSLATIONS', 'COM_KUNENA_TOOLS_TRANSLATIONS_DESC', 'language'],
         ['databasetables', 'COM_KUNENA_TOOLS_TABLES', 'COM_KUNENA_TOOLS_TABLES_DESC', 'table'],
         ['menu', 'COM_KUNENA_A_MENU_MANAGER', 'COM_KUNENA_A_MENU_MANAGER_DESC', 'bars'],

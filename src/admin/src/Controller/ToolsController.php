@@ -47,6 +47,7 @@ use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUserExport;
 use Kunena\Forum\Libraries\Tools\KunenaBrokenLinks;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
+use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
@@ -2038,6 +2039,80 @@ class ToolsController extends FormController
 
         KunenaBrokenLinks::resetOnSite();
         $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_LINKS_RESET_DONE'), 'success');
+    }
+
+    /**
+     * Ends the chosen polls now (tool "Polls overview").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function closePolls(): void
+    {
+        $ids = $this->pollsChosen();
+
+        if ($ids === null) {
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_POLLS_N_CLOSED', KunenaPollsOverview::closeOnSite($ids, time())), 'success');
+    }
+
+    /**
+     * Deletes the chosen polls with their votes (tool "Polls overview").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function deletePolls(): void
+    {
+        $ids = $this->pollsChosen();
+
+        if ($ids === null) {
+            return;
+        }
+
+        $result = KunenaPollsOverview::deleteOnSite($ids);
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_POLLS_N_DELETED', $result['deleted']), $result['deleted'] ? 'success' : 'info');
+
+        if ($result['failed']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_POLLS_N_FAILED', $result['failed']), 'warning');
+        }
+    }
+
+    /**
+     * The chosen polls, after the checks of a tool.
+     *
+     * @return  int[]|null  Null when the action stops.
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    private function pollsChosen(): ?array
+    {
+        $state = $this->input->post->getCmd('state', 'all');
+
+        if (!$this->toolAllowed('polls&state=' . (\in_array($state, KunenaPollsOverview::STATES, true) ? $state : 'all'))) {
+            return null;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_POLLS_NONE_CHOSEN'), 'warning');
+
+            return null;
+        }
+
+        return $ids;
     }
 
     /**

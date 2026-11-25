@@ -519,8 +519,9 @@ body.com_kunena .kd .kd-card:hover {
 /* Narrow screens */
 
 @container (max-width: 1000px) {
+  /* minmax(0, 1fr): a column no wider than the page, even with a table inside. */
   .kd-columns {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .kd-stats {
@@ -1457,17 +1458,94 @@ body.com_kunena #content table.table > tbody > tr > td.kd-diag__invalid {
   font-weight: 600;
 }
 
+/* A row of a form: the fields share the width, a button keeps its own (a grid gave the button a column as wide as a field). */
 .kd-form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem 1.25rem;
-  align-items: end;
+  align-items: flex-end;
+}
+
+.kd-form > * {
+  flex: 0 0 auto;
+}
+
+.kd-form > .kd-form__field,
+.kd-form > .kd-choices {
+  flex: 1 1 240px;
+  min-width: 0;
 }
 
 .kd-form__field {
   display: flex;
   flex-direction: column;
   gap: .35rem;
+}
+
+/* The search fields of the template are content-box: with width 100% their padding went out of the column. */
+body.com_kunena .kd input[type="search"] {
+  box-sizing: border-box;
+}
+
+/* A button of a table or of a row of actions keeps its text on one line; a long one of a page may wrap on a phone. */
+body.com_kunena .kd td .kd-btn,
+body.com_kunena .kd .kd-check__actions .kd-btn {
+  white-space: nowrap;
+}
+
+/* A long name without spaces (a file, a table) breaks instead of widening its panel. */
+.kd-panel .table th[scope="row"],
+.kd-panel .table td {
+  overflow-wrap: anywhere;
+}
+
+/* A button in a table keeps its own color, not the one of the links of the table. */
+body.com_kunena #content .kd table a.kd-btn--ghost {
+  color: var(--kd-text);
+}
+
+/* The hints of the stats of the tools say more than a word: they wrap. */
+.kd-stats--auto .kd-stat__hint {
+  white-space: normal;
+}
+
+/* The actions of a row of a table side by side (Run now, Edit). */
+.kd td .kd-check__actions {
+  flex-wrap: nowrap;
+}
+
+/* The forms of a row of actions (Run now, Unsubscribe all) are no block of their own. */
+.kd .kd-check__actions > form,
+.kd td > form {
+  display: contents;
+}
+
+/* A table which ends a panel (in the box which scrolls, added by the script): no margin under it. */
+body.com_kunena .kd-panel > .kd-scroll:last-child,
+body.com_kunena #content .kd-panel > .table:last-child {
+  margin-bottom: 0;
+}
+
+/* A long text without spaces in a cell (an address in Find and replace) breaks: the other columns keep their width. */
+.kd td code {
+  overflow-wrap: anywhere;
+}
+
+/* The panels in two columns: the grid makes the gap. */
+.kd-columns > .kd-panel {
+  margin-bottom: 0;
+}
+
+.kd-columns {
+  margin-bottom: 1.5rem;
+}
+
+/* A part of a text which matches (Find and replace). */
+body.com_kunena .kd mark {
+  padding: 0 .1em;
+  color: inherit;
+  background: var(--kd-warn-soft);
+  border-radius: 3px;
 }
 
 .kd-form__field > label,
@@ -1533,9 +1611,11 @@ body.com_kunena #content table.table > tbody > tr > td.kd-diag__invalid {
 .kd-tags > li {
   padding: .15rem .55rem;
   font-size: .8rem;
+  line-height: 1.4;
   background: var(--kd-surface-2);
   border: 1px solid var(--kd-border);
-  border-radius: 999px;
+  /* A long tag wraps: a pill fully rounded looked torn on two lines. */
+  border-radius: .5rem;
 }
 
 .kd-tool-frame {

@@ -22,6 +22,17 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 $options = $this->tool['options'];
 $found   = $this->tool['found'];
+
+// The text escaped, the parts which match the needle marked.
+$mark = function (string $text, string $needle) use ($options): string {
+    $text = $this->escape($text);
+
+    if ($needle === '') {
+        return $text;
+    }
+
+    return (string) preg_replace('/' . preg_quote($this->escape($needle), '/') . '/u' . ($options['case'] ? '' : 'i'), '<mark>$0</mark>', $text);
+};
 ?>
 
 <div id="kunena" class="kd">
@@ -115,8 +126,8 @@ $found   = $this->tool['found'];
                                             <br><span class="kd-form__hint">→ <?php echo $this->escape($item['newSubject']) ?></span>
                                         <?php endif ?>
                                     </th>
-                                    <td><code class="kd-check__code"><?php echo $this->escape($item['before']) ?></code></td>
-                                    <td><code class="kd-check__code"><?php echo $this->escape($item['after']) ?></code></td>
+                                    <td><code class="kd-check__code"><?php echo $mark($item['before'], $options['search']) ?></code></td>
+                                    <td><code class="kd-check__code"><?php echo $mark($item['after'], $options['replace']) ?></code></td>
                                     <td class="text-end"><?php echo (int) $item['count'] ?></td>
                                 </tr>
                             <?php endforeach ?>

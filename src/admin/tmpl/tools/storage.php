@@ -44,6 +44,14 @@ $share = static fn ($value) => $data['bytes'] ? round(100 * (int) $value / $data
         <section class="kd-panel" aria-labelledby="kd-storage-kinds">
             <h3 id="kd-storage-kinds" class="kd-panel__title"><?php echo Text::_('COM_KUNENA_TOOLS_STORAGE_BY_KIND') ?></h3>
             <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><?php echo Text::_('COM_KUNENA_TOOLS_STORAGE_KIND') ?></th>
+                        <th scope="col" class="text-end"><?php echo Text::_('COM_KUNENA_TOOLS_CACHES_FILES') ?></th>
+                        <th scope="col" class="text-end"><?php echo Text::_('COM_KUNENA_TOOLS_PRUNE_FILES_SIZE') ?></th>
+                        <th scope="col" class="text-end"><?php echo Text::_('COM_KUNENA_TOOLS_STORAGE_SHARE') ?></th>
+                    </tr>
+                </thead>
                 <tbody>
                     <?php foreach ($data['kinds'] as $kind => $row) : ?>
                         <tr>
@@ -60,6 +68,14 @@ $share = static fn ($value) => $data['bytes'] ? round(100 * (int) $value / $data
         <section class="kd-panel" aria-labelledby="kd-storage-categories">
             <h3 id="kd-storage-categories" class="kd-panel__title"><?php echo Text::_('COM_KUNENA_TOOLS_STORAGE_BY_CATEGORY') ?></h3>
             <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><?php echo Text::_('COM_KUNENA_TOOLS_QUEUE_CATEGORY') ?></th>
+                        <th scope="col" class="text-end"><?php echo Text::_('COM_KUNENA_TOOLS_CACHES_FILES') ?></th>
+                        <th scope="col" class="text-end"><?php echo Text::_('COM_KUNENA_TOOLS_PRUNE_FILES_SIZE') ?></th>
+                        <th scope="col" class="text-end"><?php echo Text::_('COM_KUNENA_TOOLS_STORAGE_SHARE') ?></th>
+                    </tr>
+                </thead>
                 <tbody>
                     <?php foreach ($data['categories'] as $row) : ?>
                         <tr>
@@ -78,6 +94,14 @@ $share = static fn ($value) => $data['bytes'] ? round(100 * (int) $value / $data
         <section class="kd-panel" aria-labelledby="kd-storage-users">
             <h3 id="kd-storage-users" class="kd-panel__title"><?php echo Text::_('COM_KUNENA_TOOLS_STORAGE_BY_USER') ?></h3>
             <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><?php echo Text::_('COM_KUNENA_TOOLS_USER_NAME') ?></th>
+                        <th scope="col" class="text-end"><?php echo Text::_('COM_KUNENA_TOOLS_CACHES_FILES') ?></th>
+                        <th scope="col" class="text-end"><?php echo Text::_('COM_KUNENA_TOOLS_PRUNE_FILES_SIZE') ?></th>
+                        <th scope="col" class="text-end"><?php echo Text::_('COM_KUNENA_TOOLS_STORAGE_SHARE') ?></th>
+                    </tr>
+                </thead>
                 <tbody>
                     <?php foreach ($data['users'] as $row) : ?>
                         <tr>
@@ -102,6 +126,12 @@ $share = static fn ($value) => $data['bytes'] ? round(100 * (int) $value / $data
         <section class="kd-panel" aria-labelledby="kd-storage-biggest">
             <h3 id="kd-storage-biggest" class="kd-panel__title"><?php echo Text::_('COM_KUNENA_TOOLS_STORAGE_BIGGEST') ?></h3>
             <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><?php echo Text::_('COM_KUNENA_TOOLS_PRUNE_FILES_FILE') ?></th>
+                        <th scope="col" class="text-end"><?php echo Text::_('COM_KUNENA_TOOLS_PRUNE_FILES_SIZE') ?></th>
+                    </tr>
+                </thead>
                 <tbody>
                     <?php foreach ($data['biggest'] as $row) : ?>
                         <tr>

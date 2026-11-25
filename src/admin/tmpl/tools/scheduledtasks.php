@@ -22,7 +22,8 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 $tasks    = $this->tool['tasks'];
 $problems = array_filter($tasks, static fn ($item) => !\in_array($item['state'], ['ok', 'never'], true));
 $action   = KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools');
-$date     = static fn ($value) => $value ? HTMLHelper::_('date', $value, Text::_('DATE_FORMAT_LC2')) : Text::_('COM_KUNENA_TOOLS_NEVER');
+// A short date: the long one took three lines in its column.
+$date     = static fn ($value) => $value ? HTMLHelper::_('date', $value, Text::_('DATE_FORMAT_LC5')) : Text::_('COM_KUNENA_TOOLS_NEVER');
 ?>
 
 <div id="kunena" class="kd">

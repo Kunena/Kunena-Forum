@@ -52,7 +52,7 @@ $folders = [
                     <?php echo Text::_($title) ?>
                 </h3>
                 <span class="kd-pill kd-pill--<?php echo $files ? 'warn' : 'ok' ?>">
-                    <?php echo Text::plural('COM_KUNENA_TOOLS_ORPHANS_N_FILES', \count($files), HTMLHelper::_('number.bytes', $size)) ?>
+                    <?php echo $files ? Text::plural('COM_KUNENA_TOOLS_ORPHANS_N_FILES', \count($files), HTMLHelper::_('number.bytes', $size)) : Text::_('COM_KUNENA_TOOLS_NONE') ?>
                 </span>
             </div>
             <p class="kd-section__desc"><?php echo Text::_($desc) ?></p>
@@ -104,7 +104,7 @@ $folders = [
                 <?php echo Text::_('COM_KUNENA_TOOLS_ORPHANS_MISSING') ?>
             </h3>
             <span class="kd-pill kd-pill--<?php echo $this->tool['missing'] ? 'warn' : 'ok' ?>">
-                <?php echo Text::plural('COM_KUNENA_TOOLS_ORPHANS_N_ATTACHMENTS', \count($this->tool['missing'])) ?>
+                <?php echo $this->tool['missing'] ? Text::plural('COM_KUNENA_TOOLS_ORPHANS_N_ATTACHMENTS', \count($this->tool['missing'])) : Text::_('COM_KUNENA_TOOLS_NONE') ?>
             </span>
         </div>
         <p class="kd-section__desc"><?php echo Text::_('COM_KUNENA_TOOLS_ORPHANS_MISSING_DESC') ?></p>

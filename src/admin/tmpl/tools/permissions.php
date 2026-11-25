@@ -26,6 +26,8 @@ foreach ($data['categories'] as $category) {
     $children[(int) $category['parentid']][] = $category;
 }
 
+$names = array_column($data['categories'], 'name', 'id');
+
 $options = [];
 $walk    = static function (int $parent, int $depth) use (&$walk, &$options, $children): void {
     foreach ($children[$parent] ?? [] as $category) {
@@ -107,7 +109,7 @@ $yesNo = static fn (bool $value) => Text::_($value ? 'JYES' : 'JNO');
                 </dl>
             </section>
             <section class="kd-panel" aria-labelledby="kd-perms-category-title">
-                <h3 id="kd-perms-category-title" class="kd-panel__title"><?php echo $this->escape($options[array_search($data['catid'], array_column($options, 0), true)][1] ?? '') ?></h3>
+                <h3 id="kd-perms-category-title" class="kd-panel__title"><?php echo $this->escape((string) ($names[$data['catid']] ?? '')) ?></h3>
                 <dl class="kd-kv">
                     <dt><?php echo Text::_('COM_KUNENA_TOOLS_PERMS_ACCESS') ?></dt>
                     <dd><code><?php echo $this->escape($access['type']) ?></code> · <?php echo $this->escape($access['access']) ?></dd>

@@ -1179,6 +1179,12 @@ body.com_kunena .kd [data-section="permissions"] joomla-tab[orientation="vertica
 /* The thumbnail of an image in the list of the attachments: it opens the lightbox */
 
 body.com_kunena .kd-thumb {
+  /* A fixed box: the text of a missing image (its file name) stays inside it */
+  display: block;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  font-size: 0;
   object-fit: cover;
   background: var(--kd-surface-2);
   border: 1px solid var(--kd-border);
@@ -1194,5 +1200,48 @@ body.com_kunena a:focus-visible > .kd-thumb {
 
 body.com_kunena a[data-kunena-lightbox] {
   cursor: zoom-in;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------
+ * No horizontal scrollbar on the page. The main column of Joomla is an item of a flex row next to the menu: by default it
+ * is never narrower than its content, so a wide table made the whole page wider than the window. It may now be narrower,
+ * and a wide table scrolls in its own box (.kd-scroll, added around the tables by the script of the DisplayController).
+ * --------------------------------------------------------------------------------------------------------------- */
+
+body.com_kunena .container-main,
+body.com_kunena #content,
+body.com_kunena #content > .row > *,
+body.com_kunena #content main,
+body.com_kunena #adminForm,
+body.com_kunena #j-main-container {
+  min-width: 0;
+}
+
+body.com_kunena .kd-scroll,
+body.com_kunena #content .table-responsive {
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+/* The table keeps its frame inside the box which scrolls */
+body.com_kunena .kd-scroll > table.table {
+  margin-bottom: 0;
+}
+
+body.com_kunena .kd-scroll {
+  margin-bottom: 1rem;
+  border-radius: var(--kd-radius);
+}
+
+/* A long name without spaces (a file name) may break, instead of making its column very wide */
+body.com_kunena #content .attachmentsList .filename,
+body.com_kunena #content .attachmentsList td {
+  overflow-wrap: anywhere;
+}
+
+/* The name of the file keeps room enough to be read on one or two lines */
+body.com_kunena #content .attachmentsList tbody th {
+  min-width: 16rem;
 }
 

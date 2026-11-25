@@ -83,6 +83,24 @@ document.addEventListener('DOMContentLoaded', function () {
 JS
         );
 
+        // A table wider than the page scrolls in its own box: the page itself keeps the width of the window (kunena-admin.css).
+        $document->getWebAssetManager()->addInlineScript(
+            <<<'JS'
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('#content table').forEach(function (table) {
+        if (table.closest('.kd-scroll, .table-responsive') || table.parentElement.closest('table')) {
+            return;
+        }
+
+        var box = document.createElement('div');
+        box.className = 'kd-scroll';
+        table.parentNode.insertBefore(box, table);
+        box.appendChild(table);
+    });
+});
+JS
+        );
+
         if ($view !== 'ranks') {
             $wa = $document->getWebAssetManager();
             $wa->registerStyle('kunena_theme', Uri::base() . '/components/com_kunena/media/css/theme.min.css', [], [], []);

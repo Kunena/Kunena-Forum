@@ -1278,6 +1278,186 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * Query to find the recipients of private posts whose private post or user no longer exists.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_privateUserOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_private_user_map AS a')->leftJoin('#__kunena_private AS p ON p.id=a.private_id')
+            ->leftJoin('#__users AS u ON u.id=a.user_id')->where('p.id IS NULL OR u.id IS NULL');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_privateUserOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.private_id, a.user_id');
+        }
+
+        return ['private_id' => 'invalid', 'user_id' => 'invalid'];
+    }
+
+    /**
+     * Delete the recipients of private posts whose private post or user no longer exists.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_privateUserOrphaned(): string
+    {
+        return 'DELETE a FROM #__kunena_private_user_map AS a LEFT JOIN #__kunena_private AS p ON p.id=a.private_id'
+            . ' LEFT JOIN #__users AS u ON u.id=a.user_id WHERE p.id IS NULL OR u.id IS NULL';
+    }
+
+    /**
+     * Query to find the links of private posts to posts of the forum when one of the two no longer exists.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_privatePostOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_private_post_map AS a')->leftJoin('#__kunena_private AS p ON p.id=a.private_id')
+            ->leftJoin('#__kunena_messages AS m ON m.id=a.message_id')->where('p.id IS NULL OR m.id IS NULL');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_privatePostOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.private_id, a.message_id');
+        }
+
+        return ['private_id' => 'invalid', 'message_id' => 'invalid'];
+    }
+
+    /**
+     * Delete the links of private posts to posts of the forum when one of the two no longer exists.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_privatePostOrphaned(): string
+    {
+        return 'DELETE a FROM #__kunena_private_post_map AS a LEFT JOIN #__kunena_private AS p ON p.id=a.private_id'
+            . ' LEFT JOIN #__kunena_messages AS m ON m.id=a.message_id WHERE p.id IS NULL OR m.id IS NULL';
+    }
+
+    /**
+     * Query to find the links of private posts to attachments when one of the two no longer exists.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_privateAttachmentOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_private_attachment_map AS a')->leftJoin('#__kunena_private AS p ON p.id=a.private_id')
+            ->leftJoin('#__kunena_attachments AS t ON t.id=a.attachment_id')->where('p.id IS NULL OR t.id IS NULL');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_privateAttachmentOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.private_id, a.attachment_id');
+        }
+
+        return ['private_id' => 'invalid', 'attachment_id' => 'invalid'];
+    }
+
+    /**
+     * Delete the links of private posts to attachments when one of the two no longer exists.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_privateAttachmentOrphaned(): string
+    {
+        return 'DELETE a FROM #__kunena_private_attachment_map AS a LEFT JOIN #__kunena_private AS p ON p.id=a.private_id'
+            . ' LEFT JOIN #__kunena_attachments AS t ON t.id=a.attachment_id WHERE p.id IS NULL OR t.id IS NULL';
+    }
+
+    /**
+     * Query to find the drafts of users who no longer exist, or of a reply to a topic which no longer exists.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_draftOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_drafts AS a')->leftJoin('#__users AS u ON u.id=a.user_id')->leftJoin('#__kunena_topics AS t ON t.id=a.topic_id')
+            ->where('u.id IS NULL OR (a.topic_id>0 AND t.id IS NULL)');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_draftOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.user_id, a.topic_id, a.subject, a.modified_time');
+        }
+
+        return ['user_id' => 'invalid', 'topic_id' => 'invalid'];
+    }
+
+    /**
+     * Delete the drafts of users who no longer exist, or of a reply to a topic which no longer exists.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_draftOrphaned(): string
+    {
+        return 'DELETE a FROM #__kunena_drafts AS a LEFT JOIN #__users AS u ON u.id=a.user_id LEFT JOIN #__kunena_topics AS t ON t.id=a.topic_id'
+            . ' WHERE u.id IS NULL OR (a.topic_id>0 AND t.id IS NULL)';
+    }
+
+    /**
      * Query to find the translations of categories which no longer exist.
      *
      * @return  QueryInterface
@@ -1548,6 +1728,52 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * Query to find the posts which reply to a post which no longer exists or is in another topic.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_messageWrongParent(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_messages AS a')->leftJoin('#__kunena_messages AS p ON p.id=a.parent')
+            ->innerJoin('#__kunena_topics AS t ON t.id=a.thread')
+            ->where('a.parent>0 AND (p.id IS NULL OR p.thread!=a.thread)');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_messageWrongParent(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.thread, a.subject, a.parent, p.thread AS parent_thread');
+        }
+
+        return ['parent' => 'invalid'];
+    }
+
+    /**
+     * A post which replies to a post which no longer exists or is in another topic replies to the first post of its topic (the
+     * first post itself replies to nothing).
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fix_messageWrongParent(): QueryInterface
+    {
+        return self::query_messageWrongParent()->update('#__kunena_messages AS a')->set('a.parent=IF(t.first_post_id=a.id, 0, t.first_post_id)');
+    }
+
+    /**
      * The ids of the rows of a check.
      *
      * @param   string  $function  The check.
@@ -1615,6 +1841,7 @@ abstract class KunenaDiagnostics
             'COM_KUNENA_DIAGNOSTICS_GROUP_POSTS' => [
                 'messageBodyMissingMessage', 'messageMissingMessageBody', 'messageWrongCategory', 'messageOrphaned', 'attachmentOrphaned',
                 'thankyouOrphaned', 'reactionOrphaned', 'historyOrphaned', 'digestOrphaned', 'bookmarkOrphaned',
+                'messageWrongParent', 'draftOrphaned', 'privateUserOrphaned', 'privatePostOrphaned', 'privateAttachmentOrphaned',
             ],
             'COM_KUNENA_DIAGNOSTICS_GROUP_POLLS' => [
                 'pollOrphaned', 'pollTopicMismatch', 'pollOptionOrphaned', 'pollUserOrphaned',
@@ -1694,6 +1921,11 @@ abstract class KunenaDiagnostics
             'topicWrongCounts',
             'topicShownEmpty',
             'ratingUserOrphaned',
+            'messageWrongParent',
+            'draftOrphaned',
+            'privateUserOrphaned',
+            'privatePostOrphaned',
+            'privateAttachmentOrphaned',
         ];
     }
 

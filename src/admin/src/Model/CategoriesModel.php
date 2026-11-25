@@ -499,7 +499,9 @@ class CategoriesModel extends KunenaModel
             $catid      = $this->getState('filter.category', '') === '' ? $this->getState('item.id', 0) : $this->getState('filter.category', '');
             $categories = [];
             $orphans    = [];
-            $levels     = $this->getState('filter.levels', '') === '' ? 0 : $this->getState('filter.levels');
+            // A number: the filter is kept in the session, and a text in it ("string - int") ended every visit of the list in an
+            // error page until the session ended.
+            $levels     = self::filterLevels($this->getState('filter.levels', ''));
 
             if ($catid) {
                 $categories   = KunenaCategoryHelper::getParents($catid, $levels - 1, ['unpublished' => 1, 'action' => 'none']);
@@ -554,6 +556,20 @@ class CategoriesModel extends KunenaModel
         }
 
         return $this->internalAdminCategories;
+    }
+
+    /**
+     * The number of levels of the filter: 0 (all levels) for anything which is not a positive number.
+     *
+     * @param   mixed  $value  The value of the filter, as the request or the session gave it.
+     *
+     * @return  integer
+     *
+     * @since   Kunena 8.0
+     */
+    public static function filterLevels(mixed $value): int
+    {
+        return \is_scalar($value) && is_numeric($value) ? max(0, (int) $value) : 0;
     }
 
     /**

@@ -379,6 +379,15 @@ class BBCodeLexer {
                         // Not a comment, so parse it like a tag.
                         $this->tag = $this->decodeTag($this->text);
                         $this->state = self::BBCODE_LEXSTATE_TEXT;
+
+                        // A start tag with a word without a value is text in square brackets: "[Quote of the day]",
+                        // the text of a Markdown link "[Hide the replies](...)".
+                        if (!$this->tag['_end'] && !empty($this->tag['_floating'])) {
+                            $this->tag = false;
+
+                            return $this->token = BBCode::BBCODE_TEXT;
+                        }
+
                         return $this->token = ($this->tag['_end'] ? BBCode::BBCODE_ENDTAG : BBCode::BBCODE_TAG);
                 }
             }
@@ -666,6 +675,13 @@ class BBCodeLexer {
             // take the key itself as the value.
             if ($type !== '=') {
                 $value = $this->stripQuotes($key);
+
+                // A word without a value right after the name of the tag: the tags of Kunena start with "=value" or
+                // "name=value", so this is text in square brackets which starts with the name of a tag ("[Quote of
+                // the day]"), not a tag (nextToken()). A word after a value ([code type=java script]) stays a parameter.
+                if ($result['_default'] === false && \count($params) === 1) {
+                    $result['_floating'] = true;
+                }
             } else {
                 $ptr++;
                 // Skip whitespace after the equal sign.

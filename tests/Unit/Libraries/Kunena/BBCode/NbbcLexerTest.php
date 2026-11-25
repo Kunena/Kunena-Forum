@@ -60,4 +60,38 @@ class NbbcLexerTest extends UnitTestCase
         $this->assertSame($text, $out);
         $this->assertSame(PREG_NO_ERROR, preg_last_error());
     }
+
+    private static function html(string $text): string
+    {
+        return trim((string) preg_replace('/\s+/', ' ', (new BBCode())->parse($text)));
+    }
+
+    /**
+     * Text in square brackets which starts with the name of a tag is text: "[Quote of the day]" became a quote, and the
+     * Markdown link "[Hide the replies for guests](...)" the [hide] of Kunena. Words after the name of a tag without "="
+     * are no parameters of Kunena: its tags take "name=value" or "=value".
+     */
+    public function testBracketsWithWordsAfterATagNameAreText(): void
+    {
+        $this->assertSame('[Quote of the day] text', self::html('[Quote of the day] text'));
+        $this->assertSame('[Hide the replies for guests, per category](features/hide.md)', self::html('[Hide the replies for guests, per category](features/hide.md)'));
+
+        $lexer = new BBCodeLexer('[quote of the day]');
+        $this->assertSame(BBCode::BBCODE_TEXT, $lexer->nextToken());
+        $this->assertSame('[quote of the day]', $lexer->text);
+    }
+
+    public function testTagsWithParametersAreStillTags(): void
+    {
+        $this->assertStringContainsString('bbcode_quote', self::html('[quote]hi[/quote]'));
+        $this->assertStringContainsString('jane wrote:', self::html('[quote="jane"]hi[/quote]'));
+        $this->assertStringContainsString('jane wrote:', self::html('[quote name=jane]hi[/quote]'));
+        $this->assertStringContainsString('jane wrote:', self::html('[quote = "jane" ]hi[/quote]'));
+        $this->assertStringContainsString('href="https://a.example"', self::html('[url=https://a.example]a[/url]'));
+        $this->assertStringContainsString('<b>x</b>', self::html('[b ]x[/b ]'));
+        // A default value of several words, as [font=Times New Roman size=4] of Nbbc.
+        $this->assertStringContainsString('Times New Roman', self::html('[font=Times New Roman size=4]x[/font]'));
+        // A word after a parameter stays a part of the tag: only a word right after the name makes it text.
+        $this->assertStringContainsString('bbcode_quote', self::html('[quote name=jane extra]hi[/quote]'));
+    }
 }

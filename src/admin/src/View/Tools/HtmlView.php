@@ -71,7 +71,7 @@ class HtmlView extends BaseHtmlView
     public const TOOLS = [
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
-        'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview',
+        'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport',
     ];
 
     /**
@@ -516,6 +516,17 @@ class HtmlView extends BaseHtmlView
 
             case 'accessoverview':
                 return ['categories' => KunenaAccessOverview::listOnSite()];
+
+            case 'userexport':
+                $userid = $input->getInt('userid', 0);
+                $search = trim($input->getString('search', ''));
+
+                return [
+                    'userid'  => $userid,
+                    'search'  => $search,
+                    'matches' => $search !== '' ? $this->findUsers($search) : [],
+                    'summary' => $userid ? KunenaUserCleanup::summary($userid) : null,
+                ];
         }
 
         return [];

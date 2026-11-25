@@ -44,6 +44,7 @@ $groups = [
         ['inactiveusers', 'COM_KUNENA_TOOLS_INACTIVE', 'COM_KUNENA_TOOLS_INACTIVE_DESC', 'user-clock'],
         ['subscriptionsoverview', 'COM_KUNENA_TOOLS_SUBS', 'COM_KUNENA_TOOLS_SUBS_DESC', 'bell'],
         ['accessoverview', 'COM_KUNENA_TOOLS_ACCESS', 'COM_KUNENA_TOOLS_ACCESS_DESC', 'table-cells'],
+        ['userexport', 'COM_KUNENA_TOOLS_EXPORT', 'COM_KUNENA_TOOLS_EXPORT_DESC', 'file-zipper'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_FILES' => [
         ['orphanfiles', 'COM_KUNENA_TOOLS_ORPHANS', 'COM_KUNENA_TOOLS_ORPHANS_DESC', 'file-circle-question'],

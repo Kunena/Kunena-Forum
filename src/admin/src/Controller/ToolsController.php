@@ -42,6 +42,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
 use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
+use Kunena\Forum\Libraries\Tools\KunenaUserExport;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -1831,6 +1832,49 @@ class ToolsController extends FormController
         if (\count($ids) > KunenaImageOptimizer::BATCH) {
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_IMAGES_BATCH', KunenaImageOptimizer::BATCH), 'info');
         }
+    }
+
+    /**
+     * Downloads everything a user has in the forum as a ZIP (tool "User data export").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function exportUser(): void
+    {
+        $userid = $this->input->post->getInt('userid', 0);
+
+        if (!$this->toolAllowed('userexport&userid=' . $userid)) {
+            return;
+        }
+
+        $file = rtrim((string) $this->app->get('tmp_path', JPATH_ROOT . '/tmp'), '/\\') . '/kunena-export-' . bin2hex(random_bytes(8)) . '.zip';
+
+        try {
+            KunenaUserExport::writeOnSite($userid, $file);
+        } catch (Exception $e) {
+            @unlink($file);
+            $this->app->enqueueMessage(Text::_($e->getMessage()), 'error');
+
+            return;
+        }
+
+        $user = KunenaUserHelper::get($userid);
+        $name = 'kunena-user-' . $userid . '-' . preg_replace('/[^a-z0-9_-]+/i', '_', (string) $user->username) . '-' . Factory::getDate()->format('Y-m-d') . '.zip';
+
+        $this->app->setHeader('Content-Type', 'application/zip', true);
+        $this->app->setHeader('Content-Disposition', 'attachment; filename="' . $name . '"', true);
+        $this->app->setHeader('Content-Length', (string) filesize($file), true);
+        $this->app->setHeader('X-Content-Type-Options', 'nosniff', true);
+        $this->app->sendHeaders();
+
+        readfile($file);
+        @unlink($file);
+
+        $this->app->close();
     }
 
     /**

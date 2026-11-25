@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
+use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaFindReplace;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
@@ -1755,6 +1756,49 @@ class ToolsController extends FormController
 
         if ($result['left']) {
             $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_REPLACE_N_LEFT', $result['left']), 'warning');
+        }
+    }
+
+    /**
+     * Merges a category into another one, a batch of topics at a time (tool "Merge categories").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function mergeCategories(): void
+    {
+        $from  = $this->input->post->getInt('from', 0);
+        $into  = $this->input->post->getInt('into', 0);
+        $after = $this->input->post->getCmd('after') === KunenaCategoryMerge::AFTER_DELETE ? KunenaCategoryMerge::AFTER_DELETE : KunenaCategoryMerge::AFTER_UNPUBLISH;
+
+        if (!$this->toolAllowed('mergecategories&from=' . $from . '&into=' . $into)) {
+            return;
+        }
+
+        $error = KunenaCategoryMerge::check(KunenaCategoryTransfer::rowsOnSite(), $from, $into);
+
+        if ($error !== null) {
+            $this->app->enqueueMessage(Text::_($error), 'error');
+
+            return;
+        }
+
+        $result = KunenaCategoryMerge::mergeOnSite($from, $into, $after);
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_CATMERGE_N_MOVED', $result['moved']), 'success');
+
+        if ($result['failed']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_CATMERGE_N_FAILED', $result['failed']), 'warning');
+        }
+
+        if ($result['done']) {
+            $this->app->enqueueMessage(Text::_($after === KunenaCategoryMerge::AFTER_DELETE ? 'COM_KUNENA_TOOLS_CATMERGE_DONE_DELETED' : 'COM_KUNENA_TOOLS_CATMERGE_DONE_UNPUBLISHED'), 'success');
+            $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=mergecategories&into=' . $into, false));
+        } elseif ($result['left']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_CATMERGE_N_LEFT', $result['left']), 'warning');
         }
     }
 

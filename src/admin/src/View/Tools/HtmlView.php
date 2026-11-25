@@ -31,6 +31,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
+use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaFindReplace;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
@@ -58,7 +59,7 @@ class HtmlView extends BaseHtmlView
      */
     public const TOOLS = [
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
-        'findreplace', 'moderation',
+        'findreplace', 'mergecategories', 'moderation',
     ];
 
     /**
@@ -418,6 +419,19 @@ class HtmlView extends BaseHtmlView
                     'options' => $options,
                     'error'   => $error,
                     'found'   => $options['search'] !== '' && $error === null ? KunenaFindReplace::findOnSite($options) : null,
+                ];
+
+            case 'mergecategories':
+                $rows = KunenaCategoryTransfer::rowsOnSite();
+                $from = $input->getInt('from', 0);
+                $into = $input->getInt('into', 0);
+
+                return [
+                    'categories' => KunenaCategoryTransfer::sortTree($rows),
+                    'from'       => $from,
+                    'into'       => $into,
+                    'error'      => $from && $into ? KunenaCategoryMerge::check($rows, $from, $into) : null,
+                    'counts'     => $from ? KunenaCategoryMerge::count($from) : null,
                 ];
 
             case 'moderation':

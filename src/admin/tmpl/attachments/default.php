@@ -95,7 +95,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 <td><?php echo $attachment->width > 0 ? $attachment->width . ' x ' . $attachment->height : '' ?></td>
                                 <td><?php echo $this->escape($message->getAuthor()->getName()); ?></td>
                                 <td><?php echo $this->escape($message->subject); ?></td>
-                                <td><?php echo intval($attachment->id); ?></td>
+                                <td class="text-center d-none d-lg-table-cell"><?php echo intval($attachment->id); ?></td>
                             </tr>
                             <?php $i++; ?>
                         <?php endforeach; ?>

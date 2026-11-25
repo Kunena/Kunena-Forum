@@ -94,6 +94,14 @@ JS
             $wa->addInlineStyle('main #kunena .form-select[multiple], main #kunena .form-select[size]:not([size="1"]) { background: var(--form-control-bg, #fff); }', [], [], ['kunena_theme']);
         }
 
+        // The look of all the Kunena views: after the theme, so it wins over it. A full URL: the asset manager would look for a
+        // relative one in the media folder, and drop it there.
+        $document->getWebAssetManager()->registerAndUseStyle(
+            'kunena_admin',
+            Uri::base() . 'components/com_kunena/media/css/kunena-admin.css',
+            ['version' => 'auto']
+        );
+
         return parent::display($cachable, $urlparams);
     }
 }

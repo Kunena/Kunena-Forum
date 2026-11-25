@@ -142,7 +142,7 @@ $this->document->addScript(Uri::root() . 'administrator/components/com_kunena/tm
                                         <a href="#" class="js-grid-item-action tbody-icon <?php echo $user->moderator ? 'active' : ''; ?>" data-item-id="cb<?php echo $i; ?>" data-item-task="<?php echo $userModerateTask ?>" data-item-form-id="" aria-labelledby="cbmod<?php echo $i; ?>-desc"><?php echo $user->moderator ? $img_yes : $img_no; ?></a>
                                         <div role="tooltip" id="cbmod<?php echo $i; ?>-desc"><?php echo $user->moderator ? Text::_('COM_KUNENA_TASK_UNMODERATE_USER') : Text::_('COM_KUNENA_TASK_MODERATE_USER'); ?></div>
                                     </td>
-                                    <td class="d-none d-md-table-cell">
+                                    <td class="text-center d-none d-lg-table-cell">
                                         <?php echo (int) $this->escape($user->userid); ?>
                                     </td>
                                 </tr>

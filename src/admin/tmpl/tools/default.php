@@ -4,7 +4,7 @@
  * Kunena Component
  *
  * @package         Kunena.Administrator.Template
- * @subpackage      CPanel
+ * @subpackage      Tools
  *
  * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -19,268 +19,51 @@ use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
+// The tools: [layout, label, description, icon]. A layout of the view install is given as a full query.
+$groups = [
+    'COM_KUNENA_ADMIN_TOOLS' => [
+        ['report', 'COM_KUNENA_REPORT_SYSTEM', 'COM_KUNENA_REPORT_SYSTEM_DESC', 'file-lines'],
+        ['prune', 'COM_KUNENA_C_PRUNETAB', 'COM_KUNENA_C_PRUNETAB_DESC', 'scissors'],
+        ['syncUsers', 'COM_KUNENA_SYNC_USERS', 'COM_KUNENA_SYNC_USERS_DESC', 'users-gear'],
+        ['recount', 'COM_KUNENA_A_RECOUNT', 'COM_KUNENA_A_RECOUNT_DESC', 'calculator'],
+    ],
+    'COM_KUNENA_ADMIN_TOOLS_SYSTEM' => [
+        ['menu', 'COM_KUNENA_A_MENU_MANAGER', 'COM_KUNENA_A_MENU_MANAGER_DESC', 'bars'],
+        ['purgerestatements', 'COM_KUNENA_A_PURGE_RE_STATEMENTS', 'COM_KUNENA_A_PURGE_RE_STATEMENTS_DESC', 'eraser'],
+        ['cleanupip', 'COM_KUNENA_CPANEL_LABEL_CLEANUP_IP', 'COM_KUNENA_CPANEL_LABEL_CLEANUP_IP_DESC', 'user-secret'],
+        ['diagnostics', 'COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS', 'COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS_DESC', 'stethoscope'],
+        ['setupsocials', 'COM_KUNENA_DIAGNOSTICS_LABEL_SETUPSOCIALS', 'COM_KUNENA_DIAGNOSTICS_LABEL_SETUPSOCIALS_DESC', 'share-nodes'],
+    ],
+];
+
+if (PluginHelper::isEnabled('system', 'modifysocials')) {
+    $groups['COM_KUNENA_ADMIN_TOOLS_SYSTEM'][] = ['managesocials', 'COM_KUNENA_DIAGNOSTICS_LABEL_MODIFYSOCIALS', 'COM_KUNENA_DIAGNOSTICS_LABEL_MODIFYSOCIALS_DESC', 'pen-to-square'];
+}
+
+if (KunenaForum::isDev()) {
+    $groups['COM_KUNENA_ADMIN_TOOLS_SYSTEM'][] = ['view=install', 'COM_KUNENA_GIT_INSTALL', 'COM_KUNENA_GIT_INSTALL_DESC', 'code-branch'];
+}
 ?>
 
-<div id="kunena" class="container-fluid">
-    <div class="row">
-        <div id="j-main-container" class="col-md-12" role="main">
-            <div class="row clearfix">
-
-                <h1><?php echo Text::_('COM_KUNENA_ADMIN_TOOLS'); ?></h1>
-                <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=report'); ?>">
-                        <div class="card proj-t-card comp-card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_REPORT_SYSTEM'); ?>
-                                        </h6>
-                                        <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?>
-                                        </h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-wrench bg-cyan"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div id="kunena" class="kd">
+    <?php $section = 0; ?>
+    <?php foreach ($groups as $title => $tools) : ?>
+        <section class="kd-section" aria-labelledby="kd-tools-<?php echo ++$section; ?>">
+            <h2 id="kd-tools-<?php echo $section; ?>" class="kd-section__title"><?php echo Text::_($title); ?></h2>
+            <div class="kd-cards">
+                <?php foreach ($tools as [$layout, $label, $desc, $icon]) :
+                    $query = str_starts_with($layout, 'view=') ? $layout : 'view=tools&layout=' . $layout; ?>
+                    <a class="kd-card" href="<?php echo Route::_('index.php?option=com_kunena&' . $query); ?>">
+                        <span class="kd-card__icon fa-solid fa-<?php echo $icon; ?>" aria-hidden="true"></span>
+                        <span class="kd-card__title"><?php echo Text::_($label); ?></span>
+                        <span class="kd-card__desc"><?php echo Text::_($desc); ?></span>
                     </a>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=prune'); ?>">
-                        <div class="card proj-t-card comp-card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_C_PRUNETAB'); ?>
-                                        </h6>
-                                        <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_C_PRUNETAB_DESC'); ?>
-                                        </h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-wrench bg-cyan"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=syncUsers'); ?>">
-                        <div class="card proj-t-card comp-card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_SYNC_USERS'); ?>
-                                        </h6>
-                                        <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_SYNC_USERS_DESC'); ?>
-                                        </h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-wrench bg-cyan"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=recount'); ?>">
-                        <div class="card proj-t-card comp-card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_A_RECOUNT'); ?>
-                                        </h6>
-                                        <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_A_RECOUNT_DESC'); ?>
-                                        </h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-wrench bg-cyan"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="clearfix"></div>
-                <h1>system</h1>
-
-                <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=menu'); ?>">
-                        <div class="card proj-t-card comp-card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_A_MENU_MANAGER'); ?>
-                                        </h6>
-                                        <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_DESC'); ?>
-                                        </h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-wrench bg-cyan"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=purgerestatements'); ?>">
-                        <div class="card proj-t-card comp-card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?>
-                                        </h6>
-                                        <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_A_PURGE_RE_STATEMENTS_DESC'); ?>
-                                        </h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-wrench bg-cyan"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=cleanupip'); ?>">
-                        <div class="card proj-t-card comp-card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP'); ?>
-                                        </h6>
-                                        <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP_DESC'); ?>
-                                        </h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-wrench bg-cyan"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=diagnostics'); ?>">
-                        <div class="card proj-t-card comp-card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?>
-                                        </h6>
-                                        <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS_DESC'); ?>
-                                        </h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-wrench bg-cyan"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                
-                <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=setupsocials'); ?>">
-                        <div class="card proj-t-card comp-card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_SETUPSOCIALS'); ?>
-                                        </h6>
-                                        <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_SETUPSOCIALS_DESC'); ?>
-                                        </h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-wrench bg-cyan"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                
-                <?php if (PluginHelper::isEnabled('system', 'modifysocials')) :
-                ?>
-                    <div class="col-xl-3 col-md-6">
-                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=managesocials'); ?>">
-                            <div class="card proj-t-card comp-card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="mb-25">
-                                                <?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_MODIFYSOCIALS'); ?>
-                                            </h6>
-                                            <h3 class="fw-700 text-cyan">
-                                                <?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_MODIFYSOCIALS_DESC'); ?>
-                                            </h3>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-wrench bg-cyan"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                <?php endif; ?>
-
-                <?php if (KunenaForum::isDev()) :
-                ?>
-                    <div class="col-xl-3 col-md-6">
-                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=install'); ?>">
-                            <div class="card proj-t-card comp-card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="mb-25">
-                                                <?php echo Text::_('COM_KUNENA_GIT_INSTALL'); ?>
-                                            </h6>
-                                            <h3 class="fw-700 text-cyan">
-                                                <?php echo Text::_('COM_KUNENA_GIT_INSTALL_DESC'); ?>
-                                            </h3>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-wrench bg-cyan"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                <?php endif; ?>
+                <?php endforeach; ?>
             </div>
-        </div>
-    </div>
-</div>
-<div class="mt-3 text-center small">
-    <?php echo KunenaVersion::getLongVersionHTML(); ?>
+        </section>
+    <?php endforeach; ?>
+
+    <footer class="kd-footer">
+        <?php echo KunenaVersion::getLongVersionHTML(); ?>
+    </footer>
 </div>

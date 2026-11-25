@@ -61,16 +61,16 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 <th scope="col" class="w-10">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'rankTitle', $listDirn, $listOrder); ?>
                                 </th>
-                                <th scope="col" class="w-10">
+                                <th scope="col" class="w-10 d-none d-md-table-cell">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_RANKS_SPECIAL', 'rankSpecial', $listDirn, $listOrder); ?>
                                 </th>
-                                <th scope="col" class="w-10">
+                                <th scope="col" class="w-10 d-none d-md-table-cell">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_RANKSMIN', 'rankMin', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" class="w-10 d-none d-md-table-cell">
                                     <?php echo Text::_('COM_KUNENA_RANKS_USERGROUP'); ?>
                                 </th>
-                                <th scope="col" class="w-1">
+                                <th scope="col" class="w-1 d-none d-md-table-cell">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'rankId', $listDirn, $listOrder); ?>
                                 </th>
                             </tr>

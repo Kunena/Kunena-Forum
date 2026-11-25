@@ -13,7 +13,6 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -29,9 +28,6 @@ use Kunena\Forum\Libraries\Integration\KunenaPlugins;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
-
-Factory::getApplication()->getDocument()->getWebAssetManager()
-    ->registerAndUseStyle('kunena_dashboard', Uri::base() . 'components/com_kunena/media/css/dashboard.css', ['version' => 'auto']);
 
 // Is there a newer Kunena release, or are there updates for the Kunena add-ons?
 $updateInfo = CpanelController::getUpdateInfo();
@@ -283,22 +279,22 @@ $tile = function (array $item): void {
                     <input type="search" id="kd-settings-filter" placeholder="<?php echo $this->escape(Text::_('COM_KUNENA_CPANEL_SETTINGS_FILTER')); ?>" autocomplete="off">
                 </label>
             </div>
-            <div class="kd-settings" id="kd-settings">
+            <div class="kd-cards" id="kd-settings">
                 <?php foreach ($settings as [$tab, $label, $icon, $desc]) : ?>
-                    <a class="kd-setting" href="<?php echo Route::_($settingsUrl) . '#' . $tab; ?>">
-                        <span class="kd-setting__icon fa-solid fa-<?php echo $icon; ?>" aria-hidden="true"></span>
-                        <span class="kd-setting__title"><?php echo Text::_($label); ?></span>
-                        <span class="kd-setting__desc"><?php echo Text::_($desc); ?></span>
+                    <a class="kd-card" href="<?php echo Route::_($settingsUrl) . '#' . $tab; ?>">
+                        <span class="kd-card__icon fa-solid fa-<?php echo $icon; ?>" aria-hidden="true"></span>
+                        <span class="kd-card__title"><?php echo Text::_($label); ?></span>
+                        <span class="kd-card__desc"><?php echo Text::_($desc); ?></span>
                     </a>
                 <?php endforeach; ?>
-                <p class="kd-settings__empty" hidden><?php echo Text::_('COM_KUNENA_CPANEL_SETTINGS_NO_MATCH'); ?></p>
+                <p class="kd-cards__empty" hidden><?php echo Text::_('COM_KUNENA_CPANEL_SETTINGS_NO_MATCH'); ?></p>
             </div>
         </section>
         <script>
             (function () {
                 var input = document.getElementById('kd-settings-filter');
-                var items = document.querySelectorAll('#kd-settings .kd-setting');
-                var empty = document.querySelector('#kd-settings .kd-settings__empty');
+                var items = document.querySelectorAll('#kd-settings .kd-card');
+                var empty = document.querySelector('#kd-settings .kd-cards__empty');
 
                 input.addEventListener('input', function () {
                     var query = input.value.trim().toLowerCase();

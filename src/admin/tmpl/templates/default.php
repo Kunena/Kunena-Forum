@@ -43,7 +43,7 @@ $userId    = $user->id;
                     <thead>
                         <tr>
                             <td class="w-1 text-center"></td>
-                            <th scope="col" class="w-10 d-none d-md-table-cell">
+                            <th scope="col" class="w-10">
                                 <?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?>
                             </th>
                             <th scope="col" class="w-1 text-center">
@@ -83,21 +83,21 @@ $userId    = $user->id;
                                             <?php echo $this->escape($row->name); ?></a>
                                     </span>
                                 </th>
-                                <td class="d-none d-md-table-cell text-center tbody-icon">
+                                <td class="text-center tbody-icon">
                                     <a href="javascript: void(0);" onclick="return Joomla.listItemTask('cb<?php echo $i; ?>', '<?php echo $templatepublishTask; ?>')">
                                         <?php echo $row->published ? $img_yes : $img_no; ?>
                                     </a>
                                 </td>
-                                <td>
+                                <td class="d-none d-md-table-cell">
                                     <?php echo $row->authorEmail ? '<a href="mailto:' . $this->escape($row->authorEmail) . '">' . $this->escape($row->author) . '</a>' : $this->escape($row->author); ?>
                                 </td>
-                                <td>
+                                <td class="d-none d-md-table-cell">
                                     <?php echo $this->escape($row->version); ?>
                                 </td>
-                                <td>
+                                <td class="d-none d-md-table-cell">
                                     <?php echo $this->escape($row->creationdate); ?>
                                 </td>
-                                <td>
+                                <td class="d-none d-md-table-cell">
                                     <a href="<?php echo $this->escape($row->authorUrl); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($row->authorUrl); ?></a>
                                 </td>
                             </tr>

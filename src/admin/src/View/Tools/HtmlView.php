@@ -43,6 +43,7 @@ use Kunena\Forum\Libraries\Tools\KunenaPermissionCheck;
 use Kunena\Forum\Libraries\Tools\KunenaScheduledTasks;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
 use Kunena\Forum\Libraries\Tools\KunenaSpamFinder;
+use Kunena\Forum\Libraries\Tools\KunenaStorageReport;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriptions;
 use Kunena\Forum\Libraries\Tools\KunenaTokenRestore;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
@@ -63,7 +64,7 @@ class HtmlView extends BaseHtmlView
      */
     public const TOOLS = [
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
-        'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions',
+        'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage',
     ];
 
     /**
@@ -468,6 +469,9 @@ class HtmlView extends BaseHtmlView
                 }
 
                 return $data;
+
+            case 'storage':
+                return KunenaStorageReport::reportOnSite();
 
         }
 

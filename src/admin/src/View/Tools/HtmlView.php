@@ -69,6 +69,7 @@ use Kunena\Forum\Libraries\Tools\KunenaReportsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaAnnouncementsReview;
+use Kunena\Forum\Libraries\Tools\KunenaRatingAbuse;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -108,7 +109,7 @@ class HtmlView extends BaseHtmlView
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
         'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles', 'overrides', 'avatarfiles', 'settingshistory',
         'reports', 'warnings', 'moderatoredits', 'contentlimits', 'bigtopics', 'topicicons', 'rankladder', 'reactions',
-        'announcements',
+        'ratingabuse', 'announcements',
     ];
 
     /**
@@ -703,6 +704,9 @@ class HtmlView extends BaseHtmlView
 
             case 'reactions':
                 return KunenaReactionsOverview::reportOnSite();
+
+            case 'ratingabuse':
+                return KunenaRatingAbuse::findOnSite();
 
             case 'announcements':
                 return KunenaAnnouncementsReview::reviewOnSite(time());

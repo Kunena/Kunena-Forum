@@ -63,6 +63,7 @@ use Kunena\Forum\Libraries\Tools\KunenaReactionsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaAnnouncementsReview;
+use Kunena\Forum\Libraries\Tools\KunenaRatingAbuse;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
@@ -2681,6 +2682,32 @@ class ToolsController extends FormController
         }
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_REACTIONS_N_REMOVED', KunenaReactionsOverview::removeOnSite($ids)), 'success');
+    }
+
+    /**
+     * Removes all the ratings of the chosen users (tool "Rating abuse").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function removeRatings(): void
+    {
+        if (!$this->toolAllowed('ratingabuse')) {
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_AVATARS_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_RATINGS_N_REMOVED', KunenaRatingAbuse::removeOnSite($ids)), 'success');
     }
 
     /**

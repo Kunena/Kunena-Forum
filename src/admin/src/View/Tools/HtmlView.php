@@ -60,6 +60,7 @@ use Kunena\Forum\Libraries\Tools\KunenaLanguageOverrides;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsHistory;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaUnansweredTopics;
+use Kunena\Forum\Libraries\Tools\KunenaModeratorEdits;
 use Kunena\Forum\Libraries\Tools\KunenaReportsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
@@ -100,7 +101,7 @@ class HtmlView extends BaseHtmlView
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
         'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles', 'overrides', 'avatarfiles', 'settingshistory',
-        'reports', 'warnings',
+        'reports', 'warnings', 'moderatoredits',
     ];
 
     /**
@@ -677,6 +678,9 @@ class HtmlView extends BaseHtmlView
 
             case 'warnings':
                 return KunenaWarningsOverview::reportOnSite($input->getInt('days', KunenaWarningsOverview::PERIODS[0]), time());
+
+            case 'moderatoredits':
+                return KunenaModeratorEdits::reportOnSite($input->getInt('days', KunenaModeratorEdits::PERIODS[1]), time(), (bool) $input->getInt('noreason', 0));
         }
 
         return [];

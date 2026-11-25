@@ -51,6 +51,7 @@ use Kunena\Forum\Libraries\Tools\KunenaGoneTopics;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
+use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
@@ -2353,6 +2354,34 @@ class ToolsController extends FormController
         }
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_ADDRESSES_N_PAUSED', KunenaSubscriberAddresses::pauseOnSite($ids)), 'success');
+    }
+
+    /**
+     * Copies the access of a category to others (tool "Copy category permissions").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function copyPermissions(): void
+    {
+        $source  = $this->input->post->getInt('source', 0);
+        $targets = ArrayHelper::toInteger((array) $this->input->post->get('targets', [], 'array'));
+        $mods    = (bool) $this->input->post->getInt('moderators', 0);
+
+        if (!$this->toolAllowed('copypermissions&' . http_build_query(['source' => $source, 'targets' => $targets, 'moderators' => (int) $mods]))) {
+            return;
+        }
+
+        $result = KunenaCategoryPermissions::copyOnSite($source, $targets, $mods);
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_COPYPERMS_N_CHANGED', $result['changed']), $result['changed'] ? 'success' : 'info');
+
+        if ($result['failed']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_COPYPERMS_N_FAILED', $result['failed']), 'warning');
+        }
     }
 
     /**

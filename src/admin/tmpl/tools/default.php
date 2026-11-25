@@ -44,6 +44,7 @@ $groups = [
         ['profilespam', 'COM_KUNENA_TOOLS_PROFILESPAM', 'COM_KUNENA_TOOLS_PROFILESPAM_DESC', 'id-card'],
         ['moderators', 'COM_KUNENA_TOOLS_MODERATORS', 'COM_KUNENA_TOOLS_MODERATORS_DESC', 'user-shield'],
         ['subscriberaddresses', 'COM_KUNENA_TOOLS_ADDRESSES', 'COM_KUNENA_TOOLS_ADDRESSES_DESC', 'envelope-circle-check'],
+        ['copypermissions', 'COM_KUNENA_TOOLS_COPYPERMS', 'COM_KUNENA_TOOLS_COPYPERMS_DESC', 'copy'],
         ['usercleanup', 'COM_KUNENA_TOOLS_USERCLEANUP', 'COM_KUNENA_TOOLS_USERCLEANUP_DESC', 'user-xmark'],
         ['mergeusers', 'COM_KUNENA_TOOLS_MERGE', 'COM_KUNENA_TOOLS_MERGE_DESC', 'code-merge'],
         ['permissions', 'COM_KUNENA_TOOLS_PERMS', 'COM_KUNENA_TOOLS_PERMS_DESC', 'user-shield'],

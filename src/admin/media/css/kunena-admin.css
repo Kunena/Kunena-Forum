@@ -1802,6 +1802,14 @@ body.com_kunena .kd mark {
   color: var(--kd-text);
 }
 
+/* The categories to choose from (Copy category permissions): in columns, a long list scrolls. */
+.kd-copy-targets {
+  max-height: 22rem;
+  margin-top: .5rem;
+  overflow: auto;
+  column-width: 16rem;
+}
+
 /* A long address (a link, an address of a redirect) breaks instead of making the table wider. */
 .kd-break {
   overflow-wrap: anywhere;

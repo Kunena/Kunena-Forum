@@ -48,6 +48,7 @@ use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaSecurityAudit;
 use Kunena\Forum\Libraries\Tools\KunenaTranslationCheck;
+use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaModeratorActivity;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
@@ -87,7 +88,7 @@ class HtmlView extends BaseHtmlView
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
-        'settings', 'moderators', 'subscriberaddresses',
+        'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
     ];
 
     /**
@@ -617,6 +618,23 @@ class HtmlView extends BaseHtmlView
 
             case 'subscriberaddresses':
                 return KunenaSubscriberAddresses::findOnSite();
+
+            case 'copypermissions':
+                $rows       = array_column(KunenaCategoryTransfer::sortTree(KunenaCategoryTransfer::rowsOnSite()), null, 'id');
+                $source     = $input->getInt('source', 0);
+                $targets    = array_map('intval', (array) $input->get('targets', [], 'array'));
+                $moderators = (bool) $input->getInt('moderators', 0);
+                $preview    = $source && $targets ? KunenaCategoryPermissions::previewOnSite($rows, $source, $targets, $moderators) : [];
+                $users      = [];
+
+                foreach ($preview as $change) {
+                    $users = array_merge($users, $change['add'], $change['remove']);
+                }
+
+                return [
+                    'rows' => $rows, 'source' => $source, 'targets' => $targets, 'moderators' => $moderators, 'preview' => $preview,
+                    'names' => KunenaCategoryPermissions::namesOnSite($users),
+                ];
         }
 
         return [];

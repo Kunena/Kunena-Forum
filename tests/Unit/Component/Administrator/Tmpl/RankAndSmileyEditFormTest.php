@@ -37,7 +37,10 @@ class RankAndSmileyEditFormTest extends UnitTestCase
         $source = Files::read($file);
 
         $this->assertSame($places, substr_count($source, $value), 'The value is printed in ' . $places . ' places.');
-        $this->assertSame($places, substr_count($source, '$this->escape((string) (' . $value . ' ??'), 'Every one of them is encoded.');
+        // A title of a rank can be a language key: it is translated before it is encoded (escape(Text::_(...))).
+        $encoded = preg_match_all('/\$this->escape\((?:Text::_\()?\(string\) \(' . preg_quote($value, '/') . ' \?\?/', $source);
+
+        $this->assertSame($places, $encoded, 'Every one of them is encoded.');
         $this->assertSame(0, preg_match('/echo isset\([^)]*\) \? ' . preg_quote($value, '/') . ' :/', $source), 'None prints the value as it is stored.');
     }
 }

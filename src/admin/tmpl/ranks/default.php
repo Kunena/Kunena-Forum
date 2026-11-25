@@ -86,7 +86,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                     </td>
                                     <td>
                                         <?php if ($canEdit) : ?>
-                                            <a href="<?php echo Route::_('index.php?option=com_kunena&view=rank&layout=edit&id=' . $item->rankId); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($item->rankTitle); ?>">
+                                            <a href="<?php echo Route::_('index.php?option=com_kunena&view=rank&layout=edit&id=' . $item->rankId); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(Text::_($item->rankTitle)); ?>">
                                                 <img loading=lazy src="<?php echo $this->escape($this->ktemplate->getRankPath($item->rankImage, true)) ?>" alt="<?php echo $this->escape($item->rankImage); ?>" /></a>
                                         <?php else : ?>
                                             <img loading=lazy src="<?php echo $this->escape($this->ktemplate->getRankPath($item->rankImage, true)) ?>" alt="<?php echo $this->escape($item->rankImage); ?>" />
@@ -94,7 +94,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                     </td>
                                     <th>
                                         <?php if ($canEdit) : ?>
-                                            <a href="<?php echo Route::_('index.php?option=com_kunena&view=rank&layout=edit&id=' . $item->rankId); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($item->rankTitle); ?>">
+                                            <a href="<?php echo Route::_('index.php?option=com_kunena&view=rank&layout=edit&id=' . $item->rankId); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(Text::_($item->rankTitle)); ?>">
                                                 <?php echo Text::_($item->rankTitle); ?></a>
                                         <?php else : ?>
                                             <?php echo Text::_($item->rankTitle); ?>

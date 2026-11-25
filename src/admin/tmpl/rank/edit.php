@@ -71,13 +71,13 @@ $wa->useScript('multiselect');
                                 if (!$this->state->get('item.id')) :
                                     ?>
                                     <img loading=lazy name="rankImage" src="" border="0"
-                                         alt="<?php echo $this->escape((string) ($this->rankSelected->rankTitle ?? '')) ?>"/>
+                                         alt="<?php echo $this->escape(Text::_((string) ($this->rankSelected->rankTitle ?? ''))) ?>"/>
                                 <?php else :
                                     ?>
                                     <img loading=lazy name="rankImage"
                                          src="<?php echo $this->escape(KunenaFactory::getTemplate()->getRankPath($this->rankSelected->rankImage ?? '', true)); ?>"
                                          border="0"
-                                         alt="<?php echo $this->escape((string) ($this->rankSelected->rankTitle ?? 'rank')) ?>"/>
+                                         alt="<?php echo $this->escape(Text::_((string) ($this->rankSelected->rankTitle ?? 'rank'))) ?>"/>
                                 <?php endif; ?>
                             </td>
                         </tr>

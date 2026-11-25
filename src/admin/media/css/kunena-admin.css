@@ -1273,3 +1273,163 @@ body.com_kunena #content table.table > * > tr > :first-child > input[type="radio
   vertical-align: middle;
 }
 
+/* ---------------------------------------------------------------------------------------------------------------
+ * Buttons: a small one and a red one (an action which removes data)
+ * --------------------------------------------------------------------------------------------------------------- */
+
+body.com_kunena .kd-btn--sm {
+  min-height: 2rem;
+  padding: .3rem .75rem;
+  font-size: .82rem;
+}
+
+body.com_kunena .kd .kd-btn--danger,
+body.com_kunena a.kd-btn--danger {
+  color: #fff;
+  background: #d92d20;
+}
+
+body.com_kunena a.kd-btn--danger:hover {
+  filter: brightness(1.08);
+}
+
+/* ---------------------------------------------------------------------------------------------------------------
+ * Diagnostics: a summary, the checks with problems, then all the checks by group
+ * --------------------------------------------------------------------------------------------------------------- */
+
+.kd-diag__heroicon {
+  display: grid;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  font-size: 1.4rem;
+  color: var(--kd-ok);
+  background: var(--kd-ok-soft);
+  border-radius: 14px;
+}
+
+.kd-diag__hero.is-problem {
+  background: linear-gradient(135deg, var(--kd-warn-soft), var(--kd-surface) 70%);
+}
+
+.kd-diag__hero.is-problem .kd-diag__heroicon {
+  color: var(--kd-warn);
+  background: var(--kd-warn-soft);
+}
+
+body.com_kunena .kd-diag__hero .kd-hero__meta code {
+  padding: 0;
+  font-size: .8rem;
+  color: var(--kd-muted);
+  background: none;
+}
+
+.kd-diag__groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 1.75rem;
+  align-items: start;
+}
+
+.kd-checks {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  list-style: none;
+  background: var(--kd-surface);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius);
+  box-shadow: var(--kd-shadow);
+}
+
+.kd-check {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  align-items: center;
+  padding: .9rem 1.1rem;
+}
+
+.kd-check + .kd-check {
+  border-top: 1px solid var(--kd-border);
+}
+
+.kd-checks--compact .kd-check {
+  padding: .65rem 1.1rem;
+}
+
+.kd-check__icon {
+  flex: none;
+  width: 1.25rem;
+  font-size: 1rem;
+  color: var(--kd-ok);
+  text-align: center;
+}
+
+.kd-check.is-problem .kd-check__icon {
+  color: var(--kd-warn);
+}
+
+.kd-check__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 12rem;
+}
+
+.kd-check__title {
+  font-weight: 600;
+}
+
+.kd-checks--compact .kd-check__title {
+  font-weight: 500;
+}
+
+body.com_kunena .kd-check__code {
+  padding: 0;
+  font-size: .75rem;
+  color: var(--kd-muted);
+  background: none;
+}
+
+.kd-check__notice {
+  margin-top: .25rem;
+  font-size: .82rem;
+  color: var(--kd-warn);
+}
+
+.kd-check__count {
+  flex: none;
+  padding: .15rem .6rem;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--kd-ok);
+  white-space: nowrap;
+  background: var(--kd-ok-soft);
+  border-radius: 999px;
+}
+
+.kd-check.is-problem .kd-check__count {
+  color: var(--kd-warn);
+  background: var(--kd-warn-soft);
+}
+
+.kd-check__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+/* The fields of the items which are wrong */
+body.com_kunena #content table.table > tbody > tr > td.kd-diag__invalid {
+  font-weight: 600;
+  color: var(--kd-warn);
+  background: var(--kd-warn-soft);
+}
+
+@container (max-width: 520px) {
+  .kd-diag__groups {
+    grid-template-columns: 1fr;
+  }
+}

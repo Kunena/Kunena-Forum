@@ -18,6 +18,7 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\Database\DatabaseQuery;
 use Joomla\DI\Container;
 use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
+use Kunena\Tests\Unit\Support\Files;
 use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -108,5 +109,42 @@ class KunenaDiagnosticsTest extends UnitTestCase
 
         $this->assertSame([['id' => 1, 'mesid' => 999999901]], $rows);
         $this->assertSame([[0, $expected]], $limits);
+    }
+
+    public function testEveryCheckIsInOneGroupOfThePage(): void
+    {
+        $grouped = array_merge(...array_values(KunenaDiagnostics::getGroups()));
+
+        $this->assertSame([], array_values(array_diff(KunenaDiagnostics::getList(), $grouped)), 'A check without a group.');
+        $this->assertSame([], array_values(array_diff($grouped, KunenaDiagnostics::getList())), 'A group names a check which is not in the list.');
+        $this->assertSame(\count($grouped), \count(array_unique($grouped)), 'A check is in two groups.');
+    }
+
+    public static function titleKeys(): array
+    {
+        return [
+            'two words'          => ['categoryOrphaned', 'COM_KUNENA_DIAGNOSTICS_CHECK_CATEGORY_ORPHANED'],
+            'four words'         => ['messageBodyMissingMessage', 'COM_KUNENA_DIAGNOSTICS_CHECK_MESSAGE_BODY_MISSING_MESSAGE'],
+            'a word in lowercase' => ['thankyouOrphaned', 'COM_KUNENA_DIAGNOSTICS_CHECK_THANKYOU_ORPHANED'],
+        ];
+    }
+
+    #[DataProvider('titleKeys')]
+    public function testTheTitleKeyIsTheNameInCapitals(string $check, string $key): void
+    {
+        $this->assertSame($key, KunenaDiagnostics::titleKey($check));
+    }
+
+    public function testEveryCheckAndGroupHasItsText(): void
+    {
+        $strings = Files::languageFolder('src/admin/language/en-GB');
+
+        foreach (KunenaDiagnostics::getList() as $check) {
+            $this->assertArrayHasKey(KunenaDiagnostics::titleKey($check), $strings, "The title of the check $check.");
+        }
+
+        foreach (array_keys(KunenaDiagnostics::getGroups()) as $heading) {
+            $this->assertArrayHasKey($heading, $strings, "The heading $heading.");
+        }
     }
 }

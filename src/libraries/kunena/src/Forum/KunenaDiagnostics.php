@@ -1123,6 +1123,52 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * The checks by what they are about, for the page of the diagnostics: heading (a language key) => checks.
+     *
+     * @return  array<string, string[]>
+     *
+     * @since   Kunena 8.0
+     */
+    public static function getGroups(): array
+    {
+        return [
+            'COM_KUNENA_DIAGNOSTICS_GROUP_CATEGORIES' => [
+                'categoryOrphaned', 'categoryMissingAlias', 'categoryWrongAlias', 'aliasMissingCategory', 'channelOrphaned',
+            ],
+            'COM_KUNENA_DIAGNOSTICS_GROUP_TOPICS' => [
+                'topicInSection', 'topicMissingCategory', 'topicMissingMessages', 'topicMissingPoll', 'topicPollMismatch',
+                'movedMissingTopic', 'movedAndMessages', 'topicsOwnersOrphaned', 'ratingOrphaned',
+            ],
+            'COM_KUNENA_DIAGNOSTICS_GROUP_POSTS' => [
+                'messageBodyMissingMessage', 'messageMissingMessageBody', 'messageWrongCategory', 'messageOrphaned', 'attachmentOrphaned',
+                'thankyouOrphaned', 'reactionOrphaned', 'historyOrphaned', 'digestOrphaned', 'bookmarkOrphaned',
+            ],
+            'COM_KUNENA_DIAGNOSTICS_GROUP_POLLS' => [
+                'pollOrphaned', 'pollTopicMismatch', 'pollOptionOrphaned', 'pollUserOrphaned',
+            ],
+            'COM_KUNENA_DIAGNOSTICS_GROUP_USERS' => [
+                'userCategoryOrphaned', 'userReadOrphaned', 'userReadWrongCategory', 'userTopicOrphaned', 'userTopicWrongCategory',
+                'userAvatarOrphaned',
+            ],
+        ];
+    }
+
+    /**
+     * The language key of the title of a check: COM_KUNENA_DIAGNOSTICS_CHECK_ and the name of the check in capitals, its words
+     * separated by an underscore (categoryOrphaned: COM_KUNENA_DIAGNOSTICS_CHECK_CATEGORY_ORPHANED).
+     *
+     * @param   string  $function  The name of the check.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function titleKey(string $function): string
+    {
+        return 'COM_KUNENA_DIAGNOSTICS_CHECK_' . strtoupper(preg_replace('/(?<=[a-z0-9])(?=[A-Z])/', '_', $function));
+    }
+
+    /**
      * @return  array
      *
      * @since   Kunena 6.0

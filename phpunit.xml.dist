@@ -20,6 +20,10 @@
             <directory>src/libraries/kunena/src</directory>
         </include>
     </source>
+    <php>
+        <!-- Some tests read the whole source of the forum at once: the Unit suite needs more than the 128M of a default php.ini -->
+        <ini name="memory_limit" value="512M"/>
+    </php>
     <!--
         Without any setting the unit tests run without Joomla and the integration tests are skipped. To run everything copy this file to
         phpunit.xml (it is not in git) and fill in what you have, or set the same values as environment variables:

@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
@@ -83,6 +84,65 @@ abstract class KunenaDigest
      * @since   Kunena 8.0
      */
     public const int MAX_MESSAGES = 50;
+
+    /**
+     * The routine of the scheduler which sends the digests (plg_task_kunena).
+     *
+     * @since   Kunena 8.0
+     */
+    public const string TASK = 'send.digests';
+
+    /**
+     * Can the digests be sent on this site (null: not checked yet in this request)?
+     *
+     * @var     boolean|null
+     * @since   Kunena 8.0
+     */
+    protected static ?bool $available = null;
+
+    /**
+     * Can the digests be sent: the plugin of the tasks of Kunena is enabled and a task of the routine is enabled? Without
+     * them a digest is never sent, and a user who chose one would get no e-mail of his subscriptions at all.
+     *
+     * @param   bool   $pluginEnabled  Is the plugin plg_task_kunena enabled?
+     * @param   int[]  $taskStates     The states of the tasks of the routine (1: enabled, 0: disabled, -2: trashed).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function canSend(bool $pluginEnabled, array $taskStates): bool
+    {
+        return $pluginEnabled && \in_array(1, array_map('intval', $taskStates), true);
+    }
+
+    /**
+     * Can the digests be sent on this site (canSend())? Checked once in a request.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isAvailable(): bool
+    {
+        if (self::$available === null) {
+            try {
+                $db    = self::getDatabase();
+                $query = $db->createQuery()
+                    ->select($db->quoteName('state'))
+                    ->from($db->quoteName('#__scheduler_tasks'))
+                    ->where($db->quoteName('type') . ' = ' . $db->quote(self::TASK));
+                $states = (array) $db->setQuery($query)->loadColumn();
+
+                self::$available = self::canSend(PluginHelper::isEnabled('task', 'kunena'), $states);
+            } catch (Exception $e) {
+                // Without the scheduler, no digest: each post is sent at once.
+                self::$available = false;
+            }
+        }
+
+        return self::$available;
+    }
 
     /**
      * The seconds between two digests of a choice (0: each reply, no wait).

@@ -149,8 +149,9 @@ class UserEditSettingsDisplay extends UserEditDisplay
         );
         $this->settings[] = $item;
 
-        // The e-mails of the subscriptions: one for each post, or a daily or weekly digest (when the forum sends digests).
-        if (!empty($this->config->digestEmails) && !empty($this->config->allowSubscriptions)) {
+        // The e-mails of the subscriptions: one for each post, or a daily or weekly digest (when the forum sends digests: the
+        // option is on and a task of the scheduler sends them).
+        if (!empty($this->config->digestEmails) && !empty($this->config->allowSubscriptions) && KunenaDigest::isAvailable()) {
             $item             = new StdClass();
             $item->name       = 'digest';
             $item->label      = Text::_('COM_KUNENA_USER_DIGEST');

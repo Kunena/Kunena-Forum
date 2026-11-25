@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Mail\MailHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Email\KunenaDigest;
 use Throwable;
 
 /**
@@ -63,6 +64,11 @@ class KunenaMailTest
             $problems[] = 'COM_KUNENA_TOOLS_MAILTEST_PROBLEM_QUEUE';
         }
 
+        // The digests are offered but nothing sends them: the users get each e-mail instead, not the digest they chose.
+        if (!empty($settings['digests']) && empty($settings['digestTask'])) {
+            $problems[] = 'COM_KUNENA_TOOLS_MAILTEST_PROBLEM_DIGEST';
+        }
+
         return $problems;
     }
 
@@ -103,6 +109,8 @@ class KunenaMailTest
             'templates'  => (bool) $config->useMailTemplates,
             'queue'      => $queue,
             'queueTask'  => \in_array($tasks['add.mailsqueue']['state'] ?? 'missing', ['ok', 'never', 'late'], true),
+            'digests'    => (bool) $config->digestEmails,
+            'digestTask' => KunenaDigest::isAvailable(),
         ];
     }
 

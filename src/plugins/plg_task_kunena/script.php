@@ -78,6 +78,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         $this->addCleanPendingAttachmentsTask();
         $this->addUnsubscribeInactiveUsersTask();
         $this->addPublishScheduledRepliesTask();
+        $this->addSendDigestsTask();
     }
 
     /**
@@ -349,6 +350,50 @@ class plgTaskKunenaInstallerScript extends InstallerScript
                 'interval-minutes' => 5,
                 'exec-time'        => gmdate('H:i'),
                 'exec-day'         => gmdate('d'),
+            ],
+            'state'  => 1,
+            'params' => [],
+        ];
+        $model->save($task);
+    }
+
+    /**
+     * Function to enable the task which sends the daily and weekly digests. Without it, a user who chose a digest got no
+     * e-mail of his subscriptions at all: the posts were collected for a digest which was never sent.
+     *
+     * @return  void
+     * @since   8.0.0
+     */
+    private function addSendDigestsTask(): void
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__scheduler_tasks'))
+            ->where($db->quoteName('type') . ' = ' . $db->quote('send.digests'));
+        $db->setQuery($query);
+        $result = $db->loadResult();
+
+        if ($result) {
+            // We are already setup
+            return;
+        }
+
+        /** @var SchedulerComponent $component */
+        $component = Factory::getApplication()->bootComponent('com_scheduler');
+
+        /** @var TaskModel $model */
+        $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
+
+        // Every hour: each user gets his digest when his day or his week is over (KunenaDigest::isDue()).
+        $task  = [
+            'title'           => 'Kunena - Send digests',
+            'type'            => 'send.digests',
+            'execution_rules' => [
+                'rule-type'      => 'interval-hours',
+                'interval-hours' => 1,
+                'exec-time'      => gmdate('H:i'),
+                'exec-day'       => gmdate('d'),
             ],
             'state'  => 1,
             'params' => [],

@@ -2337,7 +2337,8 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         // The subscribers who chose a daily or weekly digest: the post is collected for their digest, they get no e-mail now.
-        if (!empty($emailToList) && (int) ($this->_config->digestEmails ?? 1)) {
+        // Only when a task of the scheduler sends the digests: without it they would get no e-mail at all.
+        if (!empty($emailToList) && (int) ($this->_config->digestEmails ?? 1) && KunenaDigest::isAvailable()) {
             [$emailToList, $digestUsers] = KunenaDigest::split($emailToList, KunenaDigest::frequencies(array_column($emailToList, 'id')));
 
             if ($digestUsers) {

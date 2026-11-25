@@ -194,4 +194,35 @@ class KunenaDigestTest extends UnitTestCase
     {
         $this->assertMatchesRegularExpression('/#__kunena_digest\b/', Files::read($file));
     }
+
+    public function testTheDigestsAreSentOnlyWithTheTaskAndThePlugin(): void
+    {
+        $this->assertTrue(KunenaDigest::canSend(true, [1]));
+        $this->assertTrue(KunenaDigest::canSend(true, [0, '1']));
+        $this->assertFalse(KunenaDigest::canSend(true, []));
+        $this->assertFalse(KunenaDigest::canSend(true, [0, -2]));
+        $this->assertFalse(KunenaDigest::canSend(false, [1]));
+    }
+
+    /**
+     * The install of the plugin of the tasks creates the task of the digests, like the other tasks of Kunena: without it a
+     * user who chose a digest got no e-mail of his subscriptions.
+     */
+    public function testThePluginCreatesTheTaskOfTheDigests(): void
+    {
+        $script = Files::read('src/plugins/plg_task_kunena/script.php');
+
+        $this->assertMatchesRegularExpression('/->addSendDigestsTask\(\);/', $script);
+        $this->assertStringContainsString("'type'            => 'send.digests'", $script);
+        $this->assertStringContainsString("'" . KunenaDigest::TASK . "' => [", Files::read('src/plugins/plg_task_kunena/src/Extension/Kunena.php'));
+    }
+
+    /**
+     * The posts are collected for a digest, and the choice is offered, only when the digests can be sent.
+     */
+    public function testNoDigestWithoutTheTask(): void
+    {
+        $this->assertMatchesRegularExpression('/digestEmails.*KunenaDigest::isAvailable\(\)/', Files::read('src/libraries/kunena/src/Forum/Message/KunenaMessage.php'));
+        $this->assertMatchesRegularExpression('/digestEmails.*KunenaDigest::isAvailable\(\)/', Files::read('src/site/src/Controller/User/Edit/Settings/UserEditSettingsDisplay.php'));
+    }
 }

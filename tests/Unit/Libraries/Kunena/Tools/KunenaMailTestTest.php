@@ -51,5 +51,8 @@ class KunenaMailTestTest extends UnitTestCase
         $this->assertSame([], M::problems(self::settings(['mailer' => 'mail', 'smtphost' => ''])));
         $this->assertSame(['COM_KUNENA_TOOLS_MAILTEST_PROBLEM_QUEUE'], M::problems(self::settings(['queue' => 4, 'queueTask' => false])));
         $this->assertSame([], M::problems(self::settings(['queue' => 4])));
+        $this->assertSame(['COM_KUNENA_TOOLS_MAILTEST_PROBLEM_DIGEST'], M::problems(self::settings(['digests' => true, 'digestTask' => false])));
+        $this->assertSame([], M::problems(self::settings(['digests' => true, 'digestTask' => true])));
+        $this->assertSame([], M::problems(self::settings(['digests' => false, 'digestTask' => false])));
     }
 }

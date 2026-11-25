@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
+use Kunena\Forum\Libraries\Tools\KunenaScheduledTasks;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
 use Kunena\Forum\Libraries\Tools\KunenaSpamFinder;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
@@ -50,7 +51,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 8.0
      */
-    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers'];
+    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'scheduledtasks'];
 
     /**
      * The data of the tool of the layout (loadTool()).
@@ -380,6 +381,12 @@ class HtmlView extends BaseHtmlView
                     'fromMatch' => trim($input->getString('from_search', '')) !== '' ? $this->findUsers($input->getString('from_search', '')) : [],
                     'intoMatch' => trim($input->getString('into_search', '')) !== '' ? $this->findUsers($input->getString('into_search', '')) : [],
                 ];
+
+            case 'scheduledtasks':
+                Factory::getApplication()->getLanguage()->load('plg_task_kunena', JPATH_ADMINISTRATOR)
+                    || Factory::getApplication()->getLanguage()->load('plg_task_kunena', JPATH_PLUGINS . '/task/kunena');
+
+                return ['tasks' => KunenaScheduledTasks::listOnSite()] + KunenaScheduledTasks::environment();
 
         }
 

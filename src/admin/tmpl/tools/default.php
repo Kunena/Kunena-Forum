@@ -39,6 +39,7 @@ $groups = [
         ['caches', 'COM_KUNENA_TOOLS_CACHES', 'COM_KUNENA_TOOLS_CACHES_DESC', 'database'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_SYSTEM' => [
+        ['scheduledtasks', 'COM_KUNENA_TOOLS_TASKS', 'COM_KUNENA_TOOLS_TASKS_DESC', 'clock-rotate-left'],
         ['menu', 'COM_KUNENA_A_MENU_MANAGER', 'COM_KUNENA_A_MENU_MANAGER_DESC', 'bars'],
         ['purgerestatements', 'COM_KUNENA_A_PURGE_RE_STATEMENTS', 'COM_KUNENA_A_PURGE_RE_STATEMENTS_DESC', 'eraser'],
         ['cleanupip', 'COM_KUNENA_CPANEL_LABEL_CLEANUP_IP', 'COM_KUNENA_CPANEL_LABEL_CLEANUP_IP_DESC', 'user-secret'],

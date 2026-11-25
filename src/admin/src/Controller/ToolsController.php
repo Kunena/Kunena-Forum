@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
+use Kunena\Forum\Libraries\Tools\KunenaScheduledTasks;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\Tools\KunenaUserMerge;
@@ -1632,6 +1633,33 @@ class ToolsController extends FormController
         }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=mergeusers', false));
+    }
+
+    /**
+     * Runs a scheduled task of Kunena now (tool "Scheduled tasks").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function runScheduledTask(): void
+    {
+        if (!$this->toolAllowed('scheduledtasks')) {
+            return;
+        }
+
+        $result = KunenaScheduledTasks::run($this->input->post->getInt('task_id', 0));
+
+        if ($result['ok']) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_TASKS_RUN_DONE'), 'success');
+        } else {
+            $this->app->enqueueMessage(
+                $result['code'] === null ? Text::_('COM_KUNENA_TOOLS_TASKS_RUN_NOT_FOUND') : Text::sprintf('COM_KUNENA_TOOLS_TASKS_RUN_FAILED', $result['code']),
+                'error'
+            );
+        }
     }
 
     /**

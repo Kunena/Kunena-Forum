@@ -87,21 +87,26 @@
 }
 
 .kd-hero__logo {
-  display: grid;
+  display: block;
   flex: none;
-  width: 132px;
-  height: 60px;
-  place-items: center;
-  padding: 8px 14px;
-  /* The logo is drawn for a light background, also in the dark mode. */
-  background: #ffffff;
-  border: 1px solid var(--kd-border);
-  border-radius: 14px;
+  width: 128px;
+  padding-right: 1rem;
+  border-right: 1px solid var(--kd-border);
 }
 
 .kd-hero__logo svg {
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+}
+
+/* The grey letters of the logo are too dark on a dark background: the logo is inline, so its gradient follows the theme. */
+[data-bs-theme="dark"] #kunena.kd #kunena-logo-grey stop:first-child {
+  stop-color: #e6ebf2;
+}
+
+[data-bs-theme="dark"] #kunena.kd #kunena-logo-grey stop:last-child {
+  stop-color: #a9b4c4;
 }
 
 #kunena.kd .kd-hero__title {

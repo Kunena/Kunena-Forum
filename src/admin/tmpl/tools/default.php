@@ -37,6 +37,7 @@ $groups = [
         ['bbcodecheck', 'COM_KUNENA_TOOLS_BBCODE', 'COM_KUNENA_TOOLS_BBCODE_DESC', 'code'],
         ['brokenlinks', 'COM_KUNENA_TOOLS_LINKS', 'COM_KUNENA_TOOLS_LINKS_DESC', 'link-slash'],
         ['polls', 'COM_KUNENA_TOOLS_POLLS', 'COM_KUNENA_TOOLS_POLLS_DESC', 'square-poll-vertical'],
+        ['drafts', 'COM_KUNENA_TOOLS_DRAFTS', 'COM_KUNENA_TOOLS_DRAFTS_DESC', 'file-pen'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_USERS' => [
         ['spam', 'COM_KUNENA_TOOLS_SPAM', 'COM_KUNENA_TOOLS_SPAM_DESC', 'shield-virus'],

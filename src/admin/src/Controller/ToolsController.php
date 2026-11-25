@@ -46,6 +46,7 @@ use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUserExport;
 use Kunena\Forum\Libraries\Tools\KunenaBrokenLinks;
+use Kunena\Forum\Libraries\Tools\KunenaDraftsSchedule;
 use Kunena\Forum\Libraries\Tools\KunenaGoneTopics;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
@@ -2165,6 +2166,61 @@ class ToolsController extends FormController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_GONE_NONE_CHOSEN'), 'warning');
         } else {
             $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_GONE_N_REDIRECTED', $changed), 'success');
+        }
+    }
+
+    /**
+     * Deletes the chosen drafts (tool "Drafts and scheduled replies").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function deleteDrafts(): void
+    {
+        if (!$this->toolAllowed('drafts&age=' . $this->input->post->getInt('age', 90))) {
+            return;
+        }
+
+        $deleted = KunenaDraftsSchedule::deleteDraftsOnSite(ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array')));
+
+        $this->app->enqueueMessage(
+            $deleted ? Text::plural('COM_KUNENA_TOOLS_DRAFTS_N_DELETED', $deleted) : Text::_('COM_KUNENA_TOOLS_DRAFTS_NONE_CHOSEN'),
+            $deleted ? 'success' : 'warning'
+        );
+    }
+
+    /**
+     * Publishes the chosen scheduled replies now (tool "Drafts and scheduled replies").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function publishScheduled(): void
+    {
+        if (!$this->toolAllowed('drafts&age=' . $this->input->post->getInt('age', 90))) {
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_DRAFTS_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $result = KunenaDraftsSchedule::publishNowOnSite($ids, time());
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_DRAFTS_N_PUBLISHED', $result['published']), $result['published'] ? 'success' : 'info');
+
+        if ($result['skipped']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_DRAFTS_N_SKIPPED', $result['skipped']), 'warning');
         }
     }
 

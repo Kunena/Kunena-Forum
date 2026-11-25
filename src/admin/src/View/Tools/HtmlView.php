@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUpdateCheck;
 use Kunena\Forum\Libraries\Tools\KunenaBrokenLinks;
+use Kunena\Forum\Libraries\Tools\KunenaDraftsSchedule;
 use Kunena\Forum\Libraries\Tools\KunenaGoneTopics;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
@@ -82,7 +83,7 @@ class HtmlView extends BaseHtmlView
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
-        'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics',
+        'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
     ];
 
     /**
@@ -590,6 +591,12 @@ class HtmlView extends BaseHtmlView
 
             case 'gonetopics':
                 return KunenaGoneTopics::listOnSite();
+
+            case 'drafts':
+                $age = $input->getInt('age', KunenaDraftsSchedule::AGES[2]);
+                $age = \in_array($age, KunenaDraftsSchedule::AGES, true) ? $age : KunenaDraftsSchedule::AGES[2];
+
+                return ['age' => $age, 'drafts' => KunenaDraftsSchedule::draftsOnSite($age, time()), 'scheduled' => KunenaDraftsSchedule::scheduledOnSite()];
         }
 
         return [];

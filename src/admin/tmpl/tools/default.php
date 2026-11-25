@@ -37,6 +37,7 @@ $groups = [
         ['unanswered', 'COM_KUNENA_TOOLS_UNANSWERED', 'COM_KUNENA_TOOLS_UNANSWERED_DESC', 'comment-slash'],
         ['duplicatetitles', 'COM_KUNENA_TOOLS_TITLES', 'COM_KUNENA_TOOLS_TITLES_DESC', 'heading'],
         ['categoryhealth', 'COM_KUNENA_TOOLS_CATHEALTH', 'COM_KUNENA_TOOLS_CATHEALTH_DESC', 'folder-tree'],
+        ['bigtopics', 'COM_KUNENA_TOOLS_BIGTOPICS', 'COM_KUNENA_TOOLS_BIGTOPICS_DESC', 'layer-group'],
         ['contentlimits', 'COM_KUNENA_TOOLS_LIMITS', 'COM_KUNENA_TOOLS_LIMITS_DESC', 'ruler'],
         ['findreplace', 'COM_KUNENA_TOOLS_REPLACE', 'COM_KUNENA_TOOLS_REPLACE_DESC', 'arrow-right-arrow-left'],
         ['mergecategories', 'COM_KUNENA_TOOLS_CATMERGE', 'COM_KUNENA_TOOLS_CATMERGE_DESC', 'object-group'],

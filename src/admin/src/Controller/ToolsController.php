@@ -2588,6 +2588,36 @@ class ToolsController extends FormController
     }
 
     /**
+     * Locks the chosen topics (tool "Big topics").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function lockBigTopics(): void
+    {
+        $size = $this->input->post->getInt('size', 0);
+
+        if (!$this->toolAllowed('bigtopics&size=' . $size)) {
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_TITLES_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $result = KunenaTopicManager::apply($ids, 'lock');
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_TOPICS_N_LOCK', $result['done']), $result['done'] ? 'success' : 'info');
+    }
+
+    /**
      * Gives a mail template the texts of Kunena again for a language (tool "E-mail templates").
      *
      * @return  void

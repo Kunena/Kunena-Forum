@@ -48,6 +48,7 @@ use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaSecurityAudit;
 use Kunena\Forum\Libraries\Tools\KunenaTranslationCheck;
+use Kunena\Forum\Libraries\Tools\KunenaModeratorActivity;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
@@ -85,7 +86,7 @@ class HtmlView extends BaseHtmlView
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
-        'settings',
+        'settings', 'moderators',
     ];
 
     /**
@@ -609,6 +610,9 @@ class HtmlView extends BaseHtmlView
                     'changed' => KunenaSettingsSnapshot::changed($current, KunenaSettingsSnapshot::defaultsOnSite()),
                     'preview' => \is_array($import) ? KunenaSettingsSnapshot::preview($import, $current) : null,
                 ];
+
+            case 'moderators':
+                return KunenaModeratorActivity::reportOnSite($input->getInt('days', KunenaModeratorActivity::PERIODS[1]), time());
         }
 
         return [];

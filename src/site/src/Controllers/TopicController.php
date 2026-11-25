@@ -3992,7 +3992,8 @@ class TopicController extends KunenaController
         $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $iconset . '/topicicons.xml';
 
         // As KunenaTemplate::getTopicIcon() shows them: without a set of its own, the default one.
-        if ($iconset === '' || preg_match('/^[\w\-]+$/', $iconset) !== 1 || !is_file($xmlfile)) {
+        // With the D modifier: without it "$" also matches before a line break at the end of the name.
+        if ($iconset === '' || preg_match('/^[\w\-]+$/D', $iconset) !== 1 || !is_file($xmlfile)) {
             $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
         }
 

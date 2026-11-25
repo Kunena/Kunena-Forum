@@ -36,4 +36,19 @@ class TopicControllerTopicIconsTest extends UnitTestCase
         $this->assertLessThan($path, $check, 'The name is checked before it is a part of a path.');
         $this->assertStringContainsString("\$categoryIconset = 'default';", $m[1], 'Any other name is the default set.');
     }
+
+    /**
+     * Without the D modifier "$" also matches before a line break at the end: "default\n" passed as the name of a folder where
+     * the icon of a topic is checked.
+     */
+    public function testNameOfAFolderHasNoLineBreakAtItsEnd(): void
+    {
+        $source = Files::read('src/site/src/Controllers/TopicController.php');
+
+        $this->assertSame(1, preg_match('/^[\w\-]+$/', "default\n"), 'What the check without D lets through.');
+        $this->assertSame(0, preg_match('/^[\w\-]+$/D', "default\n"));
+
+        $this->assertStringContainsString("preg_match('/^[\\w\\-]+\$/D', \$iconset) !== 1", $source);
+        $this->assertSame(0, preg_match('/preg_match\(\'\/\^\[\\\\w\\\\-\]\+\$\/\', \$\w+\)/', $source), 'No check of a folder name is left without D.');
+    }
 }

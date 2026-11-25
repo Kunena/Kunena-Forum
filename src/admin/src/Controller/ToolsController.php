@@ -43,6 +43,7 @@ use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaFindReplace;
+use Kunena\Forum\Libraries\Tools\KunenaInactiveUsers;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
 use Kunena\Forum\Libraries\Tools\KunenaModerationQueue;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
@@ -1837,6 +1838,49 @@ class ToolsController extends FormController
     }
 
     /**
+     * Unsubscribes, blocks or deletes the inactive accounts, a batch at a time (tool "Inactive accounts").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function inactiveUsers(): void
+    {
+        $criteria = KunenaInactiveUsers::criteria($this->input->post->getArray(['kind' => 'cmd', 'months' => 'int']));
+
+        if (!$this->toolAllowed('inactiveusers&kind=' . $criteria['kind'] . '&months=' . $criteria['months'])) {
+            return;
+        }
+
+        $action = $this->input->post->getCmd('user_action');
+
+        if (!\in_array($action, KunenaInactiveUsers::ACTIONS, true)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_INACTIVE_CHOOSE'), 'warning');
+
+            return;
+        }
+
+        $policy = ['unsubscribe' => null, 'block' => KunenaAccountActionPolicy::BLOCK, 'delete' => KunenaAccountActionPolicy::REMOVE][$action];
+        $result = KunenaInactiveUsers::applyOnSite(
+            $criteria,
+            $action,
+            fn (int $id): bool => $policy === null || $this->accountActionRefusal($policy, $id) === null
+        );
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_INACTIVE_N_' . strtoupper($action), $result['done']), $result['done'] ? 'success' : 'info');
+
+        if ($result['skipped']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_INACTIVE_N_SKIPPED', $result['skipped']), 'warning');
+        }
+
+        if ($result['left'] && $action !== 'unsubscribe') {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_INACTIVE_N_LEFT', $result['left']), 'info');
+        }
+    }
+
+    /**
      * The checks of a tool which changes the site: the token of the form and an administrator of Kunena. Sets the redirect back
      * to the layout of the tool in any case.
      *
@@ -1881,17 +1925,7 @@ class ToolsController extends FormController
      */
     private function accountActionAllowed(string $action, int $targetId): bool
     {
-        $me     = $this->app->getIdentity();
-        $target = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($targetId);
-        $reason = KunenaAccountActionPolicy::refusal(
-            $action,
-            (int) $me->id,
-            $targetId,
-            (bool) $target->authorise('core.admin'),
-            KunenaUserHelper::get($targetId)->isAdmin(),
-            (bool) $me->authorise('core.admin'),
-            static fn (string $right): bool => (bool) $me->authorise($right, 'com_users')
-        );
+        $reason = $this->accountActionRefusal($action, $targetId);
 
         if ($reason === null) {
             return true;
@@ -1908,5 +1942,31 @@ class ToolsController extends FormController
         $this->app->enqueueMessage($message, 'error');
 
         return false;
+    }
+
+    /**
+     * Why the current user may not do this to the account (KunenaAccountActionPolicy), null when he may.
+     *
+     * @param   string  $action    The action (KunenaAccountActionPolicy).
+     * @param   int     $targetId  The user.
+     *
+     * @return  string|null
+     *
+     * @since   Kunena 8.0
+     */
+    private function accountActionRefusal(string $action, int $targetId): ?string
+    {
+        $me     = $this->app->getIdentity();
+        $target = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($targetId);
+
+        return KunenaAccountActionPolicy::refusal(
+            $action,
+            (int) $me->id,
+            $targetId,
+            (bool) $target->authorise('core.admin'),
+            KunenaUserHelper::get($targetId)->isAdmin(),
+            (bool) $me->authorise('core.admin'),
+            static fn (string $right): bool => (bool) $me->authorise($right, 'com_users')
+        );
     }
 }

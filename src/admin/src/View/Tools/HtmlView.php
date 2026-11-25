@@ -35,6 +35,7 @@ use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaFindReplace;
+use Kunena\Forum\Libraries\Tools\KunenaInactiveUsers;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
 use Kunena\Forum\Libraries\Tools\KunenaModerationQueue;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
@@ -61,7 +62,7 @@ class HtmlView extends BaseHtmlView
      */
     public const TOOLS = [
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
-        'findreplace', 'mergecategories', 'moderation', 'permissions',
+        'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'permissions',
     ];
 
     /**
@@ -438,6 +439,11 @@ class HtmlView extends BaseHtmlView
 
             case 'moderation':
                 return ['unapproved' => KunenaModerationQueue::unapprovedOnSite(), 'reports' => KunenaModerationQueue::reportsOnSite()];
+
+            case 'inactiveusers':
+                $criteria = KunenaInactiveUsers::criteria(['kind' => $input->getCmd('kind', ''), 'months' => $input->getInt('months', 0)]);
+
+                return ['criteria' => $criteria, 'found' => KunenaInactiveUsers::findOnSite($criteria)];
 
             case 'permissions':
                 $userid     = $input->getInt('userid', 0);

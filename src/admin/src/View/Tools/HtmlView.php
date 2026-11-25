@@ -60,6 +60,7 @@ use Kunena\Forum\Libraries\Tools\KunenaLanguageOverrides;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsHistory;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaUnansweredTopics;
+use Kunena\Forum\Libraries\Tools\KunenaReportsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -98,6 +99,7 @@ class HtmlView extends BaseHtmlView
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
         'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles', 'overrides', 'avatarfiles', 'settingshistory',
+        'reports',
     ];
 
     /**
@@ -668,6 +670,9 @@ class HtmlView extends BaseHtmlView
 
             case 'settingshistory':
                 return KunenaSettingsHistory::historyOnSite($input->getCmd('setting', ''));
+
+            case 'reports':
+                return KunenaReportsOverview::reportOnSite($input->getInt('days', KunenaReportsOverview::PERIODS[1]), time());
         }
 
         return [];

@@ -213,14 +213,14 @@ final class Path
         }
 
         // Maintain scheme
-        if (false !== $schemeSeparatorPosition = strpos($path, '://')) {
-            $scheme = substr($path, 0, $schemeSeparatorPosition + 3);
-            $path = substr($path, $schemeSeparatorPosition + 3);
+        if (preg_match('{^[a-zA-Z0-9+.-]{2,}://}', $path, $m)) {
+            $scheme = $m[0];
+            $path = substr($path, \strlen($scheme));
         } else {
             $scheme = '';
         }
 
-        $firstCharacter = $path[0];
+        $firstCharacter = $path[0] ?? '';
 
         if ('/' === $firstCharacter) {
             return $scheme.'/';
@@ -355,7 +355,7 @@ final class Path
         }
 
         // No actual extension in path
-        if (!$actualExtension) {
+        if ('' === $actualExtension) {
             return $path.(str_ends_with($path, '.') ? '' : '.').$extension;
         }
 
@@ -372,7 +372,7 @@ final class Path
         }
 
         // URLs and stream wrappers are considered absolute
-        if (str_contains($path, '://') && null !== parse_url($path, \PHP_URL_SCHEME)) {
+        if (preg_match('{^[a-zA-Z0-9+.-]{2,}://}', $path)) {
             return true;
         }
 
@@ -460,9 +460,9 @@ final class Path
             return self::canonicalize($path);
         }
 
-        if (false !== $schemeSeparatorPosition = strpos($basePath, '://')) {
-            $scheme = substr($basePath, 0, $schemeSeparatorPosition + 3);
-            $basePath = substr($basePath, $schemeSeparatorPosition + 3);
+        if (preg_match('{^[a-zA-Z0-9+.-]{2,}://}', $basePath, $m)) {
+            $scheme = $m[0];
+            $basePath = substr($basePath, \strlen($scheme));
         } else {
             $scheme = '';
         }
@@ -534,7 +534,17 @@ final class Path
         if ('' === $root && '' !== $baseRoot) {
             // If base path is already in its root
             if ('' === $relativeBasePath) {
-                $relativePath = ltrim($relativePath, './'.\DIRECTORY_SEPARATOR);
+                // The base path is the root directory, so any number of leading
+                // "../" segments resolves to the root itself and "./" prefixes
+                // carry no information. Remove them as segments: a leading dot
+                // that is not one (e.g. ".htaccess") must survive.
+                while (str_starts_with($relativePath, './') || str_starts_with($relativePath, '../')) {
+                    $relativePath = substr($relativePath, str_starts_with($relativePath, '../') ? 3 : 2);
+                }
+
+                if ('..' === $relativePath) {
+                    $relativePath = '';
+                }
             }
 
             return $relativePath;
@@ -583,7 +593,7 @@ final class Path
      */
     public static function isLocal(string $path): bool
     {
-        return '' !== $path && !str_contains($path, '://');
+        return '' !== $path && !preg_match('{^[a-zA-Z0-9+.-]{2,}://}', $path);
     }
 
     /**
@@ -746,7 +756,7 @@ final class Path
 
             // Collapse ".." with the previous part, if one exists
             // Don't collapse ".." if the previous part is also ".."
-            if ('..' === $part && \count($canonicalParts) > 0 && '..' !== $canonicalParts[\count($canonicalParts) - 1]) {
+            if ('..' === $part && $canonicalParts && '..' !== $canonicalParts[\count($canonicalParts) - 1]) {
                 array_pop($canonicalParts);
 
                 continue;
@@ -785,9 +795,9 @@ final class Path
         }
 
         // Remember scheme as part of the root, if any
-        if (false !== $schemeSeparatorPosition = strpos($path, '://')) {
-            $root = substr($path, 0, $schemeSeparatorPosition + 3);
-            $path = substr($path, $schemeSeparatorPosition + 3);
+        if (preg_match('{^[a-zA-Z0-9+.-]{2,}://}', $path, $m)) {
+            $root = $m[0];
+            $path = substr($path, \strlen($root));
         } else {
             $root = '';
         }

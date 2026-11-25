@@ -131,7 +131,7 @@ class Filesystem
     public function touch(string|iterable $files, ?int $time = null, ?int $atime = null): void
     {
         foreach ($this->toIterable($files) as $file) {
-            if (!($time ? self::box('touch', $file, $time, $atime) : self::box('touch', $file))) {
+            if (!(null !== $time ? self::box('touch', $file, $time, $atime) : self::box('touch', $file))) {
                 throw new IOException(\sprintf('Failed to touch "%s": ', $file).self::$lastError, 0, null, $file);
             }
         }
@@ -163,35 +163,55 @@ class Filesystem
                     throw new IOException(\sprintf('Failed to remove symlink "%s": ', $file).self::$lastError);
                 }
             } elseif (is_dir($file)) {
-                if (!$isRecursive) {
-                    $tmpName = \dirname(realpath($file)).'/.!'.strrev(strtr(base64_encode(random_bytes(2)), '/=', '-!'));
+                $tmpDir = null;
+                $origFile = null;
 
-                    if (file_exists($tmpName)) {
-                        try {
-                            self::doRemove([$tmpName], true);
-                        } catch (IOException) {
+                try {
+                    if (!$isRecursive && false !== $realPath = realpath($file)) {
+                        for ($i = 0; $i < 10; ++$i) {
+                            // Keep the temporary suffix within six characters to preserve room for descendant paths.
+                            $tmpName = \dirname($realPath).'/.'.strtr(base64_encode(random_bytes(2)), ['/' => '-', '+' => '_', '=' => '']);
+
+                            if (!self::box('mkdir', $tmpName, 0o700)) {
+                                continue;
+                            }
+
+                            $tmpDir = $tmpName;
+
+                            if (self::box('rename', $file, $tmpDir.'/d')) {
+                                $origFile = $file;
+                                $file = $tmpDir.'/d';
+                            }
+
+                            break;
                         }
                     }
 
-                    if (!file_exists($tmpName) && self::box('rename', $file, $tmpName)) {
-                        $origFile = $file;
-                        $file = $tmpName;
-                    } else {
-                        $origFile = null;
-                    }
-                }
+                    try {
+                        $filesystemIterator = new \FilesystemIterator($file, \FilesystemIterator::CURRENT_AS_PATHNAME | \FilesystemIterator::SKIP_DOTS);
+                    } catch (\UnexpectedValueException $e) {
+                        if (!file_exists($file)) {
+                            continue;
+                        }
 
-                $filesystemIterator = new \FilesystemIterator($file, \FilesystemIterator::CURRENT_AS_PATHNAME | \FilesystemIterator::SKIP_DOTS);
-                self::doRemove(iterator_to_array($filesystemIterator, true), true);
-
-                if (!self::box('rmdir', $file) && file_exists($file) && !$isRecursive) {
-                    $lastError = self::$lastError;
-
-                    if (null !== $origFile && self::box('rename', $file, $origFile)) {
-                        $file = $origFile;
+                        throw new IOException(\sprintf('Failed to remove directory "%s": ', $file).$e->getMessage(), 0, $e);
                     }
 
-                    throw new IOException(\sprintf('Failed to remove directory "%s": ', $file).$lastError);
+                    self::doRemove(iterator_to_array($filesystemIterator, true), true);
+
+                    if (!self::box('rmdir', $file) && file_exists($file) && !$isRecursive) {
+                        throw new IOException(\sprintf('Failed to remove directory "%s": ', $file).self::$lastError);
+                    }
+                } catch (IOException $e) {
+                    if (null === $origFile || !self::box('rename', $file, $origFile)) {
+                        throw $e;
+                    }
+
+                    throw new IOException(str_replace($file, $origFile, $e->getMessage()), 0, $e);
+                } finally {
+                    if (null !== $tmpDir) {
+                        self::box('rmdir', $tmpDir);
+                    }
                 }
             } elseif (!self::box('unlink', $file) && ((self::$lastError && str_contains(self::$lastError, 'Permission denied')) || file_exists($file))) {
                 throw new IOException(\sprintf('Failed to remove file "%s": ', $file).self::$lastError);
@@ -521,13 +541,18 @@ class Filesystem
      * @param array             $options  An array of boolean options
      *                                    Valid options are:
      *                                    - $options['override'] If true, target files newer than origin files are overwritten (see copy(), defaults to false)
-     *                                    - $options['copy_on_windows'] Whether to copy files instead of links on Windows (see symlink(), defaults to false)
+     *                                    - $options['follow_symlinks'] Whether to copy files instead of links, esp. useful on Windows (see symlink(), defaults to false)
+     *                                    - $options['copy_on_windows'] @deprecated since Symfony 8.1, use $options['follow_symlinks'] instead
      *                                    - $options['delete'] Whether to delete files that are not in the source directory (defaults to false)
      *
      * @throws IOException When file type is unknown
      */
     public function mirror(string $originDir, string $targetDir, ?\Traversable $iterator = null, array $options = []): void
     {
+        if (isset($options['copy_on_windows'])) {
+            trigger_deprecation('symfony/filesystem', '8.1', 'Calling "%s()" with option "copy_on_windows" is deprecated, use option "follow_symlinks" instead.', __METHOD__);
+        }
+
         $targetDir = rtrim($targetDir, '/\\');
         $originDir = rtrim($originDir, '/\\');
         $originDirLen = \strlen($originDir);
@@ -538,11 +563,7 @@ class Filesystem
 
         // Iterate in destination folder to remove obsolete entries
         if ($this->exists($targetDir) && isset($options['delete']) && $options['delete']) {
-            $deleteIterator = $iterator;
-            if (null === $deleteIterator) {
-                $flags = \FilesystemIterator::SKIP_DOTS;
-                $deleteIterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($targetDir, $flags), \RecursiveIteratorIterator::CHILD_FIRST);
-            }
+            $deleteIterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($targetDir, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST);
             $targetDirLen = \strlen($targetDir);
             foreach ($deleteIterator as $file) {
                 $origin = $originDir.substr($file->getPathname(), $targetDirLen);
@@ -552,10 +573,10 @@ class Filesystem
             }
         }
 
-        $copyOnWindows = $options['copy_on_windows'] ?? false;
+        $followSymlinks = $options['follow_symlinks'] ?? $options['copy_on_windows'] ?? false;
 
         if (null === $iterator) {
-            $flags = $copyOnWindows ? \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS : \FilesystemIterator::SKIP_DOTS;
+            $flags = $followSymlinks ? \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS : \FilesystemIterator::SKIP_DOTS;
             $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($originDir, $flags), \RecursiveIteratorIterator::SELF_FIRST);
         }
 
@@ -570,7 +591,7 @@ class Filesystem
             $target = $targetDir.substr($file->getPathname(), $originDirLen);
             $filesCreatedWhileMirroring[$target] = true;
 
-            if (!$copyOnWindows && is_link($file)) {
+            if (!$followSymlinks && is_link($file)) {
                 $this->symlink($file->getLinkTarget(), $target);
             } elseif (is_dir($file)) {
                 $this->mkdir($target);
@@ -626,7 +647,15 @@ class Filesystem
 
             // Use fopen instead of file_exists as some streams do not support stat
             // Use mode 'x+' to atomically check existence and create to avoid a TOCTOU vulnerability
-            if (!$handle = self::box('fopen', $tmpFile, 'x+')) {
+            // Force the umask so that the file is created private, as PHP's tempnam() does
+            $umask = umask(0o077);
+            try {
+                $handle = self::box('fopen', $tmpFile, 'x+');
+            } finally {
+                umask($umask);
+            }
+
+            if (!$handle) {
                 continue;
             }
 

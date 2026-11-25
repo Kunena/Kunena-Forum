@@ -412,6 +412,18 @@ class KunenaConfig
     }
 
     /**
+     * All the options with their values, as they are stored (the export of the configuration).
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    public function toArray(): array
+    {
+        return $this->config;
+    }
+
+    /**
      * Public wakeup method to prevent unserialization of this utility class.
      * Throw an exception to make it explicit that unserialization is not allowed.
      *

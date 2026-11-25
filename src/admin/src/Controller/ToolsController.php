@@ -39,6 +39,7 @@ use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
+use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
@@ -1484,6 +1485,95 @@ class ToolsController extends FormController
         }
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_SEARCHINDEX_N_PURGED', KunenaSearchIndex::purge()), 'success');
+    }
+
+    /**
+     * Downloads the categories (a branch or all) and the configuration when asked, as a JSON file (tool "Export and import").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function exportCategories(): void
+    {
+        if (!$this->toolAllowed('transfer')) {
+            return;
+        }
+
+        $root   = $this->input->post->getInt('root', 0);
+        $config = $this->input->post->getInt('with_config', 0) ? KunenaConfig::getInstance()->toArray() : null;
+        $data   = KunenaCategoryTransfer::export(KunenaCategoryTransfer::rowsOnSite(), $root, $config);
+        $name   = 'kunena-export-' . Factory::getDate()->format('Y-m-d') . '.json';
+
+        $this->app->setHeader('Content-Type', 'application/json; charset=utf-8', true);
+        $this->app->setHeader('Content-Disposition', 'attachment; filename="' . $name . '"', true);
+        $this->app->setHeader('X-Content-Type-Options', 'nosniff', true);
+        $this->app->sendHeaders();
+
+        echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        $this->app->close();
+    }
+
+    /**
+     * Imports a JSON file of an export (tool "Export and import"): the categories below the chosen parent, the configuration
+     * when asked.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function importCategories(): void
+    {
+        if (!$this->toolAllowed('transfer')) {
+            return;
+        }
+
+        $file = $this->input->files->get('import_file', [], 'raw');
+
+        if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || (int) ($file['size'] ?? 0) > 5 * 1024 * 1024) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_TRANSFER_ERROR_FILE'), 'error');
+
+            return;
+        }
+
+        $data  = json_decode((string) file_get_contents($file['tmp_name']), true);
+        $error = KunenaCategoryTransfer::validate($data);
+
+        if ($error !== null) {
+            $this->app->enqueueMessage(Text::_($error), 'error');
+
+            return;
+        }
+
+        $parent = $this->input->post->getInt('parent', 0);
+
+        if ($parent > 0 && !KunenaCategoryHelper::get($parent)->exists()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_TRANSFER_ERROR_PARENT'), 'error');
+
+            return;
+        }
+
+        $result = KunenaCategoryTransfer::importOnSite(
+            $data,
+            $parent,
+            (bool) $this->input->post->getInt('unpublished', 0),
+            (bool) $this->input->post->getInt('with_config', 0)
+        );
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_TRANSFER_N_IMPORTED', $result['categories']), 'success');
+
+        if ($result['failed']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_TRANSFER_N_FAILED', $result['failed']), 'warning');
+        }
+
+        if ($result['config']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_TRANSFER_N_CONFIG', $result['config']), 'success');
+        }
     }
 
     /**

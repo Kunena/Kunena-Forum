@@ -30,6 +30,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
+use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
 use Kunena\Forum\Libraries\Tools\KunenaSpamFinder;
@@ -49,7 +50,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 8.0
      */
-    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'mergeusers'];
+    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers'];
 
     /**
      * The data of the tool of the layout (loadTool()).
@@ -361,6 +362,9 @@ class HtmlView extends BaseHtmlView
 
             case 'searchindex':
                 return KunenaSearchIndex::status();
+
+            case 'transfer':
+                return ['categories' => KunenaCategoryTransfer::sortTree(KunenaCategoryTransfer::rowsOnSite())];
 
             case 'mergeusers':
                 $from = $input->getInt('from', 0);

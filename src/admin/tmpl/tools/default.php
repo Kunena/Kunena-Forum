@@ -26,6 +26,7 @@ $groups = [
         ['prune', 'COM_KUNENA_C_PRUNETAB', 'COM_KUNENA_C_PRUNETAB_DESC', 'scissors'],
         ['syncUsers', 'COM_KUNENA_SYNC_USERS', 'COM_KUNENA_SYNC_USERS_DESC', 'users-gear'],
         ['recount', 'COM_KUNENA_A_RECOUNT', 'COM_KUNENA_A_RECOUNT_DESC', 'calculator'],
+        ['transfer', 'COM_KUNENA_TOOLS_TRANSFER', 'COM_KUNENA_TOOLS_TRANSFER_DESC', 'right-left'],
         ['searchindex', 'COM_KUNENA_TOOLS_SEARCHINDEX', 'COM_KUNENA_TOOLS_SEARCHINDEX_DESC', 'magnifying-glass'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_USERS' => [

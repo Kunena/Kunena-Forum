@@ -23,6 +23,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Button\DropdownButton;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Administrator\Helper\ConfigHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -143,7 +144,7 @@ class HtmlView extends BaseHtmlView
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            $toolbar->preferences('com_kunena');
+            $toolbar->linkButton('options', 'JTOOLBAR_OPTIONS')->url(ConfigHelper::link());
         }
 
         $helpUrl = 'https://docs.kunena.org/en/setup/sections-categories';

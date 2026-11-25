@@ -20,6 +20,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Controller\CpanelController;
+use Kunena\Forum\Administrator\Helper\ConfigHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
@@ -57,7 +58,6 @@ if (!$lastCheck) {
 
 $canDo          = ContentHelper::getActions('com_kunena');
 $canConfigure   = $canDo->get('core.admin') || $canDo->get('core.options');
-$settingsUrl    = 'index.php?option=com_config&view=component&component=com_kunena';
 $sampleChoice   = $_POST['sample_data_choice'] ?? null;
 $hasSampleData  = KunenaForum::versionSampleData();
 $askSampleData  = $sampleChoice === null && !$hasSampleData;
@@ -85,23 +85,6 @@ $maintenance = [
     ['logs', 'COM_KUNENA_LOG_MANAGER', 'clipboard-list', $this->numberOfLogs, 'COM_KUNENA_CPANEL_TILE_LOGS_DESC'],
     ['stats', 'COM_KUNENA_STAT_FORUMSTATS', 'chart-column', null, 'COM_KUNENA_CPANEL_TILE_STATS_DESC'],
     ['tools', 'COM_KUNENA_CPANEL_LABEL_TOOLS', 'wrench', null, 'COM_KUNENA_CPANEL_TILE_TOOLS_DESC'],
-];
-
-// The tabs of the configuration: [tab, label, icon, description]. The tab opens from the hash of the link.
-$settings = [
-    ['general', 'COM_KUNENA_CPANEL_SETTINGS_GENERAL', 'sliders', 'COM_KUNENA_CPANEL_SETTINGS_GENERAL_DESC'],
-    ['frontend', 'COM_KUNENA_A_FRONTEND', 'display', 'COM_KUNENA_CPANEL_SETTINGS_FRONTEND_DESC'],
-    ['users', 'COM_KUNENA_A_USERS', 'user-gear', 'COM_KUNENA_CPANEL_SETTINGS_USERS_DESC'],
-    ['emails', 'COM_KUNENA_SUBSCRIPTIONS', 'bell', 'COM_KUNENA_CPANEL_SETTINGS_EMAILS_DESC'],
-    ['security', 'COM_KUNENA_A_SECURITY', 'shield-halved', 'COM_KUNENA_CPANEL_SETTINGS_SECURITY_DESC'],
-    ['avatars', 'COM_KUNENA_A_AVATARS', 'circle-user', 'COM_KUNENA_CPANEL_SETTINGS_AVATARS_DESC'],
-    ['uploads', 'COM_KUNENA_A_UPLOADS', 'cloud-arrow-up', 'COM_KUNENA_CPANEL_SETTINGS_UPLOADS_DESC'],
-    ['ranking', 'COM_KUNENA_A_RANKING', 'medal', 'COM_KUNENA_CPANEL_SETTINGS_RANKING_DESC'],
-    ['bbcode', 'COM_KUNENA_A_BBCODE', 'pen-to-square', 'COM_KUNENA_CPANEL_SETTINGS_BBCODE_DESC'],
-    ['rss', 'COM_KUNENA_ADMIN_RSS', 'rss', 'COM_KUNENA_CPANEL_SETTINGS_RSS_DESC'],
-    ['extra', 'COM_KUNENA_ADMIN_CONFIG_EXTRA', 'square-poll-vertical', 'COM_KUNENA_CPANEL_SETTINGS_EXTRA_DESC'],
-    ['menu', 'COM_KUNENA_ADMIN_MENU_SETTINGS', 'bars', 'COM_KUNENA_CPANEL_SETTINGS_MENU_DESC'],
-    ['permissions', 'JCONFIG_PERMISSIONS_LABEL', 'key', 'COM_KUNENA_CPANEL_SETTINGS_PERMISSIONS_DESC'],
 ];
 
 $tile = function (array $item): void {
@@ -155,7 +138,7 @@ $tile = function (array $item): void {
                 <?php echo Text::_('COM_KUNENA_CPANEL_VIEW_FORUM'); ?>
             </a>
             <?php if ($canConfigure) : ?>
-                <a class="kd-btn kd-btn--primary" href="<?php echo Route::_($settingsUrl); ?>">
+                <a class="kd-btn kd-btn--primary" href="<?php echo Route::_(ConfigHelper::link()); ?>">
                     <span class="fa-solid fa-gear" aria-hidden="true"></span>
                     <?php echo Text::_('COM_KUNENA_CPANEL_ALL_SETTINGS'); ?>
                 </a>
@@ -280,8 +263,8 @@ $tile = function (array $item): void {
                 </label>
             </div>
             <div class="kd-cards" id="kd-settings">
-                <?php foreach ($settings as [$tab, $label, $icon, $desc]) : ?>
-                    <a class="kd-card" href="<?php echo Route::_($settingsUrl) . '#' . $tab; ?>">
+                <?php foreach (ConfigHelper::SECTIONS as $tab => [$label, $icon, $desc]) : ?>
+                    <a class="kd-card" href="<?php echo Route::_(ConfigHelper::link($tab)); ?>">
                         <span class="kd-card__icon fa-solid fa-<?php echo $icon; ?>" aria-hidden="true"></span>
                         <span class="kd-card__title"><?php echo Text::_($label); ?></span>
                         <span class="kd-card__desc"><?php echo Text::_($desc); ?></span>

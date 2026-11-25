@@ -20,6 +20,7 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Administrator\Helper\ConfigHelper;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use stdClass;
 
@@ -81,7 +82,7 @@ class HtmlView extends BaseHtmlView
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            $toolbar->preferences('com_kunena');
+            $toolbar->linkButton('options', 'JTOOLBAR_OPTIONS')->url(ConfigHelper::link());
         }
     }
 }

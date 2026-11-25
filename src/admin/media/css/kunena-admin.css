@@ -850,3 +850,312 @@ body.com_kunena #content .float-end.small {
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
 }
 
+/* ---------------------------------------------------------------------------------------------------------------
+ * The configuration: the sections on the left, the options of the open section on the right.
+ * --------------------------------------------------------------------------------------------------------------- */
+
+.kd-config {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 1.75rem;
+  align-items: start;
+}
+
+.kd-config__aside {
+  position: sticky;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+}
+
+.kd-config__aside .kd-search {
+  width: 100%;
+}
+
+.kd-config__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: .4rem;
+  background: var(--kd-surface);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius);
+  box-shadow: var(--kd-shadow);
+}
+
+body.com_kunena .kd-config__link {
+  display: flex;
+  gap: .7rem;
+  align-items: center;
+  padding: .55rem .7rem;
+  font-size: .92rem;
+  font-weight: 500;
+  color: var(--kd-text);
+  border-radius: var(--kd-radius-sm);
+  transition: background-color .15s, color .15s;
+}
+
+body.com_kunena .kd-config__link:hover {
+  background: var(--kd-surface-2);
+}
+
+body.com_kunena .kd-config__link.is-active {
+  font-weight: 600;
+  color: var(--kd-accent);
+  background: var(--kd-accent-soft);
+}
+
+body.com_kunena .kd-config__link:focus-visible {
+  outline: 3px solid var(--kd-accent);
+  outline-offset: 1px;
+}
+
+.kd-config__linkicon {
+  width: 1.1rem;
+  color: var(--kd-muted);
+  text-align: center;
+}
+
+.kd-config__link.is-active .kd-config__linkicon {
+  color: inherit;
+}
+
+.kd-config__linktext {
+  flex: 1;
+  min-width: 0;
+}
+
+.kd-config__count {
+  min-width: 1.6rem;
+  padding: .05rem .45rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--kd-accent-text);
+  text-align: center;
+  background: var(--kd-accent);
+  border-radius: 999px;
+}
+
+/* While searching, the sections without a match are dimmed in the list */
+.kd-config.is-searching .kd-config__link:has(.kd-config__count[hidden]) {
+  opacity: .45;
+}
+
+.kd-config__dirty {
+  align-self: flex-start;
+  margin: 0;
+}
+
+.kd-config__main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+  scroll-margin-top: 1rem;
+}
+
+.kd-config__section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.kd-config__section[hidden] {
+  display: none;
+}
+
+.kd-config__head {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.1rem 1.25rem;
+  background: linear-gradient(135deg, var(--kd-accent-soft), var(--kd-surface) 70%);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius);
+}
+
+.kd-config__headicon {
+  display: grid;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  font-size: 1.15rem;
+  color: var(--kd-accent);
+  background: var(--kd-surface);
+  border: 1px solid var(--kd-border);
+  border-radius: 12px;
+}
+
+body.com_kunena .kd .kd-config__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--kd-text);
+}
+
+body.com_kunena .kd .kd-config__desc {
+  margin-top: .15rem;
+  font-size: .9rem;
+  color: var(--kd-muted);
+}
+
+/* While searching, every section with a match is shown: its header is lighter */
+.kd-config.is-searching .kd-config__head {
+  padding: .6rem 1rem;
+  background: transparent;
+  border: 0;
+}
+
+.kd-config.is-searching .kd-config__headicon {
+  width: 32px;
+  height: 32px;
+  font-size: .9rem;
+}
+
+.kd-config.is-searching .kd-config__title {
+  font-size: 1rem !important;
+}
+
+.kd-config.is-searching .kd-config__desc {
+  display: none;
+}
+
+.kd-config__group {
+  overflow: hidden;
+  background: var(--kd-surface);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius);
+  box-shadow: var(--kd-shadow);
+}
+
+body.com_kunena .kd .kd-config__grouptitle {
+  padding: .9rem 1.25rem;
+  margin: 0;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--kd-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  background: var(--kd-surface-2);
+  border-bottom: 1px solid var(--kd-border);
+}
+
+body.com_kunena .kd .kd-config__groupdesc {
+  padding: .9rem 1.25rem 0;
+  font-size: .9rem;
+  color: var(--kd-muted);
+}
+
+/* One option: its name on the left, its field and help text on the right */
+
+body.com_kunena .kd .kd-row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: .4rem 2rem;
+  align-items: start;
+  padding: 1rem 1.25rem;
+  margin: 0;
+}
+
+body.com_kunena .kd .kd-row + .kd-row,
+body.com_kunena .kd .kd-config__grouptitle + .kd-row {
+  border-top: 1px solid var(--kd-border);
+}
+
+body.com_kunena .kd .kd-config__grouptitle + .kd-row {
+  border-top: 0;
+}
+
+body.com_kunena .kd .kd-row.hidden,
+body.com_kunena .kd .kd-nomatch {
+  display: none !important;
+}
+
+body.com_kunena .kd .kd-row > .control-label {
+  width: auto;
+  padding: .45rem 0 0;
+  margin: 0;
+  text-align: left;
+}
+
+body.com_kunena .kd .kd-row > .control-label label {
+  font-weight: 600;
+  color: var(--kd-text);
+}
+
+body.com_kunena .kd .kd-row > .controls {
+  min-width: 0;
+  margin: 0;
+}
+
+body.com_kunena .kd .kd-row .kd-row__desc {
+  margin-top: .4rem;
+}
+
+body.com_kunena .kd .kd-row .kd-row__desc .form-text {
+  font-size: .82rem;
+  line-height: 1.45;
+  color: var(--kd-muted);
+}
+
+/* The permissions take the whole width */
+body.com_kunena .kd [data-section="permissions"] .kd-row {
+  grid-template-columns: 1fr;
+}
+
+body.com_kunena .kd [data-section="permissions"] .kd-row > .control-label {
+  display: none;
+}
+
+/* Below 992px the tabs of Joomla make the list of the groups as wide as the field, but do not wrap: the panel of the group
+   would be pushed out of view. With the wrap it goes below the list. */
+body.com_kunena .kd [data-section="permissions"] joomla-tab[orientation="vertical"] {
+  flex-wrap: wrap;
+}
+
+body.com_kunena .kd [data-section="permissions"] joomla-tab[orientation="vertical"] > joomla-tab-element {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.kd-config__empty {
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+  padding: 1.5rem;
+  margin: 0;
+  color: var(--kd-muted);
+  background: var(--kd-surface);
+  border: 1px dashed var(--kd-border);
+  border-radius: var(--kd-radius);
+}
+
+.kd-config__empty[hidden] {
+  display: none;
+}
+
+@container (max-width: 860px) {
+  .kd-config {
+    grid-template-columns: 1fr;
+  }
+
+  .kd-config__aside {
+    position: static;
+  }
+
+  .kd-config__nav {
+    flex-direction: row;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  body.com_kunena .kd-config__link {
+    flex: none;
+  }
+
+  body.com_kunena .kd .kd-row {
+    grid-template-columns: 1fr;
+  }
+}
+

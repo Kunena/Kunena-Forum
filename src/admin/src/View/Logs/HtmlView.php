@@ -21,6 +21,7 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Administrator\Helper\ConfigHelper;
 
 /**
  * Logs view for Kunena backend
@@ -132,7 +133,7 @@ class HtmlView extends BaseHtmlView
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            ToolbarHelper::preferences('com_kunena');
+            ToolbarHelper::link(ConfigHelper::link(), 'JTOOLBAR_OPTIONS', 'options');
         }
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/users';

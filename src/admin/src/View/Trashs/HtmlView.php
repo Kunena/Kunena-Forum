@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Toolbar\Button\DropdownButton;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Administrator\Helper\ConfigHelper;
 
 /**
  * Trash view for Kunena backend
@@ -154,7 +155,7 @@ class HtmlView extends BaseHtmlView
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            ToolbarHelper::preferences('com_kunena');
+            ToolbarHelper::link(ConfigHelper::link(), 'JTOOLBAR_OPTIONS', 'options');
         }
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/trashbin';

@@ -22,6 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Administrator\Helper\ConfigHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
@@ -112,7 +113,7 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar(): void
     {
         $toolbar = $this->getDocument()->getToolbar();
-        
+
         ToolbarHelper::spacer();
         $toolbar->divider();
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_DASHBOARD'), 'dashboard');
@@ -120,7 +121,7 @@ class HtmlView extends BaseHtmlView
         $canDo = ContentHelper::getActions('com_kunena');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            $toolbar->preferences('com_kunena');
+            $toolbar->linkButton('options', 'JTOOLBAR_OPTIONS')->url(ConfigHelper::link());
         }
 
         ToolbarHelper::spacer();

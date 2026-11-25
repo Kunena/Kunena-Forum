@@ -1694,3 +1694,85 @@ body.com_kunena .kd mark {
 .kd-suggest__option[aria-selected="true"] {
   background: var(--kd-accent-soft);
 }
+
+/* ---------------------------------------------------------------------------------------------------------------
+ * The buttons of the toolbar (the subhead): one look for all of them, in the colors of the administrator template
+ * (its hue, its link and special colors), instead of a blue, a grey, a green and a red one: light buttons in the light
+ * scheme, dark ones in the dark scheme, like the template. The variables are those of the template (Atum), so its
+ * hover, focus and disabled states still apply. A button which deletes keeps a red icon.
+ * --------------------------------------------------------------------------------------------------------------- */
+
+body.com_kunena .subhead .btn,
+body.com_kunena .subhead .btn.btn-primary,
+body.com_kunena .subhead .btn.btn-info,
+body.com_kunena .subhead .btn.button-options,
+body.com_kunena .subhead .btn.btn-success,
+body.com_kunena .subhead .btn.btn-danger,
+body.com_kunena .subhead .btn.btn-action,
+body.com_kunena .subhead .btn.btn-success:not([disabled]),
+body.com_kunena .subhead .btn.btn-danger:not([disabled]) {
+  --kd-subhead-accent: var(--template-link-color);
+  --kd-subhead-danger: #c52827;
+  --kd-subhead-text: var(--template-bg-dark);
+  --subhead-btn-bg: var(--template-bg-light);
+  --subhead-btn-bg-hvr: var(--template-bg-dark-7);
+  --subhead-btn-border: 1px solid var(--template-bg-dark-15);
+  --subhead-btn-icon: var(--kd-subhead-accent);
+  --subhead-btn-icon-hover: var(--kd-subhead-accent);
+  --subhead-btn-icon-hvr: var(--kd-subhead-accent);
+  color: var(--kd-subhead-text);
+  border-radius: var(--kd-radius-sm, 10px);
+}
+
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.btn-primary,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.btn-info,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.button-options,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.btn-success,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.btn-danger,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.btn-action,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.btn-success:not([disabled]),
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.btn-danger:not([disabled]) {
+  --kd-subhead-accent: var(--template-special-color);
+  --kd-subhead-danger: #f07c7b;
+  --kd-subhead-text: var(--template-text-light);
+  --subhead-btn-bg: var(--template-bg-dark-80);
+  --subhead-btn-bg-hvr: var(--template-bg-dark-70);
+  --subhead-btn-border: 1px solid var(--template-bg-dark-65);
+  --subhead-btn-icon-hover: var(--template-text-light);
+  --subhead-btn-icon-hvr: var(--template-text-light);
+}
+
+body.com_kunena .subhead .btn:not([disabled]):hover,
+body.com_kunena .subhead .btn:not([disabled]):focus-visible,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn:not([disabled]):hover,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn:not([disabled]):focus-visible {
+  --subhead-btn-border: 1px solid var(--kd-subhead-accent);
+  color: var(--kd-subhead-text);
+}
+
+body.com_kunena .subhead .btn:focus-visible {
+  outline: 2px solid var(--kd-subhead-accent);
+  outline-offset: 2px;
+}
+
+/* Delete, trash: the same button, the icon tells. */
+body.com_kunena .subhead .btn.btn-danger,
+body.com_kunena .subhead .btn.btn-danger:not([disabled]),
+body.com_kunena .subhead .btn.button-delete,
+body.com_kunena .subhead .btn.button-trash,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.btn-danger,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.btn-danger:not([disabled]),
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.button-delete,
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn.button-trash {
+  --subhead-btn-icon: var(--kd-subhead-danger);
+}
+
+/* The toggle of a group (Actions): the same border as the buttons. */
+body.com_kunena .subhead .btn-group > .btn.dropdown-toggle {
+  border-inline-start-color: var(--template-bg-dark-20);
+}
+
+html[data-color-scheme="dark"] body.com_kunena .subhead .btn-group > .btn.dropdown-toggle {
+  border-inline-start-color: var(--template-bg-dark-60);
+}

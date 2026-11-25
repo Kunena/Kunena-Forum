@@ -50,6 +50,7 @@ use Kunena\Forum\Libraries\Tools\KunenaSecurityAudit;
 use Kunena\Forum\Libraries\Tools\KunenaTranslationCheck;
 use Kunena\Forum\Libraries\Tools\KunenaModeratorActivity;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
+use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -86,7 +87,7 @@ class HtmlView extends BaseHtmlView
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
-        'settings', 'moderators',
+        'settings', 'moderators', 'subscriberaddresses',
     ];
 
     /**
@@ -613,6 +614,9 @@ class HtmlView extends BaseHtmlView
 
             case 'moderators':
                 return KunenaModeratorActivity::reportOnSite($input->getInt('days', KunenaModeratorActivity::PERIODS[1]), time());
+
+            case 'subscriberaddresses':
+                return KunenaSubscriberAddresses::findOnSite();
         }
 
         return [];

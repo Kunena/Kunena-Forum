@@ -52,6 +52,7 @@ use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
+use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -2326,6 +2327,32 @@ class ToolsController extends FormController
         }
 
         $this->app->setUserState('com_kunena.admin.tools.settings', null);
+    }
+
+    /**
+     * Pauses the subscriptions of the chosen users (tool "Subscriber address check").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function pauseSubscriptions(): void
+    {
+        if (!$this->toolAllowed('subscriberaddresses')) {
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_ADDRESSES_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_ADDRESSES_N_PAUSED', KunenaSubscriberAddresses::pauseOnSite($ids)), 'success');
     }
 
     /**

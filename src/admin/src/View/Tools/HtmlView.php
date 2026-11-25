@@ -33,6 +33,7 @@ use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\Tools\KunenaSpamFinder;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
+use Kunena\Forum\Libraries\Tools\KunenaUserMerge;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -47,7 +48,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 8.0
      */
-    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam'];
+    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam', 'mergeusers'];
 
     /**
      * The data of the tool of the layout (loadTool()).
@@ -356,6 +357,21 @@ class HtmlView extends BaseHtmlView
                 $days = max(1, min(365, $input->getInt('days', 30)));
 
                 return ['days' => $days, 'suspects' => KunenaSpamFinder::findOnSite($days)];
+
+            case 'mergeusers':
+                $from = $input->getInt('from', 0);
+                $into = $input->getInt('into', 0);
+
+                return [
+                    'from'      => KunenaUserCleanup::summary($from),
+                    'into'      => KunenaUserCleanup::summary($into),
+                    'counts'    => $from > 0 ? KunenaUserMerge::count($from) : [],
+                    'error'     => $from || $into ? KunenaUserMerge::check($from, $into) : null,
+                    'fromQuery' => $input->getString('from_search', ''),
+                    'intoQuery' => $input->getString('into_search', ''),
+                    'fromMatch' => trim($input->getString('from_search', '')) !== '' ? $this->findUsers($input->getString('from_search', '')) : [],
+                    'intoMatch' => trim($input->getString('into_search', '')) !== '' ? $this->findUsers($input->getString('into_search', '')) : [],
+                ];
 
         }
 

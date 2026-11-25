@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
+use Kunena\Forum\Libraries\Tools\KunenaUserMerge;
 use Kunena\Forum\Libraries\User\KunenaAccountActionPolicy;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
@@ -1464,6 +1465,64 @@ class ToolsController extends FormController
                 $ok ? 'success' : 'warning'
             );
         }
+    }
+
+    /**
+     * Moves everything of one user to another one (tool "Merge users").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function mergeUsers(): void
+    {
+        $from = $this->input->post->getInt('from', 0);
+        $into = $this->input->post->getInt('into', 0);
+
+        if (!$this->toolAllowed('mergeusers&from=' . $from . '&into=' . $into)) {
+            return;
+        }
+
+        $error = KunenaUserMerge::check($from, $into);
+
+        if ($error === null && (!KunenaUserCleanup::summary($from) || !KunenaUserCleanup::summary($into))) {
+            $error = 'COM_KUNENA_PROFILE_NO_USER';
+        }
+
+        if ($error !== null) {
+            $this->app->enqueueMessage(Text::_($error), 'error');
+
+            return;
+        }
+
+        $block = (bool) $this->input->post->getInt('block', 0);
+
+        if (!$this->accountActionAllowed(KunenaAccountActionPolicy::REMOVE, $from)
+            || ($block && !$this->accountActionAllowed(KunenaAccountActionPolicy::BLOCK, $from))) {
+            return;
+        }
+
+        try {
+            $moved = KunenaUserMerge::merge($from, $into);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MERGE_FAILED', $e->getMessage()), 'error');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_MERGE_N_MOVED', array_sum($moved)), 'success');
+
+        if ($block) {
+            $done = KunenaUserCleanup::apply($from, KunenaUserCleanup::options(['account' => KunenaUserCleanup::ACCOUNT_BLOCK]));
+            $this->app->enqueueMessage(
+                Text::_($done['account'] === KunenaUserCleanup::ACCOUNT_BLOCK ? 'COM_KUNENA_USER_BLOCKED_DONE' : 'COM_KUNENA_TOOLS_USERCLEANUP_ACCOUNT_FAILED'),
+                $done['account'] === KunenaUserCleanup::ACCOUNT_BLOCK ? 'success' : 'warning'
+            );
+        }
+
+        $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=mergeusers', false));
     }
 
     /**

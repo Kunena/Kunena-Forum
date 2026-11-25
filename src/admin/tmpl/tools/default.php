@@ -30,6 +30,7 @@ $groups = [
     'COM_KUNENA_ADMIN_TOOLS_USERS' => [
         ['spam', 'COM_KUNENA_TOOLS_SPAM', 'COM_KUNENA_TOOLS_SPAM_DESC', 'shield-virus'],
         ['usercleanup', 'COM_KUNENA_TOOLS_USERCLEANUP', 'COM_KUNENA_TOOLS_USERCLEANUP_DESC', 'user-xmark'],
+        ['mergeusers', 'COM_KUNENA_TOOLS_MERGE', 'COM_KUNENA_TOOLS_MERGE_DESC', 'code-merge'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_FILES' => [
         ['orphanfiles', 'COM_KUNENA_TOOLS_ORPHANS', 'COM_KUNENA_TOOLS_ORPHANS_DESC', 'file-circle-question'],

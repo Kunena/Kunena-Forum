@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 
 /**
  * Class KunenaForumDiagnostics
@@ -1276,6 +1277,156 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * Query to find the translations of categories which no longer exist.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_categoryTranslationOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_categories_translations AS a')->leftJoin('#__kunena_categories AS c ON c.id=a.category_id')->where('c.id IS NULL');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_categoryTranslationOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.category_id, a.language, a.name');
+        }
+
+        return ['category_id' => 'invalid'];
+    }
+
+    /**
+     * Delete the translations of categories which no longer exist.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_categoryTranslationOrphaned(): string
+    {
+        return 'DELETE a FROM #__kunena_categories_translations AS a LEFT JOIN #__kunena_categories AS c ON c.id=a.category_id WHERE c.id IS NULL';
+    }
+
+    /**
+     * Query to find the categories whose numbers of topics and posts differ from their published topics.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_categoryWrongCounts(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_categories AS a')
+            ->leftJoin('(SELECT category_id, COUNT(*) AS topics, SUM(posts) AS posts FROM #__kunena_topics WHERE hold=0 AND moved_id=0 GROUP BY category_id) AS c'
+                . ' ON c.category_id=a.id')
+            ->where('(a.numTopics!=COALESCE(c.topics, 0) OR a.numPosts!=COALESCE(c.posts, 0))');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_categoryWrongCounts(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.name, a.numTopics, COALESCE(c.topics, 0) AS counted_topics, a.numPosts, COALESCE(c.posts, 0) AS counted_posts');
+        }
+
+        return ['numTopics' => 'invalid', 'numPosts' => 'invalid'];
+    }
+
+    /**
+     * Count the categories again.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    protected static function repair_categoryWrongCounts(): bool
+    {
+        $ids = self::ids('categoryWrongCounts', 'a.id');
+
+        return !$ids || KunenaCategoryHelper::recountBatch($ids) !== false;
+    }
+
+    /**
+     * Query to find the categories whose parents lead back to themselves: the tree has a loop and they are shown nowhere.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_categoryLoop(): QueryInterface
+    {
+        // Each category walks up its parents (at most 100 steps); a walk which comes back to its start is a loop.
+        $walk = 'WITH RECURSIVE walk (start, id, parentid, depth) AS ('
+            . ' SELECT id, id, parentid, 0 FROM #__kunena_categories'
+            . ' UNION ALL SELECT w.start, c.id, c.parentid, w.depth + 1 FROM walk AS w INNER JOIN #__kunena_categories AS c ON c.id=w.parentid'
+            . ' WHERE w.depth < 100 AND w.parentid > 0 AND (w.depth = 0 OR w.id != w.start))'
+            . ' SELECT DISTINCT start FROM walk WHERE depth > 0 AND id = start';
+
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_categories AS a')->innerJoin('(' . $walk . ') AS l ON l.start=a.id');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_categoryLoop(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.name, a.parentid');
+        }
+
+        return ['parentid' => 'invalid'];
+    }
+
+    /**
+     * The ids of the rows of a check.
+     *
+     * @param   string  $function  The check.
+     * @param   string  $column    The column of the id.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function ids(string $function, string $column): array
+    {
+        $method = 'query_' . $function;
+        $query  = self::$method();
+        $query->select('DISTINCT ' . $column);
+
+        return array_map('intval', (array) Factory::getContainer()->get('DatabaseDriver')->setQuery($query)->loadColumn());
+    }
+
+    /**
      * The checks by what they are about, for the page of the diagnostics: heading (a language key) => checks.
      *
      * @return  array<string, string[]>
@@ -1287,6 +1438,7 @@ abstract class KunenaDiagnostics
         return [
             'COM_KUNENA_DIAGNOSTICS_GROUP_CATEGORIES' => [
                 'categoryOrphaned', 'categoryMissingAlias', 'categoryWrongAlias', 'aliasMissingCategory', 'channelOrphaned',
+                'categoryLoop', 'categoryWrongCounts', 'categoryTranslationOrphaned',
             ],
             'COM_KUNENA_DIAGNOSTICS_GROUP_TOPICS' => [
                 'topicInSection', 'topicMissingCategory', 'topicMissingMessages', 'topicMissingPoll', 'topicPollMismatch',
@@ -1368,6 +1520,9 @@ abstract class KunenaDiagnostics
             'followOrphaned',
             'ignoreOrphaned',
             'profileOrphaned',
+            'categoryLoop',
+            'categoryWrongCounts',
+            'categoryTranslationOrphaned',
         ];
     }
 

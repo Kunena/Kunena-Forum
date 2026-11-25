@@ -49,6 +49,7 @@ use Kunena\Forum\Libraries\Tools\KunenaModerationQueue;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\Tools\KunenaScheduledTasks;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
+use Kunena\Forum\Libraries\Tools\KunenaSubscriptions;
 use Kunena\Forum\Libraries\Tools\KunenaTokenRestore;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\Tools\KunenaUserMerge;
@@ -1878,6 +1879,26 @@ class ToolsController extends FormController
         if ($result['left'] && $action !== 'unsubscribe') {
             $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_INACTIVE_N_LEFT', $result['left']), 'info');
         }
+    }
+
+    /**
+     * Removes the subscriptions of a user, a category or a topic (tool "Subscriptions").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function unsubscribeAll(): void
+    {
+        if (!$this->toolAllowed('subscriptionsoverview')) {
+            return;
+        }
+
+        $removed = KunenaSubscriptions::unsubscribeOnSite($this->input->post->getCmd('scope', ''), $this->input->post->getInt('id', 0));
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_SUBS_N_REMOVED', $removed), $removed ? 'success' : 'info');
     }
 
     /**

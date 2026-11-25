@@ -371,8 +371,13 @@ document.addEventListener('DOMContentLoaded', function () {
             $id  = $user->userid;
             $app = KunenaFactory::getApplication();
 
+            // The session keeps the list of the visitor only (it is cleared on every request, see clearCache()). The list of
+            // another user (the name search asks whether a found member may read a category) stayed in the session of the visitor
+            // until it ended: that member was judged by his old rights after they changed.
+            $own = (int) $id === (int) KunenaUserHelper::getMyself()->userid;
+
             // TODO: handle guests/bots with no userstate
-            $read[$id] = $app->getUserState("com_kunena.user{$id}_read");
+            $read[$id] = $own ? $app->getUserState("com_kunena.user{$id}_read") : null;
 
             if ($read[$id] === null) {
                 $list       = [];
@@ -417,7 +422,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 $list      = ArrayHelper::toInteger($list);
                 $read[$id] = array_combine($list, $list);
                 unset($read[$id][0]);
-                $app->setUserState("com_kunena.user{$id}_read", $read[$id]);
+
+                if ($own) {
+                    $app->setUserState("com_kunena.user{$id}_read", $read[$id]);
+                }
             }
         }
 

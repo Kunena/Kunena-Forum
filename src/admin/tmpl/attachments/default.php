@@ -64,9 +64,6 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             <th scope="col" class="w-5">
                                 <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE', 'size', $listDirn, $listOrder); ?>
                             </th>
-                            <th scope="col" class="w-5">
-                                <?php echo Text::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_IMAGEDIMENSIONS'); ?>
-                            </th>
                             <th scope="col" class="w-10">
                                 <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'username', $listDirn, $listOrder); ?>
                             </th>
@@ -101,7 +98,6 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 </th>
                                 <td><?php echo $this->escape($attachment->filetype); ?></td>
                                 <td><?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_A_FILESIZE_KB'); ?></td>
-                                <td><?php echo $attachment->width > 0 ? $attachment->width . ' x ' . $attachment->height : '' ?></td>
                                 <td><?php echo $this->escape($message->getAuthor()->getName()); ?></td>
                                 <td><?php echo $this->escape($message->subject); ?></td>
                                 <td class="text-center d-none d-lg-table-cell"><?php echo intval($attachment->id); ?></td>

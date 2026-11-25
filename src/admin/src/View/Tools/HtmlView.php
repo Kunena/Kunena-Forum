@@ -20,13 +20,16 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Helper\ConfigHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
+use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -36,6 +39,29 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class HtmlView extends BaseHtmlView
 {
+    /**
+     * The layouts of the tools of Kunena 8.0 which get their data from loadTool().
+     *
+     * @since   Kunena 8.0
+     */
+    public const TOOLS = ['orphanfiles'];
+
+    /**
+     * The data of the tool of the layout (loadTool()).
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected array $tool = [];
+
+    /**
+     * Is the current user an administrator of Kunena (core.admin): only he may run a tool which changes the site.
+     *
+     * @var     boolean
+     * @since   Kunena 8.0
+     */
+    protected bool $canAdmin = false;
+
     /**
      * The files which Kunena no longer ships, found on the site (tool "Prune old files"): path => size, time, status.
      *
@@ -248,9 +274,70 @@ class HtmlView extends BaseHtmlView
             $this->canDeleteFiles = $this->getCurrentUser()->authorise('core.admin', 'com_kunena');
 
             $this->setToolBarPruneFiles();
+        } elseif (\in_array($layout, self::TOOLS, true)) {
+            $this->canAdmin = $this->getCurrentUser()->authorise('core.admin', 'com_kunena');
+            $this->tool     = $this->loadTool($layout);
+
+            $this->setToolBarTool();
+
+            // The confirmations, the "select all" boxes and the dialog of the tools. A full URL: the asset manager would look for
+            // a relative one in the media folder.
+            Text::script('COM_KUNENA_TOOLS_CONFIRM');
+            $this->getDocument()->getWebAssetManager()->registerAndUseScript(
+                'kunena_admin_tools',
+                Uri::base() . 'components/com_kunena/media/js/kunena-tools.js',
+                ['version' => 'auto'],
+                ['defer' => true],
+                ['core']
+            );
         }
 
         return parent::display($tpl);
+    }
+
+    /**
+     * The toolbar of a tool of Kunena 8.0: Close is a link back to the tools (the pages have no form adminForm which the task
+     * tools.cancel would submit).
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    protected function setToolBarTool(): void
+    {
+        ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
+        ToolbarHelper::spacer();
+        ToolbarHelper::link(Route::_('index.php?option=com_kunena&view=tools'), 'JTOOLBAR_CLOSE', 'cancel');
+        ToolbarHelper::spacer();
+        ToolbarHelper::help('COM_KUNENA', false, 'https://docs.kunena.org/en/');
+    }
+
+    /**
+     * The data of a tool of Kunena 8.0.
+     *
+     * @param   string  $layout  The layout (TOOLS).
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    protected function loadTool(string $layout): array
+    {
+        $input = Factory::getApplication()->getInput();
+
+        switch ($layout) {
+            case 'orphanfiles':
+                return [
+                    'attachments' => KunenaOrphanFiles::findOnSite(KunenaOrphanFiles::ATTACHMENTS),
+                    'avatars'     => KunenaOrphanFiles::findOnSite(KunenaOrphanFiles::AVATARS),
+                    'missing'     => KunenaOrphanFiles::findMissingOnSite(),
+                ];
+
+        }
+
+        return [];
     }
 
     /**

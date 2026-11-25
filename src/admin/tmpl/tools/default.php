@@ -27,6 +27,9 @@ $groups = [
         ['syncUsers', 'COM_KUNENA_SYNC_USERS', 'COM_KUNENA_SYNC_USERS_DESC', 'users-gear'],
         ['recount', 'COM_KUNENA_A_RECOUNT', 'COM_KUNENA_A_RECOUNT_DESC', 'calculator'],
     ],
+    'COM_KUNENA_ADMIN_TOOLS_FILES' => [
+        ['orphanfiles', 'COM_KUNENA_TOOLS_ORPHANS', 'COM_KUNENA_TOOLS_ORPHANS_DESC', 'file-circle-question'],
+    ],
     'COM_KUNENA_ADMIN_TOOLS_SYSTEM' => [
         ['menu', 'COM_KUNENA_A_MENU_MANAGER', 'COM_KUNENA_A_MENU_MANAGER_DESC', 'bars'],
         ['purgerestatements', 'COM_KUNENA_A_PURGE_RE_STATEMENTS', 'COM_KUNENA_A_PURGE_RE_STATEMENTS_DESC', 'eraser'],

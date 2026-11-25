@@ -17,6 +17,7 @@ namespace Kunena\Forum\Administrator\Controller;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -36,6 +37,7 @@ use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
 use RuntimeException;
@@ -68,6 +70,8 @@ class ToolsController extends FormController
         parent::__construct($config);
         $lang = $this->app->getLanguage();
         $lang->load('com_kunena.controllers', KPATH_ADMIN);
+        // The messages of the tools of Kunena 8.0 are with their pages.
+        $lang->load('com_kunena.views', KPATH_ADMIN);
         $this->baseurl = 'administrator/index.php?option=com_kunena&view=tools';
     }
 
@@ -1318,5 +1322,86 @@ class ToolsController extends FormController
         }
 
         $this->setRedirect($back);
+    }
+
+    /**
+     * Deletes the orphaned files of a folder (tool "Orphaned files"): the attachments or the avatars which no row names. The
+     * list is made again on the server: no path of the request is trusted.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function deleteOrphans(): void
+    {
+        if (!$this->toolAllowed('orphanfiles')) {
+            return;
+        }
+
+        $folder = $this->input->post->getCmd('scope') === 'avatars' ? KunenaOrphanFiles::AVATARS : KunenaOrphanFiles::ATTACHMENTS;
+        $result = KunenaOrphanFiles::deleteOnSite($folder);
+
+        $this->app->enqueueMessage(
+            Text::plural('COM_KUNENA_TOOLS_ORPHANS_N_DELETED', $result['deleted'], HTMLHelper::_('number.bytes', $result['bytes'])),
+            $result['deleted'] ? 'success' : 'info'
+        );
+
+        if ($result['failed']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_ORPHANS_N_FAILED', $result['failed']), 'warning');
+        }
+    }
+
+    /**
+     * Deletes the attachments whose file is missing (tool "Orphaned files"): only the chosen ids which are missing now.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function deleteMissingAttachments(): void
+    {
+        if (!$this->toolAllowed('orphanfiles')) {
+            return;
+        }
+
+        $ids     = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+        $deleted = $ids ? KunenaOrphanFiles::deleteMissingOnSite($ids) : 0;
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_ORPHANS_MISSING_N_DELETED', $deleted), $deleted ? 'success' : 'info');
+    }
+
+    /**
+     * The checks of a tool which changes the site: the token of the form and an administrator of Kunena. Sets the redirect back
+     * to the layout of the tool in any case.
+     *
+     * @param   string  $layout  The layout of the tool, with its query when it has one.
+     *
+     * @return  boolean  True when the tool may go on.
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    private function toolAllowed(string $layout): bool
+    {
+        $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=' . $layout, false));
+
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+
+            return false;
+        }
+
+        if (!$this->app->getIdentity()->authorise('core.admin', 'com_kunena')) {
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+
+            return false;
+        }
+
+        return true;
     }
 }

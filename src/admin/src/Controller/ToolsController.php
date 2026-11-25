@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
+use Kunena\Forum\Libraries\Tools\KunenaFindReplace;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
 use Kunena\Forum\Libraries\Tools\KunenaModerationQueue;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
@@ -1719,6 +1720,41 @@ class ToolsController extends FormController
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MAILTEST_SENT', $to), 'success');
         } else {
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MAILTEST_FAILED', $result['error']), 'error');
+        }
+    }
+
+    /**
+     * Replaces a text in all the messages, a batch at a time (tool "Find and replace").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function findReplace(): void
+    {
+        $options = KunenaFindReplace::options($this->input->post->getArray(['search' => 'raw', 'replace' => 'raw', 'subjects' => 'int', 'case' => 'int']));
+        $query   = http_build_query(['search' => $options['search'], 'replace' => $options['replace'], 'subjects' => (int) $options['subjects'], 'case' => (int) $options['case']]);
+
+        if (!$this->toolAllowed('findreplace&' . $query)) {
+            return;
+        }
+
+        $error = KunenaFindReplace::check($options);
+
+        if ($error !== null) {
+            $this->app->enqueueMessage(Text::_($error), 'error');
+
+            return;
+        }
+
+        $result = KunenaFindReplace::applyOnSite($options, KunenaUserHelper::getMyself());
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_REPLACE_N_CHANGED', $result['changed']), $result['changed'] ? 'success' : 'info');
+
+        if ($result['left']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_REPLACE_N_LEFT', $result['left']), 'warning');
         }
     }
 

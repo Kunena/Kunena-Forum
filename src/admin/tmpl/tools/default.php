@@ -31,6 +31,7 @@ $groups = [
     ],
     'COM_KUNENA_ADMIN_TOOLS_CONTENT' => [
         ['moderation', 'COM_KUNENA_TOOLS_QUEUE', 'COM_KUNENA_TOOLS_QUEUE_DESC', 'gavel'],
+        ['findreplace', 'COM_KUNENA_TOOLS_REPLACE', 'COM_KUNENA_TOOLS_REPLACE_DESC', 'arrow-right-arrow-left'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_USERS' => [
         ['spam', 'COM_KUNENA_TOOLS_SPAM', 'COM_KUNENA_TOOLS_SPAM_DESC', 'shield-virus'],

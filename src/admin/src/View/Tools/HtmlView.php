@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
+use Kunena\Forum\Libraries\Tools\KunenaFindReplace;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
 use Kunena\Forum\Libraries\Tools\KunenaModerationQueue;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
@@ -57,7 +58,7 @@ class HtmlView extends BaseHtmlView
      */
     public const TOOLS = [
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
-        'moderation',
+        'findreplace', 'moderation',
     ];
 
     /**
@@ -404,6 +405,21 @@ class HtmlView extends BaseHtmlView
                 $settings = KunenaMailTest::settings();
 
                 return ['settings' => $settings, 'problems' => KunenaMailTest::problems($settings), 'me' => (string) $this->getCurrentUser()->email];
+            case 'findreplace':
+                $options = KunenaFindReplace::options([
+                    'search'   => $input->get('search', '', 'raw'),
+                    'replace'  => $input->get('replace', '', 'raw'),
+                    'subjects' => $input->getInt('subjects', 0),
+                    'case'     => $input->getInt('case', 0),
+                ]);
+                $error = $options['search'] !== '' ? KunenaFindReplace::check($options) : null;
+
+                return [
+                    'options' => $options,
+                    'error'   => $error,
+                    'found'   => $options['search'] !== '' && $error === null ? KunenaFindReplace::findOnSite($options) : null,
+                ];
+
             case 'moderation':
                 return ['unapproved' => KunenaModerationQueue::unapprovedOnSite(), 'reports' => KunenaModerationQueue::reportsOnSite()];
 

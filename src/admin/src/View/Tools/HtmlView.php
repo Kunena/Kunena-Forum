@@ -31,6 +31,7 @@ use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
+use Kunena\Forum\Libraries\Tools\KunenaSpamFinder;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -46,7 +47,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 8.0
      */
-    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup'];
+    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam'];
 
     /**
      * The data of the tool of the layout (loadTool()).
@@ -350,6 +351,11 @@ class HtmlView extends BaseHtmlView
                     'summary' => KunenaUserCleanup::summary($userid),
                     'matches' => $search !== '' ? $this->findUsers($search) : [],
                 ];
+
+            case 'spam':
+                $days = max(1, min(365, $input->getInt('days', 30)));
+
+                return ['days' => $days, 'suspects' => KunenaSpamFinder::findOnSite($days)];
 
         }
 

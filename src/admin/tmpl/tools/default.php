@@ -28,6 +28,7 @@ $groups = [
         ['recount', 'COM_KUNENA_A_RECOUNT', 'COM_KUNENA_A_RECOUNT_DESC', 'calculator'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_USERS' => [
+        ['spam', 'COM_KUNENA_TOOLS_SPAM', 'COM_KUNENA_TOOLS_SPAM_DESC', 'shield-virus'],
         ['usercleanup', 'COM_KUNENA_TOOLS_USERCLEANUP', 'COM_KUNENA_TOOLS_USERCLEANUP_DESC', 'user-xmark'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_FILES' => [

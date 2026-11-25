@@ -29,6 +29,7 @@ class KunenaSecurityAuditTest extends UnitTestCase
     private const SAFE_SITE = [
         'forbidden'      => ['php', 'html', 'svg'], 'protected' => ['media/kunena/attachments' => true], 'apache' => true, 'debug' => false,
         'errorReporting' => 'default', 'registration' => true, 'activation' => 1, 'https' => true, 'forceSsl' => 0,
+        'integrity'      => ['lists' => 3, 'modified' => [], 'missing' => []],
     ];
 
     private static function statuses(array $config, array $env): array
@@ -79,5 +80,28 @@ class KunenaSecurityAuditTest extends UnitTestCase
         $this->assertSame(U::WARNING, $status['debug']);
         $this->assertSame(U::WARNING, $status['https']);
         $this->assertSame(U::OK, self::statuses([], ['https' => false, 'forceSsl' => 2])['https']);
+    }
+
+    /**
+     * The files of Kunena against the SHA-256 of the package: changed and missing files are listed, a copy of the code
+     * without lists (a development site) is only an information.
+     */
+    public function testTheIntegrityOfTheFiles(): void
+    {
+        $integrity = ['lists' => 3, 'modified' => ['site/src/Controller.php'], 'missing' => ['library/src/Upload.php']];
+        $checks    = A::checks(self::SAFE_CONFIG, ['integrity' => $integrity] + self::SAFE_SITE);
+        $check     = array_values(array_filter($checks, static fn ($c) => $c[0] === 'integrity'))[0];
+
+        $this->assertSame(U::WARNING, $check[1]);
+        $this->assertSame('2', $check[2]);
+        $this->assertSame(['modified:site/src/Controller.php', 'missing:library/src/Upload.php'], $check[3]);
+
+        // Nothing changed: the algorithms which were checked are named.
+        $clean = A::checks(self::SAFE_CONFIG, ['integrity' => ['lists' => 6, 'algorithms' => ['sha256', 'sha512'], 'modified' => [], 'missing' => []]] + self::SAFE_SITE);
+        $clean = array_values(array_filter($clean, static fn ($c) => $c[0] === 'integrity'))[0];
+        $this->assertSame([U::OK, 'SHA-256, SHA-512'], [$clean[1], $clean[2]]);
+
+        $this->assertSame(U::INFO, self::statuses([], ['integrity' => ['lists' => 0, 'modified' => [], 'missing' => []]])['integrity']);
+        $this->assertSame(U::INFO, self::statuses([], ['integrity' => null])['integrity']);
     }
 }

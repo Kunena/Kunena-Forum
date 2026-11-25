@@ -19,6 +19,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Template\KunenaTemplateChecksums;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use ReflectionClassConstant;
 use Throwable;
@@ -46,7 +47,8 @@ class KunenaSecurityAudit
      *                          fileUpload, showEmail, checkMimeTypes.
      * @param   array  $env     The site: forbidden (extensions which Kunena refuses), protected (folder => has .htaccess),
      *                          apache (bool), debug (bool), errorReporting, registration (bool), activation (int),
-     *                          https (bool), forceSsl (int).
+     *                          https (bool), forceSsl (int), integrity (lists: the lists of SHA-256 found, modified and
+     *                          missing: the files which differ from them).
      *
      * @return  array<int, array{0: string, 1: string, 2: string, 3: string[], 4: string}>  [key, status, value, details, where: kunena, com_users, com_config].
      *
@@ -111,11 +113,83 @@ class KunenaSecurityAudit
         $debug    = !empty($env['debug']) || \in_array((string) ($env['errorReporting'] ?? ''), ['maximum', 'development'], true);
         $checks[] = ['debug', $debug ? KunenaUpdateCheck::WARNING : KunenaUpdateCheck::OK, '', [], 'com_config'];
 
+        // The files of Kunena against the SHA-256 of the package: a file changed by an attacker (or by hand) differs.
+        $integrity = $env['integrity'] ?? null;
+
+        if (!\is_array($integrity) || (int) ($integrity['lists'] ?? 0) === 0) {
+            $checks[] = ['integrity', KunenaUpdateCheck::INFO, '', [], ''];
+        } else {
+            // The details: "modified:path" and "missing:path", the page names them.
+            $changed = array_merge(
+                array_map(static fn ($p) => 'modified:' . $p, (array) ($integrity['modified'] ?? [])),
+                array_map(static fn ($p) => 'missing:' . $p, (array) ($integrity['missing'] ?? []))
+            );
+            // The value: the number of the files which differ, or the algorithms which were checked ("SHA-256, SHA-512").
+            $algorithms = implode(', ', array_map(static fn ($a) => strtoupper(substr($a, 0, 3)) . '-' . substr($a, 3), (array) ($integrity['algorithms'] ?? ['sha256'])));
+            $checks[]   = ['integrity', $changed ? KunenaUpdateCheck::WARNING : KunenaUpdateCheck::OK, $changed ? (string) \count($changed) : $algorithms, $changed, ''];
+        }
+
         // Passwords and session cookies over http can be read on the way.
         $https    = !empty($env['https']) || (int) ($env['forceSsl'] ?? 0) === 2;
         $checks[] = ['https', $https ? KunenaUpdateCheck::OK : KunenaUpdateCheck::WARNING, '', [], 'com_config'];
 
         return $checks;
+    }
+
+    /**
+     * The folders of Kunena with the list of the SHA-256 which the build writes into them: part => [folder, list].
+     *
+     * @return  array<string, array{0: string, 1: string}>
+     *
+     * @since   Kunena 8.0
+     */
+    public static function integrityFolders(): array
+    {
+        return [
+            'admin'   => [JPATH_ADMINISTRATOR . '/components/com_kunena', 'install/checksums.json'],
+            'site'    => [JPATH_SITE . '/components/com_kunena', 'src/checksums.json'],
+            'library' => [JPATH_LIBRARIES . '/kunena', 'src/checksums.json'],
+        ];
+    }
+
+    /**
+     * The files of Kunena on this site against the SHA-256 of the package (KunenaTemplateChecksums::compareList()).
+     *
+     * @return  array{lists: int, algorithms: string[], modified: string[], missing: string[]}  The paths start with their part:
+     *          admin/, site/, library/.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function integrityOnSite(): array
+    {
+        $result = ['lists' => 0, 'algorithms' => [], 'modified' => [], 'missing' => []];
+
+        foreach (self::integrityFolders() as $part => [$folder, $list]) {
+            // The list of each algorithm: a file differs when one of its hashes differs.
+            foreach (KunenaTemplateChecksums::ALGORITHMS as $algorithm) {
+                $found = KunenaTemplateChecksums::compareList($folder, $list, $algorithm);
+
+                // A copy of the code which was not built (a development site), or a package older than the lists, has none.
+                if ($found === null) {
+                    continue;
+                }
+
+                $result['lists']++;
+                $result['algorithms'][$algorithm] = $algorithm;
+
+                foreach (['modified', 'missing'] as $kind) {
+                    foreach ($found[$kind] as $path) {
+                        $result[$kind][$part . '/' . $path] = $part . '/' . $path;
+                    }
+                }
+            }
+        }
+
+        $result['algorithms'] = array_values($result['algorithms']);
+        $result['modified']   = array_values($result['modified']);
+        $result['missing']    = array_values($result['missing']);
+
+        return $result;
     }
 
     /**
@@ -161,6 +235,7 @@ class KunenaSecurityAudit
             'activation'     => (int) $users->get('useractivation'),
             'https'          => Uri::getInstance()->isSsl(),
             'forceSsl'       => (int) $app->get('force_ssl'),
+            'integrity'      => self::integrityOnSite(),
         ]);
     }
 }

@@ -55,6 +55,17 @@ $places = [
                 <div class="kd-check__body">
                     <span class="kd-check__title"><?php echo Text::_('COM_KUNENA_TOOLS_SECURITY_' . strtoupper($key)) ?></span>
                     <span class="kd-form__hint"><?php echo Text::sprintf('COM_KUNENA_TOOLS_SECURITY_' . strtoupper($key) . '_' . strtoupper($status), $this->escape($value)) ?></span>
+                    <?php if ($key === 'integrity' && $details) : ?>
+                        <ul class="kd-tags mt-1">
+                            <?php foreach (\array_slice($details, 0, 25) as $detail) :
+                                [$kind, $path] = explode(':', (string) $detail, 2); ?>
+                                <li><code><?php echo $this->escape($path) ?></code> <?php echo Text::_('COM_KUNENA_TOOLS_SECURITY_INTEGRITY_' . strtoupper($kind)) ?></li>
+                            <?php endforeach ?>
+                        </ul>
+                        <?php if (\count($details) > 25) : ?>
+                            <span class="kd-form__hint"><?php echo Text::sprintf('COM_KUNENA_TOOLS_TRANSLATIONS_FIRST_N', 25) ?></span>
+                        <?php endif ?>
+                    <?php endif ?>
                     <?php if ($status !== U::OK && isset($places[$where])) : ?>
                         <a class="kd-form__hint" href="<?php echo $this->escape($places[$where][0]) ?>"><?php echo Text::_($places[$where][1]) ?> ›</a>
                     <?php endif ?>

@@ -200,4 +200,70 @@ class KunenaTemplateChecksumsTest extends UnitTestCase
 
         $this->assertSame(['modified' => [], 'missing' => []], KunenaTemplateChecksums::compare($this->templates, 'demo'));
     }
+
+    /**
+     * The list of a folder of Kunena (the component, the library): only the folders and files which the manifest installs,
+     * the list in a subfolder, the settings of the templates in it left out.
+     */
+    public function testTheListOfAFolderOfKunena(): void
+    {
+        $this->put('component/src/Controller.php', 'controller');
+        $this->put('component/install/sql.txt', 'sql');
+        $this->put('component/template/demo/config/params.ini', 'setting=1');
+        $this->put('component/template/demo/layout.php', 'layout');
+        $this->put('component/not-installed.txt', 'not in the manifest');
+
+        $folder  = $this->templates . '/component';
+        $written = KunenaTemplateChecksums::writeList($folder, 'install/checksums.json', ['src', 'install', 'template']);
+
+        $this->assertSame(['install/sql.txt', 'src/Controller.php', 'template/demo/layout.php'], array_keys($written));
+        $this->assertFileExists($folder . '/install/checksums.json');
+        $this->assertSame(['modified' => [], 'missing' => []], KunenaTemplateChecksums::compareList($folder, 'install/checksums.json'));
+
+        // A file changed by hand, a file deleted.
+        file_put_contents($folder . '/src/Controller.php', 'hacked');
+        unlink($folder . '/install/sql.txt');
+
+        $this->assertSame(['modified' => ['src/Controller.php'], 'missing' => ['install/sql.txt']], KunenaTemplateChecksums::compareList($folder, 'install/checksums.json'));
+    }
+
+    /**
+     * The list of SHA-512 next to the one of SHA-256: its own name, hashes of 128 characters, each list leaves the other out,
+     * and a changed file is found by both.
+     */
+    public function testTheListOfSha512(): void
+    {
+        $this->assertSame('install/checksums.json', KunenaTemplateChecksums::listName('install/checksums.json', 'sha256'));
+        $this->assertSame('install/checksums.sha512.json', KunenaTemplateChecksums::listName('install/checksums.json', 'sha512'));
+
+        $this->put('component/src/Controller.php', 'controller');
+        $folder = $this->templates . '/component';
+
+        $sha256 = KunenaTemplateChecksums::writeList($folder, 'src/checksums.json', [], 'sha256');
+        $sha512 = KunenaTemplateChecksums::writeList($folder, 'src/checksums.json', [], 'sha512');
+
+        $this->assertSame(['src/Controller.php'], array_keys($sha256));
+        $this->assertSame(['src/Controller.php'], array_keys($sha512), 'The list of SHA-256 is no file of the list of SHA-512.');
+        $this->assertSame(hash('sha512', 'controller'), $sha512['src/Controller.php']);
+        $this->assertSame(128, \strlen($sha512['src/Controller.php']));
+        $this->assertFileExists($folder . '/src/checksums.sha512.json');
+
+        file_put_contents($folder . '/src/Controller.php', 'hacked');
+
+        foreach (KunenaTemplateChecksums::ALGORITHMS as $algorithm) {
+            $this->assertSame(['src/Controller.php'], KunenaTemplateChecksums::compareList($folder, 'src/checksums.json', $algorithm)['modified'], $algorithm);
+        }
+
+        $this->assertNull(KunenaTemplateChecksums::compareList($folder, 'src/checksums.json', 'md5'));
+    }
+
+    /**
+     * A copy of the code which was not built (a development site) has no list: no result, not "everything is missing".
+     */
+    public function testAFolderWithoutItsListHasNoResult(): void
+    {
+        $this->put('component/src/Controller.php', 'controller');
+
+        $this->assertNull(KunenaTemplateChecksums::compareList($this->templates . '/component', 'install/checksums.json'));
+    }
 }

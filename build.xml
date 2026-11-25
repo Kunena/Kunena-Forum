@@ -349,6 +349,29 @@
 			<arg file="${tmp_dir}/packages/com_kunena/site/template" />
 		</exec>
 
+		<!-- The SHA-256 of every file which the component installs, after the templates (their lists are files of the site too):
+		     the Security audit of the backend compares the installed files with them -->
+		<exec
+			executable="${php.interpreter}"
+			checkreturn="true"
+			passthru="true">
+			<arg file="scripts/folder-checksums.php" />
+			<arg file="${tmp_dir}/packages/com_kunena/site" />
+			<arg value="src/checksums.json" />
+			<arg file="${tmp_dir}/packages/com_kunena/kunena.xml" />
+			<arg value="files" />
+		</exec>
+		<exec
+			executable="${php.interpreter}"
+			checkreturn="true"
+			passthru="true">
+			<arg file="scripts/folder-checksums.php" />
+			<arg file="${tmp_dir}/packages/com_kunena" />
+			<arg value="install/checksums.json" />
+			<arg file="${tmp_dir}/packages/com_kunena/kunena.xml" />
+			<arg value="administration/files" />
+		</exec>
+
 		<echo message="Building Components...DONE!" />
 	</target>
 
@@ -370,6 +393,18 @@
 				<include name="**/*.xml" />
 			</fileset>
 		</copy>
+
+		<!-- The SHA-256 of every file which the library installs: the Security audit of the backend compares them -->
+		<exec
+			executable="${php.interpreter}"
+			checkreturn="true"
+			passthru="true">
+			<arg file="scripts/folder-checksums.php" />
+			<arg file="${tmp_dir}/packages/lib_kunena" />
+			<arg value="src/checksums.json" />
+			<arg file="${tmp_dir}/packages/lib_kunena/kunena.xml" />
+			<arg value="files" />
+		</exec>
 	</target>
 
 	<target

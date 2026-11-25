@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Template;
 \defined('_JEXEC') or die();
 
 use FilesystemIterator;
+use InvalidArgumentException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use stdClass;
@@ -36,6 +37,32 @@ abstract class KunenaTemplateChecksums
     public const FILENAME = 'checksums.json';
 
     /**
+     * The algorithms of the lists: SHA-256 (checksums.json), SHA-512 (checksums.sha512.json).
+     *
+     * @since  Kunena 8.0
+     */
+    public const ALGORITHMS = ['sha256', 'sha512'];
+
+    /**
+     * The path of the list of an algorithm: the list of SHA-256 itself, "checksums.sha512.json" for SHA-512.
+     *
+     * @param   string  $list       The path of the list of SHA-256.
+     * @param   string  $algorithm  The algorithm.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function listName(string $list, string $algorithm): string
+    {
+        if ($algorithm === 'sha256') {
+            return $list;
+        }
+
+        return str_ends_with($list, '.json') ? substr($list, 0, -5) . '.' . $algorithm . '.json' : $list . '.' . $algorithm;
+    }
+
+    /**
      * Compute the list of a template folder and write it into <folder>/checksums.json: every regular file, by its path relative
      * to the folder (forward slashes), without config/params.ini (the settings of the site) and the list itself.
      *
@@ -47,6 +74,32 @@ abstract class KunenaTemplateChecksums
      */
     public static function write(string $folder): array
     {
+        return self::writeList($folder, self::FILENAME);
+    }
+
+    /**
+     * Compute the list of a folder of Kunena and write it into the folder: every regular file (or only those of the given
+     * entries at the top of the folder, the folders and files which the manifest installs), by its path relative to the
+     * folder, without the settings of the templates (config/params.ini) and the list itself.
+     *
+     * @param   string    $folder     The folder.
+     * @param   string    $list       The path of the list of SHA-256, relative to the folder (listName() gives the one of
+     *                                another algorithm).
+     * @param   string[]  $entries    The folders and files at the top of the folder to list (none: all).
+     * @param   string    $algorithm  One of ALGORITHMS.
+     *
+     * @return  array<string, string>  The list which was written.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function writeList(string $folder, string $list, array $entries = [], string $algorithm = 'sha256'): array
+    {
+        if (!\in_array($algorithm, self::ALGORITHMS, true)) {
+            throw new InvalidArgumentException('Unknown algorithm ' . $algorithm);
+        }
+
+        // The lists of all the algorithms are no files of the list.
+        $lists     = array_map(static fn ($algo) => self::listName($list, $algo), self::ALGORITHMS);
         $folder    = rtrim(str_replace('\\', '/', $folder), '/');
         $checksums = [];
         $files     = new RecursiveIteratorIterator(
@@ -61,17 +114,21 @@ abstract class KunenaTemplateChecksums
             $path     = str_replace('\\', '/', $file->getPathname());
             $relative = ltrim(substr($path, \strlen($folder)), '/');
 
-            if ($relative === self::FILENAME || $relative === 'config/params.ini') {
+            if (\in_array($relative, $lists, true) || $relative === 'config/params.ini' || str_ends_with($relative, '/config/params.ini')) {
                 continue;
             }
 
-            $checksums[$relative] = hash_file('sha256', $path);
+            if ($entries && !\in_array(explode('/', $relative)[0], $entries, true)) {
+                continue;
+            }
+
+            $checksums[$relative] = hash_file($algorithm, $path);
         }
 
         ksort($checksums, SORT_STRING);
 
         file_put_contents(
-            $folder . '/' . self::FILENAME,
+            $folder . '/' . self::listName($list, $algorithm),
             json_encode((object) $checksums, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n"
         );
 
@@ -95,8 +152,28 @@ abstract class KunenaTemplateChecksums
             return null;
         }
 
-        $folder = $templates . '/' . $name;
-        $list   = $folder . '/' . self::FILENAME;
+        return self::compareList($templates . '/' . $name, self::FILENAME);
+    }
+
+    /**
+     * Compare a folder of Kunena with its list.
+     *
+     * @param   string  $folder     The folder.
+     * @param   string  $file       The path of the list of SHA-256, relative to the folder.
+     * @param   string  $algorithm  One of ALGORITHMS: its list is read (listName()).
+     *
+     * @return  array{modified: string[], missing: string[]}|null  The modified and the missing files, or null when the folder has
+     *                                                            no valid list (a copy of the code which was not built).
+     *
+     * @since   Kunena 8.0
+     */
+    public static function compareList(string $folder, string $file, string $algorithm = 'sha256'): ?array
+    {
+        if (!\in_array($algorithm, self::ALGORITHMS, true)) {
+            return null;
+        }
+
+        $list = $folder . '/' . self::listName($file, $algorithm);
 
         if (!is_dir($folder) || !is_file($list)) {
             return null;
@@ -142,7 +219,7 @@ abstract class KunenaTemplateChecksums
                 continue;
             }
 
-            if (!hash_equals(strtolower($hash), (string) hash_file('sha256', $real))) {
+            if (!hash_equals(strtolower($hash), (string) hash_file($algorithm, $real))) {
                 $modified[] = $path;
             }
         }

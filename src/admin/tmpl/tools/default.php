@@ -62,6 +62,7 @@ $groups = [
     'COM_KUNENA_ADMIN_TOOLS_FILES' => [
         ['orphanfiles', 'COM_KUNENA_TOOLS_ORPHANS', 'COM_KUNENA_TOOLS_ORPHANS_DESC', 'file-circle-question'],
         ['missingfiles', 'COM_KUNENA_TOOLS_MISSINGFILES', 'COM_KUNENA_TOOLS_MISSINGFILES_DESC', 'file-circle-xmark'],
+        ['avatarfiles', 'COM_KUNENA_TOOLS_AVATARS', 'COM_KUNENA_TOOLS_AVATARS_DESC', 'circle-user'],
         ['caches', 'COM_KUNENA_TOOLS_CACHES', 'COM_KUNENA_TOOLS_CACHES_DESC', 'database'],
         ['storage', 'COM_KUNENA_TOOLS_STORAGE', 'COM_KUNENA_TOOLS_STORAGE_DESC', 'hard-drive'],
         ['optimizeimages', 'COM_KUNENA_TOOLS_IMAGES', 'COM_KUNENA_TOOLS_IMAGES_DESC', 'image'],

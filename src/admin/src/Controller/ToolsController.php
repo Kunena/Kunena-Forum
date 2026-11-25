@@ -51,6 +51,7 @@ use Kunena\Forum\Libraries\Tools\KunenaGoneTopics;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
+use Kunena\Forum\Libraries\Tools\KunenaAvatarFiles;
 use Kunena\Forum\Libraries\Tools\KunenaBanReview;
 use Kunena\Forum\Libraries\Tools\KunenaLanguageOverrides;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
@@ -2494,6 +2495,32 @@ class ToolsController extends FormController
         }
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_OVERRIDES_N_REMOVED', KunenaLanguageOverrides::removeOnSite($files)), 'success');
+    }
+
+    /**
+     * Removes the avatars of the chosen users (tool "Avatar files").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function removeAvatars(): void
+    {
+        if (!$this->toolAllowed('avatarfiles')) {
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_AVATARS_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_AVATARS_N_REMOVED', KunenaAvatarFiles::removeOnSite($ids)), 'success');
     }
 
     /**

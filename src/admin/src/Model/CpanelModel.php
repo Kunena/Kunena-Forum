@@ -18,6 +18,7 @@ namespace Kunena\Forum\Administrator\Model;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
+use RuntimeException;
 
 /**
  * Cpanel Model for Kunena
@@ -42,30 +43,30 @@ class CpanelModel extends AdminModel
     }
 
     /**
-     * Get number of mail queue entries to be displayed in cpanel
-     * 
+     * The number of e-mails of the mail queue which wait to be sent, for the dashboard. The queue keeps the sent ones too
+     * (send = 1): they are not counted.
+     *
+     * @return  integer
+     *
      * @since   Kunena 7.1
      */
     public function numberOfMailsqueues(): int
     {
         $db    = $this->getDatabase();
-        $query = $db->createQuery();
+        $query = $db->createQuery()
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__kunena_notifications_mailsqueue', 'a'))
+            ->where($db->quoteName('a.send') . ' = 0');
 
-        $query->select('COUNT(*)');
-
-        $query->from($db->quoteName('#__kunena_notifications_mailsqueue', 'a'));
-
-        $db->setQuery($query);
-        
         try {
             $db->setQuery($query);
-            $result = $db->loadResult();
-        } catch (\RuntimeException $e) {
+
+            return (int) $db->loadResult();
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+
             return 0;
         }
-        
-        return $result;
     }
 
     /**

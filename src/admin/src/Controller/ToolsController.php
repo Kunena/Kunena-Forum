@@ -59,6 +59,7 @@ use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaTopicManager;
 use Kunena\Forum\Libraries\Tools\KunenaContentLimits;
 use Kunena\Forum\Libraries\Tools\KunenaRankLadder;
+use Kunena\Forum\Libraries\Tools\KunenaReactionsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
@@ -2653,6 +2654,32 @@ class ToolsController extends FormController
         }
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_RANKS_N_RESET', KunenaRankLadder::resetUnknownOnSite()), 'success');
+    }
+
+    /**
+     * Removes all the reactions of the chosen users (tool "Reactions overview").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function removeReactions(): void
+    {
+        if (!$this->toolAllowed('reactions')) {
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_AVATARS_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_REACTIONS_N_REMOVED', KunenaReactionsOverview::removeOnSite($ids)), 'success');
     }
 
     /**

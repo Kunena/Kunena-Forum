@@ -64,6 +64,7 @@ use Kunena\Forum\Libraries\Tools\KunenaBigTopics;
 use Kunena\Forum\Libraries\Tools\KunenaContentLimits;
 use Kunena\Forum\Libraries\Tools\KunenaModeratorEdits;
 use Kunena\Forum\Libraries\Tools\KunenaRankLadder;
+use Kunena\Forum\Libraries\Tools\KunenaReactionsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaReportsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
@@ -105,7 +106,7 @@ class HtmlView extends BaseHtmlView
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
         'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles', 'overrides', 'avatarfiles', 'settingshistory',
-        'reports', 'warnings', 'moderatoredits', 'contentlimits', 'bigtopics', 'topicicons', 'rankladder',
+        'reports', 'warnings', 'moderatoredits', 'contentlimits', 'bigtopics', 'topicicons', 'rankladder', 'reactions',
     ];
 
     /**
@@ -697,6 +698,9 @@ class HtmlView extends BaseHtmlView
 
             case 'rankladder':
                 return KunenaRankLadder::checkOnSite();
+
+            case 'reactions':
+                return KunenaReactionsOverview::reportOnSite();
         }
 
         return [];

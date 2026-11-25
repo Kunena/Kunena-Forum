@@ -54,6 +54,7 @@ $groups = [
         ['banreview', 'COM_KUNENA_TOOLS_BANS', 'COM_KUNENA_TOOLS_BANS_DESC', 'user-lock'],
         ['warnings', 'COM_KUNENA_TOOLS_WARNINGS', 'COM_KUNENA_TOOLS_WARNINGS_DESC', 'triangle-exclamation'],
         ['thankyourings', 'COM_KUNENA_TOOLS_RINGS', 'COM_KUNENA_TOOLS_RINGS_DESC', 'handshake'],
+        ['reactions', 'COM_KUNENA_TOOLS_REACTIONS', 'COM_KUNENA_TOOLS_REACTIONS_DESC', 'face-smile'],
         ['rankladder', 'COM_KUNENA_TOOLS_RANKS', 'COM_KUNENA_TOOLS_RANKS_DESC', 'ranking-star'],
         ['moderators', 'COM_KUNENA_TOOLS_MODERATORS', 'COM_KUNENA_TOOLS_MODERATORS_DESC', 'user-shield'],
         ['subscriberaddresses', 'COM_KUNENA_TOOLS_ADDRESSES', 'COM_KUNENA_TOOLS_ADDRESSES_DESC', 'envelope-circle-check'],

@@ -63,6 +63,7 @@ $groups = [
         ['mailpreview', 'COM_KUNENA_TOOLS_MAILS', 'COM_KUNENA_TOOLS_MAILS_DESC', 'envelope-open-text'],
         ['beforeupdate', 'COM_KUNENA_TOOLS_UPDATE', 'COM_KUNENA_TOOLS_UPDATE_DESC', 'rocket'],
         ['security', 'COM_KUNENA_TOOLS_SECURITY', 'COM_KUNENA_TOOLS_SECURITY_DESC', 'shield-halved'],
+        ['settings', 'COM_KUNENA_TOOLS_SETTINGS', 'COM_KUNENA_TOOLS_SETTINGS_DESC', 'sliders'],
         ['translations', 'COM_KUNENA_TOOLS_TRANSLATIONS', 'COM_KUNENA_TOOLS_TRANSLATIONS_DESC', 'language'],
         ['gonetopics', 'COM_KUNENA_TOOLS_GONE', 'COM_KUNENA_TOOLS_GONE_DESC', 'ban'],
         ['databasetables', 'COM_KUNENA_TOOLS_TABLES', 'COM_KUNENA_TOOLS_TABLES_DESC', 'table'],

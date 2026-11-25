@@ -51,6 +51,7 @@ use Kunena\Forum\Libraries\Tools\KunenaGoneTopics;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
+use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -2222,6 +2223,109 @@ class ToolsController extends FormController
         if ($result['skipped']) {
             $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_DRAFTS_N_SKIPPED', $result['skipped']), 'warning');
         }
+    }
+
+    /**
+     * Downloads the settings which differ from the defaults (tool "Settings snapshot").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function exportSettings(): void
+    {
+        if (!$this->toolAllowed('settings')) {
+            return;
+        }
+
+        $json = KunenaSettingsSnapshot::exportOnSite();
+        $name = 'kunena-settings-' . gmdate('Y-m-d') . '.json';
+
+        $this->app->setHeader('Content-Type', 'application/json; charset=utf-8', true);
+        $this->app->setHeader('Content-Disposition', 'attachment; filename="' . $name . '"', true);
+        $this->app->setHeader('Content-Length', (string) \strlen($json), true);
+        $this->app->setHeader('X-Content-Type-Options', 'nosniff', true);
+        $this->app->sendHeaders();
+
+        echo $json;
+
+        $this->app->close();
+    }
+
+    /**
+     * Reads an uploaded snapshot and shows what it changes (tool "Settings snapshot").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function previewSettings(): void
+    {
+        if (!$this->toolAllowed('settings')) {
+            return;
+        }
+
+        $file     = (array) $this->input->files->get('snapshot', [], 'raw');
+        $path     = (string) ($file['tmp_name'] ?? '');
+        $settings = $path !== '' && is_uploaded_file($path) && (int) ($file['size'] ?? 0) <= KunenaSettingsSnapshot::MAX_FILE
+            ? KunenaSettingsSnapshot::read((string) file_get_contents($path)) : null;
+
+        if ($settings === null) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SETTINGS_BAD_FILE'), 'error');
+
+            return;
+        }
+
+        $this->app->setUserState('com_kunena.admin.tools.settings', $settings);
+    }
+
+    /**
+     * Saves the settings of the uploaded snapshot (tool "Settings snapshot").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function importSettings(): void
+    {
+        if (!$this->toolAllowed('settings')) {
+            return;
+        }
+
+        $settings = $this->app->getUserState('com_kunena.admin.tools.settings');
+        $this->app->setUserState('com_kunena.admin.tools.settings', null);
+
+        if (!\is_array($settings)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SETTINGS_NO_PREVIEW'), 'warning');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_SETTINGS_N_SAVED', KunenaSettingsSnapshot::importOnSite($settings)), 'success');
+    }
+
+    /**
+     * Forgets the uploaded snapshot (tool "Settings snapshot").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function cancelSettings(): void
+    {
+        if (!$this->toolAllowed('settings')) {
+            return;
+        }
+
+        $this->app->setUserState('com_kunena.admin.tools.settings', null);
     }
 
     /**

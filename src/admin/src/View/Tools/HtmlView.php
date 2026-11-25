@@ -48,6 +48,7 @@ use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaSecurityAudit;
 use Kunena\Forum\Libraries\Tools\KunenaTranslationCheck;
+use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -84,6 +85,7 @@ class HtmlView extends BaseHtmlView
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
+        'settings',
     ];
 
     /**
@@ -597,6 +599,16 @@ class HtmlView extends BaseHtmlView
                 $age = \in_array($age, KunenaDraftsSchedule::AGES, true) ? $age : KunenaDraftsSchedule::AGES[2];
 
                 return ['age' => $age, 'drafts' => KunenaDraftsSchedule::draftsOnSite($age, time()), 'scheduled' => KunenaDraftsSchedule::scheduledOnSite()];
+
+            case 'settings':
+                // A snapshot which was uploaded waits in the session for its preview.
+                $import  = Factory::getApplication()->getUserState('com_kunena.admin.tools.settings');
+                $current = KunenaSettingsSnapshot::currentOnSite();
+
+                return [
+                    'changed' => KunenaSettingsSnapshot::changed($current, KunenaSettingsSnapshot::defaultsOnSite()),
+                    'preview' => \is_array($import) ? KunenaSettingsSnapshot::preview($import, $current) : null,
+                ];
         }
 
         return [];

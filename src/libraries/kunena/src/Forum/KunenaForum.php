@@ -375,6 +375,20 @@ abstract class KunenaForum
     }
 
     /**
+     * Is this an internal version (the version name INTERNAL of the package)? The tools for the developers of Kunena (Git
+     * Install, the restore of the build tokens) are only offered there.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isInternal(): bool
+    {
+        // The version name of an internal version of the package (the footer shows it: "[ INTERNAL ]").
+        return strcasecmp(trim(self::versionName()), 'INTERNAL') === 0;
+    }
+
+    /**
      * Check if Kunena Forum is running from a Git repository.
      *
      * Developers tend to do their work directly in the Git repositories instead of

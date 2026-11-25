@@ -84,9 +84,13 @@ if (PluginHelper::isEnabled('system', 'modifysocials')) {
     $groups['COM_KUNENA_ADMIN_TOOLS_SYSTEM'][] = ['managesocials', 'COM_KUNENA_DIAGNOSTICS_LABEL_MODIFYSOCIALS', 'COM_KUNENA_DIAGNOSTICS_LABEL_MODIFYSOCIALS_DESC', 'pen-to-square'];
 }
 
-if (KunenaForum::isDev()) {
-    $groups['COM_KUNENA_ADMIN_TOOLS_SYSTEM'][] = ['view=install', 'COM_KUNENA_GIT_INSTALL', 'COM_KUNENA_GIT_INSTALL_DESC', 'code-branch'];
-    $groups['COM_KUNENA_ADMIN_TOOLS_SYSTEM'][] = ['restoretokens', 'COM_KUNENA_TOOLS_TOKENS', 'COM_KUNENA_TOOLS_TOKENS_DESC', 'rotate-left'];
+// The tools for the developers of Kunena, in their own section: only in an internal version (versionname INTERNAL of the
+// package), never on a site which runs a release.
+if (KunenaForum::isInternal()) {
+    $groups['COM_KUNENA_ADMIN_TOOLS_DEVELOPMENT'] = [
+        ['view=install', 'COM_KUNENA_GIT_INSTALL', 'COM_KUNENA_GIT_INSTALL_DESC', 'code-branch'],
+        ['restoretokens', 'COM_KUNENA_TOOLS_TOKENS', 'COM_KUNENA_TOOLS_TOKENS_DESC', 'rotate-left'],
+    ];
 }
 
 // The search of the tools and the tools used last. A full URL: the asset manager would look for a relative one in the media folder.

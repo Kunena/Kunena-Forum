@@ -55,11 +55,11 @@ $wa->useScript('multiselect');
                             </td>
                             <td width="80%">
                                 <input class="form-control" type="text" name="smileyCode"
-                                           value="<?php echo isset($this->smileySelected) ? $this->smileySelected->code : '' ?>"/>
+                                           value="<?php echo $this->escape((string) ($this->smileySelected->code ?? '')) ?>"/>
                                 <img loading=lazy name="smiley_image"
                                      src="<?php echo isset($this->smileySelected) ? $this->escape(KunenaFactory::getTemplate()->getSmileyPath($this->smileySelected->location, true)) : '' ?>"
                                      border="0"
-                                     alt="<?php echo isset($this->smileySelected) ? $this->smileySelected->code : 'smiley' ?>"/>
+                                     alt="<?php echo $this->escape((string) ($this->smileySelected->code ?? 'smiley')) ?>"/>
                             </td>
                         </tr>
                         <tr>

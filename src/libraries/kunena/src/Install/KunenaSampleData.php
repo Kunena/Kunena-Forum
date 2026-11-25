@@ -49,16 +49,16 @@ class KunenaSampleData
         $query = $db->createQuery();
         $query->insert($db->quoteName('#__kunena_ranks'))
             ->columns([$db->quoteName('rankId'), $db->quoteName('rankTitle'), $db->quoteName('rankMin'), $db->quoteName('rankSpecial'), $db->quoteName('rankImage')])
-            ->values('1, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK1') . ', 0, 0, ' . $db->quote('rank1.gif'))
-            ->values('2, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK2') . ', 20, 0, ' . $db->quote('rank2.gif'))
-            ->values('3, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK3') . ', 40, 0, ' . $db->quote('rank3.gif'))
-            ->values('4, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK4') . ', 80, 0, ' . $db->quote('rank4.gif'))
-            ->values('5, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK5') . ', 160, 0, ' . $db->quote('rank5.gif'))
-            ->values('6, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK6') . ', 320, 0, ' . $db->quote('rank6.gif'))
-            ->values('7, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN') . ', 0, 1, ' . $db->quote('rankadmin.gif'))
-            ->values('8, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR') . ', 0, 1, ' . $db->quote('rankmod.gif'))
-            ->values('9, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER') . ', 0, 1, ' . $db->quote('rankspammer.gif'))
-            ->values('10, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED') . ', 0, 1, ' . $db->quote('rankbanned.gif'));
+            ->values('1, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK1') . ', 0, 0, ' . $db->quote('rank1.svg'))
+            ->values('2, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK2') . ', 20, 0, ' . $db->quote('rank2.svg'))
+            ->values('3, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK3') . ', 40, 0, ' . $db->quote('rank3.svg'))
+            ->values('4, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK4') . ', 80, 0, ' . $db->quote('rank4.svg'))
+            ->values('5, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK5') . ', 160, 0, ' . $db->quote('rank5.svg'))
+            ->values('6, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK6') . ', 320, 0, ' . $db->quote('rank6.svg'))
+            ->values('7, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN') . ', 0, 1, ' . $db->quote('rankadmin.svg'))
+            ->values('8, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR') . ', 0, 1, ' . $db->quote('rankmod.svg'))
+            ->values('9, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER') . ', 0, 1, ' . $db->quote('rankspammer.svg'))
+            ->values('10, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED') . ', 0, 1, ' . $db->quote('rankbanned.svg'));
 
         $queries[] = ['kunena_ranks', $query];
 

@@ -1201,7 +1201,7 @@ class KunenaUser
             $rank->rankTitle   = Text::_('COM_KUNENA_RANK_USER');
             $rank->rankMin     = 0;
             $rank->rankSpecial = 0;
-            $rank->rankImage   = 'rank0.gif';
+            $rank->rankImage   = 'rank0.svg';
 
             switch ($userType) {
                 case 'guest':
@@ -1219,7 +1219,7 @@ class KunenaUser
                 case 'blocked':
                     $rank->rankTitle   = Text::_('COM_KUNENA_RANK_BLOCKED');
                     $rank->rankSpecial = 1;
-                    $rank->rankImage   = 'rankdisabled.gif';
+                    $rank->rankImage   = 'rankdisabled.svg';
 
                     foreach (self::$_ranks as $cur) {
                         if ($cur->rankSpecial == 1 && strstr($cur->rankImage, 'disabled')) {
@@ -1232,7 +1232,7 @@ class KunenaUser
                 case 'banned':
                     $rank->rankTitle   = Text::_('COM_KUNENA_RANK_BANNED');
                     $rank->rankSpecial = 1;
-                    $rank->rankImage   = 'rankbanned.gif';
+                    $rank->rankImage   = 'rankbanned.svg';
 
                     foreach (self::$_ranks as $cur) {
                         if ($cur->rankSpecial == 1 && strstr($cur->rankImage, 'banned')) {
@@ -1246,7 +1246,7 @@ class KunenaUser
                 case 'localadmin':
                     $rank->rankTitle   = Text::_('COM_KUNENA_RANK_ADMINISTRATOR');
                     $rank->rankSpecial = 1;
-                    $rank->rankImage   = 'rankadmin.gif';
+                    $rank->rankImage   = 'rankadmin.svg';
 
                     foreach (self::$_ranks as $cur) {
                         if (!empty($cur->rankImage)) {
@@ -1262,7 +1262,7 @@ class KunenaUser
                 case 'moderator':
                     $rank->rankTitle   = Text::_('COM_KUNENA_RANK_MODERATOR');
                     $rank->rankSpecial = 1;
-                    $rank->rankImage   = 'rankmod.gif';
+                    $rank->rankImage   = 'rankmod.svg';
 
                     foreach (self::$_ranks as $cur) {
                         if (
@@ -1318,11 +1318,10 @@ class KunenaUser
             }
 
             if ($this->_config->rankImages == 1) {
-                $url             = KunenaTemplate::getInstance()->getRankPath($rank->rankImage, true);
-                $location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage;
-                $imageProperties = Image::getImageFileProperties($location);
+                $url  = KunenaTemplate::getInstance()->getRankPath($rank->rankImage, true);
+                $size = self::rankImageSizeAttributes(JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage);
 
-                return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . htmlspecialchars(Text::_($rank->rankTitle), ENT_QUOTES, 'UTF-8') . '" />';
+                return '<img loading=lazy src="' . $url . '"' . $size . ' alt="' . htmlspecialchars(Text::_($rank->rankTitle), ENT_QUOTES, 'UTF-8') . '" />';
             }
 
             if ($this->_config->rankImages == 2) {
@@ -1330,11 +1329,10 @@ class KunenaUser
             }
 
             if ($this->_config->rankImages == 3) {
-                $url             = KunenaTemplate::getInstance()->getRankPath($rank->rankImage, true);
-                $location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage;
-                $imageProperties = Image::getImageFileProperties($location);
+                $url  = KunenaTemplate::getInstance()->getRankPath($rank->rankImage, true);
+                $size = self::rankImageSizeAttributes(JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage);
 
-                return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . htmlspecialchars(Text::_($rank->rankTitle), ENT_QUOTES, 'UTF-8') . '" /><br>
+                return '<img loading=lazy src="' . $url . '"' . $size . ' alt="' . htmlspecialchars(Text::_($rank->rankTitle), ENT_QUOTES, 'UTF-8') . '" /><br>
 				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
             }
 
@@ -1344,6 +1342,65 @@ class KunenaUser
         }
 
         return $rank;
+    }
+
+    /**
+     * The attributes height and width of a rank image, or nothing when its size cannot be read (the image keeps its own size).
+     *
+     * @param   string  $location  The path of the image.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    private static function rankImageSizeAttributes(string $location): string
+    {
+        [$width, $height] = self::rankImageSize($location);
+
+        return $width && $height ? ' height="' . $height . '" width="' . $width . '"' : '';
+    }
+
+    /**
+     * The width and the height of a rank image. An SVG image (the images of Kunena) gives them in its attributes width and
+     * height, else in its viewBox: the reader of Joomla (getimagesize) does not read SVG.
+     *
+     * @param   string  $location  The path of the image.
+     *
+     * @return  int[]  [width, height], [0, 0] when they cannot be read.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function rankImageSize(string $location): array
+    {
+        if (!is_file($location)) {
+            return [0, 0];
+        }
+
+        if (strtolower(pathinfo($location, PATHINFO_EXTENSION)) !== 'svg') {
+            try {
+                $properties = Image::getImageFileProperties($location);
+
+                return [(int) $properties->width, (int) $properties->height];
+            } catch (Exception) {
+                return [0, 0];
+            }
+        }
+
+        // The image is read as XML without any network access (no external entity is loaded).
+        $svg = @simplexml_load_string((string) file_get_contents($location), null, LIBXML_NONET);
+
+        if (!$svg) {
+            return [0, 0];
+        }
+
+        $width  = (float) $svg['width'];
+        $height = (float) $svg['height'];
+
+        if ((!$width || !$height) && preg_match('/^\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)\s*$/', (string) $svg['viewBox'], $box)) {
+            [$width, $height] = [(float) $box[1], (float) $box[2]];
+        }
+
+        return [(int) round($width), (int) round($height)];
     }
 
     /**

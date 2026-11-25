@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="70" height="16" viewBox="0 0 70 16">
+  <defs>
+    <linearGradient id="kunena-rank-level" x1="0" y1="0" x2="70" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="4" width="10" height="8" rx="4" fill="url(#kunena-rank-level)"/>
+  <rect x="12" y="4" width="10" height="8" rx="4" fill="url(#kunena-rank-level)"/>
+  <rect x="24" y="4" width="10" height="8" rx="4" fill="url(#kunena-rank-level)"/>
+  <rect x="36" y="4" width="10" height="8" rx="4" fill="#94a3b8" fill-opacity=".35"/>
+  <rect x="48" y="4" width="10" height="8" rx="4" fill="#94a3b8" fill-opacity=".35"/>
+  <rect x="60" y="4" width="10" height="8" rx="4" fill="#94a3b8" fill-opacity=".35"/>
+</svg>

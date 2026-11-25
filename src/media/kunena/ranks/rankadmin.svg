@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="70" height="16" viewBox="0 0 70 16">
+  <defs>
+    <linearGradient id="kunena-rank-admin" x1="0" y1="0" x2="70" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fb7185"/>
+      <stop offset="1" stop-color="#e11d48"/>
+    </linearGradient>
+  </defs>
+  <rect width="70" height="16" rx="8" fill="url(#kunena-rank-admin)"/>
+  <g transform="translate(29 2)">
+    <path d="M1 9.5 0 2.5l3.4 2.7L6 1l2.6 4.2L12 2.5l-1 7z" fill="#fff"/>
+    <rect x="1" y="10.2" width="10" height="1.6" rx=".8" fill="#fff"/>
+  </g>
+</svg>

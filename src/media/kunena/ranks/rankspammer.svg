@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="70" height="16" viewBox="0 0 70 16">
+  <defs>
+    <linearGradient id="kunena-rank-spammer" x1="0" y1="0" x2="70" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="70" height="16" rx="8" fill="url(#kunena-rank-spammer)"/>
+  <g transform="translate(29 2)">
+    <path d="M6 .6c.4 0 .8.2 1 .6l4.8 8.6c.4.7-.1 1.6-1 1.6H1.2c-.9 0-1.4-.9-1-1.6L5 1.2c.2-.4.6-.6 1-.6z" fill="#fff"/>
+    <path d="M6 4v3" stroke="#d97706" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="6" cy="9.1" r=".85" fill="#d97706"/>
+  </g>
+</svg>

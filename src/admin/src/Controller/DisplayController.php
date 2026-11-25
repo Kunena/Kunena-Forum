@@ -84,11 +84,13 @@ JS
         );
 
         // A table wider than the page scrolls in its own box: the page itself keeps the width of the window (kunena-admin.css).
+        // The list of the columns of Joomla (table.columns, which runs before) goes into the row of the search tools.
         $document->getWebAssetManager()->addInlineScript(
             <<<'JS'
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('#content table').forEach(function (table) {
-        if (table.closest('.kd-scroll, .table-responsive') || table.parentElement.closest('table')) {
+    document.querySelectorAll('#content table.table').forEach(function (table) {
+        // Not the tables of the calendars of the date fields: they are a part of their popup.
+        if (table.closest('.kd-scroll, .table-responsive, .js-calendar') || table.parentElement.closest('table')) {
             return;
         }
 
@@ -97,6 +99,16 @@ document.addEventListener('DOMContentLoaded', function () {
         table.parentNode.insertBefore(box, table);
         box.appendChild(table);
     });
+
+    var columns = document.querySelector('#content #columnList');
+    var tools = document.querySelector('#content .js-stools-container-bar .btn-toolbar');
+
+    if (columns && tools) {
+        var chooser = columns.closest('.dropdown');
+        chooser.classList.remove('float-end', 'pb-2');
+        chooser.classList.add('kd-columns-chooser');
+        tools.appendChild(chooser);
+    }
 });
 JS
         );

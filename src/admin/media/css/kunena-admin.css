@@ -1234,6 +1234,13 @@ body.com_kunena .kd-scroll {
   border-radius: var(--kd-radius);
 }
 
+/* The list of the columns of Joomla (table.columns, wider than 992px) floats right just before the table. A box which
+   scrolls does not go under a float but next to it, which made the table narrower: the box goes below it, at full width. */
+body.com_kunena .kd-scroll,
+body.com_kunena #content .table-responsive {
+  clear: both;
+}
+
 /* A long name without spaces (a file name) may break, instead of making its column very wide */
 body.com_kunena #content .attachmentsList .filename,
 body.com_kunena #content .attachmentsList td {
@@ -1243,5 +1250,14 @@ body.com_kunena #content .attachmentsList td {
 /* The name of the file keeps room enough to be read on one or two lines */
 body.com_kunena #content .attachmentsList tbody th {
   min-width: 16rem;
+}
+
+/* The list of the columns, in the row of the search tools: as high as the other fields of the row */
+
+body.com_kunena #content .kd-columns-chooser > .dropdown-toggle {
+  height: 100%;
+  min-height: calc(1.5em + .75rem + 2px);
+  padding: .375rem .9rem;
+  font-size: inherit;
 }
 

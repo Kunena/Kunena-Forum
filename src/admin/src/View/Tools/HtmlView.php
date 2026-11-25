@@ -69,6 +69,7 @@ use Kunena\Forum\Libraries\Tools\KunenaReportsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaAnnouncementsReview;
+use Kunena\Forum\Libraries\Tools\KunenaDataRetention;
 use Kunena\Forum\Libraries\Tools\KunenaRatingAbuse;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
@@ -109,7 +110,7 @@ class HtmlView extends BaseHtmlView
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
         'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles', 'overrides', 'avatarfiles', 'settingshistory',
         'reports', 'warnings', 'moderatoredits', 'contentlimits', 'bigtopics', 'topicicons', 'rankladder', 'reactions',
-        'ratingabuse', 'announcements',
+        'dataretention', 'ratingabuse', 'announcements',
     ];
 
     /**
@@ -704,6 +705,18 @@ class HtmlView extends BaseHtmlView
 
             case 'reactions':
                 return KunenaReactionsOverview::reportOnSite();
+
+            case 'dataretention':
+                $days  = $input->getInt('days', KunenaDataRetention::AGES[2]);
+                $days  = \in_array($days, KunenaDataRetention::AGES, true) ? $days : KunenaDataRetention::AGES[2];
+                $now   = time();
+                $old   = [];
+
+                foreach (array_keys(KunenaDataRetention::TABLES) as $key) {
+                    $old[$key] = KunenaDataRetention::countOnSite($key, $days, $now);
+                }
+
+                return ['days' => $days, 'stats' => KunenaDataRetention::statsOnSite(), 'old' => $old];
 
             case 'ratingabuse':
                 return KunenaRatingAbuse::findOnSite();

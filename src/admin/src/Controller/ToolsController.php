@@ -63,6 +63,7 @@ use Kunena\Forum\Libraries\Tools\KunenaReactionsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaAnnouncementsReview;
+use Kunena\Forum\Libraries\Tools\KunenaDataRetention;
 use Kunena\Forum\Libraries\Tools\KunenaRatingAbuse;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
@@ -2682,6 +2683,33 @@ class ToolsController extends FormController
         }
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_REACTIONS_N_REMOVED', KunenaReactionsOverview::removeOnSite($ids)), 'success');
+    }
+
+    /**
+     * Deletes the rows of a table which are older than an age (tool "Data retention").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function pruneData(): void
+    {
+        $table = $this->input->post->getCmd('table', '');
+        $days  = $this->input->post->getInt('days', 0);
+
+        if (!$this->toolAllowed('dataretention')) {
+            return;
+        }
+
+        if (!isset(KunenaDataRetention::TABLES[$table]) || !\in_array($days, KunenaDataRetention::AGES, true)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_RETENTION_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_RETENTION_N_DELETED', KunenaDataRetention::pruneOnSite($table, $days, time())), 'success');
     }
 
     /**

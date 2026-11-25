@@ -75,6 +75,7 @@ $groups = [
         ['avatarfiles', 'COM_KUNENA_TOOLS_AVATARS', 'COM_KUNENA_TOOLS_AVATARS_DESC', 'circle-user'],
         ['caches', 'COM_KUNENA_TOOLS_CACHES', 'COM_KUNENA_TOOLS_CACHES_DESC', 'database'],
         ['storage', 'COM_KUNENA_TOOLS_STORAGE', 'COM_KUNENA_TOOLS_STORAGE_DESC', 'hard-drive'],
+        ['dataretention', 'COM_KUNENA_TOOLS_RETENTION', 'COM_KUNENA_TOOLS_RETENTION_DESC', 'box-archive'],
         ['optimizeimages', 'COM_KUNENA_TOOLS_IMAGES', 'COM_KUNENA_TOOLS_IMAGES_DESC', 'image'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_SYSTEM' => [

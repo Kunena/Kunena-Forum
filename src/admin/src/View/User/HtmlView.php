@@ -127,6 +127,17 @@ class HtmlView extends BaseHtmlView
             return parent::display($tpl);
         }
 
+        // The page "move the messages" opened by its address, without users ticked in the list: back to the list. The page of
+        // one user was prepared for it, and the layout showed PHP warnings for the list and the users it did not have.
+        if ($this->getLayout() == 'move') {
+            $app = Factory::getApplication();
+            KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+            $app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+            $app->redirect('index.php?option=com_kunena&view=users');
+
+            return;
+        }
+
         $this->user         = $model->getUser();
         $this->sub          = $model->getSubscriptions();
         $this->subsCatsList = $model->getCatSubscriptions();

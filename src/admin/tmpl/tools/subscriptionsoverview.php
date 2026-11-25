@@ -81,6 +81,8 @@ $lists = [
             <div class="kd-form__field">
                 <label for="kd-subs-search"><?php echo Text::_('COM_KUNENA_TOOLS_USER_SEARCH') ?></label>
                 <input type="search" class="form-control" id="kd-subs-search" name="search" value="<?php echo $this->escape($data['search']) ?>"
+                       data-kd-users="<?php echo $this->escape($this->usersEndpoint) ?>"
+                       data-kd-users-go="<?php echo $this->escape(Route::_('index.php?option=com_kunena&view=tools&layout=subscriptionsoverview&userid=__ID__', false) . '#kd-subs-user') ?>"
                        placeholder="<?php echo $this->escape(Text::_('COM_KUNENA_TOOLS_USER_SEARCH_HINT')) ?>">
             </div>
             <div>

@@ -1648,3 +1648,49 @@ body.com_kunena .kd mark {
     grid-template-columns: 1fr;
   }
 }
+
+/* The suggestions of a user field (the autocomplete of the tools) */
+.kd-suggest {
+  position: relative;
+}
+
+.kd-suggest__list {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 4px);
+  z-index: 20;
+  max-height: 18rem;
+  padding: .3rem;
+  margin: 0;
+  overflow-y: auto;
+  list-style: none;
+  background: var(--kd-surface);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius-sm);
+  box-shadow: var(--kd-shadow-hover);
+}
+
+.kd-suggest__option {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .1rem .6rem;
+  align-items: baseline;
+  padding: .45rem .6rem;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.kd-suggest__option span,
+.kd-suggest__empty {
+  font-size: .82rem;
+  color: var(--kd-muted);
+}
+
+.kd-suggest__empty {
+  padding: .45rem .6rem;
+}
+
+.kd-suggest__option:hover,
+.kd-suggest__option[aria-selected="true"] {
+  background: var(--kd-accent-soft);
+}

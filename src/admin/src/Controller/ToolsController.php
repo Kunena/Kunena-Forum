@@ -1728,6 +1728,43 @@ class ToolsController extends FormController
     }
 
     /**
+     * The users whose username, name or e-mail contains the text, as JSON: the suggestions of the user fields of the tools.
+     * Only the id, the username and the name leave the server.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function searchUsers(): void
+    {
+        $users = [];
+        $code  = 200;
+
+        if (!Session::checkToken('get')) {
+            $code = 403;
+        } elseif (!$this->app->getIdentity()->authorise('core.manage', 'com_kunena')) {
+            $code = 403;
+        } else {
+            $search = trim($this->input->getString('search', ''));
+
+            foreach (mb_strlen($search) >= 2 ? KunenaUserCleanup::search($search, 10) : [] as $user) {
+                $users[] = ['id' => (int) $user['id'], 'username' => (string) $user['username'], 'name' => (string) $user['name']];
+            }
+        }
+
+        $this->app->setHeader('status', $code, true);
+        $this->app->setHeader('Content-Type', 'application/json; charset=utf-8', true);
+        $this->app->setHeader('Cache-Control', 'no-store', true);
+        $this->app->sendHeaders();
+
+        echo json_encode($users, JSON_UNESCAPED_UNICODE);
+
+        $this->app->close();
+    }
+
+    /**
      * Replaces a text in all the messages, a batch at a time (tool "Find and replace").
      *
      * @return  void

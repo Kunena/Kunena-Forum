@@ -56,6 +56,8 @@ $sides  = [
                     <div class="kd-form__field">
                         <label for="kd-merge-search-<?php echo $side ?>"><?php echo Text::_('COM_KUNENA_TOOLS_USER_SEARCH') ?></label>
                         <input type="search" class="form-control" id="kd-merge-search-<?php echo $side ?>" name="<?php echo $side ?>_search"
+                               data-kd-users="<?php echo $this->escape($this->usersEndpoint) ?>"
+                               data-kd-users-go="<?php echo $this->escape(Route::_('index.php?option=com_kunena&view=tools&layout=mergeusers&' . ($side === 'from' ? 'from=__ID__&into=' . $intoId : 'from=' . $fromId . '&into=__ID__'), false)) ?>"
                                value="<?php echo $this->escape($query) ?>" placeholder="<?php echo $this->escape(Text::_('COM_KUNENA_TOOLS_USER_SEARCH_HINT')) ?>">
                     </div>
                     <div>

@@ -21,6 +21,7 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Helper\ConfigHelper;
@@ -83,6 +84,14 @@ class HtmlView extends BaseHtmlView
      * @since   Kunena 8.0
      */
     protected bool $canAdmin = false;
+
+    /**
+     * The address of the suggestions of the user fields (task tools.searchUsers, with the token of the session).
+     *
+     * @var     string
+     * @since   Kunena 8.0
+     */
+    protected string $usersEndpoint = '';
 
     /**
      * The files which Kunena no longer ships, found on the site (tool "Prune old files"): path => size, time, status.
@@ -302,9 +311,13 @@ class HtmlView extends BaseHtmlView
 
             $this->setToolBarTool();
 
-            // The confirmations, the "select all" boxes and the dialog of the tools. A full URL: the asset manager would look for
-            // a relative one in the media folder.
+            // The suggestions of the user fields: the address with the token of the session.
+            $this->usersEndpoint = Route::_('index.php?option=com_kunena&task=tools.searchUsers&format=json&' . Session::getFormToken() . '=1', false);
+
+            // The confirmations, the "select all" boxes, the dialog and the suggestions of the tools. A full URL: the asset
+            // manager would look for a relative one in the media folder.
             Text::script('COM_KUNENA_TOOLS_CONFIRM');
+            Text::script('COM_KUNENA_TOOLS_USER_NO_MATCH');
             $this->getDocument()->getWebAssetManager()->registerAndUseScript(
                 'kunena_admin_tools',
                 Uri::base() . 'components/com_kunena/media/js/kunena-tools.js',
@@ -501,25 +514,7 @@ class HtmlView extends BaseHtmlView
      */
     protected function findUsers(string $search): array
     {
-        $search = trim($search);
-
-        if ($search === '') {
-            return [];
-        }
-
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $like  = '%' . str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $search) . '%';
-        $query = $db->createQuery()
-            ->select($db->quoteName(['id', 'username', 'name', 'email']))
-            ->from($db->quoteName('#__users'))
-            ->where('(' . $db->quoteName('username') . ' LIKE :like1 OR ' . $db->quoteName('name') . ' LIKE :like2 OR ' . $db->quoteName('email') . ' LIKE :like3'
-                . (ctype_digit($search) ? ' OR ' . $db->quoteName('id') . ' = ' . (int) $search : '') . ')')
-            ->bind(':like1', $like)
-            ->bind(':like2', $like)
-            ->bind(':like3', $like)
-            ->order($db->quoteName('username'));
-
-        return (array) $db->setQuery($query, 0, 20)->loadAssocList('id');
+        return KunenaUserCleanup::search($search);
     }
 
     /**

@@ -59,6 +59,8 @@ $yesNo = static fn (bool $value) => Text::_($value ? 'JYES' : 'JNO');
             <div class="kd-form__field">
                 <label for="kd-perms-search"><?php echo Text::_('COM_KUNENA_TOOLS_USER_SEARCH') ?></label>
                 <input type="search" class="form-control" id="kd-perms-search" name="search" value="<?php echo $this->escape($data['search']) ?>"
+                       data-kd-users="<?php echo $this->escape($this->usersEndpoint) ?>"
+                       data-kd-users-go="<?php echo $this->escape(Route::_('index.php?option=com_kunena&view=tools&layout=permissions&userid=__ID__&catid=' . (int) $data['catid'], false)) ?>"
                        placeholder="<?php echo $this->escape(Text::_('COM_KUNENA_TOOLS_USER_SEARCH_HINT')) ?>">
             </div>
             <div class="kd-form__field">

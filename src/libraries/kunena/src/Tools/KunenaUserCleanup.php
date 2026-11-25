@@ -124,6 +124,45 @@ class KunenaUserCleanup
     }
 
     /**
+     * The users whose username, name or e-mail contains the text, or whose id it is: the exact username first, then the
+     * usernames which start with the text, then the others (the order of an autocomplete).
+     *
+     * @param   string  $search  The text.
+     * @param   int     $limit   At most this many.
+     *
+     * @return  array  id => [id, username, name, email].
+     *
+     * @since   Kunena 8.0
+     */
+    public static function search(string $search, int $limit = 20): array
+    {
+        $search = trim($search);
+
+        if ($search === '' || $limit <= 0) {
+            return [];
+        }
+
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        $escape = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $search);
+        $like   = '%' . $escape . '%';
+        $prefix = $escape . '%';
+        $query  = $db->createQuery()
+            ->select($db->quoteName(['id', 'username', 'name', 'email']))
+            ->from($db->quoteName('#__users'))
+            ->where('(' . $db->quoteName('username') . ' LIKE :like1 OR ' . $db->quoteName('name') . ' LIKE :like2 OR ' . $db->quoteName('email') . ' LIKE :like3'
+                . (ctype_digit($search) ? ' OR ' . $db->quoteName('id') . ' = ' . (int) $search : '') . ')')
+            ->bind(':like1', $like)
+            ->bind(':like2', $like)
+            ->bind(':like3', $like)
+            ->bind(':exact', $search)
+            ->bind(':prefix', $prefix)
+            ->order('CASE WHEN ' . $db->quoteName('username') . ' = :exact THEN 0 WHEN ' . $db->quoteName('username') . ' LIKE :prefix THEN 1 ELSE 2 END')
+            ->order($db->quoteName('username'));
+
+        return (array) $db->setQuery($query, 0, $limit)->loadAssocList('id');
+    }
+
+    /**
      * What the user has in the forum.
      *
      * @param   int  $userid  The user.

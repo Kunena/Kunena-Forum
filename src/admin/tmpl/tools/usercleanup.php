@@ -45,6 +45,7 @@ $date    = static fn ($value) => $value && !str_starts_with($value, '0000') && !
             <div class="kd-form__field">
                 <label for="kd-user-search"><?php echo Text::_('COM_KUNENA_TOOLS_USER_SEARCH') ?></label>
                 <input type="search" class="form-control" id="kd-user-search" name="search" value="<?php echo $this->escape($this->tool['search']) ?>"
+                       data-kd-users="<?php echo $this->escape($this->usersEndpoint) ?>" data-kd-users-go="<?php echo $this->escape(Route::_($page . '&userid=__ID__', false)) ?>"
                        placeholder="<?php echo $this->escape(Text::_('COM_KUNENA_TOOLS_USER_SEARCH_HINT')) ?>">
             </div>
             <div>

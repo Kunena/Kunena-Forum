@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUpdateCheck;
 use Kunena\Forum\Libraries\Tools\KunenaBrokenLinks;
+use Kunena\Forum\Libraries\Tools\KunenaGoneTopics;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
@@ -81,7 +82,7 @@ class HtmlView extends BaseHtmlView
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
-        'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls',
+        'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics',
     ];
 
     /**
@@ -586,6 +587,9 @@ class HtmlView extends BaseHtmlView
                 $state = \in_array($state, KunenaPollsOverview::STATES, true) ? $state : 'all';
 
                 return ['state' => $state, 'polls' => KunenaPollsOverview::listOnSite($state, time())];
+
+            case 'gonetopics':
+                return KunenaGoneTopics::listOnSite();
         }
 
         return [];

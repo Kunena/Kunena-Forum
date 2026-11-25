@@ -46,6 +46,7 @@ use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUserExport;
 use Kunena\Forum\Libraries\Tools\KunenaBrokenLinks;
+use Kunena\Forum\Libraries\Tools\KunenaGoneTopics;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
@@ -2113,6 +2114,58 @@ class ToolsController extends FormController
         }
 
         return $ids;
+    }
+
+    /**
+     * Frees the chosen addresses of deleted topics (tool "Deleted topic addresses").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function removeGoneTopics(): void
+    {
+        if (!$this->toolAllowed('gonetopics')) {
+            return;
+        }
+
+        $removed = KunenaGoneTopics::removeOnSite(ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array')));
+
+        $this->app->enqueueMessage(
+            $removed ? Text::plural('COM_KUNENA_TOOLS_GONE_N_REMOVED', $removed) : Text::_('COM_KUNENA_TOOLS_GONE_NONE_CHOSEN'),
+            $removed ? 'success' : 'warning'
+        );
+    }
+
+    /**
+     * Sends the chosen addresses of deleted topics to another page (tool "Deleted topic addresses").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function redirectGoneTopics(): void
+    {
+        if (!$this->toolAllowed('gonetopics')) {
+            return;
+        }
+
+        $changed = KunenaGoneTopics::redirectOnSite(
+            ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array')),
+            $this->input->post->getString('target', '')
+        );
+
+        if ($changed < 0) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_GONE_BAD_TARGET'), 'error');
+        } elseif ($changed === 0) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_GONE_NONE_CHOSEN'), 'warning');
+        } else {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_GONE_N_REDIRECTED', $changed), 'success');
+        }
     }
 
     /**

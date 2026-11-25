@@ -63,6 +63,7 @@ $groups = [
         ['beforeupdate', 'COM_KUNENA_TOOLS_UPDATE', 'COM_KUNENA_TOOLS_UPDATE_DESC', 'rocket'],
         ['security', 'COM_KUNENA_TOOLS_SECURITY', 'COM_KUNENA_TOOLS_SECURITY_DESC', 'shield-halved'],
         ['translations', 'COM_KUNENA_TOOLS_TRANSLATIONS', 'COM_KUNENA_TOOLS_TRANSLATIONS_DESC', 'language'],
+        ['gonetopics', 'COM_KUNENA_TOOLS_GONE', 'COM_KUNENA_TOOLS_GONE_DESC', 'ban'],
         ['databasetables', 'COM_KUNENA_TOOLS_TABLES', 'COM_KUNENA_TOOLS_TABLES_DESC', 'table'],
         ['menu', 'COM_KUNENA_A_MENU_MANAGER', 'COM_KUNENA_A_MENU_MANAGER_DESC', 'bars'],
         ['purgerestatements', 'COM_KUNENA_A_PURGE_RE_STATEMENTS', 'COM_KUNENA_A_PURGE_RE_STATEMENTS_DESC', 'eraser'],

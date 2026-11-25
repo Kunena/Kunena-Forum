@@ -70,6 +70,7 @@ use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaAnnouncementsReview;
 use Kunena\Forum\Libraries\Tools\KunenaDataRetention;
+use Kunena\Forum\Libraries\Tools\KunenaHealthSummary;
 use Kunena\Forum\Libraries\Tools\KunenaRatingAbuse;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
@@ -110,7 +111,7 @@ class HtmlView extends BaseHtmlView
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
         'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles', 'overrides', 'avatarfiles', 'settingshistory',
         'reports', 'warnings', 'moderatoredits', 'contentlimits', 'bigtopics', 'topicicons', 'rankladder', 'reactions',
-        'dataretention', 'ratingabuse', 'announcements',
+        'health', 'dataretention', 'ratingabuse', 'announcements',
     ];
 
     /**
@@ -705,6 +706,9 @@ class HtmlView extends BaseHtmlView
 
             case 'reactions':
                 return KunenaReactionsOverview::reportOnSite();
+
+            case 'health':
+                return KunenaHealthSummary::runOnSite(time());
 
             case 'dataretention':
                 $days  = $input->getInt('days', KunenaDataRetention::AGES[2]);

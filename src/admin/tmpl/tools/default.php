@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 // The tools: [layout, label, description, icon]. A layout of the view install is given as a full query.
 $groups = [
     'COM_KUNENA_ADMIN_TOOLS' => [
+        ['health', 'COM_KUNENA_TOOLS_HEALTH', 'COM_KUNENA_TOOLS_HEALTH_DESC', 'heart-pulse'],
         ['report', 'COM_KUNENA_REPORT_SYSTEM', 'COM_KUNENA_REPORT_SYSTEM_DESC', 'file-lines'],
         ['prune', 'COM_KUNENA_C_PRUNETAB', 'COM_KUNENA_C_PRUNETAB_DESC', 'scissors'],
         ['syncUsers', 'COM_KUNENA_SYNC_USERS', 'COM_KUNENA_SYNC_USERS_DESC', 'users-gear'],

@@ -32,7 +32,8 @@ $this->getDocument()->getWebAssetManager()->addInlineStyle(
     . '#adminForm .subform-repeatable-wrapper th:nth-child(6) { width: 9% !important; }'
     . '#adminForm .subform-repeatable-wrapper thead td:last-child { width: 110px !important; }'
     . '#adminForm .socials-no-controls .subform-repeatable-wrapper tr > :last-child { display: none; }'
-    . '#adminForm .subform-repeatable-wrapper td .form-control, #adminForm .subform-repeatable-wrapper td .form-select { min-width: 0; max-width: 100%; }'
+    // The fields fill their column (the address of the profile stopped at the width of 20 characters, before the icon).
+    . '#adminForm .subform-repeatable-wrapper td .form-control, #adminForm .subform-repeatable-wrapper td .form-select { width: 100%; min-width: 0; max-width: 100%; }'
     . '#adminForm .subform-repeatable-wrapper td .minicolors { display: block; width: 100%; }'
     . '#adminForm .subform-repeatable-wrapper td .controls { min-width: 0; width: 100%; }'
     . '#adminForm .subform-repeatable-wrapper td .btn-group { white-space: nowrap; }'

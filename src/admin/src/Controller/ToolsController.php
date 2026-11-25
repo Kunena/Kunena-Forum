@@ -30,6 +30,7 @@ use Kunena\Forum\Libraries\Event\KunenaBeforeDeleteSocialsEvent;
 use Kunena\Forum\Libraries\Event\KunenaBeforeModifySocialsEvent;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPollHelper;
@@ -44,6 +45,7 @@ use Kunena\Forum\Libraries\Tools\KunenaMailTest;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\Tools\KunenaScheduledTasks;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
+use Kunena\Forum\Libraries\Tools\KunenaTokenRestore;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\Tools\KunenaUserMerge;
 use Kunena\Forum\Libraries\User\KunenaAccountActionPolicy;
@@ -1634,6 +1636,37 @@ class ToolsController extends FormController
         }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=mergeusers', false));
+    }
+
+    /**
+     * Puts the tokens of the build back in the files of a git clone which an installed package overwrote through the links of
+     * the site (tool "Restore the build tokens", for the developers).
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function restoreTokens(): void
+    {
+        if (!$this->toolAllowed('restoretokens')) {
+            return;
+        }
+
+        if (!KunenaForum::isDev()) {
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+
+            return;
+        }
+
+        $result = KunenaTokenRestore::apply(KunenaTokenRestore::linkedFolders());
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_TOKENS_N_RESTORED', $result['restored']), 'success');
+
+        if ($result['failed']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_TOKENS_N_FAILED', $result['failed']), 'warning');
+        }
     }
 
     /**

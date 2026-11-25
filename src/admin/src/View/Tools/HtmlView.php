@@ -26,6 +26,7 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Helper\ConfigHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
@@ -36,6 +37,7 @@ use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\Tools\KunenaScheduledTasks;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
 use Kunena\Forum\Libraries\Tools\KunenaSpamFinder;
+use Kunena\Forum\Libraries\Tools\KunenaTokenRestore;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\Tools\KunenaUserMerge;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -52,7 +54,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 8.0
      */
-    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'scheduledtasks', 'mailtest'];
+    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest'];
 
     /**
      * The data of the tool of the layout (loadTool()).
@@ -382,6 +384,11 @@ class HtmlView extends BaseHtmlView
                     'fromMatch' => trim($input->getString('from_search', '')) !== '' ? $this->findUsers($input->getString('from_search', '')) : [],
                     'intoMatch' => trim($input->getString('into_search', '')) !== '' ? $this->findUsers($input->getString('into_search', '')) : [],
                 ];
+
+            case 'restoretokens':
+                $folders = KunenaForum::isDev() ? KunenaTokenRestore::linkedFolders() : [];
+
+                return ['dev' => KunenaForum::isDev(), 'folders' => $folders, 'files' => $folders ? KunenaTokenRestore::find($folders) : []];
 
             case 'scheduledtasks':
                 Factory::getApplication()->getLanguage()->load('plg_task_kunena', JPATH_ADMINISTRATOR)

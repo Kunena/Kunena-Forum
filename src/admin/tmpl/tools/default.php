@@ -56,6 +56,7 @@ if (PluginHelper::isEnabled('system', 'modifysocials')) {
 
 if (KunenaForum::isDev()) {
     $groups['COM_KUNENA_ADMIN_TOOLS_SYSTEM'][] = ['view=install', 'COM_KUNENA_GIT_INSTALL', 'COM_KUNENA_GIT_INSTALL_DESC', 'code-branch'];
+    $groups['COM_KUNENA_ADMIN_TOOLS_SYSTEM'][] = ['restoretokens', 'COM_KUNENA_TOOLS_TOKENS', 'COM_KUNENA_TOOLS_TOKENS_DESC', 'rotate-left'];
 }
 ?>
 

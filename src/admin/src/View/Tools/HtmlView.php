@@ -54,6 +54,7 @@ use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
 use Kunena\Forum\Libraries\Tools\KunenaBanReview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryHealth;
+use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaUnansweredTopics;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
@@ -92,7 +93,7 @@ class HtmlView extends BaseHtmlView
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
-        'unanswered', 'banreview', 'categoryhealth',
+        'unanswered', 'banreview', 'thankyourings', 'categoryhealth',
     ];
 
     /**
@@ -645,6 +646,9 @@ class HtmlView extends BaseHtmlView
 
             case 'banreview':
                 return KunenaBanReview::reviewOnSite(time());
+
+            case 'thankyourings':
+                return KunenaThankyouRings::findOnSite();
 
             case 'categoryhealth':
                 return KunenaCategoryHealth::checkOnSite($input->getInt('days', KunenaCategoryHealth::PERIODS[1]), time());

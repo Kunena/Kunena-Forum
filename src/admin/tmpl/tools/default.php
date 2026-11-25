@@ -46,6 +46,7 @@ $groups = [
         ['spam', 'COM_KUNENA_TOOLS_SPAM', 'COM_KUNENA_TOOLS_SPAM_DESC', 'shield-virus'],
         ['profilespam', 'COM_KUNENA_TOOLS_PROFILESPAM', 'COM_KUNENA_TOOLS_PROFILESPAM_DESC', 'id-card'],
         ['banreview', 'COM_KUNENA_TOOLS_BANS', 'COM_KUNENA_TOOLS_BANS_DESC', 'user-lock'],
+        ['thankyourings', 'COM_KUNENA_TOOLS_RINGS', 'COM_KUNENA_TOOLS_RINGS_DESC', 'handshake'],
         ['moderators', 'COM_KUNENA_TOOLS_MODERATORS', 'COM_KUNENA_TOOLS_MODERATORS_DESC', 'user-shield'],
         ['subscriberaddresses', 'COM_KUNENA_TOOLS_ADDRESSES', 'COM_KUNENA_TOOLS_ADDRESSES_DESC', 'envelope-circle-check'],
         ['copypermissions', 'COM_KUNENA_TOOLS_COPYPERMS', 'COM_KUNENA_TOOLS_COPYPERMS_DESC', 'copy'],

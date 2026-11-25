@@ -52,6 +52,7 @@ use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaBanReview;
+use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
@@ -2411,6 +2412,32 @@ class ToolsController extends FormController
         $result = KunenaBanReview::cleanOnSite($ids);
 
         $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_BANS_CLEANED', $result['moderator'], $result['subscriptions']), 'success');
+    }
+
+    /**
+     * Removes the thanks the users of the chosen pairs gave each other (tool "Thank-you rings").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function removeThanks(): void
+    {
+        if (!$this->toolAllowed('thankyourings')) {
+            return;
+        }
+
+        $pairs = KunenaThankyouRings::parse((array) $this->input->post->get('pairs', [], 'array'));
+
+        if (!$pairs) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_RINGS_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_RINGS_N_REMOVED', KunenaThankyouRings::removeOnSite($pairs)), 'success');
     }
 
     /**

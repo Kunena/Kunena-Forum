@@ -34,6 +34,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
+use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
 use Kunena\Forum\Libraries\Tools\KunenaFindReplace;
 use Kunena\Forum\Libraries\Tools\KunenaInactiveUsers;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
@@ -64,7 +65,7 @@ class HtmlView extends BaseHtmlView
      */
     public const TOOLS = [
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
-        'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage',
+        'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
     ];
 
     /**
@@ -473,6 +474,8 @@ class HtmlView extends BaseHtmlView
             case 'storage':
                 return KunenaStorageReport::reportOnSite();
 
+            case 'databasetables':
+                return ['supported' => KunenaDatabaseTables::isSupported(), 'tables' => KunenaDatabaseTables::listOnSite()];
         }
 
         return [];

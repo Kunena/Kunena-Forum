@@ -42,6 +42,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
+use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
 use Kunena\Forum\Libraries\Tools\KunenaFindReplace;
 use Kunena\Forum\Libraries\Tools\KunenaInactiveUsers;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
@@ -1899,6 +1900,53 @@ class ToolsController extends FormController
         $removed = KunenaSubscriptions::unsubscribeOnSite($this->input->post->getCmd('scope', ''), $this->input->post->getInt('id', 0));
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_SUBS_N_REMOVED', $removed), $removed ? 'success' : 'info');
+    }
+
+    /**
+     * Optimizes or analyzes the chosen tables (tool "Database tables").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function databaseTables(): void
+    {
+        if (!$this->toolAllowed('databasetables')) {
+            return;
+        }
+
+        $operation = $this->input->post->getCmd('operation') === 'analyze' ? 'analyze' : 'optimize';
+        $results   = KunenaDatabaseTables::runOnSite($operation, (array) $this->input->post->get('tables', [], 'array'));
+
+        if (!$results) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_TABLES_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_TABLES_N_' . strtoupper($operation), \count($results)), 'success');
+
+        foreach ($results as $table => $message) {
+            if (!\in_array(strtolower($message), ['ok', 'table is already up to date'], true)) {
+                $this->app->enqueueMessage($this->escapeText($table . ': ' . $message), 'info');
+            }
+        }
+    }
+
+    /**
+     * A text of the database in a message: no markup.
+     *
+     * @param   string  $text  The text.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    private function escapeText(string $text): string
+    {
+        return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
     }
 
     /**

@@ -20,7 +20,6 @@ return [
     'administrator/components/com_kunena/src/Controller/CloseController.php',
     'administrator/components/com_kunena/src/Controller/EmailController.php',
     'administrator/components/com_kunena/src/Controller/IconsController.php',
-    'administrator/components/com_kunena/src/Controller/InstallController.php',
     'administrator/components/com_kunena/src/Controller/LabelsController.php',
     'administrator/components/com_kunena/src/Controller/LogController.php',
     'administrator/components/com_kunena/src/Controller/StatisticsController.php',

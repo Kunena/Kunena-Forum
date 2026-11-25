@@ -58,6 +58,7 @@ use Kunena\Forum\Libraries\Tools\KunenaSettingsHistory;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaTopicManager;
 use Kunena\Forum\Libraries\Tools\KunenaContentLimits;
+use Kunena\Forum\Libraries\Tools\KunenaRankLadder;
 use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
@@ -2634,6 +2635,24 @@ class ToolsController extends FormController
         }
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_ICONS_N_RESET', KunenaTopicIcons::resetUnknownOnSite()), 'success');
+    }
+
+    /**
+     * Takes the ranks which no longer exist away from the users (tool "Rank ladder check").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function resetUnknownRanks(): void
+    {
+        if (!$this->toolAllowed('rankladder')) {
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_RANKS_N_RESET', KunenaRankLadder::resetUnknownOnSite()), 'success');
     }
 
     /**

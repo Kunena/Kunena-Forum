@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var icons = {
         cpanel: 'gauge-high', attachments: 'paperclip', badges: 'award', categories: 'sitemap', config: 'gear',
         smilies: 'face-smile', stats: 'chart-column', logs: 'clipboard-list', mailsqueues: 'envelope', plugins: 'plug',
-        ranks: 'ranking-star', socials: 'share-nodes', templates: 'palette', tools: 'wrench', trashs: 'trash', users: 'users'
+        ranks: 'ranking-star', socials: 'share-nodes', templates: 'palette', topics: 'list-check', tools: 'wrench', trashs: 'trash', users: 'users'
     };
 
     document.querySelectorAll('#sidebarmenu a.no-dropdown').forEach(function (link) {

@@ -16,6 +16,7 @@
  * - a button with data-kd-frame="url" opens the page in a dialog (the indexer of Smart Search);
  * - a field with data-kd-users="url of the suggestions" suggests users while typing; the one chosen opens
  *   data-kd-users-go (its __ID__ becomes the id of the user);
+ * - a button with data-kd-task="ctrl.task" submits the form adminForm with the task, when rows are chosen;
  * - a button with data-kd-insert="text" inserts the text into the last field with data-kd-tag-target (or editor of
  *   Joomla in a box with data-kd-tag-editor) which had the focus.
  */
@@ -232,6 +233,24 @@
         target.value = target.value.slice(0, start) + tag + target.value.slice(end);
         target.focus();
         target.setSelectionRange(start + tag.length, start + tag.length);
+    });
+
+    // A button of a list of Joomla (form adminForm) outside the toolbar: the task for the chosen rows.
+    document.addEventListener('click', function (event) {
+        var button = event.target.closest('#kunena [data-kd-task]');
+        var form = document.getElementById('adminForm');
+
+        if (!button || !form || !window.Joomla) {
+            return;
+        }
+
+        if (form.boxchecked && Number(form.boxchecked.value) === 0) {
+            Joomla.renderMessages({ error: [text('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST')] });
+
+            return;
+        }
+
+        Joomla.submitbutton(button.getAttribute('data-kd-task'));
     });
 
     document.addEventListener('change', function (event) {

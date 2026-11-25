@@ -118,7 +118,13 @@ body.com_kunena .kd a {
   stop-color: #a9b4c4;
 }
 
+/* A title can be a subject typed by a user: a long word breaks instead of making the page wider. */
+.kd-hero__brand > div {
+  min-width: 0;
+}
+
 body.com_kunena .kd .kd-hero__title {
+  overflow-wrap: anywhere;
   font-size: 1.4rem;
   font-weight: 700;
   line-height: 1.2;
@@ -1452,7 +1458,12 @@ body.com_kunena #content table.table > tbody > tr > td.kd-diag__invalid {
   margin-bottom: 0;
 }
 
-.kd-panel__title {
+/* A form around the blocks of a page (an edit with the toolbar): its blocks keep the spacing of the page. */
+body.com_kunena .kd > .kd-contents {
+  display: contents;
+}
+
+body.com_kunena .kd .kd-panel__title {
   margin: 0 0 .75rem;
   font-size: 1.05rem;
   font-weight: 600;
@@ -1706,6 +1717,109 @@ body.com_kunena .kd mark {
   background: var(--kd-surface-2);
   border: 1px solid var(--kd-border);
   border-radius: var(--kd-radius-sm);
+}
+
+/* The pagination of a list: how many are shown on the left, the pages on the right (under each other on a phone). */
+.kd-pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kd-pager .pagination {
+  flex-wrap: wrap;
+}
+
+/* The quick actions of a row of a list (lock, sticky, approve, trash, edit): small icon buttons; a state which is on
+   (locked, sticky) shows in the accent color. */
+.kd-row-actions {
+  display: inline-flex;
+  gap: .25rem;
+  white-space: nowrap;
+}
+
+.kd-row-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  color: var(--kd-muted);
+  background: transparent;
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius-sm);
+}
+
+.kd-row-action:hover,
+.kd-row-action:focus-visible {
+  color: var(--kd-text);
+  background: var(--kd-surface-2);
+}
+
+.kd-row-action.is-on {
+  color: var(--kd-accent);
+  border-color: currentcolor;
+}
+
+/* The editor of the forum (CKEditor 5) in the dark administrator template: its variables take the colors of the page. Its
+   dropdowns and dialogs are put at the end of the body, so the rule is for the whole page of Kunena, not only #kunena. */
+[data-bs-theme="dark"] body.com_kunena .ck {
+  --ck-color-base-background: var(--kd-surface);
+  --ck-color-base-foreground: var(--kd-surface-2);
+  --ck-color-base-border: var(--kd-border);
+  --ck-color-text: var(--kd-text);
+  --ck-color-toolbar-background: var(--kd-surface-2);
+  --ck-color-toolbar-border: var(--kd-border);
+  --ck-color-button-default-hover-background: var(--kd-bg);
+  --ck-color-button-default-active-background: var(--kd-bg);
+  --ck-color-button-on-background: var(--kd-bg);
+  --ck-color-button-on-hover-background: var(--kd-bg);
+  --ck-color-button-on-color: var(--kd-accent);
+  --ck-color-dropdown-panel-background: var(--kd-surface);
+  --ck-color-dropdown-panel-border: var(--kd-border);
+  --ck-color-panel-background: var(--kd-surface);
+  --ck-color-panel-border: var(--kd-border);
+  --ck-color-input-background: var(--kd-surface);
+  --ck-color-input-border: var(--kd-border);
+  --ck-color-input-text: var(--kd-text);
+  --ck-color-labeled-field-label-background: var(--kd-surface);
+  --ck-color-list-background: var(--kd-surface);
+  --ck-color-list-button-hover-background: var(--kd-surface-2);
+  --ck-color-split-button-hover-background: var(--kd-bg);
+  --ck-color-tooltip-background: var(--kd-bg);
+  --ck-color-tooltip-text: var(--kd-text);
+}
+
+[data-bs-theme="dark"] body.com_kunena .ck.ck-editor__main > .ck-editor__editable {
+  background: var(--kd-surface);
+}
+
+[data-bs-theme="dark"] body.com_kunena .ck.ck-content,
+[data-bs-theme="dark"] body.com_kunena .ck.ck-content * {
+  color: var(--kd-text);
+}
+
+/* A message of a topic in its edit: who wrote it and when, then its subject and its text (BBCode, in a fixed font). */
+.kd-post {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.kd-post__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: baseline;
+}
+
+.kd-post__text {
+  font-family: var(--bs-font-monospace, monospace);
+  font-size: .85rem;
+  resize: vertical;
 }
 
 /* The edit of a mail template: the fields under each other, the text in a fixed font (its lines are sent as they are). */

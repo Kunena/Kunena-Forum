@@ -74,6 +74,7 @@ $groups = [
         ['security', 'COM_KUNENA_TOOLS_SECURITY', 'COM_KUNENA_TOOLS_SECURITY_DESC', 'shield-halved'],
         ['settings', 'COM_KUNENA_TOOLS_SETTINGS', 'COM_KUNENA_TOOLS_SETTINGS_DESC', 'sliders'],
         ['translations', 'COM_KUNENA_TOOLS_TRANSLATIONS', 'COM_KUNENA_TOOLS_TRANSLATIONS_DESC', 'language'],
+        ['overrides', 'COM_KUNENA_TOOLS_OVERRIDES', 'COM_KUNENA_TOOLS_OVERRIDES_DESC', 'pen-ruler'],
         ['gonetopics', 'COM_KUNENA_TOOLS_GONE', 'COM_KUNENA_TOOLS_GONE_DESC', 'ban'],
         ['databasetables', 'COM_KUNENA_TOOLS_TABLES', 'COM_KUNENA_TOOLS_TABLES_DESC', 'table'],
         ['menu', 'COM_KUNENA_A_MENU_MANAGER', 'COM_KUNENA_A_MENU_MANAGER_DESC', 'bars'],

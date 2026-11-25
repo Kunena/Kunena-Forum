@@ -55,6 +55,7 @@ use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
 use Kunena\Forum\Libraries\Tools\KunenaBanReview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryHealth;
 use Kunena\Forum\Libraries\Tools\KunenaDuplicateTitles;
+use Kunena\Forum\Libraries\Tools\KunenaLanguageOverrides;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaUnansweredTopics;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
@@ -94,7 +95,7 @@ class HtmlView extends BaseHtmlView
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
-        'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles',
+        'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles', 'overrides',
     ];
 
     /**
@@ -656,6 +657,9 @@ class HtmlView extends BaseHtmlView
 
             case 'duplicatetitles':
                 return KunenaDuplicateTitles::findOnSite();
+
+            case 'overrides':
+                return ['files' => KunenaLanguageOverrides::checkOnSite()];
         }
 
         return [];

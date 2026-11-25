@@ -429,6 +429,10 @@ return new class () implements ServiceProviderInterface {
 
                         if (file_exists($saved)) {
                             File::copy($saved, JPATH_SITE . "/components/com_kunena/template/{$template}/assets/scss/custom.scss");
+
+                            // The copy is for this update only: left in the folder for temporary files, a later update put it back
+                            // over the template after the administrator had deleted his custom.scss.
+                            File::delete($saved);
                         }
                     }
 

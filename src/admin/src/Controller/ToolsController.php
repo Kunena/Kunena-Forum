@@ -33,6 +33,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPollHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
+use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -1015,7 +1016,7 @@ class ToolsController extends FormController
             // Move values of old socials columns to the JSON in column socials
             $listOldSocialsColumns = ['userid', 'facebook', 'myspace', 'linkedin', 'linkedin_company', 'digg', 'skype', 'yim', 'google', 'github', 'microsoft', 'blogspot', 'flickr', 'bebo', 'instagram', 'qqsocial', 'qzone', 'weibo', 'wechat',
                 'vk', 'telegram', 'apple', 'vimeo', 'whatsapp', 'youtube', 'ok', 'pinterest', 'reddit', 'icq'];
-            
+
             // Check if column twitter exist to import value from it just in case
             $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('twitter');
             $db->setQuery($query);
@@ -1062,7 +1063,7 @@ class ToolsController extends FormController
             }
 
             $listOldSocialsColumnsForImport = array_diff($listOldSocialsColumns, ['icq']);
-            
+
             // The social websites of every user go into the column socials through the object of the socials, as the update to 6.4
             // moves them. The JSON was written by hand without escaping (a value with a quote made the column no JSON), only for the
             // users who were never banned (the others lost their socials with the old columns, removed below), and the column
@@ -1127,7 +1128,7 @@ class ToolsController extends FormController
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         } else {
             // Socials already set up: still remove leftover legacy columns which are never imported
-            foreach (['icq'] as $column) {           
+            foreach (['icq'] as $column) {
                 $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote($column);
                 $db->setQuery($query);
 
@@ -1267,5 +1268,55 @@ class ToolsController extends FormController
     public function systemReport(): void
     {
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
+
+    /**
+     * Deletes the chosen files which Kunena no longer ships (tool "Prune old files"). Only an administrator of Kunena, and only
+     * the files of the list which can be deleted (KunenaObsoleteFiles): the paths of the request are checked against it.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function pruneFiles(): void
+    {
+        $back = KunenaRoute::_($this->baseurl . '&layout=prunefiles', false);
+
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect($back);
+
+            return;
+        }
+
+        if (!$this->app->getIdentity()->authorise('core.admin', 'com_kunena')) {
+            $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect($back);
+
+            return;
+        }
+
+        $paths = array_values(array_filter((array) $this->input->post->get('files', [], 'array'), 'is_string'));
+
+        if (!$paths) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_PRUNE_FILES_NONE_CHOSEN'), 'warning');
+            $this->setRedirect($back);
+
+            return;
+        }
+
+        $result = KunenaObsoleteFiles::deleteOnSite($paths);
+
+        if ($result['deleted']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_PRUNE_FILES_N_DELETED', \count($result['deleted'])), 'success');
+        }
+
+        if ($result['skipped']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_PRUNE_FILES_N_SKIPPED', \count($result['skipped'])), 'warning');
+        }
+
+        $this->setRedirect($back);
     }
 }

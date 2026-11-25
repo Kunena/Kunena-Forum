@@ -25,6 +25,7 @@ use Kunena\Forum\Administrator\Helper\ConfigHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -35,6 +36,22 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class HtmlView extends BaseHtmlView
 {
+    /**
+     * The files which Kunena no longer ships, found on the site (tool "Prune old files"): path => size, time, status.
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected array $obsoleteFiles = [];
+
+    /**
+     * Who may delete them: an administrator of Kunena (core.admin).
+     *
+     * @var     boolean
+     * @since   Kunena 8.0
+     */
+    protected bool $canDeleteFiles = false;
+
     /**
      * @var     array
      * @since   Kunena 6.0
@@ -226,6 +243,11 @@ class HtmlView extends BaseHtmlView
             $this->setToolBarSubscriptions();
         } elseif ($layout == 'syncUsers') {
             $this->setToolBarSyncUsers();
+        } elseif ($layout == 'prunefiles') {
+            $this->obsoleteFiles  = KunenaObsoleteFiles::findOnSite();
+            $this->canDeleteFiles = $this->getCurrentUser()->authorise('core.admin', 'com_kunena');
+
+            $this->setToolBarPruneFiles();
         }
 
         return parent::display($tpl);
@@ -351,6 +373,20 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::spacer();
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/purge-re-prefixes';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    protected function setToolBarPruneFiles(): void
+    {
+        ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
+        ToolbarHelper::spacer();
+        ToolbarHelper::cancel('tools.cancel', 'JTOOLBAR_CLOSE');
+        ToolbarHelper::spacer();
+        ToolbarHelper::help('COM_KUNENA', false, 'https://docs.kunena.org/en/');
     }
 
     /**

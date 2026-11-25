@@ -34,6 +34,13 @@ class KunenaSubscriptions
     public const LIMIT = 20;
 
     /**
+     * At most this many topics of a user are listed.
+     *
+     * @since   Kunena 8.0
+     */
+    public const USER_LIMIT = 200;
+
+    /**
      * The scopes of an unsubscription: the column which is matched, the tables.
      *
      * @since   Kunena 8.0
@@ -108,18 +115,65 @@ class KunenaSubscriptions
     }
 
     /**
-     * Removes the subscriptions of a user, of a category or of a topic.
+     * The subscriptions of a user: his categories and his topics, by name.
      *
-     * @param   string  $scope  A key of SCOPES.
-     * @param   int     $id     The user, the category or the topic.
+     * @param   int  $userid  The user.
+     *
+     * @return  array{categories: array, topics: array, topicsTotal: int}
+     *
+     * @since   Kunena 8.0
+     */
+    public static function ofUserOnSite(int $userid): array
+    {
+        $result = ['categories' => [], 'topics' => [], 'topicsTotal' => 0];
+
+        if ($userid <= 0) {
+            return $result;
+        }
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select([$db->quoteName('c.id'), $db->quoteName('c.name')])
+            ->from($db->quoteName('#__kunena_user_categories', 's'))
+            ->innerJoin($db->quoteName('#__kunena_categories', 'c') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('s.category_id'))
+            ->where($db->quoteName('s.user_id') . ' = :id')
+            ->where($db->quoteName('s.subscribed') . ' = 1')
+            ->bind(':id', $userid, ParameterType::INTEGER)
+            ->order($db->quoteName('c.name'));
+        $result['categories'] = (array) $db->setQuery($query)->loadAssocList();
+
+        $query = $db->createQuery()
+            ->select([$db->quoteName('t.id'), $db->quoteName('t.subject'), $db->quoteName('t.category_id'), $db->quoteName('t.last_post_time')])
+            ->from($db->quoteName('#__kunena_user_topics', 's'))
+            ->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('s.topic_id'))
+            ->where($db->quoteName('s.user_id') . ' = :id')
+            ->where($db->quoteName('s.subscribed') . ' = 1')
+            ->bind(':id', $userid, ParameterType::INTEGER)
+            ->order($db->quoteName('t.last_post_time') . ' DESC');
+        $result['topics'] = (array) $db->setQuery($query, 0, self::USER_LIMIT)->loadAssocList();
+
+        $count = clone $query;
+        $count->clear('select')->clear('order')->select('COUNT(*)');
+        $result['topicsTotal'] = (int) $db->setQuery($count)->loadResult();
+
+        return $result;
+    }
+
+    /**
+     * Removes the subscriptions of a user, of a category or of a topic; with a user, only his subscription to that category
+     * or topic.
+     *
+     * @param   string  $scope   A key of SCOPES.
+     * @param   int     $id      The user, the category or the topic.
+     * @param   int     $userid  The user whose subscription is removed (0: all the users).
      *
      * @return  int  The subscriptions removed.
      *
      * @since   Kunena 8.0
      */
-    public static function unsubscribeOnSite(string $scope, int $id): int
+    public static function unsubscribeOnSite(string $scope, int $id, int $userid = 0): int
     {
-        if (!isset(self::SCOPES[$scope]) || $id <= 0) {
+        if (!isset(self::SCOPES[$scope]) || $id <= 0 || $userid < 0) {
             return 0;
         }
 
@@ -134,6 +188,11 @@ class KunenaSubscriptions
                 ->where($db->quoteName($column) . ' = :id')
                 ->where($db->quoteName('subscribed') . ' = 1')
                 ->bind(':id', $id, ParameterType::INTEGER);
+
+            if ($userid > 0 && $scope !== 'user') {
+                $query->where($db->quoteName('user_id') . ' = :user')->bind(':user', $userid, ParameterType::INTEGER);
+            }
+
             $db->setQuery($query)->execute();
             $removed += (int) $db->getAffectedRows();
         }

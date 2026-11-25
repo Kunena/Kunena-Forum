@@ -1893,11 +1893,14 @@ class ToolsController extends FormController
      */
     public function unsubscribeAll(): void
     {
-        if (!$this->toolAllowed('subscriptionsoverview')) {
+        // A subscription of the user chosen on the page goes back to that user.
+        $userid = $this->input->post->getInt('user_id', 0);
+
+        if (!$this->toolAllowed('subscriptionsoverview' . ($userid > 0 ? '&userid=' . $userid : ''))) {
             return;
         }
 
-        $removed = KunenaSubscriptions::unsubscribeOnSite($this->input->post->getCmd('scope', ''), $this->input->post->getInt('id', 0));
+        $removed = KunenaSubscriptions::unsubscribeOnSite($this->input->post->getCmd('scope', ''), $this->input->post->getInt('id', 0), max(0, $userid));
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_SUBS_N_REMOVED', $removed), $removed ? 'success' : 'info');
     }

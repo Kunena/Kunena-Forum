@@ -449,7 +449,16 @@ class HtmlView extends BaseHtmlView
                 return ['criteria' => $criteria, 'found' => KunenaInactiveUsers::findOnSite($criteria)];
 
             case 'subscriptionsoverview':
-                return KunenaSubscriptions::overviewOnSite();
+                $userid = $input->getInt('userid', 0);
+                $search = trim($input->getString('search', ''));
+
+                return KunenaSubscriptions::overviewOnSite() + [
+                    'userid'   => $userid,
+                    'search'   => $search,
+                    'matches'  => $search !== '' ? $this->findUsers($search) : [],
+                    'user'     => $userid ? KunenaUserCleanup::summary($userid) : null,
+                    'userSubs' => $userid ? KunenaSubscriptions::ofUserOnSite($userid) : null,
+                ];
 
             case 'permissions':
                 $userid     = $input->getInt('userid', 0);

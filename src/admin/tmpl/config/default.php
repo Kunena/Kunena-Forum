@@ -117,7 +117,12 @@ $first = array_key_first($sections);
                                     <p class="kd-config__groupdesc"><?php echo Text::_($group['desc']); ?></p>
                                 <?php endif; ?>
                                 <?php foreach ($fields as $field) : ?>
-                                    <?php echo $field->renderField(['class' => 'kd-row', 'descClass' => 'kd-row__desc']); ?>
+                                    <?php if ($field->hidden) : ?>
+                                        <?php // A hidden option (hidden="true") gives only its input, which can be a text field: its value is saved, not shown. ?>
+                                        <div hidden><?php echo $field->input; ?></div>
+                                    <?php else : ?>
+                                        <?php echo $field->renderField(['class' => 'kd-row', 'descClass' => 'kd-row__desc']); ?>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </div>
                         <?php endforeach; ?>

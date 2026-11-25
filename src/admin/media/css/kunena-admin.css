@@ -1058,13 +1058,9 @@ body.com_kunena .kd .kd-row {
   margin: 0;
 }
 
-body.com_kunena .kd .kd-row + .kd-row,
-body.com_kunena .kd .kd-config__grouptitle + .kd-row {
+/* A line above every option but the first one of its group (a hidden option can be between two of them) */
+body.com_kunena .kd .kd-row ~ .kd-row {
   border-top: 1px solid var(--kd-border);
-}
-
-body.com_kunena .kd .kd-config__grouptitle + .kd-row {
-  border-top: 0;
 }
 
 body.com_kunena .kd .kd-row.hidden,

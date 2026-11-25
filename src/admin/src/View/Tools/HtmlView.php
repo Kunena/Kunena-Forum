@@ -30,6 +30,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
@@ -37,6 +38,7 @@ use Kunena\Forum\Libraries\Tools\KunenaFindReplace;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
 use Kunena\Forum\Libraries\Tools\KunenaModerationQueue;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
+use Kunena\Forum\Libraries\Tools\KunenaPermissionCheck;
 use Kunena\Forum\Libraries\Tools\KunenaScheduledTasks;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
 use Kunena\Forum\Libraries\Tools\KunenaSpamFinder;
@@ -59,7 +61,7 @@ class HtmlView extends BaseHtmlView
      */
     public const TOOLS = [
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
-        'findreplace', 'mergecategories', 'moderation',
+        'findreplace', 'mergecategories', 'moderation', 'permissions',
     ];
 
     /**
@@ -436,6 +438,26 @@ class HtmlView extends BaseHtmlView
 
             case 'moderation':
                 return ['unapproved' => KunenaModerationQueue::unapprovedOnSite(), 'reports' => KunenaModerationQueue::reportsOnSite()];
+
+            case 'permissions':
+                $userid     = $input->getInt('userid', 0);
+                $catid      = $input->getInt('catid', 0);
+                $search     = trim($input->getString('search', ''));
+                $categories = KunenaCategoryTransfer::sortTree(KunenaCategoryTransfer::rowsOnSite());
+                $data       = ['userid' => $userid, 'catid' => $catid, 'search' => $search, 'categories' => $categories, 'matches' => $search !== '' ? $this->findUsers($search) : [], 'result' => null];
+                $category   = $catid ? KunenaCategoryHelper::get($catid) : null;
+
+                // A guest is user 0: the checker answers for him too.
+                if ($category && $category->exists() && ($userid === 0 || KunenaUserCleanup::summary($userid))) {
+                    $user               = KunenaUserHelper::get($userid);
+                    $data['userName']   = $userid ? $user->getName() : Text::_('COM_KUNENA_TOOLS_PERMS_GUEST');
+                    $data['result']     = KunenaPermissionCheck::check($category, $user);
+                    $data['profile']    = KunenaPermissionCheck::profile($user, $category);
+                    $data['category']   = KunenaPermissionCheck::categoryAccess($category);
+                    $data['rules']      = KunenaPermissionCheck::rules();
+                }
+
+                return $data;
 
         }
 

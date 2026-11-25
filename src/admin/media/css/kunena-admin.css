@@ -475,8 +475,21 @@ body.com_kunena .kd .kd-card {
   transition: border-color .15s, box-shadow .15s, transform .15s;
 }
 
-body.com_kunena .kd .kd-card[hidden] {
+body.com_kunena .kd .kd-card[hidden],
+body.com_kunena .kd .kd-section[hidden] {
   display: none;
+}
+
+/* The search of the page of the tools: the field with its icon in front. */
+.kd-tools-search {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+}
+
+.kd-tools-search > .form-control {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 body.com_kunena .kd .kd-card:hover {

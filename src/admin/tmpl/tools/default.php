@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
@@ -87,9 +88,31 @@ if (KunenaForum::isDev()) {
     $groups['COM_KUNENA_ADMIN_TOOLS_SYSTEM'][] = ['view=install', 'COM_KUNENA_GIT_INSTALL', 'COM_KUNENA_GIT_INSTALL_DESC', 'code-branch'];
     $groups['COM_KUNENA_ADMIN_TOOLS_SYSTEM'][] = ['restoretokens', 'COM_KUNENA_TOOLS_TOKENS', 'COM_KUNENA_TOOLS_TOKENS_DESC', 'rotate-left'];
 }
+
+// The search of the tools and the tools used last. A full URL: the asset manager would look for a relative one in the media folder.
+$this->getDocument()->getWebAssetManager()->registerAndUseScript(
+    'kunena_admin_tools_index',
+    Uri::base() . 'components/com_kunena/media/js/kunena-tools-index.js',
+    ['version' => 'auto'],
+    ['defer' => true]
+);
 ?>
 
 <div id="kunena" class="kd">
+    <div class="kd-panel kd-tools-search">
+        <label for="kd-tools-search" class="visually-hidden"><?php echo Text::_('COM_KUNENA_TOOLS_SEARCH'); ?></label>
+        <span class="fa-solid fa-magnifying-glass" aria-hidden="true"></span>
+        <input type="search" class="form-control" id="kd-tools-search" autocomplete="off"
+               placeholder="<?php echo $this->escape(Text::_('COM_KUNENA_TOOLS_SEARCH')); ?>">
+    </div>
+    <p class="kd-form__hint" id="kd-tools-none" hidden><?php echo Text::_('COM_KUNENA_TOOLS_SEARCH_NONE'); ?></p>
+
+    <?php // Filled by kunena-tools-index.js with the tools used last in this browser. ?>
+    <section class="kd-section" id="kd-tools-recent" aria-labelledby="kd-tools-recent-title" hidden>
+        <h2 id="kd-tools-recent-title" class="kd-section__title"><?php echo Text::_('COM_KUNENA_TOOLS_RECENT'); ?></h2>
+        <div class="kd-cards"></div>
+    </section>
+
     <?php $section = 0; ?>
     <?php foreach ($groups as $title => $tools) : ?>
         <section class="kd-section" aria-labelledby="kd-tools-<?php echo ++$section; ?>">
@@ -97,7 +120,7 @@ if (KunenaForum::isDev()) {
             <div class="kd-cards">
                 <?php foreach ($tools as [$layout, $label, $desc, $icon]) :
                     $query = str_starts_with($layout, 'view=') ? $layout : 'view=tools&layout=' . $layout; ?>
-                    <a class="kd-card" href="<?php echo Route::_('index.php?option=com_kunena&' . $query); ?>">
+                    <a class="kd-card" href="<?php echo Route::_('index.php?option=com_kunena&' . $query); ?>" data-kd-tool="<?php echo $this->escape($layout); ?>">
                         <span class="kd-card__icon fa-solid fa-<?php echo $icon; ?>" aria-hidden="true"></span>
                         <span class="kd-card__title"><?php echo Text::_($label); ?></span>
                         <span class="kd-card__desc"><?php echo Text::_($desc); ?></span>

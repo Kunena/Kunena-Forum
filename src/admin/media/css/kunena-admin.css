@@ -1802,6 +1802,11 @@ body.com_kunena .kd mark {
   color: var(--kd-text);
 }
 
+/* A long address (a link, an address of a redirect) breaks instead of making the table wider. */
+.kd-break {
+  overflow-wrap: anywhere;
+}
+
 /* A message of a topic in its edit: who wrote it and when, then its subject and its text (BBCode, in a fixed font). */
 .kd-post {
   display: flex;

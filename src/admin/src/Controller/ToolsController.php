@@ -45,6 +45,7 @@ use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
 use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUserExport;
+use Kunena\Forum\Libraries\Tools\KunenaBrokenLinks;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
@@ -1998,6 +1999,45 @@ class ToolsController extends FormController
         if ($result['skipped']) {
             $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_PROFILESPAM_N_SKIPPED', $result['skipped']), 'warning');
         }
+    }
+
+    /**
+     * Checks the next links of the posts (tool "Broken links in posts").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function checkLinks(): void
+    {
+        if (!$this->toolAllowed('brokenlinks')) {
+            return;
+        }
+
+        $result = KunenaBrokenLinks::checkNextOnSite(time());
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_LINKS_N_CHECKED', $result['checked'], $result['broken']), $result['broken'] ? 'warning' : 'success');
+    }
+
+    /**
+     * Forgets the answers of the links: every link is checked again (tool "Broken links in posts").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function resetLinks(): void
+    {
+        if (!$this->toolAllowed('brokenlinks')) {
+            return;
+        }
+
+        KunenaBrokenLinks::resetOnSite();
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_LINKS_RESET_DONE'), 'success');
     }
 
     /**

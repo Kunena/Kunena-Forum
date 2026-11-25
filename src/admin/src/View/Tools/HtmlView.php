@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
 use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUpdateCheck;
+use Kunena\Forum\Libraries\Tools\KunenaBrokenLinks;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaSecurityAudit;
@@ -79,7 +80,7 @@ class HtmlView extends BaseHtmlView
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
-        'translations', 'security', 'missingfiles', 'profilespam',
+        'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks',
     ];
 
     /**
@@ -575,6 +576,9 @@ class HtmlView extends BaseHtmlView
                 $maxPosts = \in_array($maxPosts, KunenaProfileSpam::MAX_POSTS, true) ? $maxPosts : KunenaProfileSpam::MAX_POSTS[1];
 
                 return ['maxPosts' => $maxPosts, 'items' => KunenaProfileSpam::findOnSite($maxPosts)];
+
+            case 'brokenlinks':
+                return KunenaBrokenLinks::findOnSite();
         }
 
         return [];

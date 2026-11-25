@@ -42,6 +42,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
+use Kunena\Forum\Libraries\Tools\KunenaModerationQueue;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\Tools\KunenaScheduledTasks;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
@@ -1718,6 +1719,40 @@ class ToolsController extends FormController
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MAILTEST_SENT', $to), 'success');
         } else {
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MAILTEST_FAILED', $result['error']), 'error');
+        }
+    }
+
+    /**
+     * Approves or trashes the chosen messages (tool "Moderation queue").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function moderateQueue(): void
+    {
+        if (!$this->toolAllowed('moderation')) {
+            return;
+        }
+
+        $action = $this->input->post->getCmd('queue_action') === KunenaModerationQueue::APPROVE ? KunenaModerationQueue::APPROVE : KunenaModerationQueue::TRASH;
+        $ids    = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_QUEUE_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $result = KunenaModerationQueue::apply($ids, $action);
+        $key    = $action === KunenaModerationQueue::APPROVE ? 'COM_KUNENA_TOOLS_QUEUE_N_APPROVED' : 'COM_KUNENA_TOOLS_QUEUE_N_TRASHED';
+
+        $this->app->enqueueMessage(Text::plural($key, $result['done']), $result['done'] ? 'success' : 'info');
+
+        if ($result['failed']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_QUEUE_N_FAILED', $result['failed']), 'warning');
         }
     }
 

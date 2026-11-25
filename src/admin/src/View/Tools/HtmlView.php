@@ -33,6 +33,7 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaMailTest;
+use Kunena\Forum\Libraries\Tools\KunenaModerationQueue;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\Tools\KunenaScheduledTasks;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
@@ -54,7 +55,10 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 8.0
      */
-    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest'];
+    public const TOOLS = [
+        'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
+        'moderation',
+    ];
 
     /**
      * The data of the tool of the layout (loadTool()).
@@ -400,6 +404,9 @@ class HtmlView extends BaseHtmlView
                 $settings = KunenaMailTest::settings();
 
                 return ['settings' => $settings, 'problems' => KunenaMailTest::problems($settings), 'me' => (string) $this->getCurrentUser()->email];
+            case 'moderation':
+                return ['unapproved' => KunenaModerationQueue::unapprovedOnSite(), 'reports' => KunenaModerationQueue::reportsOnSite()];
+
         }
 
         return [];

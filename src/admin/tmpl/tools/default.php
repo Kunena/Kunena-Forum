@@ -29,6 +29,9 @@ $groups = [
         ['transfer', 'COM_KUNENA_TOOLS_TRANSFER', 'COM_KUNENA_TOOLS_TRANSFER_DESC', 'right-left'],
         ['searchindex', 'COM_KUNENA_TOOLS_SEARCHINDEX', 'COM_KUNENA_TOOLS_SEARCHINDEX_DESC', 'magnifying-glass'],
     ],
+    'COM_KUNENA_ADMIN_TOOLS_CONTENT' => [
+        ['moderation', 'COM_KUNENA_TOOLS_QUEUE', 'COM_KUNENA_TOOLS_QUEUE_DESC', 'gavel'],
+    ],
     'COM_KUNENA_ADMIN_TOOLS_USERS' => [
         ['spam', 'COM_KUNENA_TOOLS_SPAM', 'COM_KUNENA_TOOLS_SPAM_DESC', 'shield-virus'],
         ['usercleanup', 'COM_KUNENA_TOOLS_USERCLEANUP', 'COM_KUNENA_TOOLS_USERCLEANUP_DESC', 'user-xmark'],

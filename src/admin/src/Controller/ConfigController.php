@@ -21,6 +21,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Administrator\Helper\ConfigHelper;
 use Kunena\Forum\Administrator\Model\ConfigModel;
+use Kunena\Forum\Libraries\Tools\KunenaSettingsHistory;
 use RuntimeException;
 use Throwable;
 
@@ -113,6 +114,9 @@ class ConfigController extends BaseController
             return;
         }
 
+        // The settings before the save, for the history of the settings.
+        $before = KunenaSettingsHistory::paramsOnSite();
+
         try {
             $model->save(['params' => $valid, 'id' => ComponentHelper::getComponent('com_kunena')->id, 'option' => 'com_kunena']);
         } catch (RuntimeException $e) {
@@ -122,6 +126,7 @@ class ConfigController extends BaseController
             return;
         }
 
+        KunenaSettingsHistory::recordOnSite($before);
         $this->app->setUserState(ConfigModel::DATA_CONTEXT, null);
         $this->setRedirect($stay ? $here : Route::_('index.php?option=com_kunena&view=cpanel', false), Text::_('COM_KUNENA_CONFIG_SAVED'));
     }

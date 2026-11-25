@@ -57,6 +57,7 @@ use Kunena\Forum\Libraries\Tools\KunenaBanReview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryHealth;
 use Kunena\Forum\Libraries\Tools\KunenaDuplicateTitles;
 use Kunena\Forum\Libraries\Tools\KunenaLanguageOverrides;
+use Kunena\Forum\Libraries\Tools\KunenaSettingsHistory;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaUnansweredTopics;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
@@ -96,7 +97,7 @@ class HtmlView extends BaseHtmlView
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
-        'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles', 'overrides', 'avatarfiles',
+        'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles', 'overrides', 'avatarfiles', 'settingshistory',
     ];
 
     /**
@@ -664,6 +665,9 @@ class HtmlView extends BaseHtmlView
 
             case 'avatarfiles':
                 return KunenaAvatarFiles::checkOnSite();
+
+            case 'settingshistory':
+                return KunenaSettingsHistory::historyOnSite($input->getCmd('setting', ''));
         }
 
         return [];

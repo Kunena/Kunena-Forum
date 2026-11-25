@@ -281,6 +281,13 @@ class KunenaLog
     // Const LOG_SHADOW_TOPIC_DELETE = 'LOG_SHADOW_TOPIC_DELETE';
 
     /**
+     * A save of the configuration: the settings it changed (tool "Settings history").
+     *
+     * @since   Kunena 8.0
+     */
+    public const string LOG_CONFIG_EDIT = 'LOG_CONFIG_EDIT';
+
+    /**
      * @since   Kunena 5.0
      */
     public const string LOG_USER_EDIT = 'LOG_USER_EDIT';

@@ -74,6 +74,7 @@ $groups = [
         ['beforeupdate', 'COM_KUNENA_TOOLS_UPDATE', 'COM_KUNENA_TOOLS_UPDATE_DESC', 'rocket'],
         ['security', 'COM_KUNENA_TOOLS_SECURITY', 'COM_KUNENA_TOOLS_SECURITY_DESC', 'shield-halved'],
         ['settings', 'COM_KUNENA_TOOLS_SETTINGS', 'COM_KUNENA_TOOLS_SETTINGS_DESC', 'sliders'],
+        ['settingshistory', 'COM_KUNENA_TOOLS_HISTORY', 'COM_KUNENA_TOOLS_HISTORY_DESC', 'clock-rotate-left'],
         ['translations', 'COM_KUNENA_TOOLS_TRANSLATIONS', 'COM_KUNENA_TOOLS_TRANSLATIONS_DESC', 'language'],
         ['overrides', 'COM_KUNENA_TOOLS_OVERRIDES', 'COM_KUNENA_TOOLS_OVERRIDES_DESC', 'pen-ruler'],
         ['gonetopics', 'COM_KUNENA_TOOLS_GONE', 'COM_KUNENA_TOOLS_GONE_DESC', 'ban'],

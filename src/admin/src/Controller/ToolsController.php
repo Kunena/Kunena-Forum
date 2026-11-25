@@ -54,6 +54,7 @@ use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
 use Kunena\Forum\Libraries\Tools\KunenaAvatarFiles;
 use Kunena\Forum\Libraries\Tools\KunenaBanReview;
 use Kunena\Forum\Libraries\Tools\KunenaLanguageOverrides;
+use Kunena\Forum\Libraries\Tools\KunenaSettingsHistory;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaTopicManager;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
@@ -2314,7 +2315,9 @@ class ToolsController extends FormController
             return;
         }
 
+        $before = KunenaSettingsHistory::paramsOnSite();
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_SETTINGS_N_SAVED', KunenaSettingsSnapshot::importOnSite($settings)), 'success');
+        KunenaSettingsHistory::recordOnSite($before, 'import');
     }
 
     /**

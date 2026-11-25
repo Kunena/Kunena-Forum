@@ -134,13 +134,16 @@ class KunenaCategory extends KunenaDatabaseObject
         'topic.post.approve'                => ['Read', 'NotBanned', 'Moderate'],
         'topic.post.delete'                 => ['Read', 'NotBanned', 'Unlocked'],
         'topic.post.undelete'               => ['Read', 'NotBanned', 'Moderate'],
-        'topic.post.permdelete'             => ['Read', 'NotBanned', 'Admin'],
+        'topic.post.permdelete'             => ['Read', 'NotBanned', 'Moderate'],
         'topic.post.attachment.read'        => ['Read'],
         'topic.post.attachment.createimage' => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'],
         'topic.post.attachment.createfile'  => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'],
         'topic.post.attachment.delete'      => ['NotBanned'],
         'topic.post.attachment.private'     => ['NotBanned'],
         // TODO: In the future we might want to restrict this: array('Read', 'NotBanned', 'Unlocked'),
+        // topic.post.permdelete is as topic.permdelete: the rule Permdelete of the message and of the topic (an administrator, or a
+        // moderator when the option allows it) decides. With 'Admin' a moderator with that option deleted one message with its
+        // button, but not several messages in a list of posts.
     ];
 
     /**

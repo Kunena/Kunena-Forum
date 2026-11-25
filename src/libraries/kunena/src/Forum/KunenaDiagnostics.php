@@ -22,6 +22,7 @@ use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Class KunenaForumDiagnostics
@@ -1278,6 +1279,49 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * Query to find the warnings of users who no longer exist.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_warningOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_warnings AS a')->leftJoin('#__users AS u ON u.id=a.user_id')->where('u.id IS NULL');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_warningOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.user_id, a.points, a.reason, a.created_time');
+        }
+
+        return ['user_id' => 'invalid'];
+    }
+
+    /**
+     * Delete the warnings of users who no longer exist.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_warningOrphaned(): string
+    {
+        return 'DELETE a FROM #__kunena_warnings AS a LEFT JOIN #__users AS u ON u.id=a.user_id WHERE u.id IS NULL';
+    }
+
+    /**
      * Query to find the recipients of private posts whose private post or user no longer exists.
      *
      * @return  QueryInterface
@@ -1458,6 +1502,50 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * Query to find the bans of users who no longer exist. A ban of an IP address stays: it still bans the address.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_banOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_users_banned AS a')->leftJoin('#__users AS u ON u.id=a.userid')
+            ->where("a.userid>0 AND u.id IS NULL AND (a.ip IS NULL OR a.ip='')");
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_banOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.userid, a.expiration, a.reason_private');
+        }
+
+        return ['userid' => 'invalid'];
+    }
+
+    /**
+     * Delete the bans of users who no longer exist (not a ban of an IP address).
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_banOrphaned(): string
+    {
+        return "DELETE a FROM #__kunena_users_banned AS a LEFT JOIN #__users AS u ON u.id=a.userid WHERE a.userid>0 AND u.id IS NULL AND (a.ip IS NULL OR a.ip='')";
+    }
+
+    /**
      * Query to find the translations of categories which no longer exist.
      *
      * @return  QueryInterface
@@ -1541,6 +1629,94 @@ abstract class KunenaDiagnostics
     protected static function delete_ratingUserOrphaned(): string
     {
         return 'DELETE a FROM #__kunena_rate AS a LEFT JOIN #__users AS u ON u.id=a.userid WHERE u.id IS NULL';
+    }
+
+    /**
+     * Query to find the karma given by or to users who no longer exist.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_karmaOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_karma AS a')->leftJoin('#__users AS u ON u.id=a.userid')->leftJoin('#__users AS t ON t.id=a.target_userid')
+            ->where('u.id IS NULL OR t.id IS NULL');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_karmaOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.userid, a.target_userid, a.time');
+        }
+
+        return ['userid' => 'invalid', 'target_userid' => 'invalid'];
+    }
+
+    /**
+     * Delete the karma given by or to users who no longer exist.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_karmaOrphaned(): string
+    {
+        return 'DELETE a FROM #__kunena_karma AS a LEFT JOIN #__users AS u ON u.id=a.userid LEFT JOIN #__users AS t ON t.id=a.target_userid'
+            . ' WHERE u.id IS NULL OR t.id IS NULL';
+    }
+
+    /**
+     * Query to find the sessions of users who no longer exist (a guest has no session row).
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_sessionOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_sessions AS a')->leftJoin('#__users AS u ON u.id=a.userid')->where('a.userid>0 AND u.id IS NULL');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_sessionOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.userid, a.lasttime, a.currvisit');
+        }
+
+        return ['userid' => 'invalid'];
+    }
+
+    /**
+     * Delete the sessions of users who no longer exist.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_sessionOrphaned(): string
+    {
+        return 'DELETE a FROM #__kunena_sessions AS a LEFT JOIN #__users AS u ON u.id=a.userid WHERE a.userid>0 AND u.id IS NULL';
     }
 
     /**
@@ -1640,6 +1816,53 @@ abstract class KunenaDiagnostics
         $ids = self::ids('categoryWrongCounts', 'a.id');
 
         return !$ids || KunenaCategoryHelper::recountBatch($ids) !== false;
+    }
+
+    /**
+     * Query to find the users whose number of posts differs from the posts in their topics.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_userWrongPosts(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_users AS a')
+            ->leftJoin('(SELECT user_id, SUM(posts) AS posts FROM #__kunena_user_topics GROUP BY user_id) AS c ON c.user_id=a.userid')
+            ->where('a.posts!=COALESCE(c.posts, 0)');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_userWrongPosts(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.userid, a.posts, COALESCE(c.posts, 0) AS counted');
+        }
+
+        return ['posts' => 'invalid'];
+    }
+
+    /**
+     * Count the posts of the users again.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    protected static function repair_userWrongPosts(): bool
+    {
+        return KunenaUserHelper::recount() !== false;
     }
 
     /**
@@ -1849,6 +2072,7 @@ abstract class KunenaDiagnostics
             'COM_KUNENA_DIAGNOSTICS_GROUP_USERS' => [
                 'userCategoryOrphaned', 'userReadOrphaned', 'userReadWrongCategory', 'userTopicOrphaned', 'userTopicWrongCategory',
                 'userAvatarOrphaned', 'userTopicUserOrphaned', 'userCategoryUserOrphaned', 'followOrphaned', 'ignoreOrphaned', 'profileOrphaned',
+                'userWrongPosts', 'warningOrphaned', 'banOrphaned', 'karmaOrphaned', 'sessionOrphaned',
             ],
         ];
     }
@@ -1926,6 +2150,11 @@ abstract class KunenaDiagnostics
             'privateUserOrphaned',
             'privatePostOrphaned',
             'privateAttachmentOrphaned',
+            'userWrongPosts',
+            'warningOrphaned',
+            'banOrphaned',
+            'karmaOrphaned',
+            'sessionOrphaned',
         ];
     }
 

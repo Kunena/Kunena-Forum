@@ -154,4 +154,17 @@ class KunenaDiagnosticsTest extends UnitTestCase
             $this->assertTrue(method_exists(KunenaDiagnostics::class, 'query_' . $check), "The query of the check $check.");
         }
     }
+
+    public function testACheckWhichIsCountedAgainCanBeFixed(): void
+    {
+        // A counter is fixed by Kunena's recount (repair_), not by one statement (fix_).
+        foreach (['topicWrongCounts', 'categoryWrongCounts', 'userWrongPosts', 'topicShownEmpty'] as $check) {
+            $this->assertTrue(KunenaDiagnostics::canFix($check), $check);
+            $this->assertFalse(KunenaDiagnostics::canDelete($check), $check);
+        }
+
+        // A loop in the categories is for the administrator to undo: which parent is wrong is not known.
+        $this->assertFalse(KunenaDiagnostics::canFix('categoryLoop'));
+        $this->assertFalse(KunenaDiagnostics::canDelete('categoryLoop'));
+    }
 }

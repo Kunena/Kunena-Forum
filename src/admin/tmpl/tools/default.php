@@ -39,6 +39,7 @@ $groups = [
         ['categoryhealth', 'COM_KUNENA_TOOLS_CATHEALTH', 'COM_KUNENA_TOOLS_CATHEALTH_DESC', 'folder-tree'],
         ['bigtopics', 'COM_KUNENA_TOOLS_BIGTOPICS', 'COM_KUNENA_TOOLS_BIGTOPICS_DESC', 'layer-group'],
         ['contentlimits', 'COM_KUNENA_TOOLS_LIMITS', 'COM_KUNENA_TOOLS_LIMITS_DESC', 'ruler'],
+        ['topicicons', 'COM_KUNENA_TOOLS_ICONS', 'COM_KUNENA_TOOLS_ICONS_DESC', 'icons'],
         ['findreplace', 'COM_KUNENA_TOOLS_REPLACE', 'COM_KUNENA_TOOLS_REPLACE_DESC', 'arrow-right-arrow-left'],
         ['mergecategories', 'COM_KUNENA_TOOLS_CATMERGE', 'COM_KUNENA_TOOLS_CATMERGE_DESC', 'object-group'],
         ['duplicates', 'COM_KUNENA_TOOLS_DUPLICATES', 'COM_KUNENA_TOOLS_DUPLICATES_DESC', 'clone'],

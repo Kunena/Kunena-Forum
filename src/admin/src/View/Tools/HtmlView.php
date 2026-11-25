@@ -64,6 +64,7 @@ use Kunena\Forum\Libraries\Tools\KunenaBigTopics;
 use Kunena\Forum\Libraries\Tools\KunenaContentLimits;
 use Kunena\Forum\Libraries\Tools\KunenaModeratorEdits;
 use Kunena\Forum\Libraries\Tools\KunenaReportsOverview;
+use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
@@ -103,7 +104,7 @@ class HtmlView extends BaseHtmlView
         'translations', 'security', 'missingfiles', 'profilespam', 'brokenlinks', 'polls', 'gonetopics', 'drafts',
         'settings', 'moderators', 'subscriberaddresses', 'copypermissions',
         'unanswered', 'banreview', 'thankyourings', 'categoryhealth', 'duplicatetitles', 'overrides', 'avatarfiles', 'settingshistory',
-        'reports', 'warnings', 'moderatoredits', 'contentlimits', 'bigtopics',
+        'reports', 'warnings', 'moderatoredits', 'contentlimits', 'bigtopics', 'topicicons',
     ];
 
     /**
@@ -689,6 +690,9 @@ class HtmlView extends BaseHtmlView
 
             case 'bigtopics':
                 return KunenaBigTopics::findOnSite($input->getInt('size', KunenaBigTopics::SIZES[1]));
+
+            case 'topicicons':
+                return KunenaTopicIcons::checkOnSite();
         }
 
         return [];

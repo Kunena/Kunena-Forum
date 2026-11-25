@@ -58,6 +58,7 @@ use Kunena\Forum\Libraries\Tools\KunenaSettingsHistory;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaTopicManager;
 use Kunena\Forum\Libraries\Tools\KunenaContentLimits;
+use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
@@ -2615,6 +2616,24 @@ class ToolsController extends FormController
         $result = KunenaTopicManager::apply($ids, 'lock');
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_TOPICS_N_LOCK', $result['done']), $result['done'] ? 'success' : 'info');
+    }
+
+    /**
+     * Gives the topics whose icon is not in their icon set the default icon (tool "Topic icons and labels").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function resetTopicIcons(): void
+    {
+        if (!$this->toolAllowed('topicicons')) {
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_ICONS_N_RESET', KunenaTopicIcons::resetUnknownOnSite()), 'success');
     }
 
     /**

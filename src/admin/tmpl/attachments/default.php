@@ -17,6 +17,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
@@ -25,6 +26,14 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('table.columns')
     ->useScript('multiselect');
+
+// The images open in the lightbox of Kunena (the one of the forum), which is in the media folder of the site.
+$wa->registerAndUseStyle('kunena.lightbox', Uri::root() . 'media/kunena/core/css/lightbox.css', ['version' => 'auto'])
+    ->registerAndUseScript('kunena.lightbox', Uri::root() . 'media/kunena/core/js/lightbox.js', ['version' => 'auto'], ['defer' => true]);
+
+foreach (['COM_KUNENA_LIGHTBOX', 'COM_KUNENA_LIGHTBOX_CLOSE', 'COM_KUNENA_LIGHTBOX_PREVIOUS', 'COM_KUNENA_LIGHTBOX_NEXT', 'COM_KUNENA_LIGHTBOX_COUNTER', 'COM_KUNENA_LIGHTBOX_DOWNLOAD', 'COM_KUNENA_LIGHTBOX_OPEN', 'COM_KUNENA_LIGHTBOX_LOADING', 'COM_KUNENA_LIGHTBOX_ERROR'] as $key) {
+    Text::script($key);
+}
 
 $app       = Factory::getApplication();
 $user      = $this->getCurrentUser();

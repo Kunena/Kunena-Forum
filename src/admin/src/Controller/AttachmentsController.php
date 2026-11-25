@@ -16,12 +16,14 @@ namespace Kunena\Forum\Administrator\Controller;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Access\Exception\NotAllowed;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Site\Controller\Application\Attachment\Initial\AttachmentDisplay;
 
 /**
  * Kunena Attachments Controller
@@ -109,5 +111,48 @@ class AttachmentsController extends FormController
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_DELETED_SUCCESSFULLY'), 'success');
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
+
+    /**
+     * Shows an image of the list of the attachments (its thumbnail with thumb=1) to who manages Kunena, also a protected one:
+     * the route of the forum checks the session of the site, which is not the one of the administration.
+     *
+     * Only an image is shown, with the headers of the forum (a sandbox: a script in an SVG does not run).
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function preview(): void
+    {
+        if (!$this->app->getIdentity()->authorise('core.manage', 'com_kunena')) {
+            throw new NotAllowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+        }
+
+        $attachment = KunenaAttachmentHelper::get($this->input->getInt('id'));
+        $path       = $attachment->exists() && $attachment->isImage()
+            ? ($attachment->getPath($this->input->getBool('thumb')) ?: $attachment->getPath())
+            : false;
+
+        if (!$path) {
+            throw new Exception(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
+
+        // Close all output buffers.
+        while (@ob_end_clean()) {
+        }
+
+        header('X-Content-Type-Options: nosniff');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
+
+        foreach (AttachmentDisplay::fileHeaders($attachment, false, false) as $line) {
+            header($line);
+        }
+
+        header('Content-Length: ' . filesize($path));
+        readfile($path);
+
+        $this->app->close();
     }
 }

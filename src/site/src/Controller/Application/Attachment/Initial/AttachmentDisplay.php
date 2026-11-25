@@ -196,7 +196,8 @@ class AttachmentDisplay extends KunenaControllerDisplay
     }
 
     /**
-     * The headers which depend on the kind of answer: an inline picture, an inline PDF or a download.
+     * The headers which depend on the kind of answer: an inline picture, an inline PDF or a download. The administration
+     * sends the same ones for the images it shows (AttachmentsController::preview).
      *
      * @param   KunenaAttachment  $attachment    The attachment.
      * @param   bool              $download      True when the file is asked as a download.
@@ -206,7 +207,7 @@ class AttachmentDisplay extends KunenaControllerDisplay
      *
      * @since   Kunena 8.0
      */
-    protected static function fileHeaders(KunenaAttachment $attachment, bool $download, bool $guestMayRead): array
+    public static function fileHeaders(KunenaAttachment $attachment, bool $download, bool $guestMayRead): array
     {
         // A file opened by itself runs no script and reaches no other address (a picture with a script, an SVG): it is shown,
         // and a picture in a page is not changed by it.
@@ -269,7 +270,7 @@ class AttachmentDisplay extends KunenaControllerDisplay
      *
      * @since   Kunena 8.0
      */
-    protected static function dispositionName(string $name): string
+    public static function dispositionName(string $name): string
     {
         $ascii = preg_replace('/[^\x20-\x7e]|["\\\\;]/', '_', $name);
 

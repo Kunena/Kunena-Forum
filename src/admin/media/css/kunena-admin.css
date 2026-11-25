@@ -1176,3 +1176,23 @@ body.com_kunena .kd [data-section="permissions"] joomla-tab[orientation="vertica
   }
 }
 
+/* The thumbnail of an image in the list of the attachments: it opens the lightbox */
+
+body.com_kunena .kd-thumb {
+  object-fit: cover;
+  background: var(--kd-surface-2);
+  border: 1px solid var(--kd-border);
+  border-radius: 8px;
+  transition: transform .15s, box-shadow .15s;
+}
+
+body.com_kunena a:hover > .kd-thumb,
+body.com_kunena a:focus-visible > .kd-thumb {
+  box-shadow: var(--kd-shadow-hover);
+  transform: scale(1.06);
+}
+
+body.com_kunena a[data-kunena-lightbox] {
+  cursor: zoom-in;
+}
+

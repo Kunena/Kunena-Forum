@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
 use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUpdateCheck;
+use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaSecurityAudit;
 use Kunena\Forum\Libraries\Tools\KunenaTranslationCheck;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
@@ -77,7 +78,7 @@ class HtmlView extends BaseHtmlView
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
         'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview', 'beforeupdate',
-        'translations', 'security',
+        'translations', 'security', 'missingfiles',
     ];
 
     /**
@@ -564,6 +565,9 @@ class HtmlView extends BaseHtmlView
 
             case 'security':
                 return ['checks' => KunenaSecurityAudit::checksOnSite()];
+
+            case 'missingfiles':
+                return KunenaMissingAttachments::findOnSite();
         }
 
         return [];

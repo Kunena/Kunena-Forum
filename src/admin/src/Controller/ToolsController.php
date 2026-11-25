@@ -45,6 +45,7 @@ use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
 use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
 use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUserExport;
+use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -1947,6 +1948,30 @@ class ToolsController extends FormController
 
         if ($unknown) {
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MAILS_UNKNOWN_TAGS', '{' . implode('}, {', $unknown) . '}'), 'warning');
+        }
+    }
+
+    /**
+     * Deletes the records of the chosen attachments whose file is gone (tool "Missing attachment files").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function deleteMissingFiles(): void
+    {
+        if (!$this->toolAllowed('missingfiles')) {
+            return;
+        }
+
+        $result = KunenaMissingAttachments::deleteOnSite(ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array')));
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_MISSINGFILES_N_DELETED', $result['deleted']), $result['deleted'] ? 'success' : 'info');
+
+        if ($result['skipped']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_MISSINGFILES_N_SKIPPED', $result['skipped']), 'warning');
         }
     }
 

@@ -359,6 +359,66 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * Delete the subscriptions and favorites of users who no longer exist.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_userTopicUserOrphaned(): string
+    {
+        return "DELETE a FROM #__kunena_user_topics AS a LEFT JOIN #__users AS u ON u.id=a.user_id WHERE u.id IS NULL";
+    }
+
+    /**
+     * Delete the subscriptions and roles in categories of users who no longer exist.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_userCategoryUserOrphaned(): string
+    {
+        return "DELETE a FROM #__kunena_user_categories AS a LEFT JOIN #__users AS u ON u.id=a.user_id WHERE u.id IS NULL";
+    }
+
+    /**
+     * Delete the follows of or by users who no longer exist.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_followOrphaned(): string
+    {
+        return "DELETE a FROM #__kunena_user_follow AS a LEFT JOIN #__users AS u ON u.id=a.user_id LEFT JOIN #__users AS f ON f.id=a.followed_id WHERE u.id IS NULL OR f.id IS NULL";
+    }
+
+    /**
+     * Delete the ignores of or by users who no longer exist.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_ignoreOrphaned(): string
+    {
+        return "DELETE a FROM #__kunena_user_ignore AS a LEFT JOIN #__users AS u ON u.id=a.user_id LEFT JOIN #__users AS i ON i.id=a.ignored_id WHERE u.id IS NULL OR i.id IS NULL";
+    }
+
+    /**
+     * Delete the forum profiles of Joomla users who no longer exist.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_profileOrphaned(): string
+    {
+        return "DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS u ON u.id=a.userid WHERE u.id IS NULL";
+    }
+
+    /**
      * @return  string
      *
      * @since   Kunena 6.0
@@ -873,6 +933,86 @@ abstract class KunenaDiagnostics
      *
      * @return  array
      *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_userTopicUserOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.*');
+        }
+
+        return ['user_id' => 'invalid'];
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_userCategoryUserOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.*');
+        }
+
+        return ['user_id' => 'invalid'];
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_followOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.*');
+        }
+
+        return ['followed_id' => 'invalid'];
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_ignoreOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.*');
+        }
+
+        return ['ignored_id' => 'invalid'];
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_profileOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.*');
+        }
+
+        return ['userid' => 'invalid'];
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
      * @since   Kunena 6.0
      */
     protected static function fields_userCategoryOrphaned(?QueryInterface $query = null): array
@@ -1148,7 +1288,7 @@ abstract class KunenaDiagnostics
             ],
             'COM_KUNENA_DIAGNOSTICS_GROUP_USERS' => [
                 'userCategoryOrphaned', 'userReadOrphaned', 'userReadWrongCategory', 'userTopicOrphaned', 'userTopicWrongCategory',
-                'userAvatarOrphaned',
+                'userAvatarOrphaned', 'userTopicUserOrphaned', 'userCategoryUserOrphaned', 'followOrphaned', 'ignoreOrphaned', 'profileOrphaned',
             ],
         ];
     }
@@ -1210,6 +1350,11 @@ abstract class KunenaDiagnostics
             'channelOrphaned',
             'userAvatarOrphaned',
             'topicsOwnersOrphaned',
+            'userTopicUserOrphaned',
+            'userCategoryUserOrphaned',
+            'followOrphaned',
+            'ignoreOrphaned',
+            'profileOrphaned',
         ];
     }
 
@@ -1712,6 +1857,86 @@ abstract class KunenaDiagnostics
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
         $query->from("#__kunena_users")->where("avatar=''");
+
+        return $query;
+    }
+
+    /**
+     * Query to find the subscriptions and favorites of users who no longer exist.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_userTopicUserOrphaned(): QueryInterface
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->from("#__kunena_user_topics AS a")->leftJoin("#__users AS u ON u.id=a.user_id")->where("u.id IS NULL");
+
+        return $query;
+    }
+
+    /**
+     * Query to find the subscriptions and roles in categories of users who no longer exist.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_userCategoryUserOrphaned(): QueryInterface
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->from("#__kunena_user_categories AS a")->leftJoin("#__users AS u ON u.id=a.user_id")->where("u.id IS NULL");
+
+        return $query;
+    }
+
+    /**
+     * Query to find the follows of or by users who no longer exist.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_followOrphaned(): QueryInterface
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->from("#__kunena_user_follow AS a")->leftJoin("#__users AS u ON u.id=a.user_id")->leftJoin("#__users AS f ON f.id=a.followed_id")->where("u.id IS NULL OR f.id IS NULL");
+
+        return $query;
+    }
+
+    /**
+     * Query to find the ignores of or by users who no longer exist.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_ignoreOrphaned(): QueryInterface
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->from("#__kunena_user_ignore AS a")->leftJoin("#__users AS u ON u.id=a.user_id")->leftJoin("#__users AS i ON i.id=a.ignored_id")->where("u.id IS NULL OR i.id IS NULL");
+
+        return $query;
+    }
+
+    /**
+     * Query to find the forum profiles of Joomla users who no longer exist.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_profileOrphaned(): QueryInterface
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->from("#__kunena_users AS a")->leftJoin("#__users AS u ON u.id=a.userid")->where("u.id IS NULL");
 
         return $query;
     }

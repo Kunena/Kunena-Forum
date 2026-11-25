@@ -1624,19 +1624,56 @@ class KunenaMessage extends KunenaDatabaseObject
             'message'     => $this->_config->mailFull ? '<p style="margin:18px 0 4px;color:#888888">' . $esc(Text::_('COM_KUNENA_MESSAGE')) . ':</p><div style="border-left:3px solid #dddddd;padding:4px 14px;margin:0 0 6px">' . $this->displayField('message', true, 'subscription') . '</div>' : '',
             'more'        => $more ? '<p style="font-size:14px">' . $esc($more) . '</p>' : '',
             'footer'      => $esc($footer) . ($note !== '' ? '<br>' . $esc($note) : ''),
-            'unsubscribe' => $unsubscribeUrl
-                ? '<p style="font-size:12px;color:#999999">' . $esc(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC')) . ' <a href="' . $esc($unsubscribeUrl) . '" style="color:#999999">' . $esc(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE')) . '</a></p>'
-                : '',
+            'unsubscribe' => self::unsubscribeHtml($unsubscribeUrl, Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC'), Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE')),
         ];
 
         $plain = $common + [
             'message'     => $this->_config->mailFull ? Text::_('COM_KUNENA_MESSAGE') . ":\n" . $this->displayField('message', false) . "\n" : '',
             'more'        => $more ? $more . "\n" : '',
             'footer'      => $footer . ($note !== '' ? "\n" . $note : ''),
-            'unsubscribe' => $unsubscribeUrl ? Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC') . "\n" . $unsubscribeUrl : '',
+            'unsubscribe' => self::unsubscribePlain($unsubscribeUrl, Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC')),
         ];
 
         return ['html' => $html, 'plain' => $plain];
+    }
+
+    /**
+     * The tag {UNSUBSCRIBE} of the HTML of a notification: the text and a link which the recipient clicks (nothing when there
+     * is no address: a mail which the recipient did not subscribe to).
+     *
+     * @param   string  $url          The address to unsubscribe (KunenaEmailUnsubscribe::getUrl()).
+     * @param   string  $description  The text before the link (COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC).
+     * @param   string  $label        The text of the link (COM_KUNENA_EMAIL_UNSUBSCRIBE).
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function unsubscribeHtml(string $url, string $description, string $label): string
+    {
+        if ($url === '') {
+            return '';
+        }
+
+        $esc = static fn (string $text): string => htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+
+        return '<p style="font-size:12px;color:#999999">' . $esc($description) . ' <a href="' . $esc($url) . '" style="color:#999999">' . $esc($label) . '</a></p>';
+    }
+
+    /**
+     * The tag {UNSUBSCRIBE} of the text of a notification: the text, then the address on its own line (which mail programs
+     * make a link of).
+     *
+     * @param   string  $url          The address to unsubscribe.
+     * @param   string  $description  The text before the address.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function unsubscribePlain(string $url, string $description): string
+    {
+        return $url === '' ? '' : $description . "\n" . $url;
     }
 
     /**

@@ -1695,6 +1695,63 @@ body.com_kunena .kd mark {
   background: var(--kd-accent-soft);
 }
 
+/* The preview of a mail as text and as HTML (E-mail templates). */
+.kd-mail-text {
+  max-height: 22rem;
+  padding: .9rem 1rem;
+  margin: 0;
+  overflow: auto;
+  font-size: .85rem;
+  white-space: pre-wrap;
+  background: var(--kd-surface-2);
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius-sm);
+}
+
+/* The edit of a mail template: the fields under each other, the text in a fixed font (its lines are sent as they are). */
+.kd-mail-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.kd-mail-edit > .kd-panel__title,
+.kd-mail-edit > .kd-form__actions {
+  margin: 0;
+}
+
+.kd-mail-edit__text {
+  font-family: var(--bs-font-monospace, monospace);
+  font-size: .85rem;
+  resize: vertical;
+}
+
+.kd-tag-insert {
+  padding: .15rem .55rem;
+  font-family: var(--bs-font-monospace, monospace);
+  font-size: .8rem;
+  line-height: 1.4;
+  color: var(--kd-text);
+  background: var(--kd-surface-2);
+  border: 1px solid var(--kd-border);
+  border-radius: .5rem;
+}
+
+.kd-tag-insert:hover,
+.kd-tag-insert:focus-visible {
+  color: var(--kd-accent);
+  border-color: currentcolor;
+}
+
+.kd-mail-html {
+  display: block;
+  width: 100%;
+  height: 28rem;
+  background: #fff;
+  border: 1px solid var(--kd-border);
+  border-radius: var(--kd-radius-sm);
+}
+
 /* ---------------------------------------------------------------------------------------------------------------
  * The buttons of the toolbar (the subhead): one look for all of them, in the colors of the administrator template
  * (its hue, its link and special colors), instead of a blue, a grey, a green and a red one: light buttons in the light

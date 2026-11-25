@@ -32,11 +32,13 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Kunena\Forum\Libraries\Tools\KunenaAccessOverview;
 use Kunena\Forum\Libraries\Tools\KunenaBBCodeCheck;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
 use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
+use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -71,7 +73,7 @@ class HtmlView extends BaseHtmlView
     public const TOOLS = [
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
-        'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport',
+        'duplicates', 'bbcodecheck', 'optimizeimages', 'accessoverview', 'userexport', 'mailpreview',
     ];
 
     /**
@@ -526,6 +528,25 @@ class HtmlView extends BaseHtmlView
                     'search'  => $search,
                     'matches' => $search !== '' ? $this->findUsers($search) : [],
                     'summary' => $userid ? KunenaUserCleanup::summary($userid) : null,
+                ];
+
+            case 'mailpreview':
+                $languages = KunenaMailPreview::languagesOnSite();
+                $template  = $input->getString('template', array_key_first(KunenaMailPreview::TEMPLATES));
+                $language  = $input->getString('language', '');
+
+                if (!isset($languages[$language])) {
+                    $language = (string) ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
+                }
+
+                return [
+                    'template'  => isset(KunenaMailPreview::TEMPLATES[$template]) ? $template : array_key_first(KunenaMailPreview::TEMPLATES),
+                    'language'  => $language,
+                    'languages' => $languages,
+                    'rendered'  => KunenaMailPreview::renderOnSite(isset(KunenaMailPreview::TEMPLATES[$template]) ? $template : array_key_first(KunenaMailPreview::TEMPLATES), $language),
+                    'edit'      => KunenaMailPreview::editableOnSite(isset(KunenaMailPreview::TEMPLATES[$template]) ? $template : array_key_first(KunenaMailPreview::TEMPLATES), $language),
+                    'html'      => KunenaMailPreview::htmlOnSite(),
+                    'me'        => (string) $this->getCurrentUser()->email,
                 ];
         }
 

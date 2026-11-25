@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\Controller;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -42,6 +43,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
 use Kunena\Forum\Libraries\Tools\KunenaImageOptimizer;
+use Kunena\Forum\Libraries\Tools\KunenaMailPreview;
 use Kunena\Forum\Libraries\Tools\KunenaUserExport;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
@@ -1875,6 +1877,99 @@ class ToolsController extends FormController
         @unlink($file);
 
         $this->app->close();
+    }
+
+    /**
+     * Sends a template of the e-mails of Kunena with sample data to an address (tool "E-mail templates").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function sendMailPreview(): void
+    {
+        $template = $this->input->post->getString('template', '');
+        $language = $this->input->post->getString('language', '');
+
+        if (!$this->toolAllowed('mailpreview&' . http_build_query(['template' => $template, 'language' => $language]))) {
+            return;
+        }
+
+        $to     = trim($this->input->post->getString('to', ''));
+        $result = KunenaMailPreview::sendOnSite($template, $language, $to);
+
+        if ($result['ok']) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MAILTEST_SENT', $to), 'success');
+        } else {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MAILTEST_FAILED', Text::_($result['error'])), 'error');
+        }
+    }
+
+    /**
+     * Saves the texts of a mail template for a language (tool "E-mail templates"), as Joomla does in System, Mail Templates.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function saveMailTemplate(): void
+    {
+        $template = $this->input->post->getString('template', '');
+        $language = $this->input->post->getString('language', '');
+
+        if (!$this->toolAllowed('mailpreview&' . http_build_query(['template' => $template, 'language' => $language]))) {
+            return;
+        }
+
+        // The subject and the text are plain text; the HTML goes through the text filters of Joomla, as in its own form.
+        $texts = [
+            'subject'  => $this->input->post->get('subject', '', 'raw'),
+            'body'     => $this->input->post->get('body', '', 'raw'),
+            'htmlbody' => ComponentHelper::filterText((string) $this->input->post->get('htmlbody', '', 'raw')),
+        ];
+        $error = KunenaMailPreview::saveOnSite($template, $language, $texts);
+
+        if ($error !== '') {
+            $this->app->enqueueMessage(Text::_($error), 'error');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_MAILS_SAVED'), 'success');
+
+        // A tag which the template does not know is sent as it is: most likely a typing error.
+        $edit    = KunenaMailPreview::editableOnSite($template, $language);
+        $unknown = KunenaMailPreview::unknownTags(implode(' ', $texts), $edit['tags'] ?? []);
+
+        if ($unknown) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MAILS_UNKNOWN_TAGS', '{' . implode('}, {', $unknown) . '}'), 'warning');
+        }
+    }
+
+    /**
+     * Gives a mail template the texts of Kunena again for a language (tool "E-mail templates").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function resetMailTemplate(): void
+    {
+        $template = $this->input->post->getString('template', '');
+        $language = $this->input->post->getString('language', '');
+
+        if (!$this->toolAllowed('mailpreview&' . http_build_query(['template' => $template, 'language' => $language]))) {
+            return;
+        }
+
+        KunenaMailPreview::resetOnSite($template, $language);
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_MAILS_RESET_DONE'), 'success');
     }
 
     /**

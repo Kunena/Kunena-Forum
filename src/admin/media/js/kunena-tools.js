@@ -15,7 +15,9 @@
  * - a checkbox with data-kd-all="name" checks or unchecks the checkboxes of the class "name";
  * - a button with data-kd-frame="url" opens the page in a dialog (the indexer of Smart Search);
  * - a field with data-kd-users="url of the suggestions" suggests users while typing; the one chosen opens
- *   data-kd-users-go (its __ID__ becomes the id of the user).
+ *   data-kd-users-go (its __ID__ becomes the id of the user);
+ * - a button with data-kd-insert="text" inserts the text into the last field with data-kd-tag-target (or editor of
+ *   Joomla in a box with data-kd-tag-editor) which had the focus.
  */
 (function () {
     'use strict';
@@ -185,6 +187,51 @@
         if (button && !window.confirm(button.getAttribute('data-kd-confirm') || text('COM_KUNENA_TOOLS_CONFIRM'))) {
             event.preventDefault();
         }
+    });
+
+    // The tags of a mail template: a click inserts the tag where the user was typing (a field with data-kd-tag-target, or the
+    // editor of Joomla in a box with data-kd-tag-editor="id of the editor"); in the text when nothing was chosen yet.
+    var tagTarget = null;
+
+    document.addEventListener('focusin', function (event) {
+        var field = event.target.closest('#kunena [data-kd-tag-target], #kunena [data-kd-tag-editor]');
+
+        if (field) {
+            tagTarget = field;
+        }
+    });
+
+    document.addEventListener('click', function (event) {
+        var button = event.target.closest('#kunena [data-kd-insert]');
+
+        if (!button) {
+            return;
+        }
+
+        var tag = button.getAttribute('data-kd-insert');
+        var target = tagTarget || button.form && button.form.querySelector('textarea[data-kd-tag-target]')
+            || document.querySelector('#kunena textarea[data-kd-tag-target]');
+
+        if (!target) {
+            return;
+        }
+
+        var editorId = target.getAttribute('data-kd-tag-editor');
+
+        if (editorId) {
+            if (window.Joomla && Joomla.editors && Joomla.editors.instances[editorId]) {
+                Joomla.editors.instances[editorId].replaceSelection(tag);
+            }
+
+            return;
+        }
+
+        var start = target.selectionStart ?? target.value.length;
+        var end = target.selectionEnd ?? start;
+
+        target.value = target.value.slice(0, start) + tag + target.value.slice(end);
+        target.focus();
+        target.setSelectionRange(start + tag.length, start + tag.length);
     });
 
     document.addEventListener('change', function (event) {

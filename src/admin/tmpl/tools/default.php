@@ -132,6 +132,13 @@ $this->getDocument()->getWebAssetManager()->registerAndUseScript(
     <p class="kd-form__hint" id="kd-tools-none" hidden><?php echo Text::_('COM_KUNENA_TOOLS_SEARCH_NONE'); ?></p>
 
     <?php // Filled by kunena-tools-index.js with the tools used last in this browser. ?>
+    <?php // Filled by kunena-tools-index.js with the tools pinned with their star in this browser. ?>
+    <section class="kd-section" id="kd-tools-pinned" aria-labelledby="kd-tools-pinned-title" hidden
+             data-kd-pin="<?php echo $this->escape(Text::_('COM_KUNENA_TOOLS_PIN')); ?>" data-kd-unpin="<?php echo $this->escape(Text::_('COM_KUNENA_TOOLS_UNPIN')); ?>">
+        <h2 id="kd-tools-pinned-title" class="kd-section__title"><?php echo Text::_('COM_KUNENA_TOOLS_PINNED'); ?></h2>
+        <div class="kd-cards"></div>
+    </section>
+
     <section class="kd-section" id="kd-tools-recent" aria-labelledby="kd-tools-recent-title" hidden>
         <h2 id="kd-tools-recent-title" class="kd-section__title"><?php echo Text::_('COM_KUNENA_TOOLS_RECENT'); ?></h2>
         <div class="kd-cards"></div>
@@ -139,7 +146,7 @@ $this->getDocument()->getWebAssetManager()->registerAndUseScript(
 
     <?php $section = 0; ?>
     <?php foreach ($groups as $title => $tools) : ?>
-        <section class="kd-section" aria-labelledby="kd-tools-<?php echo ++$section; ?>">
+        <section class="kd-section" data-kd-tools aria-labelledby="kd-tools-<?php echo ++$section; ?>">
             <h2 id="kd-tools-<?php echo $section; ?>" class="kd-section__title"><?php echo Text::_($title); ?></h2>
             <div class="kd-cards">
                 <?php foreach ($tools as [$layout, $label, $desc, $icon]) :

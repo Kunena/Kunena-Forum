@@ -492,6 +492,44 @@ body.com_kunena .kd .kd-section[hidden] {
   min-width: 0;
 }
 
+/* The star of a card of a tool (pinned on top): next to the link of the card, in its corner. */
+body.com_kunena .kd .kd-card-box {
+  position: relative;
+  display: grid;
+}
+
+body.com_kunena .kd .kd-card-box[hidden] {
+  display: none;
+}
+
+body.com_kunena .kd .kd-card-box > .kd-card {
+  padding-right: 2.75rem;
+}
+
+body.com_kunena .kd .kd-pin {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  color: var(--kd-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+body.com_kunena .kd .kd-pin:hover,
+body.com_kunena .kd .kd-pin:focus-visible {
+  color: var(--kd-accent);
+  background: var(--kd-accent-soft);
+}
+
+body.com_kunena .kd .kd-pin[aria-pressed="true"] {
+  color: var(--kd-accent);
+}
+
 body.com_kunena .kd .kd-card:hover {
   border-color: var(--kd-accent);
   box-shadow: var(--kd-shadow-hover);

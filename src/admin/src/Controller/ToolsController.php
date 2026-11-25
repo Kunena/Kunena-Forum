@@ -37,6 +37,7 @@ use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
@@ -1372,6 +1373,30 @@ class ToolsController extends FormController
         $deleted = $ids ? KunenaOrphanFiles::deleteMissingOnSite($ids) : 0;
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_ORPHANS_MISSING_N_DELETED', $deleted), $deleted ? 'success' : 'info');
+    }
+
+    /**
+     * Empties the caches of Kunena (tool "Empty the caches").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function emptyCaches(): void
+    {
+        if (!$this->toolAllowed('caches')) {
+            return;
+        }
+
+        $names  = array_values(array_filter((array) $this->input->post->get('folders', [], 'array'), 'is_string'));
+        $result = KunenaCacheFolders::emptyOnSite($names);
+
+        $this->app->enqueueMessage(
+            Text::plural('COM_KUNENA_TOOLS_CACHES_N_EMPTIED', $result['files'], HTMLHelper::_('number.bytes', $result['bytes'])),
+            'success'
+        );
     }
 
     /**

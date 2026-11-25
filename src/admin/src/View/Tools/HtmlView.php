@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
+use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -44,7 +45,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 8.0
      */
-    public const TOOLS = ['orphanfiles'];
+    public const TOOLS = ['orphanfiles', 'caches'];
 
     /**
      * The data of the tool of the layout (loadTool()).
@@ -334,6 +335,9 @@ class HtmlView extends BaseHtmlView
                     'avatars'     => KunenaOrphanFiles::findOnSite(KunenaOrphanFiles::AVATARS),
                     'missing'     => KunenaOrphanFiles::findMissingOnSite(),
                 ];
+
+            case 'caches':
+                return ['folders' => KunenaCacheFolders::measureOnSite()];
 
         }
 

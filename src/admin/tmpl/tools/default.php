@@ -29,6 +29,7 @@ $groups = [
     ],
     'COM_KUNENA_ADMIN_TOOLS_FILES' => [
         ['orphanfiles', 'COM_KUNENA_TOOLS_ORPHANS', 'COM_KUNENA_TOOLS_ORPHANS_DESC', 'file-circle-question'],
+        ['caches', 'COM_KUNENA_TOOLS_CACHES', 'COM_KUNENA_TOOLS_CACHES_DESC', 'database'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_SYSTEM' => [
         ['menu', 'COM_KUNENA_A_MENU_MANAGER', 'COM_KUNENA_A_MENU_MANAGER_DESC', 'bars'],

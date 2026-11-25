@@ -1261,3 +1261,15 @@ body.com_kunena #content .kd-columns-chooser > .dropdown-toggle {
   font-size: inherit;
 }
 
+/* The checkboxes of the tables: one size. The one of the header row (check all) took the smaller text of that row. */
+
+body.com_kunena #content table.table .form-check-input[type="checkbox"],
+body.com_kunena #content table.table > * > tr > :first-child > input[type="checkbox"],
+body.com_kunena #content table.table > * > tr > :first-child > input[type="radio"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  font-size: 1rem;
+  vertical-align: middle;
+}
+

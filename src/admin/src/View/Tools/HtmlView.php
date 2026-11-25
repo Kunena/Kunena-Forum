@@ -31,6 +31,7 @@ use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
+use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -45,7 +46,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 8.0
      */
-    public const TOOLS = ['orphanfiles', 'caches'];
+    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup'];
 
     /**
      * The data of the tool of the layout (loadTool()).
@@ -339,9 +340,52 @@ class HtmlView extends BaseHtmlView
             case 'caches':
                 return ['folders' => KunenaCacheFolders::measureOnSite()];
 
+            case 'usercleanup':
+                $userid = $input->getInt('userid', 0);
+                $search = trim($input->getString('search', ''));
+
+                return [
+                    'userid'  => $userid,
+                    'search'  => $search,
+                    'summary' => KunenaUserCleanup::summary($userid),
+                    'matches' => $search !== '' ? $this->findUsers($search) : [],
+                ];
+
         }
 
         return [];
+    }
+
+    /**
+     * The users whose name, username or e-mail contains the text, or whose id it is.
+     *
+     * @param   string  $search  The text.
+     *
+     * @return  array  id => [username, name, email].
+     *
+     * @since   Kunena 8.0
+     */
+    protected function findUsers(string $search): array
+    {
+        $search = trim($search);
+
+        if ($search === '') {
+            return [];
+        }
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $like  = '%' . str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $search) . '%';
+        $query = $db->createQuery()
+            ->select($db->quoteName(['id', 'username', 'name', 'email']))
+            ->from($db->quoteName('#__users'))
+            ->where('(' . $db->quoteName('username') . ' LIKE :like1 OR ' . $db->quoteName('name') . ' LIKE :like2 OR ' . $db->quoteName('email') . ' LIKE :like3'
+                . (ctype_digit($search) ? ' OR ' . $db->quoteName('id') . ' = ' . (int) $search : '') . ')')
+            ->bind(':like1', $like)
+            ->bind(':like2', $like)
+            ->bind(':like3', $like)
+            ->order($db->quoteName('username'));
+
+        return (array) $db->setQuery($query, 0, 20)->loadAssocList('id');
     }
 
     /**

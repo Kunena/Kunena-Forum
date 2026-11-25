@@ -22,6 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -39,6 +40,8 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
+use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
+use Kunena\Forum\Libraries\User\KunenaAccountActionPolicy;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
 use RuntimeException;
@@ -1400,6 +1403,70 @@ class ToolsController extends FormController
     }
 
     /**
+     * Cleans up a user in one step (tool "Clean up a user"): his messages, attachments, profile and account.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function cleanupUser(): void
+    {
+        $userid = $this->input->post->getInt('userid', 0);
+
+        if (!$this->toolAllowed('usercleanup&userid=' . $userid)) {
+            return;
+        }
+
+        $options = KunenaUserCleanup::options($this->input->post->getArray());
+
+        if (!KunenaUserCleanup::hasAction($options)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_USERCLEANUP_NOTHING_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        if (!KunenaUserCleanup::summary($userid)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+
+            return;
+        }
+
+        $action = $options['account'] === KunenaUserCleanup::ACCOUNT_BLOCK ? KunenaAccountActionPolicy::BLOCK : KunenaAccountActionPolicy::BAN;
+
+        if (!$this->accountActionAllowed($action, $userid)) {
+            return;
+        }
+
+        $done = KunenaUserCleanup::apply($userid, $options);
+
+        if ($options['messages'] !== KunenaUserCleanup::MESSAGES_KEEP) {
+            $key = $options['messages'] === KunenaUserCleanup::MESSAGES_DELETE ? 'COM_KUNENA_TOOLS_USERCLEANUP_N_DELETED' : 'COM_KUNENA_TOOLS_USERCLEANUP_N_TRASHED';
+            $this->app->enqueueMessage(Text::plural($key, $done['messages']), 'success');
+        }
+
+        if ($options['attachments']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_USERCLEANUP_N_ATTACHMENTS', $done['attachments']), 'success');
+        }
+
+        if ($options['profile']) {
+            $this->app->enqueueMessage(
+                Text::_($done['profile'] ? 'COM_KUNENA_TOOLS_USERCLEANUP_PROFILE_DONE' : 'COM_KUNENA_TOOLS_USERCLEANUP_PROFILE_FAILED'),
+                $done['profile'] ? 'success' : 'warning'
+            );
+        }
+
+        if ($options['account'] !== KunenaUserCleanup::ACCOUNT_KEEP) {
+            $ok = $done['account'] === $options['account'];
+            $this->app->enqueueMessage(
+                Text::_($ok ? ($options['account'] === KunenaUserCleanup::ACCOUNT_BLOCK ? 'COM_KUNENA_USER_BLOCKED_DONE' : 'COM_KUNENA_USER_BANNED_DONE') : 'COM_KUNENA_TOOLS_USERCLEANUP_ACCOUNT_FAILED'),
+                $ok ? 'success' : 'warning'
+            );
+        }
+    }
+
+    /**
      * The checks of a tool which changes the site: the token of the form and an administrator of Kunena. Sets the redirect back
      * to the layout of the tool in any case.
      *
@@ -1428,5 +1495,48 @@ class ToolsController extends FormController
         }
 
         return true;
+    }
+
+    /**
+     * May the current user do this to the account (KunenaAccountActionPolicy)? The reason is shown when not.
+     *
+     * @param   string  $action    The action (KunenaAccountActionPolicy).
+     * @param   int     $targetId  The user.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    private function accountActionAllowed(string $action, int $targetId): bool
+    {
+        $me     = $this->app->getIdentity();
+        $target = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($targetId);
+        $reason = KunenaAccountActionPolicy::refusal(
+            $action,
+            (int) $me->id,
+            $targetId,
+            (bool) $target->authorise('core.admin'),
+            KunenaUserHelper::get($targetId)->isAdmin(),
+            (bool) $me->authorise('core.admin'),
+            static fn (string $right): bool => (bool) $me->authorise($right, 'com_users')
+        );
+
+        if ($reason === null) {
+            return true;
+        }
+
+        if ($reason === KunenaAccountActionPolicy::SELF) {
+            $message = Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF');
+        } elseif ($reason === KunenaAccountActionPolicy::ADMIN) {
+            $message = Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', KunenaUserHelper::get($targetId)->getName());
+        } else {
+            $message = Text::_('JERROR_ALERTNOAUTHOR');
+        }
+
+        $this->app->enqueueMessage($message, 'error');
+
+        return false;
     }
 }

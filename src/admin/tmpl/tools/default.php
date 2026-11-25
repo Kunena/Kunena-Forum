@@ -33,6 +33,7 @@ $groups = [
     'COM_KUNENA_ADMIN_TOOLS_CONTENT' => [
         ['moderation', 'COM_KUNENA_TOOLS_QUEUE', 'COM_KUNENA_TOOLS_QUEUE_DESC', 'gavel'],
         ['reports', 'COM_KUNENA_TOOLS_REPORTS', 'COM_KUNENA_TOOLS_REPORTS_DESC', 'flag'],
+        ['announcements', 'COM_KUNENA_TOOLS_ANNOUNCEMENTS', 'COM_KUNENA_TOOLS_ANNOUNCEMENTS_DESC', 'bullhorn'],
         ['moderatoredits', 'COM_KUNENA_TOOLS_EDITS', 'COM_KUNENA_TOOLS_EDITS_DESC', 'user-pen'],
         ['unanswered', 'COM_KUNENA_TOOLS_UNANSWERED', 'COM_KUNENA_TOOLS_UNANSWERED_DESC', 'comment-slash'],
         ['duplicatetitles', 'COM_KUNENA_TOOLS_TITLES', 'COM_KUNENA_TOOLS_TITLES_DESC', 'heading'],

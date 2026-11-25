@@ -62,6 +62,7 @@ use Kunena\Forum\Libraries\Tools\KunenaRankLadder;
 use Kunena\Forum\Libraries\Tools\KunenaReactionsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaTopicIcons;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
+use Kunena\Forum\Libraries\Tools\KunenaAnnouncementsReview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
@@ -2680,6 +2681,32 @@ class ToolsController extends FormController
         }
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_REACTIONS_N_REMOVED', KunenaReactionsOverview::removeOnSite($ids)), 'success');
+    }
+
+    /**
+     * Unpublishes the chosen announcements (tool "Announcements review").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function unpublishAnnouncements(): void
+    {
+        if (!$this->toolAllowed('announcements')) {
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_ANNOUNCEMENTS_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_ANNOUNCEMENTS_N_UNPUBLISHED', KunenaAnnouncementsReview::unpublishOnSite($ids)), 'success');
     }
 
     /**

@@ -123,8 +123,8 @@ class KunenaDiagnosticsTest extends UnitTestCase
     public static function titleKeys(): array
     {
         return [
-            'two words'          => ['categoryOrphaned', 'COM_KUNENA_DIAGNOSTICS_CHECK_CATEGORY_ORPHANED'],
-            'four words'         => ['messageBodyMissingMessage', 'COM_KUNENA_DIAGNOSTICS_CHECK_MESSAGE_BODY_MISSING_MESSAGE'],
+            'two words'           => ['categoryOrphaned', 'COM_KUNENA_DIAGNOSTICS_CHECK_CATEGORY_ORPHANED'],
+            'four words'          => ['messageBodyMissingMessage', 'COM_KUNENA_DIAGNOSTICS_CHECK_MESSAGE_BODY_MISSING_MESSAGE'],
             'a word in lowercase' => ['thankyouOrphaned', 'COM_KUNENA_DIAGNOSTICS_CHECK_THANKYOU_ORPHANED'],
         ];
     }
@@ -145,6 +145,13 @@ class KunenaDiagnosticsTest extends UnitTestCase
 
         foreach (array_keys(KunenaDiagnostics::getGroups()) as $heading) {
             $this->assertArrayHasKey($heading, $strings, "The heading $heading.");
+        }
+    }
+
+    public function testEveryCheckHasItsQuery(): void
+    {
+        foreach (KunenaDiagnostics::getList() as $check) {
+            $this->assertTrue(method_exists(KunenaDiagnostics::class, 'query_' . $check), "The query of the check $check.");
         }
     }
 }

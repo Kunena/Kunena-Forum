@@ -64,7 +64,7 @@ abstract class KunenaDiagnostics
     {
         $queryFunction = 'fix_' . $function;
 
-        if (method_exists(__CLASS__, $queryFunction)) {
+        if (method_exists(__CLASS__, $queryFunction) || method_exists(__CLASS__, 'repair_' . $function)) {
             return true;
         }
 
@@ -1099,6 +1099,19 @@ abstract class KunenaDiagnostics
      */
     public static function fix(string $function): bool
     {
+        // A fix which needs more than one statement (a recount): its own method.
+        $repairFunction = 'repair_' . $function;
+
+        if (method_exists(__CLASS__, $repairFunction)) {
+            try {
+                return self::$repairFunction();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+
+                return false;
+            }
+        }
+
         $queryFunction = 'fix_' . $function;
 
         if (method_exists(__CLASS__, $queryFunction)) {
@@ -2016,53 +2029,55 @@ abstract class KunenaDiagnostics
         return $query;
     }
 
-    //  /**
-    //   * @return QueryInterface
-    //   * @since   Kunena 6.0
-    //   */
-    //  protected static function query_topicsOwnersOrphaned()
-    //  {
-    //      // Query to find user read which do not belong in any existing topic
-    //      $db    = Factory::getContainer()->get('DatabaseDriver');
-    //      $query = $db->createQuery();
-    //      $query->from("#__kunena_users");
-    //
-    //      return $query;
-    //  }
-    //
-    //  /**
-    //   * @param   QueryInterface  $query  query
-    //   *
-    //   * @return  array
-    //   * @since   Kunena 6.0
-    //   */
-    //  protected static function fields_topicsOwnersOrphaned(QueryInterface $query = null)
-    //  {
-    //      if ($query)
-    //      {
-    //          $query->select('*');
-    //      }
-    //
-    //      return array('channels' => 'invalid');
-    //  }
-    //
-    //  /**
-    //   * @return QueryInterface
-    //   * @since   Kunena 6.0
-    //   */
-    //  protected static function fix_topicsOwnersOrphaned()
-    //  {
-    //      $query = self::query_topicsOwnersOrphaned()->insert('#__kunena_user_topics');
-    //
-    //      return $query;
-    //  }
+    /**
+     * Query to find the topics of a registered author which have no owner (no row of a user of the topic is the owner): the
+     * author does not see the topic as his, and cannot edit it as its owner.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_topicsOwnersOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_topics AS a')
+            ->innerJoin('#__users AS u ON u.id=a.first_post_userid')
+            ->leftJoin('(SELECT topic_id, MAX(owner) AS owner FROM #__kunena_user_topics GROUP BY topic_id) AS j ON j.topic_id=a.id')
+            ->where('a.moved_id=0 AND COALESCE(j.owner, 0)=0');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_topicsOwnersOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.category_id, a.subject, a.first_post_userid');
+        }
+
+        return ['first_post_userid' => 'invalid'];
+    }
+
+    /**
+     * The author of the first post becomes the owner of the topic (his row of the topic is made, or marked as the owner).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function repair_topicsOwnersOrphaned(): bool
+    {
+        $select = self::query_topicsOwnersOrphaned();
+        $select->select('a.id, a.first_post_userid, a.category_id, 1');
+        $db = Factory::getContainer()->get('DatabaseDriver');
+        $db->setQuery('INSERT INTO #__kunena_user_topics (topic_id, user_id, category_id, owner) ' . $select . ' ON DUPLICATE KEY UPDATE owner=1');
+
+        return (bool) $db->execute();
+    }
 }
-/*
--- Find and update topics without owners:
-INSERT INTO `#__kunena_user_topics` (topic_id, user_id, owner)
-(SELECT t.id, t.first_post_userid, 1
-FROM #__kunena_topics AS t
-INNER JOIN (SELECT topic_id, MAX(owner) AS owner FROM `#__kunena_user_topics` GROUP BY topic_id HAVING owner=0) AS j ON j.topic_id=t.id
-WHERE t.first_post_userid>0)
-ON DUPLICATE KEY UPDATE owner=1
-*/

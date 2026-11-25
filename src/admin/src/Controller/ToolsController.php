@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
+use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -1762,6 +1763,30 @@ class ToolsController extends FormController
         echo json_encode($users, JSON_UNESCAPED_UNICODE);
 
         $this->app->close();
+    }
+
+    /**
+     * Moves the chosen copies of duplicate posts to the trash (tool "Duplicate posts").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function trashDuplicates(): void
+    {
+        if (!$this->toolAllowed('duplicates')) {
+            return;
+        }
+
+        $result = KunenaDuplicatePosts::trashOnSite(ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array')));
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_DUPLICATES_N_TRASHED', $result['trashed']), $result['trashed'] ? 'success' : 'info');
+
+        if ($result['skipped']) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_DUPLICATES_N_SKIPPED', $result['skipped']), 'warning');
+        }
     }
 
     /**

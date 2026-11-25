@@ -33,6 +33,7 @@ use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
+use Kunena\Forum\Libraries\Tools\KunenaDuplicatePosts;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryMerge;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
 use Kunena\Forum\Libraries\Tools\KunenaDatabaseTables;
@@ -67,6 +68,7 @@ class HtmlView extends BaseHtmlView
     public const TOOLS = [
         'orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'transfer', 'mergeusers', 'restoretokens', 'scheduledtasks', 'mailtest',
         'findreplace', 'mergecategories', 'moderation', 'inactiveusers', 'subscriptionsoverview', 'permissions', 'storage', 'databasetables',
+        'duplicates',
     ];
 
     /**
@@ -498,6 +500,9 @@ class HtmlView extends BaseHtmlView
 
             case 'databasetables':
                 return ['supported' => KunenaDatabaseTables::isSupported(), 'tables' => KunenaDatabaseTables::listOnSite()];
+
+            case 'duplicates':
+                return ['groups' => KunenaDuplicatePosts::findOnSite()];
         }
 
         return [];

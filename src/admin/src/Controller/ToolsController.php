@@ -51,6 +51,7 @@ use Kunena\Forum\Libraries\Tools\KunenaGoneTopics;
 use Kunena\Forum\Libraries\Tools\KunenaMissingAttachments;
 use Kunena\Forum\Libraries\Tools\KunenaPollsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaProfileSpam;
+use Kunena\Forum\Libraries\Tools\KunenaBanReview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
@@ -2382,6 +2383,34 @@ class ToolsController extends FormController
         if ($result['failed']) {
             $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_COPYPERMS_N_FAILED', $result['failed']), 'warning');
         }
+    }
+
+    /**
+     * Takes the moderator rights and the subscriptions of the chosen banned users away (tool "Ban review").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function cleanBanned(): void
+    {
+        if (!$this->toolAllowed('banreview')) {
+            return;
+        }
+
+        $ids = ArrayHelper::toInteger((array) $this->input->post->get('ids', [], 'array'));
+
+        if (!$ids) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_BANS_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        $result = KunenaBanReview::cleanOnSite($ids);
+
+        $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_BANS_CLEANED', $result['moderator'], $result['subscriptions']), 'success');
     }
 
     /**

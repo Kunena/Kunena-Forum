@@ -57,6 +57,7 @@ use Kunena\Forum\Libraries\Tools\KunenaLanguageOverrides;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsHistory;
 use Kunena\Forum\Libraries\Tools\KunenaThankyouRings;
 use Kunena\Forum\Libraries\Tools\KunenaTopicManager;
+use Kunena\Forum\Libraries\Tools\KunenaContentLimits;
 use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
@@ -2551,6 +2552,39 @@ class ToolsController extends FormController
         }
 
         $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_WARNINGS_N_BANNED', KunenaWarningsOverview::banOnSite($ids, time())), 'success');
+    }
+
+    /**
+     * Deletes the chosen attachments or shortens the chosen signatures (tool "Content over the limits").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function fixContentLimits(): void
+    {
+        if (!$this->toolAllowed('contentlimits')) {
+            return;
+        }
+
+        $attachments = ArrayHelper::toInteger((array) $this->input->post->get('attachments', [], 'array'));
+        $signatures  = ArrayHelper::toInteger((array) $this->input->post->get('signatures', [], 'array'));
+
+        if (!$attachments && !$signatures) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_LIMITS_NONE_CHOSEN'), 'warning');
+
+            return;
+        }
+
+        if ($attachments) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_LIMITS_N_DELETED', KunenaContentLimits::deleteAttachmentsOnSite($attachments)), 'success');
+        }
+
+        if ($signatures) {
+            $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_LIMITS_N_SHORTENED', KunenaContentLimits::shortenSignaturesOnSite($signatures)), 'success');
+        }
     }
 
     /**

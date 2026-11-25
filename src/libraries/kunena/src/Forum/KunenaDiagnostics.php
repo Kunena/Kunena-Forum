@@ -21,6 +21,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 
 /**
  * Class KunenaForumDiagnostics
@@ -1320,6 +1321,98 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * Query to find the ratings of topics by users who no longer exist (ratingOrphaned: of topics which no longer exist).
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_ratingUserOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_rate AS a')->leftJoin('#__users AS u ON u.id=a.userid')->where('u.id IS NULL');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_ratingUserOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.topic_id, a.userid, a.rate');
+        }
+
+        return ['userid' => 'invalid'];
+    }
+
+    /**
+     * Delete the ratings by users who no longer exist.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_ratingUserOrphaned(): string
+    {
+        return 'DELETE a FROM #__kunena_rate AS a LEFT JOIN #__users AS u ON u.id=a.userid WHERE u.id IS NULL';
+    }
+
+    /**
+     * Query to find the topics whose number of posts or time of the last post differ from their posts, as the recount of the
+     * topics counts them (the posts in the state of the topic which were not moved away).
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_topicWrongCounts(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_topics AS a')
+            ->innerJoin('(SELECT thread, hold, COUNT(*) AS posts, MAX(time) AS maxtime FROM #__kunena_messages WHERE moved=0 GROUP BY thread, hold) AS c'
+                . ' ON c.thread=a.id AND c.hold=a.hold')
+            ->where('a.moved_id=0 AND (a.posts!=c.posts OR a.last_post_time!=c.maxtime)');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_topicWrongCounts(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.category_id, a.subject, a.posts, c.posts AS counted, a.last_post_time, c.maxtime AS counted_time');
+        }
+
+        return ['posts' => 'invalid', 'last_post_time' => 'invalid'];
+    }
+
+    /**
+     * Count the topics again (and their categories).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    protected static function repair_topicWrongCounts(): bool
+    {
+        return self::recountTopics(self::ids('topicWrongCounts', 'a.id'));
+    }
+
+    /**
      * Query to find the categories whose numbers of topics and posts differ from their published topics.
      *
      * @return  QueryInterface
@@ -1408,6 +1501,53 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * Query to find the published topics whose posts are all deleted or wait for approval: they are listed and open empty.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_topicShownEmpty(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_topics AS a')
+            ->innerJoin('(SELECT thread, MIN(hold) AS hold FROM #__kunena_messages WHERE moved=0 GROUP BY thread) AS c ON c.thread=a.id')
+            ->where('a.hold=0 AND a.moved_id=0 AND c.hold>0');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_topicShownEmpty(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.category_id, a.subject, a.hold, c.hold AS posts_hold');
+        }
+
+        return ['hold' => 'invalid'];
+    }
+
+    /**
+     * Count the topics again: the recount gives a topic the state of its posts.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    protected static function repair_topicShownEmpty(): bool
+    {
+        return self::recountTopics(self::ids('topicShownEmpty', 'a.id'));
+    }
+
+    /**
      * The ids of the rows of a check.
      *
      * @param   string  $function  The check.
@@ -1427,6 +1567,33 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * Count topics again, with their categories.
+     *
+     * @param   int[]  $ids  The topics.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    protected static function recountTopics(array $ids): bool
+    {
+        if (!$ids) {
+            return true;
+        }
+
+        $db         = Factory::getContainer()->get('DatabaseDriver');
+        $categories = $db->setQuery('SELECT DISTINCT category_id FROM #__kunena_topics WHERE id IN (' . implode(',', array_map('intval', $ids)) . ')')->loadColumn();
+
+        if (KunenaTopicHelper::recount($ids) === false) {
+            return false;
+        }
+
+        return !$categories || KunenaCategoryHelper::recountBatch(array_map('intval', $categories)) !== false;
+    }
+
+    /**
      * The checks by what they are about, for the page of the diagnostics: heading (a language key) => checks.
      *
      * @return  array<string, string[]>
@@ -1443,6 +1610,7 @@ abstract class KunenaDiagnostics
             'COM_KUNENA_DIAGNOSTICS_GROUP_TOPICS' => [
                 'topicInSection', 'topicMissingCategory', 'topicMissingMessages', 'topicMissingPoll', 'topicPollMismatch',
                 'movedMissingTopic', 'movedAndMessages', 'topicsOwnersOrphaned', 'ratingOrphaned',
+                'topicWrongCounts', 'topicShownEmpty', 'ratingUserOrphaned',
             ],
             'COM_KUNENA_DIAGNOSTICS_GROUP_POSTS' => [
                 'messageBodyMissingMessage', 'messageMissingMessageBody', 'messageWrongCategory', 'messageOrphaned', 'attachmentOrphaned',
@@ -1523,6 +1691,9 @@ abstract class KunenaDiagnostics
             'categoryLoop',
             'categoryWrongCounts',
             'categoryTranslationOrphaned',
+            'topicWrongCounts',
+            'topicShownEmpty',
+            'ratingUserOrphaned',
         ];
     }
 

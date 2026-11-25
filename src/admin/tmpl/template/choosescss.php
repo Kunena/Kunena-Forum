@@ -57,7 +57,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <?php echo $this->escape($file); ?>
                                     </td>
                                     <td>
-                                        <?php echo is_writable($this->dir . '/' . $file) ? '<span style="color:green;"> ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($file)) . '</span>' : '<span style="color:red;"> ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($file)) . '</span>' ?>
+                                        <?php echo is_writable(is_file($this->dir . '/' . $file) ? $this->dir . '/' . $file : $this->dir) ? '<span style="color:green;"> ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($file)) . '</span>' : '<span style="color:red;"> ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($file)) . '</span>' ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

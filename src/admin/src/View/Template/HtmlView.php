@@ -40,6 +40,26 @@ class HtmlView extends BaseHtmlView
     public ?array $modifiedFiles = null;
 
     /**
+     * The files of a list with the file of the own styles, also when that file does not exist yet.
+     *
+     * @param   array   $files  The names of the files in the folder.
+     * @param   string  $own    The name of the file of the own styles.
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    public static function withOwnFile(array $files, string $own): array
+    {
+        if (!\in_array($own, $files, true)) {
+            $files[] = $own;
+            sort($files);
+        }
+
+        return $files;
+    }
+
+    /**
      * @param   string|null  $tpl  tpl
      *
      * @return  mixed
@@ -56,36 +76,19 @@ class HtmlView extends BaseHtmlView
             $this->setToolBarChooseCss();
             $this->templatename = $app->getUserState('kunena.templatename');
 
-            $file = KPATH_MEDIA . '/core/css/custom.css';
-
-            if (!file_exists($file) && is_dir(KPATH_MEDIA . '/core/css/')) {
-                if (!is_dir(KPATH_MEDIA . '/core/css/')) {
-                    Folder::create(KPATH_MEDIA . '/core/css/');
-                }
-
-                $fp = fopen($file, "w");
-                fwrite($fp, "");
-                fclose($fp);
-            }
-
+            // The file of the own styles is in the list also before it exists: it is made when it is saved. The page made an empty
+            // file when it was opened (a page which is only viewed wrote a file).
             $this->dir   = KPATH_MEDIA . '/core/css';
-            $this->files = Folder::files($this->dir, '\.css$', false, false);
+            $this->files = self::withOwnFile(is_dir($this->dir) ? Folder::files($this->dir, '\.css$', false, false) : [], 'custom.css');
 
             return parent::display($tpl);
         } elseif ($this->getLayout() == "choosescss") {
             $this->setToolBarChooseScss();
             $this->templatename = $app->getUserState('kunena.templatename');
 
-            $file = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/custom.scss';
-
-            if (!file_exists($file) && is_dir(KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/')) {
-                $fp = fopen($file, "w");
-                fwrite($fp, "");
-                fclose($fp);
-            }
-
+            // As the style sheets: custom.scss is in the list before it exists, and no file is made by opening the page.
             $this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss';
-            $this->files = Folder::files($this->dir, '\.scss$', false, false);
+            $this->files = self::withOwnFile(is_dir($this->dir) ? Folder::files($this->dir, '\.scss$', false, false) : [], 'custom.scss');
 
             return parent::display($tpl);
         } elseif ($this->getLayout() == "editscss") {

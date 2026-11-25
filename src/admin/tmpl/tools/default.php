@@ -34,6 +34,7 @@ $groups = [
         ['findreplace', 'COM_KUNENA_TOOLS_REPLACE', 'COM_KUNENA_TOOLS_REPLACE_DESC', 'arrow-right-arrow-left'],
         ['mergecategories', 'COM_KUNENA_TOOLS_CATMERGE', 'COM_KUNENA_TOOLS_CATMERGE_DESC', 'object-group'],
         ['duplicates', 'COM_KUNENA_TOOLS_DUPLICATES', 'COM_KUNENA_TOOLS_DUPLICATES_DESC', 'clone'],
+        ['bbcodecheck', 'COM_KUNENA_TOOLS_BBCODE', 'COM_KUNENA_TOOLS_BBCODE_DESC', 'code'],
     ],
     'COM_KUNENA_ADMIN_TOOLS_USERS' => [
         ['spam', 'COM_KUNENA_TOOLS_SPAM', 'COM_KUNENA_TOOLS_SPAM_DESC', 'shield-virus'],

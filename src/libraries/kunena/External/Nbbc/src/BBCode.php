@@ -2233,7 +2233,9 @@ REGEX;
                 ."]</tt> uses verbatim content: searching for $end_tag...<br>\n");
         }
 
-        // Push tokens until we find a matching end tag or end-of-input.
+        // Push tokens until we find a matching end tag or end-of-input. A block cut at the output limit (an excerpt) is
+        // closed as if its end tag had been found.
+        $end_tag_params = $end_tag;
         $start = count($this->stack);
         $this->lexer->verbatim = true;
         while (($token_type = $this->lexer->NextToken()) != self::BBCODE_EOI) {

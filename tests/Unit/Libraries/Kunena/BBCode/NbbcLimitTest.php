@@ -110,4 +110,18 @@ class NbbcLimitTest extends UnitTestCase
     {
         $this->assertSame('one two three four...', self::plain('one two three four five six seven eight nine ten eleven twelve', 20));
     }
+
+    /**
+     * A [code] block longer than the limit: the search for its [/code] stopped at the limit and left $end_tag_params
+     * undefined (a warning on the page of the topic, where the description is an excerpt of the post).
+     */
+    public function testACodeBlockLongerThanTheLimitIsCutWithoutAWarning(): void
+    {
+        $parser = new BBCode();
+        $parser->SetLimit(20);
+        $html = (string) $parser->Parse('[code]' . str_repeat('echo "x"; ', 20) . '[/code] after');
+
+        $this->assertStringContainsString('echo', $html);
+        $this->assertStringNotContainsString('after', $html);
+    }
 }

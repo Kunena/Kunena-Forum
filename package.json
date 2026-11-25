@@ -25,7 +25,7 @@
   ],
   "devDependencies": {
     "ckeditor5": "49.1.0",
-    "cypress": "^16.3.0",
+    "cypress": "^16.4.0",
     "esbuild": "0.28.2",
     "joomla-cypress": "^2.0.0",
     "mailparser": "^3.15.0",

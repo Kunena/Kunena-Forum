@@ -15,10 +15,13 @@ namespace Kunena\Forum\Administrator\Model;
 
 \defined('_JEXEC') or die();
 
+use DateTime;
+use DateTimeZone;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
+use Throwable;
 
 /**
  * Logs Model for Kunena
@@ -202,6 +205,51 @@ class LogsModel extends ListModel
 
         // List state information.
         parent::populateState($ordering, $direction);
+
+        // A time which is no date is no filter. The filters are kept in the session, and the calendar field of the filter form
+        // stopped on such a value ("Failed to parse time string"): every visit of the list ended in an error page until the
+        // session ended.
+        $stored  = $app->getUserState($this->context . '.filter');
+        $changed = false;
+
+        foreach (['time_start', 'time_stop'] as $name) {
+            $this->setState('filter.' . $name, self::filterTime($this->state->get('filter.' . $name, '')));
+
+            if (\is_array($stored) && isset($stored[$name]) && self::filterTime($stored[$name]) !== $stored[$name]) {
+                $stored[$name] = '';
+                $changed       = true;
+            }
+        }
+
+        if ($changed) {
+            $app->setUserState($this->context . '.filter', $stored);
+        }
+    }
+
+    /**
+     * The time of a filter: the value when it is a date, an empty text (no filter) when it is not.
+     *
+     * @param   mixed  $value  The value of the filter, as the request or the session gave it.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function filterTime(mixed $value): string
+    {
+        // A date as the calendar of the filter gives it (year-month-day, with or without a time): one letter is a time too for
+        // PHP (a time zone).
+        if (!\is_string($value) || preg_match('/^\d{4}-\d{1,2}-\d{1,2}(?:[ T]\d{1,2}:\d{2}(?::\d{2})?)?$/D', $value) !== 1) {
+            return '';
+        }
+
+        try {
+            new DateTime($value, new DateTimeZone('UTC'));
+        } catch (Throwable $e) {
+            return '';
+        }
+
+        return strtotime($value) === false ? '' : $value;
     }
 
     /**

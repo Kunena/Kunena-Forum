@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
+use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\Tools\KunenaUserMerge;
 use Kunena\Forum\Libraries\User\KunenaAccountActionPolicy;
@@ -1465,6 +1466,24 @@ class ToolsController extends FormController
                 $ok ? 'success' : 'warning'
             );
         }
+    }
+
+    /**
+     * Removes the Kunena items from the index of Smart Search (tool "Search index"); the indexer adds them again.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function purgeSearchIndex(): void
+    {
+        if (!$this->toolAllowed('searchindex')) {
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_SEARCHINDEX_N_PURGED', KunenaSearchIndex::purge()), 'success');
     }
 
     /**

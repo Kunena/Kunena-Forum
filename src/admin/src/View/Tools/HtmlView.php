@@ -31,6 +31,7 @@ use Kunena\Forum\Libraries\Install\KunenaObsoleteFiles;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
+use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
 use Kunena\Forum\Libraries\Tools\KunenaSpamFinder;
 use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\Tools\KunenaUserMerge;
@@ -48,7 +49,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 8.0
      */
-    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam', 'mergeusers'];
+    public const TOOLS = ['orphanfiles', 'caches', 'usercleanup', 'spam', 'searchindex', 'mergeusers'];
 
     /**
      * The data of the tool of the layout (loadTool()).
@@ -357,6 +358,9 @@ class HtmlView extends BaseHtmlView
                 $days = max(1, min(365, $input->getInt('days', 30)));
 
                 return ['days' => $days, 'suspects' => KunenaSpamFinder::findOnSite($days)];
+
+            case 'searchindex':
+                return KunenaSearchIndex::status();
 
             case 'mergeusers':
                 $from = $input->getInt('from', 0);

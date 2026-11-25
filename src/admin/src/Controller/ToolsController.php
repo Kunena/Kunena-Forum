@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tools\KunenaCacheFolders;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryTransfer;
+use Kunena\Forum\Libraries\Tools\KunenaMailTest;
 use Kunena\Forum\Libraries\Tools\KunenaOrphanFiles;
 use Kunena\Forum\Libraries\Tools\KunenaScheduledTasks;
 use Kunena\Forum\Libraries\Tools\KunenaSearchIndex;
@@ -1659,6 +1660,31 @@ class ToolsController extends FormController
                 $result['code'] === null ? Text::_('COM_KUNENA_TOOLS_TASKS_RUN_NOT_FOUND') : Text::sprintf('COM_KUNENA_TOOLS_TASKS_RUN_FAILED', $result['code']),
                 'error'
             );
+        }
+    }
+
+    /**
+     * Sends a test e-mail with the sender of the forum (tool "Test email").
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    public function sendTestMail(): void
+    {
+        if (!$this->toolAllowed('mailtest')) {
+            return;
+        }
+
+        $to     = trim($this->input->post->getString('to', ''));
+        $result = KunenaMailTest::send($to);
+
+        if ($result['ok']) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MAILTEST_SENT', $to), 'success');
+        } else {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_MAILTEST_FAILED', $result['error']), 'error');
         }
     }
 

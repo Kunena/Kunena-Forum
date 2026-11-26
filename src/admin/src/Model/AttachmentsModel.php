@@ -22,6 +22,7 @@ use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Tools\KunenaSizeFilter;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -201,12 +202,23 @@ class AttachmentsModel extends ListModel
             $query->where('(a.filetype LIKE ' . $filetype . ')');
         }
 
-        // TODO: support < > and ranges
-        $filter = $this->getState('filter.size');
+        // The size: "500k", ">2MB", "<= 100kB", "1M-5M" (KunenaSizeFilter); a filter which is no size finds nothing.
+        $filter = trim((string) $this->getState('filter.size'));
 
-        if (!empty($filter)) {
-            $size = $db->quote('%' . $db->escape($filter, true) . '%');
-            $query->where('(a.size LIKE ' . $size . ')');
+        if ($filter !== '') {
+            $range = KunenaSizeFilter::range($filter);
+
+            if ($range === null) {
+                $query->where('0 = 1');
+            } else {
+                if ($range[0] !== null) {
+                    $query->where($db->quoteName('a.size') . ' >= ' . (int) $range[0]);
+                }
+
+                if ($range[1] !== null) {
+                    $query->where($db->quoteName('a.size') . ' <= ' . (int) $range[1]);
+                }
+            }
         }
 
         $filter = $this->getState('filter.username');

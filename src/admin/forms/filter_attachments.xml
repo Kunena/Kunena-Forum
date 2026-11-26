@@ -8,6 +8,13 @@
 			label="COM_USERS_SEARCH_USERS"
 			description=""
 			hint="JSEARCH_FILTER" />
+		<field
+			name="size"
+			type="text"
+			label="COM_KUNENA_ATTACHMENTS_FILTER_SIZE"
+			description="COM_KUNENA_ATTACHMENTS_FILTER_SIZE_DESC"
+			hint="COM_KUNENA_ATTACHMENTS_FILTER_SIZE_HINT"
+			onchange="this.form.submit();" />
 	</fields>
 	<fields name="list">
 		<field

@@ -27,6 +27,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Tools\KunenaTopicManager;
 use Kunena\Tests\Integration\DBTestInterface;
 use Kunena\Tests\Integration\DBTestTrait;
 use Kunena\Tests\Integration\IntegrationTestCase;
@@ -284,5 +285,23 @@ class KunenaTopicDeletedShadowTest extends IntegrationTestCase implements DBTest
                 $this->assertGreaterThan(time() - 60, (int) $message['deleted_time'], "State $state.");
             }
         }
+    }
+
+    /**
+     * A topic put in the trash by the tool "Topic manager" and restored there: a reply which a moderator deleted before stays
+     * deleted. The tool gave the messages the state "deleted" (as that reply) and not "deleted with the topic", and the restore
+     * of the topic published every deleted message of it.
+     */
+    public function testTheTopicManagerRestoresOnlyWhatItPutInTheTrash(): void
+    {
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_messages SET hold = 2, deleted_time = 500 WHERE id = 2')->execute();
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_topics SET posts = 1, last_post_id = 1 WHERE id = ' . self::TARGET)->execute();
+
+        $this->assertSame(['done' => 1, 'failed' => 0], KunenaTopicManager::apply([self::TARGET], 'trash'));
+        $this->assertEquals([1 => 3, 2 => 2], array_column($this->fetchAll('SELECT id, hold FROM #__kunena_messages ORDER BY id'), 'hold', 'id'));
+
+        $this->replace(KunenaTopicHelper::class, '_instances', []);
+        $this->assertSame(['done' => 1, 'failed' => 0], KunenaTopicManager::apply([self::TARGET], 'restore'));
+        $this->assertEquals([1 => 0, 2 => 2], array_column($this->fetchAll('SELECT id, hold FROM #__kunena_messages ORDER BY id'), 'hold', 'id'));
     }
 }

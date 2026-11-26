@@ -273,7 +273,10 @@ class KunenaTopicManager
                 } elseif ($action === 'move') {
                     $ok = (int) $topic->category_id === (int) $category->id || (bool) $topic->move($category);
                 } elseif ($action === 'trash') {
-                    $ok = (int) $topic->hold >= KunenaForum::DELETED || $topic->publish(KunenaForum::DELETED);
+                    // As the delete of a topic on the site: its messages become "deleted with the topic", so a restore brings back
+                    // those only. They became "deleted", as the replies which a moderator deleted before: the restore of the topic
+                    // published those replies again.
+                    $ok = (int) $topic->hold >= KunenaForum::DELETED || $topic->publish(KunenaForum::TOPIC_DELETED);
                 } elseif ($action === 'delete') {
                     // Only a topic in the trash: the delete cannot be undone.
                     $ok = (int) $topic->hold >= KunenaForum::DELETED && $topic->delete();

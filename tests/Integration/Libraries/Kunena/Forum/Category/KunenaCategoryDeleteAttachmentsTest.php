@@ -216,4 +216,61 @@ class KunenaCategoryDeleteAttachmentsTest extends IntegrationTestCase implements
 
         $this->assertSame([9, 10], array_map('intval', array_column($this->fetchAll('SELECT id FROM #__kunena_attachments ORDER BY id'), 'id')));
     }
+
+    /**
+     * Delete the category (with the table of the Joomla tags, which is not in the schema of the tests).
+     */
+    private function deleteCategory(): void
+    {
+        $this->getDBDriver()->setQuery("CREATE TABLE IF NOT EXISTS #__contentitem_tag_map (type_alias varchar(255) NOT NULL DEFAULT '', content_item_id int NOT NULL DEFAULT 0, tag_id int NOT NULL DEFAULT 0)")->execute();
+
+        try {
+            $this->assertTrue(KunenaCategoryHelper::get(self::CATEGORY)->delete());
+        } finally {
+            $this->getDBDriver()->setQuery('DROP TABLE IF EXISTS #__contentitem_tag_map')->execute();
+        }
+    }
+
+    /**
+     * A deleted category takes the private messages of its posts with it. They stayed in the database, with their text, their
+     * recipients and their links, shown nowhere.
+     */
+    public function testDeletingACategoryTakesThePrivateMessagesOfItsPosts(): void
+    {
+        $this->insertRow('#__kunena_messages', ['id' => 99, 'parent' => 0, 'thread' => 50, 'catid' => self::OTHER_CATEGORY, 'subject' => 'Other', 'time' => 1000, 'hold' => 0]);
+
+        foreach ([1 => 1, 2 => 99] as $id => $message) {
+            $this->insertRow('#__kunena_private', ['id' => $id, 'author_id' => 42, 'created_at' => '2026-01-01 00:00:00', 'subject' => 'Private', 'body' => "Secret $id", 'params' => '']);
+            $this->insertRow('#__kunena_private_post_map', ['private_id' => $id, 'message_id' => $message]);
+            $this->insertRow('#__kunena_private_user_map', ['private_id' => $id, 'user_id' => 42]);
+        }
+
+        $this->deleteCategory();
+
+        $ids = fn (string $table, string $column): array => array_map('intval', array_column($this->fetchAll("SELECT $column FROM $table ORDER BY $column"), $column));
+
+        $this->assertSame([2], $ids('#__kunena_private', 'id'));
+        $this->assertSame([2], $ids('#__kunena_private_post_map', 'private_id'));
+        $this->assertSame([2], $ids('#__kunena_private_user_map', 'private_id'));
+    }
+
+    /**
+     * The subcategories of a deleted category go to its parent. They kept the deleted category as their parent: no list of the
+     * forum showed them any more, and a post in one of them ended in an error.
+     */
+    public function testTheSubcategoriesOfADeletedCategoryGoToItsParent(): void
+    {
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_categories SET parentid = ' . self::OTHER_CATEGORY . ' WHERE id = ' . self::CATEGORY)->execute();
+        $this->insertRows('#__kunena_categories', [
+            ['id' => 8, 'parentid' => self::CATEGORY, 'name' => 'Child', 'alias' => '8-child', 'published' => 1],
+            ['id' => 9, 'parentid' => 8, 'name' => 'Grandchild', 'alias' => '9-grandchild', 'published' => 1],
+        ]);
+
+        $this->deleteCategory();
+
+        $this->assertEquals(
+            [self::OTHER_CATEGORY => 0, 8 => self::OTHER_CATEGORY, 9 => 8],
+            array_column($this->fetchAll('SELECT id, parentid FROM #__kunena_categories ORDER BY id'), 'parentid', 'id')
+        );
+    }
 }

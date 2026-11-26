@@ -44,6 +44,7 @@ use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -1363,6 +1364,17 @@ class KunenaCategory extends KunenaDatabaseObject
                 ->where($db->quoteName($column) . ' IN (' . $pollIds . ')');
             $queries[] = $query;
         }
+
+        // Delete the private messages of the posts (their text was left in the database for good, shown nowhere)
+        $queries[] = KunenaPrivateMessage::deleteOfMessagesQuery((string) $messageIds);
+
+        // The subcategories go to the parent of the deleted category. They kept the deleted one as their parent: they were in no
+        // list of the forum any more, and a post in one of them ended in an error.
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_categories'))
+            ->set($db->quoteName('parentid') . ' = ' . (int) $this->parentid)
+            ->where($db->quoteName('parentid') . ' = ' . $catid);
+        $queries[] = $query;
 
         // Delete message texts
         $query = $db->createQuery();

@@ -370,7 +370,13 @@ class CategoryController extends CategoriesController
                 // The message is printed as html: the name of the category is text in it.
                 $name = htmlspecialchars((string) $category->name, ENT_QUOTES, 'UTF-8');
 
-                if ($success && $userid == $me->userid) {
+                // Not unsubscribed (the save failed, its error is shown): no message of success. The own unsubscribe which
+                // failed said "You have unsubscribed the user from the category".
+                if (!$success) {
+                    continue;
+                }
+
+                if ($userid == $me->userid) {
                     $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $name), 'success');
                 } else {
                     $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_NAME_MODERATOR_UNSUBCRIBED_USER', $name), 'success');

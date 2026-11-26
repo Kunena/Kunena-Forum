@@ -64,4 +64,19 @@ class CategoryControllerSubscribeMessagesTest extends UnitTestCase
         // The name inside htmlspecialchars() is fine; the name as an argument of the text is not.
         $this->assertSame(0, preg_match('/enqueueMessage\([^;]*(?<!htmlspecialchars\()(?<!\(string\) )\$category->name[,)]/', $source));
     }
+
+    /**
+     * An unsubscribe which failed has no message of success: the own one said "You have unsubscribed the user from the category".
+     */
+    public function testAFailedUnsubscribeHasNoMessageOfSuccess(): void
+    {
+        $body = $this->task('unsubscribe');
+
+        $failed = strpos($body, 'if (!$success) {');
+        $own    = strpos($body, 'if ($userid == $me->userid) {');
+
+        $this->assertIsInt($failed, 'A failed unsubscribe goes on with the next category.');
+        $this->assertIsInt($own);
+        $this->assertLessThan($own, $failed, 'Before the messages of success.');
+    }
 }

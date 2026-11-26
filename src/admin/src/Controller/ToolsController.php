@@ -65,6 +65,7 @@ use Kunena\Forum\Libraries\Tools\KunenaWarningsOverview;
 use Kunena\Forum\Libraries\Tools\KunenaAnnouncementsReview;
 use Kunena\Forum\Libraries\Tools\KunenaDataRetention;
 use Kunena\Forum\Libraries\Tools\KunenaRatingAbuse;
+use Kunena\Forum\Libraries\Tools\KunenaRecountProgress;
 use Kunena\Forum\Libraries\Tools\KunenaCategoryPermissions;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsSnapshot;
 use Kunena\Forum\Libraries\Tools\KunenaSubscriberAddresses;
@@ -512,7 +513,6 @@ class ToolsController extends FormController
             $state          = new StdClass();
             $state->step    = 0;
             $state->start   = 0;
-            $state->current = 0;
             $state->reload  = 0;
 
             $db    = Factory::getContainer()->get('DatabaseDriver');
@@ -520,9 +520,8 @@ class ToolsController extends FormController
             $query->select('MAX(thread)')->from('#__kunena_messages');
             $db->setQuery($query);
 
-            // Topic count
+            // The highest id of a topic: the batches of the topics go up to it.
             $state->maxId = (int) $db->loadResult();
-            $state->total = $state->maxId * 2 + 10000;
 
             $state->topics     = $this->input->getBool('topics', false);
             $state->usertopics = $this->input->getBool('usertopics', false);
@@ -542,7 +541,7 @@ class ToolsController extends FormController
         $this->setResponse(
             [
                 'success' => true,
-                'status'  => \sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
+                'status'  => $this->recountStatus($state),
                 'header'  => Text::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
                 'message' => $msg,
                 'href'    => $redirect,
@@ -633,17 +632,16 @@ class ToolsController extends FormController
             $this->checkTimeout();
 
             while (1) {
-                // Topic count per run.
-                // TODO: count isn't accurate as it can overflow total.
-                $count = mt_rand(4500, 5500);
+                // The topics of a batch: from the start up to and with the end, the next batch starts after it.
+                $end = KunenaRecountProgress::batchEnd((int) $state->start);
 
                 switch ($state->step) {
                     case 0:
                         if ($state->topics) {
                             // Update topic statistics
                             KunenaAttachmentHelper::cleanup();
-                            KunenaTopicHelper::recount(false, $state->start, $state->start + $count);
-                            $state->start += $count;
+                            KunenaTopicHelper::recount(false, $state->start, $end);
+                            $state->start = $end + 1;
                             $msg          = Text::sprintf(
                                 'COM_KUNENA_ADMIN_RECOUNT_TOPICS_X',
                                 round(min(100 * $state->start / ($state->maxId + 1), 100)) . '%'
@@ -653,8 +651,8 @@ class ToolsController extends FormController
                     case 1:
                         if ($state->usertopics) {
                             // Update user's topic statistics
-                            KunenaTopicUserHelper::recount(false, $state->start, $state->start + $count);
-                            $state->start += $count;
+                            KunenaTopicUserHelper::recount(false, $state->start, $end);
+                            $state->start = $end + 1;
                             $msg          = Text::sprintf(
                                 'COM_KUNENA_ADMIN_RECOUNT_USERTOPICS_X',
                                 round(min(100 * $state->start / ($state->maxId + 1), 100)) . '%'
@@ -703,8 +701,6 @@ class ToolsController extends FormController
                         return;
                 }
 
-                $state->current = min($state->current + $count, $state->total);
-
                 if (!$state->start || $state->start > $state->maxId) {
                     $state->step++;
                     $state->start = 0;
@@ -725,7 +721,7 @@ class ToolsController extends FormController
             $this->setResponse(
                 [
                     'success' => false,
-                    'status'  => \sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
+                    'status'  => $this->recountStatus($state),
                     'header'  => Text::_('COM_KUNENA_AJAX_ERROR'),
                     'message' => Text::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
                     'error'   => $e->getMessage(),
@@ -739,13 +735,33 @@ class ToolsController extends FormController
         $this->setResponse(
             [
                 'success' => true,
-                'status'  => \sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
+                'status'  => $this->recountStatus($state),
                 'header'  => Text::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
                 'message' => $msg,
                 'href'    => $redirect,
             ],
             $ajax
         );
+    }
+
+    /**
+     * The progress of the recount, over the steps which were chosen.
+     *
+     * @param   object  $state  The state of the recount.
+     *
+     * @return  string  "42.5%".
+     *
+     * @since   Kunena 8.0
+     */
+    private function recountStatus(object $state): string
+    {
+        $chosen = [];
+
+        foreach (KunenaRecountProgress::STEPS as $step) {
+            $chosen[$step] = !empty($state->{$step});
+        }
+
+        return KunenaRecountProgress::percent($chosen, (int) $state->step, (int) $state->start, (int) $state->maxId) . '%';
     }
 
     /**

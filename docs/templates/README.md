@@ -3,6 +3,9 @@
 Upgrading a template or overrides from Kunena 7: see [Upgrading a template to Kunena 8.0](upgrading-to-8.0.md), the scripts,
 layouts, helpers, settings and strings which Kunena 8.0 removed, and what replaces them.
 
+The module positions of the forum, where each is shown and the target of the content plugins of its modules: see
+[Module positions](module-positions.md).
+
 ## HMVC templates
 
 Template file overrides are searched in the following order (assuming they extend Aurelia):

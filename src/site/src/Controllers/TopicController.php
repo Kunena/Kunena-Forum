@@ -2433,6 +2433,28 @@ class TopicController extends KunenaController
     }
 
     /**
+     * Refuse the task when the forum is in read only mode ("Allow users only to read messages"): a message, and back to the page.
+     * The posting, the edit and the moderation ask the rights of the message or the topic, which refuse everything but reading
+     * in that mode. A thank you, a reaction, a vote, a bookmark and the answer of a topic did not: their buttons are hidden, but
+     * a request with a token still wrote them.
+     *
+     * @return  boolean  True when the task is refused.
+     *
+     * @since   Kunena 8.0
+     */
+    protected function refusedInReadOnlyMode(): bool
+    {
+        if (!$this->config->readOnly) {
+            return false;
+        }
+
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_WARNING_READONLY'), 'error');
+        $this->setRedirectBack();
+
+        return true;
+    }
+
+    /**
      * @return  void
      *
      * @throws  Exception
@@ -2454,6 +2476,10 @@ class TopicController extends KunenaController
      */
     protected function setThankyou($type)
     {
+        if ($this->refusedInReadOnlyMode()) {
+            return;
+        }
+
         if (!Session::checkToken('get')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirectBack();
@@ -2901,6 +2927,10 @@ class TopicController extends KunenaController
      */
     public function answer()
     {
+        if ($this->refusedInReadOnlyMode()) {
+            return;
+        }
+
         if (!Session::checkToken('get')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirectBack();
@@ -2969,6 +2999,10 @@ class TopicController extends KunenaController
      */
     public function react()
     {
+        if ($this->refusedInReadOnlyMode()) {
+            return;
+        }
+
         if (!Session::checkToken('get')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirectBack();
@@ -3021,6 +3055,10 @@ class TopicController extends KunenaController
      */
     public function bookmark()
     {
+        if ($this->refusedInReadOnlyMode()) {
+            return;
+        }
+
         if (!Session::checkToken('get')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirectBack();
@@ -3884,6 +3922,10 @@ class TopicController extends KunenaController
      */
     public function vote()
     {
+        if ($this->refusedInReadOnlyMode()) {
+            return;
+        }
+
         if (!Session::checkToken('post')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirectBack();

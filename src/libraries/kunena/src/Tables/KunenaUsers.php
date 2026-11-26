@@ -348,7 +348,7 @@ class KunenaUsers extends KunenaTable
         $user = KunenaUserHelper::getJoomlaUser((int) $this->userid);
 
         if (!$this->userid || !$user) {
-            // FIXME: find a way to throw exception because it prevent guest to post
+            // An error, not an exception: an exception here stopped a guest from posting (the post saves the guest user).
             $this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));
         }
 

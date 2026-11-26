@@ -374,7 +374,7 @@ abstract class KunenaTopicUserReadHelper
             KunenaError::displayDatabaseError($e);
         }
 
-        // TODO: is there a bug?
+        // The rows of the users which are loaded; a user without a row (he has no row for the topic any more) gets an empty one.
         foreach (self::$_topics [$id] as $instance) {
             if (isset($results[$instance->user_id])) {
                 $instance->bind($results[$instance->user_id]);

@@ -26,6 +26,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
@@ -1598,7 +1599,8 @@ class KunenaUser
                 $offset = new DateTimeZone($timezone);
                 $this->_time->setTimezone($offset);
             } catch (Exception $e) {
-                // TODO: log error?
+                // An unknown time zone (a zone removed from PHP, a typo in the profile): the time stays in the zone of the site.
+                Log::add(\sprintf('Kunena: unknown time zone "%s" of the user %d', $timezone, $this->userid), Log::WARNING, 'kunena');
             }
         }
 

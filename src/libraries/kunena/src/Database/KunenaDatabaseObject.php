@@ -159,7 +159,8 @@ abstract class KunenaDatabaseObject
      */
     public function delete(): bool
     {
-        // TODO: return false
+        // An object which is not in the database is not deleted, and that is no failure: the callers show an error for false, and
+        // a second delete of the same object (a double click, two moderators at once) would show one for nothing.
         if (!$this->exists()) {
             return true;
         }

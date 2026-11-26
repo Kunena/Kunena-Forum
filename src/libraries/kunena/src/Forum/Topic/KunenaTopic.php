@@ -928,7 +928,7 @@ class KunenaTopic extends KunenaDatabaseObject
                 }
             }
 
-            // FIXME: add recount statistics
+            // The statistics of the forum (KunenaStatistics) are counted when they are shown, they have nothing to recount.
             if ($recount) {
                 KunenaUserHelper::recount();
                 KunenaMessageThankyouHelper::recount();
@@ -2087,7 +2087,6 @@ class KunenaTopic extends KunenaDatabaseObject
             $target->getCategory()->update($target, 0, $published ? $this->posts : 0);
         } else {
             // Both topics have changed and we have no idea how much: force full recount
-            // TODO: we can do this faster..
             $this->recount();
             $target->recount();
         }

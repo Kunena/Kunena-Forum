@@ -2947,9 +2947,7 @@ class KunenaMessage extends KunenaDatabaseObject
             }
         }
 
-        // Activity integration
-        // FIXME : load the plugin finder produce a fatal error
-        // Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+        // Activity integration (Smart Search indexes the message through the plugin "Kunena - Finder", on onKunenaAfterSave)
         $activity = KunenaFactory::getActivityIntegration();
 
         if ($postDelta < 0) {

@@ -46,9 +46,7 @@ abstract class KunenaTable extends Table
      */
     public function delete($pk = null): bool
     {
-        // Workaround Joomla 3.2 change.
-        // TODO: remove check when we're only supporting J!3.5+.
-        $tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+        $tbl_keys = $this->_tbl_keys;
 
         if (\is_null($pk)) {
             $pk = [];
@@ -69,12 +67,6 @@ abstract class KunenaTable extends Table
             }
 
             $this->$key = $pk[$key];
-        }
-
-        // Implement JObservableInterface: Pre-processing by observers
-        // TODO: remove if when we're only supporting J!3.5+.
-        if (isset($this->_observers)) {
-            $this->_observers->update('onBeforeDelete', [$pk]);
         }
 
         // Check for a database error.
@@ -99,12 +91,6 @@ abstract class KunenaTable extends Table
             $this->_db->transactionRollback();
 
             throw new KunenaException($e->getMessage());
-        }
-
-        // Implement JObservableInterface: Post-processing by observers
-        // TODO: remove if when we're only supporting J!3.5+.
-        if (isset($this->_observers)) {
-            $this->_observers->update('onAfterDelete', [$pk]);
         }
 
         return true;
@@ -142,9 +128,7 @@ abstract class KunenaTable extends Table
         $fields = [];
         $values = [];
 
-        // Workaround Joomla 3.2 change.
-        // TODO: remove check when we're only supporting J!3.5+.
-        $tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+        $tbl_keys = $this->_tbl_keys;
 
         // Iterate over the object variables to build the query fields and values.
         foreach (get_object_vars($this) as $k => $v) {
@@ -305,16 +289,6 @@ abstract class KunenaTable extends Table
      */
     public function store($updateNulls = false): bool
     {
-        // Workaround Joomla 3.2 change.
-        // TODO: remove check when we're only supporting J!3.5+.
-        $k = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
-
-        // Implement JObservableInterface: Pre-processing by observers
-        // TODO: remove if when we're only supporting J!3.5+.
-        if (isset($this->_observers)) {
-            $this->_observers->update('onBeforeStore', [$updateNulls, $k]);
-        }
-
         if ($this->exists()) {
             try {
                 $result = $this->updateObject($updateNulls);
@@ -335,12 +309,6 @@ abstract class KunenaTable extends Table
 
         $this->_exists = true;
 
-        // Implement JObservableInterface: Post-processing by observers
-        // TODO: remove if when we're only supporting J!3.5+.
-        if (isset($this->_observers)) {
-            $this->_observers->update('onAfterStore', [&$result]);
-        }
-
         return true;
     }
 
@@ -360,9 +328,7 @@ abstract class KunenaTable extends Table
         $fields = [];
         $where  = [];
 
-        // Workaround Joomla 3.2 change.
-        // TODO: remove check when we're only supporting J!3.5+.
-        $tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+        $tbl_keys = $this->_tbl_keys;
 
         // Create the base update statement.
         $statement = 'UPDATE ' . $this->_db->quoteName($this->_tbl) . ' SET %s WHERE %s';

@@ -54,8 +54,8 @@ require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCodeLibrary.php';
 require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCodeLexer.php';
 require_once KPATH_FRAMEWORK . '/External/Nbbc/src/Debugger.php';
 
-// TODO: add possibility to hide contents from these tags:
-// [hide], [confidential], [spoiler], [attachment], [code]
+// The contents of [hide], [confidential], [private], [spoiler], [attachment] and [code] are left out where they must not be seen: the
+// excerpts, feeds and e-mails (KunenaParser::stripBBCode()) and the quotes of a reply (KunenaMessageQuotes::block()).
 
 /**
  * @see     \Nbbc\BBCode;

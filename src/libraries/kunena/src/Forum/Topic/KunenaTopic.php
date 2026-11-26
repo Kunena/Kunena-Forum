@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageQuotes;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPollHelper;
@@ -2127,9 +2128,16 @@ class KunenaTopic extends KunenaDatabaseObject
         }
 
         if ($fields === true) {
-            $user             = KunenaUserHelper::get($this->first_post_userid);
-            $text             = KunenaParser::removeBlocks((string) $this->first_post_message, ['confidential', 'private']);
-            $message->message = "[quote=\"{$user->getName($this->first_post_guest_name)}\" post={$this->first_post_id}]" . $text . "[/quote]";
+            // The quote of the first post as the quotes of the messages make it: without the confidential and the private text, and
+            // without the text of [hide] for a visitor (the topic hides it from him, the editor of the reply gave it to him).
+            $author           = KunenaUserHelper::get($this->first_post_userid);
+            $message->message = KunenaMessageQuotes::block(
+                (int) $this->first_post_id,
+                (int) $this->first_post_userid,
+                (string) $author->getName($this->first_post_guest_name),
+                (string) $this->first_post_message,
+                !$message->userid
+            );
         } else {
             if ($safefields) {
                 $message->bind($safefields);

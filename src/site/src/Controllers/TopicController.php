@@ -3490,14 +3490,10 @@ class TopicController extends KunenaController
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'), 'success');
 
-        // Only email if message wasn't modified by the author before approval
-        // TODO: this is just a workaround for #1862, we need to find better solution.
-
-        // A member who changed his message: a message of a visitor (or an anonymous one) has userid 0 and no modified_by (0 or NULL),
-        // which were equal, so its approval never told the subscribers.
-        $modifiedByAuthor = (int) $message->modified_by > 0 && (int) $message->modified_by === (int) $message->userid;
-
-        if (!$modifiedByAuthor) {
+        // The subscribers are told about a message once: a published message which an edit sent back to review (issue #1862) is
+        // approved without telling them again. It was "not if its author changed it", which also left out the first approval of a
+        // message which its author changed while it waited.
+        if (!$message->notified) {
             // A topic sends the notification of its first post; a message (a reply) sends its own (KunenaMessage has no
             // sendNotification() anymore).
             if ($target instanceof KunenaMessage) {

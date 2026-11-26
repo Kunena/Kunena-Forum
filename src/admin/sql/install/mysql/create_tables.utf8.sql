@@ -203,6 +203,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_messages`
     `modified_reason` tinytext     NULL,
     `scheduled_time`  int(11)      NOT NULL default '0',
     `scheduled_review` tinyint(4)  NOT NULL default '0',
+    `notified`        tinyint(4)   NOT NULL default '0',
     PRIMARY KEY (id),
     KEY `thread` (thread),
     KEY `ip` (ip),

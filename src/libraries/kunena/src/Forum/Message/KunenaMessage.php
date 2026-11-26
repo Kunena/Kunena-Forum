@@ -94,6 +94,7 @@ use ValueError;
  * @property string $modified_reason
  * @property int    $scheduled_time
  * @property int    $scheduled_review
+ * @property int    $notified
  * @property string $message
  * @since   Kunena 6.0
  */
@@ -279,6 +280,15 @@ class KunenaMessage extends KunenaDatabaseObject
      * @since   Kunena 8.0
      */
     public mixed $scheduled_review = null;
+
+    /**
+     * 1 when the subscribers were told about the message (it was published): an edit which sends it back to review does not tell them
+     * again when it is approved.
+     *
+     * @var     integer
+     * @since   Kunena 8.0
+     */
+    public mixed $notified = null;
 
     /**
      * @var     string
@@ -2336,6 +2346,33 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
+     * Mark a published message as told to its subscribers (the column notified), once.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    protected function markNotified(): void
+    {
+        if ((int) $this->hold !== KunenaForum::PUBLISHED || !empty($this->notified) || !$this->id) {
+            return;
+        }
+
+        try {
+            $this->_db->setQuery(
+                $this->_db->createQuery()
+                    ->update($this->_db->quoteName('#__kunena_messages'))
+                    ->set($this->_db->quoteName('notified') . ' = 1')
+                    ->where($this->_db->quoteName('id') . ' = ' . (int) $this->id)
+            )->execute();
+
+            $this->notified = 1;
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+    }
+
+    /**
      * Choose how to handle the notification : store in queue for later in task plugin or send it now
      *
      * @param   null|string  $url       url
@@ -2350,6 +2387,9 @@ class KunenaMessage extends KunenaDatabaseObject
     public function processNotification($url = null, $approved = false, $type = false)
     {
         $this->_approved = $approved;
+
+        // A published message: its subscribers are told now, once (see TopicController::approve()).
+        $this->markNotified();
 
         // Gather data to be able to the handle to send the notification
         list($emailToList, $once, $sentusers) = $this->gatherNotificationData();

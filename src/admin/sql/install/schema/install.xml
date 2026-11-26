@@ -508,6 +508,10 @@
                type="tinyint(4)"
                null="0"
                default="0"/>
+        <field name="notified"
+               type="tinyint(4)"
+               null="0"
+               default="0"/>
         <key name="PRIMARY"
              unique="1"
              columns="id"/>

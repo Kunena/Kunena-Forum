@@ -838,15 +838,20 @@ abstract class KunenaUserHelper
     }
 
     /**
+     * Count the posts of the users again from their topics.
+     *
+     * @param   int[]  $userids  Only these users (the users of one topic), all the users when empty.
+     *
      * @return  boolean|integer
      *
      * @since   Kunena 5.1
      *
      * @throws  Exception
      */
-    public static function recount()
+    public static function recount(array $userids = [])
     {
-        $db = Factory::getContainer()->get('DatabaseDriver');
+        $db      = Factory::getContainer()->get('DatabaseDriver');
+        $userids = array_values(array_unique(array_filter(array_map('intval', $userids))));
 
         // Update user post count
         // Create the SELECT query for user post counts
@@ -855,6 +860,10 @@ abstract class KunenaUserHelper
             ->select('SUM(' . $db->quoteName('posts') . ') AS ' . $db->quoteName('posts'))
             ->from($db->quoteName('#__kunena_user_topics'))
             ->group($db->quoteName('user_id'));
+
+        if ($userids) {
+            $selectQuery->where($db->quoteName('user_id') . ' IN (' . implode(',', $userids) . ')');
+        }
 
         // Create the INSERT query using the SELECT query
         $query = $db->createQuery();
@@ -876,7 +885,7 @@ abstract class KunenaUserHelper
         $affected = $db->getAffectedRows();
 
         // A user who has no topics any more (his last topic was removed for ever) is not in the count above: his posts are 0.
-        self::recountPostsNull();
+        self::recountPostsNull($userids);
 
         return $affected;
     }
@@ -921,15 +930,18 @@ abstract class KunenaUserHelper
     }
 
     /**
+     * @param   int[]  $userids  Only these users, all the users when empty.
+     *
      * @return  boolean|integer
      *
      * @since   Kunena 5.1
      *
      * @throws  Exception
      */
-    public static function recountPostsNull()
+    public static function recountPostsNull(array $userids = [])
     {
-        $db = Factory::getContainer()->get('DatabaseDriver');
+        $db      = Factory::getContainer()->get('DatabaseDriver');
+        $userids = array_values(array_unique(array_filter(array_map('intval', $userids))));
 
         // If user has no user_topics, set posts into 0
         $query = $db->createQuery();
@@ -937,6 +949,10 @@ abstract class KunenaUserHelper
             ->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('u.userid'))
             ->set($db->quoteName('u.posts') . ' = 0')
             ->where($db->quoteName('ut.user_id') . ' IS NULL');
+
+        if ($userids) {
+            $query->where($db->quoteName('u.userid') . ' IN (' . implode(',', $userids) . ')');
+        }
         $db->setQuery($query);
 
         try {

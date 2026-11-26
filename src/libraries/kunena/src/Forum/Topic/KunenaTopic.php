@@ -2641,13 +2641,54 @@ class KunenaTopic extends KunenaDatabaseObject
                 throw new Exception($e->getMessage());
             }
         } else {
+            // The users whose posts are in the topic, also those whose last post in it is gone (their row of the topic is still
+            // there): only their counts change. The posts of every user of the forum were counted again, for each post of a guest.
+            $userids = $this->getUserIdsForRecount();
+
             KunenaTopicUserHelper::recount($this->id);
 
-            // FIXME: optimize
-            KunenaUserHelper::recount();
+            if ($userids) {
+                KunenaUserHelper::recount($userids);
+            }
         }
 
         return true;
+    }
+
+    /**
+     * The users of the topic whose post counts a recount of the topic can change: the authors of its messages and the users who
+     * have a row of the topic (#__kunena_user_topics).
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    protected function getUserIdsForRecount(): array
+    {
+        $db = $this->_db;
+
+        $authors = $db->createQuery()
+            ->select('DISTINCT ' . $db->quoteName('userid'))
+            ->from($db->quoteName('#__kunena_messages'))
+            ->where($db->quoteName('thread') . ' = ' . (int) $this->id)
+            ->where($db->quoteName('userid') . ' > 0');
+
+        $users = $db->createQuery()
+            ->select('DISTINCT ' . $db->quoteName('user_id'))
+            ->from($db->quoteName('#__kunena_user_topics'))
+            ->where($db->quoteName('topic_id') . ' = ' . (int) $this->id);
+
+        try {
+            $ids = array_merge((array) $db->setQuery($authors)->loadColumn(), (array) $db->setQuery($users)->loadColumn());
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return [];
+        }
+
+        return array_values(array_unique(array_filter(array_map('intval', $ids))));
     }
 
     /**

@@ -22,7 +22,6 @@ use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\User\UserFactoryInterface;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -199,7 +198,7 @@ class CategoryDisplay extends KunenaControllerDisplay
         // The address only when the reader may see it (as on the profile: the choice of the member, the option "Show e-mail
         // addresses"): the feed gave the address of every author to every reader.
         if ($this->config->rssAuthorFormat != 'name' && $userid && KunenaUserHelper::getMyself()->canDisplayEmail(KunenaUserHelper::get($userid))) {
-            $item->authorEmail = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid)->email;
+            $item->authorEmail = (string) KunenaUserHelper::get((int) $userid)->email;
         }
 
         $item->category = $category;

@@ -19,7 +19,6 @@ use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\User\UserFactoryInterface;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -145,9 +144,9 @@ class KunenaViewCategory extends KunenaView
         $item->date        = $date->toSql();
         $item->author      = $username;
 
-        // FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
+        // The users of the feed are kept by Kunena once loaded: no query for each item.
         if ($this->config->rssAuthorFormat != 'name') {
-            $item->authorEmail = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid)->email;
+            $item->authorEmail = (string) KunenaUserHelper::get((int) $userid)->email;
         }
 
         $item->category = $category;

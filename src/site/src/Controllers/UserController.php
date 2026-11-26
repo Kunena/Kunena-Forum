@@ -589,16 +589,24 @@ class UserController extends KunenaController
             $session = $this->app->getSession();
             $session->set('user', $this->user);
 
-            // Update session if username has been changed
-            // TODO : the table session isn't able to be loaded with that
-            /* if ($username && $username != $this->user->username)
-            {
-                $table = Table::getInstance('session', 'JTable');
-                $table->load($session->getId());
+            // A changed username: the row of the session in the database has the name too (who is online, the sessions of the
+            // users in the administrator).
+            if ($username && $username !== $this->user->username) {
+                $id    = (string) $session->getId();
+                $name  = (string) $this->user->username;
+                $query = $this->db->createQuery()
+                    ->update($this->db->quoteName('#__session'))
+                    ->set($this->db->quoteName('username') . ' = :username')
+                    ->where($this->db->quoteName('session_id') . ' = :id')
+                    ->bind(':username', $name)
+                    ->bind(':id', $id);
 
-                $table->username = $this->user->username;
-                $table->store();
-            }*/
+                try {
+                    $this->db->setQuery($query)->execute();
+                } catch (Exception $e) {
+                    // The sessions are kept elsewhere (another session handler): nothing to update.
+                }
+            }
         }
 
         return true;

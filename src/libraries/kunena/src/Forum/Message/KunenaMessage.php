@@ -2458,7 +2458,9 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         if (!$url) {
-            $url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl();
+            // The address itself, not escaped for HTML: the mail escapes it where it is HTML. On a site without SEF addresses
+            // the link of the mail of an approved post had "&amp;" between its values, and led nowhere.
+            $url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl(null, false);
         }
 
         $topic = $this->getTopic();

@@ -1370,6 +1370,9 @@ class KunenaMessage extends KunenaDatabaseObject
 
         $once = false;
 
+        // In the mode where the category subscribers get every post, "only the first post" is for the topic subscribers only.
+        $markCategorySubscribers = false;
+
         if ($mailsubs) {
             if (!$this->parent) {
                 // New topic: Send email only to category subscribers
@@ -1385,8 +1388,10 @@ class KunenaMessage extends KunenaDatabaseObject
                     ? KunenaAccess::CATEGORY_SUBSCRIPTION
                     : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 
-                // FIXME: category subscription can override topic
-                $once = $this->_config->topicSubscriptions == 'first';
+                // The topic subscribers get the first new post only, the category subscribers every post: the recipients who
+                // subscribed to the category are marked below, their e-mail does not say that it is the last one.
+                $once                    = $this->_config->topicSubscriptions == 'first';
+                $markCategorySubscribers = $once;
             }
         }
 
@@ -1399,6 +1404,16 @@ class KunenaMessage extends KunenaDatabaseObject
             $mailadmins,
             self::notificationExcludeList((int) KunenaUserHelper::getMyself()->userid, (int) $this->userid)
         );
+
+        if ($markCategorySubscribers && $emailToList) {
+            $categorySubscribers = array_map('intval', KunenaAccess::getInstance()->loadSubscribers($this->getTopic(), KunenaAccess::CATEGORY_SUBSCRIPTION));
+
+            foreach ($emailToList as $emailTo) {
+                if (\in_array((int) $emailTo->id, $categorySubscribers, true)) {
+                    $emailTo->categorySubscriber = 1;
+                }
+            }
+        }
 
         // The followers of the author get an e-mail about a new topic of him (if they may read the category and do not
         // get the e-mail already as subscribers of the category).
@@ -1469,7 +1484,10 @@ class KunenaMessage extends KunenaDatabaseObject
                         ($emailTo->moderator || $emailTo->subscription)
                     )
                 ) {
-                    $sentusers[] = $emailTo->id;
+                    // A category subscriber gets the next posts of the topic anyway: his topic subscription is not marked as sent.
+                    if (empty($emailTo->categorySubscriber)) {
+                        $sentusers[] = $emailTo->id;
+                    }
                 }
             }
         }
@@ -2787,7 +2805,7 @@ class KunenaMessage extends KunenaDatabaseObject
                 $mail->setSubject($mailSubject);
                 $mail->setSender([$this->_config->email, $mailnamesender]);
 
-                if (!$this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, (string) $recipientLanguage, !empty($emailTo->approvedAuthor))) {
+                if (!$this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once && empty($emailTo->categorySubscriber), (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, (string) $recipientLanguage, !empty($emailTo->approvedAuthor))) {
                     $success = false;
                 } elseif ($onRecipientSent !== null) {
                     $onRecipientSent($recipientIndex);

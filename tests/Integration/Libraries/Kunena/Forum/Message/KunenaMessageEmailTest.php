@@ -455,4 +455,39 @@ class KunenaMessageEmailTest extends IntegrationTestCase implements DBTestInterf
 
         $this->assertSame('Tom & Jerry', $this->notificationHeaders()['X-Forum-Who'] ?? null);
     }
+
+    /**
+     * Category subscribers get every post, topic subscribers the first new post only ("FIXME: category subscription can override
+     * topic"): the e-mail of a subscriber of the category said that it was the last one until he read the topic, and his topic
+     * subscription was marked as sent. Only the topic subscribers get that now.
+     */
+    public function testOnlyTheFirstPostIsForTheTopicSubscribersOnly(): void
+    {
+        $this->seed('A reply');
+        $this->option('allowSubscriptions', 1);
+        $this->option('categorySubscriptions', 'post');
+        $this->option('topicSubscriptions', 'first');
+        $this->option('mailModerators', -1);
+        $this->option('mailAdministrators', -1);
+        $this->option('emailVisibleAddress', 'forum@forum.example');
+
+        // 43 subscribed to the category (and to the topic), 44 to the topic only.
+        $recipient = static fn (int $id) => (object) ['id' => $id, 'email' => "user$id@forum.example", 'subscription' => 1, 'moderator' => 0, 'admin' => 0];
+        $access    = $this->createStub(KunenaAccess::class);
+        $access->method('getSubscribers')->willReturn([$recipient(self::MENTIONED), $recipient(44)]);
+        $access->method('loadSubscribers')->willReturn([(string) self::MENTIONED]);
+        $this->replace(KunenaAccess::class, 'instance', $access);
+
+        [$list, $once, $sent] = (new ReflectionMethod(KunenaMessageHelper::get(self::REPLY), 'gatherNotificationData'))->invoke(KunenaMessageHelper::get(self::REPLY));
+
+        $marks = [];
+
+        foreach ($list as $emailTo) {
+            $marks[(int) $emailTo->id] = !empty($emailTo->categorySubscriber);
+        }
+
+        $this->assertTrue($once);
+        $this->assertSame([self::MENTIONED => true, 44 => false], $marks);
+        $this->assertSame([44], array_map('intval', $sent), 'Only the topic subscription of the topic subscriber is marked as sent.');
+    }
 }

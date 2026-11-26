@@ -457,6 +457,8 @@ abstract class KunenaUserHelper
             $query->from($db->quoteName(['#__kunena_users'], ['ku']));
             $query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
             $query->where($db->quoteName('ku.posts') . ' > 0');
+            // Not the users who are blocked in Joomla (a banned spammer with many posts was a top poster of the statistics).
+            $query->where($db->quoteName('u.block') . ' = 0');
             $query->order($db->quoteName('ku.posts') . ' DESC');
 
             if (KunenaFactory::getConfig()->superAdminUserlist && ($filter = Access::getUsersByGroup(8))) {

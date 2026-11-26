@@ -102,6 +102,22 @@ class KunenaAccess
     protected mixed $moderatorsByUserid = null;
 
     /**
+     * The categories which each user may read, for the request: user id => [category id => category id].
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected array $allowedCategories = [];
+
+    /**
+     * The same, without the categories of another language: "language|user id" => the list.
+     *
+     * @var     array
+     * @since   Kunena 8.0
+     */
+    protected array $allowedCategoriesByLanguage = [];
+
+    /**
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -194,10 +210,9 @@ class KunenaAccess
         $this->moderatorsByCatid  = [];
         $this->moderatorsByUserid = [];
 
-        // Reset read KunenaAccess for the current session
-        $me  = KunenaUserHelper::getMyself();
-        $app = KunenaFactory::getApplication();
-        $app->setUserState("com_kunena.user{$me->userid}_read", null);
+        // The readable categories are made again.
+        $this->allowedCategories           = [];
+        $this->allowedCategoriesByLanguage = [];
 
         // @var KunenaAccess $access
 
@@ -371,7 +386,10 @@ document.addEventListener('DOMContentLoaded', function () {
      */
     public function getAllowedCategories($user = null)
     {
-        static $read = [];
+        // The lists of the request, which clearCache() empties (a static variable here kept the old list after a change of the rights
+        // in the same request). The list is not kept in the session any more: the constructor cleared it on every request, so it was
+        // read back in the same request only, and each visitor, a guest or a bot without a session too, had it written to his session.
+        $read = &$this->allowedCategories;
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -380,75 +398,60 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (!isset($read[$user->userid])) {
-            $id  = $user->userid;
-            $app = KunenaFactory::getApplication();
+            $id = $user->userid;
 
-            // The session keeps the list of the visitor only (it is cleared on every request, see clearCache()). The list of
-            // another user (the name search asks whether a found member may read a category) stayed in the session of the visitor
-            // until it ended: that member was judged by his old rights after they changed.
-            $own = (int) $id === (int) KunenaUserHelper::getMyself()->userid;
+            $list       = [];
+            $categories = KunenaCategoryHelper::getCategories(false, false, 'none');
+            $all        = $categories;
 
-            // TODO: handle guests/bots with no userstate
-            $read[$id] = $own ? $app->getUserState("com_kunena.user{$id}_read") : null;
+            foreach ($categories as $category) {
+                // Remove unpublished categories, and the categories in an unpublished section or category: what is in it is
+                // hidden with it (the index does not show it, its topics must not stay open by their addresses and lists).
+                $published = $category->published == 1;
+                $parent    = $all[$category->parentid] ?? null;
 
-            if ($read[$id] === null) {
-                $list       = [];
-                $categories = KunenaCategoryHelper::getCategories(false, false, 'none');
-                $all        = $categories;
-
-                foreach ($categories as $category) {
-                    // Remove unpublished categories, and the categories in an unpublished section or category: what is in it is
-                    // hidden with it (the index does not show it, its topics must not stay open by their addresses and lists).
-                    $published = $category->published == 1;
-                    $parent    = $all[$category->parentid] ?? null;
-
-                    for ($depth = 0; $published && $parent && $depth < 100; $depth++) {
-                        $published = $parent->published == 1;
-                        $parent    = $all[$parent->parentid] ?? null;
-                    }
-
-                    if (!$published) {
-                        unset($categories[$category->id]);
-                    }
-
-                    // Moderators have always KunenaAccess
-                    if (self::isModerator($user, $category->id)) {
-                        $list[$category->id] = $category->id;
-                        unset($categories[$category->id]);
-                    }
+                for ($depth = 0; $published && $parent && $depth < 100; $depth++) {
+                    $published = $parent->published == 1;
+                    $parent    = $all[$parent->parentid] ?? null;
                 }
 
-                // Get external authorization
-                if (!empty($categories)) {
-                    // @var KunenaAccess $access
-
-                    foreach ($this->accesstypes['all'] as $access) {
-                        if (method_exists($access, 'authoriseCategories')) {
-                            $list += $access->authoriseCategories($id, $categories);
-                        }
-                    }
+                if (!$published) {
+                    unset($categories[$category->id]);
                 }
 
-                // Clean up and filter the resulting list by using only array keys.
-                $list      = array_keys($list);
-                $list      = ArrayHelper::toInteger($list);
-                $read[$id] = array_combine($list, $list);
-                unset($read[$id][0]);
-
-                if ($own) {
-                    $app->setUserState("com_kunena.user{$id}_read", $read[$id]);
+                // Moderators have always KunenaAccess
+                if (self::isModerator($user, $category->id)) {
+                    $list[$category->id] = $category->id;
+                    unset($categories[$category->id]);
                 }
             }
+
+            // Get external authorization
+            if (!empty($categories)) {
+                // @var KunenaAccess $access
+
+                foreach ($this->accesstypes['all'] as $access) {
+                    if (method_exists($access, 'authoriseCategories')) {
+                        $list += $access->authoriseCategories($id, $categories);
+                    }
+                }
+            }
+
+            // Clean up and filter the resulting list by using only array keys.
+            $list      = array_keys($list);
+            $list      = ArrayHelper::toInteger($list);
+            $read[$id] = array_combine($list, $list);
+            unset($read[$id][0]);
         }
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         $allowed = $read[$user->userid];
 
-        // On a multilingual site the categories of another language are left out (the list in the user state keeps them,
-        // as it is kept for all languages).
+        // On a multilingual site the categories of another language are left out (the list above keeps them, as it is kept for
+        // all languages).
         if (KunenaMultilanguage::isEnabled()) {
-            static $byLanguage = [];
+            $byLanguage = &$this->allowedCategoriesByLanguage;
 
             $key = KunenaMultilanguage::getCurrent() . '|' . $user->userid;
 

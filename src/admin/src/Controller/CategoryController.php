@@ -305,11 +305,7 @@ class CategoryController extends KunenaController
                 }
             }
 
-            // Update read access
-            $read                = $this->app->getUserState("com_kunena.user{$me->userid}_read");
-            $read[$category->id] = $category->id;
-            $this->app->setUserState("com_kunena.user{$me->userid}_read", null);
-
+            // The readable categories are made again by the save of the category (KunenaAccess::clearCache()).
             $category->checkIn();
         } else {
             // Category was checked out by someone else.

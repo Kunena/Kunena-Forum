@@ -16,22 +16,32 @@ use Kunena\Tests\Unit\Support\Files;
 use Kunena\Tests\Unit\UnitTestCase;
 
 /**
- * The categories a user may read are kept in the session. For the visitor the list is cleared on every request; the list of
- * another user (the name search asks whether a found member may read a category) stayed in the session of the visitor until it
- * ended, so that member was judged by his old rights after they changed. Only the list of the visitor is kept.
+ * The categories which a user may read are kept for the request, on the access object, which clearCache() empties. They were kept in
+ * the session of the visitor ("TODO: handle guests/bots with no userstate"): the constructor cleared that copy on every request, so it
+ * was only read back in the same request, and every visitor, a guest or a bot too, had it written to his session. A static variable
+ * kept them for the request, which clearCache() could not empty: a change of the rights in the request kept the old list. The list of
+ * another user (the name search asks whether a found member may read a category) is never kept beyond the request either.
  */
 class KunenaAccessOtherUserSessionTest extends UnitTestCase
 {
-    public function testOnlyTheListOfTheVisitorIsReadFromAndWrittenToTheSession(): void
+    public function testTheListsAreKeptOnTheObjectAndNotInTheSession(): void
     {
         $source = Files::read('src/libraries/kunena/src/Access/KunenaAccess.php');
 
         $this->assertSame(1, preg_match('/public function getAllowedCategories\(.*?\n    \}\n/s', $source, $m));
 
-        $this->assertStringContainsString('$own = (int) $id === (int) KunenaUserHelper::getMyself()->userid;', $m[0]);
-        $this->assertStringContainsString('$read[$id] = $own ? $app->getUserState("com_kunena.user{$id}_read") : null;', $m[0]);
-        $this->assertSame(1, preg_match('/if \(\$own\) \{\s+\$app->setUserState\("com_kunena\.user\{\$id\}_read", \$read\[\$id\]\);/', $m[0]));
-        $this->assertSame(1, substr_count($m[0], 'setUserState('), 'No other write of the list to the session.');
-        $this->assertSame(1, substr_count($m[0], 'getUserState('), 'No other read of the list from the session.');
+        $this->assertStringContainsString('$read = &$this->allowedCategories;', $m[0]);
+        $this->assertStringContainsString('$byLanguage = &$this->allowedCategoriesByLanguage;', $m[0]);
+        $this->assertStringNotContainsString('static $', $m[0], 'No list in a static variable, which clearCache() cannot empty.');
+        $this->assertStringNotContainsString('UserState(', $source, 'No list in the session.');
+    }
+
+    public function testClearCacheEmptiesTheLists(): void
+    {
+        $source = Files::read('src/libraries/kunena/src/Access/KunenaAccess.php');
+
+        $this->assertSame(1, preg_match('/public function clearCache\(\)\s*\{(.*?)\n    \}\n/s', $source, $m));
+        $this->assertStringContainsString('$this->allowedCategories           = [];', $m[1]);
+        $this->assertStringContainsString('$this->allowedCategoriesByLanguage = [];', $m[1]);
     }
 }

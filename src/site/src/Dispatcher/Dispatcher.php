@@ -142,11 +142,19 @@ class Dispatcher extends ComponentDispatcher
             $uri = KunenaRoute::current(true);
 
             if ($uri) {
-                // FIXME: using wrong Itemid
-                Factory::getApplication()->redirect(KunenaRoute::_($uri, false));
-            } else {
-                throw new \Exception("Kunena view '{$view}' not found", 404);
+                // The address of the view without the menu item of this page (it was kept: the menu item of another view, a
+                // wrong one): the router chooses the menu item of the view. An old view which becomes this same address is not
+                // found (a redirect to it came back here).
+                $uri = clone $uri;
+                $uri->delVar('Itemid');
+                $target = KunenaRoute::_($uri, false);
+
+                if ($target && !KunenaController::isSameAddress($target, Uri::getInstance()->toString(['path', 'query']))) {
+                    Factory::getApplication()->redirect($target);
+                }
             }
+
+            throw new \Exception("Kunena view '{$view}' not found", 404);
         }
 
         // Prepare and display the output.

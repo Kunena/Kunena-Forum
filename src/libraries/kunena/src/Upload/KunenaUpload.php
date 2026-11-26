@@ -144,6 +144,9 @@ class KunenaUpload
             $contentType = '';
         }
 
+        // The time limit of the server, given back after the chunk is read.
+        $timeLimit = (int) \ini_get('max_execution_time');
+
         try {
             // Set filename for future queries.
             $this->filename = $options['filename'];
@@ -203,8 +206,8 @@ class KunenaUpload
             fseek($out, $options['chunkStart']);
 
             while (!feof($in)) {
-                // Set script execution time to 8 seconds in order to interrupt stalled file transfers (< 1kb/sec).
-                // Not sure if it works, though, needs some testing. :)
+                // 8 seconds for every 8 kB, to end a transfer which stalls (< 1kb/sec). That works where PHP counts the real
+                // time (Windows); elsewhere the wait for the data is not counted and the timeout of the web server ends it.
                 @set_time_limit(8);
 
                 $buff = fread($in, 8192);
@@ -242,8 +245,9 @@ class KunenaUpload
         } catch (Exception $exception) {
         }
 
-        // Reset script execution time.
-        @set_time_limit(25);
+        // The time limit of the server again, counted from here. It was 25 seconds: the rest of the request (the check of the
+        // file, a picture made smaller, the save of the attachment) stopped after that on a server which allows more.
+        @set_time_limit($timeLimit);
 
         if ($in) {
             fclose($in);

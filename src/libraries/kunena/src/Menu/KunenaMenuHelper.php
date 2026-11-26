@@ -149,6 +149,11 @@ abstract class KunenaMenuHelper
 
             if ($items) {
                 foreach ($items as $i => $item) {
+                    // A copy of the item: the menu of Joomla gives the same objects to every menu module of the page, and what is
+                    // set below (the escaped title, the link, the level) was set on the items of the other modules too.
+                    $item      = clone $item;
+                    $items[$i] = $item;
+
                     $item->parent = false;
 
                     if (isset($items[$lastitem]) && $items[$lastitem]->id == $item->parent_id && $item->getParams()->get('menu_show', 1) == 1) {
@@ -217,8 +222,8 @@ abstract class KunenaMenuHelper
                         $item->flink = Route::_($item->flink);
                     }
 
-                    // We prevent the double encoding because for some reason the $item is shared for menu modules and we get double encoding
-                    // when the cause of that is found the argument should be removed
+                    // No double encoding (the last argument): the menu module of Joomla escapes the titles on the items it shares with
+                    // every menu module, so a title can come here escaped already (mod_menu has the same argument for that reason).
                     $item->title          = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
                     $item->anchor_css     = htmlspecialchars($item->getParams()->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
                     $item->anchor_title   = htmlspecialchars($item->getParams()->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);

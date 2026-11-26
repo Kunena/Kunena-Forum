@@ -219,4 +219,54 @@ class KunenaTopicMoveUnpublishedTest extends IntegrationTestCase implements DBTe
         );
         $this->assertSame([[1, 2], [0, 0]], $this->counts());
     }
+
+    /**
+     * The read marks of the users follow a topic which moves to another category: they kept the old category, so the topic was not
+     * in the unread topics of the new category (Diagnostics listed them as "user read in the wrong category").
+     */
+    public function testTheReadMarksOfAMovedTopicGetItsNewCategory(): void
+    {
+        $this->insertRows('#__kunena_user_read', [
+            ['user_id' => 42, 'topic_id' => self::TARGET, 'category_id' => self::CATEGORY, 'message_id' => 2, 'time' => 1100],
+            ['user_id' => 43, 'topic_id' => self::TARGET, 'category_id' => self::CATEGORY, 'message_id' => 1, 'time' => 1000],
+        ]);
+
+        KunenaTopicHelper::get(self::TARGET)->move(KunenaCategoryHelper::get(self::OTHER_CATEGORY));
+
+        $this->assertSame(
+            [[42, self::TARGET, self::OTHER_CATEGORY], [43, self::TARGET, self::OTHER_CATEGORY]],
+            $this->readMarks()
+        );
+    }
+
+    /**
+     * The read marks of a topic which is merged into another one go to that topic: they stayed on the shadow. A user who read both
+     * keeps the earlier of his two marks.
+     */
+    public function testTheReadMarksOfAMergedTopicGoToTheTarget(): void
+    {
+        $this->insertRows('#__kunena_user_read', [
+            ['user_id' => 42, 'topic_id' => self::UNAPPROVED, 'category_id' => self::CATEGORY, 'message_id' => 10, 'time' => 1500],
+            ['user_id' => 43, 'topic_id' => self::UNAPPROVED, 'category_id' => self::CATEGORY, 'message_id' => 10, 'time' => 1500],
+            ['user_id' => 43, 'topic_id' => self::TARGET, 'category_id' => self::CATEGORY, 'message_id' => 2, 'time' => 1100],
+        ]);
+
+        KunenaTopicHelper::get(self::UNAPPROVED)->move(KunenaTopicHelper::get(self::TARGET));
+
+        $this->assertSame(
+            [[42, self::TARGET, self::CATEGORY, 10, 1500], [43, self::TARGET, self::CATEGORY, 2, 1100]],
+            $this->readMarks(true)
+        );
+    }
+
+    /**
+     * The read marks: user, topic, category (and the message and the time).
+     */
+    private function readMarks(bool $all = false): array
+    {
+        return array_map(
+            static fn ($row) => array_map('intval', array_values($row)),
+            $this->fetchAll('SELECT user_id, topic_id, category_id' . ($all ? ', message_id, time' : '') . ' FROM #__kunena_user_read ORDER BY user_id, topic_id')
+        );
+    }
 }

@@ -2027,8 +2027,10 @@ class KunenaTopic extends KunenaDatabaseObject
             // Update user topic information (topic, category)
             KunenaTopicUserHelper::move($this, $target);
 
-            // TODO: do we need this?
-            // \Kunena\Forum\Libraries\Forum\Topic\\Kunena\Forum\Libraries\Forum\Topic\User\Read\Helper::move($this, $target);
+            // And the read marks of the users: their category stayed the old one, so the topic was missing from the unread topics
+            // of the new category (Diagnostics found the rows as "user read in the wrong category").
+            KunenaTopicUserReadHelper::move($this, $target);
+
             // Remove topic and posts from the old category
             $categoryFrom->update($this, $published ? -1 : 0, $published ? -$this->posts : 0);
 
@@ -2074,8 +2076,10 @@ class KunenaTopic extends KunenaDatabaseObject
             // Update user topic information (topic, category)
             KunenaTopicUserHelper::merge($this, $target);
 
-            // TODO: do we need this?
-            // \Kunena\Forum\Libraries\Forum\Topic\\Kunena\Forum\Libraries\Forum\Topic\User\Read\Helper::merge($this, $target);
+            // And the read marks: they stayed on the shadow of the merged topic. A user who read both keeps the earlier of his two
+            // marks, so that what he has not read is still new to him.
+            KunenaTopicUserReadHelper::merge($this, $target);
+
             // Remove topic and posts from the old category
             $this->getCategory()->update($this, $published ? -1 : 0, $published ? -$this->posts : 0);
 

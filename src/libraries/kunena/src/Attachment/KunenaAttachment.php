@@ -61,7 +61,6 @@ use Throwable;
  * @property string $filename
  * @property string $filename_real
  * @property string $caption
- * @property string $comment
  * @property int    $inline
  * @property int    $status
  * @property string $typeAlias
@@ -220,12 +219,6 @@ class KunenaAttachment extends KunenaDatabaseObject
     public mixed $filename_real = null;
 
     /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public mixed $comment = null; //ToDo does comment exist anymore?
-
-    /**
      * @var     boolean
      * @since   Kunena 6.0
      */
@@ -332,8 +325,6 @@ class KunenaAttachment extends KunenaDatabaseObject
                 return $this->filetype;
             case 'filename_real':
                 return $this->filename_real;
-            case 'comment':
-                return $this->comment;
             case 'inline':
                 return $this->inline;
             case 'status':

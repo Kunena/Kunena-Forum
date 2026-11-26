@@ -93,12 +93,6 @@ class TableKunenaAttachments extends KunenaTable
     public mixed $filename_real = null;
 
     /**
-     * @var     string|null
-     * @since   Kunena 6.0
-     */
-    public mixed $comment = null;
-
-    /**
      * @var     int|null
      * @since   Kunena 6.0
      */

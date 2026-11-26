@@ -8,14 +8,18 @@ The module positions of the forum, where each is shown and the target of the con
 
 ## HMVC templates
 
-Template file overrides are searched in the following order (assuming they extend Aurelia):
+A layout is searched in this order, the first file found is used (for a Kunena template [TEMPLATE] which extends Aurelia):
 
-- ./templates/[JOOMLATEMPLATE]/layouts/com_kunena/[TEMPLATE]/topics/default.php (TODO)
-- ./components/com_kunena/template/[TEMPLATE]/layouts/topics/default.php
-- ./templates/[JOOMLATEMPLATE]/layouts/com_kunena/aurelia/topics/default.php (TODO)
-- ./components/com_kunena/template/aurelia/layouts/topics/default.php
-- ./templates/[JOOMLATEMPLATE]/layouts/com_kunena/topics/default.php (TODO)
-- ./layouts/com_kunena/topics/default.php (TODO)
+- ./templates/[JOOMLATEMPLATE]/html/com_kunena/layouts/topic/item/default.php: an override for every Kunena template
+- ./templates/[JOOMLATEMPLATE]/html/com_kunena/[TEMPLATE]/layouts/topic/item/default.php: an override for [TEMPLATE] only
+- ./components/com_kunena/template/[TEMPLATE]/layouts/topic/item/default.php
+- ./templates/[JOOMLATEMPLATE]/html/com_kunena/aurelia/layouts/topic/item/default.php: an override for Aurelia and the templates
+  built on it
+- ./components/com_kunena/template/aurelia/layouts/topic/item/default.php
+- ./components/com_kunena/template/system/layouts/topic/item/default.php
+
+The pages are searched the same way (`pages/` in place of `layouts/`). With Agora, the chosen layout set
+(`template/agora/layoutsets/<set>/layouts/...`) comes right before Agora itself, after the overrides of Agora.
 
 ## Legacy templates
 

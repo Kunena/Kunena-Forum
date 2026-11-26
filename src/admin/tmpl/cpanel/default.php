@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Integration\KunenaPlugins;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
@@ -74,7 +74,7 @@ $manage = [
     ['users', 'COM_KUNENA_CPANEL_LABEL_USERS', 'users', KunenaUserHelper::getTotalCount(), 'COM_KUNENA_CPANEL_TILE_USERS_DESC'],
     ['ranks', 'COM_KUNENA_CPANEL_LABEL_RANKS', 'ranking-star', KunenaUserHelper::getTotalRanks(), 'COM_KUNENA_CPANEL_TILE_RANKS_DESC'],
     ['smilies', 'COM_KUNENA_CPANEL_LABEL_EMOTICONS', 'face-smile', KunenaStatistics::getTotalEmoticons(), 'COM_KUNENA_CPANEL_TILE_EMOTICONS_DESC'],
-    ['templates', 'COM_KUNENA_CPANEL_LABEL_TEMPLATES', 'palette', round(\count(KunenaTemplate::getInstance()->getTemplatePaths()) / 2) - 1, 'COM_KUNENA_CPANEL_TILE_TEMPLATES_DESC'],
+    ['templates', 'COM_KUNENA_CPANEL_LABEL_TEMPLATES', 'palette', \count(KunenaTemplateHelper::parseXmlFiles()), 'COM_KUNENA_CPANEL_TILE_TEMPLATES_DESC'],
     ['plugins', 'COM_KUNENA_CPANEL_LABEL_PLUGINS', 'plug', KunenaPlugins::getTotalPlugins(), 'COM_KUNENA_CPANEL_TILE_PLUGINS_DESC'],
 ];
 

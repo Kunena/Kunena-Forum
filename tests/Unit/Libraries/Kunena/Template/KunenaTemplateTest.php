@@ -12,7 +12,9 @@
 
 namespace Kunena\Tests\Unit\Libraries\Kunena\Template;
 
+use Joomla\CMS\Application\CMSApplication;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -142,5 +144,40 @@ class KunenaTemplateTest extends UnitTestCase
     public function testAScriptIsDeferred(array $attribs, array $expected): void
     {
         $this->assertSame($expected, KunenaTemplate::scriptAttributes($attribs));
+    }
+
+    /**
+     * The folders where a layout is searched, the last one first: the override of the Joomla template for all the Kunena templates,
+     * then for each Kunena template of the chain its override (html/com_kunena/<template>, "(TODO)" in the documentation of the
+     * templates) before its own folder.
+     */
+    public function testEachKunenaTemplateHasAnOverrideFolderInTheJoomlaTemplate(): void
+    {
+        $this->requireJoomla();
+
+        if (!\defined('KPATH_SITE')) {
+            \define('KPATH_SITE', \dirname(__DIR__, 5) . '/src/site');
+        }
+
+        $application = $this->createStub(CMSApplication::class);
+        $application->method('getTemplate')->willReturn('cassiopeia');
+
+        $template = self::bare(KunenaTemplate::class, ['app' => $application, 'default' => ['agora', 'aurelia', 'system'], 'paths' => []]);
+        $site     = KPATH_SITE . '/template';
+        $override = JPATH_ROOT . '/templates/cassiopeia/html/com_kunena';
+        $path     = KunenaPath::clean('/layouts/topic/item');
+
+        $this->assertSame(
+            [
+                "{$site}/system{$path}",
+                "{$override}/system{$path}",
+                "{$site}/aurelia{$path}",
+                "{$override}/aurelia{$path}",
+                "{$site}/agora{$path}",
+                "{$override}/agora{$path}",
+                "{$override}{$path}",
+            ],
+            $template->getTemplatePaths('layouts/topic/item', true)
+        );
     }
 }

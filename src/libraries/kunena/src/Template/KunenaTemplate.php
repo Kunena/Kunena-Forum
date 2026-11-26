@@ -1705,12 +1705,19 @@ HTML;
             $path = KunenaPath::clean("/$path");
         }
 
-        $array = [];
+        // From the weakest to the strongest (the callers put the last one first). Each Kunena template of the chain (system, ...,
+        // the template of the forum), then its override in the Joomla template (html/com_kunena/<Kunena template>/...: an override
+        // for one Kunena template, which the templates built on it get too), and last the override for all the Kunena templates
+        // (html/com_kunena/...), which stays the strongest as before.
+        $array     = [];
+        $overrides = ($fullpath ? JPATH_ROOT : JPATH_SITE) . "/templates/{$this->getSiteTemplateName()}/html/com_kunena";
 
         foreach (array_reverse($this->default) as $template) {
             $array[] = ($fullpath ? KPATH_SITE : KPATH_COMPONENT_RELATIVE) . "/template/" . $template . $path;
-            $array[] = ($fullpath ? JPATH_ROOT : JPATH_SITE) . "/templates/{$this->getSiteTemplateName()}/html/com_kunena" . $path;
+            $array[] = $overrides . '/' . $template . $path;
         }
+
+        $array[] = $overrides . $path;
 
         foreach (array_reverse($this->paths) as $template) {
             $array[] = ($fullpath ? JPATH_SITE : '') . $template . $path;

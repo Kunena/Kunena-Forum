@@ -32,7 +32,6 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                     <input type="hidden" name="filename" value="<?php echo $this->escape($this->filename); ?>"/>
                     <?php echo HTMLHelper::_('form.token'); ?>
 
-                    <?php // TODO: redo FTP protection fields ?>
                     <fieldset>
                         <legend><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_SCSS_TEMPLATE'); ?></legend>
                         <table class="table table-bordered table-striped">

@@ -19,10 +19,13 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\BBCode\KunenaBBCode;
+use Kunena\Forum\Libraries\BBCode\KunenaBBCodeLibrary;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use RuntimeException;
 
 /**
  * Kunena Misc Controller
@@ -89,5 +92,43 @@ class MiscController extends KunenaController
         }
 
         $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));
+    }
+
+    /**
+     * A tweet of a message, read from X after the page (tweet-load.js): the HTML of the tweet as JSON ({"html": "..."}). Only for the
+     * key which the page gave with the id (KunenaBBCodeLibrary::tweetKey()), so that nobody makes the forum ask X for other tweets.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function tweet(): void
+    {
+        $id  = $this->input->getString('id', '');
+        $key = $this->input->getString('key', '');
+
+        // KunenaBBCodeLibrary is in the file of KunenaBBCode.
+        class_exists(KunenaBBCode::class);
+
+        if (!ctype_digit($id) || \strlen($id) > 18 || !hash_equals(KunenaBBCodeLibrary::tweetKey($id), $key)) {
+            throw new RuntimeException(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+        }
+
+        if (KunenaFactory::getTemplate()->isHmvc() && !KunenaFactory::getTemplate()->params->get('X_Social')) {
+            throw new RuntimeException(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
+
+        $html = (new KunenaBBCodeLibrary())->renderTweet((int) $id);
+
+        header('Content-type: application/json');
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+
+        while (@ob_end_clean()) {
+        }
+
+        echo json_encode(['html' => \is_string($html) ? $html : '']);
+
+        jexit();
     }
 }

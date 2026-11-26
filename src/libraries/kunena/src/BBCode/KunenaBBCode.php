@@ -2772,7 +2772,71 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return "<a href=\"https://x.com/kunena/status/" . $tweetid . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . Text::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
         }
 
-        return $this->renderTweet($tweetid);
+        // A tweet which was read before is shown at once. Another one is read from X after the page (two requests to X, of up to
+        // ten seconds each, held up the page): the page has a link to it, which tweet-load.js replaces with the tweet.
+        if ($this->isTweetCached((int) $tweetid)) {
+            return $this->renderTweet((int) $tweetid);
+        }
+
+        return $this->tweetPlaceholder($tweetid);
+    }
+
+    /**
+     * Is the tweet in the cache of the tweets (read from X before)?
+     *
+     * @param   int  $tweetid  The id of the tweet.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public function isTweetCached(int $tweetid): bool
+    {
+        return is_file(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json');
+    }
+
+    /**
+     * The key of a tweet in the address which loads it (task misc.tweet): only a tweet which a page of the forum shows is read from
+     * X, an address with another id gets nothing (else anybody could make the forum ask X for any tweet).
+     *
+     * @param   string  $tweetid  The id of the tweet.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function tweetKey(string $tweetid): string
+    {
+        return hash_hmac('sha256', 'kunena-tweet:' . $tweetid, (string) Factory::getApplication()->get('secret'));
+    }
+
+    /**
+     * The link to a tweet in the page, which tweet-load.js replaces with the tweet.
+     *
+     * @param   string  $tweetid  The id of the tweet (digits only).
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected function tweetPlaceholder(string $tweetid): string
+    {
+        $url = Uri::root() . 'index.php?option=com_kunena&view=misc&task=tweet&format=raw&id=' . $tweetid . '&key=' . self::tweetKey($tweetid);
+
+        $document = Factory::getApplication()->getDocument();
+
+        if ($document instanceof HtmlDocument) {
+            $document->getWebAssetManager()->registerAndUseScript(
+                'kunena.tweet-load',
+                Uri::root() . 'media/kunena/core/js/tweet-load.js',
+                [],
+                ['defer' => true]
+            );
+        }
+
+        return '<div class="kunena-tweet-load" data-tweet-url="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '">'
+            . '<a href="https://x.com/i/status/' . $tweetid . '" rel="nofollow noopener noreferrer" target="_blank">'
+            . Text::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . '</a></div>';
     }
 
     // Format a [size] tag by producing a <span> with a style with a different font-size.
@@ -3243,7 +3307,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      */
     protected function getTweet(int $tweetid)
     {
-        // FIXME: use AJAX instead...
+        // Read when the page is shown for a tweet in the cache, else by the task misc.tweet after the page (tweet-load.js).
         $uri             = Uri::getInstance();
         $consumer_key    = trim($this->config->XConsumerKey);
         $consumer_secret = trim($this->config->XConsumerSecret);

@@ -128,7 +128,8 @@ class UserEditAvatarDisplay extends UserEditDisplay
             $files[''] = $images;
         }
 
-        // TODO: Allow recursive paths.
+        // One level of folders: an avatar of the gallery is gallery/<folder>/<file> and nothing deeper (KunenaAvatarPath, which
+        // checks every value of an avatar before a file is read or deleted with it).
         $folders = Folder::folders($path);
 
         foreach ($folders as $folder) {

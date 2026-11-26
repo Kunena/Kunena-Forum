@@ -28,9 +28,8 @@ use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
- * Class ComponentTopicControllerFormHistoryDisplay
- *
- * TODO: merge to another controller...
+ * The last versions of the messages of a topic, under the form of a reply (a sub-request of the layout topic/edit: a page part of its
+ * own, as the other parts of an HMVC page).
  *
  * @since   Kunena 4.0
  */
@@ -141,7 +140,8 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         }
 
-        // FIXME: need to improve BBCode class on this...
+        // The files of all the messages at once: getAttachments() of each message reads them from the cache. Which files a message
+        // shows in its text is known when it is parsed (the BBCode keeps them on the layout), so the layout lists the others.
         $this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
         $this->inline_attachments = [];
 

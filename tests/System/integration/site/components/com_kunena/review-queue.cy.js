@@ -68,7 +68,7 @@ describe('Kunena review: topics and messages which wait for a moderator', () => 
     });
     category().then((numbers) => expect(numbers, 'the category does not count it').to.deep.eq({ topics: 0, posts: 0 }));
 
-    // The visitors do not see it (the author does not either: the topic has a TODO for that, "Allow owner to see his posts").
+    // The visitors do not see it, nor does its author: a topic which waits is for the moderators only.
     [
       () => `${base}&view=topic&catid=${ids.category}&id=${ids.topic}`,
       () => `${base}&view=topics`,

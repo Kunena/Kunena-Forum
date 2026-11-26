@@ -21,9 +21,8 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-// FIXME: change into JForm.
-
-// TODO: Add generic form version
+// The form of the search is written here, not with Joomla Form: its fields (the categories as a tree, the users while a name is
+// typed, the dates of the browser) are the ones of Kunena, and a template overrides this layout to change it.
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $bootstrap = $this->ktemplate->params->get('bootstrap');

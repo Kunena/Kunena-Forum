@@ -148,8 +148,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
             <small class="text-muted me-auto"><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
             <input type="submit" class="btn btn-outline-primary border kreply-submit" name="Submit" value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
                                                                                                                                                                                         ?>" />
-            <?php // TODO: remove data on cancel.
-            ?>
+            <?php // Cancel empties the editor (its reset) and forgets the text which was kept for the form (form-recover.js). ?>
             <input type="reset" name="reset" class="btn btn-outline-primary border" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" />
         </div>
         <input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />

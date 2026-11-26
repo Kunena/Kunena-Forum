@@ -165,8 +165,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         <?php if (!empty($config->enableDrafts) && $me->exists()) : ?>
                             <button type="submit" class="btn btn-outline-secondary border" name="savedraft" value="1" formnovalidate><?php echo Text::_('COM_KUNENA_DRAFT_SAVE'); ?></button>
                         <?php endif; ?>
-                        <?php // TODO: remove data on cancel.
-                        ?>
+                        <?php // Cancel empties the editor (its reset) and forgets the text which was kept for the form (form-recover.js). ?>
                         <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-kunena-dialog-close="kreply<?php echo $message->displayField('id'); ?>_form" />
                     </div>
                     <input type="hidden" id="kurl_emojis<?php echo (int) $message->id; ?>" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
@@ -279,8 +278,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         <?php if (!empty($config->enableDrafts) && $me->exists()) : ?>
                             <button type="submit" class="btn btn-outline-secondary border" name="savedraft" value="1" formnovalidate><?php echo Text::_('COM_KUNENA_DRAFT_SAVE'); ?></button>
                         <?php endif; ?>
-                        <?php // TODO: remove data on cancel.
-                        ?>
+                        <?php // Cancel empties the editor (its reset) and forgets the text which was kept for the form (form-recover.js). ?>
                         <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-kunena-dialog-close="kreply<?php echo $message->displayField('id'); ?>_form" />
                     </div>
                     <input type="hidden" id="kurl_emojis<?php echo (int) $message->id; ?>" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />

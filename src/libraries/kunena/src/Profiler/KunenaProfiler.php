@@ -135,11 +135,12 @@ class KunenaProfiler extends Profiler
     }
 
     /**
+     * The profiler of Kunena (instance(), not getInstance(): the getInstance() of the profiler of Joomla gives a profiler of Joomla).
+     *
      * @param   string  $prefix  string
      *
      * @return  KunenaProfiler
      *
-     * @fixme   override getInstance() and fix the function into Joomla
      * @since   Kunena 6.0
      */
     public static function instance($prefix = 'Kunena'): KunenaProfiler

@@ -324,7 +324,8 @@ class Router extends RouterView
 
         // Support URIs like: /forum/category
         if (!empty($query['catid']) && ($view == 'category' || $view == 'topic' || $view == 'home')) {
-            // TODO: ensure that we have view=category/topic
+            // The views which have a category in their path: a category (the segment says the view, view= goes below), a topic (its
+            // id follows) and the home page of a category (view=home stays in the address).
             $catid = (int) $query['catid'];
 
             if ($catid) {

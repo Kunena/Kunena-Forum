@@ -119,7 +119,8 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
      * @param   KunenaGetAccessControlEvent  $event  The event instance
      *
      * @return  void
-     * @todo    Should we remove category ACL integration?
+     * The categories which JomSocial gives to its groups; the option "Access control" of the plugin turns it off.
+     *
      * @since   Kunena 6.0
      */
     public function onKunenaGetAccessControl(KunenaGetAccessControlEvent $event): void

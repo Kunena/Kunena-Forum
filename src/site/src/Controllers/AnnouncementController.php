@@ -42,7 +42,7 @@ class AnnouncementController extends KunenaController
      */
     public function none()
     {
-        // FIXME: This is workaround for task=none on edit.
+        // Old links of the announcements (task=none) open the form of the announcement: no form of Kunena 8 sends this task.
         $this->edit();
     }
 

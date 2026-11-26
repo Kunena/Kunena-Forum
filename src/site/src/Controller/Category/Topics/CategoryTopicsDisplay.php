@@ -133,7 +133,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
             $limit = $this->config->threadsPerPage;
         }
 
-        // TODO:
+        // The newest, the most read or the longest first: a category chooses what its topics are ordered by, not the direction.
         $direction = 'DESC';
 
         $this->category = KunenaCategoryHelper::get($catid);

@@ -31,10 +31,10 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Layout\Widget\WidgetModule;
 use RuntimeException;
 
 /**
@@ -387,7 +387,12 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
             $this->setCanonicalLink($doc, KunenaRoute::_($this->getCanonicalUri(['option', 'view', 'layout', 'Itemid'], 0)));
         }
 
-        KunenaParser::prepareContent($content, 'index_top');
+        // The Joomla content plugins of the target index_top (the system plugin of Kunena) run on the modules at the top of the index of the forum (kunena_index_top).
+        WidgetModule::prepareWith('kunena_index_top', 'index_top');
+        WidgetModule::prepareWith('kunena_index_bottom', 'index_bottom');
+
+        // The positions of the sections: kunena_section_<n> under a section, kunena_section_top_<n> above it.
+        WidgetModule::prepareWith('kunena_section_*', 'index_sections');
     }
 
     /**

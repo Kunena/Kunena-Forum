@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
+use Kunena\Forum\Site\Layout\Widget\WidgetModule;
 use Kunena\Forum\Site\Model\CategoryModel;
 use RuntimeException;
 
@@ -192,6 +193,11 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         }
 
         list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
+
+        // The Joomla content plugins of the modules of a list of topics (the system plugin of Kunena chooses the targets): at the top of
+        // the page, and between the topics (kunena_topic_<n>).
+        WidgetModule::prepareWith('kunena_top', 'topic_list_default');
+        WidgetModule::prepareWith('kunena_topic_*', 'topic_list_rows');
 
         if ($this->total > 0) {
             // Collect user ids for avatar prefetch when integrated.

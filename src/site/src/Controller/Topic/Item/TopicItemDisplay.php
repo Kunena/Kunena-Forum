@@ -49,6 +49,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Layout\Widget\WidgetModule;
 use RuntimeException;
 
 /**
@@ -310,7 +311,18 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $params->set('kunena_layout', 'default');
 
         PluginHelper::importPlugin('kunena');
-        KunenaParser::prepareContent($content, 'topic_top');
+        // The Joomla content plugins of the target topic_top (the system plugin of Kunena) run on the modules at the top of the topic (kunena_topictitle).
+        WidgetModule::prepareWith('kunena_topictitle', 'topic_top');
+        WidgetModule::prepareWith('kunena_poll', 'topic_poll');
+
+        // Between the messages: kunena_msg_<n> (and kunena_msg_row_<n> of the layout sets of Agora).
+        WidgetModule::prepareWith('kunena_msg_*', 'topic_messages');
+
+        // In the profile of the author of a message: kunena_topicprofile(more), kunena_profile_default(_<rank or user>),
+        // kunena_profile_horizontal(_<rank or user>).
+        WidgetModule::prepareWith('kunena_topicprofile', 'topic_profiles');
+        WidgetModule::prepareWith('kunena_topicprofilemore', 'topic_profiles');
+        WidgetModule::prepareWith('kunena_profile_*', 'topic_profiles');
         $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
             'context' => 'kunena.topic',
             'subject' => $this->topic,

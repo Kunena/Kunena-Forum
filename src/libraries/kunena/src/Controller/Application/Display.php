@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Layout\KunenaModuleContent;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -220,6 +221,18 @@ class Display extends KunenaControllerDisplay
             KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
         }
+
+        // The Joomla content plugins of the modules of the frame of every page (the system plugin of Kunena chooses the targets). The
+        // controller of the content gives its own positions their targets, and a more precise one to a position of the frame
+        // (kunena_top of a list of topics: topic_list_default).
+        KunenaModuleContent::prepareWith('kunena_top', 'page_top');
+        KunenaModuleContent::prepareWith('kunena_announcement', 'page_top');
+        KunenaModuleContent::prepareWith('kunena_bottom', 'page_bottom');
+        KunenaModuleContent::prepareWith('kunena_login', 'page_login');
+        KunenaModuleContent::prepareWith('kunena_logout', 'page_login');
+        KunenaModuleContent::prepareWith('kunena_logout_bottom', 'page_login');
+        KunenaModuleContent::prepareWith('kunena_custom_top', 'page_custom');
+        KunenaModuleContent::prepareWith('kunena_custom_bottom', 'page_custom');
 
         // Wrapper KunenaLayout.
         $this->output = KunenaLayout::factory('Page')

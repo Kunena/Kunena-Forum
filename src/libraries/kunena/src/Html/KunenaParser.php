@@ -267,13 +267,9 @@ abstract class KunenaParser
     {
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-        // The system plugin may be disabled or missing: getPlugin() has no object to give then.
-        $plugin       = PluginHelper::getPlugin('system', 'kunena');
-        $params       = new Registry($plugin->params ?? null);
-        $events       = (int) $params->get('jcontentevents', false);
-        $event_target = (array) $params->get('jcontentevent_target', []);
+        $params = self::contentPluginParams();
 
-        if ($content && $events && \in_array($target, $event_target)) {
+        if ($content && self::isContentTarget((string) $target)) {
             // The Joomla content plugins which were chosen: an empty list means all the enabled content plugins.
             $chosen = array_values(array_filter((array) $params->get('jcontentevent_plugins', [])));
 
@@ -287,6 +283,36 @@ abstract class KunenaParser
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return $content;
+    }
+
+    /**
+     * Do the Joomla content plugins run on a target ("Run plugins on" of the system plugin of Kunena, with the content plugins on)?
+     *
+     * @param   string  $target  The target (body, title, index_top...).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isContentTarget(string $target): bool
+    {
+        $params = self::contentPluginParams();
+
+        return (int) $params->get('jcontentevents', false) && \in_array($target, (array) $params->get('jcontentevent_target', []), true);
+    }
+
+    /**
+     * The settings of the system plugin of Kunena. The plugin may be disabled or missing: getPlugin() has no object to give then.
+     *
+     * @return  Registry
+     *
+     * @since   Kunena 8.0
+     */
+    private static function contentPluginParams(): Registry
+    {
+        $plugin = PluginHelper::getPlugin('system', 'kunena');
+
+        return new Registry($plugin->params ?? null);
     }
 
     /**

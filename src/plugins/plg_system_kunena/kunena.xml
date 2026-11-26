@@ -49,9 +49,21 @@
                     <option value="announcement_description">announcement_description</option>
                     <option value="category_headerdesc">category_headerdesc</option>
                     <option value="section_headerdesc">section_headerdesc</option>
-                    <option value="index_top">index_top</option>
-                    <option value="topic_top">topic_top</option>
-                    <option value="topic_list_default">topic_list_default</option>
+                    <option value="page_top">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_PAGE_TOP</option>
+                    <option value="page_bottom">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_PAGE_BOTTOM</option>
+                    <option value="page_login">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_PAGE_LOGIN</option>
+                    <option value="page_custom">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_PAGE_CUSTOM</option>
+                    <option value="index_top">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_INDEX_TOP</option>
+                    <option value="index_bottom">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_INDEX_BOTTOM</option>
+                    <option value="index_sections">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_INDEX_SECTIONS</option>
+                    <option value="topic_list_default">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_TOPIC_LIST_DEFAULT</option>
+                    <option value="topic_list_rows">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_TOPIC_LIST_ROWS</option>
+                    <option value="topic_top">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_TOPIC_TOP</option>
+                    <option value="topic_poll">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_TOPIC_POLL</option>
+                    <option value="topic_messages">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_TOPIC_MESSAGES</option>
+                    <option value="topic_profiles">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_TOPIC_PROFILES</option>
+                    <option value="message_list_rows">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_MESSAGE_LIST_ROWS</option>
+                    <option value="profile_summary">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_PROFILE_SUMMARY</option>
                     <option value="message">messages</option>
                 </field>
                 <field

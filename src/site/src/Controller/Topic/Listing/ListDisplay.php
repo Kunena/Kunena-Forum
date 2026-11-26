@@ -34,12 +34,12 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicListPreload;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
-use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
+use Kunena\Forum\Site\Layout\Widget\WidgetModule;
 
 /**
  * Class ComponentTopicControllerListDisplay
@@ -268,7 +268,11 @@ abstract class ListDisplay extends KunenaControllerDisplay
         $params->set('kunena_view', 'topic');
         $params->set('kunena_layout', 'list');
         PluginHelper::importPlugin('kunena');
-        KunenaParser::prepareContent($content, 'topicList_default');
+        // The Joomla content plugins of the target topic_list_default (the system plugin of Kunena) run on the modules at the top of the list of topics (kunena_top).
+        WidgetModule::prepareWith('kunena_top', 'topic_list_default');
+
+        // The positions between the topics of the list: kunena_topic_<n>.
+        WidgetModule::prepareWith('kunena_topic_*', 'topic_list_rows');
 
         // Each topic of the list for the plugins of Kunena, as the topic page does with its topic and its messages (kunena.topic,
         // kunena.messages): the event of the list had the topic of the page as its subject, which a list has not, so it was off.

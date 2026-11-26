@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
+use Kunena\Forum\Site\Layout\Widget\WidgetModule;
 use Kunena\Forum\Site\Model\TopicsModel;
 
 /**
@@ -229,6 +230,12 @@ class MessageListingRecentDisplay extends ListDisplay
             ->start($this->pagination->limitstart)
             ->limit($this->pagination->limit)
             ->find();
+
+        // The Joomla content plugins of the modules between the posts (the system plugin of Kunena chooses the targets): the position of
+        // a row is its number in the list (Message/Row).
+        foreach (array_keys((array) $this->messages) as $row) {
+            WidgetModule::prepareWith((string) $row, 'message_list_rows');
+        }
 
         // Load topics...
         $topicIds = [];

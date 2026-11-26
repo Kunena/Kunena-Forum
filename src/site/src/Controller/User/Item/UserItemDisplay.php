@@ -27,6 +27,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Layout\Widget\WidgetModule;
 use Kunena\Forum\Site\Model\UserModel;
 use RuntimeException;
 
@@ -102,6 +103,9 @@ class UserItemDisplay extends KunenaControllerDisplay
     protected function before()
     {
         parent::before();
+
+        // The Joomla content plugins of the modules of the summary of the profile (the system plugin of Kunena chooses the targets).
+        WidgetModule::prepareWith('kunena_summary', 'profile_summary');
 
         // If profile integration is disabled, this view doesn't exist.
         $integration = KunenaFactory::getProfile();

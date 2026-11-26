@@ -61,11 +61,16 @@ class KunenaUserHelperOnlineUsersTest extends UnitTestCase
             'application' => Factory::$application,
             'container'   => Factory::$container,
             'language'    => Factory::$language,
+            'dates'       => Factory::$dates,
         ];
 
         (new ReflectionProperty(KunenaConfig::class, 'instance'))->setValue(null, $config);
         Factory::$application = $site;
         Factory::$language    = $language;
+
+        // Factory::getDate() keeps the date of "now" of its first call for the rest of the process, which is a request on a site but
+        // the whole run of the tests here: a test which ran minutes before gave the helper its old "now".
+        Factory::$dates = [];
 
         $this->loadHelper();
 
@@ -84,6 +89,7 @@ class KunenaUserHelperOnlineUsersTest extends UnitTestCase
         Factory::$application = $this->saved['application'];
         Factory::$container   = $this->saved['container'];
         Factory::$language    = $this->saved['language'];
+        Factory::$dates       = $this->saved['dates'];
 
         foreach (['_me', '_instances', '_online'] as $name) {
             (new ReflectionProperty(KunenaUserHelper::class, $name))->setValue(null, $this->saved[$name]);

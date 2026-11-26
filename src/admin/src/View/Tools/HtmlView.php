@@ -17,11 +17,13 @@ namespace Kunena\Forum\Administrator\View\Tools;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Helper\ConfigHelper;
@@ -813,20 +815,16 @@ class HtmlView extends BaseHtmlView
             ToolbarHelper::custom('tools.fixLegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
         }
 
-        // TODO: check why the modal doesn't open
-        /*
-        // Get the toolbar object instance
-        $bar = $this->getDocument()->getToolbar();
+        // The restore deletes the menu of the forum and makes it new: the button opens the confirmation of the page
+        // (menu_trashmenuconfirmation), which sends the task. The script of the modals of Bootstrap is not on the page
+        // by itself: without it the button did nothing.
+        HTMLHelper::_('bootstrap.modal', '#trashmenuconfirmationModal');
 
-        HTMLHelper::_('bootstrap.renderModal', 'trashmenuconfirmationModal');
-
-        $title = Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH');
-        $dhtml = "<button data-bs-toggle=\"modal\" data-bs-target=\"#trashmenuconfirmationModal\" class=\"btn btn-sm\">
-                    <i class=\"icon-apply\" title=\"$title\"> </i>
-                        $title</button>";
-                        $bar->appendButton('Custom', $dhtml, 'batch');*/
-
-        ToolbarHelper::custom('tools.trashmenu', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_TRASH_MENU', false);
+        $title = $this->escape(Text::_('COM_KUNENA_A_TRASH_MENU'));
+        Toolbar::getInstance('toolbar')->customButton('trashmenu')->html(
+            '<joomla-toolbar-button><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#trashmenuconfirmationModal">'
+            . '<span class="icon-apply" aria-hidden="true"></span> ' . $title . '</button></joomla-toolbar-button>'
+        );
         ToolbarHelper::spacer();
         ToolbarHelper::cancel();
         ToolbarHelper::spacer();

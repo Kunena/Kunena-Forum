@@ -15,12 +15,12 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="modal fade" id="trashmenuconfirmationModal">
+<div class="modal fade" id="trashmenuconfirmationModal" tabindex="-1" aria-labelledby="trashmenuconfirmationTitle" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <h3><?php echo Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH_MODAL_TITLE'); ?></h3>
+                <h3 class="modal-title fs-5" id="trashmenuconfirmationTitle"><?php echo Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH_MODAL_TITLE'); ?></h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php echo Text::_('JCLOSE'); ?>"></button>
             </div>
             <div class="modal-body">
                 <p><?php echo Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH_TIP'); ?></p>
@@ -34,7 +34,7 @@ use Joomla\CMS\Language\Text;
                 <button class="btn" type="button" data-bs-dismiss="modal">
                     <?php echo Text::_('JCANCEL'); ?>
                 </button>
-                <button class="btn btn-warning" type="submit" onclick="Joomla.submitbutton('trashmenu');">
+                <button class="btn btn-warning" type="submit" onclick="Joomla.submitbutton('tools.trashmenu');">
                     <?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_RESTOREMENU_CONFIRMATION_PROCESS'); ?>
                 </button>
             </div>

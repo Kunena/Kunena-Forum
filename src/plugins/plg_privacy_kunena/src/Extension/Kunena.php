@@ -220,6 +220,9 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         KunenaHelper::deleteUserData('#__kunena_user_ignore', 'user_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_user_ignore', 'ignored_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_karma', 'userid', $user->id);
+        // Also the karma which other users gave him (as the thank yous, the follows and the ignores, which go in both directions):
+        // those rows stayed, with his id.
+        KunenaHelper::deleteUserData('#__kunena_karma', 'target_userid', $user->id);
         KunenaHelper::deleteUserData('#__kunena_reactions', 'user_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_messages_history', 'edited_by', $user->id);
         KunenaHelper::deleteUserData('#__kunena_digest', 'user_id', $user->id);

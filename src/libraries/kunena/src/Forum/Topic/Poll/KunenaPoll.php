@@ -159,6 +159,39 @@ class KunenaPoll
     }
 
     /**
+     * The votes of the users for an option which the edit of the poll removed. A user whose only vote it was may vote again (his
+     * row goes: he had voted, but for nothing which is counted); a user with more votes has one less, and no last vote any more.
+     * The votes of a user for the options before his last one are not stored, so only his last vote can be taken back.
+     *
+     * @param   int  $option  The removed option.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    protected function dropVotesOf(int $option): void
+    {
+        $db     = $this->_db;
+        $pollid = (int) $this->id;
+        $voters = static fn () => $db->createQuery()
+            ->where($db->quoteName('pollid') . ' = ' . $pollid)
+            ->where($db->quoteName('lastvote') . ' = ' . $option);
+
+        try {
+            $db->setQuery($voters()->delete($db->quoteName('#__kunena_polls_users'))->where($db->quoteName('votes') . ' <= 1'))->execute();
+            $db->setQuery(
+                $voters()->update($db->quoteName('#__kunena_polls_users'))
+                    ->set($db->quoteName('votes') . ' = ' . $db->quoteName('votes') . ' - 1')
+                    ->set($db->quoteName('lastvote') . ' = 0')
+            )->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        $this->myvotes = $this->mytime = [];
+    }
+
+    /**
      * @param   int  $option  option
      * @param   int  $delta   delta
      *
@@ -634,9 +667,7 @@ class KunenaPoll
                     KunenaError::displayDatabaseError($e);
                 }
 
-                // TODO: Votes in #__kunena_polls_users will be off and there's no way we can fix that
-                // Maybe we should allow option to reset votes when option gets removed
-                // Or we could prevent users from editing poll..
+                $this->dropVotesOf((int) $key);
             }
         }
 

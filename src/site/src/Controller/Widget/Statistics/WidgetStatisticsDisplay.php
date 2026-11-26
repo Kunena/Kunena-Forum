@@ -17,11 +17,13 @@ namespace Kunena\Forum\Site\Controller\Widget\Statistics;
 
 use Exception;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Cache\KunenaLayoutCache;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Class ComponentKunenaControllerWidgetStatisticsDisplay
@@ -125,5 +127,17 @@ class WidgetStatisticsDisplay extends KunenaControllerDisplay
         $this->statisticsUrl    = KunenaFactory::getProfile()->getStatisticsURL();
 
         return true;
+    }
+
+    /**
+     * The statistics are the same for all the users of a kind: one copy for each kind (KunenaLayoutCache).
+     *
+     * @return  array|null
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getCacheContext(): ?array
+    {
+        return ['user' => KunenaLayoutCache::userType(KunenaUserHelper::getMyself())];
     }
 }

@@ -21,6 +21,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Administrator\Helper\ConfigHelper;
 use Kunena\Forum\Administrator\Model\ConfigModel;
+use Kunena\Forum\Libraries\Cache\KunenaLayoutCache;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsHistory;
 use RuntimeException;
 use Throwable;
@@ -127,6 +128,10 @@ class ConfigController extends BaseController
         }
 
         KunenaSettingsHistory::recordOnSite($before);
+
+        // The parts of the pages in the cache were made with the settings before (KunenaLayoutCache).
+        KunenaLayoutCache::clear(true);
+
         $this->app->setUserState(ConfigModel::DATA_CONTEXT, null);
         $this->setRedirect($stay ? $here : Route::_('index.php?option=com_kunena&view=cpanel', false), Text::_('COM_KUNENA_CONFIG_SAVED'));
     }

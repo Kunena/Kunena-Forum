@@ -24,6 +24,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
+use Kunena\Forum\Libraries\Cache\KunenaLayoutCache;
 use SimpleXMLElement;
 
 /**
@@ -743,6 +744,9 @@ class KunenaConfig
 
         // Clean out the Cache and start with new value(s)
         $this->reset();
+
+        // The parts of the pages in the cache were made with the settings before (KunenaLayoutCache).
+        KunenaLayoutCache::clear(true);
 
         return $result;
     }

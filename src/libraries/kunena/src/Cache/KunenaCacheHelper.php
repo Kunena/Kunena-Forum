@@ -142,6 +142,9 @@ abstract class KunenaCacheHelper
     {
         $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
         $cache->clean('com_kunena');
+
+        // The parts of the pages (KunenaLayoutCache): the configuration or the template may have changed.
+        KunenaLayoutCache::clear(true);
     }
 
     /**

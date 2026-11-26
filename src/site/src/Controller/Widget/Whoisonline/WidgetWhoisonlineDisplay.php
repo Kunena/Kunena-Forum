@@ -136,4 +136,17 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
     {
         $this->setTitle(Text::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'));
     }
+
+    /**
+     * Who is online: a copy for each member (he is in the list himself, a moderator sees the hidden users) and one for all the
+     * guests (KunenaLayoutCache), for the cache time.
+     *
+     * @return  array|null
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getCacheContext(): ?array
+    {
+        return ['user' => (int) KunenaUserHelper::getMyself()->userid];
+    }
 }

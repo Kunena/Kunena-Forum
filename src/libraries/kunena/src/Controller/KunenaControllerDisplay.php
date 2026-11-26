@@ -22,6 +22,7 @@ use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Cache\KunenaLayoutCache;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicRedirect;
@@ -163,6 +164,42 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
      * @throws  Exception
      */
     public function __toString(): string
+    {
+        // A part of a page which may be kept in the cache (its controller says what it depends on): its copy, else it is made.
+        if (!$this->primary) {
+            $context = $this->getCacheContext();
+
+            if ($context !== null) {
+                return KunenaLayoutCache::render((string) $this->name, $context, fn (): string => $this->renderOutput());
+            }
+        }
+
+        return $this->renderOutput();
+    }
+
+    /**
+     * What the HTML of this part of a page depends on, for its copy in the cache (KunenaLayoutCache): null when it is not kept.
+     * A part which shows the same to many users gives what tells them apart (KunenaLayoutCache::userType(), the id of the user...).
+     *
+     * @return  array|null
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getCacheContext(): ?array
+    {
+        return null;
+    }
+
+    /**
+     * The view as a string, without the cache.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    protected function renderOutput(): string
     {
         try {
             $output = $this->execute();

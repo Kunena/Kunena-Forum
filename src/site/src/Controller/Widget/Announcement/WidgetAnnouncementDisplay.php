@@ -16,9 +16,11 @@ namespace Kunena\Forum\Site\Controller\Widget\Announcement;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Kunena\Forum\Libraries\Cache\KunenaLayoutCache;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Class ComponentKunenaControllerWidgetAnnouncementDisplay
@@ -73,5 +75,21 @@ class WidgetAnnouncementDisplay extends KunenaControllerDisplay
         }
 
         return true;
+    }
+
+    /**
+     * The announcement: the same for all the users of a kind, on the pages which show it (view and layout).
+     *
+     * @return  array|null
+     *
+     * @since   Kunena 8.0
+     */
+    protected function getCacheContext(): ?array
+    {
+        return [
+            'user'   => KunenaLayoutCache::userType(KunenaUserHelper::getMyself()),
+            'view'   => $this->input->getWord('view', 'default'),
+            'layout' => $this->input->getWord('layout', 'default'),
+        ];
     }
 }

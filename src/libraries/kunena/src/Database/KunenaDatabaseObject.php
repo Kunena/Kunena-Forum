@@ -21,6 +21,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Event\DispatcherInterface;
+use Kunena\Forum\Libraries\Cache\KunenaLayoutCache;
 use Kunena\Forum\Libraries\Event\KunenaAfterDeleteEvent;
 use Kunena\Forum\Libraries\Event\KunenaAfterSaveEvent;
 use Kunena\Forum\Libraries\Event\KunenaBeforeDeleteEvent;
@@ -194,6 +195,9 @@ abstract class KunenaDatabaseObject
         // Trigger the onKunenaAfterDelete event.
         $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
         $dispatcher->dispatch('onKunenaAfterDelete', new KunenaAfterDeleteEvent('onKunenaAfterDelete', ['com_kunena.' . $this->_name, $table]));
+
+        // The parts of the pages in the cache show the forum as it was.
+        KunenaLayoutCache::clear();
 
         return true;
     }
@@ -374,6 +378,9 @@ abstract class KunenaDatabaseObject
         $dispatcher->dispatch('onKunenaAfterSave', new KunenaAfterSaveEvent('onKunenaAfterSave', ['com_kunena.' . $this->_name, &$table, $isNew]));
 
         $this->_saving = false;
+
+        // The parts of the pages in the cache show the forum as it was.
+        KunenaLayoutCache::clear();
 
         return true;
     }

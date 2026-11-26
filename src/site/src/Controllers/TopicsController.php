@@ -474,12 +474,20 @@ class TopicsController extends KunenaController
             return;
         }
 
+        // The topics which were moved, each with the category it came from, for the moderation log. The log had an entry for
+        // every topic of the request once one of them was moved (also the refused ones), with the category after the move.
+        $moved = [];
+
         if ($topics) {
             foreach ($topics as $topic) {
                 try {
+                    $source = $topic->getCategory();
                     $topic->tryAuthorise('move');
-                    $topic->move($target);
+                    if ($topic->move($target) === false) {
+                        continue;
+                    }
 
+                    $moved[] = [$topic, $source];
                     $success = Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -502,7 +510,7 @@ class TopicsController extends KunenaController
 
         if ($success !== null) {
             if ($this->config->logModeration) {
-                foreach ($topics as $topic) {
+                foreach ($moved as [$topic, $source]) {
                     KunenaLog::log(
                         KunenaLog::TYPE_MODERATION,
                         KunenaLog::LOG_TOPIC_MODERATE,
@@ -510,7 +518,7 @@ class TopicsController extends KunenaController
                             'move'   => ['id' => $topic->id, 'mode' => 'topic'],
                             'target' => ['category_id' => $target->id],
                         ],
-                        $topic->getCategory(),
+                        $source,
                         $topic,
                         null
                     );

@@ -17,6 +17,7 @@ use Joomla\CMS\Language\Language;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -113,5 +114,30 @@ class KunenaAttachmentStaffProtectionTest extends UnitTestCase
     public function testTheAuthorReadsHisFileOfTheStaff(): void
     {
         $this->assertNull(self::attachment(KunenaAttachment::PROTECTION_ADMINS)->tryAuthorise('read', self::user(5, false, false), false));
+    }
+
+    /**
+     * A file for the friends of its author ("TODO: Add support for PROTECTION_FRIENDS"): only the author could read it. The friends
+     * of the author (KunenaProfile::isFriend(): the users he follows) read it now; the other users do not.
+     */
+    public function testTheFriendsOfTheAuthorReadAFileOfHisFriends(): void
+    {
+        // The user 7 is a friend of the author 5, the user 8 is not.
+        $profile = $this->createStub(KunenaProfile::class);
+        $profile->method('isFriend')->willReturnCallback(static fn (int $userid, int $friendid): bool => $userid === 5 && $friendid === 7);
+
+        $instance = new ReflectionProperty(KunenaProfile::class, 'instance');
+        $saved    = $instance->getValue();
+        $instance->setValue(null, $profile);
+
+        try {
+            $file = self::attachment(KunenaAttachment::PROTECTION_FRIENDS);
+
+            $this->assertNull($file->tryAuthorise('read', self::user(7, false, false), false), 'a friend');
+            $this->assertInstanceOf(KunenaExceptionAuthorise::class, $file->tryAuthorise('read', self::user(8, false, false), false), 'another user');
+            $this->assertNull($file->tryAuthorise('read', self::user(5, false, false), false), 'the author');
+        } finally {
+            $instance->setValue(null, $saved);
+        }
     }
 }

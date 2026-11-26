@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserFollow;
 
 /**
  * Class KunenaProfile
@@ -208,5 +209,23 @@ class KunenaProfile
     public function showProfile(KunenaLayout $view, Registry $params): string
     {
         return '';
+    }
+
+    /**
+     * Is the other user a friend of the user (for the files which the user gives to his friends only)? In Kunena a friend is a user
+     * whom the user follows: he chose him. A profile integration with a list of friends of its own (Community Builder, JomSocial)
+     * can answer with it.
+     *
+     * @param   int  $userid    The user (the author of the file).
+     * @param   int  $friendid  The other user.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public function isFriend(int $userid, int $friendid): bool
+    {
+        return $userid > 0 && $friendid > 0 && $userid !== $friendid && KunenaUserFollow::isEnabled()
+            && KunenaUserFollow::isFollowing($userid, $friendid);
     }
 }

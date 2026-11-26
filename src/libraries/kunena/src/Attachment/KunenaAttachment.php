@@ -76,7 +76,7 @@ class KunenaAttachment extends KunenaDatabaseObject
     // Protection level can be checked as bitmask: PROTECTION_ACL + PROTECTION_FRIENDS.
     // To filter out KunenaAttachments when doing a database query, you can use:
     // Visible for author = value < PROTECTION_AUTHOR * 2
-    // tryAuthorise() checks them all except PROTECTION_FRIENDS, which only the author passes.
+    // tryAuthorise() checks them all (PROTECTION_FRIENDS: the users whom the author follows, KunenaProfile::isFriend()).
 
     /**
      * @since   Kunena 6.0
@@ -1179,9 +1179,18 @@ class KunenaAttachment extends KunenaDatabaseObject
             $exception = $this->getMessage()->tryAuthorise('attachment.' . $action, $user, false);
         }
 
+        // A file for the friends of its author: the users whom the author follows (or the friends of the profile integration,
+        // KunenaProfile::isFriend()), who may read its message.
+        if ($exception && ((int) $this->protected & self::PROTECTION_FRIENDS) && $user->exists() && $this->userid) {
+            $friend = KunenaFactory::getProfile()->isFriend((int) $this->userid, (int) $user->userid);
+
+            if ($friend && (!$this->mesid || $this->getMessage()->isAuthorised('read', $user))) {
+                $exception = null;
+            }
+        }
+
         // A file for the moderators or the administrators: the moderators (or administrators) of the category of its message, the
-        // global ones for a file without a message. PROTECTION_FRIENDS has no check: Kunena has no list of the friends of a user
-        // (only the profile integrations have one), such a file is for its author only.
+        // global ones for a file without a message.
         if ($exception && ((int) $this->protected & (self::PROTECTION_MODERATORS | self::PROTECTION_ADMINS))) {
             $category = $this->mesid ? $this->getMessage()->getCategory() : null;
             $allowed  = ((int) $this->protected & self::PROTECTION_MODERATORS) ? $user->isModerator($category) : $user->isAdmin($category);

@@ -313,13 +313,13 @@ class ToolsController extends FormController
         }
 
         if ($userDel) {
-            // TODO: need to find a way to make this query working with DatabaseQuery
-            $db->createQuery();
+            // The profiles of the forum whose user of Joomla no longer exists. MySQL refuses a subquery on the table of the DELETE,
+            // not one on another table.
+            $users = $db->createQuery()->select($db->quoteName('id'))->from($db->quoteName('#__users'));
             $db->setQuery(
-                "DELETE a
-				FROM #__kunena_users AS a
-				LEFT JOIN #__users AS b ON a.userid=b.id
-				WHERE b.username IS NULL"
+                $db->createQuery()
+                    ->delete($db->quoteName('#__kunena_users'))
+                    ->where($db->quoteName('userid') . ' NOT IN (' . $users . ')')
             );
 
             try {

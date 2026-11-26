@@ -385,7 +385,8 @@ class KunenaDate extends Date
         if (!$output) {
             $output .= Text::_('COM_KUNENA_LIB_TIME_NOW');
         } else {
-            $output = Text::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
+            // A time which is still to come (a scheduled reply, the start of an announcement) is "in ...": it was "... ago" too.
+            $output = Text::sprintf($diff->invert ? 'COM_KUNENA_LIB_TIME_IN' : 'COM_KUNENA_LIB_TIME_AGO', trim($output));
         }
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;

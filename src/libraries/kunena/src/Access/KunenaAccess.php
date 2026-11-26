@@ -791,9 +791,16 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         }
 
-        // In backend every logged in user has global admin rights (for now)
+        // In the backend, the user who may manage Kunena (the right "Access Administration Interface" of the component) administers
+        // the whole forum. It was every user of the backend: Joomla asks that right to open the pages of Kunena, but the library
+        // also runs on other pages of the backend (the quick icons of the dashboard, a module, another extension), for users who
+        // have not that right.
         if (Factory::getApplication()->isClient('administrator') && $user->userid == KunenaUserHelper::getMyself()->userid) {
-            return true;
+            $identity = Factory::getApplication()->getIdentity();
+
+            if ($identity && $identity->authorise('core.manage', 'com_kunena')) {
+                return true;
+            }
         }
 
         // Is user a global administrator?

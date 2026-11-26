@@ -714,13 +714,11 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $list[$mesid]->indent = $indent;
 
             if (empty($this->threaded[$mesid])) {
-                // No children node
-                // FIXME: $mesid == $message->thread
-                $list[$mesid]->indent[] = ($mesid == $message->thread) ? 'single' : 'leaf';
+                // No children node: the first post of the topic alone, or a reply without replies.
+                $list[$mesid]->indent[] = ($mesid == $this->topic->first_post_id) ? 'single' : 'leaf';
             } else {
-                // Has children node
-                // FIXME: $mesid == $message->thread
-                $list[$mesid]->indent[] = ($mesid == $message->thread) ? 'root' : 'node';
+                // Has children node: the first post of the topic, or a reply with replies.
+                $list[$mesid]->indent[] = ($mesid == $this->topic->first_post_id) ? 'root' : 'node';
             }
 
             if (!empty($this->threaded[$mesid])) {

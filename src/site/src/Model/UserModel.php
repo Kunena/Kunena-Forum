@@ -109,8 +109,8 @@ class UserModel extends KunenaModel
      */
     public function getItems()
     {
-        // FIXME: use pagination object and redirect on illegal page (maybe in the view)
-        // TODO: should we reset to page 1 when user makes a new search?
+        // A page past the end (fewer users found than before): the last page. A new search starts on the first page
+        // (populateState()).
         static $items = false;
 
         if ($items === false) {
@@ -274,6 +274,13 @@ class UserModel extends KunenaModel
         $this->setState('list.limit', $limit);
 
         $value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_start", 'limitstart', 0, 'int');
+
+        // A search without a page (the form of the search): its first page, not the page of the list before it.
+        if ($this->app->getInput()->getString('search', '') !== '' && $this->app->getInput()->get('limitstart') === null) {
+            $value = 0;
+            $this->app->setUserState("com_kunena.users_{$active}_list_start", 0);
+        }
+
         $value -= $value % $limit;
         $this->setState('list.start', $value);
 

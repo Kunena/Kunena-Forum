@@ -54,7 +54,9 @@ abstract class KunenaHelper
             $data = $db->setQuery($query)->loadAssocList();
         }
 
-        return $data;
+        // No row: an empty list. The database gives null then, which this method cannot give back: the export of the data of a
+        // user without a profile of the forum (he never used it) stopped with an error of PHP, for every extension of the site.
+        return \is_array($data) ? $data : [];
     }
 
     /**

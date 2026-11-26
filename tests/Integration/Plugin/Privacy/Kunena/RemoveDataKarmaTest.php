@@ -95,4 +95,40 @@ class RemoveDataKarmaTest extends IntegrationTestCase implements DBTestInterface
             $this->fetchAll('SELECT userid, target_userid FROM #__kunena_karma ORDER BY id')
         );
     }
+
+    /**
+     * The export of the data of a user has what the removal deletes: also the karma he gave and his subscriptions and
+     * favourites, of categories and of topics. They were left out.
+     */
+    public function testTheExportHasTheKarmaAndTheSubscriptions(): void
+    {
+        $this->getDBDriver()->setQuery('INSERT INTO #__kunena_karma (userid, target_userid, time) VALUES (42, 7, 1000)')->execute();
+        $this->insertRow('#__kunena_user_categories', ['user_id' => 42, 'category_id' => 3, 'subscribed' => 1, 'params' => '']);
+        $this->insertRow('#__kunena_user_topics', ['user_id' => 42, 'topic_id' => 9, 'category_id' => 3, 'subscribed' => 1, 'favorite' => 1]);
+
+        $user     = new User();
+        $user->id = 42;
+
+        $domains = [];
+        $event   = $this->createStub(ExportRequestEvent::class);
+        $event->method('getUser')->willReturn($user);
+        $event->method('addResult')->willReturnCallback(static function ($result) use (&$domains): void {
+            $domains = $result;
+        });
+
+        // The user has no profile of the forum (he never used it): the export is made all the same.
+        $plugin = (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor();
+        $plugin->setDatabase($this->getDBDriver());
+        $plugin->onPrivacyExportRequest($event);
+
+        $items = [];
+
+        foreach ($domains as $domain) {
+            $items[$domain->name] = \count($domain->getItems());
+        }
+
+        $this->assertSame(1, $items['kunena_user_karma'] ?? null);
+        $this->assertSame(1, $items['kunena_user_categories'] ?? null);
+        $this->assertSame(1, $items['kunena_user_topics'] ?? null);
+    }
 }

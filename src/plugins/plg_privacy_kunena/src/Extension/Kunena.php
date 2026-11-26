@@ -156,6 +156,11 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         $domains[] = $this->createKunenaTableDomain('digest', '#__kunena_digest', 'user_id', $user->id);
         $domains[] = $this->createKunenaTableDomain('bookmarks', '#__kunena_bookmarks', 'user_id', $user->id);
         $domains[] = $this->createKunenaTableDomain('warnings', '#__kunena_warnings', 'user_id', $user->id);
+        // What the removal of the data deletes is exported too: the karma he gave, and his subscriptions and favourites (the
+        // categories and the topics). They were left out of the export.
+        $domains[] = $this->createKunenaTableDomain('karma', '#__kunena_karma', 'userid', $user->id);
+        $domains[] = $this->createKunenaTableDomain('categories', '#__kunena_user_categories', 'user_id', $user->id);
+        $domains[] = $this->createKunenaTableDomain('topics', '#__kunena_user_topics', 'user_id', $user->id);
 
         try {
             $domains[] = $this->createKunenaTableDomain('inbox_received', '#__kunena_inbox', 'user_id', $user->id);
@@ -295,7 +300,13 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         $redacted = [];
         $excluded = [];
         $item     = KunenaHelper::getUserItems('#__kunena_users', 'userid', $userid, true);
-        $data     = KunenaHelper::processUserData($item, $excluded, $redacted);
+
+        // A user who never used the forum has no profile of the forum: the domain is empty.
+        if (!$item) {
+            return $domain;
+        }
+
+        $data = KunenaHelper::processUserData($item, $excluded, $redacted);
 
         $domain->addItem($this->createItemFromArray($data, $userid));
 

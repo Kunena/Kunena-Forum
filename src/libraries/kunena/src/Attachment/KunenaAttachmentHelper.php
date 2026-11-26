@@ -437,7 +437,7 @@ abstract class KunenaAttachmentHelper
             return $types;
         }
 
-        // For now on we only allow registered users
+        // From here on only the registered users
         if (!$user->exists()) {
             return false;
         }
@@ -446,7 +446,7 @@ abstract class KunenaAttachmentHelper
             return $types;
         }
 
-        // For now on we only allow moderators
+        // From here on only the moderators
         if (!$user->isModerator($category)) {
             return false;
         }
@@ -455,7 +455,7 @@ abstract class KunenaAttachmentHelper
             return $types;
         }
 
-        // For now on we only allow administrators
+        // From here on only the administrators
         if (!$user->isAdmin($category)) {
             return false;
         }
@@ -495,7 +495,7 @@ abstract class KunenaAttachmentHelper
             return $types;
         }
 
-        // For now on we only allow registered users
+        // From here on only the registered users
         if (!$user->exists()) {
             return false;
         }
@@ -504,7 +504,7 @@ abstract class KunenaAttachmentHelper
             return $types;
         }
 
-        // For now on we only allow moderators
+        // From here on only the moderators
         if (!$user->isModerator($category)) {
             return false;
         }
@@ -513,7 +513,7 @@ abstract class KunenaAttachmentHelper
             return $types;
         }
 
-        // For now on we only allow administrators
+        // From here on only the administrators
         if (!$user->isAdmin($category)) {
             return false;
         }

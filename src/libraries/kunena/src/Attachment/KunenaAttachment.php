@@ -415,7 +415,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      */
     protected function loadPrivateAuthorisation(KunenaUser $user): ?KunenaExceptionAuthorise
     {
-        // Need to load private message (for now allow only one private message per KunenaAttachment).
+        // The private message of the attachment (an attachment belongs to one private message).
         $db  = Factory::getContainer()->get(DatabaseInterface::class);
         $map = new TableKunenaPrivateAttachmentMap($db);
 

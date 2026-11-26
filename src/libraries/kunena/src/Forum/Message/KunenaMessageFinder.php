@@ -190,7 +190,7 @@ class KunenaMessageFinder extends KunenaFinder
     }
 
     /**
-     * Filter by users role in the message. For now use only once.
+     * Filter by users role in the message. Use it once in a query: the thank you filters join their table, a second call would join it again.
      *
      * posted = User has posted the message.
      *

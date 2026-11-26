@@ -323,7 +323,7 @@ class KunenaBase extends KunenaLayoutBase
     }
 
     /**
-     * Dirty function to debug layout/path errors
+     * The paths where the layout is searched and which of them exist, to debug a layout which is not found
      *
      * @return  string
      *

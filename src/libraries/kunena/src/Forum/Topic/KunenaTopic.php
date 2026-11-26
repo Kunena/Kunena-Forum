@@ -1873,7 +1873,7 @@ class KunenaTopic extends KunenaDatabaseObject
             throw new Exception(Text::_('COM_KUNENA_MODERATION_ERROR_WRONG_TARGET'));
         }
 
-        // For now on we assume that at least one message will be moved (=authorization check was called on topic/message)
+        // From here on at least one message is moved (the authorisation check ran on the topic or on the message)
 
         // We will soon need target topic id, so save if it doesn't exist
         if (!$target->exists()) {

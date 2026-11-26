@@ -156,7 +156,7 @@ class KunenaCategoryUpdateLastTopicTest extends IntegrationTestCase implements D
 
     /**
      * The save of the counts (update()) does not order the categories again, the next save of the category does: the mark of
-     * update() stayed on the object (a note: "remove this hack"), and a category moved after a post kept a wrong place in its list.
+     * update() stayed on the object (a note asked to remove that mark), and a category moved after a post kept a wrong place in its list.
      */
     public function testTheNextSaveAfterTheCountsOrdersTheCategoriesAgain(): void
     {

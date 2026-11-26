@@ -361,7 +361,7 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
-     * Filter by users role in the topic. For now use only once.
+     * Filter by users role in the topic. Use it once in a query: it joins the table of the user topics, a second call would join it again.
      *
      * first_post = User has posted the first post.
      * last_post = User has posted the last post.

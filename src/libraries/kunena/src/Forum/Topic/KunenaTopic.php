@@ -49,6 +49,7 @@ use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUser;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -896,6 +897,11 @@ class KunenaTopic extends KunenaDatabaseObject
                 ->where($db->quoteName('message_id') . ' IN (SELECT ' . $db->quoteName('id') . ' FROM ' . $db->quoteName('#__kunena_messages') . ' WHERE ' . $db->quoteName('thread') . ' = :thread)');
             $query->bind(':thread', $this->id, ParameterType::INTEGER);
             $queries[] = $query;
+
+            // Delete the private messages of the posts (their text was left in the database for good, shown nowhere)
+            $queries[] = KunenaPrivateMessage::deleteOfMessagesQuery(
+                'SELECT ' . $db->quoteName('id') . ' FROM ' . $db->quoteName('#__kunena_messages') . ' WHERE ' . $db->quoteName('thread') . ' = ' . (int) $this->id
+            );
 
             // Delete all messages text (first: the texts are found by their messages, which are deleted next)
             $query = $db->createQuery();

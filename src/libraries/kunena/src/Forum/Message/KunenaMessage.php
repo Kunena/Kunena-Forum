@@ -58,6 +58,7 @@ use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
+use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaGuestName;
@@ -1222,6 +1223,9 @@ class KunenaMessage extends KunenaDatabaseObject
         $query->delete($this->_db->quoteName('#__kunena_bookmarks'))
             ->where($this->_db->quoteName('message_id') . ' = ' . (int) $this->id);
         $queries[] = $query;
+
+        // Delete the private message of the post (its text was left in the database for good, shown nowhere)
+        $queries[] = KunenaPrivateMessage::deleteOfMessagesQuery((string) (int) $this->id);
 
         // Delete message
         $query = $this->_db->createQuery();

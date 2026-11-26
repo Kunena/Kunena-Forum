@@ -27,6 +27,7 @@ use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
+use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -175,6 +176,9 @@ abstract class KunenaTopicHelper
                   ->where($db->quoteName($column) . ' IN (' . $pollIds . ')');
             $queries [] = $query;
         }
+
+        // Delete the private messages of the posts (their text was left in the database for good, shown nowhere)
+        $queries [] = KunenaPrivateMessage::deleteOfMessagesQuery((string) $messageIds);
 
         // Delete message texts
         $query = $db->createQuery();

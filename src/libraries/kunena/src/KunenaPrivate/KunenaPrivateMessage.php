@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\KunenaPrivate;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
@@ -188,6 +189,28 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
      *
      * @throws  Exception
      */
+    /**
+     * The query which deletes the private messages of posts of the forum, with their recipients and the links to their posts
+     * and their attachments (the files are attachments of the posts and go with them).
+     *
+     * @param   string  $messageIds  The ids of the posts: a list of integers or a query which selects them.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function deleteOfMessagesQuery(string $messageIds): string
+    {
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        return 'DELETE ' . $db->quoteName('p') . ', ' . $db->quoteName('pm') . ', ' . $db->quoteName('um') . ', ' . $db->quoteName('am')
+            . ' FROM ' . $db->quoteName('#__kunena_private_post_map', 'pm')
+            . ' INNER JOIN ' . $db->quoteName('#__kunena_private', 'p') . ' ON ' . $db->quoteName('p.id') . ' = ' . $db->quoteName('pm.private_id')
+            . ' LEFT JOIN ' . $db->quoteName('#__kunena_private_user_map', 'um') . ' ON ' . $db->quoteName('um.private_id') . ' = ' . $db->quoteName('p.id')
+            . ' LEFT JOIN ' . $db->quoteName('#__kunena_private_attachment_map', 'am') . ' ON ' . $db->quoteName('am.private_id') . ' = ' . $db->quoteName('p.id')
+            . ' WHERE ' . $db->quoteName('pm.message_id') . ' IN (' . $messageIds . ')';
+    }
+
     public function delete(): bool
     {
         // The finder keeps the messages which it found on this page: a deleted one is found no more.

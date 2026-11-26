@@ -237,4 +237,61 @@ class KunenaTopicDeleteAttachmentsTest extends IntegrationTestCase implements DB
         $this->assertSame([9, 10], array_map('intval', array_column($this->fetchAll('SELECT id FROM #__kunena_attachments ORDER BY id'), 'id')));
         $this->assertSame(0, $this->countRows('#__kunena_topics'));
     }
+
+    /**
+     * A private message of each of the two posts, with its recipient and its attachment link.
+     */
+    private function privateMessages(int $first, int $second): void
+    {
+        foreach ([1 => $first, 2 => $second] as $id => $message) {
+            $this->insertRow('#__kunena_private', ['id' => $id, 'author_id' => 42, 'created_at' => '2026-01-01 00:00:00', 'subject' => 'Private', 'body' => "Secret $id", 'params' => '']);
+            $this->insertRow('#__kunena_private_post_map', ['private_id' => $id, 'message_id' => $message]);
+            $this->insertRow('#__kunena_private_user_map', ['private_id' => $id, 'user_id' => 42]);
+            $this->insertRow('#__kunena_private_attachment_map', ['private_id' => $id, 'attachment_id' => 70 + $id]);
+        }
+    }
+
+    /**
+     * The private messages which are left, in each of their tables.
+     */
+    private function privateLeft(): array
+    {
+        $ids = fn (string $table, string $column): array => array_map('intval', array_column($this->fetchAll("SELECT $column FROM $table ORDER BY $column"), $column));
+
+        return [
+            'private'     => $ids('#__kunena_private', 'id'),
+            'posts'       => $ids('#__kunena_private_post_map', 'private_id'),
+            'users'       => $ids('#__kunena_private_user_map', 'private_id'),
+            'attachments' => $ids('#__kunena_private_attachment_map', 'private_id'),
+        ];
+    }
+
+    private const ONLY_THE_SECOND = ['private' => [2], 'posts' => [2], 'users' => [2], 'attachments' => [2]];
+
+    /**
+     * A topic deleted for good takes the private messages of its posts with it (one topic, and several topics at once). They
+     * stayed in the database, with their text, their recipients and their links, shown nowhere and never removed.
+     */
+    public function testATopicDeletedForGoodTakesThePrivateMessagesOfItsPosts(): void
+    {
+        $this->privateMessages(1, 99);
+
+        $this->assertTrue(KunenaTopicHelper::get(self::TARGET)->delete());
+
+        $this->assertSame(self::ONLY_THE_SECOND, $this->privateLeft());
+    }
+
+    public function testSeveralTopicsDeletedForGoodTakeThePrivateMessagesOfTheirPosts(): void
+    {
+        $this->privateMessages(1, 99);
+        $this->getDBDriver()->setQuery("CREATE TABLE IF NOT EXISTS #__contentitem_tag_map (type_alias varchar(255) NOT NULL DEFAULT '', content_item_id int NOT NULL DEFAULT 0, tag_id int NOT NULL DEFAULT 0)")->execute();
+
+        try {
+            $this->assertNotFalse(KunenaTopicHelper::delete([self::TARGET]));
+        } finally {
+            $this->getDBDriver()->setQuery('DROP TABLE IF EXISTS #__contentitem_tag_map')->execute();
+        }
+
+        $this->assertSame(self::ONLY_THE_SECOND, $this->privateLeft());
+    }
 }

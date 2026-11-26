@@ -252,6 +252,14 @@ class KunenaAnnouncement extends KunenaDatabaseObject
                 return $this->getAuthor()->getLink();
             case 'publish_up':
             case 'publish_down':
+                // The start or the end of the announcement, nothing when it has none. Both gave the date of the creation.
+                $date = (string) $this->$field;
+
+                if ($date === '' || str_starts_with($date, '0000-00-00')) {
+                    return '';
+                }
+
+                return KunenaDate::getInstance($date)->toKunena($mode ?: 'date_today');
             case 'created':
                 if (!$mode) {
                     $mode = 'date_today';

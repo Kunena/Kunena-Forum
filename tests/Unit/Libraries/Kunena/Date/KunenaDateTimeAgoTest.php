@@ -62,4 +62,16 @@ class KunenaDateTimeAgoTest extends UnitTestCase
         $this->assertSame('3 days 2 hours ago', KunenaDate::getInstance($this->date('-3 days -2 hours -5 minutes'))->toKunena('ago'));
         $this->assertSame('in 3 days 2 hours', KunenaDate::getInstance($this->date('+3 days +2 hours +5 minutes'))->toKunena('ago'));
     }
+
+    public function testTheStartAndTheEndOfAnAnnouncementAreTheirOwnDates(): void
+    {
+        $announcement               = (new ReflectionClass(KunenaAnnouncement::class))->newInstanceWithoutConstructor();
+        $announcement->created      = $this->date('-3 days -2 hours -5 minutes');
+        $announcement->publish_up   = $this->date('+3 days +2 hours +5 minutes');
+        $announcement->publish_down = '0000-00-00 00:00:00';
+
+        $this->assertSame('3 days 2 hours ago', $announcement->displayField('created', 'ago'));
+        $this->assertSame('in 3 days 2 hours', $announcement->displayField('publish_up', 'ago'));
+        $this->assertSame('', $announcement->displayField('publish_down', 'ago'), 'An announcement without an end shows none.');
+    }
 }

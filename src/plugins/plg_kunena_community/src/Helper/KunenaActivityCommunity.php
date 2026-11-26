@@ -326,7 +326,8 @@ class KunenaActivityCommunity extends KunenaActivity
         CFactory::load('libraries', 'activities');
         CActivityStream::remove('kunena.thread.post', $target->id);
 
-        // TODO: Need get replied id
-        CActivityStream::remove('kunena.thread.replied', $target->id);
+        // The activities of the replies are kept by the id of their topic too (onAfterReply(): app kunena.thread.reply, cid the
+        // topic). They were removed as kunena.thread.replied, a name which no activity has: they stayed in the stream.
+        CActivityStream::remove('kunena.thread.reply', $target->id);
     }
 }

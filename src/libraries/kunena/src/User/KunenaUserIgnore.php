@@ -78,10 +78,31 @@ abstract class KunenaUserIgnore
                 ->order($db->quoteName('created_time') . ' DESC')
                 ->bind(':userid', $userid, ParameterType::INTEGER);
 
-            self::$lists[$userid] = array_map('intval', (array) $db->setQuery($query)->loadColumn());
+            // Without the users who are a moderator or an administrator now: they can not be ignored, and a user who was put on
+            // the list before he got that role stayed hidden (the list of the settings still shows him, to take him off).
+            self::$lists[$userid] = array_values(array_filter(
+                array_map('intval', (array) $db->setQuery($query)->loadColumn()),
+                static fn (int $id): bool => !self::isStaff($id)
+            ));
         }
 
         return self::$lists[$userid];
+    }
+
+    /**
+     * Is the user a moderator or an administrator of the forum (they can not be ignored).
+     *
+     * @param   int  $userid  The user.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function isStaff(int $userid): bool
+    {
+        $user = KunenaUserHelper::get($userid);
+
+        return $user->exists() && ($user->isAdmin() || $user->isModerator());
     }
 
     /**
@@ -95,7 +116,8 @@ abstract class KunenaUserIgnore
      */
     public static function getIgnoredBy(int $targetid): array
     {
-        if ($targetid < 1 || !self::isEnabled()) {
+        // Nobody ignores a moderator or an administrator (an ignore made before he got that role counts no more).
+        if ($targetid < 1 || !self::isEnabled() || self::isStaff($targetid)) {
             return [];
         }
 

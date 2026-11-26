@@ -129,6 +129,22 @@ class KunenaUserStaffAndBlockedTest extends IntegrationTestCase implements DBTes
         return $old;
     }
 
+    public function testAUserWhoBecameAModeratorIsIgnoredNoMore(): void
+    {
+        // The member ignored both before one of them became a moderator.
+        $this->insertRows('#__kunena_user_ignore', [
+            ['user_id' => self::MEMBER, 'ignored_id' => self::MODERATOR, 'created_time' => '2026-01-01 00:00:00'],
+            ['user_id' => self::MEMBER, 'ignored_id' => self::OTHER, 'created_time' => '2026-01-02 00:00:00'],
+        ]);
+
+        $this->assertSame([self::OTHER], KunenaUserIgnore::getIgnored(self::MEMBER));
+        $this->assertSame([], KunenaUserIgnore::getIgnoredBy(self::MODERATOR), 'The member gets the e-mails about the posts of the moderator.');
+        $this->assertSame([self::MEMBER], KunenaUserIgnore::getIgnoredBy(self::OTHER));
+
+        // The list of the settings still has him, to take him off.
+        $this->assertCount(2, KunenaUserIgnore::getIgnoredList(self::MEMBER));
+    }
+
     public function testABlockedUserIsNoTopPoster(): void
     {
         $this->assertSame([self::MODERATOR, self::MEMBER], array_map(static fn ($row) => (int) $row->id, KunenaUserHelper::getTopPosters()));

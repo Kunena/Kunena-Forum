@@ -35,7 +35,7 @@ if (empty($this->results)) {
 
 <?php
 foreach ($this->results as $message) {
-    echo $this->subLayout('Search/Results/Row')->set('message', $message)->set('config', $this->config)->set('ktemplate', $this->ktemplate);
+    echo $this->subLayout('Search/Results/Row')->set('message', $message)->set('config', $this->config)->set('ktemplate', $this->ktemplate)->set('searchwords', (array) ($this->searchwords ?? []));
 }
 ?>
 

@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Html\KunenaHighlight;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -25,6 +26,8 @@ $author               = $message->getAuthor();
 $isReply              = $message->id != $topic->first_post_id;
 $me                   = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
+// The words of the search, marked in the text of the message.
+$searchwords          = (array) ($this->searchwords ?? []);
 ?>
 <article class="kunena-search-result agora-search-result message-<?php echo $message->getState(); ?><?php echo $author->isModerator() ? ' agora-search-result-moderator' : ''; ?>">
     <div class="agora-search-result-head">
@@ -47,9 +50,9 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
     </div>
     <div class="kmessage agora-search-result-text">
         <?php if (!$isReply) :
-            echo $message->displayField('message');
+            echo KunenaHighlight::html($message->displayField('message'), $searchwords);
         else :
-            echo (!$me->userid && $category->hidesRepliesForGuests()) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+            echo (!$me->userid && $category->hidesRepliesForGuests()) ? Text::_('COM_KUNENA_TEASER_TEXT') : KunenaHighlight::html($this->message->displayField('message'), $searchwords);
         endif; ?>
     </div>
 </article>

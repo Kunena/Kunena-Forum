@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Html\KunenaHighlight;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -203,21 +204,9 @@ class SearchResults extends KunenaLayout
             $profile          = $profileCache[$userId];
             $this->useravatar = $profile->getAvatarImage('kavatar', 'post');
 
-            foreach ($this->searchwords as $searchword) {
-                if (empty($searchword)) {
-                    continue;
-                }
-
-                $ressubject = preg_replace(
-                    "/" . preg_quote($searchword, '/') . "/iu",
-                    '<span  class="searchword" >' . $searchword . '</span>',
-                    $ressubject
-                );
-
-                // FIXME: enable highlighting, but only after we can be sure that we do not break html
-                // $resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu",
-                // '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
-            }
+            // The words of the search marked in the subject and the message: in their text only, the HTML stays whole.
+            $ressubject = KunenaHighlight::html($ressubject, (array) $this->searchwords);
+            $resmessage = KunenaHighlight::html($resmessage, (array) $this->searchwords);
 
             $this->author      = $this->message->getAuthor();
             $this->topicAuthor = $this->topic->getAuthor();

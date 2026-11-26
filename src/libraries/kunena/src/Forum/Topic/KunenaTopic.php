@@ -1293,9 +1293,8 @@ class KunenaTopic extends KunenaDatabaseObject
                 return $direction == 'asc' ? $this->posts - 1 : 0;
             }
 
-            if ($mesid == $this->unread) {
-                return $direction == 'asc' ? $this->posts - max($this->unread, 1) : 0;
-            }
+            // Any other message is counted below. A third short cut compared the id of the message with the number of the unread
+            // messages: a message whose id was that number (a young forum) opened the page of the first unread message.
         }
 
         if ($mesid == 'first') {

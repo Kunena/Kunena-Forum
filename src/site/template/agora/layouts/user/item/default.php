@@ -15,9 +15,11 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
@@ -33,6 +35,16 @@ if ($bootstrap) {
 }
 
 $tabs = $this->getTabs();
+
+// The tab of the address is opened (#banuser from the moderation of a post). A full URL: the asset manager looks for a path
+// without a host in the media folder, and leaves the script out when it is not there.
+Factory::getApplication()->getDocument()->getWebAssetManager()->registerAndUseScript(
+    'kunena.profile.tab',
+    Uri::root() . 'media/kunena/core/js/profile-tab.js',
+    ['version' => 'auto'],
+    ['defer' => true],
+    ['bootstrap.tab']
+);
 ?>
 
 <section class="agora-profile kfrontend">

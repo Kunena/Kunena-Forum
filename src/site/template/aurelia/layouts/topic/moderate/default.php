@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -22,6 +23,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaBan;
 
 // The tabs of the page: the component of Bootstrap which it uses, not all of them (the dialogs are native: dialog.js).
 HTMLHelper::_('bootstrap.tab');
@@ -36,6 +38,20 @@ $this->addScript('assets/js/topic.js');
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $labels          = $this->ktemplate->params->get('labels');
+
+// The form of a ban is a tab of the profile of the author (a form cannot be in the form of this page): a link to it, for a moderator
+// who may ban the author.
+$banLink = '';
+
+if (isset($this->message) && (int) $this->message->userid > 0) {
+    try {
+        if (KunenaBan::getInstanceByUserid((int) $this->message->userid, true)->canBan()) {
+            $banLink = $this->message->getAuthor()->getURL() . '#banuser';
+        }
+    } catch (Exception $e) {
+        $banLink = '';
+    }
+}
 ?>
 <div class="card">
     <div class="card-header">
@@ -74,8 +90,11 @@ $labels          = $this->ktemplate->params->get('labels');
                                 aria-controls="tab3"
                                 aria-selected="false"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a>
                         </li>
-                        <!--  <li><a href="#tab4" data-bs-toggle="tab"><?php // Echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN');
-                                                                        ?></a></li> -->
+                        <?php if ($banLink !== '') : ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo $banLink; ?>"><?php echo Text::_('COM_KUNENA_BAN_NEW'); ?> ›</a>
+                            </li>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </ul>
                 <br />
@@ -278,11 +297,6 @@ $labels          = $this->ktemplate->params->get('labels');
                             <?php echo $this->subLayout('User/Ban/History')->set('profile', $this->message->getAuthor())->set('headerText', Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'))->set('banHistory', $this->banHistory)->set('me', KunenaUserHelper::getMyself()); // The forum user: the history asks isModerator() (the Joomla user of $this->me gave a fatal error). ?>
                         </div>
 
-                        <!-- FIXME: This adds a form which cause an issue, because there will be nested forms
-                <div class="tab-pane" id="tab4">
-                        <?php // Echo $this->subLayout('User/Ban/Form')->set('profile', $this->message->getAuthor())->set('banInfo', $this->banInfo)->set('headerText', Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'));
-                        ?>
-                </div>-->
                     <?php endif; ?>
                     <hr />
                     <br />

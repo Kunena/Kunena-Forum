@@ -751,7 +751,12 @@ abstract class KunenaCategoryHelper
             $catlist += $channels;
         }
 
+        // No category to count: none of them has new topics (KunenaCategory::getNewCount() would count each one again).
         if (empty($catlist)) {
+            foreach ($categories as $category) {
+                $category->getNewCount(0);
+            }
+
             return;
         }
 
@@ -790,10 +795,7 @@ abstract class KunenaCategoryHelper
             return;
         }
 
-        if (empty($newlist)) {
-            return;
-        }
-
+        // No new topic: each category gets 0 below.
         $new = [];
 
         foreach ($newlist as $id => $item) {

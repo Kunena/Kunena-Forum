@@ -1766,7 +1766,9 @@ class KunenaCategory extends KunenaDatabaseObject
     /**
      * Returns new topics count from this category for current user.
      *
-     * @todo    Currently new topics needs to be calculated manually, make it automatic.
+     * The lists of categories count them for all their categories at once (KunenaCategoryHelper::getNewTopics()); a category which
+     * no list counted counts its own the first time (it gave nothing). It is 0 for a guest and when the forum does not show the
+     * new topics.
      *
      * @param   mixed  $count  Internal parameter to set new count.
      *
@@ -1778,9 +1780,13 @@ class KunenaCategory extends KunenaDatabaseObject
     {
         if ($count !== null) {
             $this->_new = $count;
+        } elseif ($this->_new === null && $this->exists()) {
+            // 0 first: getNewTopics() sets the count, and leaves it when there is nothing to count.
+            $this->_new = 0;
+            KunenaCategoryHelper::getNewTopics([(int) $this->id]);
         }
 
-        return $this->_new;
+        return (int) $this->_new;
     }
 
     /**

@@ -14,7 +14,12 @@
 \defined('_JEXEC') or die();
 
 return [
+    'administrator/components/com_kunena/media/css/admin.css',
+    'administrator/components/com_kunena/media/css/admin.rtl.css',
+    'administrator/components/com_kunena/media/css/cpanel.css',
     'administrator/components/com_kunena/media/css/dashboard.css',
+    'administrator/components/com_kunena/media/css/layout.css',
+    'administrator/components/com_kunena/media/css/styles.css',
     'administrator/components/com_kunena/src/Controller/BadwordsController.php',
     'administrator/components/com_kunena/src/Controller/BlockipsController.php',
     'administrator/components/com_kunena/src/Controller/CloseController.php',

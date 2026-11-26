@@ -206,4 +206,35 @@ class KunenaTopicDeleteAttachmentsTest extends IntegrationTestCase implements DB
 
         $this->assertSame([9, 10], array_map('intval', array_column($this->fetchAll('SELECT id FROM #__kunena_attachments ORDER BY id'), 'id')));
     }
+
+    /**
+     * The topics deleted together (KunenaTopicHelper::delete(), the prune of a category) take the files of their messages too: the
+     * helper deleted the texts, the polls, the ratings... and had "TODO: delete attachments". The clean-up after the prune removed
+     * 50 rows of them at most, never their files.
+     */
+    public function testDeletingSeveralTopicsRemovesTheFilesOfTheirMessages(): void
+    {
+        $this->topic(5, 0, 0, 1);
+        $this->insertRow('#__kunena_messages', ['id' => 50, 'parent' => 0, 'thread' => 5, 'catid' => self::CATEGORY, 'subject' => 'Five', 'time' => 1300, 'hold' => 0]);
+        $this->insertRows('#__kunena_attachments', [
+            ['id' => 7, 'mesid' => 1, 'userid' => 42, 'folder' => 'media/kunena/attachments/42', 'filename' => 'a.txt', 'filename_real' => 'a.txt'],
+            ['id' => 8, 'mesid' => 50, 'userid' => 42, 'folder' => 'media/kunena/attachments/42', 'filename' => 'b.txt', 'filename_real' => 'b.txt'],
+            // A file of another topic, and an upload which waits for its message.
+            ['id' => 9, 'mesid' => 99, 'userid' => 42, 'folder' => 'media/kunena/attachments/42', 'filename' => 'c.txt', 'filename_real' => 'c.txt'],
+            ['id' => 10, 'mesid' => 0, 'userid' => 42, 'folder' => 'media/kunena/attachments/42', 'filename' => 'd.txt', 'filename_real' => 'd.txt'],
+        ]);
+
+        // The helper removes the Joomla tags of the topics: the table is in an installation of Joomla, not in the schema of the
+        // tests. It is there for this test only.
+        $this->getDBDriver()->setQuery("CREATE TABLE IF NOT EXISTS #__contentitem_tag_map (type_alias varchar(255) NOT NULL DEFAULT '', content_item_id int NOT NULL DEFAULT 0, tag_id int NOT NULL DEFAULT 0)")->execute();
+
+        try {
+            $this->assertNotFalse(KunenaTopicHelper::delete([self::TARGET, 5]));
+        } finally {
+            $this->getDBDriver()->setQuery('DROP TABLE IF EXISTS #__contentitem_tag_map')->execute();
+        }
+
+        $this->assertSame([9, 10], array_map('intval', array_column($this->fetchAll('SELECT id FROM #__kunena_attachments ORDER BY id'), 'id')));
+        $this->assertSame(0, $this->countRows('#__kunena_topics'));
+    }
 }

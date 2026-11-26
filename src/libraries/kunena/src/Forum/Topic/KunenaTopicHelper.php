@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -199,12 +200,33 @@ abstract class KunenaTopicHelper
               ->where($db->quoteName('content_item_id') . ' IN (' . $idlist . ')');
         $queries [] = $query;
 
-        // TODO: delete attachments
         // Delete topics last, because the previous queries look up data in the topics table
         $query = $db->createQuery();
         $query->delete('#__kunena_topics')
               ->where('id IN (' . $idlist . ')');
         $queries [] = $query;
+
+        // The files of the messages go with them, as in KunenaTopic::delete() (the row, and the file when no other row uses it):
+        // they stayed as rows without a message, and as files which the site served without the protection of their message.
+        // They are found before the queries delete the messages.
+        try {
+            $mesids = $db->setQuery(
+                $db->createQuery()
+                    ->select($db->quoteName('id'))
+                    ->from($db->quoteName('#__kunena_messages'))
+                    ->where($db->quoteName('thread') . ' IN (' . $idlist . ')')
+            )->loadColumn();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
+        if ($mesids) {
+            foreach (KunenaAttachmentHelper::getByMessage(array_map('intval', $mesids), 'none') as $attachment) {
+                $attachment->delete();
+            }
+        }
 
         foreach ($queries as $query) {
             $db->setQuery($query);

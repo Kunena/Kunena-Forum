@@ -96,11 +96,17 @@ class TopicsDisplay extends KunenaControllerDisplay
             }
         }
 
-        // TODO: if start != 0, add information from it into description
         $this->document->setGenerator($this->config->boardTitle);
 
         // The feed is not rendered through a view, which would load the language file of the title.
         KunenaFactory::loadLanguage('com_kunena.views');
+
+        // A feed which does not start with the first item says from which one (prepareDocument() adds the name of the forum).
+        $start = (int) $this->topicsModel->getState('list.start');
+
+        if ($start > 0) {
+            $this->document->setDescription(Text::sprintf('COM_KUNENA_RSS_FROM_ITEM', $start + 1));
+        }
 
         $this->setTitle(Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT'));
 
@@ -219,7 +225,6 @@ class TopicsDisplay extends KunenaControllerDisplay
         $this->messages = $this->topicsModel->getMessages();
         $this->topics   = $this->topicsModel->getTopics();
 
-        // TODO: if start != 0, add information from it into description
         $this->document->setGenerator($this->config->boardTitle);
 
         $this->setTitle(Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT'));

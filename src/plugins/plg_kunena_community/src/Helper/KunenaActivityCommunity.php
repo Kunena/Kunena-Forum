@@ -22,6 +22,7 @@ use CNotificationLibrary;
 use CParameter;
 use CUserPoints;
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -131,33 +132,83 @@ class KunenaActivityCommunity extends KunenaActivity
      */
     protected function getAccess($category): int
     {
-        // Activity access level: 0 = public, 20 = registered, 30 = friend, 40 = private
-        $accesstype = $category->accesstype;
+        $levelGroups = [];
 
-        if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level') {
-            // Private
-            return 40;
+        if ($category->accesstype === 'joomla.level') {
+            static $levels = [];
+
+            $level = (int) $category->access;
+
+            if (!isset($levels[$level])) {
+                $db    = Factory::getContainer()->get('DatabaseDriver');
+                $rules = $db->setQuery(
+                    $db->createQuery()
+                        ->select($db->quoteName('rules'))
+                        ->from($db->quoteName('#__viewlevels'))
+                        ->where($db->quoteName('id') . ' = ' . $level)
+                )->loadResult();
+
+                $levels[$level] = array_map('intval', (array) json_decode((string) $rules, true));
+            }
+
+            $levelGroups = $levels[$level];
         }
 
-        // FIXME: Joomla 2.5 can mix up groups and access levels
-        if (
-            ($accesstype == 'joomla.level' && $category->access == 1)
-            || ($accesstype == 'joomla.group' && ($category->pubAccess == 1 || $category->adminAccess == 1))
-        ) {
-            // Public
-            $access = 0;
-        } elseif (
-            ($accesstype == 'joomla.level' && $category->access == 2)
-            || ($accesstype == 'joomla.group' && ($category->pubAccess == 2 || $category->adminAccess == 2))
-        ) {
-            // Registered
-            $access = 20;
-        } else {
-            // Other groups (=private)
-            $access = 40;
+        return self::activityAccess(
+            (string) $category->accesstype,
+            (int) $category->pubAccess,
+            (bool) $category->pubRecurse,
+            (int) $category->adminAccess,
+            (bool) $category->adminRecurse,
+            $levelGroups
+        );
+    }
+
+    /**
+     * The access of the activity of a message for JomSocial (0 public, 20 registered, 30 friends, 40 private): the widest one which
+     * does not show it to users who may not read its category.
+     *
+     * It was read from the ids: a view level 1 or a group 1 was public, 2 registered (a note said that Joomla 2.5 mixes up groups
+     * and access levels). But a view level is what its groups say (the level 1 of a site can be another one), and a category of a user
+     * group without its subgroups is not for the users of the groups under it: the activity of a category "Registered only" was
+     * shown to every registered user, the authors and editors too.
+     *
+     * @param   string  $accesstype    The access type of the category.
+     * @param   int     $pubAccess     Its group (joomla.group).
+     * @param   bool    $pubRecurse    With the groups under it.
+     * @param   int     $adminAccess   Its admin group.
+     * @param   bool    $adminRecurse  With the groups under it.
+     * @param   int[]   $levelGroups   The groups of its view level (joomla.level).
+     *
+     * @return  integer
+     *
+     * @since   Kunena 8.0
+     */
+    public static function activityAccess(string $accesstype, int $pubAccess, bool $pubRecurse, int $adminAccess, bool $adminRecurse, array $levelGroups): int
+    {
+        // A view level is for the users of its groups and of the groups under them: the group Public is everybody, the group
+        // Registered (2) every registered user.
+        if ($accesstype === 'joomla.level') {
+            if (\in_array(1, $levelGroups, true)) {
+                return 0;
+            }
+
+            return \in_array(2, $levelGroups, true) ? 20 : 40;
         }
 
-        return $access;
+        // A user group is for everybody, or for every registered user, only with all the groups under it.
+        if ($accesstype === 'joomla.group') {
+            $groups = array_merge($pubRecurse ? [$pubAccess] : [], $adminRecurse ? [$adminAccess] : []);
+
+            if (\in_array(1, $groups, true)) {
+                return 0;
+            }
+
+            return \in_array(2, $groups, true) ? 20 : 40;
+        }
+
+        // The access of another extension: private.
+        return 40;
     }
 
     /**

@@ -19,9 +19,11 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 $view    = Factory::getApplication()->getInput()->getWord('view');
 // In the tabs of a profile the list is a part of the page, whose h1 is the name of the user: one h1 per page (the input of
@@ -54,8 +56,18 @@ $ids = [
                     )
                 </small>
 
-                <?php // ToDo:: <span class="badge bg-success"> <?php echo $this->topics->count->unread; ?/></span>
+                <?php
+                // The posts of the page which are new to the user (the read marks of their topics are loaded at once).
+                $newPosts = 0;
+
+                if (KunenaUserHelper::getMyself()->exists() && $this->messages) {
+                    KunenaTopicUserReadHelper::getTopics(array_values(array_unique(array_map(static fn ($message) => (int) $message->thread, (array) $this->messages))));
+                    $newPosts = \count(array_filter((array) $this->messages, static fn ($message) => $message->isNew()));
+                }
                 ?>
+                <?php if ($newPosts) : ?>
+                    <span class="badge bg-success"><?php echo Text::plural('COM_KUNENA_LIST_N_NEW_POSTS', $newPosts); ?></span>
+                <?php endif; ?>
             </<?php echo $heading; ?>>
         </div>
 

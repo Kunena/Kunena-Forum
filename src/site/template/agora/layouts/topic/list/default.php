@@ -86,6 +86,14 @@ $ids = [
             <?php if ($layout != 'unread') : ?>
                 <small data-ktopics-count><?php echo KunenaCategory::getInstance()->totalCount($this->pagination->total); ?></small>
             <?php endif; ?>
+            <?php
+            // The topics of the page with posts which the user has not read (not on the list of the unread topics itself).
+            $unreadTopics = $layout != 'unread' && KunenaUserHelper::getMyself()->exists()
+                ? \count(array_filter((array) $this->topics, static fn ($topic) => (int) $topic->unread > 0)) : 0;
+            ?>
+            <?php if ($unreadTopics) : ?>
+                <span class="badge bg-success"><?php echo Text::plural('COM_KUNENA_LIST_N_UNREAD_TOPICS', $unreadTopics); ?></span>
+            <?php endif; ?>
         </<?php echo $heading; ?>>
     </div>
 

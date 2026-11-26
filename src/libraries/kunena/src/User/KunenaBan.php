@@ -657,7 +657,7 @@ class KunenaBan
     }
 
     /**
-     * Method to load a \Kunena\Forum\Libraries\User\Ban object by user id
+     * Method to load a \Kunena\Forum\Libraries\User\Ban object by IP address
      *
      * @access  public
      *
@@ -710,10 +710,10 @@ class KunenaBan
     }
 
     /**
-     * Do the ban for the specified user from site or forum
+     * Do the ban for the specified user or IP address from site or forum.
      *
-     * @param   null    $userid          userid
-     * @param   null    $ip              The address IP of the user
+     * @param   int|null     $userid     User id, or null for an IP-only ban
+     * @param   string|null  $ip         The IP address to ban
      * @param   bool    $banlevel        Set if the user from forum or from site, from forum is set to 0 and from site is set to 1
      * @param   null    $expiration      The expiration date of the ban, if no date is specified the ban is set for lifetime
      * @param   string  $reason_private  The private reason
@@ -725,8 +725,8 @@ class KunenaBan
      */
     public function ban($userid = null, $ip = null, $banlevel = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = ''): void
     {
-        $this->userid  = \intval($userid) > 0 ? (int) $userid : null;
-        $this->ip      = $ip ? (string) $ip : '';
+        $this->userid  = \intval($userid) > 0 ? (int) $userid : 0;
+        $this->ip      = $ip ? (KunenaIpAddress::clean((string) $ip) ?: (string) $ip) : '';
         $this->blocked = (int) $banlevel;
         $this->setExpiration($expiration);
         $this->reason_private = (string) $reason_private;
@@ -939,11 +939,16 @@ class KunenaBan
     {
         $userid = $this->userid;
         $me     = KunenaUserHelper::getMyself();
-        $user   = KunenaUserHelper::get($userid);
 
         if (!$me->isModerator()) {
             throw new KunenaException(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
         }
+
+        if (!$userid && $this->ip !== '') {
+            return true;
+        }
+
+        $user = KunenaUserHelper::get($userid);
 
         if (!$user->exists()) {
             throw new KunenaException(Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));

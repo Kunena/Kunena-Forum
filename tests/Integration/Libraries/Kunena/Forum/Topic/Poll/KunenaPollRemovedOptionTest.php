@@ -21,7 +21,7 @@ use ReflectionMethod;
 use ReflectionProperty;
 
 /**
- * The votes of an option which the edit of a poll removes ("TODO: Votes in #__kunena_polls_users will be off"): a user whose only
+ * The votes of an option which the edit of a poll removes (a note: "Votes in #__kunena_polls_users will be off"): a user whose only
  * vote it was had voted for nothing which is counted and could not vote again.
  */
 class KunenaPollRemovedOptionTest extends IntegrationTestCase implements DBTestInterface

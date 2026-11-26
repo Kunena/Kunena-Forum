@@ -17,9 +17,9 @@ use Kunena\Tests\Unit\Support\Files;
 use Kunena\Tests\Unit\UnitTestCase;
 
 /**
- * The count of the new topics of a category ("@todo Currently new topics needs to be calculated manually, make it automatic"): the
- * lists count them for their categories at once, a category which no list counted counts its own the first time (it gave nothing),
- * and a count of no topic is 0 for every category of the list (else each one counted its own again).
+ * The count of the new topics of a category (a note: "Currently new topics needs to be calculated manually, make it automatic"):
+ * the lists count them for their categories at once, a category which no list counted counts its own the first time (it gave
+ * nothing), and a count of no topic is 0 for every category of the list (else each one counted its own again).
  */
 class KunenaCategoryNewCountTest extends UnitTestCase
 {

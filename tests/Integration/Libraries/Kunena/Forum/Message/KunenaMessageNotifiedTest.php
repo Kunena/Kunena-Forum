@@ -23,10 +23,10 @@ use ReflectionMethod;
 use ReflectionProperty;
 
 /**
- * The subscribers are told about a message once ("TODO: this is just a workaround for #1862"): an edit of a published message in a
- * category with review sends it back to review, and its approval told the subscribers again. The workaround did not tell them when its
- * author had changed it, which also left out the first approval of a message which its author changed while it waited. A message
- * keeps whether its subscribers were told (the column notified).
+ * The subscribers are told about a message once (a note: "this is just a workaround for #1862"): an edit of a published message in
+ * a category with review sends it back to review, and its approval told the subscribers again. The workaround did not tell them
+ * when its author had changed it, which also left out the first approval of a message which its author changed while it waited. A
+ * message keeps whether its subscribers were told (the column notified).
  */
 class KunenaMessageNotifiedTest extends IntegrationTestCase implements DBTestInterface
 {

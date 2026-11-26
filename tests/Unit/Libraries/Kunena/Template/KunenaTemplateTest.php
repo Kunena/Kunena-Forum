@@ -148,8 +148,8 @@ class KunenaTemplateTest extends UnitTestCase
 
     /**
      * The folders where a layout is searched, the last one first: the override of the Joomla template for all the Kunena templates,
-     * then for each Kunena template of the chain its override (html/com_kunena/<template>, "(TODO)" in the documentation of the
-     * templates) before its own folder.
+     * then for each Kunena template of the chain its override (html/com_kunena/<template>, marked as still to do in the
+     * documentation of the templates) before its own folder.
      */
     public function testEachKunenaTemplateHasAnOverrideFolderInTheJoomlaTemplate(): void
     {

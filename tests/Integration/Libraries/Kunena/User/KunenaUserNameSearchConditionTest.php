@@ -127,7 +127,7 @@ class KunenaUserNameSearchConditionTest extends IntegrationTestCase implements D
     }
 
     /**
-     * The option of the user list "Search from the beginning of the name" ("TODO: add strict search from the beginning of the
+     * The option of the user list "Search from the beginning of the name" (a note: "add strict search from the beginning of the
      * name"): the names which start with the text, not those which have it anywhere.
      */
     public function testAStrictSearchFindsTheNamesWhichStartWithTheText(): void

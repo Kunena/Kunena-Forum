@@ -35,7 +35,7 @@ use ReflectionProperty;
 
 /**
  * A topic deleted for good (the purge of the trash in the backend, TrashsModel::purgeTopics(), and the frontend) takes the files of its
- * messages with it. KunenaTopic::delete() removed the texts, the thank yous, the history... but not the files ("TODO: delete
+ * messages with it. KunenaTopic::delete() removed the texts, the thank yous, the history... but not the files (a note: "delete
  * attachments"): their rows stayed without a message, and the files on the disk, reachable by their address without the protection.
  */
 class KunenaTopicDeleteAttachmentsTest extends IntegrationTestCase implements DBTestInterface
@@ -209,8 +209,8 @@ class KunenaTopicDeleteAttachmentsTest extends IntegrationTestCase implements DB
 
     /**
      * The topics deleted together (KunenaTopicHelper::delete(), the prune of a category) take the files of their messages too: the
-     * helper deleted the texts, the polls, the ratings... and had "TODO: delete attachments". The clean-up after the prune removed
-     * 50 rows of them at most, never their files.
+     * helper deleted the texts, the polls, the ratings... and a note asked to "delete attachments". The clean-up after the prune
+     * removed 50 rows of them at most, never their files.
      */
     public function testDeletingSeveralTopicsRemovesTheFilesOfTheirMessages(): void
     {

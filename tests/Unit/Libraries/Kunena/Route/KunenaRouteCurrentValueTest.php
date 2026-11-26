@@ -22,8 +22,8 @@ use ReflectionProperty;
 
 /**
  * The values of the query of the request which stay in the current address of Kunena (the links of the page are made from it):
- * letters, digits, "_" and spaces. An array (&catids[]=2) was taken whole ("TODO: we need to find a way to here deal with arrays"),
- * whatever it had in it; it keeps its good values now.
+ * letters, digits, "_" and spaces. An array (&catids[]=2) was taken whole (a note: "we need to find a way to here deal with
+ * arrays"), whatever it had in it; it keeps its good values now.
  */
 class KunenaRouteCurrentValueTest extends UnitTestCase
 {

@@ -17,10 +17,10 @@ use Kunena\Tests\Unit\UnitTestCase;
 
 /**
  * The categories which a user may read are kept for the request, on the access object, which clearCache() empties. They were kept in
- * the session of the visitor ("TODO: handle guests/bots with no userstate"): the constructor cleared that copy on every request, so it
- * was only read back in the same request, and every visitor, a guest or a bot too, had it written to his session. A static variable
- * kept them for the request, which clearCache() could not empty: a change of the rights in the request kept the old list. The list of
- * another user (the name search asks whether a found member may read a category) is never kept beyond the request either.
+ * the session of the visitor (a note: "handle guests/bots with no userstate"): the constructor cleared that copy on every request,
+ * so it was only read back in the same request, and every visitor, a guest or a bot too, had it written to his session. A static
+ * variable kept them for the request, which clearCache() could not empty: a change of the rights in the request kept the old list.
+ * The list of another user (the name search asks whether a found member may read a category) is never kept beyond the request either.
  */
 class KunenaAccessOtherUserSessionTest extends UnitTestCase
 {

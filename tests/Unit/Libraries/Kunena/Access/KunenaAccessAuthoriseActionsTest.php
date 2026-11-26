@@ -18,7 +18,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Tests\Unit\UnitTestCase;
 
 /**
- * The actions which the access plugins allow or refuse in a category ("TODO: allow plugin to customise the error"): a plugin
+ * The actions which the access plugins allow or refuse in a category (a note: "allow plugin to customise the error"): a plugin
  * refuses with false, or with its own reason (a KunenaExceptionAuthorise), which the category gives to the user. A plugin which
  * allows the action wins.
  */

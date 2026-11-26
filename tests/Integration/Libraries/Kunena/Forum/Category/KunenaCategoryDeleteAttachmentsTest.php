@@ -35,8 +35,8 @@ use ReflectionProperty;
 
 /**
  * A deleted category (the categories of the backend) takes the files of its messages with it. KunenaCategory::delete() removed the
- * topics, messages, texts, polls... but not the files ("TODO: delete attachments"): their rows stayed without a message, and the files
- * on the disk, reachable by their address without the protection.
+ * topics, messages, texts, polls... but not the files (a note: "delete attachments"): their rows stayed without a message, and the
+ * files on the disk, reachable by their address without the protection.
  */
 class KunenaCategoryDeleteAttachmentsTest extends IntegrationTestCase implements DBTestInterface
 {

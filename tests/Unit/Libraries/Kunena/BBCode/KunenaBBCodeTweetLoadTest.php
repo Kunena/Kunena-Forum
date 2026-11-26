@@ -28,9 +28,9 @@ use ReflectionProperty;
 use RuntimeException;
 
 /**
- * A tweet which the forum has not read from X yet is read after the page ("FIXME: use AJAX instead"): two requests to X of up to ten
- * seconds each held up the page. The page has a link to the tweet with the address which loads it; that address has a key made with
- * the secret of the site, so that nobody makes the forum ask X for other tweets.
+ * A tweet which the forum has not read from X yet is read after the page (a note: "use AJAX instead"): two requests to X of up to
+ * ten seconds each held up the page. The page has a link to the tweet with the address which loads it; that address has a key made
+ * with the secret of the site, so that nobody makes the forum ask X for other tweets.
  */
 class KunenaBBCodeTweetLoadTest extends UnitTestCase
 {

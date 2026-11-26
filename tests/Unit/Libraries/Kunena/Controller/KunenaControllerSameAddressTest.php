@@ -18,7 +18,7 @@ use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
- * The redirect of a page to the address of its menu item ("FIXME: check possible redirect loops!"): a redirect to the address of
+ * The redirect of a page to the address of its menu item (a note: "check possible redirect loops!"): a redirect to the address of
  * the page itself came back to the same page, again and again until the browser stopped it. The page is shown then.
  */
 class KunenaControllerSameAddressTest extends UnitTestCase

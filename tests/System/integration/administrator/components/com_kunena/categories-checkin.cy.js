@@ -1,5 +1,5 @@
 // The lock of a checked-out category in the backend category list (task category.checkin): the category is checked in. The task
-// was an empty "TODO" which only went back to the list, so a category stayed checked out (Joomla's Global Check-in was the only way).
+// was an empty placeholder which only went back to the list, so a category stayed checked out (Joomla's Global Check-in was the only way).
 describe('Kunena backend categories: check-in', () => {
   const admin = '/administrator/index.php?option=com_kunena';
   const stamp = Date.now();

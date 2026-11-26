@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionProperty;
 
 /**
- * A report to StopForumSpam with a private, local or reserved address ("TODO : prevent to do a request with a private or local
+ * A report to StopForumSpam with a private, local or reserved address (a note: "prevent to do a request with a private or local
  * IP"): the service refuses it, and it would report the network of the site. It is refused before any request, with the reason.
  */
 class KunenaUserHelperStopForumSpamIpTest extends UnitTestCase

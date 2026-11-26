@@ -457,7 +457,7 @@ class KunenaMessageEmailTest extends IntegrationTestCase implements DBTestInterf
     }
 
     /**
-     * Category subscribers get every post, topic subscribers the first new post only ("FIXME: category subscription can override
+     * Category subscribers get every post, topic subscribers the first new post only (a note: "category subscription can override
      * topic"): the e-mail of a subscriber of the category said that it was the last one until he read the topic, and his topic
      * subscription was marked as sent. Only the topic subscribers get that now.
      */

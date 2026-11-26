@@ -24,7 +24,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionProperty;
 
 /**
- * A file for the moderators or for the administrators (PROTECTION_MODERATORS, PROTECTION_ADMINS: "TODO: Add support for
+ * A file for the moderators or for the administrators (PROTECTION_MODERATORS, PROTECTION_ADMINS; a note: "Add support for
  * PROTECTION_MODERATORS / PROTECTION_ADMINS"): only its author could read it. The moderators, or the administrators, read it now.
  */
 class KunenaAttachmentStaffProtectionTest extends UnitTestCase
@@ -117,8 +117,8 @@ class KunenaAttachmentStaffProtectionTest extends UnitTestCase
     }
 
     /**
-     * A file for the friends of its author ("TODO: Add support for PROTECTION_FRIENDS"): only the author could read it. The friends
-     * of the author (KunenaProfile::isFriend(): the users he follows) read it now; the other users do not.
+     * A file for the friends of its author (a note: "Add support for PROTECTION_FRIENDS"): only the author could read it. The
+     * friends of the author (KunenaProfile::isFriend(): the users he follows) read it now; the other users do not.
      */
     public function testTheFriendsOfTheAuthorReadAFileOfHisFriends(): void
     {

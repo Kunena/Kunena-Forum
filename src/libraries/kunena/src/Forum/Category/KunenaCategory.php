@@ -2238,14 +2238,19 @@ class KunenaCategory extends KunenaDatabaseObject
      */
     public function newTopic(?array $fields = null, $user = null, ?array $safefields = null): array
     {
-        $catid           = isset($safefields['category_id']) ? $safefields['category_id'] : $this->getNewTopicCategory($user)->id;
+        // The category which gets the topic: this one, or another one (a category can send its new topics to another category,
+        // and the caller can name one). The review of that category decides whether the first post waits for approval: it was the
+        // review of this category, so a topic sent into a moderated category through a category without review was published.
+        $target          = isset($safefields['category_id']) ? KunenaCategoryHelper::get((int) $safefields['category_id']) : $this->getNewTopicCategory($user);
+        $catid           = isset($safefields['category_id']) ? $safefields['category_id'] : $target->id;
+        $target          = $target->exists() ? $target : $this;
         $user            = KunenaUserHelper::get($user);
         $message         = new KunenaMessage();
         $message->catid  = $catid;
         $message->name   = $user->getName('');
         $message->userid = $user->userid;
         $message->ip     = !empty(KunenaUserHelper::getUserIp()) ? KunenaUserHelper::getUserIp() : '';
-        $message->hold   = $this->review ? (int) !$this->isAuthorised('moderate', $user) : 0;
+        $message->hold   = $target->review ? (int) !$target->isAuthorised('moderate', $user) : 0;
 
         if ($safefields) {
             $message->bind($safefields);

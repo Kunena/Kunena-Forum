@@ -73,6 +73,7 @@ class KunenaCategoryUpdateLastTopicTest extends IntegrationTestCase implements D
         $application->method('isClient')->willReturnCallback(static fn ($client) => $client === 'cli');
         $language = $this->createStub(Language::class);
         $language->method('transliterate')->willReturnArgument(0);
+        $language->method('_')->willReturnArgument(0);
         $config = (new ReflectionClass(KunenaConfig::class))->newInstanceWithoutConstructor();
         (new ReflectionProperty(KunenaConfig::class, 'config'))->setValue($config, ['threadsPerPage' => 20, 'ratingEnabled' => 0, 'readOnly' => 0]);
 
@@ -164,5 +165,25 @@ class KunenaCategoryUpdateLastTopicTest extends IntegrationTestCase implements D
         $category->update(KunenaTopicHelper::get(1), 0, 1);
 
         $this->assertTrue((new ReflectionProperty(KunenaCategory::class, 'reorderOnSave'))->getValue($category));
+    }
+
+    /**
+     * A new topic waits for approval when the category which gets it is moderated. The review of the category where the topic
+     * was started decided: a topic sent into a moderated category through a category without review was published at once.
+     */
+    public function testTheReviewOfTheCategoryWhichGetsTheTopicDecides(): void
+    {
+        $this->insertRow('#__kunena_categories', ['id' => 7, 'parentid' => 1, 'name' => 'Moderated', 'alias' => '7-moderated', 'published' => 1, 'review' => 1]);
+
+        // Started in the category 2 (no review), for the category 7 (review).
+        [$topic, $message] = KunenaCategoryHelper::get(self::CATEGORY)->newTopic(['subject' => 'New', 'message' => 'Text'], null, ['category_id' => 7]);
+
+        $this->assertSame(7, (int) $topic->category_id);
+        $this->assertSame(1, (int) $message->hold, 'The first post waits for approval.');
+
+        // And the other way: from the moderated category into the one without review.
+        [, $message] = KunenaCategoryHelper::get(7)->newTopic(['subject' => 'New', 'message' => 'Text'], null, ['category_id' => self::CATEGORY]);
+
+        $this->assertSame(0, (int) $message->hold);
     }
 }

@@ -156,26 +156,21 @@ class KunenaController extends BaseController
 
             if ($vFormat == 'html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id)) {
                 // Routing has been changed, redirect
-                // FIXME: check possible redirect loops!
                 $route    = KunenaRoute::_(null, false);
+                $current  = Uri::getInstance()->toString(['path', 'query']);
                 $activeId = !empty($active->id) ? $active->id : 0;
-                Log::add("Redirect from " . Uri::getInstance()->toString(['path', 'query']) . " ({$activeId}) to {$route} ($routed->id)", Log::DEBUG, 'kunena');
-                // Permanent: the address of the page is the address of its menu item (a 303 is a redirect for this time only).
-                $this->app->redirect($route, 301);
-            }
 
-            // Joomla 2.5+ multi-language support
-            /*
-            FIXME:
-            if (isset($active->language) && $active->language != '*') {
-                $language = Factory::getApplication()->getDocument()->getLanguage();
-                if (strtolower($active->language) != strtolower($language)) {
-                    $route = \Kunena\Forum\Libraries\Route\KunenaRoute::_(null, false);
-                    Log::add("Language redirect from ".Uri::getInstance()->toString(array('path', 'query'))." to {$route}", Log::DEBUG, 'kunena');
-                    $this->redirect ($route);
+                // A redirect to the address of this page would come back here, again and again until the browser stops it (the
+                // menu item found for the page makes the same address as the item Joomla chose for it): the page is shown.
+                if (!self::isSameAddress($route, $current)) {
+                    Log::add("Redirect from {$current} ({$activeId}) to {$route} ($routed->id)", Log::DEBUG, 'kunena');
+                    // Permanent: the address of the page is the address of its menu item (a 303 is a redirect for this time only).
+                    $this->app->redirect($route, 301);
                 }
             }
-            */
+
+            // The language of the menu item and of the page: the plugin "System - Language Filter" of Joomla redirects to the
+            // address of the language, Kunena does not do it a second time.
         }
 
         $config              = [];
@@ -298,8 +293,6 @@ class KunenaController extends BaseController
         $this->format = $this->input->getWord('format', 'html');
 
         try {
-            // TODO: This would be great, but we would need to store POST before doing it in here...
-
             if ($task != 'display') {
                 // Make sure that Kunena is online before running any tasks (doesn't affect admins).
                 if (!KunenaForum::enabled(true)) {
@@ -394,6 +387,31 @@ class KunenaController extends BaseController
     protected function isRegOnlyGuestTask(string $task): bool
     {
         return \in_array($task, $this->regOnlyGuestTasks, true);
+    }
+
+    /**
+     * Are the two addresses of the site the same page? The path (decoded, without a slash at its end) and the variables of the
+     * query in any order; the scheme and the host are not compared.
+     *
+     * @param   string  $a  An address (/forum/topic?start=10, or a full one).
+     * @param   string  $b  The other address.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isSameAddress(string $a, string $b): bool
+    {
+        $read = static function (string $url): array {
+            $parts = parse_url(html_entity_decode($url, ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?: [];
+            $query = [];
+            parse_str($parts['query'] ?? '', $query);
+            ksort($query);
+
+            return [rtrim(rawurldecode($parts['path'] ?? ''), '/'), $query];
+        };
+
+        return $read($a) == $read($b);
     }
 
     /**

@@ -299,7 +299,9 @@ class KunenaSampleData
         try {
             $db->execute();
         } catch (Exception $e) {
-            throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+            // The exception of Kunena, as above. It was KunenaInstallerException, a class which does not exist: a failure of
+            // this query ended in "Class not found" instead of its message.
+            throw new KunenaException($e->getMessage(), (int) $e->getCode());
         }
     }
 }

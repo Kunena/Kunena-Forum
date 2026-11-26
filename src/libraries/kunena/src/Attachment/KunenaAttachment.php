@@ -76,7 +76,7 @@ class KunenaAttachment extends KunenaDatabaseObject
     // Protection level can be checked as bitmask: PROTECTION_ACL + PROTECTION_FRIENDS.
     // To filter out KunenaAttachments when doing a database query, you can use:
     // Visible for author = value < PROTECTION_AUTHOR * 2
-    // TODO: Implement these
+    // tryAuthorise() checks them all except PROTECTION_FRIENDS, which only the author passes.
 
     /**
      * @since   Kunena 6.0
@@ -1171,8 +1171,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         $exception = !$this->protected
         ? null : new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->id ? 403 : 401);
 
-        // TODO: Add support for PROTECTION_PUBLIC
-        // Currently we only support ACL checks, not public KunenaAttachments.
+        // A public file and a file of the access of the message: who may read the message may read the file.
         // The levels are bits: "&", not "&&" (with "&&" every protected file, also a private one, was given to every reader of
         // the message).
         if ($exception && $this->mesid && ((int) $this->protected & (self::PROTECTION_PUBLIC | self::PROTECTION_ACL))) {
@@ -1180,9 +1179,18 @@ class KunenaAttachment extends KunenaDatabaseObject
             $exception = $this->getMessage()->tryAuthorise('attachment.' . $action, $user, false);
         }
 
-        // TODO: Add support for PROTECTION_FRIENDS
-        // TODO: Add support for PROTECTION_MODERATORS
-        // TODO: Add support for PROTECTION_ADMINS
+        // A file for the moderators or the administrators: the moderators (or administrators) of the category of its message, the
+        // global ones for a file without a message. PROTECTION_FRIENDS has no check: Kunena has no list of the friends of a user
+        // (only the profile integrations have one), such a file is for its author only.
+        if ($exception && ((int) $this->protected & (self::PROTECTION_MODERATORS | self::PROTECTION_ADMINS))) {
+            $category = $this->mesid ? $this->getMessage()->getCategory() : null;
+            $allowed  = ((int) $this->protected & self::PROTECTION_MODERATORS) ? $user->isModerator($category) : $user->isAdmin($category);
+
+            if ($user->exists() && $allowed) {
+                $exception = null;
+            }
+        }
+
         // Check if KunenaAttachment is private.
         if ($exception && ((int) $this->protected & self::PROTECTION_PRIVATE)) {
             $exception = $this->authorisePrivate($user, $action);

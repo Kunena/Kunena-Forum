@@ -256,9 +256,19 @@ abstract class ListDisplay extends KunenaControllerDisplay
 
         $options    = [];
         $options[]  = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
-        // Todo: fix params
+        // The forum jump: the sections and the categories which the user may read (it had "Forum top" only, as the list was made of
+        // that one option).
         $this->catParams    = ['sections' => 1, 'catid' => 0];
-        $this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="form-select fbs" size="1" aria-label="' . Text::_('COM_KUNENA_CATEGORY') . '"', 'value', 'text');
+        $this->categorylist = HTMLHelper::_(
+            'kunenaforum.categorylist',
+            'catid',
+            0,
+            $options,
+            $this->catParams,
+            'class="form-select fbs" size="1" aria-label="' . Text::_('COM_KUNENA_CATEGORY') . '"',
+            'value',
+            'text'
+        );
 
         $this->input = $this->app->getInput();
 

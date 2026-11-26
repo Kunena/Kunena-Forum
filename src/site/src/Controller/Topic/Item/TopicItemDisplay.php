@@ -188,7 +188,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $options    = [];
         $options[]  = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 
-        // Todo: fix params
+        // The forum jump: the sections and the categories which the user may read.
         $this->catParams    = ['sections' => 1, 'catid' => 0];
         $this->categorylist = HTMLHelper::_(
             'kunenaforum.categorylist',

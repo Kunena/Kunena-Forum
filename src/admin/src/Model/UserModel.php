@@ -187,7 +187,7 @@ class UserModel extends KunenaModel
             $categoryList[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_GLOBAL_MODERATOR'));
         }
 
-        // Todo: fix params
+        // The categories which a moderator can get: all the categories which the administrator may read, without the sections.
         $params = [
             'sections' => false,
             'action'   => 'read',

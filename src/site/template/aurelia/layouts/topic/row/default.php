@@ -118,10 +118,6 @@ if (!empty($this->spacing)) : ?>
             <?php echo Text::_('COM_KUNENA_BY') ?>
             <?php echo $topic->getAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getFirstPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
             <div class="float-end">
-                <?php /** TODO: New Feature - LABELS
-                 * <span class="badge bg-info">
-                 * <?php echo Text::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
-                 * </span>    */ ?>
                 <?php if ($topic->locked != 0) : ?>
                     <?php echo $this->subLayout('Widget/Lock')->set('topic', $topic); ?>
                 <?php endif; ?>

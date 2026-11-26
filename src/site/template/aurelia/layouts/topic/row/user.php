@@ -115,10 +115,6 @@ if (!empty($this->spacing)) : ?>
                 <?php echo $topic->getFirstPostTime()->toKunena('config_postDateFormat'); ?>
             <?php endif; ?>
             <div class="float-end">
-                <?php /** TODO: New Feature - LABELS
-                 * <span class="badge bg-info">
-                 * <?php echo Text::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
-                 * </span>    */ ?>
                 <?php if ($topic->locked != 0) : ?>
                     <?php echo $this->subLayout('Widget/Lock')->set('topic', $topic); ?>
                 <?php endif; ?>

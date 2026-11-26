@@ -565,7 +565,8 @@ class HtmlView extends KunenaView
         }
 
         if (!$this->state->get('embedded')) {
-            // TODO: allow translations/overrides
+            // About 137 characters, less the length of the name of the language (the old views: the pages set their own
+            // description).
             $lang   = Factory::getApplication()->getLanguage();
             $length = StringHelper::strlen($lang->getName());
             $length = 137 - $length;
@@ -668,11 +669,11 @@ class HtmlView extends KunenaView
                 $usertype = $this->profile->getType($this->category->id, true);
             }
 
-            // TODO: add context (options) to caching
             $this->cachekey   = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
             $this->cachegroup = 'com_kunena.messages';
 
-            // FIXME: enable caching after fixing the issues
+            // The cache of the old views stays off: they run only for a Kunena template without pages (Agora, Aurelia and
+            // the templates built on them have pages), and the key of a copy has neither the options nor the template.
             $contents = false; // $this->cache->get($cachekey, $cachegroup);
 
             if (!$contents) {
@@ -710,8 +711,6 @@ class HtmlView extends KunenaView
 
                 $contents .= implode(' ', $result);
 
-                // FIXME: enable caching after fixing the issues (also external profile stuff affects this)
-                // if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
             }
 
             $profiles[$key] = $contents;
@@ -1109,7 +1108,6 @@ class HtmlView extends KunenaView
             }
         }
 
-        // TODO: add context (options, template) to caching
         $templateHash     = $this->messageTemplateHash ?: $this->getTemplateMD5();
         $this->cachekey   = "message.{$templateHash}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
         $this->cachegroup = 'com_kunena.messages';
@@ -1175,8 +1173,6 @@ class HtmlView extends KunenaView
                 $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', [$this, 'fillMessageInfo'], $contents);
             }
 
-            // FIXME: enable caching after fixing the issues (a cached message of a guest was shown here, before the cache was off)
-            // if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
         }
 
         $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', [$this, 'fillMessageInfo'], $contents);

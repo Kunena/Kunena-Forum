@@ -308,12 +308,12 @@ class HtmlView extends KunenaView
             $this->category = $this->topic->getCategory();
             $usertype       = $this->getCurrentUserTypeByCategory((int) $this->category->id);
 
-            // TODO: add context (options, template) to caching
             $this->cache      = true;
             $this->cachekey   = "{$templateHash}.{$usertype}.t{$this->topic->id}.p{$message->id}";
             $this->cachegroup = 'com_kunena.posts';
 
-            // FIXME: enable caching after fixing the issues
+            // The cache of the old views stays off: they run only for a Kunena template without pages (Agora, Aurelia and
+            // the templates built on them have pages), and the key of a copy has neither the options nor the template.
             $contents = false; // $cache->get($cachekey, $cachegroup);
 
             if (!$contents) {
@@ -336,8 +336,6 @@ class HtmlView extends KunenaView
                     $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
                 }
 
-                // FIXME: enable caching after fixing the issues
-                // if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
             }
 
             if ($usertype != 'guest') {
@@ -382,12 +380,12 @@ class HtmlView extends KunenaView
             $this->category = $this->topic->getCategory();
             $usertype       = $this->getCurrentUserTypeByCategory((int) $this->category->id);
 
-            // TODO: add context (options, template) to caching
             $this->cache      = true;
             $this->cachekey   = "{$templateHash}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
             $this->cachegroup = 'com_kunena.topics';
 
-            // FIXME: enable caching after fixing the issues
+            // The cache of the old views stays off: they run only for a Kunena template without pages (Agora, Aurelia and
+            // the templates built on them have pages), and the key of a copy has neither the options nor the template.
             $contents = false; // $cache->get($cachekey, $cachegroup);
 
             if (!$contents) {
@@ -418,8 +416,6 @@ class HtmlView extends KunenaView
                     $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
                 }
 
-                // FIXME: enable caching after fixing the issues
-                // if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
             }
 
             if ($usertype != 'guest') {

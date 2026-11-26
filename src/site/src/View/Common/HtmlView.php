@@ -631,7 +631,8 @@ class HtmlView extends KunenaView
         $cachekey   = "{$this->ktemplate->name}.common.loginbox.u{$my->id}";
         $cachegroup = 'com_kunena.template';
 
-        // FIXME: enable caching after fixing the issues
+        // The cache of the old views stays off: they run only for a Kunena template without pages (Agora, Aurelia and
+        // the templates built on them have pages), and the key of a copy has neither the options nor the template.
         $contents = false; // $cache->get($cachekey, $cachegroup);
 
         if (!$contents) {
@@ -653,14 +654,11 @@ class HtmlView extends KunenaView
                 // Private messages
                 $this->getPrivateMessageLink();
 
-                // TODO: Edit profile (need to get link to edit page, even with integration)
-                // $this->editProfileLink = '<a href="' . $url.'">'. Text::_('COM_KUNENA_PROFILE_EDIT').'</a>';
+                // The logout box of the old views has no link to edit the profile (the one of the pages has it).
             }
 
             $contents = $this->loadTemplateFile($tpl);
 
-            // FIXME: enable caching after fixing the issues
-            // $cache->store($contents, $cachekey, $cachegroup);
         }
 
         $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillLoginBoxInfo'], $contents);

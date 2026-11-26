@@ -333,7 +333,8 @@ class TableKunenaCategories extends KunenaTable
      */
     public function isChild($id)
     {
-        // FIXME: when we have category cache, replace this code
+        // The parents as they are in the database, not from the categories of KunenaCategoryHelper: this runs in check(), while
+        // categories are saved (a move, a batch), when those objects can be older than the table. Two columns of each category.
         if ($id > 0) {
             $query = $this->_db->createQuery()
                 ->select(['id', 'parentid'])
@@ -353,16 +354,12 @@ class TableKunenaCategories extends KunenaTable
             while ($id) {
                 if (\in_array($id, $recurse)) {
                     throw new Exception(\get_class($this) . Text::_('COM_KUNENA_RECURSION'));
-
-                    return 0;
                 }
 
                 $recurse[] = $id;
 
                 if (!isset($list[$id])) {
                     throw new Exception(\get_class($this) . Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID'));
-
-                    return 0;
                 }
 
                 $id = $list[$id]->parentid;

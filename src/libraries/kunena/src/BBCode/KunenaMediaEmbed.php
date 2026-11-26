@@ -39,6 +39,38 @@ abstract class KunenaMediaEmbed
      *
      * @since   Kunena 8.0
      */
+    /**
+     * The id of the video of an address of YouTube: the page of a video (watch?v=), a short link (youtu.be), a Short, a live
+     * stream or the address of the player (embed).
+     *
+     * @param   string  $host   The host of the address.
+     * @param   string  $path   Its path.
+     * @param   string  $query  Its query.
+     *
+     * @return  string|null  Null when the address is no video of YouTube.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function youtube(string $host, string $path, string $query = ''): ?string
+    {
+        $host  = strtolower($host);
+        $parts = explode('/', trim($path, '/'));
+        $video = null;
+
+        if ($host === 'youtu.be') {
+            $video = $parts[0] ?? null;
+        } elseif (str_contains('.' . $host, '.youtube.') || str_contains('.' . $host, '.youtube-nocookie.')) {
+            if ($parts[0] === 'watch') {
+                parse_str($query, $values);
+                $video = isset($values['v']) && \is_string($values['v']) ? $values['v'] : null;
+            } elseif (\in_array($parts[0], ['embed', 'shorts', 'live'], true)) {
+                $video = $parts[1] ?? null;
+            }
+        }
+
+        return $video !== null && preg_match('/^[\w\-]{6,32}$/D', $video) ? $video : null;
+    }
+
     public static function deezer(string $host, string $path): ?string
     {
         if (!\in_array($host, ['deezer.com', 'www.deezer.com'], true) || !preg_match('#^/(?:[a-z]{2}(?:-[a-z]{2})?/)?(track|album|playlist|episode|show)/(\d+)#', $path, $match)) {

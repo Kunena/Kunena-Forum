@@ -674,18 +674,10 @@ class KunenaBBCode extends BBCode
 
         if ($this->config->autoEmbedYoutube && empty($this->parent->forceMinimal) && isset($params['host'])) {
             // Convert youtube links to embedded player
-            parse_str($params['query'], $query);
-            $path = explode('/', $params['path']);
+            // Also a Short and a live stream (youtube.com/shorts/..., /live/...): they stayed plain links.
+            $video = KunenaMediaEmbed::youtube((string) $params['host'], (string) $params['path'], (string) $params['query']);
 
-            if (strstr($params['host'], '.youtube.') && !empty($path[1]) && $path[1] == 'watch' && !empty($query['v'])) {
-                $video = $query['v'];
-            } elseif ($params['host'] == 'youtu.be' && !empty($path[1])) {
-                $video = $path[1];
-            } elseif (strstr($params['host'], '.youtube.') && !empty($path[1]) && $path[1] == 'embed') {
-                $video = $path[2];
-            }
-
-            if (isset($video)) {
+            if ($video !== null) {
                 $uri = Uri::getInstance();
 
                 if ($uri->isSSL()) {
@@ -3014,6 +3006,20 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 switch ($vid["type"]) {
                     case 'wideo':
                         $vid["type"] = 'wideo.fr';
+                        break;
+                    case 'youtu':
+                    case 'youtube':
+                    case 'youtube-nocookie':
+                        // Any address of a video of YouTube: a short link (youtu.be), a Short, a live stream and the address
+                        // of the player showed nothing, only the page of a video (watch?v=) was read.
+                        $vid_parts = parse_url($content) ?: [];
+                        $vid_code  = KunenaMediaEmbed::youtube((string) ($vid_parts['host'] ?? ''), (string) ($vid_parts['path'] ?? ''), (string) ($vid_parts['query'] ?? ''));
+
+                        if ($vid_code !== null) {
+                            $vid["type"] = 'youtube';
+                            $content     = $vid_code;
+                            $vid_auto    = 0;
+                        }
                         break;
                 }
             }

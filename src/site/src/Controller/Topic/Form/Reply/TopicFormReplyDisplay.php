@@ -179,8 +179,8 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
         $arrayanynomousbox = [];
         $arraypollcatid    = [];
-        $this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
-        $this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+        $this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', $arrayanynomousbox);
+        $this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', $arraypollcatid);
 
         // Run event.
         $params = new Registry();

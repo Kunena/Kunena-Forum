@@ -166,9 +166,10 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
         }
 
-        // FIXME: We need to proxy this...
-        $this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
-        $this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+        // The categories where a message is anonymous by default and those with polls, for edit.js: the arrays as they are (they
+        // were JSON in a string, which the scripts had to parse again).
+        $this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', $arrayanynomousbox);
+        $this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', $arraypollcatid);
 
         $this->category                    = KunenaCategoryHelper::get($catid);
         list($this->topic, $this->message) = $this->category->newTopic($saved);

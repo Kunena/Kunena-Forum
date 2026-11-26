@@ -895,7 +895,7 @@
 			}
 
 			var pollcategoriesidOption = Joomla.getOptions('com_kunena.pollcategoriesid');
-			var pollcategoriesid = pollcategoriesidOption !== undefined ? JSON.parse(pollcategoriesidOption) : undefined;
+			var pollcategoriesid = typeof pollcategoriesidOption === 'string' ? JSON.parse(pollcategoriesidOption) : pollcategoriesidOption;
 			var catid = (document.getElementById('postcatid') || {}).value || (document.getElementById('poll_catid') || {}).value;
 
 			if (document.getElementById('poll_exist_edit')) {

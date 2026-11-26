@@ -137,8 +137,8 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
             }
         }
 
-        $this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
-        $this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+        $this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', $arrayanynomousbox);
+        $this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', $arraypollcatid);
 
         $doc = $this->app->getDocument();
         $doc->setMetaData('robots', 'nofollow, noindex');

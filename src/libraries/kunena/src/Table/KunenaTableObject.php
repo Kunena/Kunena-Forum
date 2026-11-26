@@ -552,10 +552,10 @@ abstract class KunenaTableObject
      */
     public static function getInstance($keys): KunenaDatabaseObject
     {
-        $k = json_encode(self::resolveKeys($keys));
-
-        // FIXME:
-        $k = (int) $keys;
+        // The identifier as the constructor makes it: the value of a single key, the JSON of several (the JSON of a single key
+        // never matched, and an int of the keys made every array of keys the identifier 1).
+        $resolved = static::resolveKeys($keys);
+        $k        = \count($resolved) > 1 ? json_encode($resolved) : reset($resolved);
 
         // If we are creating or loading a new item or we load instance by alternative keys,
         // we need to create a new object.
@@ -608,8 +608,10 @@ abstract class KunenaTableObject
      */
     protected function getKeyValues($fields = null, $throw = true): array
     {
-        // FIXME: bug...
-        static $fieldNames = null;
+        // The fields of each class: a static variable of a method is shared by the classes which inherit the method.
+        static $fieldNamesOf = [];
+
+        $fieldNames = $fieldNamesOf[static::class] ?? null;
 
         $tableKeys = static::$tbl_keys;
 
@@ -629,7 +631,7 @@ abstract class KunenaTableObject
         } else {
             if (\is_null($fieldNames)) {
                 // Lazy initialize fields list.
-                $fieldNames = static::getFields();
+                $fieldNames = $fieldNamesOf[static::class] = static::getFields();
             }
 
             if (!\is_array($fields)) {

@@ -506,27 +506,29 @@ abstract class KunenaForum
      */
     public static function versionDate(): string
     {
-        if (self::$version_date === false) {
+        // Not read yet: the date starts as null (the check was for false, so a first call gave null, an error of PHP for a string).
+        if (self::$version_date === null || self::$version_date === false) {
             self::buildVersion();
         }
 
-        return self::$version_date;
+        return (string) self::$version_date;
     }
 
     /**
      * Returns major version number (2.0, 3.0, 3.1 and so on).
      *
-     * @return  boolean Major version in xxx.yyy format.
+     * @return  string Major version in xxx.yyy format.
      *
      * @since   Kunena 6.0
      */
-    public static function versionMajor(): bool
+    public static function versionMajor(): string
     {
         if (self::$version_major === false) {
             self::buildVersion();
         }
 
-        return self::$version_major;
+        // The number itself: the method was declared boolean, so "8.0" came back as true.
+        return (string) self::$version_major;
     }
 
     /**

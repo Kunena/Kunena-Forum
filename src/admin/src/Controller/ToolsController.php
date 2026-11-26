@@ -825,7 +825,7 @@ class ToolsController extends FormController
     }
 
     /**
-     * Fix Legacy
+     * Repairs the menu items of the forum which still have the link of an old version.
      *
      * @return  void
      *

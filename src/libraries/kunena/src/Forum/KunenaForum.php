@@ -303,7 +303,7 @@ abstract class KunenaForum
      * Legacy method which check if installer is running, it's unsafe to use our framework. Files may be
      * currently replaced with new ones and the database structure might be inconsistent. Using forum
      * during installation will likely cause fatal errors and data corruption if you attempt to update
-     * bjects in the database.
+     * objects in the database.
      *
      * Always detect Kunena in your code before you start using the framework:
      *

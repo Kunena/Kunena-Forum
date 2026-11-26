@@ -190,7 +190,7 @@ class KunenaPrivate
             return '';
         }
 
-        // We should offer the user a PM link
+        // The link to write a private message to the user
         return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '>' . KunenaIcons::pm() . '</a>';
     }
 
@@ -241,7 +241,7 @@ class KunenaPrivate
             return '<a class="' . $class . '" href="' . $url . '">' . KunenaIcons::pm() . ' ' . $text . '</a>';
         }
 
-        // We should offer the user a PM link
+        // The link to write a private message to the user
         return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '>' . KunenaIcons::pm() . ' ' . Text::_('COM_KUNENA_PM_WRITE') . '</a>';
     }
 }

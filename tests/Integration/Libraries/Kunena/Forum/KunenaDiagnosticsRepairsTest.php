@@ -126,4 +126,75 @@ class KunenaDiagnosticsRepairsTest extends IntegrationTestCase implements DBTest
         $this->assertSame([['threadid' => 30]], $this->fetchAll('SELECT threadid FROM #__kunena_polls'));
         $this->assertSame([['id' => 30, 'poll_id' => 5], ['id' => 31, 'poll_id' => 0]], $this->fetchAll('SELECT id, poll_id FROM #__kunena_topics ORDER BY id'));
     }
+
+    /**
+     * Three private posts: the first of the post 5 which exists, the second of the post 9 which is gone, the third without a post.
+     */
+    private function privatePosts(): void
+    {
+        $this->insertRow('#__kunena_messages', ['id' => 5, 'parent' => 0, 'thread' => 1, 'catid' => 2, 'subject' => 'Post', 'time' => 1000]);
+
+        foreach ([1 => 5, 2 => 9, 3 => 0] as $id => $message) {
+            $this->insertRow('#__kunena_private', ['id' => $id, 'author_id' => 42, 'created_at' => '2026-01-01 00:00:00', 'subject' => 'Private', 'body' => "Secret $id", 'params' => '']);
+            $this->insertRow('#__kunena_private_user_map', ['private_id' => $id, 'user_id' => 42]);
+            $this->insertRow('#__kunena_private_attachment_map', ['private_id' => $id, 'attachment_id' => 70 + $id]);
+
+            if ($message) {
+                $this->insertRow('#__kunena_private_post_map', ['private_id' => $id, 'message_id' => $message]);
+            }
+        }
+    }
+
+    /**
+     * The private posts which are left, in each of their tables.
+     */
+    private function privateLeft(): array
+    {
+        $ids = fn (string $table, string $column): array => array_map('intval', array_column($this->fetchAll("SELECT $column FROM $table ORDER BY $column"), $column));
+
+        return [
+            'private'     => $ids('#__kunena_private', 'id'),
+            'posts'       => $ids('#__kunena_private_post_map', 'private_id'),
+            'users'       => $ids('#__kunena_private_user_map', 'private_id'),
+            'attachments' => $ids('#__kunena_private_attachment_map', 'private_id'),
+        ];
+    }
+
+    /**
+     * A private post whose post of the forum is gone is found and deleted (a post deleted for good left its private post, with
+     * its text, behind until Kunena 8.0; nothing found it). Its recipients and links are for the checks which follow it.
+     */
+    public function testAPrivatePostWhosePostIsGoneIsDeleted(): void
+    {
+        $this->privatePosts();
+
+        $this->assertContains('privateOrphaned', KunenaDiagnostics::getList());
+        $this->assertSame(2, KunenaDiagnostics::count('privateOrphaned'));
+
+        KunenaDiagnostics::delete('privateOrphaned');
+
+        $this->assertSame([1], $this->privateLeft()['private']);
+        $this->assertSame(0, KunenaDiagnostics::count('privateOrphaned'));
+    }
+
+    /**
+     * The upgrade to Kunena 8.0 removes them, with their recipients and links.
+     */
+    public function testTheUpgradeRemovesThePrivatePostsWhosePostIsGone(): void
+    {
+        $this->privatePosts();
+
+        $queries = array_filter(
+            array_map('trim', preg_split('/\R/', file_get_contents(\dirname(__DIR__, 5) . '/src/admin/sql/updates/mysql/8.0.0-DEV.sql'))),
+            static fn (string $line): bool => str_starts_with($line, 'DELETE a FROM `#__kunena_private')
+        );
+
+        $this->assertCount(4, $queries);
+
+        foreach ($queries as $query) {
+            $this->getDBDriver()->setQuery(rtrim($query, ';'))->execute();
+        }
+
+        $this->assertSame(['private' => [1], 'posts' => [1], 'users' => [1], 'attachments' => [1]], $this->privateLeft());
+    }
 }

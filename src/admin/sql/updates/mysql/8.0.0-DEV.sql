@@ -151,6 +151,11 @@ ALTER TABLE `#__kunena_messages` ADD COLUMN `notified` tinyint(4) NOT NULL defau
 UPDATE `#__kunena_messages` SET `notified` = 1 WHERE `hold` = 0;
 -- A message in the trash without the time of its delete (deleted before the column was there, or by a tool which did not set it) gets the time of the upgrade: the task which empties the trash removed it at once, whatever its age.
 UPDATE `#__kunena_messages` SET `deleted_time` = UNIX_TIMESTAMP() WHERE `hold` IN (2, 3) AND `deleted_time` = 0;
+-- The private posts whose post no longer exists (a post deleted for good left its private post behind), with their recipients and links.
+DELETE a FROM `#__kunena_private` AS a WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_private_post_map` AS pm INNER JOIN `#__kunena_messages` AS m ON m.`id` = pm.`message_id` WHERE pm.`private_id` = a.`id`);
+DELETE a FROM `#__kunena_private_post_map` AS a LEFT JOIN `#__kunena_private` AS p ON p.`id` = a.`private_id` WHERE p.`id` IS NULL;
+DELETE a FROM `#__kunena_private_user_map` AS a LEFT JOIN `#__kunena_private` AS p ON p.`id` = a.`private_id` WHERE p.`id` IS NULL;
+DELETE a FROM `#__kunena_private_attachment_map` AS a LEFT JOIN `#__kunena_private` AS p ON p.`id` = a.`private_id` WHERE p.`id` IS NULL;
 -- The title and the image of a rank are 255 characters, as in the schema: the install file of the first versions of 6.x made them 250.
 ALTER TABLE `#__kunena_ranks` MODIFY `rankTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '';
 ALTER TABLE `#__kunena_ranks` MODIFY `rankImage` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL;

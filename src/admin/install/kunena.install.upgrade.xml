@@ -705,6 +705,11 @@
             <query mode="silenterror">UPDATE `#__kunena_messages` SET `notified` = 1 WHERE `hold` = 0</query>
             <!-- A message in the trash without the time of its delete gets the time of the upgrade: the task which empties the trash removed it at once -->
             <query mode="silenterror">UPDATE `#__kunena_messages` SET `deleted_time` = UNIX_TIMESTAMP() WHERE `hold` IN (2, 3) AND `deleted_time` = 0</query>
+            <!-- The private posts whose post no longer exists (a post deleted for good left its private post behind), with their recipients and links -->
+            <query mode="silenterror">DELETE a FROM `#__kunena_private` AS a WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_private_post_map` AS pm INNER JOIN `#__kunena_messages` AS m ON m.`id` = pm.`message_id` WHERE pm.`private_id` = a.`id`)</query>
+            <query mode="silenterror">DELETE a FROM `#__kunena_private_post_map` AS a LEFT JOIN `#__kunena_private` AS p ON p.`id` = a.`private_id` WHERE p.`id` IS NULL</query>
+            <query mode="silenterror">DELETE a FROM `#__kunena_private_user_map` AS a LEFT JOIN `#__kunena_private` AS p ON p.`id` = a.`private_id` WHERE p.`id` IS NULL</query>
+            <query mode="silenterror">DELETE a FROM `#__kunena_private_attachment_map` AS a LEFT JOIN `#__kunena_private` AS p ON p.`id` = a.`private_id` WHERE p.`id` IS NULL</query>
             <!-- The title and the image of a rank are 255 characters, as in the schema: the install file of the first versions of 6.x made them 250 -->
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` MODIFY `rankTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` MODIFY `rankImage` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL</query>

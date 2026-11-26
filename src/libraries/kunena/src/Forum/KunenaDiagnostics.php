@@ -1322,6 +1322,52 @@ abstract class KunenaDiagnostics
     }
 
     /**
+     * Query to find the private posts whose post of the forum no longer exists: every private post is made with its post, and
+     * until Kunena 8.0 a post deleted for good left its private post (the text) behind.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function query_privateOrphaned(): QueryInterface
+    {
+        $query = Factory::getContainer()->get('DatabaseDriver')->createQuery();
+        $query->from('#__kunena_private AS a')
+            ->where('NOT EXISTS (SELECT 1 FROM #__kunena_private_post_map AS pm INNER JOIN #__kunena_messages AS m ON m.id=pm.message_id WHERE pm.private_id=a.id)');
+
+        return $query;
+    }
+
+    /**
+     * @param   QueryInterface|null  $query  query
+     *
+     * @return  array
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fields_privateOrphaned(?QueryInterface $query = null): array
+    {
+        if ($query) {
+            $query->select('a.id, a.author_id, a.created_at');
+        }
+
+        return ['id' => 'invalid', 'author_id' => 'valid', 'created_at' => 'valid'];
+    }
+
+    /**
+     * Delete the private posts whose post of the forum no longer exists (their recipients and links are the next checks).
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function delete_privateOrphaned(): string
+    {
+        return 'DELETE a FROM #__kunena_private AS a WHERE NOT EXISTS (SELECT 1 FROM #__kunena_private_post_map AS pm'
+            . ' INNER JOIN #__kunena_messages AS m ON m.id=pm.message_id WHERE pm.private_id=a.id)';
+    }
+
+    /**
      * Query to find the recipients of private posts whose private post or user no longer exists.
      *
      * @return  QueryInterface
@@ -2064,7 +2110,7 @@ abstract class KunenaDiagnostics
             'COM_KUNENA_DIAGNOSTICS_GROUP_POSTS' => [
                 'messageBodyMissingMessage', 'messageMissingMessageBody', 'messageWrongCategory', 'messageOrphaned', 'attachmentOrphaned',
                 'thankyouOrphaned', 'reactionOrphaned', 'historyOrphaned', 'digestOrphaned', 'bookmarkOrphaned',
-                'messageWrongParent', 'draftOrphaned', 'privateUserOrphaned', 'privatePostOrphaned', 'privateAttachmentOrphaned',
+                'messageWrongParent', 'draftOrphaned', 'privateOrphaned', 'privateUserOrphaned', 'privatePostOrphaned', 'privateAttachmentOrphaned',
             ],
             'COM_KUNENA_DIAGNOSTICS_GROUP_POLLS' => [
                 'pollOrphaned', 'pollTopicMismatch', 'pollOptionOrphaned', 'pollUserOrphaned',
@@ -2147,6 +2193,7 @@ abstract class KunenaDiagnostics
             'ratingUserOrphaned',
             'messageWrongParent',
             'draftOrphaned',
+            'privateOrphaned',
             'privateUserOrphaned',
             'privatePostOrphaned',
             'privateAttachmentOrphaned',

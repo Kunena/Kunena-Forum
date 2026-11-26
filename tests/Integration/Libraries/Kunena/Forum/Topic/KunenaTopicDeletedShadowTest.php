@@ -264,4 +264,25 @@ class KunenaTopicDeletedShadowTest extends IntegrationTestCase implements DBTest
 
         $this->assertSame(['numTopics' => 1, 'numPosts' => 2], $this->categoryCounts());
     }
+
+    /**
+     * A topic put in the trash as "deleted" (state 2, the tool "Topic manager") gives its messages the time of the delete, as a
+     * topic deleted on the site (state 3) does. They had no time: the task which empties the trash removed them for good at its
+     * next run, whatever the age it waits for.
+     */
+    public function testTheMessagesOfATopicPutInTheTrashHaveTheTimeOfTheDelete(): void
+    {
+        foreach ([KunenaForum::DELETED, KunenaForum::TOPIC_DELETED] as $state) {
+            $this->getDBDriver()->setQuery('UPDATE #__kunena_messages SET hold = 0, deleted_time = 0')->execute();
+            $this->getDBDriver()->setQuery('UPDATE #__kunena_topics SET hold = 0 WHERE id = ' . self::TARGET)->execute();
+            $this->replace(KunenaTopicHelper::class, '_instances', []);
+
+            $this->assertTrue(KunenaTopicHelper::get(self::TARGET)->publish($state));
+
+            foreach ($this->fetchAll('SELECT hold, deleted_time FROM #__kunena_messages WHERE thread = ' . self::TARGET) as $message) {
+                $this->assertEquals($state, $message['hold']);
+                $this->assertGreaterThan(time() - 60, (int) $message['deleted_time'], "State $state.");
+            }
+        }
+    }
 }

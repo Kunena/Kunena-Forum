@@ -2181,7 +2181,10 @@ class KunenaTopic extends KunenaDatabaseObject
             }
         }
 
-        if ($this->hold === 3) {
+        // The time of the delete, for both deleted states. It was set for "deleted with the topic" (3) only: a topic put in the trash
+        // as "deleted" (2, the tool "Topic manager") left its messages without a time, and the task which empties the trash
+        // removed them for good at its next run, whatever the age it waits for.
+        if ($this->hold >= 2) {
             $deletedTime = $date->toUnix();
         } else {
             $deletedTime = 0;

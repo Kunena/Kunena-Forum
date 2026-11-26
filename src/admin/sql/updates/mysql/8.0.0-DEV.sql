@@ -149,6 +149,8 @@ ALTER TABLE `#__kunena_messages` ADD COLUMN `scheduled_review` tinyint(4) NOT NU
 -- A message whose subscribers were told about it: approved again after an edit, it does not tell them a second time.
 ALTER TABLE `#__kunena_messages` ADD COLUMN `notified` tinyint(4) NOT NULL default '0' AFTER `scheduled_review`;
 UPDATE `#__kunena_messages` SET `notified` = 1 WHERE `hold` = 0;
+-- A message in the trash without the time of its delete (deleted before the column was there, or by a tool which did not set it) gets the time of the upgrade: the task which empties the trash removed it at once, whatever its age.
+UPDATE `#__kunena_messages` SET `deleted_time` = UNIX_TIMESTAMP() WHERE `hold` IN (2, 3) AND `deleted_time` = 0;
 -- The title and the image of a rank are 255 characters, as in the schema: the install file of the first versions of 6.x made them 250.
 ALTER TABLE `#__kunena_ranks` MODIFY `rankTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '';
 ALTER TABLE `#__kunena_ranks` MODIFY `rankImage` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL;

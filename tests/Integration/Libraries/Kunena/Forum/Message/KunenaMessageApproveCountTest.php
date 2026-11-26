@@ -315,4 +315,31 @@ class KunenaMessageApproveCountTest extends IntegrationTestCase implements DBTes
             'user'      => [['posts' => 2]],
         ], $this->counters());
     }
+
+    /**
+     * The time of the delete of the messages, as it is in the database.
+     */
+    private function deletedTimes(): array
+    {
+        return array_column($this->fetchAll('SELECT id, deleted_time FROM #__kunena_messages ORDER BY id'), 'deleted_time', 'id');
+    }
+
+    /**
+     * A message in the trash keeps the time of its delete when it is saved again (an edit of a moderator, a move). The save took
+     * the time away from a message deleted with its topic (state 3), and from a deleted one (state 2) read from the database (its
+     * state is text then): the task which empties the trash removed such a message for good at its next run, whatever the age.
+     */
+    public function testASavedMessageOfTheTrashKeepsTheTimeOfItsDelete(): void
+    {
+        $this->seed(KunenaForum::PUBLISHED, 1, 3, 7, [[10, 0, KunenaForum::PUBLISHED, 1000], [11, 10, KunenaForum::DELETED, 1100], [12, 10, KunenaForum::TOPIC_DELETED, 1200]]);
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_messages SET deleted_time = 5000 WHERE id IN (11, 12)')->execute();
+
+        foreach ([11, 12] as $id) {
+            $message          = KunenaMessageHelper::get($id);
+            $message->subject = 'Changed';
+            $this->assertTrue($message->save());
+        }
+
+        $this->assertEquals([10 => 0, 11 => 5000, 12 => 5000], $this->deletedTimes());
+    }
 }

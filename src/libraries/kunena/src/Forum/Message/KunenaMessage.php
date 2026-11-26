@@ -1084,9 +1084,14 @@ class KunenaMessage extends KunenaDatabaseObject
             }
         }
 
-        // When the message is set to be deleted, set the deleted time to the deleted time
-        if ($this->hold === 2) {
-            $this->deleted_time = Factory::getDate()->toUnix();
+        // A deleted message (2) or one deleted with its topic (3) has the time of its delete, which a later save keeps; any other
+        // message has none. Only the number 2 counted: a message read from the database has its state as text, and one deleted
+        // with its topic has the state 3, so a save of a message in the trash (an edit, a move) took its time away, and the task
+        // which empties the trash removed it for good at its next run, whatever the age it waits for.
+        if ((int) $this->hold === 2 || (int) $this->hold === 3) {
+            if (!(int) $this->deleted_time) {
+                $this->deleted_time = Factory::getDate()->toUnix();
+            }
         } else {
             $this->deleted_time = 0;
         }

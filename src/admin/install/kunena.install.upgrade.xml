@@ -703,6 +703,8 @@
                  The published messages were told about. -->
             <query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD `notified` tinyint(4) NOT NULL default '0' AFTER `scheduled_review`</query>
             <query mode="silenterror">UPDATE `#__kunena_messages` SET `notified` = 1 WHERE `hold` = 0</query>
+            <!-- A message in the trash without the time of its delete gets the time of the upgrade: the task which empties the trash removed it at once -->
+            <query mode="silenterror">UPDATE `#__kunena_messages` SET `deleted_time` = UNIX_TIMESTAMP() WHERE `hold` IN (2, 3) AND `deleted_time` = 0</query>
             <!-- The title and the image of a rank are 255 characters, as in the schema: the install file of the first versions of 6.x made them 250 -->
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` MODIFY `rankTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` MODIFY `rankImage` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL</query>

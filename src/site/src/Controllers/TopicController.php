@@ -3834,7 +3834,11 @@ class TopicController extends KunenaController
                     $body = trim($layout->render());
                     $mail->setBody($body);
                 } catch (Exception $e) {
-                    // TODO: display exception
+                    // No mail without its text: the report is not sent, and the reporter is told.
+                    $this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_NOT_SEND') . ' ' . $e->getMessage(), 'error');
+                    $this->setRedirectBack();
+
+                    return;
                 }
 
                 $receivers = [];

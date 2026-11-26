@@ -24,6 +24,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
@@ -269,15 +270,17 @@ abstract class ListDisplay extends KunenaControllerDisplay
         PluginHelper::importPlugin('kunena');
         KunenaParser::prepareContent($content, 'topicList_default');
 
-        // @todo: this has never worked as $this->topics does not exist here
-        // should be removed, commented out for now
-        // $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
-        //     'context' => 'kunena.topic.list',
-        //     'subject' => $this->topic,
-        //     'params'  => $params,
-        //     'page'    => 0
-        // ]);
-        // $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        // Each topic of the list for the plugins of Kunena, as the topic page does with its topic and its messages (kunena.topic,
+        // kunena.messages): the event of the list had the topic of the page as its subject, which a list has not, so it was off.
+        foreach ((array) $this->topics as $topic) {
+            $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+                'context' => 'kunena.topic.list',
+                'subject' => $topic,
+                'params'  => $params,
+                'page'    => 0,
+            ]);
+            $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        }
     }
 
     /**

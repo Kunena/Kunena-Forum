@@ -35,6 +35,15 @@ use Kunena\Forum\Libraries\User\KunenaUserSocials;
 class SocialsModel extends AdminModel
 {
     /**
+     * The component of the model. Joomla reads it from the namespace of the class (what follows "\Component\"), which the namespace
+     * of Kunena has not: it made "com_m" of it.
+     *
+     * @var    string
+     * @since  Kunena 8.0
+     */
+    protected $option = 'com_kunena';
+
+    /**
      * @param   array    $data      data
      * @param   boolean  $loadData  load data
      *

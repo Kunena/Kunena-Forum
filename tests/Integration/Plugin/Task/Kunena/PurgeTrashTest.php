@@ -15,6 +15,8 @@ namespace Kunena\Tests\Integration\Plugin\Task\Kunena;
 use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Extension\ComponentInterface;
+use Joomla\CMS\Extension\ExtensionHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Language;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -122,6 +124,11 @@ class PurgeTrashTest extends IntegrationTestCase implements DBTestInterface
             'access'      => $this->replace(KunenaAccess::class, 'instance', $this->createStub(KunenaAccess::class)),
             'plugins'     => $this->replace(PluginHelper::class, 'plugins', []),
             'components'  => $this->replace(ComponentHelper::class, 'components', ['com_kunena' => (object) ['id' => 1, 'enabled' => 1]]),
+            // The model of the trash is of com_kunena, and a model of Joomla boots its component: the booted one of the test,
+            // which has nothing (the real one needs the whole container of a site).
+            'extensions' => $this->replace(ExtensionHelper::class, 'extensions', [
+                ComponentInterface::class => ['kunena' => $this->createStub(ComponentInterface::class)],
+            ]),
         ];
 
         Factory::$container   = $container;
@@ -174,6 +181,7 @@ class PurgeTrashTest extends IntegrationTestCase implements DBTestInterface
             $this->replace(KunenaAccess::class, 'instance', $this->saved['access']);
             $this->replace(PluginHelper::class, 'plugins', $this->saved['plugins']);
             $this->replace(ComponentHelper::class, 'components', $this->saved['components']);
+            $this->replace(ExtensionHelper::class, 'extensions', $this->saved['extensions']);
             $this->replace(KunenaCategoryHelper::class, '_instances', $this->saved['categories']);
             $this->replace(KunenaUserHelper::class, '_instances', $this->saved['users']);
             $this->replace(KunenaUserHelper::class, '_me', $this->saved['me']);

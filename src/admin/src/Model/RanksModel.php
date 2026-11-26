@@ -28,6 +28,15 @@ use Joomla\Database\QueryInterface;
 class RanksModel extends ListModel
 {
     /**
+     * The component of the model. Joomla reads it from the namespace of the class (what follows "\Component\"), which the namespace
+     * of Kunena has not: it made "com_m" of it.
+     *
+     * @var    string
+     * @since  Kunena 8.0
+     */
+    protected $option = 'com_kunena';
+
+    /**
      * @param   array  $config  config
      *
      * @throws  Exception
@@ -63,13 +72,9 @@ class RanksModel extends ListModel
      */
     protected function populateState($ordering = 'rankId', $direction = 'asc')
     {
-        // For some reason kunena sets option to com_m instead of com_kunena.
-        // That is why the workaround to set the context manually
-        $this->context = 'com_kunena.admin.ranks';
-
         $app = Factory::getApplication();
 
-        // Adjust the context to support modal layouts.
+        // The context of the list (the key of its filters in the session), with the layout for the modal layouts.
         $layout        = $app->getInput()->get('layout');
         $this->context = 'com_kunena.admin.ranks';
 

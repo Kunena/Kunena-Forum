@@ -32,6 +32,15 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 class AnnouncementModel extends ListModel
 {
     /**
+     * The component of the model. Joomla reads it from the namespace of the class (what follows "\Component\"), which the namespace
+     * of Kunena has not: it made "com_m" of it.
+     *
+     * @var    string
+     * @since  Kunena 8.0
+     */
+    protected $option = 'com_kunena';
+
+    /**
      * @var     boolean
      * @since   Kunena 6.0
      */

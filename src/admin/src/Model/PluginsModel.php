@@ -26,6 +26,15 @@ use Joomla\Database\QueryInterface;
 class PluginsModel extends JoomlaPluginsModel
 {
     /**
+     * The component of the model. Joomla reads it from the namespace of the class (what follows "\Component\"), which the namespace
+     * of Kunena has not: it made "com_m" of it.
+     *
+     * @var    string
+     * @since  Kunena 8.0
+     */
+    protected $option = 'com_kunena';
+
+    /**
      * Constructor.
      *
      * @param   array                     $config   An optional associative array of configuration settings.

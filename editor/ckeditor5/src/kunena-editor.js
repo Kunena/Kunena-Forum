@@ -473,6 +473,12 @@ const KunenaEditor = {
 			element.value = editor.getData();
 		});
 		element.form?.addEventListener('submit', () => instance.updateElement(), true);
+		// The Cancel of a form is a reset: the textarea gets the message as the page gave it, the editor shows it again. The editor kept
+		// the text which was typed, and the next submit sent it (it was marked as changed).
+		element.form?.addEventListener('reset', () => {
+			// The reset event comes before the fields are reset.
+			setTimeout(() => instance.setData(element.value), 0);
+		});
 		editor.model.document.on('change:data', () => {
 			element.dataset.kunenaChanged = '1';
 		});

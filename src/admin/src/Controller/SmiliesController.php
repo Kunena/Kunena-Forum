@@ -227,10 +227,10 @@ class SmiliesController extends FormController
             return;
         }
 
-        // TODO : change this part to use other method than \Kunena\Forum\Libraries\Upload\KunenaUploadHelper::upload()
-        $upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), 'html');
+        // Under a free name in the folder of the smileys: an existing smiley with the same name stays.
+        $upload = KunenaUploadHelper::store($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath());
 
-        if ($upload) {
+        if ($upload !== null) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS'), 'success');
         } else {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE'), 'error');

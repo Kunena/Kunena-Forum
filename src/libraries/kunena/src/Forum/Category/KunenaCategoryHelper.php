@@ -1110,7 +1110,9 @@ abstract class KunenaCategoryHelper
             $cat_instances[$id]    = $kunenacategory;
         }
 
-        // TODO: remove this by adding level into table
+        // The level of each category comes from the tree, which getChildren() and getParents() need anyway: a level column in the table
+        // would be a copy to keep right on every move of a category and of every category under it, and its tree is built here in one
+        // pass over the categories, in memory.
         self::buildTree($cat_instances);
         // From the top of the tree (the parent 0 of the sections). The heap started with null, which ended the loop at once: every
         // category had level 0, and the lists of the categories (search, new topic, move, the jump menu, the backend) were flat.

@@ -30,12 +30,13 @@ class StatsModel extends AdminModel
      * @param   array    $data      data
      * @param   boolean  $loadData  load data
      *
-     * @return void
+     * @return false  This model has no form.
      *
      * @since  Kunena 6.0
      */
     public function getForm($data = [], $loadData = true)
     {
-        // TODO: Implement getForm() method.
+        // No form: this model does not use one (the method is kept for the callers of getForm()).
+        return false;
     }
 }

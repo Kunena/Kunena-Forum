@@ -137,7 +137,8 @@ class KunenaTopic extends KunenaDatabaseObject
         'post.attachment.createfile'  => ['Unlocked'],
         'post.attachment.delete'      => [],
         'post.attachment.private'     => [],
-        // TODO: In the future we might want to restrict this: array('Read','Unlocked'),
+        // No Read and no Unlocked for post.attachment.delete and .private, on purpose (see topic.post.attachment.delete in
+        // KunenaCategory): a user removes his own files also from a locked topic, from the list of his profile.
     ];
 
     /**

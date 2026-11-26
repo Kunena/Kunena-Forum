@@ -140,7 +140,9 @@ class KunenaCategory extends KunenaDatabaseObject
         'topic.post.attachment.createfile'  => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'],
         'topic.post.attachment.delete'      => ['NotBanned'],
         'topic.post.attachment.private'     => ['NotBanned'],
-        // TODO: In the future we might want to restrict this: array('Read', 'NotBanned', 'Unlocked'),
+        // topic.post.attachment.delete and .private ask no Read and no Unlocked on purpose: the attachment checks its uploader (or a
+        // moderator) itself, and a user removes his own files from the list of his profile also when their topic is locked or he
+        // may not read their category any more (an edit of a locked topic is refused by the edit itself).
         // topic.post.permdelete is as topic.permdelete: the rule Permdelete of the message and of the topic (an administrator, or a
         // moderator when the option allows it) decides. With 'Admin' a moderator with that option deleted one message with its
         // button, but not several messages in a list of posts.

@@ -118,4 +118,89 @@ class KunenaMediaEmbedTest extends UnitTestCase
         $this->assertNull(KunenaMediaEmbed::spotify('www.deezer.com', '/track/3135556'));
         $this->assertNull(KunenaMediaEmbed::deezer('open.spotify.com', '/track/4cOdK2wGLETKBW3PvgPWqT'));
     }
+
+    private const DID = 'did:plc:z72i7hdynmk6r22z27h6tvur';
+
+    /**
+     * The handles which the resolver of the test was asked for.
+     */
+    private array $asked = [];
+
+    protected function tearDown(): void
+    {
+        KunenaMediaEmbed::$blueskyResolver = null;
+
+        parent::tearDown();
+    }
+
+    /**
+     * The frame of a Bluesky link, with a resolver which knows the handle bsky.app only.
+     */
+    private function bluesky(string $host, string $path): ?string
+    {
+        KunenaMediaEmbed::$blueskyResolver = function (string $handle): ?string {
+            $this->asked[] = $handle;
+
+            return $handle === 'bsky.app' ? self::DID : null;
+        };
+
+        return KunenaMediaEmbed::bluesky($host, $path);
+    }
+
+    public function testABlueskyPostIsShownInTheFrameOfBluesky(): void
+    {
+        $html = $this->bluesky('bsky.app', '/profile/bsky.app/post/3l6oveex3ii2l');
+
+        $this->assertNotNull($html);
+        $this->assertMatchesRegularExpression(
+            '#src="https://embed\.bsky\.app/embed/' . self::DID . '/app\.bsky\.feed\.post/3l6oveex3ii2l\?id=([0-9a-f]{12})"#',
+            $html
+        );
+        preg_match('#\?id=([0-9a-f]{12})"#', $html, $id);
+        $this->assertStringContainsString('data-bluesky-id="' . $id[1] . '"', $html, 'The frame has the id which it sends with its height.');
+        $this->assertStringContainsString('class="kunena-bluesky"', $html);
+        $this->assertSame(['bsky.app'], $this->asked);
+    }
+
+    public function testALinkWithTheDidAsksNothing(): void
+    {
+        $html = $this->bluesky('bsky.app', '/profile/' . self::DID . '/post/3l6oveex3ii2l/');
+
+        $this->assertStringContainsString('/embed/' . self::DID . '/app.bsky.feed.post/3l6oveex3ii2l?id=', (string) $html);
+        $this->assertSame([], $this->asked);
+    }
+
+    public function testAHandleIsAskedInSmallLetters(): void
+    {
+        $this->assertNotNull($this->bluesky('bsky.app', '/profile/BSKY.app/post/3l6oveex3ii2l'));
+        $this->assertSame(['bsky.app'], $this->asked);
+    }
+
+    public static function notBluesky(): array
+    {
+        return [
+            'another host'       => ['example.com', '/profile/bsky.app/post/3l6oveex3ii2l'],
+            'a lookalike host'   => ['bsky.app.evil.com', '/profile/bsky.app/post/3l6oveex3ii2l'],
+            'a profile'          => ['bsky.app', '/profile/bsky.app'],
+            'a feed'             => ['bsky.app', '/profile/bsky.app/feed/whats-hot'],
+            'an unknown handle'  => ['bsky.app', '/profile/nobody.example/post/3l6oveex3ii2l'],
+            'a handle no domain' => ['bsky.app', '/profile/localhost/post/3l6oveex3ii2l'],
+            'a wrong DID'        => ['bsky.app', '/profile/did:plc:short/post/3l6oveex3ii2l'],
+            'a quote in the key' => ['bsky.app', '/profile/bsky.app/post/3l6"onload="alert(1)'],
+            'an empty path'      => ['bsky.app', ''],
+        ];
+    }
+
+    #[DataProvider('notBluesky')]
+    public function testNoFrameForOtherLinks(string $host, string $path): void
+    {
+        $this->assertNull($this->bluesky($host, $path));
+    }
+
+    public function testADidOfTheResolverIsChecked(): void
+    {
+        KunenaMediaEmbed::$blueskyResolver = static fn (): string => 'did:plc:x"><script>';
+
+        $this->assertNull(KunenaMediaEmbed::bluesky('bsky.app', '/profile/bsky.app/post/3l6oveex3ii2l'));
+    }
 }

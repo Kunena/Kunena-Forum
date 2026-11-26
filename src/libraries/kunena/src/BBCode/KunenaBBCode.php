@@ -724,11 +724,23 @@ class KunenaBBCode extends BBCode
             }
         }
 
-        if (isset($params['host']) && strstr($params['host'], 'bsky.')) {
-            $path = explode('/', $params['path']);
+        // A link to a Bluesky post: the post in the frame of Bluesky, which tells its height to bluesky-embed.js.
+        if (!empty($this->config->autoEmbedBluesky) && empty($this->parent->forceMinimal) && isset($params['host'])) {
+            $embed = KunenaMediaEmbed::bluesky($params['host'], $params['path']);
 
-            if (isset($path[3])) {
-                // TODO : add render for bluesky
+            if ($embed !== null) {
+                $document = Factory::getApplication()->getDocument();
+
+                if ($document instanceof HtmlDocument) {
+                    $document->getWebAssetManager()->registerAndUseScript(
+                        'kunena.bluesky-embed',
+                        Uri::root() . 'media/kunena/core/js/bluesky-embed.js',
+                        [],
+                        ['defer' => true]
+                    );
+                }
+
+                return $embed;
             }
         }
 

@@ -53,6 +53,7 @@ use SimpleXMLElement;
  * @property string $autoEmbedSoundcloud          Auto Embed Soundcloud items
  * @property int    $autoEmbedSpotify             Auto Embed Spotify items
  * @property int    $autoEmbedDeezer              Auto Embed Deezer items
+ * @property int    $autoEmbedBluesky             Auto Embed Bluesky posts
  * @property int    $displayNameField             Field with the nickname (the name which others see)
  * @property int    $linkPreview                  Show a card (title, description, picture) for the links in messages
  * @property int    $linkPreviewMax               Most cards in one message

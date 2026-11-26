@@ -21,6 +21,7 @@ All the pages have the label `feature`. The number of the issue is the issue in 
 | [Date fields of the browser](features/date-fields.md) | Users, administrators |  | The date fields are the date fields of the browser, with their own calendar in the user's language; the dates of an announcement keep their time. |
 | [Links in a new window from the CKEditor link form](features/link-target.md) | Users | [#7793](https://github.com/Kunena/Kunena-Forum/issues/7793) | The link form of CKEditor asks whether a link opens in a new window. |
 | [Spotify and Deezer players](features/spotify-and-deezer.md) | Administrators, users | [#3769](https://github.com/Kunena/Kunena-Forum/issues/3769) | A link to a Spotify or Deezer track, album, playlist, show or episode is shown as the player of that service. |
+| [Bluesky posts](features/bluesky-posts.md) | Administrators, users | | A link to a Bluesky post is shown as the post, in the frame of Bluesky. |
 | [Maps with OpenStreetMap](features/maps-openstreetmap.md) | Administrators, users | [#6088](https://github.com/Kunena/Kunena-Forum/issues/6088) | The [map] BBCode and the location links can use OpenStreetMap, without a key. |
 | [Mentions: search while typing, e-mail and SCEditor](features/mentions.md) | Users |  | Typing @ and some letters finds the users, also on a new topic and in the SCEditor, and a mentioned user can get an e-mail. |
 | [Tag topics with Joomla Tags](features/tags.md) | Administrators, moderators, users |  | Topics get tags of the Joomla component Tags, shown as labels and usable as a filter. |

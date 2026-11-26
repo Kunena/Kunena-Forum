@@ -58,6 +58,7 @@ class ConfigDefinitionTest extends UnitTestCase
             'own domains'                => ['ownDomains', 'textarea', ''],
             'spotify player'             => ['autoEmbedSpotify', 'radio', '1'],
             'deezer player'              => ['autoEmbedDeezer', 'radio', '1'],
+            'bluesky post'               => ['autoEmbedBluesky', 'radio', '1'],
         ];
     }
 

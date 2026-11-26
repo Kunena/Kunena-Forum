@@ -215,7 +215,6 @@ class UserModel extends KunenaModel
      */
     public function getQuerySearch()
     {
-        // TODO: add strict search from the beginning of the name
         $search = $this->getState('list.search');
         $where  = [];
 
@@ -223,7 +222,9 @@ class UserModel extends KunenaModel
             $db = $this->getDatabase();
 
             // The user is found by the username, the real name or the display name.
-            $where[] = KunenaUserName::getSearchCondition((string) $search, 'u');
+            // A name which starts with the text when the option says so ("Search from the beginning of the name"), else one which
+            // has it anywhere.
+            $where[] = KunenaUserName::getSearchCondition((string) $search, 'u', false, (bool) KunenaFactory::getConfig()->userlistSearchFromStart);
 
             $where = 'AND (' . implode(' OR ', $where) . ')';
         } else {

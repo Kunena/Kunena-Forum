@@ -59,6 +59,7 @@ class ConfigDefinitionTest extends UnitTestCase
             'spotify player'             => ['autoEmbedSpotify', 'radio', '1'],
             'deezer player'              => ['autoEmbedDeezer', 'radio', '1'],
             'bluesky post'               => ['autoEmbedBluesky', 'radio', '1'],
+            'user list from the start'   => ['userlistSearchFromStart', 'radio', '0'],
         ];
     }
 

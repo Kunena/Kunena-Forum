@@ -1868,6 +1868,16 @@
                 label="COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS"
                 description="COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC" />
             <field
+                name="userlistSearchFromStart"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_SEARCH_FROM_START"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_SEARCH_FROM_START_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
                 name="userlistOnline"
                 type="radio"
                 default="1"

@@ -293,6 +293,7 @@ use SimpleXMLElement;
  * @property string $userlistOnline               Online Status
  * @property string $userlistPosts                Show Number of Posts
  * @property string $userlistRows                 Users Per Page
+ * @property int    $userlistSearchFromStart      The search of the user list finds the names which start with the text
  * @property string $userlistUserHits             Show Profile Hits
  * @property string $username                     Display User Name
  * @property string $utmSource                    UTM Source

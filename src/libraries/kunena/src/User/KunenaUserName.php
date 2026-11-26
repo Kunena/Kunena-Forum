@@ -208,19 +208,19 @@ abstract class KunenaUserName
      * real names, a part of a username (the name with which he logs in, which the forum keeps for itself) still found him, and
      * searching letter by letter gave the username of each member; the same for the real names when it shows the usernames.
      *
-     * @param   string  $search  The text to look for.
-     * @param   string  $alias   The alias of the table of the Joomla users in the query.
-     * @param   bool    $exact   The whole name (the option "exact name" of the search of the messages), not a part of it.
+     * @param   string  $search     The text to look for.
+     * @param   string  $alias      The alias of the table of the Joomla users in the query.
+     * @param   bool    $exact      The whole name (the option "exact name" of the search of the messages), not a part of it.
+     * @param   bool    $fromStart  A name which starts with the text (the option of the user list), not one which has it anywhere.
      *
      * @return  string  The condition (without AND).
      *
      * @since   Kunena 8.0
      */
-    public static function getSearchCondition(string $search, string $alias = 'a', bool $exact = false): string
+    public static function getSearchCondition(string $search, string $alias = 'a', bool $exact = false, bool $fromStart = false): string
     {
         $db       = Factory::getContainer()->get(DatabaseInterface::class);
-        $wildcard = $exact ? '' : '%';
-        $like     = $db->quote($wildcard . $db->escape($search, true) . $wildcard, false);
+        $like     = $db->quote(($exact || $fromStart ? '' : '%') . $db->escape($search, true) . ($exact ? '' : '%'), false);
         $username = $db->quoteName($alias . '.username');
         $name     = $db->quoteName($alias . '.name');
 

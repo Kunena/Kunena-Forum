@@ -127,15 +127,29 @@ class KunenaUserNameSearchConditionTest extends IntegrationTestCase implements D
     }
 
     /**
+     * The option of the user list "Search from the beginning of the name" ("TODO: add strict search from the beginning of the
+     * name"): the names which start with the text, not those which have it anywhere.
+     */
+    public function testAStrictSearchFindsTheNamesWhichStartWithTheText(): void
+    {
+        $this->configure(KunenaUserName::REALNAME, false);
+
+        $this->assertSame([self::JOE, self::ANN, self::BOB], $this->find('Real'), 'anywhere: the end of the names');
+        $this->assertSame([], $this->find('Real', true), 'from the start: no name starts with Real');
+        $this->assertSame([self::ANN], $this->find('Ann', true));
+        $this->assertSame([self::ANN], $this->find('Ann Real', true), 'the whole name starts with itself');
+    }
+
+    /**
      * The ids of the users which the condition finds, in order.
      */
-    private function find(string $search): array
+    private function find(string $search, bool $fromStart = false): array
     {
         $db    = $this->getDBDriver();
         $query = $db->getQuery(true)
             ->select($db->quoteName('a.id'))
             ->from($db->quoteName('#__users', 'a'))
-            ->where(KunenaUserName::getSearchCondition($search, 'a'))
+            ->where(KunenaUserName::getSearchCondition($search, 'a', false, $fromStart))
             ->order($db->quoteName('a.id'));
 
         return array_map('intval', $db->setQuery($query)->loadColumn());

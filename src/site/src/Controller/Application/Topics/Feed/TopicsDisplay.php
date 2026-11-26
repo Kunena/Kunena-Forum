@@ -242,9 +242,10 @@ class TopicsDisplay extends KunenaControllerDisplay
         KunenaUserHelper::loadUsers(array_map(static fn ($message) => \is_object($message) ? $message->userid : 0, (array) $this->messages));
 
         foreach ($this->messages as $message) {
+            // A message whose topic was not loaded (its topic is gone, or not readable): only that message is left out (all the messages
+            // after it were).
             if (!isset($this->topics[$message->thread])) {
-                // TODO: INTERNAL ERROR
-                return;
+                continue;
             }
 
             $topic    = $this->topics[$message->thread];

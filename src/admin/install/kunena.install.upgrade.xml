@@ -683,6 +683,8 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_rate` ADD UNIQUE KEY `topic_user` (`topic_id`, `userid`)</query>
             <!-- The files of the private attachments get a name which nobody can guess (their folder is served by the site) -->
             <phpfile name="8.0.0-2026-10-27_hide_private_attachments"/>
+            <!-- A forum which comes from Kunena 7 and never saved its settings keeps Aurelia (Agora is the default of a new forum) -->
+            <phpfile name="8.0.0-2026-11-26_keep_template_of_upgraded_forum"/>
             <!-- The rank images of Kunena are SVG images: the ranks with an image of Kunena take the new one (an own image stays) -->
             <query mode="silenterror">UPDATE `#__kunena_ranks` SET `rankImage` = REPLACE(`rankImage`, '.gif', '.svg') WHERE `rankImage` IN ('rank0.gif', 'rank1.gif', 'rank2.gif', 'rank3.gif', 'rank4.gif', 'rank5.gif', 'rank6.gif', 'rankadmin.gif', 'rankmod.gif', 'rankbanned.gif', 'rankdisabled.gif', 'rankspammer.gif')</query>
             <!-- The smilies get a manual order: the current order (by id) stays the same, a second run keeps an order set since -->

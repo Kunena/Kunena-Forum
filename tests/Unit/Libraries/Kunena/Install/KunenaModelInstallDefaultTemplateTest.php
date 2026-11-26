@@ -31,16 +31,13 @@ class KunenaModelInstallDefaultTemplateTest extends UnitTestCase
 
     public function testAnUpgradedForumKeepsItsTemplate(): void
     {
-        $source = Files::read('src/libraries/kunena/src/Install/KunenaModelInstall.php');
+        // The step of the upgrade of 8.0 which gives Aurelia to a forum from Kunena 7 without a stored template (it was in
+        // migrateConfig() of the old web installer, which nothing ran: an upgraded forum got Agora). Its behaviour is tested in
+        // Integration/Component/Administrator/Install/KeepTemplateOfUpgradedForumTest.php.
+        $xml  = simplexml_load_file(Files::path('src/admin/install/kunena.install.upgrade.xml'));
+        $step = '8.0.0-2026-11-26_keep_template_of_upgraded_forum';
 
-        // migrateConfig() runs on an upgrade only, and saves the configuration with the defaults of config.xml: before the save, a
-        // forum without a stored template gets Aurelia, which it had.
-        $this->assertSame(1, preg_match('/public function migrateConfig\(\): void\s*\{(.*?)\n    \}/s', $source, $m));
-        $guard = strpos($m[1], "if (!ComponentHelper::getParams('com_kunena')->exists('template')) {\n            \$config->template = 'aurelia';");
-        $save  = strrpos($m[1], '$config->save();');
-
-        $this->assertNotFalse($guard);
-        $this->assertNotFalse($save);
-        $this->assertLessThan($save, $guard);
+        $this->assertCount(1, $xml->xpath('//version[@version="8.0.0-DEV"]/phpfile[@name="' . $step . '"]'));
+        $this->assertFileExists(Files::path('src/admin/install/sql/updates/php/' . $step . '.php'));
     }
 }

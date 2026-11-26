@@ -16,6 +16,7 @@ namespace Kunena\Forum\Plugin\Finder\Kunena\Extension;
 \defined('_JEXEC') or die('');
 
 use Exception;
+use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Finder\AfterDeleteEvent;
 use Joomla\CMS\Event\Finder\AfterSaveEvent;
@@ -113,6 +114,15 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @since  Kunena 7.1
      */
     protected ?array $viewLevels = \null;
+
+    /**
+     * The user groups of the site, read once: 'parents' (id => id of the parent group) and 'always' (the groups of the
+     * administrators of the site).
+     *
+     * @var    ?array
+     * @since  Kunena 8.0
+     */
+    protected ?array $userGroups = \null;
 
     /**
      * The category and the state of the topics which are being saved (id => [category, hold]), from onFinderBeforeSave().
@@ -685,7 +695,7 @@ final class Kunena extends Adapter implements SubscriberInterface
         $item->state     = \intval($visible);
         $item->language  = '*';
 
-        // TODO: add access control
+        // The view level which only the users who may read the category have (getAccessLevel()).
         $item->access = $this->getAccessLevel($item->catid);
 
         // Set the item type.
@@ -946,13 +956,35 @@ final class Kunena extends Adapter implements SubscriberInterface
             }
         }
 
+        // The user groups of the site, for a category of a user group: their tree, and the groups of the administrators, who read
+        // every category.
+        if ($category->accesstype === 'joomla.group' && $this->userGroups === \null) {
+            $db   = $this->getDatabase();
+            $rows = $db->setQuery($db->createQuery()->select($db->quoteName(['id', 'parent_id']))->from($db->quoteName('#__usergroups')))->loadObjectList();
+
+            $this->userGroups = ['parents' => [], 'always' => []];
+
+            foreach ($rows as $row) {
+                $this->userGroups['parents'][(int) $row->id] = (int) $row->parent_id;
+
+                if (Access::checkGroup((int) $row->id, 'core.admin')) {
+                    $this->userGroups['always'][] = (int) $row->id;
+                }
+            }
+        }
+
         // A category of a view level has the level of the category (0 is a level which nobody has: Public, as before); a category of
-        // a user group the narrowest level of that group (Kunena 7.1: it was 0, so the registered users did not find its messages).
+        // a user group a level which only its readers have (KunenaFinderAccess::groupLevel()), else nobody.
         return KunenaFinderAccess::viewLevel(
             (string) $category->accesstype,
             (int) $category->access ?: 1,
             (int) $category->pubAccess,
-            $this->viewLevels
+            $this->viewLevels,
+            ($this->userGroups ?? []) + [
+                'pubRecurse'   => (bool) $category->pubRecurse,
+                'adminAccess'  => (int) $category->adminAccess,
+                'adminRecurse' => (bool) $category->adminRecurse,
+            ]
         );
     }
 }

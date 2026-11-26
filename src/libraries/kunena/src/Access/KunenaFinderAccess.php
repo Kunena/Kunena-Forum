@@ -37,12 +37,13 @@ abstract class KunenaFinderAccess
      * @param   integer  $access      The view level of a category of the type joomla.level.
      * @param   integer  $pubAccess   The group which may read a category of the type joomla.group.
      * @param   array    $levels      All view levels of the site: id => list of the groups of the level.
+     * @param   array    $groups      For joomla.group: the rules of the category and the groups of the site, see groupLevel().
      *
-     * @return  integer  A view level, or NOBODY.
+     * @return  integer  The id of a view level, or NOBODY.
      *
      * @since   Kunena 7.1
      */
-    public static function viewLevel(string $accessType, int $access, int $pubAccess, array $levels): int
+    public static function viewLevel(string $accessType, int $access, int $pubAccess, array $levels, array $groups = []): int
     {
         if ($accessType === 'joomla.level') {
             // The level of the category is the level of its messages -- if it is a level of the site.
@@ -50,28 +51,98 @@ abstract class KunenaFinderAccess
         }
 
         if ($accessType === 'joomla.group') {
-            // The level which is read by the fewest groups, of those which the group belongs to: the visitors of other groups
-            // must not get a level which is wider than the category.
-            $best = self::NOBODY;
-            $size = PHP_INT_MAX;
-
-            foreach ($levels as $id => $groups) {
-                $groups = array_map('intval', (array) $groups);
-
-                if (!\in_array($pubAccess, $groups, true)) {
-                    continue;
-                }
-
-                if (\count($groups) < $size || (\count($groups) === $size && (int) $id < $best)) {
-                    $best = (int) $id;
-                    $size = \count($groups);
-                }
-            }
-
-            return $best;
+            return self::groupLevel($pubAccess, $levels, $groups);
         }
 
         // Other types of access (the ones of other extensions) can not be expressed as a view level: not shown.
         return self::NOBODY;
+    }
+
+    /**
+     * The view level of a category of a user group: a level which only users who may read the category have.
+     *
+     * Kunena gives the category to the members of its group (pubAccess), with the members of the groups under it when pubRecurse is
+     * set, to the members of its admin group (adminAccess, adminRecurse) and to the administrators of the site. Joomla gives a view
+     * level to the members of its groups and of all the groups under them. So a level can be used only when each of its groups, with
+     * all the groups under it, may read the category. The level which was used before ("the fewest groups") gave the messages of a
+     * category "this group only" to the groups under it, and those of a category of a group to the other groups of the level.
+     * Of the levels which may be used, one with the group of the category, the narrowest, the lowest id; when none, nobody.
+     *
+     * @param   integer  $pubAccess  The group of the category.
+     * @param   array    $levels     The view levels: id => groups.
+     * @param   array    $groups     'parents' (group id => id of its parent group; without it each group has no group under it),
+     *                               'pubRecurse' (default true), 'adminAccess' (0: none), 'adminRecurse' (default true) and 'always'
+     *                               (the groups which read every category: the administrators of the site).
+     *
+     * @return  integer
+     *
+     * @since   Kunena 8.0
+     */
+    public static function groupLevel(int $pubAccess, array $levels, array $groups = []): int
+    {
+        $parents  = array_map('intval', (array) ($groups['parents'] ?? []));
+        $children = [];
+
+        foreach ($parents as $child => $parent) {
+            $children[$parent][] = (int) $child;
+        }
+
+        // A group with all the groups under it.
+        $subtree = static function (int $group) use ($children): array {
+            $found = [$group => true];
+            $todo  = [$group];
+
+            while ($todo) {
+                foreach ($children[array_pop($todo)] ?? [] as $child) {
+                    if (!isset($found[$child])) {
+                        $found[$child] = true;
+                        $todo[]        = $child;
+                    }
+                }
+            }
+
+            return $found;
+        };
+
+        // The groups whose members may read the category.
+        $readers = [];
+
+        foreach ([[$pubAccess, $groups['pubRecurse'] ?? true], [(int) ($groups['adminAccess'] ?? 0), $groups['adminRecurse'] ?? true]] as [$group, $recurse]) {
+            if ($group > 0) {
+                $readers += $recurse ? $subtree($group) : [$group => true];
+            }
+        }
+
+        foreach ((array) ($groups['always'] ?? []) as $group) {
+            $readers += $subtree((int) $group);
+        }
+
+        $best = self::NOBODY;
+        $rank = null;
+
+        foreach ($levels as $id => $levelGroups) {
+            $levelGroups = array_map('intval', (array) $levelGroups);
+
+            if (!$levelGroups) {
+                continue;
+            }
+
+            // Every group of the level, with the groups under it, reads the category.
+            foreach ($levelGroups as $group) {
+                if (array_diff_key($subtree($group), $readers)) {
+                    continue 2;
+                }
+            }
+
+            // The group of the category first, then the narrowest level, then the lowest id.
+            $candidate = [\in_array($pubAccess, $levelGroups, true) ? 0 : 1, \count($levelGroups), (int) $id];
+
+            if ($rank === null || $candidate < $rank) {
+                $rank = $candidate;
+                $best = (int) $id;
+            }
+        }
+
+        return $best;
     }
 }

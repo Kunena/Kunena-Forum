@@ -493,9 +493,10 @@ class KunenaModelInstall extends BaseDatabaseModel
         return true;
     }
 
-    // TODO: move to migration
-
     /**
+     * Deletes the menu of the forum (the menu type kunenamenu with its items): for Tools, which makes the menu again, and for the
+     * uninstall of the package. It is no step of an upgrade.
+     *
      * @return  void
      *
      * @throws  Exception

@@ -98,7 +98,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 </th>
                                 <td><?php echo $this->escape($attachment->filetype); ?></td>
                                 <td><?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_A_FILESIZE_KB'); ?></td>
-                                <td><?php echo $this->escape($message->getAuthor()->getName()); ?></td>
+                                <td><?php echo $this->escape($message->getAuthor()->getName('', false)); ?></td>
                                 <td><?php echo $this->escape($message->subject); ?></td>
                                 <td class="text-center d-none d-lg-table-cell"><?php echo intval($attachment->id); ?></td>
                             </tr>

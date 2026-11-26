@@ -438,7 +438,7 @@ abstract class KunenaDigest
                 . '<a href="' . $escape($base . $list[0]->getPermaUrl(null, false)) . '">' . $escape((string) $topic->subject) . '</a></h2><ul>';
 
             foreach ($list as $message) {
-                $body .= '<li><strong>' . $escape((string) $message->getAuthor()->getName()) . '</strong> &middot; '
+                $body .= '<li><strong>' . $escape((string) $message->getAuthor()->getName('', false)) . '</strong> &middot; '
                     . $escape($message->getTime()->toKunena('datetime')) . '<br>'
                     . $escape((string) mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags(KunenaParser::stripBBCode((string) $message->message, 0, false)))), 0, 200, 'UTF-8'))
                     . ' <a href="' . $escape($base . $message->getPermaUrl(null, false)) . '">' . Text::_('COM_KUNENA_DIGEST_READ') . '</a></li>';

@@ -324,7 +324,7 @@ class CategoryController extends KunenaController
                     $this->app->enqueueMessage(
                         Text::sprintf(
                             'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED',
-                            $this->escape($user->getName()),
+                            $this->escape($user->getName('', false)),
                             $this->escape($category->name)
                         ),
                         'success'

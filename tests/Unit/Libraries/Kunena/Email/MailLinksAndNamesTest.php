@@ -44,4 +44,14 @@ class MailLinksAndNamesTest extends UnitTestCase
         $this->assertSame(2, substr_count($digest, '->getPermaUrl(null, false))'));
         $this->assertSame(0, preg_match('/getPermaUrl\(\)/', $digest), 'No escaped address in the digest.');
     }
+
+    public function testTheNameOfAUserIsEscapedOnce(): void
+    {
+        foreach (['src/libraries/kunena/src/Email/KunenaDigest.php', 'src/admin/src/Controller/CategoryController.php', 'src/admin/tmpl/attachments/default.php'] as $file) {
+            $source = Files::read($file);
+
+            $this->assertSame(0, preg_match('/escape\([^;\n]*->getName\(\)\)/', $source), $file);
+            $this->assertSame(1, preg_match('/escape\([^;\n]*->getName\(\'\', false\)\)/', $source), $file);
+        }
+    }
 }

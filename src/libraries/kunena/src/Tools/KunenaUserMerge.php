@@ -192,7 +192,7 @@ class KunenaUserMerge
             }
 
             // The name of the author kept on his messages.
-            $name  = (string) KunenaUserHelper::get($into)->getName();
+            $name  = (string) KunenaUserHelper::get($into)->getName('', false);
             $query = $db->createQuery()
                 ->update($db->quoteName('#__kunena_messages'))
                 ->set($db->quoteName('name') . ' = :name')

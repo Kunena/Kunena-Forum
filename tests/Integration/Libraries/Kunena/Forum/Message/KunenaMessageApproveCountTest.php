@@ -342,4 +342,21 @@ class KunenaMessageApproveCountTest extends IntegrationTestCase implements DBTes
 
         $this->assertEquals([10 => 0, 11 => 5000, 12 => 5000], $this->deletedTimes());
     }
+
+    /**
+     * The name of the author which a message keeps is his name as it is. It was kept escaped for HTML ("Tom &amp; Jerry"), and
+     * escaped again where the kept name is shown: the post of a user who was deleted, the API, a feed.
+     */
+    public function testTheNameKeptOnAMessageIsNotEscaped(): void
+    {
+        $name = $this->getDBDriver()->quote('Tom & "Jerry"');
+        $this->getDBDriver()->setQuery("UPDATE #__users SET name = $name, username = $name WHERE id = " . self::AUTHOR)->execute();
+        $this->seed(KunenaForum::PUBLISHED, 1, 3, 7, [[10, 0, KunenaForum::PUBLISHED, 1000]]);
+
+        $message          = KunenaMessageHelper::get(10);
+        $message->subject = 'Changed';
+        $this->assertTrue($message->save());
+
+        $this->assertSame('Tom & "Jerry"', $this->fetchAll('SELECT name FROM #__kunena_messages WHERE id = 10')[0]['name']);
+    }
 }

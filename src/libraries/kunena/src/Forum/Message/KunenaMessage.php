@@ -1035,7 +1035,9 @@ class KunenaMessage extends KunenaDatabaseObject
                 $this->name = Text::_('COM_KUNENA_USERNAME_ANONYMOUS');
             }
         } else {
-            $this->name = $author->getName();
+            // The name as it is, not escaped for HTML: it is text of the database, escaped where it is shown. It was stored escaped
+            // ("Tom &amp; Jerry"), and shown escaped again where the stored name is used (the post of a deleted user, the API, a feed).
+            $this->name = $author->getName('', false);
         }
 
         if (!empty($this->email)) {

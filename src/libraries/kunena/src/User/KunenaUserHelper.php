@@ -21,6 +21,7 @@ use BadMethodCallException;
 use Exception;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\CMS\User\UserHelper;
@@ -1031,13 +1032,26 @@ abstract class KunenaUserHelper
         // Create a 'stream' transport.
         $http = new Http($options, $transport);
 
-        // TODO : prevent to do a request with a private or local IP
+        // A private, local or reserved address (a test site, a proxy which hides the address of the visitor) tells the service
+        // nothing about a spammer: a report with it is refused (and would report the network of the site), a check leaves it out.
+        // In the debug mode of Kunena it is sent, to test the reports on a local site.
+        $public = filter_var((string) ($data['ip'] ?? ''), FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false
+            || KunenaFactory::getConfig()->debug;
+
         if ($type == 'add') {
+            if (!$public) {
+                throw new Exception(Text::_('COM_KUNENA_REPORTSPAM_PRIVATE_IP'));
+            }
+
             $datatosend = ['username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email'], 'api_key' => $data['stopForumSpamKey'], 'evidence' => $data['evidence']];
 
             $response = $http->post('https://www.stopforumspam.com/add', $datatosend);
         } elseif ($type == 'api') {
             $datatosend = ['username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email']];
+
+            if (!$public) {
+                unset($datatosend['ip_addr']);
+            }
 
             $response = $http->post('https://www.stopforumspam.com/api', $datatosend);
         } else {

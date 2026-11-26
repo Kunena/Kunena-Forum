@@ -2521,12 +2521,13 @@ class KunenaCategory extends KunenaDatabaseObject
                 $this->authorised[$user->userid] = KunenaAccess::getInstance()->authoriseActions($this, $user->userid);
             }
 
-            if (
-                isset($this->authorised[$user->userid][$action])
-                && $this->authorised[$user->userid][$action] === false
-            ) {
+            $forced = $this->authorised[$user->userid][$action] ?? null;
+
+            if ($forced instanceof KunenaExceptionAuthorise) {
+                // A plugin refuses the action with its own reason.
+                $this->_authcache[$user->userid][$action] = $forced;
+            } elseif ($forced === false) {
                 // Plugin forces authorisation to fail.
-                // TODO: allow plugin to customise the error.
                 $this->_authcache[$user->userid][$action] = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $user->userid ? 403 : 401);
             } else {
                 // Do the authorisation.

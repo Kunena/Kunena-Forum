@@ -25,6 +25,7 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Event\KunenaGetAccessControlEvent;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -138,11 +139,12 @@ class KunenaAccess
      * Authorise user actions in a category.
      *
      * Function returns a list of authorised actions. Missing actions are threaded as inherit.
+     * The value of an action is true (allowed), false (refused) or a KunenaExceptionAuthorise (refused with that reason).
      *
      * @param   KunenaCategory  $category  category
      * @param   int             $userid    user id
      *
-     * @return  array
+     * @return  array<string, bool|KunenaExceptionAuthorise>
      *
      * @since   Kunena 6.0
      */
@@ -161,7 +163,17 @@ class KunenaAccess
                 $sublist = $access->getAuthoriseActions($category, $userid);
 
                 foreach ($sublist as $key => $value) {
-                    $list[$key] = !empty($list[$key]) || $value;
+                    // A plugin refuses an action with false, or with an exception whose message and code are shown to the
+                    // user (KunenaExceptionAuthorise). A plugin which allows it wins over those which refuse it.
+                    if ($value instanceof KunenaExceptionAuthorise) {
+                        if (($list[$key] ?? false) !== true) {
+                            $list[$key] = $value;
+                        }
+                    } elseif ($value) {
+                        $list[$key] = true;
+                    } elseif (!isset($list[$key])) {
+                        $list[$key] = false;
+                    }
                 }
             }
         }

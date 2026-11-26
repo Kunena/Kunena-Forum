@@ -72,11 +72,13 @@ class CategoryDisplay extends KunenaControllerDisplay
 
             try {
                 $category->tryAuthorise('read');
-            } catch (Exception $response) {
-                // TODO: how to throw or show the exception ?
+                $topics = $model->getTopics();
+            } catch (Exception $e) {
+                // The list stays empty and says why (the list of topics only has the topics of readable categories anyway).
+                $topics            = [];
+                $response['error'] = $e->getMessage();
+                Factory::getApplication()->setHeader('status', (int) $e->getCode() ?: 403, true);
             }
-
-            $topics = $model->getTopics();
 
             foreach ($topics as $topic) {
                 $item                    = new StdClass();

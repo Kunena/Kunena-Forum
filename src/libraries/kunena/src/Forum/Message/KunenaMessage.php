@@ -968,13 +968,11 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         if (!$user->userid) {
-            // TODO: better error message
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 401);
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_LOGIN'), 401);
         }
 
         if (!$this->userid || $this->userid == $user->userid) {
-            // TODO: better error message
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_NOT_OWN'), 403);
         }
 
         return;

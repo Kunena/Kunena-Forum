@@ -270,6 +270,19 @@ class Com_KunenaInstallerScript extends InstallerScript
             // Do nothing: the uninstall goes on.
         }
 
+        try {
+            // The mail templates of the forum (subscription, moderator, mention, report...): Joomla does not remove the templates
+            // of an extension. The rows of the templates of Kunena 6 have no extension, their id tells whose they are. (This was in
+            // the uninstall of the old web installer, which nothing ran: the templates stayed in Mail Templates of Joomla.)
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery()
+                ->delete($db->quoteName('#__mail_templates'))
+                ->where('(' . $db->quoteName('extension') . ' = ' . $db->quote('com_kunena') . ' OR ' . $db->quoteName('template_id') . ' LIKE ' . $db->quote('com\_kunena.%') . ')');
+            $db->setQuery($query)->execute();
+        } catch (Throwable $e) {
+            // Do nothing: the uninstall goes on.
+        }
+
         return true;
     }
 

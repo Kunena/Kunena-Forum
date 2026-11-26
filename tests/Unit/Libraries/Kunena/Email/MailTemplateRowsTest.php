@@ -135,8 +135,12 @@ class MailTemplateRowsTest extends UnitTestCase
 
     public function testTheTemplatesAreRemovedWhenKunenaIsRemoved(): void
     {
-        $install = Files::read('src/libraries/kunena/src/Install/KunenaModelInstall.php');
+        // The uninstall of the component (the one of the old web installer was never run).
+        $script = Files::read('src/admin/script.php');
 
-        $this->assertStringContainsString("quoteName('extension') . ' = ' . \$this->db->quote('com_kunena')", $install);
+        $this->assertSame(1, preg_match('/public function uninstall\(\$parent\): bool\s*\{(.*?)\n    \}/s', $script, $m));
+        $this->assertStringContainsString("->delete(\$db->quoteName('#__mail_templates'))", $m[1]);
+        $this->assertStringContainsString("quoteName('extension') . ' = ' . \$db->quote('com_kunena')", $m[1]);
+        $this->assertStringContainsString("quoteName('template_id') . ' LIKE ' . \$db->quote('com\\_kunena.%')", $m[1]);
     }
 }

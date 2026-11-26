@@ -28,6 +28,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
+use Joomla\Database\ParameterType;
 use Joomla\Event\DispatcherInterface;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
@@ -1244,18 +1245,20 @@ class UserController extends KunenaController
 
         $spammer = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
 
-        // TODO: remove this query by getting the ip of user by an another way
-        $query = $this->db->createQuery();
-        $query
-            ->select($this->db->quoteName(['ip']))
-            ->from($this->db->quoteName('#__kunena_messages'))
-            ->where($this->db->quoteName('userid') . ' = ' . $this->db->quote($userid))
-            ->group($this->db->quoteName('ip'))
-            ->order('time DESC');
+        // The IP of the profile (the last one the forum saw), else the one of his last post. The query of the posts grouped by the IP
+        // and ordered by the time, which MySQL refuses in its default mode (ONLY_FULL_GROUP_BY).
+        $ip = (string) KunenaUserHelper::get($userid)->ip;
 
-        $query->setLimit(1);
-        $this->db->setQuery($query);
-        $ip = $this->db->loadResult();
+        if ($ip === '') {
+            $query = $this->db->createQuery()
+                ->select($this->db->quoteName('ip'))
+                ->from($this->db->quoteName('#__kunena_messages'))
+                ->where($this->db->quoteName('userid') . ' = :userid')
+                ->where($this->db->quoteName('ip') . ' <> ' . $this->db->quote(''))
+                ->bind(':userid', $userid, ParameterType::INTEGER)
+                ->order($this->db->quoteName('time') . ' DESC');
+            $ip = (string) $this->db->setQuery($query, 0, 1)->loadResult();
+        }
 
         if (!empty($ip)) {
             $data                     = [];

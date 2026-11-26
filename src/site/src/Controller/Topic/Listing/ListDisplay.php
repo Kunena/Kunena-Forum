@@ -211,14 +211,22 @@ abstract class ListDisplay extends KunenaControllerDisplay
             }
         }
 
-        // Fetch also last post positions when user can see unapproved or deleted posts.
-        // TODO: Optimize? Take account of configuration option...
-        $moderator = $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus();
+        // The positions of the last posts in the categories where the user sees the unapproved and deleted posts too (he moderates
+        // them): the link to the last post counts them. It was all the last posts of the list as soon as he moderated any category.
+        $moderatedLastIds = [];
+
+        if ($this->me->exists() && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())) {
+            foreach ($this->topics as $topic) {
+                if ($this->me->isModerator($topic->getCategory())) {
+                    $moderatedLastIds[(int) $topic->last_post_id] = (int) $topic->last_post_id;
+                }
+            }
+        }
 
         // A page with several lists (the tabs of a profile) prepares all of them first: the list adds what it needs, and it is
         // loaded with what the other lists need (one query per kind for all the lists).
         if (KunenaTopicListPreload::isCollecting()) {
-            KunenaTopicListPreload::add((array) $this->topics, $userIds, $lastIds, $moderator ? $mesIds + $lastIds : $mesIds);
+            KunenaTopicListPreload::add((array) $this->topics, $userIds, $lastIds, $mesIds + $moderatedLastIds);
         } else {
             // Prefetch all users/avatars to avoid user by user queries during template iterations.
             if (!empty($userIds)) {
@@ -234,9 +242,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 
             $mesIds += KunenaTopicHelper::fetchNewStatus((array) $this->topics);
 
-            if ($moderator) {
-                $mesIds += $lastIds;
-            }
+            $mesIds += $moderatedLastIds;
 
             // Load position information for all selected messages.
             if ($mesIds) {

@@ -852,12 +852,12 @@ abstract class KunenaRoute
                 continue;
             }
 
-            if (\in_array($key, ['query', 'searchuser'])) {
-                // Allow all values
-            }
-            // TODO: we need to find a way to here deal with arrays: &foo[]=bar
-            elseif (\gettype($value) == 'string') {
-                if (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
+            if (!\in_array($key, ['query', 'searchuser'])) {
+                // The other values may have letters, digits, "_" and spaces only; an array (&catids[]=2&catids[]=5) keeps its
+                // values which pass that check, with keys of the same kind (an array was taken whole, whatever it had in it).
+                $value = self::cleanCurrentValue($value);
+
+                if ($value === null) {
                     // Illegal value
                     continue;
                 }
@@ -874,6 +874,35 @@ abstract class KunenaRoute
         self::$home = self::getHome(self::$active);
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+    }
+
+    /**
+     * A value of the query of the request which may stay in the current address: a string of letters, digits, "_" and spaces, or an
+     * array (one level) of such strings with keys of the same kind, without the values which are not.
+     *
+     * @param   mixed  $value  The value of the request.
+     *
+     * @return  string|array|null  The value, the array of its good values, or null when nothing of it may stay.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function cleanCurrentValue(mixed $value): string|array|null
+    {
+        $clean = static fn ($item): bool => \is_string($item) && !preg_match('/[^a-zA-Z0-9_ ]/', $item);
+
+        if (!\is_array($value)) {
+            return $clean($value) ? $value : null;
+        }
+
+        $kept = [];
+
+        foreach ($value as $key => $item) {
+            if ($clean((string) $key) && $clean($item)) {
+                $kept[$key] = $item;
+            }
+        }
+
+        return $kept ?: null;
     }
 
     /**

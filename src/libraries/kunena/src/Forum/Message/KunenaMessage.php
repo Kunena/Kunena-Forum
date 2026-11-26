@@ -883,8 +883,8 @@ class KunenaMessage extends KunenaDatabaseObject
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 401);
         }
 
-        // Check that topic owned by the user or user is a moderator
-        // TODO: check #__kunena_user_topics
+        // The message is his (its author is the user) or he moderates its category. Not the owner of the topic in
+        // #__kunena_user_topics: who started the topic does not own the replies of the others, he must not edit or delete them.
         if ($this->userid != $user->userid && !$user->isModerator($this->getCategory())) {
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
         }

@@ -144,17 +144,32 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             $countExpiredbans = \count($expiredBans ?? []);
 
             foreach ($expiredBans as $ban) {
-                // Unblock user in Joomla
-                $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($ban->userid);
-                if ($user && $user->block) {
-                    $user->block = 0;
-                    $user->save();
-                }
+                // A user who is banned again (a newer ban which has not ended) stays blocked and banned: only the old ban is
+                // marked as handled below. The account was unblocked and the profile cleared whatever other ban the user had: an
+                // old ban which the task had not handled yet (a forum upgraded from a version without the task, or the task
+                // switched off for a while) lifted the block of a user who was banned again since.
+                $query = $db->createQuery()
+                    ->select('COUNT(*)')
+                    ->from($db->quoteName('#__kunena_users_banned'))
+                    ->where($db->quoteName('userid') . ' = ' . (int) $ban->userid)
+                    ->where($db->quoteName('id') . ' != ' . (int) $ban->id)
+                    ->where($db->quoteName('blocked') . ' = 1')
+                    ->where($db->quoteName('expiration') . ' > ' . $db->quote($now->toSql()));
+                $bannedAgain = (int) $ban->userid > 0 && (int) $db->setQuery($query)->loadResult() > 0;
 
-                // Update Kunena user profile
-                $profile         = KunenaFactory::getUser($ban->userid);
-                $profile->banned = \null;
-                $profile->save(\true);
+                if (!$bannedAgain) {
+                    // Unblock user in Joomla
+                    $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($ban->userid);
+                    if ($user && $user->block) {
+                        $user->block = 0;
+                        $user->save();
+                    }
+
+                    // Update Kunena user profile
+                    $profile         = KunenaFactory::getUser($ban->userid);
+                    $profile->banned = \null;
+                    $profile->save(\true);
+                }
 
                 // Mark the ban as handled with a comment, directly in the table: KunenaBan::save() needs a moderator, which
                 // the scheduler is not, so the ban was never stamped and came back at every run.

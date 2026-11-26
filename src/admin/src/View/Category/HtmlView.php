@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -76,9 +77,9 @@ class HtmlView extends BaseHtmlView
         $model          = $this->getModel();
         $this->category = $model->getAdminCategory();
 
-        // FIXME: better access control and gracefully handle no rights
-        // Prevent fatal error if no rights:
         if (!$this->category) {
+            $this->leaveWithoutRights();
+
             return;
         }
 
@@ -87,6 +88,23 @@ class HtmlView extends BaseHtmlView
         $this->subscribers = $model->getAdminSubscribers();
         $this->setToolBarEdit();
         $this->display();
+    }
+
+    /**
+     * Back to the categories with a message: the model gives no category when the user may not administer it (the page was
+     * empty).
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     *
+     * @throws  Exception
+     */
+    protected function leaveWithoutRights(): void
+    {
+        $app = Factory::getApplication();
+        $app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+        $app->redirect(Route::_('index.php?option=com_kunena&view=categories', false));
     }
 
     /**
@@ -133,9 +151,9 @@ class HtmlView extends BaseHtmlView
         $this->category = $model->getAdminCategory();
         $this->state    = $model->getState();
 
-        // FIXME: better access control and gracefully handle no rights
-        // Prevent fatal error if no rights:
         if (!$this->category) {
+            $this->leaveWithoutRights();
+
             return;
         }
 

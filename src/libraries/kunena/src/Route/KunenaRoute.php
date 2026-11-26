@@ -668,14 +668,13 @@ abstract class KunenaRoute
      * @param   ?KunenaTopic         $topic     topic
      * @param   ?KunenaCategory      $category  category
      *
-     * @return  boolean
+     * @return  string   The address of the message (the page of the topic with its anchor).
      *
      * @since   Kunena 6.0
      * @throws Exception
      */
     public static function getMessageUrl(KunenaMessage $message, $xhtml = true, ?KunenaTopic $topic = null, ?KunenaCategory $category = null)
     {
-        // FIXME: not yet fully implemented...
         if (!$category) {
             $category = $message->getCategory();
         }
@@ -684,7 +683,8 @@ abstract class KunenaRoute
             $topic = $message->getTopic();
         }
 
-        return self::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$topic->id}", $xhtml);
+        // The address of the message itself: the page of the topic where it is and its anchor (it was the first page of the topic).
+        return $topic->getUrl($category, $xhtml, $message);
     }
 
     /**

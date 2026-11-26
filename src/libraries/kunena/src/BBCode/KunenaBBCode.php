@@ -2100,7 +2100,21 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                         $fileurl = 'http://' . $fileurl;
                     }
 
-                    // TODO: call URL layout instead..
+                    // The link of the template (BBCode/URL), as the other links of the message: a link of the site or of an own
+                    // domain gets no rel="nofollow", a template can change how it looks.
+                    $link = KunenaLayout::factory('BBCode/URL');
+
+                    if ($link->getPath()) {
+                        $internal = KunenaRoute::isInternal($fileurl);
+
+                        return (string) $link
+                            ->set('content', $bbcode->HTMLEncode($fileurl))
+                            ->set('url', $fileurl)
+                            ->set('target', '_blank')
+                            ->set('internal', $internal)
+                            ->set('ownDomain', !$internal && KunenaBBCode::isOwnDomain($fileurl, (string) $this->config->ownDomains));
+                    }
+
                     return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $bbcode->HTMLEncode($fileurl) . '</a>';
                 }
 

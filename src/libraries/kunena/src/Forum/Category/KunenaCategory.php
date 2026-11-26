@@ -508,10 +508,13 @@ class KunenaCategory extends KunenaDatabaseObject
     protected mixed $hold = null;
 
     /**
+     * Whether save() orders the categories again: not for the save of the counts of the category (update()), whose order did not
+     * change.
+     *
      * @var     boolean
-     * @since   Kunena 6.0
+     * @since   Kunena 8.0
      */
-    protected $_noreOrder;
+    private bool $reorderOnSave = true;
 
     /**
      * @param   mixed|array  $properties  properties
@@ -2347,11 +2350,9 @@ class KunenaCategory extends KunenaDatabaseObject
             $this->_alias = $this->alias;
         }
 
-        // TODO: remove this hack...
-        if (!isset($this->_noreOrder)) {
+        if ($this->reorderOnSave) {
             $table->reOrder();
             $this->ordering = $table->ordering;
-            unset($this->_noreOrder);
         }
 
         // Clear cache
@@ -2637,10 +2638,15 @@ class KunenaCategory extends KunenaDatabaseObject
             return true;
         }
 
-        // TODO: remove this hack...
-        $this->_noreOrder = true;
+        // The counts only: the order of the categories stays. The flag is set back after the save (it stayed set, and the next save
+        // of the object, after a move to another place, did not order the categories again).
+        $this->reorderOnSave = false;
 
-        return $this->save();
+        try {
+            return $this->save();
+        } finally {
+            $this->reorderOnSave = true;
+        }
     }
 
     /**

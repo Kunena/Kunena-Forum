@@ -23,6 +23,7 @@ use Joomla\Event\Dispatcher;
 use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Tests\Integration\DBTestInterface;
@@ -151,5 +152,17 @@ class KunenaCategoryUpdateLastTopicTest extends IntegrationTestCase implements D
             [['last_topic_id' => 3, 'last_post_id' => 10]],
             array_map(static fn ($row) => array_map('intval', $row), $this->fetchAll('SELECT last_topic_id, last_post_id FROM #__kunena_categories WHERE id = ' . self::CATEGORY))
         );
+    }
+
+    /**
+     * The save of the counts (update()) does not order the categories again, the next save of the category does: the mark of
+     * update() stayed on the object ("TODO: remove this hack"), and a category moved after a post kept a wrong place in its list.
+     */
+    public function testTheNextSaveAfterTheCountsOrdersTheCategoriesAgain(): void
+    {
+        $category = KunenaCategoryHelper::get(self::CATEGORY);
+        $category->update(KunenaTopicHelper::get(1), 0, 1);
+
+        $this->assertTrue((new ReflectionProperty(KunenaCategory::class, 'reorderOnSave'))->getValue($category));
     }
 }

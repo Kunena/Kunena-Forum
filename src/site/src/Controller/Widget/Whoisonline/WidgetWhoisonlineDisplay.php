@@ -75,9 +75,29 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
         KunenaUserHelper::loadUsers(array_keys($users));
         $onlineusers = KunenaUserHelper::getOnlineCount();
 
-        $who = '<strong>' . $onlineusers['user'] . ' </strong>';
+        $this->onlineList = [];
+        $this->hiddenList = [];
 
-        if ($onlineusers['user'] == 1) {
+        foreach ($users as $userid => $usertime) {
+            $user = KunenaUserHelper::get($userid);
+
+            // A member who does not show that he is online, or who chose the status "Invisible" (as the login widget treats them).
+            if (!$user->showOnline || (int) $user->status === 3) {
+                if ($moderator) {
+                    $this->hiddenList[$user->getName()] = $user;
+                }
+            } else {
+                $this->onlineList[$user->getName()] = $user;
+            }
+        }
+
+        // The members whom the viewer sees: a member who hides that he is online was counted (only a moderator sees him in
+        // the list), so the number told when he came and went.
+        $members = $moderator ? (int) $onlineusers['user'] : \count($this->onlineList);
+
+        $who = '<strong>' . $members . ' </strong>';
+
+        if ($members == 1) {
             $who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
         } else {
             $who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
@@ -94,22 +114,6 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 
         $who .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
         $this->membersOnline = $who;
-
-        $this->onlineList = [];
-        $this->hiddenList = [];
-
-        foreach ($users as $userid => $usertime) {
-            $user = KunenaUserHelper::get($userid);
-
-            // A member who does not show that he is online, or who chose the status "Invisible" (as the login widget treats them).
-            if (!$user->showOnline || (int) $user->status === 3) {
-                if ($moderator) {
-                    $this->hiddenList[$user->getName()] = $user;
-                }
-            } else {
-                $this->onlineList[$user->getName()] = $user;
-            }
-        }
 
         ksort($this->onlineList);
         ksort($this->hiddenList);

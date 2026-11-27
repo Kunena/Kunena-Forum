@@ -329,25 +329,6 @@ class HtmlView extends KunenaView
         KunenaUserHelper::loadUsers(array_keys($users));
         $onlineusers = KunenaUserHelper::getOnlineCount();
 
-        $who = '<strong>' . $onlineusers['user'] . ' </strong>';
-
-        if ($onlineusers['user'] == 1) {
-            $who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
-        } else {
-            $who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
-        }
-
-        $who .= Text::_('COM_KUNENA_WHO_AND');
-        $who .= '<strong> ' . $onlineusers['guest'] . ' </strong>';
-
-        if ($onlineusers['guest'] == 1) {
-            $who .= Text::_('COM_KUNENA_WHO_ONLINE_GUEST') . '&nbsp;';
-        } else {
-            $who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
-        }
-
-        $who .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
-
         $onlineList = [];
         $hiddenList = [];
 
@@ -363,6 +344,29 @@ class HtmlView extends KunenaView
                 $onlineList[$user->getName()] = $user;
             }
         }
+
+        // The members whom the viewer sees: a member who hides that he is online was counted (only a moderator sees him in
+        // the list), so the number told when he came and went.
+        $members = $moderator ? (int) $onlineusers['user'] : \count($onlineList);
+
+        $who = '<strong>' . $members . ' </strong>';
+
+        if ($members == 1) {
+            $who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
+        } else {
+            $who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
+        }
+
+        $who .= Text::_('COM_KUNENA_WHO_AND');
+        $who .= '<strong> ' . $onlineusers['guest'] . ' </strong>';
+
+        if ($onlineusers['guest'] == 1) {
+            $who .= Text::_('COM_KUNENA_WHO_ONLINE_GUEST') . '&nbsp;';
+        } else {
+            $who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
+        }
+
+        $who .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
 
         ksort($onlineList);
         ksort($hiddenList);

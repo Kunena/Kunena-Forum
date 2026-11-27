@@ -279,4 +279,23 @@ class KunenaTopicDeleteAttachmentsTest extends IntegrationTestCase implements DB
 
         $this->assertSame(self::ONLY_THE_SECOND, $this->privateLeft());
     }
+
+    /**
+     * A shown topic which is deleted for good leaves the counters of its category: the topics, the posts and the last post. They
+     * kept it (only the delete of several topics counted the category again): the category still counted the topic and named it
+     * as its last topic, a link to a page which is gone.
+     */
+    public function testAShownTopicDeletedForGoodLeavesTheCountersOfItsCategory(): void
+    {
+        $this->getDBDriver()->setQuery(
+            'UPDATE #__kunena_categories SET numTopics = 1, numPosts = 1, last_topic_id = ' . self::TARGET . ', last_post_id = 1, last_post_time = 1000 WHERE id = ' . self::CATEGORY
+        )->execute();
+
+        $this->assertTrue(KunenaTopicHelper::get(self::TARGET)->delete());
+
+        $this->assertEquals(
+            [['numTopics' => 0, 'numPosts' => 0, 'last_topic_id' => 0, 'last_post_id' => 0]],
+            $this->fetchAll('SELECT numTopics, numPosts, last_topic_id, last_post_id FROM #__kunena_categories WHERE id = ' . self::CATEGORY)
+        );
+    }
 }

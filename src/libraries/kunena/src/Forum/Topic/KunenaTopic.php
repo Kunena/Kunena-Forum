@@ -936,6 +936,13 @@ class KunenaTopic extends KunenaDatabaseObject
                 }
             }
 
+            // A topic which was shown (not one of the trash, which its category counts no more) leaves the counters of its
+            // category: the topics, the posts and the last post. They kept the deleted topic: the category still counted it and
+            // named it as its last topic, a link to a page which is gone.
+            if ((int) $this->hold === KunenaForum::PUBLISHED) {
+                KunenaCategoryHelper::recountBatch([(int) $this->category_id]);
+            }
+
             // The statistics of the forum (KunenaStatistics) are counted when they are shown, they have nothing to recount.
             if ($recount) {
                 KunenaUserHelper::recount();

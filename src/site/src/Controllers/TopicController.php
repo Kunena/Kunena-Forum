@@ -845,6 +845,50 @@ class TopicController extends KunenaController
     }
 
     /**
+     * The limit of the files which wait for a message (mesid 0): twice the files of a message, 50 when those have no limit (else a
+     * user uploads file after file without posting, and fills the disk).
+     *
+     * @return  void
+     *
+     * @throws  RuntimeException  The user has as many as the limit.
+     * @since   Kunena 8.0
+     */
+    protected function checkPendingLimit(): void
+    {
+        $perMessage = (int) $this->config->attachmentLimit;
+        $maxPending = $perMessage > 0 ? 2 * $perMessage : 50;
+        $db         = Factory::getContainer()->get('DatabaseDriver');
+        $query      = $db->createQuery()
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__kunena_attachments'))
+            ->where($db->quoteName('userid') . ' = ' . (int) $this->me->userid)
+            ->where($db->quoteName('mesid') . ' = 0');
+        $pending    = (int) $db->setQuery($query)->loadResult();
+        $own        = $pending;
+
+        // A guest: the uploads of his session. All the guests have the user id 0, so they shared one limit: the pending uploads of
+        // a few guests stopped the uploads of every other guest (until the task removed them, a day later).
+        if (!$this->me->exists()) {
+            $mine = KunenaPendingAttachment::guestUploads();
+            $own  = 0;
+
+            if ($mine) {
+                $query = $db->createQuery()
+                    ->select('COUNT(*)')
+                    ->from($db->quoteName('#__kunena_attachments'))
+                    ->where($db->quoteName('userid') . ' = 0')
+                    ->where($db->quoteName('mesid') . ' = 0')
+                    ->whereIn($db->quoteName('id'), $mine);
+                $own   = (int) $db->setQuery($query)->loadResult();
+            }
+        }
+
+        if (KunenaPendingAttachment::overLimit($own, $pending, $maxPending, !$this->me->exists())) {
+            throw new RuntimeException(Text::sprintf('COM_KUNENA_UPLOAD_ERROR_PENDING', $maxPending), 400);
+        }
+    }
+
+    /**
      * Upload files with AJAX.
      *
      * @return  void
@@ -910,41 +954,10 @@ class TopicController extends KunenaController
                 throw new RuntimeException(Text::_('COM_KUNENA_NO_ACCESS'), 403);
             }
 
-            // The files which wait for a message (mesid 0) have a limit: twice the files of a message, 50 when those have no
-            // limit (else a user uploads file after file without posting, and fills the disk). It is checked at the start of a
-            // file, not in the middle of its parts.
+            // The files which wait for a message (mesid 0) have a limit: checked at the start of a file (not in the middle of its
+            // parts), and again when it is complete (below).
             if ($this->input->getInt('chunkStart', 0) === 0) {
-                $perMessage = (int) $this->config->attachmentLimit;
-                $maxPending = $perMessage > 0 ? 2 * $perMessage : 50;
-                $db         = Factory::getContainer()->get('DatabaseDriver');
-                $query      = $db->createQuery()
-                    ->select('COUNT(*)')
-                    ->from($db->quoteName('#__kunena_attachments'))
-                    ->where($db->quoteName('userid') . ' = ' . (int) $this->me->userid)
-                    ->where($db->quoteName('mesid') . ' = 0');
-                $pending    = (int) $db->setQuery($query)->loadResult();
-                $own        = $pending;
-
-                // A guest: the uploads of his session. All the guests have the user id 0, so they shared one limit: the pending
-                // uploads of a few guests stopped the uploads of every other guest (until the task removed them, a day later).
-                if (!$this->me->exists()) {
-                    $mine = KunenaPendingAttachment::guestUploads();
-                    $own  = 0;
-
-                    if ($mine) {
-                        $query = $db->createQuery()
-                            ->select('COUNT(*)')
-                            ->from($db->quoteName('#__kunena_attachments'))
-                            ->where($db->quoteName('userid') . ' = 0')
-                            ->where($db->quoteName('mesid') . ' = 0')
-                            ->whereIn($db->quoteName('id'), $mine);
-                        $own   = (int) $db->setQuery($query)->loadResult();
-                    }
-                }
-
-                if (KunenaPendingAttachment::overLimit($own, $pending, $maxPending, !$this->me->exists())) {
-                    throw new RuntimeException(Text::sprintf('COM_KUNENA_UPLOAD_ERROR_PENDING', $maxPending), 400);
-                }
+                $this->checkPendingLimit();
             }
 
             $caption = $this->input->getString('caption');
@@ -963,6 +976,11 @@ class TopicController extends KunenaController
             $response = (object) $upload->ajaxUpload($options);
 
             if (!empty($response->completed)) {
+                // A file is counted only once it is complete: the first parts of several files (sent at once, or one after the
+                // other before their last parts) all passed the check of their start, and the limit was passed. The temporary file
+                // goes with the refusal (the catch below).
+                $this->checkPendingLimit();
+
                 // We have it all, lets create the attachment.
                 $uploadFile                 = $upload->getProtectedFile();
                 list($basename, $extension) = $upload->splitFilename();

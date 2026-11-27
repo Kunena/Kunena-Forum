@@ -4053,8 +4053,9 @@ class TopicController extends KunenaController
 
         $topic = KunenaTopicHelper::get($this->id);
 
-        // Only moderators of the category may reset the votes of a poll.
-        if (!$topic->exists() || !$this->me->isModerator($topic->getCategory())) {
+        // Only moderators of the category may reset the votes of a poll. Not through the shadow of a moved topic: it keeps the
+        // poll, and a moderator of the old category reset the votes of a poll of a category which he does not moderate.
+        if (!$topic->exists() || $topic->moved_id || !$this->me->isModerator($topic->getCategory())) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
             $this->setRedirectBack();
 

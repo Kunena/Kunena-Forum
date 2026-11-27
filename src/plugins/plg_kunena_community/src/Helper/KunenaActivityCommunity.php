@@ -261,7 +261,9 @@ class KunenaActivityCommunity extends KunenaActivity
         $act->cmd     = 'wall.write';
         $act->actor   = $message->userid;
         $act->target  = 0; // No target
-        $act->title   = Text::_('{single}{actor}{/single}{multiple}{actors}{/multiple} ' . Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE', '<a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>'));
+        // The subject escaped, as in the activity of a new topic: it is stored as it was typed, and the title of the activity is
+        // HTML (a subject with a tag ran its script for every reader of the stream).
+        $act->title   = Text::_('{single}{actor}{/single}{multiple}{actors}{/multiple} ' . Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE', '<a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>'));
         $act->content = $this->buildContent($message);
         $act->app     = 'kunena.thread.reply';
         $act->cid     = $message->thread;

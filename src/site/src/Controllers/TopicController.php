@@ -3536,6 +3536,15 @@ class TopicController extends KunenaController
             return;
         }
 
+        // A message of a topic in the trash: approving it published the topic again with that message only (its other messages
+        // stayed in the trash). The topic is restored first.
+        if ($target instanceof KunenaMessage && (int) $topic->hold >= KunenaForum::DELETED) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_TOPIC_DELETED'), 'notice');
+            $this->setRedirect($target->getUrl($this->return, false));
+
+            return;
+        }
+
         try {
             $target->publish(KunenaForum::PUBLISHED);
         } catch (Exception $e) {

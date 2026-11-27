@@ -471,7 +471,8 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
             );
         }
 
-        if ($this->message->hold == 1) {
+        // Not for a message of a topic in the trash: the approval is refused there (the topic is restored first).
+        if ($this->message->hold == 1 && (int) $this->message->getTopic()->hold < 2) {
             if ($this->message->isAuthorised('approve')) {
                 $this->messageButtons->set(
                     'publish',

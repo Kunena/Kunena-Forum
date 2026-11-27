@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS `#__kunena_configuration`;
 DROP TABLE IF EXISTS `#__kunena_topics`;
 DROP TABLE IF EXISTS `#__kunena_messages`;
 DROP TABLE IF EXISTS `#__kunena_messages_text`;
+DROP TABLE IF EXISTS `#__kunena_notifications_mailsqueue`;
 DROP TABLE IF EXISTS `#__kunena_polls`;
 DROP TABLE IF EXISTS `#__kunena_polls_options`;
 DROP TABLE IF EXISTS `#__kunena_polls_users`;

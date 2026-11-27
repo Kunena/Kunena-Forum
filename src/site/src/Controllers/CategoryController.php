@@ -249,7 +249,9 @@ class CategoryController extends CategoriesController
             $session = KunenaFactory::getSession();
 
             if ($session->userid) {
-                $categories = [$category->id => $category];
+                // With the channels of the category which the user reads: their topics are in the list of the category, and they
+                // stayed new after "Mark Topics Read" (and in the count of the new topics of the category in the index).
+                $categories = [$category->id => $category] + $category->getChannels();
 
                 if ($children) {
                     // Include all levels of child categories.
@@ -259,7 +261,8 @@ class CategoryController extends CategoriesController
                 // Mark all unread topics in selected categories as read.
                 KunenaCategoryUserHelper::markRead(array_keys($categories));
 
-                if (\count($categories) > 1) {
+                // The message of one category for its channels too: the children are what makes it more.
+                if ($children && \count($categories) > 1) {
                     $this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'), 'success');
                 } else {
                     $this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_FORUM_MARKED'), 'success');

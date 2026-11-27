@@ -209,7 +209,8 @@ class KunenaAvatarGalleryNameTest extends UnitTestCase
         $this->assertSame(1, preg_match('/public function galleryimages\(\)\s*\{(.*?)\n    \}\n/s', $source, $m));
 
         $this->assertStringContainsString("if (!Session::checkToken('get')) {\n            throw new RuntimeException(Text::_('Forbidden'), 403);", $m[1]);
-        $this->assertStringContainsString('if ($this->me->exists()) {', $m[1]);
+        // For members, and only when the gallery is on (UserAvatarOptionsTest).
+        $this->assertStringContainsString('if ($this->me->exists() && $this->config->allowAvatarGallery) {', $m[1]);
         $this->assertStringContainsString("KunenaAvatarGalleryName::pictures(JPATH_ROOT . '/media/kunena/avatars/gallery', \$name)", $m[1]);
         $this->assertStringContainsString('use Kunena\Forum\Libraries\User\KunenaAvatarGalleryName;', $source);
     }

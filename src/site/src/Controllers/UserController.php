@@ -739,9 +739,11 @@ class UserController extends KunenaController
         // Save avatar from gallery
         $avatar_gallery = $input->$method->get('avatar_gallery', '', 'string');
 
-        // Only an existing picture of the avatar gallery may be used: no other folders, no parent folder segments.
+        // Only an existing picture of the avatar gallery may be used: no other folders, no parent folder segments. And only when
+        // the gallery is on (the option "Use Avatars Gallery" left out the form only).
         if (
-            !empty($avatar_gallery)
+            $this->config->allowAvatarGallery
+            && !empty($avatar_gallery)
             && KunenaAvatarGalleryName::isAvatar($avatar_gallery)
             && is_file(KPATH_MEDIA . '/avatars/' . $avatar_gallery)
         ) {
@@ -1514,6 +1516,11 @@ class UserController extends KunenaController
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
 
+        // The option "Allow Avatar Upload": only the form left out the upload, a request stored the avatar all the same.
+        if (!$this->config->allowAvatarUpload) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
         $upload = KunenaUpload::getInstance();
         $user   = $this->getAvatarUser();
 
@@ -1777,7 +1784,8 @@ class UserController extends KunenaController
         $name = $this->input->getString('gallery_name', '');
         $list = [];
 
-        if ($this->me->exists()) {
+        // No pictures when the gallery is off (the option "Use Avatars Gallery").
+        if ($this->me->exists() && $this->config->allowAvatarGallery) {
             foreach (KunenaAvatarGalleryName::pictures(JPATH_ROOT . '/media/kunena/avatars/gallery', $name) as $picture) {
                 $list[] = [
                     'value' => 'gallery/' . $picture,

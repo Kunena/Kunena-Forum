@@ -137,7 +137,36 @@ class KunenaApiReplyTest extends UnitTestCase
             'a bare link'  => ['See https://example.com', true],
             'www'          => ['See www.example.com', true],
             'plain text'   => ['See the topic about www', false],
+            // The site makes links of these too, and the form removes them.
+            'ftp'          => ['Get ftp://files.example.com/a', true],
+            'www2'         => ['See www2.example.com', true],
+            'an e-mail'    => ['Write to spam@example.com', true],
         ];
+    }
+
+    /**
+     * The links are counted as the site shows them: the form of the site counts the links of the shown text. Only the addresses
+     * with a scheme were counted, so a reply of the API passed the limit with [url=example.com] or www.example.com, and an address
+     * written as the text of its own [url] tag, or one in a block of code, was counted where the site shows no second link.
+     */
+    public static function counted(): array
+    {
+        return [
+            'url tags without a scheme' => [str_repeat('[url=spam.example/x]x[/url] ', 3), 3],
+            'www without a scheme'      => ['www.spam.example and www3.other.example', 2],
+            'an address without scheme' => ['[url=//spam.example/a]a[/url]', 1],
+            'a tag with its address'    => ['[url=https://a.example]https://a.example[/url]', 1],
+            'a url tag with the link'   => ['[url]https://a.example/b[/url]', 1],
+            'in a block of code'        => ['[code]https://a.example[/code]', 0],
+            'a path of the site'        => ['[url=/forum/topic]here[/url]', 0],
+            'the site without scheme'   => ['[url=forum.example.org/a]a[/url] www.forum.example.org/b', 0],
+        ];
+    }
+
+    #[DataProvider('counted')]
+    public function testTheLinksAreCountedAsTheSiteShowsThem(string $message, int $count): void
+    {
+        $this->assertSame($count, KunenaApiReply::externalLinks($message, 'forum.example.org'));
     }
 
     #[DataProvider('links')]

@@ -170,7 +170,8 @@ abstract class KunenaApiReply
      */
     public static function hasLinksOrImages(string $message): bool
     {
-        return (bool) preg_match('#\[(url|img)\b|https?://|www\.[\w-]+\.#i', $message);
+        // Also the addresses which the site makes links of (an FTP address, www2., an e-mail address): the form removes them.
+        return (bool) preg_match('#\[(url|img|email)\b|(?:https?|ftp)://|www\d{0,3}\.[\w-]+\.|[\w.+-]+@[\w-]+\.[\w.-]+#i', $message);
     }
 
     /**
@@ -185,11 +186,43 @@ abstract class KunenaApiReply
      */
     public static function externalLinks(string $message, string $host): int
     {
-        preg_match_all('#https?://([^\s/\]\["\'<>?\#:]+)#i', $message, $matches);
+        // The links as the site shows them (the form counts the links of the shown text): not in a block of code, a [url] tag once
+        // (its text is no second link), and an address without a scheme too ([url=example.com], www.example.com, //example.com).
+        // Only the addresses with a scheme were counted, so a reply of the API passed the limit with links of the other forms.
+        $links = [];
+        $text  = (string) preg_replace('#\[code\b[^\]]*\].*?\[/code\]#is', ' ', $message);
+        $text  = (string) preg_replace_callback(
+            '#\[url=([^\]]+)\].*?\[/url\]|\[url\](.*?)\[/url\]#is',
+            static function (array $match) use (&$links): string {
+                $links[] = trim($match[1] !== '' ? $match[1] : ($match[2] ?? ''), " \"'");
 
-        $host = strtolower(preg_replace('/^www\./i', '', $host));
+                return ' ';
+            },
+            $text
+        );
 
-        return \count(array_filter($matches[1], static fn ($link) => strtolower(preg_replace('/^www\./i', '', $link)) !== $host));
+        preg_match_all('#(?<![\w/@.\-])(?:(?:https?|ftp)://|www\d{0,3}\.)[^\s\[\]"\'<>]+#i', $text, $matches);
+        $links = array_merge($links, $matches[0]);
+
+        $host  = strtolower((string) preg_replace('/^www\d{0,3}\./i', '', $host));
+        $count = 0;
+
+        foreach ($links as $link) {
+            // An address of the site itself (a path) is internal.
+            if ($link === '' || ($link[0] === '/' && !str_starts_with($link, '//'))) {
+                continue;
+            }
+
+            $linkHost = (string) preg_replace('#^(?:[a-z][a-z0-9+.\-]*:)?//#i', '', $link);
+            $linkHost = strtolower((string) preg_replace('#[/?\#:].*$#s', '', $linkHost));
+            $linkHost = (string) preg_replace('/^www\d{0,3}\./i', '', $linkHost);
+
+            if ($linkHost !== '' && $linkHost !== $host) {
+                $count++;
+            }
+        }
+
+        return $count;
     }
 
     /**

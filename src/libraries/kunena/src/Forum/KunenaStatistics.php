@@ -483,6 +483,14 @@ class KunenaStatistics
                 ->group($this->_db->quoteName('pollid'))
                 ->having($this->_db->quoteName('count') . ' > 0')
                 ->order($this->_db->quoteName('count') . ' DESC');
+            // In the categories where the users see their own topics only, the topics of the others are left out before the list is
+            // cut, as the hidden categories: they were left out after it, so they took the places of polls which the visitor reads.
+            $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere(null, $this->_db->quoteName('topic.category_id'), $this->_db->quoteName('topic.first_post_userid'));
+
+            if ($own) {
+                $query->where($own);
+            }
+
             $query->setLimit($limit);
             $this->_db->setQuery($query);
 

@@ -2537,7 +2537,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if (!empty($content)) {
             // Display tag in activity streams etc..
             if (!empty($bbcode->parent->forceMinimal)) {
-                return "<a href=\"" . $content . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $content . '</a>';
+                return self::minimalLink($content);
             }
 
             $content = strip_tags($content);
@@ -3557,6 +3557,29 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     }
 
     /**
+     * The link of an embed in an activity stream (forceMinimal): a link only for an address of the web (http or https), else the text.
+     * The address was put into the link as it was typed: [soundcloud]javascript:alert(1)[/soundcloud] ran its script for every reader
+     * of the stream (and [instagram] too, with an address which parse_url() does not read).
+     *
+     * @param   string  $content  The content of the tag.
+     *
+     * @return  string  HTML.
+     *
+     * @since   Kunena 8.0
+     */
+    public static function minimalLink(string $content): string
+    {
+        $url  = trim(html_entity_decode(strip_tags($content), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        $text = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');
+
+        if (!preg_match('#^https?://#i', $url)) {
+            return $text;
+        }
+
+        return '<a href="' . $text . '" rel="nofollow noopener noreferrer" target="_blank">' . $text . '</a>';
+    }
+
+    /**
      * Method to render the instagram content
      *
      * @param   object  $bbcode   The bbcode tag being rendered
@@ -3592,7 +3615,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return "<a href=\"" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . '</a>';
+            return self::minimalLink($before);
         }
 
         // A bare post code

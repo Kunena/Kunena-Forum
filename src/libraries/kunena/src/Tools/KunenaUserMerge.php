@@ -304,6 +304,23 @@ class KunenaUserMerge
             ->bind(':into', $into, ParameterType::INTEGER);
         $taken = array_map('intval', (array) $db->setQuery($query)->loadColumn());
 
+        // A vote of the first user in a poll where the second one voted too is dropped below: it is taken off its option too.
+        // The option kept the vote, so the person behind both accounts stayed counted twice in the result of the poll. (The
+        // row of a voter has his last vote only: of several votes in one poll the last one is taken off.)
+        if ($table === '#__kunena_polls_users' && $taken) {
+            $query = $db->createQuery()
+                ->update($db->quoteName('#__kunena_polls_options', 'o'))
+                ->innerJoin($db->quoteName('#__kunena_polls_users', 'f') . ' ON ' . $db->quoteName('f.pollid') . ' = ' . $db->quoteName('o.pollid') . ' AND ' . $db->quoteName('f.lastvote') . ' = ' . $db->quoteName('o.id'))
+                ->innerJoin($db->quoteName('#__kunena_polls_users', 'i') . ' ON ' . $db->quoteName('i.pollid') . ' = ' . $db->quoteName('f.pollid'))
+                ->set($db->quoteName('o.votes') . ' = ' . $db->quoteName('o.votes') . ' - 1')
+                ->where($db->quoteName('f.userid') . ' = :from')
+                ->where($db->quoteName('i.userid') . ' = :into')
+                ->where($db->quoteName('o.votes') . ' > 0')
+                ->bind(':from', $from, ParameterType::INTEGER)
+                ->bind(':into', $into, ParameterType::INTEGER);
+            $db->setQuery($query)->execute();
+        }
+
         foreach (array_chunk($taken, 500) as $chunk) {
             $query = $db->createQuery()
                 ->delete($db->quoteName($table))

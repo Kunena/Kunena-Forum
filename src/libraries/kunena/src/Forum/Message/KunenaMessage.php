@@ -103,6 +103,9 @@ use ValueError;
 class KunenaMessage extends KunenaDatabaseObject
 {
     /**
+     * The rules of each action. A thank you is for a published message only (NotHold), as a reaction: a moderator, who reads the
+     * messages which wait or are in the trash, thanked them, and the counter of the author counted a message nobody else saw.
+     *
      * @var     array
      * @since   Kunena 6.0
      */
@@ -114,7 +117,7 @@ class KunenaMessage extends KunenaDatabaseObject
         'move'                   => ['Read'],
         'approve'                => ['Read'],
         'delete'                 => ['Read', 'Own', 'Delete'],
-        'thankyou'               => ['Read', 'Thankyou'],
+        'thankyou'               => ['Read', 'NotHold', 'Thankyou'],
         'unthankyou'             => ['Read'],
         'undelete'               => ['Read'],
         'permdelete'             => ['Read', 'Permdelete'],

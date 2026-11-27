@@ -471,6 +471,22 @@ class KunenaAttachment extends KunenaDatabaseObject
             }
         }
 
+        // A file without protection ("Protect Attachments" off, the default) is for who may read its message, and a file which
+        // waits for its message for its uploader: the right of the file did not look at the message, so the address of the file
+        // (view=attachment&id=N, the ids follow each other) gave the files of the hidden categories, of the unapproved and the
+        // deleted messages, and the uploads of the others.
+        if (!$this->protected) {
+            if ($this->mesid) {
+                $exception = $this->getMessage()->tryAuthorise('attachment.read', $user, false);
+
+                if ($exception) {
+                    return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401, $exception);
+                }
+            } elseif ($user->exists() ? (int) $user->userid !== (int) $this->userid : !\in_array((int) $this->id, KunenaPendingAttachment::guestUploads(), true)) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401);
+            }
+        }
+
         return;
     }
 

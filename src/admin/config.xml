@@ -842,16 +842,6 @@
                 <option value="1000">1000</option>
             </field>
             <field
-                name="rssOldTitles"
-                type="radio"
-                default="1"
-                layout="joomla.form.field.radio.switcher"
-                label="COM_KUNENA_A_RSS_OLD_TITLES"
-                description="COM_KUNENA_A_RSS_OLD_TITLES_DESC">
-                <option value="0">JNO</option>
-                <option value="1">JYES</option>
-            </field>
-            <field
                 name="rssCache"
                 type="list"
                 default="900"

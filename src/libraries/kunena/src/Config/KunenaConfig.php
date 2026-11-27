@@ -185,7 +185,6 @@ use SimpleXMLElement;
  * @property string $rssFeedBurnerUrl             The URL of the basic RSS feed into FeedBurner.
  * @property array  $rssIncludedCategories        Include Categories
  * @property string $rssLimit                     RSS Limit
- * @property string $rssOldTitles                 Use Oldstyle Titles
  * @property string $rssSpecification             RSS Specification
  * @property string $rssTimeLimit                 RSS History (timelimit)
  * @property string $rssType                      RSS Feed type

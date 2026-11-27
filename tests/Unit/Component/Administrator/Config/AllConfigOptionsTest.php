@@ -370,4 +370,56 @@ class AllConfigOptionsTest extends UnitTestCase
             $this->assertStringContainsString('#__', (string) $field['query'], 'The query of ' . $field['name'] . ' has no #__ prefix.');
         }
     }
+
+    /**
+     * Options which the form has and no code reads yet (the ids of three menu items, kept for the menu of the forum).
+     * A new option which nothing reads fails the test below; an option which gets its code is taken out of this list.
+     */
+    private const NOT_READ_YET = ['homeId', 'mainMenuId', 'miscId'];
+
+    /** @var string|null */
+    private static ?string $code = null;
+
+    /**
+     * The PHP and JavaScript of Kunena (without the configuration class, the upgrade steps and the bundled libraries).
+     */
+    private static function code(): string
+    {
+        if (self::$code === null) {
+            self::$code = '';
+            $root       = Files::path('src');
+
+            foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($root, \RecursiveDirectoryIterator::SKIP_DOTS)) as $file) {
+                $path = str_replace('\\', '/', $file->getPathname());
+
+                if (
+                    !\in_array($file->getExtension(), ['php', 'js'], true) || str_ends_with($path, '.min.js') || str_ends_with($path, '/KunenaConfig.php')
+                    || str_contains($path, '/External/') || str_contains($path, '/install/sql/') || str_contains($path, '/ckeditor5/')
+                ) {
+                    continue;
+                }
+
+                self::$code .= file_get_contents($path) . "\n";
+            }
+        }
+
+        return self::$code;
+    }
+
+    /**
+     * An option of the form is read by the code. Six were not: "Check MIME Types" with its list, the format of the feeds, the
+     * address of FeedBurner and "UTM Source" got their code; "Use Oldstyle Titles" of the feeds, whose text promised titles
+     * which were never made, is no option any more.
+     */
+    #[DataProvider('options')]
+    public function testTheOptionIsReadByTheCode(string $name): void
+    {
+        if (\in_array($name, self::NOT_READ_YET, true)) {
+            $this->assertSame(0, preg_match('/(?:->|[\'"_])' . $name . '\b/', self::code()), "$name is read now: take it out of NOT_READ_YET.");
+
+            return;
+        }
+
+        $this->assertSame(1, preg_match('/(?:->|[\'"_])' . $name . '\b/', self::code()), "No code reads the option $name.");
+    }
 }

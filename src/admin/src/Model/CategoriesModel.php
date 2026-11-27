@@ -618,10 +618,9 @@ class CategoriesModel extends KunenaModel
         $review = $this->getUserStateFromRequest($this->context . '.filter.review', 'filter_review');
         $this->setState('filter.review', $review);
 
-        $allowPolls = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
-        $this->setState('filter.search', $search);
-
-        $search = $this->getUserStateFromRequest($this->context . '.filter.allowPolls', 'filter_allowPolls');
+        // The filter "polls allowed" has its own value. It got the text of the search (the two were read into each other's
+        // variable): a search filtered the list on the polls too, with a text which is no yes or no.
+        $allowPolls = $this->getUserStateFromRequest($this->context . '.filter.allowPolls', 'filter_allowPolls');
         $this->setState('filter.allowPolls', $allowPolls);
 
         $anonymous = $this->getUserStateFromRequest($this->context . '.filter.anonymous', 'anonymous');

@@ -435,13 +435,13 @@ abstract class KunenaDigest
         foreach ($topics as $list) {
             $topic = $list[0]->getTopic();
             $body .= '<h2 style="font-size:1.1em;margin:1.2em 0 .4em">'
-                . '<a href="' . $escape($base . $list[0]->getPermaUrl(null, false)) . '">' . $escape((string) $topic->subject) . '</a></h2><ul>';
+                . '<a href="' . $escape(KunenaEmail::utm($base . $list[0]->getPermaUrl(null, false))) . '">' . $escape((string) $topic->subject) . '</a></h2><ul>';
 
             foreach ($list as $message) {
                 $body .= '<li><strong>' . $escape((string) $message->getAuthor()->getName('', false)) . '</strong> &middot; '
                     . $escape($message->getTime()->toKunena('datetime')) . '<br>'
                     . $escape((string) mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags(KunenaParser::stripBBCode((string) $message->message, 0, false)))), 0, 200, 'UTF-8'))
-                    . ' <a href="' . $escape($base . $message->getPermaUrl(null, false)) . '">' . Text::_('COM_KUNENA_DIGEST_READ') . '</a></li>';
+                    . ' <a href="' . $escape(KunenaEmail::utm($base . $message->getPermaUrl(null, false))) . '">' . Text::_('COM_KUNENA_DIGEST_READ') . '</a></li>';
             }
 
             $body .= '</ul>';

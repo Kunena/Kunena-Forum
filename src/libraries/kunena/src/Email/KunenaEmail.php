@@ -19,6 +19,7 @@ use ErrorException;
 use Exception;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Mail\Mail;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -70,6 +71,31 @@ abstract class KunenaEmail
      * @throws Exception
      * @since Kunena 6.0
      */
+    /**
+     * The address of a link in an e-mail of the forum with the source of the visit (utm_source=kunena&utm_medium=email), for the
+     * statistics of the site, when the option "UTM Source" is on. The option was in the configuration and nothing read it.
+     *
+     * @param   string     $url      The address.
+     * @param   bool|null  $enabled  The option; null reads the configuration.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function utm(string $url, ?bool $enabled = null): string
+    {
+        $enabled ??= (bool) (KunenaConfig::getInstance()->utmSource ?? false);
+
+        if (!$enabled || $url === '' || preg_match('/[?&]utm_source=/', $url)) {
+            return $url;
+        }
+
+        // The values go before the part after # (the place in the page).
+        $parts = explode('#', $url, 2);
+
+        return $parts[0] . (str_contains($parts[0], '?') ? '&' : '?') . 'utm_source=kunena&utm_medium=email' . (isset($parts[1]) ? '#' . $parts[1] : '');
+    }
+
     public static function send($mail, array $receivers)
     {
         if (isset(static::$mailer_error_status)) {

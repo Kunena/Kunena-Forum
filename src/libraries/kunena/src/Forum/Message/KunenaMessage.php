@@ -1281,6 +1281,9 @@ class KunenaMessage extends KunenaDatabaseObject
     {
         $templateId = $subscription || $approvedAuthor ? 'com_kunena.subscription' : 'com_kunena.moderator';
 
+        // The option "UTM Source": the link of the mail says that the visit comes from an e-mail of the forum.
+        $url = KunenaEmail::utm($url);
+
         if (KunenaMailTemplate::isUsed($templateId)) {
             if ($approvedAuthor) {
                 // The author did not subscribe to this e-mail: nothing to unsubscribe from.
@@ -2693,6 +2696,7 @@ class KunenaMessage extends KunenaDatabaseObject
         $topic      = $this->getTopic();
         $authorName = $this->getAuthor()->getName($this->name, false);
         $url        = $url !== '' ? $url : Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl(null, false);
+        $url        = KunenaEmail::utm($url);
         $sender     = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
         $sent       = 0;
 

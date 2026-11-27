@@ -410,6 +410,15 @@ class KunenaMessage extends KunenaDatabaseObject
         $this->_config = KunenaFactory::getConfig();
 
         parent::__construct($properties);
+
+        // A message made from a row of the database (the lists of the helper: the messages of a topic, the latest messages, a set
+        // of ids) is in the state and in the topic of that row. Only load() said so, so such a message counted as one which was
+        // never shown: putting it in the trash took nothing off the counters of its topic, its category and its author, and
+        // saving it while it was shown added a post to them.
+        if ($properties !== null && !empty($this->id)) {
+            $this->_hold   = $this->hold;
+            $this->_thread = $this->thread;
+        }
     }
 
     /**

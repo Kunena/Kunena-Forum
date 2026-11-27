@@ -303,6 +303,98 @@ class KunenaMessageApproveCountTest extends IntegrationTestCase implements DBTes
     }
 
     /**
+     * A published topic with three published posts of the author, who has them in the row of the topic.
+     */
+    private function seedThreeShownPosts(): void
+    {
+        $this->seed(KunenaForum::PUBLISHED, 3, 3, 7, [
+            [10, 0, KunenaForum::PUBLISHED, 1000],
+            [11, 10, KunenaForum::PUBLISHED, 1100],
+            [12, 10, KunenaForum::PUBLISHED, 1200],
+        ]);
+        $this->insertRow('#__kunena_user_topics', ['user_id' => self::AUTHOR, 'topic_id' => self::TOPIC, 'category_id' => self::CATEGORY, 'posts' => 3, 'last_post_id' => 12, 'owner' => 1]);
+    }
+
+    /**
+     * Messages read as a list (the posts a moderator ticked, the posts of a user) are made from the rows of one query. Such a
+     * message did not know the state of its row: putting it in the trash took nothing off the counters.
+     */
+    public function testTrashingMessagesReadAsAListTakesThemOffTheCounters(): void
+    {
+        $this->seedThreeShownPosts();
+
+        foreach (KunenaMessageHelper::getMessages([11, 12], 'none') as $message) {
+            $this->assertTrue($message->publish(KunenaForum::DELETED));
+        }
+
+        $this->assertEquals([
+            'topic'     => [['hold' => 0, 'posts' => 1]],
+            'category'  => [['numTopics' => 3, 'numPosts' => 5]],
+            'usertopic' => [['posts' => 1]],
+            'user'      => [['posts' => 1]],
+        ], $this->counters());
+    }
+
+    public function testTrashingTheMessagesOfATopicReadAsAListTakesThemOffTheCounters(): void
+    {
+        $this->seedThreeShownPosts();
+
+        $messages = KunenaMessageHelper::getMessagesByTopic(KunenaTopicHelper::get(self::TOPIC), 0, 50, 'ASC', 0);
+
+        $this->assertCount(3, $messages);
+
+        // Every post but the first one.
+        foreach (\array_slice(array_values($messages), 1) as $message) {
+            $this->assertTrue($message->publish(KunenaForum::DELETED));
+        }
+
+        $this->assertEquals([
+            'topic'     => [['hold' => 0, 'posts' => 1]],
+            'category'  => [['numTopics' => 3, 'numPosts' => 5]],
+            'usertopic' => [['posts' => 1]],
+            'user'      => [['posts' => 1]],
+        ], $this->counters());
+    }
+
+    /**
+     * The bulk action "delete permanently" of the moderators reads the ticked posts as a list too.
+     */
+    public function testDeletingMessagesReadAsAListForGoodTakesThemOffTheCounters(): void
+    {
+        $this->seedThreeShownPosts();
+
+        foreach (KunenaMessageHelper::getMessages([11, 12], 'none') as $message) {
+            $this->assertTrue($message->delete());
+        }
+
+        $this->assertEquals([
+            'topic'     => [['hold' => 0, 'posts' => 1]],
+            'category'  => [['numTopics' => 3, 'numPosts' => 5]],
+            'usertopic' => [['posts' => 1]],
+            'user'      => [['posts' => 1]],
+        ], $this->counters());
+    }
+
+    /**
+     * A shown message read as a list and saved as it is (an edit) is not a new post.
+     */
+    public function testSavingAShownMessageReadAsAListAddsNoPost(): void
+    {
+        $this->seedThreeShownPosts();
+
+        foreach (KunenaMessageHelper::getMessages([11, 12], 'none') as $message) {
+            $this->assertTrue($message->save());
+        }
+
+        $this->assertEquals([
+            'topic'     => [['hold' => 0, 'posts' => 3]],
+            'category'  => [['numTopics' => 3, 'numPosts' => 7]],
+            'usertopic' => [['posts' => 3]],
+            'user'      => [['posts' => 3]],
+        ], $this->counters());
+    }
+
+    /**
      * The time of the delete of the messages, as it is in the database.
      */
     private function deletedTimes(): array

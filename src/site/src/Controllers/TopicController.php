@@ -3719,7 +3719,9 @@ class TopicController extends KunenaController
         $onlyChanged = !$messageId && !$targetTopic && $targetCategory == $topic->category_id;
 
         try {
-            $targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
+            // The category which the topic leaves, for the log: a topic moved without a shadow is in the target category after it.
+            $sourceCategory = $topic->getCategory();
+            $targetobject   = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
         } catch (Exception $e) {
             // Nothing was moved: only the error is shown (it was followed by the message of success) and nothing is logged.
             $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -3737,7 +3739,9 @@ class TopicController extends KunenaController
                     'target'  => ['category_id' => $targetCategory, 'topic_id' => $targetTopic],
                     'options' => ['emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow],
                 ],
-                $topic->getCategory(),
+                // The category it came from (the target is in the data): the target was logged twice for a move without a shadow,
+                // and the move was found in the logs of no source category.
+                $sourceCategory,
                 $topic,
                 $message->getAuthor()
             );

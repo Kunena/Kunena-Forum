@@ -118,6 +118,25 @@ abstract class KunenaForum
     protected static mixed $version_sampleData = false;
 
     /**
+     * The version which is installed, from the table of the versions, for a site without the manifest of the package: the newest
+     * row. The first row was read (the oldest: the version of the first installation), so an upgraded forum gave the version it
+     * once started with.
+     *
+     * @return  object|null
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function installedVersion(): ?object
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select('*')->from($db->quoteName('#__kunena_version'))->order($db->quoteName('id') . ' DESC');
+        $query->setLimit(1);
+
+        return $db->setQuery($query)->loadObject() ?: null;
+    }
+
+    /**
      * @return  void
      *
      * @since   Kunena 6.0
@@ -132,17 +151,11 @@ abstract class KunenaForum
             self::$version_date = (string) $manifest->creationDate;
             self::$version_name = (string) $manifest->versionname;
         } else {
-            $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->createQuery();
-            $query->select('*')->from('#__kunena_version')->order('id');
-            $query->setLimit(1);
-            $db->setQuery($query);
+            $version = self::installedVersion();
 
-            $version = $db->loadObject();
-
-            self::$version      = $version->version;
-            self::$version_date = $version->versiondate;
-            self::$version_name = $version->versionname;
+            self::$version      = (string) ($version->version ?? '');
+            self::$version_date = (string) ($version->versiondate ?? '');
+            self::$version_name = (string) ($version->versionname ?? '');
         }
 
         self::$version_major = substr(self::$version, 0, 3);
@@ -150,8 +163,10 @@ abstract class KunenaForum
         // Only set version name to 'Git Repository' if the version contains development indicators
         if (strpos(self::$version, 'GIT') !== false) {
             self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
-        } else {
-            self::$version_name = (string) ($manifest->versionname ?? 'Stable Release');
+        } elseif ((string) self::$version_name === '') {
+            // No name: a stable release. (The name was read from the manifest again here: without a manifest every version was
+            // "Stable Release", whatever the table of the versions said, and a manifest without a name gave an empty name.)
+            self::$version_name = 'Stable Release';
         }
 
         $db    = Factory::getContainer()->get('DatabaseDriver');

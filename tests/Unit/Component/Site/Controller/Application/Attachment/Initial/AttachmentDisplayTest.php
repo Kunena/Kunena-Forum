@@ -124,4 +124,18 @@ class AttachmentDisplayTest extends UnitTestCase
         $this->assertStringStartsWith('attachment; ', $this->values($headers, 'Content-Disposition')[0]);
         $this->assertSame(['0'], $this->values($headers, 'Expires'));
     }
+
+    /**
+     * A forum for registered users only (or offline) refuses the guests before the right of the file is asked: that right let a
+     * guest read the picture, so the answer to a member was public and a cache in front of the site gave the picture to guests
+     * for an hour. (The display needs a whole site: its code is read.)
+     */
+    public function testAFileOfAForumForMembersIsNotPublic(): void
+    {
+        $source = (string) file_get_contents(\dirname(__DIR__, 8) . '/src/site/src/Controller/Application/Attachment/Initial/AttachmentDisplay.php');
+
+        $this->assertSame(1, preg_match('/\$guestMayRead = (.*?);/s', $source, $m));
+        $this->assertStringContainsString('!$this->config->regOnly', $m[1]);
+        $this->assertStringContainsString('!$this->config->boardOffline', $m[1]);
+    }
 }

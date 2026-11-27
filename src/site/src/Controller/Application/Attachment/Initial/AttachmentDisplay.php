@@ -157,8 +157,11 @@ class AttachmentDisplay extends KunenaControllerDisplay
         header('X-Content-Type-Options: nosniff');
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
 
-        // If guests can access an inline picture or PDF, we allow it to be cached for an hour.
+        // If guests can access an inline picture or PDF, we allow it to be cached for an hour. Not when the forum is for registered
+        // users only or offline (checked above, not by the right of the file): the answer to a member was public, and a cache in
+        // front of the site gave the file to guests.
         $guestMayRead = !$download && ($attachment->isImage() || $attachment->isPdf())
+            && !$this->config->regOnly && !$this->config->boardOffline
             && $attachment->isAuthorised('read', new KunenaUser());
 
         foreach (self::fileHeaders($attachment, $download, $guestMayRead) as $line) {

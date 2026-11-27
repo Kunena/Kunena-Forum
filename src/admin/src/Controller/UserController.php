@@ -200,7 +200,12 @@ class UserController extends FormController
         // Update moderator rights
         $categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
 
+        // Not the sections: the list of the page has none (they cannot be chosen), so a right in a section was taken away.
         foreach ($categories as $category) {
+            if ($category->isSection()) {
+                continue;
+            }
+
             $category->setModerator($user, \in_array($category->id, $modCatids));
         }
 

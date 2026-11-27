@@ -186,9 +186,12 @@ class UserModel extends KunenaModel
         }
 
         // The categories which a moderator can get: all the categories which the administrator may read, without the sections.
+        // The unpublished ones too: the save sets the rights of all the categories which the administrator administers, so the right
+        // in a hidden category, which the list did not have, was taken away by any save of the user.
         $params = [
-            'sections' => false,
-            'action'   => 'read',
+            'sections'    => false,
+            'action'      => 'read',
+            'unpublished' => 1,
         ];
 
         return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="form-select" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');

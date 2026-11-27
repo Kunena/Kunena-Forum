@@ -916,8 +916,27 @@ class TopicController extends KunenaController
                     ->from($db->quoteName('#__kunena_attachments'))
                     ->where($db->quoteName('userid') . ' = ' . (int) $this->me->userid)
                     ->where($db->quoteName('mesid') . ' = 0');
+                $pending    = (int) $db->setQuery($query)->loadResult();
+                $own        = $pending;
 
-                if ((int) $db->setQuery($query)->loadResult() >= $maxPending) {
+                // A guest: the uploads of his session. All the guests have the user id 0, so they shared one limit: the pending
+                // uploads of a few guests stopped the uploads of every other guest (until the task removed them, a day later).
+                if (!$this->me->exists()) {
+                    $mine = KunenaPendingAttachment::guestUploads();
+                    $own  = 0;
+
+                    if ($mine) {
+                        $query = $db->createQuery()
+                            ->select('COUNT(*)')
+                            ->from($db->quoteName('#__kunena_attachments'))
+                            ->where($db->quoteName('userid') . ' = 0')
+                            ->where($db->quoteName('mesid') . ' = 0')
+                            ->whereIn($db->quoteName('id'), $mine);
+                        $own   = (int) $db->setQuery($query)->loadResult();
+                    }
+                }
+
+                if (KunenaPendingAttachment::overLimit($own, $pending, $maxPending, !$this->me->exists())) {
                     throw new RuntimeException(Text::sprintf('COM_KUNENA_UPLOAD_ERROR_PENDING', $maxPending), 400);
                 }
             }
@@ -1010,6 +1029,11 @@ class TopicController extends KunenaController
 
                 if ($attachment->id) {
                     $location = $attachment->getUrl(false, true, false);
+
+                    // The upload of a guest belongs to his session: only he can put it into his message.
+                    if (!$this->me->exists()) {
+                        KunenaPendingAttachment::rememberGuestUpload((int) $attachment->id);
+                    }
                 }
             }
         } catch (Exception $response) {

@@ -34,6 +34,7 @@ use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaPendingAttachment;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -443,8 +444,12 @@ class KunenaMessage extends KunenaDatabaseObject
         // from the form, and an upload of somebody else would be taken away from him).
         $me = KunenaUserHelper::getMyself();
 
+        // A guest: the uploads of his session only. Every guest has the user id 0, so a guest took the pending upload of
+        // another guest by sending its number.
+        $guestUploads = $me->exists() ? [] : KunenaPendingAttachment::guestUploads();
+
         foreach ($attachments as $id => $attachment) {
-            if (!$attachment->mesid && (int) $attachment->userid !== (int) $me->userid) {
+            if (!$attachment->mesid && !KunenaPendingAttachment::mayAttach((int) $attachment->id, (int) $attachment->userid, (int) $me->userid, $guestUploads)) {
                 unset($attachments[$id]);
             }
         }

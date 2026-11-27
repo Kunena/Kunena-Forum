@@ -21,6 +21,7 @@ use Joomla\Event\Dispatcher;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\BBCode\KunenaBBCode;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -181,5 +182,22 @@ class KunenaParserStripBBCodeTest extends UnitTestCase
         $excerpt = KunenaParser::stripBBCode($text, 200, false);
 
         $this->assertSame(mb_strcut($text, 0, 200, 'UTF-8') . '...', $excerpt);
+    }
+
+    /**
+     * The plain text of a post is made with the parser which also writes the posts of the page. For a text in HTML it tells the
+     * parser to leave "&" as it is, and it left the parser that way: every post shown later in the request kept its "&" and its
+     * single quotes unescaped. The parser escapes again when it is asked for the next text.
+     */
+    public function testTheParserEscapesAgainAfterThePlainText(): void
+    {
+        $relative = (new ReflectionProperty(KunenaParser::class, 'relative'))->getValue();
+
+        KunenaParser::stripBBCode('Tom & Jerry', 0, true);
+
+        $parser = KunenaBBCode::getInstance($relative);
+
+        $this->assertFalse($parser->GetAllowAmpersand());
+        $this->assertSame('Tom &amp; Jerry&#039;s', $parser->htmlEncode("Tom & Jerry's"));
     }
 }

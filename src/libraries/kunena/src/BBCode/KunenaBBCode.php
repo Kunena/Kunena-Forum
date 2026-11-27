@@ -510,6 +510,11 @@ class KunenaBBCode extends BBCode
 
         $instance[\intval($relative)]->autoLink_disable = 0;
 
+        // "&" is escaped again, as the parser does by default. The plain text of a post (KunenaParser::stripBBCode(), for a
+        // tooltip or the description of the page) switches that off on this shared parser and left it off: every post shown
+        // later in the request kept its "&" and its single quotes as they were typed.
+        $instance[\intval($relative)]->SetAllowAmpersand(false);
+
         return $instance[\intval($relative)];
     }
 

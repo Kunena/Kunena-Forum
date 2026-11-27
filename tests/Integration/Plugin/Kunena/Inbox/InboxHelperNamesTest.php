@@ -24,7 +24,10 @@ use RuntimeException;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Plugin\Kunena\Inbox\Helper\InboxHelper;
+use Kunena\Forum\Plugin\Kunena\Inbox\Helper\KunenaPrivateInbox;
 use Kunena\Tests\Integration\DBTestInterface;
 use Kunena\Tests\Integration\DBTestTrait;
 use Kunena\Tests\Integration\IntegrationTestCase;
@@ -126,6 +129,25 @@ class InboxHelperNamesTest extends IntegrationTestCase implements DBTestInterfac
     public function testTheListOfTheBlockedUsersHasTheNamesAsText(): void
     {
         $this->assertSame([['id' => 11, 'name' => 'Tom & Jerry']], InboxHelper::getBlocked(10));
+    }
+
+    /**
+     * A user who blocked another one gets no e-mail of his mentions (nor of his thanks): the inbox left the notification out, the
+     * e-mail was sent all the same. (User 10 blocked user 11.)
+     */
+    public function testNoMailOfTheMentionOfABlockedUser(): void
+    {
+        require_once \dirname(__DIR__, 5) . '/src/plugins/plg_kunena_inbox/src/Helper/KunenaPrivateInbox.php';
+
+        $message = (new ReflectionClass(KunenaMessage::class))->newInstanceWithoutConstructor();
+        foreach (['id' => 61, 'thread' => 60, 'catid' => 2, 'userid' => 11, 'subject' => 'Hello'] as $name => $value) {
+            $message->$name = $value;
+        }
+
+        // The e-mail is on by default: only the user who blocked the author is left out of it.
+        $inbox = new KunenaPrivateInbox(new Registry(['notifications' => 1, 'emailDefault' => 1]));
+
+        $this->assertSame([10], $inbox->notify($message, 'mention', [10, 12]));
     }
 
     /**

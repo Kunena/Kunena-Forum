@@ -112,9 +112,14 @@ class KunenaPrivateInbox extends KunenaPrivate
 
         InboxHelper::addNotification($message, $type, $userids, $this->params, $senderId);
 
+        // No e-mail either of a mention or a thank you of a user whom he blocked: the inbox left it out, the e-mail was sent all the
+        // same (the block "gives no notifications of mentions").
+        $author = $senderId ?: (int) $message->userid;
+
         return array_values(array_filter(
             array_map('intval', $userids),
             fn (int $userid) => !InboxHelper::wantsEmail($userid, $this->params)
+                || (\in_array($type, ['mention', 'thanks'], true) && InboxHelper::isBlocked($userid, $author))
         ));
     }
 }

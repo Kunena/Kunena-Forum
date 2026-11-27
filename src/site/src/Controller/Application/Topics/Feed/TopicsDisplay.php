@@ -17,9 +17,11 @@ namespace Kunena\Forum\Site\Controller\Application\Topics\Feed;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Document\FeedDocument;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\UserFactoryInterface;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Site\Model\TopicsModel;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -67,6 +69,11 @@ class TopicsDisplay extends KunenaControllerDisplay
     {
         $this->config = KunenaFactory::getConfig();
         $this->document = Factory::getApplication()->getDocument();
+
+        if (!($this->document instanceof FeedDocument)) {
+            throw new KunenaException(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
+
         $this->topicsModel = new TopicsModel();
         $mode = $this->getInput()->getWord('mode', 'topics');
         $this->me        = KunenaUserHelper::getMyself();

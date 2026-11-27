@@ -93,6 +93,10 @@ class UserBanHistoryDisplay extends KunenaControllerDisplay
     {
         $menu_item = $this->app->getMenu()->getActive();
 
+        // The name as text: the title and the description are escaped by Joomla (headerText has the HTML name of the page). With
+        // headerText the title of the page of "Tom & Jerry" was "Ban history for Tom &amp; Jerry".
+        $headerText = Text::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->profile->getName('', false));
+
         if ($menu_item) {
             $params             = $menu_item->getParams();
             $params_title       = $params->get('page_title');
@@ -102,14 +106,14 @@ class UserBanHistoryDisplay extends KunenaControllerDisplay
                 $title = $params->get('page_title');
                 $this->setTitle($title);
             } else {
-                $this->setTitle($this->headerText);
+                $this->setTitle($headerText);
             }
 
             if (!empty($params_description)) {
                 $description = $params->get('menu-meta_description');
                 $this->setDescription($description);
             } else {
-                $this->setDescription($this->headerText);
+                $this->setDescription($headerText);
             }
         }
     }

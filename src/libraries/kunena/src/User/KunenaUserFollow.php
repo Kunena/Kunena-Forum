@@ -214,13 +214,19 @@ abstract class KunenaUserFollow
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $now   = gmdate('Y-m-d H:i:s');
         $query = $db->createQuery()
             ->select($db->quoteName(['u.id', 'u.name', 'u.username', 'u.email']))
             ->from($db->quoteName('#__kunena_user_follow', 'f'))
             ->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('f.user_id'))
+            // Not a user who is banned from the forum now, as for the subscribers (KunenaAccess::loadSubscribers()): a banned
+            // follower got the text of every new topic of the author. The dates of the bans are in UTC.
+            ->leftJoin($db->quoteName('#__kunena_users', 'ku') . ' ON ' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id'))
             ->where($db->quoteName('f.followed_id') . ' = :followedid')
             ->where($db->quoteName('u.block') . ' = 0')
-            ->bind(':followedid', $followedid, ParameterType::INTEGER);
+            ->where('(' . $db->quoteName('ku.banned') . ' IS NULL OR ' . $db->quoteName('ku.banned') . ' < :now)')
+            ->bind(':followedid', $followedid, ParameterType::INTEGER)
+            ->bind(':now', $now);
 
         if (KunenaConfig::getInstance()->useSystemEmails) {
             $query->where($db->quoteName('u.sendEmail') . ' = 1');

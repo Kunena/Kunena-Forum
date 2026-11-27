@@ -247,7 +247,10 @@ class KunenaActivityCommunity extends KunenaActivity
             $params->set('url', Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getPermaUrl(null) . '#' . $message->id); // {url} tag for activity. Used when hovering over avatar in notification window, as well as in email notification
             $params->set('title', $message->displayField('subject')); // (title) tag in language file
             $params->set('title_url', $message->getPermaUrl()); // Make the title in notification - linkable
-            $params->set('message', $message->displayField('message')); // (message) tag in language file
+            // (message) tag in language file. Parsed as for an e-mail (a context): the [confidential], [hide] and [private] parts
+            // are left out. Parsed for the page, they were shown as the poster (or the moderator who approved) sees them, and the
+            // notification and its e-mail gave them to every subscriber.
+            $params->set('message', $message->displayField('message', true, 'email'));
             $params->set('actor', $actor->getDisplayName()); // Actor in the stream
             $params->set('actor_url', 'index.php?option=com_community&view=profile&userid=' . $actor->id); // Actor Link
 

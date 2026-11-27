@@ -313,7 +313,12 @@ class TopicsController extends KunenaController
                     $topic->publish(KunenaForum::PUBLISHED);
 
                     $message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
-                    $topic->sendNotification(null, $wasUnapproved);
+
+                    // The subscribers are told about a message once, as in the approval of one message: a topic which an edit
+                    // of its first post sent back to review was mailed to all of them again.
+                    if (!KunenaMessageHelper::get($topic->first_post_id)->notified) {
+                        $topic->sendNotification(null, $wasUnapproved);
+                    }
 
                     // The users mentioned in its first post: a message which waits for approval tells none of them.
                     KunenaMessageHelper::get($topic->first_post_id, true)->sendMentionNotifications();
@@ -645,7 +650,11 @@ class TopicsController extends KunenaController
 
                     $message->publish(KunenaForum::PUBLISHED);
 
-                    $message->processNotification(null, $wasUnapproved);
+                    // The subscribers are told about a message once, as in the approval of one message: a reply which an edit sent
+                    // back to review was mailed to all of them again (and its author got the mail of the approval again).
+                    if (!$message->notified) {
+                        $message->processNotification(null, $wasUnapproved);
+                    }
 
                     // The users mentioned in it: a message which waits for approval tells none of them.
                     $message->sendMentionNotifications();

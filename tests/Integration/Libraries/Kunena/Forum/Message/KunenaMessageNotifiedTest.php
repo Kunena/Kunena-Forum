@@ -91,4 +91,19 @@ class KunenaMessageNotifiedTest extends IntegrationTestCase implements DBTestInt
 
         $this->assertStringContainsString('$this->markNotified();', Files::read('src/libraries/kunena/src/Forum/Message/KunenaMessage.php'));
     }
+
+    /**
+     * The approval of several topics or posts at once (the lists of the moderators) tells the subscribers once too: it mailed them
+     * again for a message which an edit had sent back to review.
+     */
+    public function testTheApprovalOfSeveralMessagesTellsTheSubscribersOnce(): void
+    {
+        $source = Files::read('src/site/src/Controllers/TopicsController.php');
+
+        $this->assertSame(1, preg_match('/public function approve_posts\(\)\s*\{(.*?)\n    \}/s', $source, $posts));
+        $this->assertMatchesRegularExpression('/if \(!\$message->notified\) \{\s*\$message->processNotification\(/', $posts[1]);
+
+        $this->assertSame(1, preg_match('/public function approve\(\)\s*\{(.*?)\n    \}/s', $source, $topics));
+        $this->assertMatchesRegularExpression('/if \(!KunenaMessageHelper::get\(\$topic->first_post_id\)->notified\) \{\s*\$topic->sendNotification\(/', $topics[1]);
+    }
 }

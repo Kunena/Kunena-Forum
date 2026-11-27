@@ -713,11 +713,15 @@ abstract class KunenaAttachmentHelper
                 $instance = new KunenaAttachment($row);
                 $instance->exists(true);
 
-                self::$_instances[$id]                  = $instance;
-                self::$_messages[$instance->mesid][$id] = $instance;
+                self::$_instances[$id] = $instance;
             }
 
-            $list[$id] = self::$_instances[$id];
+            // In the list of its message also when it was loaded before (by its id, or as a new upload which has its message now):
+            // the list of the message had only the files loaded here first.
+            $instance                                     = self::$_instances[$id];
+            self::$_messages[(int) $instance->mesid][$id] = $instance;
+
+            $list[$id] = $instance;
         }
 
         return $list;
@@ -736,8 +740,10 @@ abstract class KunenaAttachmentHelper
         foreach ($ids as $i => $id) {
             $id = \intval($id);
 
-            // A message without attachments has an empty list: remember that it was loaded, or its query runs again and again.
-            if (!empty(self::$_messages[$id]) || isset(self::$_messagesLoaded[$id])) {
+            // A message without attachments has an empty list: remember that it was loaded, or its query runs again and again. Only
+            // a message whose files were all read is skipped: one file of it loaded by its id made the list of the message that file
+            // alone (an edit counted one file against the limit of the attachments, a delete left the others).
+            if (isset(self::$_messagesLoaded[$id])) {
                 unset($ids[$i]);
             }
 
@@ -772,12 +778,10 @@ abstract class KunenaAttachmentHelper
             KunenaError::displayDatabaseError($e);
         }
 
+        // The list of each message is made again from its rows, in their order (a file of it loaded before by its id is in them).
         foreach ($ids as $mesid) {
             self::$_messagesLoaded[$mesid] = true;
-
-            if (!isset(self::$_messages [$mesid])) {
-                self::$_messages [$mesid] = [];
-            }
+            self::$_messages [$mesid]      = [];
         }
 
         // The rows have every column of the attachments: they become the attachments (get() would read each one again).

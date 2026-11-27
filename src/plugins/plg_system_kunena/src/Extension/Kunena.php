@@ -69,12 +69,15 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     public static function getSubscribedEvents(): array
     {
         $app     = Factory::getApplication();
-        $mapping = [];
+        // The profile of a new user and the clean-up of a deleted one, whichever application saves or deletes him: a user deleted
+        // through the web services (the API) kept all his data of the forum.
+        $mapping = [
+            'onUserAfterSave'   => 'onUserAfterSave',
+            'onUserAfterDelete' => 'onUserAfterDelete',
+        ];
 
         if ($app->isClient('site') || $app->isClient('administrator')) {
-            $mapping['onUserAfterSave']   = 'onUserAfterSave';
-            $mapping['onUserAfterLogin']  = 'onUserAfterLogin';
-            $mapping['onUserAfterDelete'] = 'onUserAfterDelete';
+            $mapping['onUserAfterLogin'] = 'onUserAfterLogin';
 
             if ($app->isClient('site')) {
                 // Only allowed in the frontend

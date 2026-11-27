@@ -796,7 +796,10 @@ abstract class KunenaCategoryHelper
             ->where($db->quoteName('t.moved_id') . ' = 0')
             ->where($db->quoteName('t.last_post_time') . ' > ' . $db->quote($session->getAllReadTime()))
             ->where('(' . $db->quoteName('uc.allreadtime') . ' IS NULL OR ' . $db->quoteName('t.last_post_time') . ' > ' . $db->quoteName('uc.allreadtime') . ')')
-            ->where('(' . $db->quoteName('ur.topic_id') . ' IS NULL OR ' . $db->quoteName('t.last_post_id') . ' != ' . $db->quoteName('ur.message_id') . ')')
+            // New after the time the user read it, as the lists of topics count it (KunenaTopicHelper::fetchNewStatus()). The last
+            // message which he read was compared: when that message was deleted, the topic stayed new in the index for ever, while
+            // no list showed it as new.
+            ->where('(' . $db->quoteName('ur.topic_id') . ' IS NULL OR ' . $db->quoteName('t.last_post_time') . ' > ' . $db->quoteName('ur.time') . ')')
             ->group($db->quoteName('category_id'));
 
         // In the categories where the users see their own topics only, the topics of the others are never new for the user: the

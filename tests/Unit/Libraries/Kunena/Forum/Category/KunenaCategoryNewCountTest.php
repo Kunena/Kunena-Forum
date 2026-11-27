@@ -52,6 +52,26 @@ class KunenaCategoryNewCountTest extends UnitTestCase
         $this->assertStringNotContainsString("if (empty(\$newlist)) {\n            return;", $m[1]);
     }
 
+    /**
+     * A topic is new after the time the user read it, as in the lists of topics. The index compared the last message which he
+     * read with the last one of the topic: after that one was deleted (or the topic merged) the category showed "1 new" for ever,
+     * and no list showed the topic as new.
+     */
+    public function testATopicIsNewByTheTimeItWasReadAsInTheLists(): void
+    {
+        $source = Files::read('src/libraries/kunena/src/Forum/Category/KunenaCategoryHelper.php');
+
+        $this->assertSame(1, preg_match('/public static function getNewTopics\(\$catids\): void\s*\{(.*?)\n    \}/s', $source, $m));
+        $this->assertStringContainsString("\$db->quoteName('t.last_post_time') . ' > ' . \$db->quoteName('ur.time')", $m[1]);
+        $this->assertStringNotContainsString("quoteName('ur.message_id')", $m[1]);
+
+        // The rule of the lists.
+        $this->assertStringContainsString(
+            "\$db->quoteName('m.time') . ' > ' . \$db->quoteName('ur.time')",
+            Files::read('src/libraries/kunena/src/Forum/Topic/KunenaTopicHelper.php')
+        );
+    }
+
     public function testTheTopicListsHaveTheCategoriesInTheirForumJump(): void
     {
         $source = Files::read('src/site/src/Controller/Topic/Listing/ListDisplay.php');

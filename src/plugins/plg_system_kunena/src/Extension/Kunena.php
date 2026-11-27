@@ -182,6 +182,22 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         if ($isNew && \intval($user['id'])) {
             $kuser = KunenaFactory::getUser(\intval($user['id']));
             $kuser->save();
+
+            return;
+        }
+
+        // The language which the user (or an administrator) chose in Joomla: the forum stored it only at the login, so the mails of
+        // the subscriptions stayed in the old language until the next login (and for ever for a user who does not log in again).
+        $params   = json_decode((string) ($user['params'] ?? ''));
+        $language = \is_object($params) ? (string) ($params->language ?? '') : '';
+
+        if ($language !== '' && \intval($user['id'] ?? 0) > 0) {
+            $kuser = KunenaFactory::getUser(\intval($user['id']));
+
+            if ($kuser->exists() && $kuser->language !== $language) {
+                $kuser->language = $language;
+                $kuser->save();
+            }
         }
     }
 

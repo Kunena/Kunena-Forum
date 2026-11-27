@@ -24,6 +24,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\CMS\Event\User\AfterDeleteEvent;
+use Joomla\CMS\Event\User\AfterSaveEvent;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\Event\Dispatcher;
@@ -269,6 +270,29 @@ class UserDeleteKarmaTest extends IntegrationTestCase implements DBTestInterface
             ['1' => 1, '2' => 1],
             array_map('intval', array_column($this->fetchAll('SELECT id, votes FROM #__kunena_polls_options ORDER BY id'), 'votes', 'id'))
         );
+    }
+
+    /**
+     * A language chosen in Joomla (by the user or an administrator) is the language of the forum profile at once: it was stored only
+     * at the login, so the mails of the subscriptions stayed in the old language until the next login. (The save of a user, next to
+     * his delete: both are the user events of the plugin.)
+     */
+    public function testTheLanguageChosenInJoomlaIsTheLanguageOfTheProfile(): void
+    {
+        $this->insertRow('#__users', ['id' => 7, 'name' => 'User 7', 'username' => 'user7', 'registerDate' => '2026-01-01 00:00:00', 'params' => '']);
+        $this->insertRow('#__kunena_users', ['userid' => 7, 'language' => 'en-GB']);
+
+        $plugin = (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor();
+        $plugin->setDatabase($this->getDBDriver());
+
+        $event = $this->createStub(AfterSaveEvent::class);
+        $event->method('getSavingResult')->willReturn(true);
+        $event->method('getIsNew')->willReturn(false);
+        $event->method('getUser')->willReturn(['id' => 7, 'params' => '{"language":"de-DE"}']);
+
+        $plugin->onUserAfterSave($event);
+
+        $this->assertSame('de-DE', $this->fetchAll('SELECT language FROM #__kunena_users WHERE userid = 7')[0]['language']);
     }
 
     /**

@@ -35,6 +35,7 @@ use Joomla\Utilities\IpHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use RuntimeException;
 
@@ -263,6 +264,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
                 '#__kunena_polls_users'      => ['userid'],
                 '#__kunena_private_user_map' => ['user_id'],
                 '#__kunena_inbox_blocks'     => ['user_id', 'blocked_id'],
+                '#__kunena_thankyou'         => ['userid'],
             ] as $table => $fields
         ) {
             foreach ($fields as $field) {
@@ -278,6 +280,10 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         }
 
         KunenaRateHelper::recountTopics($rated);
+
+        // The thanks he gave are deleted above: the posts counted them without naming him, and the users he thanked kept them in
+        // their count. The thanks to his posts, which stay, are kept.
+        KunenaMessageThankyouHelper::recount();
 
         // His inbox (plugin Kunena - Inbox): every message and notification of his side is deleted as if he deleted it himself, so
         // a message stays for the other user until he deletes it too, and the files go with the messages which are removed.

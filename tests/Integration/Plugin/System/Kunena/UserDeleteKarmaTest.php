@@ -240,4 +240,36 @@ class UserDeleteKarmaTest extends IntegrationTestCase implements DBTestInterface
             $this->fetchAll('SELECT userid, target_userid FROM #__kunena_karma ORDER BY id')
         );
     }
+
+    /**
+     * The thanks which he gave are removed and the users whom he thanked are counted again: the post counted his thanks without
+     * naming him, and the user kept them in his count. The thanks to his posts, which stay, are kept.
+     */
+    public function testTheThanksGivenByTheDeletedUserAreRemovedAndRecounted(): void
+    {
+        $this->insertRows('#__users', [
+            ['id' => 7, 'name' => 'User 7', 'username' => 'user7', 'registerDate' => '2026-01-01 00:00:00', 'params' => ''],
+            ['id' => 8, 'name' => 'User 8', 'username' => 'user8', 'registerDate' => '2026-01-01 00:00:00', 'params' => ''],
+        ]);
+        $this->insertRow('#__kunena_users', ['userid' => 7, 'thankyou' => 2]);
+
+        foreach ([[1, self::USER, 7], [2, 8, 7], [3, 8, self::USER]] as [$post, $from, $to]) {
+            $this->insertRow('#__kunena_thankyou', ['postid' => $post, 'userid' => $from, 'targetuserid' => $to, 'time' => '2026-01-01 00:00:00']);
+        }
+
+        $plugin = (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor();
+        $plugin->setDatabase($this->getDBDriver());
+
+        $event = $this->createStub(AfterDeleteEvent::class);
+        $event->method('getDeletingResult')->willReturn(true);
+        $event->method('getUser')->willReturn(['id' => self::USER]);
+
+        $plugin->onUserAfterDelete($event);
+
+        $this->assertEquals(
+            [['postid' => 2, 'userid' => 8], ['postid' => 3, 'userid' => 8]],
+            $this->fetchAll('SELECT postid, userid FROM #__kunena_thankyou ORDER BY postid')
+        );
+        $this->assertSame(1, (int) $this->fetchAll('SELECT thankyou FROM #__kunena_users WHERE userid = 7')[0]['thankyou']);
+    }
 }

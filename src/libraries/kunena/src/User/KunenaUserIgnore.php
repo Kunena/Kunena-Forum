@@ -80,8 +80,15 @@ abstract class KunenaUserIgnore
 
             // Without the users who are a moderator or an administrator now: they can not be ignored, and a user who was put on
             // the list before he got that role stayed hidden (the list of the settings still shows him, to take him off).
+            $ids = array_map('intval', (array) $db->setQuery($query)->loadColumn());
+
+            // The users of the list in one query (each one was read on his own).
+            if ($ids) {
+                KunenaUserHelper::loadUsers($ids);
+            }
+
             self::$lists[$userid] = array_values(array_filter(
-                array_map('intval', (array) $db->setQuery($query)->loadColumn()),
+                $ids,
                 static fn (int $id): bool => !self::isStaff($id)
             ));
         }

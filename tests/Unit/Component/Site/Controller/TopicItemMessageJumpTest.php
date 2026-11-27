@@ -46,4 +46,12 @@ class TopicItemMessageJumpTest extends UnitTestCase
     {
         $this->assertStringContainsString('|| ($mesid && $id && $id != $this->topic->id)', $this->source());
     }
+
+    public function testTheDescriptionHasTheSubjectAsText(): void
+    {
+        $source = $this->source();
+
+        $this->assertStringContainsString('$this->headerText = (string) $this->topic->subject;', $source);
+        $this->assertStringNotContainsString("KunenaParser::parseText(\$this->topic->displayField('subject'))", $source);
+    }
 }

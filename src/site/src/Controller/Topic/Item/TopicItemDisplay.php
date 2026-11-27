@@ -350,7 +350,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $this->userTopic  = $this->topic->getUserTopic();
         $this->quickReply = $this->topic->isAuthorised('reply') && $this->me->exists() && $this->config->quickReply;
 
-        $this->headerText = KunenaParser::parseText($this->topic->displayField('subject'));
+        // The subject as text: it is the description of the page when the first post has no text, which Joomla escapes.
+        // displayField() escapes it already, and parseText() escaped it again ("Q&A" was "Q&amp;amp;A" in the description).
+        $this->headerText = (string) $this->topic->subject;
 
         $data = $this->getStructuredData(KunenaMessageHelper::get($this->topic->first_post_id));
 

@@ -23,6 +23,8 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserName;
 
 /**
  * @package     Kunena
@@ -110,5 +112,24 @@ class KunenaProfileEasyblog extends KunenaProfile
     public function getEditProfileURL(int $userid, bool $xhtml = true): string
     {
         return $this->getProfileURL($userid, 'edit', $xhtml);
+    }
+
+    /**
+     * The name of a user, as the forum shows it: EasyBlog gives the profile pages, not the names. Without this the name of every
+     * user was empty (the method of the base class gives nothing).
+     *
+     * @param   KunenaUser  $user         The user.
+     * @param   string      $visitorname  The name of a guest.
+     * @param   bool        $escape       Escape it for HTML.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
+    {
+        $name = !$user->userid && !$user->name ? $visitorname : KunenaUserName::get($user);
+
+        return $escape ? htmlspecialchars($name, \ENT_COMPAT, 'UTF-8') : $name;
     }
 }

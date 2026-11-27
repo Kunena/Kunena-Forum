@@ -147,13 +147,16 @@ class KunenaProfileCommunity extends KunenaProfile
         $cconfig         = CFactory::getConfig();
         $displayusername = $cconfig->get('displayname');
 
-        if ($user->id == 0) {
-            return $user->name;
+        if (!$user->userid) {
+            $name = $user->name ?: $visitorname;
         } elseif ($displayusername == 'name') {
-            return CFactory::getUser($user->userid)->name;
+            $name = (string) CFactory::getUser($user->userid)->name;
+        } else {
+            $name = (string) CFactory::getUser($user->userid)->username;
         }
 
-        return CFactory::getUser($user->userid)->username;
-
+        // Escaped when it is asked (the default): the forum puts the name into its links and attributes as it is given, and the
+        // name of a guest (or of a member) with a quote broke out of the attribute.
+        return $escape ? htmlspecialchars((string) $name, \ENT_COMPAT, 'UTF-8') : (string) $name;
     }
 }

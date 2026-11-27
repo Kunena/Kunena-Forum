@@ -219,15 +219,13 @@ class KunenaProfileEasySocial extends KunenaProfile
         $displayusername = $config->get('users.displayName');
 
         if ($user->userid > 0) {
-            if ($displayusername == 'username') {
-                return FD::user($user->userid)->username;
-            }
-
-            return FD::user($user->userid)->name;
-
+            $name = $displayusername == 'username' ? FD::user($user->userid)->username : FD::user($user->userid)->name;
+        } else {
+            // The name which the guest gave (the author of a post): it was the visitor name only, empty for the posts of guests.
+            $name = $user->name ?: $visitorname;
         }
 
-        return $visitorname;
-
+        // Escaped when it is asked (the default): the forum puts the name into its links and attributes as it is given.
+        return $escape ? htmlspecialchars((string) $name, \ENT_COMPAT, 'UTF-8') : (string) $name;
     }
 }

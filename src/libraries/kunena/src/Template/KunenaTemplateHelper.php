@@ -65,9 +65,11 @@ abstract class KunenaTemplateHelper
     public static function isDefault(string $template): int
     {
         $config         = KunenaFactory::getConfig();
-        $defaultemplate = $config->template;
+        $defaultemplate = (string) $config->template;
 
-        return $defaultemplate == $template ? 1 : 0;
+        // Whatever the case: on Windows and macOS "Agora" is the folder of the template agora (the uninstall of "Agora" deleted the
+        // template in use).
+        return strtolower($defaultemplate) === strtolower($template) ? 1 : 0;
     }
 
     /**

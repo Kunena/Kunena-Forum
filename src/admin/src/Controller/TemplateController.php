@@ -1013,7 +1013,8 @@ class TemplateController extends FormController
             return;
         }
 
-        if (\in_array($id, $this->locked)) {
+        // Whatever the case of the name: on Windows and macOS "Agora" is the folder agora, which was deleted.
+        if (\in_array(strtolower((string) $id), array_map('strtolower', $this->locked), true)) {
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_SYSTEM_TEMPLATE', $otemplate->name), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 

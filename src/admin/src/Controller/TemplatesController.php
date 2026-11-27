@@ -70,7 +70,10 @@ class TemplatesController extends KunenaController
      */
     public function install(): bool
     {
-        $tmpKunena = KunenaPath::tmpdir() . '/kinstall/';
+        // A folder of its own for the files of the package, removed at the end whatever happened: the folder kinstall was the same
+        // for every install and stayed after a failed one, and the next package which has its template at the root moved the
+        // files of the old one into the folder of the templates.
+        $tmpKunena = KunenaPath::tmpdir() . '/kinstall-' . bin2hex(random_bytes(8)) . '/';
         $dest      = KPATH_SITE . '/template/';
         $file      = $this->input->files->get('install_package', null, 'raw');
         $result    = true;
@@ -123,8 +126,9 @@ class TemplatesController extends KunenaController
 
                     if (!empty($templates)) {
                         foreach ($templates as $template) {
-                            // Never overwrite locked templates
-                            if (\in_array($template->directory, $this->locked)) {
+                            // Never overwrite locked templates, whatever the case of the folder of the package: on Windows and
+                            // macOS "Agora" is the folder agora, which was deleted and replaced.
+                            if (\in_array(strtolower((string) $template->directory), array_map('strtolower', $this->locked), true)) {
                                 continue;
                             }
 
@@ -190,6 +194,10 @@ class TemplatesController extends KunenaController
                     $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE') . ' ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'), 'error');
                 }
             }
+        }
+
+        if (is_dir($tmpKunena)) {
+            Folder::delete($tmpKunena);
         }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));

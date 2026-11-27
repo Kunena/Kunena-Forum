@@ -94,7 +94,9 @@ class UserEdit extends KunenaLayout
             }
         }
 
-        if ($myProfile) {
+        // The settings are the choices of the user: saved for him and for an administrator only (UserController::saveSettings()).
+        // A moderator saw them, changed one, and got "saved" for a change which was not kept.
+        if ($this->profile->isMyself() || KunenaUserHelper::getMyself()->isAdmin()) {
             $tab              = new stdClass();
             $tab->title       = Text::_('COM_KUNENA_PROFILE_EDIT_SETTINGS');
             $tab->content     = $this->subRequest('User/Edit/Settings');

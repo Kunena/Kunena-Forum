@@ -289,6 +289,15 @@ class KunenaUpload
                         500
                     );
                 }
+
+                // The options "Check MIME Types" and "Legal MIME Types": an image whose real type is not in the list is refused.
+                // Nothing read the two options (the text of the refusal was there, and the security audit of the tools said that
+                // the types were checked): a file with the name of a picture and another content was accepted.
+                if (self::mimeRefused((string) $options['filename'], (string) $options['mime'], (bool) $config->checkMimeTypes, (string) $config->imageMimeTypes, (string) $config->imageTypes)) {
+                    $this->cleanup();
+
+                    throw new RuntimeException(Text::sprintf('COM_KUNENA_UPLOAD_ERROR_MIME', (string) $options['mime'], (string) $config->imageMimeTypes), 400);
+                }
             }
 
             $options['hash'] = md5_file($outFile);
@@ -319,6 +328,34 @@ class KunenaUpload
         $kind = stripos(trim($mime), 'image/') === 0 ? 'image' : 'file';
 
         return $size > ($kind === 'image' ? $imageSizeKb : $fileSizeKb) * 1024 ? $kind : null;
+    }
+
+    /**
+     * Is an uploaded image refused by its type? An image is a file with the extension of an image or whose content is one; its
+     * type is the one which was read from the file.
+     *
+     * @param   string   $filename    The name of the file.
+     * @param   string   $mime        The type read from the file (empty when it could not be read: nothing is refused then).
+     * @param   boolean  $check       The option "Check MIME Types".
+     * @param   string   $allowed     The option "Legal MIME Types" (comma separated; empty: every type).
+     * @param   string   $extensions  The option "Allowed image types", the extensions of the images (comma separated).
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function mimeRefused(string $filename, string $mime, bool $check, string $allowed, string $extensions): bool
+    {
+        $list = static fn (string $text): array => array_values(array_filter(array_map('trim', explode(',', strtolower($text))), 'strlen'));
+        $mime = strtolower(trim(explode(';', $mime)[0]));
+
+        if (!$check || $mime === '' || !$list($allowed)) {
+            return false;
+        }
+
+        $image = \in_array(strtolower(pathinfo($filename, PATHINFO_EXTENSION)), $list($extensions), true) || str_starts_with($mime, 'image/');
+
+        return $image && !\in_array($mime, $list($allowed), true);
     }
 
     /**

@@ -21,6 +21,7 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -168,6 +169,12 @@ class MessageListingRecentDisplay extends ListDisplay
         }
 
         $categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
+
+        // The deleted ones of the categories where the user sees them ("Show deleted messages").
+        if ($this->state->get('list.mode') === 'deleted') {
+            $categories = KunenaAccess::getInstance()->filterSeeDeleted($categories, $this->me);
+        }
+
         $finder->filterByCategories($categories);
 
         // Only the posts which the visitor may read are counted: in the categories with "own topics only" the count had the posts

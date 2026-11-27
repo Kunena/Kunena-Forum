@@ -369,7 +369,8 @@ class TopicsModel extends KunenaModel
                 $where   = "AND tt.category_id IN ({$allowed})";
                 break;
             case 'deleted':
-                $allowed = KunenaCategoryHelper::getCategories(false, false, 'topic.undelete');
+                // The categories where the user sees the deleted topics ("Show deleted messages").
+                $allowed = KunenaAccess::getInstance()->filterSeeDeleted(KunenaCategoryHelper::getCategories(false, false, 'topic.undelete'), KunenaUserHelper::getMyself());
 
                 if (empty($allowed)) {
                     return;

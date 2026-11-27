@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
@@ -180,6 +181,12 @@ class TopicListingRecentDisplay extends ListDisplay
         $this->applyFilters($finder);
 
         $categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
+
+        // The deleted ones of the categories where the user sees them ("Show deleted messages").
+        if ($this->state->get('list.mode') === 'deleted') {
+            $categories = KunenaAccess::getInstance()->filterSeeDeleted($categories, $this->me);
+        }
+
         $finder->filterByCategories($categories);
 
         $this->pagination = new KunenaPagination($finder->count(), $start, $limit);

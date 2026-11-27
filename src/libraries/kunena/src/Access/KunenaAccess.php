@@ -528,6 +528,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
+     * The categories in which the user sees the deleted messages ("Show deleted messages": the administrators, or also the
+     * moderators). The lists of the deleted topics and posts took the categories which the user moderates: their count had the
+     * deleted ones which the list then left out (empty pages, and the size of the trash), and the feed gave them.
+     *
+     * @param   array            $categories  The categories, keyed by id.
+     * @param   KunenaUser|int   $user        The user.
+     *
+     * @return  array  The categories in which he sees them, with their keys.
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function filterSeeDeleted(array $categories, $user): array
+    {
+        return array_filter($categories, fn ($category) => \in_array(2, (array) $this->getAllowedHold($user, (int) $category->id, false), true));
+    }
+
+    /**
      * Get KunenaAccess groups for the selected category.
      *
      * @param   KunenaCategory  $category  Category

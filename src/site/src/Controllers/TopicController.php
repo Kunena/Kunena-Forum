@@ -2338,6 +2338,12 @@ class TopicController extends KunenaController
             return null;
         }
 
+        // The date which stands for "no end" (1000-01-01), as the poll dialog of CKEditor sends it back for a poll without an end:
+        // it was the end of that day, so the poll was closed by any edit of its topic.
+        if (preg_match('/^(\d{4})-/', $value, $year) && (int) $year[1] < 1970) {
+            return null;
+        }
+
         // A day without a time (the date field of the browser sends yyyy-mm-dd) is the end of that day, as a date of the date
         // picker is: PHP reads it as the start of the day, and the poll ended a day early.
         if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {

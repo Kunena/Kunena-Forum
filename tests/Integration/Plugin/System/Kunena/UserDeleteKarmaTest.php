@@ -190,6 +190,36 @@ class UserDeleteKarmaTest extends IntegrationTestCase implements DBTestInterface
      */
     private const USER = 999001;
 
+    /**
+     * The topics which he rated get the rating of the ratings which are left: the rating is stored with the topic, and kept his.
+     */
+    public function testTheTopicsWhichTheDeletedUserRatedAreRatedAgain(): void
+    {
+        $this->insertRows('#__kunena_topics', [
+            ['id' => 1, 'category_id' => 2, 'subject' => 'Rated by him only', 'rating' => 1],
+            ['id' => 2, 'category_id' => 2, 'subject' => 'Rated by him and 7', 'rating' => 3],
+        ]);
+        $this->insertRows('#__kunena_rate', [
+            ['topic_id' => 1, 'userid' => self::USER, 'rate' => 1, 'time' => '2026-01-01 00:00:00'],
+            ['topic_id' => 2, 'userid' => self::USER, 'rate' => 1, 'time' => '2026-01-01 00:00:00'],
+            ['topic_id' => 2, 'userid' => 7, 'rate' => 5, 'time' => '2026-01-01 00:00:00'],
+        ]);
+
+        $plugin = (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor();
+        $plugin->setDatabase($this->getDBDriver());
+
+        $event = $this->createStub(AfterDeleteEvent::class);
+        $event->method('getDeletingResult')->willReturn(true);
+        $event->method('getUser')->willReturn(['id' => self::USER]);
+
+        $plugin->onUserAfterDelete($event);
+
+        $this->assertSame(
+            ['1' => 0, '2' => 5],
+            array_map('intval', array_column($this->fetchAll('SELECT id, rating FROM #__kunena_topics ORDER BY id'), 'rating', 'id'))
+        );
+    }
+
     public function testTheKarmaGivenByAndToTheDeletedUserIsRemoved(): void
     {
         foreach ([[self::USER, 7], [8, self::USER], [7, 8]] as [$from, $to]) {

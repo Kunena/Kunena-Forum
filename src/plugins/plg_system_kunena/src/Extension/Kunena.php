@@ -35,6 +35,7 @@ use Joomla\Utilities\IpHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use RuntimeException;
 
 /**
@@ -237,6 +238,9 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
         $db = $this->getDatabase();
 
+        // The topics which he rated: their rating is stored, and kept his ratings after they are deleted below.
+        $rated = KunenaRateHelper::topicsRatedBy($userid);
+
         foreach (
             [
                 '#__kunena_users'            => ['userid'],
@@ -272,6 +276,8 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
                 }
             }
         }
+
+        KunenaRateHelper::recountTopics($rated);
 
         // His inbox (plugin Kunena - Inbox): every message and notification of his side is deleted as if he deleted it himself, so
         // a message stays for the other user until he deletes it too, and the files go with the messages which are removed.

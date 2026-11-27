@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Forum\Topic\Rate;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\Database\ParameterType;
 
 /**
  * Kunena Forum Topic Rate Helper Class
@@ -43,6 +44,68 @@ abstract class KunenaRateHelper
      * @since   Kunena 8.0
      */
     protected static array $_pending = [];
+
+    /**
+     * The topics which a user rated.
+     *
+     * @param   int  $userid  The user.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 8.0
+     */
+    public static function topicsRatedBy(int $userid): array
+    {
+        if ($userid <= 0) {
+            return [];
+        }
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select('DISTINCT ' . $db->quoteName('topic_id'))
+            ->from($db->quoteName('#__kunena_rate'))
+            ->where($db->quoteName('userid') . ' = :userid')
+            ->bind(':userid', $userid, ParameterType::INTEGER);
+
+        return array_map('intval', (array) $db->setQuery($query)->loadColumn());
+    }
+
+    /**
+     * The rating of the topics again, from their ratings: the rating is stored with the topic (the lists of topics show it) and is
+     * written when a user rates, so a removed rating stayed in it. The rounded average (as getSelected()), 0 without any rating.
+     *
+     * @param   int[]  $ids  The topics.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public static function recountTopics(array $ids): void
+    {
+        $ids = array_values(array_unique(array_filter(array_map('intval', $ids))));
+
+        if (!$ids) {
+            return;
+        }
+
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        foreach (array_chunk($ids, 500) as $chunk) {
+            $average = $db->createQuery()
+                ->select('COALESCE(ROUND(AVG(' . $db->quoteName('r.rate') . ')), 0)')
+                ->from($db->quoteName('#__kunena_rate', 'r'))
+                ->where($db->quoteName('r.topic_id') . ' = ' . $db->quoteName('t.id'));
+            $query   = $db->createQuery()
+                ->update($db->quoteName('#__kunena_topics', 't'))
+                ->set($db->quoteName('t.rating') . ' = (' . $average . ')')
+                ->whereIn($db->quoteName('t.id'), $chunk);
+            $db->setQuery($query)->execute();
+        }
+
+        foreach ($ids as $id) {
+            unset(self::$_counts[$id]);
+        }
+    }
 
     /**
      * Load the number of ratings of these topics when a number is first asked for, with the ones of the other topics which

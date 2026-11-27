@@ -30,6 +30,8 @@ use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\ParameterType;
 use Joomla\Event\SubscriberInterface;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Plugin\Privacy\Kunena\Helper\KunenaHelper;
 
 /**
@@ -213,9 +215,14 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         // Delete miscelanious
         KunenaHelper::deleteUserData('#__kunena_logs', 'user_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_logs', 'target_user', $user->id);
+        // The topics which he rated get the rating of the other ratings, and the users whom he thanked the number of the thanks
+        // which are left: both numbers are stored, and kept his ratings and his thanks.
+        $rated = KunenaRateHelper::topicsRatedBy((int) $user->id);
         KunenaHelper::deleteUserData('#__kunena_rate', 'userid', $user->id);
+        KunenaRateHelper::recountTopics($rated);
         KunenaHelper::deleteUserData('#__kunena_thankyou', 'userid', $user->id);
         KunenaHelper::deleteUserData('#__kunena_thankyou', 'targetuserid', $user->id);
+        KunenaMessageThankyouHelper::recount();
         KunenaHelper::deleteUserData('#__kunena_users_banned', 'userid', $user->id);
 
         // The data of Kunena 8.0: drafts, follows, ignore list, karma, session, poll votes and the private parts he may read.

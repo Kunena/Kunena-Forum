@@ -20,6 +20,7 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Throwable;
@@ -171,6 +172,10 @@ class KunenaUserMerge
             ->bind(':id', $from, ParameterType::INTEGER);
         $topics = array_map('intval', (array) $db->setQuery($query)->loadColumn());
 
+        // The topics which the first user rated: a rating of his on a topic which the second one rated too is dropped, and the
+        // rating stored with the topic kept it.
+        $rated = KunenaRateHelper::topicsRatedBy($from);
+
         $db->transactionStart();
 
         try {
@@ -222,6 +227,7 @@ class KunenaUserMerge
 
             KunenaUserHelper::recount();
             KunenaMessageThankyouHelper::recount();
+            KunenaRateHelper::recountTopics($rated);
             KunenaCacheHelper::clear();
         } catch (Throwable $e) {
             // The rows are moved; the recount of the tools fixes the counters.

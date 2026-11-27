@@ -242,6 +242,36 @@ class UserDeleteKarmaTest extends IntegrationTestCase implements DBTestInterface
     }
 
     /**
+     * His votes are taken off the options of the polls: the results had a vote more than the voters.
+     */
+    public function testTheVotesOfTheDeletedUserAreTakenOffThePolls(): void
+    {
+        $this->insertRows('#__kunena_polls_options', [
+            ['id' => 1, 'pollid' => 1, 'text' => 'Yes', 'votes' => 2],
+            ['id' => 2, 'pollid' => 1, 'text' => 'No', 'votes' => 1],
+        ]);
+        $this->insertRows('#__kunena_polls_users', [
+            ['pollid' => 1, 'userid' => self::USER, 'votes' => 1, 'lasttime' => '2026-01-01 00:00:00', 'lastvote' => 1],
+            ['pollid' => 1, 'userid' => 7, 'votes' => 1, 'lasttime' => '2026-01-01 00:00:00', 'lastvote' => 1],
+            ['pollid' => 1, 'userid' => 8, 'votes' => 1, 'lasttime' => '2026-01-01 00:00:00', 'lastvote' => 2],
+        ]);
+
+        $plugin = (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor();
+        $plugin->setDatabase($this->getDBDriver());
+
+        $event = $this->createStub(AfterDeleteEvent::class);
+        $event->method('getDeletingResult')->willReturn(true);
+        $event->method('getUser')->willReturn(['id' => self::USER]);
+
+        $plugin->onUserAfterDelete($event);
+
+        $this->assertSame(
+            ['1' => 1, '2' => 1],
+            array_map('intval', array_column($this->fetchAll('SELECT id, votes FROM #__kunena_polls_options ORDER BY id'), 'votes', 'id'))
+        );
+    }
+
+    /**
      * The thanks which he gave are removed and the users whom he thanked are counted again: the post counted his thanks without
      * naming him, and the user kept them in his count. The thanks to his posts, which stay, are kept.
      */

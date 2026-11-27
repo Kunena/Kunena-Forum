@@ -31,6 +31,7 @@ use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\ParameterType;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPollHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Plugin\Privacy\Kunena\Helper\KunenaHelper;
 
@@ -241,6 +242,8 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         KunenaHelper::deleteUserData('#__kunena_bookmarks', 'user_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_warnings', 'user_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_sessions', 'userid', $user->id);
+        // His votes are taken off the polls before his rows of the voters go (the results had a vote more than the voters).
+        KunenaPollHelper::takeOffVotesOf((int) $user->id);
         KunenaHelper::deleteUserData('#__kunena_polls_users', 'userid', $user->id);
         KunenaHelper::deleteUserData('#__kunena_private_user_map', 'user_id', $user->id);
 

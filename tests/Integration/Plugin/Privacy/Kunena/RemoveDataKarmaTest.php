@@ -86,6 +86,35 @@ class RemoveDataKarmaTest extends IntegrationTestCase implements DBTestInterface
     }
 
     /**
+     * His votes are taken off the options of the polls: the results had a vote more than the voters.
+     */
+    public function testTheVotesOfTheUserAreTakenOffThePolls(): void
+    {
+        $this->insertRows('#__kunena_polls_options', [
+            ['id' => 1, 'pollid' => 1, 'text' => 'Yes', 'votes' => 2],
+            ['id' => 2, 'pollid' => 1, 'text' => 'No', 'votes' => 1],
+        ]);
+        $this->insertRows('#__kunena_polls_users', [
+            ['pollid' => 1, 'userid' => 42, 'votes' => 1, 'lasttime' => '2026-01-01 00:00:00', 'lastvote' => 1],
+            ['pollid' => 1, 'userid' => 7, 'votes' => 1, 'lasttime' => '2026-01-01 00:00:00', 'lastvote' => 1],
+            ['pollid' => 1, 'userid' => 8, 'votes' => 1, 'lasttime' => '2026-01-01 00:00:00', 'lastvote' => 2],
+        ]);
+
+        $user     = new User();
+        $user->id = 42;
+
+        $event = $this->createStub(RemoveDataEvent::class);
+        $event->method('getUser')->willReturn($user);
+
+        (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor()->onPrivacyRemoveData($event);
+
+        $this->assertSame(
+            ['1' => 1, '2' => 1],
+            array_map('intval', array_column($this->fetchAll('SELECT id, votes FROM #__kunena_polls_options ORDER BY id'), 'votes', 'id'))
+        );
+    }
+
+    /**
      * The topics which he rated get the rating of the ratings which are left, and the users whom he thanked the number of the
      * thanks which are left: both numbers are stored, and kept his ratings and his thanks. The removal of the user 42, who
      * rated two topics and thanked the user 7 twice: the ratings of the topics and the thanks of the users after it.

@@ -78,4 +78,28 @@ abstract class KunenaPollHelper
         $db->setQuery($query);
         $db->execute();
     }
+
+    /**
+     * Take the votes of a user off the options of the polls, before his rows of the voters are deleted (the delete of the user,
+     * the removal of his data): the results had a vote more than the voters, and their percentages counted it. As the merge of two
+     * users does it: his row has his last vote.
+     *
+     * @param   int  $userid  The user.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public static function takeOffVotesOf(int $userid): void
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->update($db->quoteName('#__kunena_polls_options', 'o'))
+            ->innerJoin($db->quoteName('#__kunena_polls_users', 'u') . ' ON ' . $db->quoteName('u.pollid') . ' = ' . $db->quoteName('o.pollid') . ' AND ' . $db->quoteName('u.lastvote') . ' = ' . $db->quoteName('o.id'))
+            ->set($db->quoteName('o.votes') . ' = ' . $db->quoteName('o.votes') . ' - 1')
+            ->where($db->quoteName('u.userid') . ' = ' . $userid)
+            ->where($db->quoteName('o.votes') . ' > 0');
+
+        $db->setQuery($query)->execute();
+    }
 }

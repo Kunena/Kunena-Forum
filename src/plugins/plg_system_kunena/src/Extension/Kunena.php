@@ -36,6 +36,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPollHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use RuntimeException;
 
@@ -244,6 +245,9 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
         // The topics which he rated: their rating is stored, and kept his ratings after they are deleted below.
         $rated = KunenaRateHelper::topicsRatedBy($userid);
+
+        // His votes are taken off the polls before his rows of the voters are deleted below.
+        KunenaPollHelper::takeOffVotesOf($userid);
 
         foreach (
             [

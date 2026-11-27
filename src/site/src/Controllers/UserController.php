@@ -915,6 +915,15 @@ class UserController extends KunenaController
 
         $delban = $this->app->getInput()->getString('delban', '');
 
+        // The ban box of a message is for a user who is not banned (it is not shown for one): from a page opened before the ban,
+        // it made the ban of another moderator a ban of a few days, unblocked the account and erased both reasons.
+        if ($ban->id && $ban->isEnabled() && $this->app->getInput()->getInt('quick', 0)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_BAN_ALREADY'), 'warning');
+            $this->setRedirect($user->getUrl(false));
+
+            return;
+        }
+
         if (!$ban->id) {
             $ban->ban($user->userid, $ip, $banlevel, $expiration, $reason_private, $reason_public, $comment);
             $success = $ban->save();

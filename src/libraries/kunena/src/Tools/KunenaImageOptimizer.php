@@ -111,6 +111,30 @@ class KunenaImageOptimizer
     }
 
     /**
+     * A name which no file of the folder has: the name, or the name with -1, -2... before its extension.
+     *
+     * @param   string  $folder    The folder.
+     * @param   string  $filename  The name.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    private static function freeName(string $folder, string $filename): string
+    {
+        $dot  = strrpos($filename, '.');
+        $base = $dot === false ? $filename : substr($filename, 0, $dot);
+        $ext  = $dot === false ? '' : substr($filename, $dot);
+        $name = $filename;
+
+        for ($n = 1; is_file($folder . '/' . $name) || is_file($folder . '/' . $name . '.new'); $n++) {
+            $name = $base . '-' . $n . $ext;
+        }
+
+        return $name;
+    }
+
+    /**
      * Can this site write WebP?
      *
      * @return  boolean
@@ -225,15 +249,22 @@ class KunenaImageOptimizer
                 continue;
             }
 
-            $filename = $toType === $type ? (string) $row['filename'] : self::rename((string) $row['filename'], 'webp');
+            $filename = $toType === $type ? (string) $row['filename'] : self::freeName($folder, self::rename((string) $row['filename'], 'webp'));
             $target   = $folder . '/' . $filename;
 
-            if (!@rename($temp, $target . '.new') || ($target !== $path && !@unlink($path)) || !@rename($target . '.new', $target)) {
+            // The file of another name is a free name: the WebP of "photo.jpg" replaced the file "photo.webp" of another attachment
+            // (or of "photo.png" optimized in the same run). The old file goes once the new one is in place: when the last step
+            // failed, the attachment was left without any file.
+            if (!@rename($temp, $target . '.new') || !@rename($target . '.new', $target)) {
                 @unlink($temp);
                 @unlink($target . '.new');
                 $result['failed']++;
 
                 continue;
+            }
+
+            if ($target !== $path) {
+                @unlink($path);
             }
 
             $filetype = $toType === $type ? (string) $row['filetype'] : 'image/webp';

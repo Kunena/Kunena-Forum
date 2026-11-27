@@ -144,6 +144,15 @@ class SmiliesController extends FormController
             return;
         }
 
+        // The columns have 12 (code) and 50 (file) characters: a longer value was the error of the database (Joomla runs it in
+        // strict mode), shown as it came, and the smiley was not saved.
+        if (mb_strlen($smileyCode) > 12 || mb_strlen($smileyLocation) > 50) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SMILEY_TOO_LONG', 12, 50), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         if (!$smileyId) {
             try {
                 // A new smiley comes last: MySQL does not allow a subquery on the same table in the insert

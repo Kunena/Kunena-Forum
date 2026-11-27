@@ -159,10 +159,10 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                     <?php echo !$this->group || isset($this->group['user']) ? $this->escape($item->user_username) . ' <small>(' . $this->escape($item->user_id) . ')</small>' . '<br />' . $this->escape($item->user_name) : ''; ?>
                                 </td>
                                 <td>
-                                    <?php echo !$this->group || isset($this->group['category']) ? $item->category_name . ' <small>(' . $this->escape($item->category_id) . ')</small>' : ''; ?>
+                                    <?php echo !$this->group || isset($this->group['category']) ? $this->escape($item->category_name) . ' <small>(' . $this->escape($item->category_id) . ')</small>' : ''; ?>
                                 </td>
                                 <td>
-                                    <?php echo !$this->group || isset($this->group['topic']) ? $item->topic_subject . ' <small>(' . $this->escape($item->topic_id) . ')</small>' : ''; ?>
+                                    <?php echo !$this->group || isset($this->group['topic']) ? $this->escape($item->topic_subject) . ' <small>(' . $this->escape($item->topic_id) . ')</small>' : ''; ?>
                                 </td>
                                 <td>
                                     <?php echo !$this->group || isset($this->group['target_user']) ? $this->escape($item->targetuser_username) . ' <small>(' . $this->escape($item->target_user) . ')</small>' . '<br />' . $this->escape($item->targetuser_name) : ''; ?>

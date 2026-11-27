@@ -230,8 +230,11 @@ class TopicItemDisplay extends KunenaControllerDisplay
         if ($this->primary) {
             $channels = $this->category->getChannels();
 
+            // Also when the topic of the address is not the topic of the message (the message was split into another topic since):
+            // the other topic was shown under the address of the old one, and the links of its pages went to the old topic.
             if (
                 $this->message->thread != $this->topic->id
+                || ($mesid && $id && $id != $this->topic->id)
                 || ($this->topic->category_id != $this->category->id && !isset($channels[$this->topic->category_id]))
             ) {
                 $this->app->redirect($this->message->getUrl(null, false));

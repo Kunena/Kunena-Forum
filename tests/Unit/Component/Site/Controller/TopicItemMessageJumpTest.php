@@ -41,4 +41,9 @@ class TopicItemMessageJumpTest extends UnitTestCase
         // 10 a page: the 13th post (place 12) is on the page which starts at 10.
         $this->assertSame(10, intdiv(12, 10) * 10);
     }
+
+    public function testAMessageOfAnotherTopicGoesToItsAddress(): void
+    {
+        $this->assertStringContainsString('|| ($mesid && $id && $id != $this->topic->id)', $this->source());
+    }
 }

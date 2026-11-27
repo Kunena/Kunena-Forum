@@ -388,8 +388,14 @@ class TopicController extends KunenaController
         $success   = [];
         $instance  = KunenaAttachmentHelper::get($attach_id);
 
+        // The file of a message is a part of that message: it is removed by who may edit the message. The rule of the attachment
+        // alone (its uploader) let the author take the files out of a post which he may edit no more: after the edit time, in a
+        // locked topic, in read only mode. An upload which waits for its message has no message to ask.
+        $message  = (int) $instance->mesid ? $instance->getMessage() : null;
+        $editable = !$message || !$message->exists() || $message->isAuthorised('edit');
+
         // The rule of the attachment itself: its uploader (not banned) or a moderator of the category of its message.
-        if ($instance->isAuthorised('delete')) {
+        if ($editable && $instance->isAuthorised('delete')) {
             $editor_text = $this->app->getInput()->get->get('editor_text', '', 'raw');
 
             $success['text_prepared'] = $instance->removeBBCodeInMessage($editor_text);
@@ -3728,7 +3734,9 @@ class TopicController extends KunenaController
             return;
         }
 
-        if (!$this->me->exists() || $this->config->reportMsg == 0) {
+        // A banned user may read, not write: his report is a topic or an e-mail for every moderator (he could send them one after
+        // the other).
+        if (!$this->me->exists() || $this->me->isBanned() || $this->config->reportMsg == 0) {
             // Deny access if report feature has been disabled or user is guest
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'warning');
             $this->setRedirectBack();

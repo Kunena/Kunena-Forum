@@ -254,7 +254,8 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
                 '#__kunena_warnings'         => ['user_id'],
                 '#__kunena_drafts'           => ['user_id'],
                 '#__kunena_sessions'         => ['userid'],
-                '#__kunena_karma'            => ['userid'],
+                // The karma he gave and the karma he got (Diagnostics lists both as rows of a user who is gone).
+                '#__kunena_karma'            => ['userid', 'target_userid'],
                 '#__kunena_polls_users'      => ['userid'],
                 '#__kunena_private_user_map' => ['user_id'],
                 '#__kunena_inbox_blocks'     => ['user_id', 'blocked_id'],

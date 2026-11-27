@@ -627,6 +627,8 @@ class KunenaStatistics
                     $this->_db->quoteName('#__users', 'u') . ' ON ' .
                         $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('t.targetuserid')
                 )
+                // // Not a user who is blocked in Joomla, as the top posters (a blocked spammer stayed in the list with a link to his profile).
+                ->where($this->_db->quoteName('u.block') . ' = 0')
                 ->group($this->_db->quoteName('t.targetuserid'));
             $query->order($this->_db->quoteName('count') . ' DESC');
 

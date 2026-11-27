@@ -86,6 +86,8 @@ class KunenaProfileKunena extends KunenaProfile
         $query->from($db->quoteName(['#__kunena_users'], ['ku']));
         $query->join('INNER', $db->quoteName('#__users', 'u'), $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
         $query->where($db->quoteName('ku.uhits') . ' > 0');
+        // Not a user who is blocked in Joomla, as the top posters (a blocked spammer stayed in the list with a link to his profile).
+        $query->where($db->quoteName('u.block') . ' = 0');
         $query->order($db->quoteName('ku.uhits') . ' DESC');
 
         if (KunenaFactory::getConfig()->superAdminUserlist && ($filter = Access::getUsersByGroup(8))) {

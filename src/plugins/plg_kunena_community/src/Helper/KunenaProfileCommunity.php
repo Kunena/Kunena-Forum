@@ -81,6 +81,8 @@ class KunenaProfileCommunity extends KunenaProfile
             ->from($db->quoteName('#__community_users', 'cu'))
             ->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.userid')
             ->where('cu.view > 0')
+            // Not a user who is blocked in Joomla, as the top posters (a blocked spammer stayed in the list with a link to his profile).
+            ->where('u.block = 0')
             ->order('cu.view DESC');
         $query->setLimit($limit);
         $db->setQuery($query);

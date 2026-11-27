@@ -149,4 +149,53 @@ class KunenaUserStaffAndBlockedTest extends IntegrationTestCase implements DBTes
     {
         $this->assertSame([self::MODERATOR, self::MEMBER], array_map(static fn ($row) => (int) $row->id, KunenaUserHelper::getTopPosters()));
     }
+
+    /**
+     * The other top lists of the statistics leave out the blocked users too: the profiles seen most (the profile of Kunena) and the
+     * thank yous received. The blocked spammer stayed in both, with a link to his profile.
+     */
+    public function testABlockedUserIsInNoTopListOfTheStatistics(): void
+    {
+        require_once \dirname(__DIR__, 5) . '/src/plugins/plg_kunena_kunena/src/Helper/KunenaProfileKunena.php';
+
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_users SET uhits = userid - 100')->execute();
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_users SET uhits = 99 WHERE userid = ' . self::OTHER)->execute();
+        $this->insertRows('#__kunena_thankyou', [
+            ['postid' => 1, 'userid' => self::MEMBER, 'targetuserid' => self::OTHER, 'time' => '2026-01-01 00:00:00'],
+            ['postid' => 2, 'userid' => self::MEMBER, 'targetuserid' => self::OTHER, 'time' => '2026-01-01 00:00:00'],
+            ['postid' => 3, 'userid' => self::OTHER, 'targetuserid' => self::MEMBER, 'time' => '2026-01-01 00:00:00'],
+        ]);
+
+        $profile = new \Kunena\Forum\Plugin\Kunena\Kunena\Helper\KunenaProfileKunena(new \Joomla\Registry\Registry());
+        $this->assertSame([self::MODERATOR, self::MEMBER], array_map('intval', array_column($profile->getTopHits(5), 'id')));
+
+        $language = $this->createStub(\Joomla\CMS\Language\Language::class);
+        $language->method('_')->willReturnArgument(0);
+        $saved             = Factory::$language;
+        Factory::$language = $language;
+
+        // The names of the list are the names of the forum (no profile integration).
+        $profileOff          = new \Kunena\Forum\Libraries\Integration\KunenaProfile();
+        $profileOff->enabled = false;
+        $savedProfile        = $this->replace(\Kunena\Forum\Libraries\Integration\KunenaProfile::class, 'instance', $profileOff);
+
+        try {
+            $config = KunenaConfig::getInstance();
+            (new ReflectionProperty(KunenaConfig::class, 'config'))->setValue($config, ['popUserCount' => 5, 'popThanksCount' => 5, 'superAdminUserlist' => 0, 'enableIgnore' => 1]);
+            $statistics = (new ReflectionClass(\Kunena\Forum\Libraries\Forum\KunenaStatistics::class))->newInstanceWithoutConstructor();
+            (new ReflectionProperty(\Kunena\Forum\Libraries\Forum\KunenaStatistics::class, '_db'))->setValue($statistics, $this->getDBDriver());
+            (new ReflectionProperty(\Kunena\Forum\Libraries\Forum\KunenaStatistics::class, '_config'))->setValue($statistics, $config);
+            // The rows of the query are kept before the links of the list are made (which need the template of a site).
+            try {
+                $statistics->loadTopThankyous(5);
+            } catch (\Throwable $e) {
+                $this->assertNotNull($statistics->topThanks, 'The query ran before: ' . $e->getMessage());
+            }
+        } finally {
+            Factory::$language = $saved;
+            $this->replace(\Kunena\Forum\Libraries\Integration\KunenaProfile::class, 'instance', $savedProfile);
+        }
+
+        $this->assertSame([self::MEMBER],array_map(static fn ($row) => (int) $row->targetuserid, $statistics->topThanks));
+    }
 }

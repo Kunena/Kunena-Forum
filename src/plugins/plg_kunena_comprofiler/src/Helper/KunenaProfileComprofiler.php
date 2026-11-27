@@ -182,6 +182,8 @@ class KunenaProfileComprofiler extends KunenaProfile
         $query->from($db->quoteName('#__comprofiler', 'cu'));
         $query->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.user_id');
         $query->where('cu.hits > 0');
+        // Not a user who is blocked in Joomla, as the top posters (a blocked spammer stayed in the list with a link to his profile).
+        $query->where('u.block = 0');
         $query->order('cu.hits DESC');
         $query->setLimit($limit);
         $db->setQuery($query);

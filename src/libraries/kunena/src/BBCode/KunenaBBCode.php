@@ -2082,8 +2082,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             ->set('alt', $altText ?? 0)
             ->set('canLink', $bbcode->autoLink_disable == 0);
 
-        // When image is set to don't show to guest, it should display the smilies
-        if (Factory::getApplication()->getIdentity()->id == 0 && $this->config->showImgForGuest == 0 && !preg_match('@media\/kunena\/emoticons@', $fileurl)) {
+        // When image is set to don't show to guest, it should display the smilies: an emoticon of the site (emoticonUrl() above,
+        // which finds its file), not any address with "media/kunena/emoticons" in it, which showed any picture to the guests.
+        if (Factory::getApplication()->getIdentity()->id == 0 && $this->config->showImgForGuest == 0 && $emoticonUrl === null) {
             // Hide between content from non registered users.
             return (string) $layout->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
         }

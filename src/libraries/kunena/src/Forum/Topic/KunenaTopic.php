@@ -1904,8 +1904,10 @@ class KunenaTopic extends KunenaDatabaseObject
                 throw new Exception($e->getMessage());
             }
 
-            // The category counts the new topic (its posts are counted by the recount of the topics).
-            if ($newTarget && $ids) {
+            // The category counts the new topic (its posts are counted by the recount of the topics): a shown one only. The new
+            // topic has the state of the old one, and a split of an unapproved or trashed topic added a topic which the category
+            // does not count (and counted it again when it was approved or restored).
+            if ($newTarget && $ids && (int) $target->hold === KunenaForum::PUBLISHED) {
                 $target->getCategory()->update($target, 1, 0);
             }
         }

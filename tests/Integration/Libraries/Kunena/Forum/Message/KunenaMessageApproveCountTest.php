@@ -393,6 +393,25 @@ class KunenaMessageApproveCountTest extends IntegrationTestCase implements DBTes
     }
 
     /**
+     * A split (here: the test needs the setup of the messages) makes a new topic with the state of the old one: of an unapproved
+     * topic, an unapproved one, which the category does not count. It counted it as a shown topic.
+     */
+    public function testASplitOfAnUnapprovedTopicAddsNoTopicToTheTargetCategory(): void
+    {
+        $this->seed(KunenaForum::UNAPPROVED, 2, 3, 7, [[10, 0, KunenaForum::UNAPPROVED, 1000], [11, 10, KunenaForum::UNAPPROVED, 1100]]);
+
+        // A section with the category of the topic and a second category, which is empty.
+        $this->insertRow('#__kunena_categories', ['id' => 1, 'parentid' => 0, 'name' => 'Section', 'alias' => '1-section', 'published' => 1]);
+        $this->insertRow('#__kunena_categories', ['id' => 9, 'parentid' => 1, 'name' => 'Other', 'alias' => '9-other', 'published' => 1]);
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_categories SET parentid = 1 WHERE id = ' . self::CATEGORY)->execute();
+
+        $new = KunenaTopicHelper::get(self::TOPIC)->move(KunenaCategoryHelper::get(9), [11]);
+
+        $this->assertSame(KunenaForum::UNAPPROVED, (int) $new->hold);
+        $this->assertEquals([['numTopics' => 0, 'numPosts' => 0]], $this->fetchAll('SELECT numTopics, numPosts FROM #__kunena_categories WHERE id = 9'));
+    }
+
+    /**
      * A shown message read as a list and saved as it is (an edit) is not a new post.
      */
     public function testSavingAShownMessageReadAsAListAddsNoPost(): void

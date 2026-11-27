@@ -147,8 +147,10 @@ class KunenaUserFinder extends KunenaFinder
         } elseif ($usertype == 'globalmod') {
             $this->query->where($this->db->quoteName('ku.moderator') . ' =1 ');
         } elseif ($usertype == 'user') {
-            $this->query->where($this->db->quoteName('ku.moderator') . ' =0');
-            $this->query->where('(' . $this->db->quoteName('ku.banned') . ' = ' . $this->db->quote('1000-01-01 00:00:00') . ' OR ' . $this->db->quoteName('ku.banned') . '<=' . $this->db->quote($dateNow) . ')');
+            // A user of Joomla who has no row of the forum yet (he never came to the forum) is a user too: the join gives him no
+            // moderator and no ban (NULL), which the conditions left out.
+            $this->query->where('COALESCE(' . $this->db->quoteName('ku.moderator') . ', 0) = 0');
+            $this->query->where('(' . $this->db->quoteName('ku.banned') . ' IS NULL OR ' . $this->db->quoteName('ku.banned') . ' = ' . $this->db->quote('1000-01-01 00:00:00') . ' OR ' . $this->db->quoteName('ku.banned') . '<=' . $this->db->quote($dateNow) . ')');
             // Not a super user. The join of the groups gave a row for each group of a user, so a user of two groups was counted
             // twice (the total and the pages of the list were wrong), and a super user who is in another group too was listed.
             $this->query->where('NOT EXISTS (SELECT 1 FROM ' . $this->db->quoteName('#__user_usergroup_map', 'uum') . ' WHERE ' . $this->db->quoteName('uum.user_id')

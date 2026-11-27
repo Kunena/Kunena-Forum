@@ -99,4 +99,17 @@ class KunenaUserFinderUserTypeTest extends IntegrationTestCase implements DBTest
     {
         $this->assertSame(2, (new KunenaUserFinder())->filterByUserType('user')->count());
     }
+
+    /**
+     * A user of Joomla who never came to the forum has no row of the forum: the join gives him no moderator and no ban (NULL), and
+     * the filter left him out.
+     */
+    public function testAUserWithoutARowOfTheForumIsAUser(): void
+    {
+        $this->insertRow('#__users', ['id' => 44, 'name' => 'U44', 'username' => 'u44', 'email' => 'u44@example.com', 'password' => '',
+            'block' => 0, 'registerDate' => '2026-01-01 00:00:00', 'params' => '']);
+        $this->insertRow('#__user_usergroup_map', ['user_id' => 44, 'group_id' => 2]);
+
+        $this->assertSame(3, (new KunenaUserFinder())->filterByUserType('user')->count());
+    }
 }

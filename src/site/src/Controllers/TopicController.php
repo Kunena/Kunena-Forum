@@ -2572,8 +2572,24 @@ class TopicController extends KunenaController
                 KunenaPrivate::getInstance()->notify($message, 'thanks', [(int) $message->userid], (int) $this->me->userid);
             }
         } else {
+            // The link of a moderator next to a thanker names that user (userid): his thank you is removed. The own one of the
+            // moderator was removed instead (or "you did not thank" was the error), and the one of the user stayed.
+            $whose = $this->me;
+            $other = $this->app->getInput()->getInt('userid', 0);
+
+            if ($other > 0 && $other !== (int) $this->me->userid) {
+                if (!$this->me->isModerator($message->getCategory())) {
+                    $this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+                    $this->setRedirectBack();
+
+                    return;
+                }
+
+                $whose = KunenaUserHelper::get($other);
+            }
+
             try {
-                $thankyou->delete($this->me);
+                $thankyou->delete($whose);
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
                 $this->setRedirectBack();

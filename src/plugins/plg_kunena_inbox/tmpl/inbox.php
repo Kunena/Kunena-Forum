@@ -69,7 +69,7 @@ $strings = [
         </div>
         <div class="mb-2">
             <label class="form-label" for="kinbox-body"><?php echo Text::_('PLG_KUNENA_INBOX_MESSAGE'); ?></label>
-            <textarea class="form-control" id="kinbox-body" rows="6"></textarea>
+            <textarea class="form-control" id="kinbox-body" rows="6" maxlength="10000"></textarea>
         </div>
         <?php if ($attachments) : ?>
             <div class="mb-2">
@@ -264,7 +264,7 @@ $strings = [
                         + (m.files && m.files.length ? '<div class="mt-2 small">' + m.files.map(function (f) { return '<a href="' + esc(f.url) + '" class="me-3">' + S.attach + ' ' + esc(f.name) + ' (' + esc(f.size) + ')</a>'; }).join('') + '</div>' : '')
                         + '</div></div>';
                 }).join('')
-                + '<div class="mt-2"><textarea class="form-control mb-2" rows="4" data-role="replybody"></textarea>'
+                + '<div class="mt-2"><textarea class="form-control mb-2" rows="4" maxlength="10000" data-role="replybody"></textarea>'
                 + (root.dataset.attach === '1' ? '<input type="file" class="form-control mb-2" multiple data-role="replyfiles">' : '')
                 + '<button type="button" class="btn btn-primary btn-sm" data-action="reply">&crarr;</button></div>';
             el('list').classList.add('d-none');

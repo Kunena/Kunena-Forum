@@ -151,6 +151,29 @@ class InboxHelperNamesTest extends IntegrationTestCase implements DBTestInterfac
     }
 
     /**
+     * A text longer than 10000 characters is refused: it was cut, and "The message has been sent" said nothing of it. A message
+     * without a subject gets a message which names it.
+     */
+    public function testATooLongTextOrNoSubjectIsRefusedWithItsMessage(): void
+    {
+        (new ReflectionProperty(KunenaConfig::class, 'config'))->setValue(KunenaConfig::getInstance(), ['username' => 1, 'userCanChooseName' => 0, 'displayNameField' => 0, 'readOnly' => 0, 'floodProtection' => 0]);
+        // The recipient exists (and is not blocked in Joomla).
+        (new ReflectionProperty(KunenaUser::class, '_exists'))->setValue(KunenaUserHelper::get(11), true);
+
+        foreach ([['Subject', str_repeat('a', 10001), 'PLG_KUNENA_INBOX_ERROR_TOO_LONG'], ['', 'Text', 'PLG_KUNENA_INBOX_ERROR_NO_SUBJECT']] as [$subject, $body, $error]) {
+            try {
+                InboxHelper::send(10, 11, $subject, $body);
+                $this->fail('The message was sent.');
+            } catch (RuntimeException $e) {
+                $this->assertSame($error, $e->getMessage());
+            }
+        }
+
+        $this->assertSame([], $this->fetchAll('SELECT id FROM #__kunena_inbox'));
+        $this->assertStringContainsString('id="kinbox-body" rows="6" maxlength="10000"', (string) file_get_contents(\dirname(__DIR__, 5) . '/src/plugins/plg_kunena_inbox/tmpl/inbox.php'));
+    }
+
+    /**
      * In the read only mode of the forum no private message is sent (nobody can post in it, but a message still went out).
      */
     public function testNoMessageIsSentInReadOnlyMode(): void

@@ -210,7 +210,12 @@ class InboxHelper
         $db           = self::db();
         $conversation = 0;
         $subject      = trim(mb_substr($subject, 0, 150));
-        $body         = trim(mb_substr($body, 0, 10000));
+        $body         = trim($body);
+
+        // A longer text is refused: it was cut at 10000 characters and "The message has been sent" said nothing of it.
+        if (mb_strlen($body) > 10000) {
+            throw new RuntimeException(Text::sprintf('PLG_KUNENA_INBOX_ERROR_TOO_LONG', 10000));
+        }
 
         if ($replyTo) {
             $parent = self::getRow($replyTo);
@@ -237,8 +242,13 @@ class InboxHelper
             throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_RECIPIENT'));
         }
 
-        if ($body === '' || $subject === '') {
+        if ($body === '') {
             throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_EMPTY'));
+        }
+
+        // The subject has a message of its own: "A message needs a user name and a text" named neither.
+        if ($subject === '') {
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_NO_SUBJECT'));
         }
 
         // A user who ignores or has blocked the sender gets no message from him.

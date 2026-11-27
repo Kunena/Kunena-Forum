@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Route\KunenaFeedLink;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
@@ -172,7 +173,7 @@ foreach ($this->sections as $section) :
 
                                                 <?php if ($this->config->enableRss) : ?>
                                                     <a href="<?php echo $this->getCategoryRSSURL($category->id); ?>" class="<?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS')); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS')); ?>"
-                                                       rel="alternate" type="application/rss+xml">
+                                                       rel="alternate" type="<?php echo KunenaFeedLink::mime(); ?>">
                                                         <?php echo KunenaIcons::rss(); ?>
                                                     </a>
                                                 <?php endif; ?>

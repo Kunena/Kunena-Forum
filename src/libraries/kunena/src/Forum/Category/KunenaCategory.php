@@ -47,6 +47,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Route\KunenaFeedLink;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -1929,10 +1930,10 @@ class KunenaCategory extends KunenaDatabaseObject
             $params = '&catid=' . (int) $this->id;
 
             if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix')) {
-                return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=feed{$params}") . '?format=feed&type=rss';
+                return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=feed{$params}") . '?format=feed&type=' . KunenaFeedLink::type();
             }
 
-            return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&type=rss&layout=feed{$params}", $xhtml);
+            return KunenaRoute::_('index.php?option=com_kunena&view=category&format=feed&type=' . KunenaFeedLink::type() . "&layout=feed{$params}", $xhtml);
 
         }
 

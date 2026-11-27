@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Route\KunenaFeedLink;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 // Use function defined;
@@ -66,18 +67,25 @@ class WidgetFooter extends KunenaLayout
             $itemid = KunenaRoute::fixMissingItemID();
 
             if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix')) {
-                $url = KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}") . '?format=feed&type=rss';
+                $url = KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}") . '?format=feed&type=' . KunenaFeedLink::type();
             } else {
-                $url = KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&type=rss&layout=feed&{$rssType}&Itemid={$itemid}", true);
+                $url = KunenaRoute::_('index.php?option=com_kunena&view=topics&format=feed&type=' . KunenaFeedLink::type() . "&layout=feed&{$rssType}&Itemid={$itemid}", true);
+            }
+
+            // The feed of the forum at FeedBurner, when the option has its address (the option was read by nothing).
+            $burner = KunenaFeedLink::burner();
+
+            if ($burner !== null) {
+                $url = htmlspecialchars($burner, ENT_QUOTES, 'UTF-8');
             }
 
             $doc = Factory::getApplication()->getDocument();
-            $doc->addHeadLink($url, 'alternate', 'rel', ['type' => 'application/rss+xml']);
+            $doc->addHeadLink($url, 'alternate', 'rel', ['type' => KunenaFeedLink::mime()]);
 
             // Only an icon: its name for the screen readers (aria-label) and for the mouse (the tooltip of the title).
             $label = htmlspecialchars(Text::_('COM_KUNENA_RSS_FEED_LABEL'), ENT_QUOTES, 'UTF-8');
 
-            return '<a rel="alternate" type="application/rss+xml" href="' . $url . '" class="' . KunenaFactory::getTemplate()->tooltips()
+            return '<a rel="alternate" type="' . KunenaFeedLink::mime() . '" href="' . $url . '" class="' . KunenaFactory::getTemplate()->tooltips()
                 . '" data-bs-toggle="tooltip" title="' . $label . '" aria-label="' . $label . '">' . KunenaIcons::rss(true) . '</a>';
         }
     }

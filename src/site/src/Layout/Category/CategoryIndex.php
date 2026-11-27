@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryIcon;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
+use Kunena\Forum\Libraries\Route\KunenaFeedLink;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -254,10 +255,10 @@ class CategoryIndex extends KunenaLayout
             $params = '&catid=' . (int) $catid;
 
             if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix')) {
-                return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=feed{$params}") . '?format=feed&type=rss';
+                return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=feed{$params}") . '?format=feed&type=' . KunenaFeedLink::type();
             }
 
-            return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&type=rss&layout=feed{$params}", $xhtml);
+            return KunenaRoute::_('index.php?option=com_kunena&view=category&format=feed&type=' . KunenaFeedLink::type() . "&layout=feed{$params}", $xhtml);
         }
 
         return false;

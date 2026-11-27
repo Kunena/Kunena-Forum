@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
+use Kunena\Forum\Libraries\Route\KunenaFeedLink;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\KunenaView;
@@ -544,7 +545,7 @@ class HtmlView extends KunenaView
                 break;
         }
 
-        return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}{$params}&format=feed&type=rss", $xhtml);
+        return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}{$params}&format=feed&type=" . KunenaFeedLink::type(), $xhtml);
 
     }
 

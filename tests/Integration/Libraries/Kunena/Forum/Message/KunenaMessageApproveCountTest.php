@@ -345,4 +345,35 @@ class KunenaMessageApproveCountTest extends IntegrationTestCase implements DBTes
 
         $this->assertSame('Tom & "Jerry"', $this->fetchAll('SELECT name FROM #__kunena_messages WHERE id = 10')[0]['name']);
     }
+
+    /**
+     * An anonymous post of a member does not keep his name. The name of a post without an author which is the name of a user is
+     * replaced, but the form gave the name of the member escaped for HTML ("Tom &amp; Jerry"): it was the name of no user, so it
+     * stayed on the anonymous post and named its author. (The controller gives the name as it is now: its code is read.)
+     */
+    public function testAnAnonymousPostDoesNotKeepTheNameOfItsAuthor(): void
+    {
+        $name = $this->getDBDriver()->quote('Tom & Jerry');
+        $this->getDBDriver()->setQuery("UPDATE #__users SET name = $name WHERE id = " . self::AUTHOR)->execute();
+        $this->seed(KunenaForum::PUBLISHED, 1, 3, 7, [[10, 0, KunenaForum::PUBLISHED, 1000]]);
+
+        // The post of the member, made anonymous, with his name as the form gives it now.
+        $message         = KunenaMessageHelper::get(10);
+        $message->userid = 0;
+        $message->name   = 'Tom & Jerry';
+        $message->check();
+
+        $this->assertNotSame('Tom & Jerry', $message->name);
+
+        // What the form gave before: the escaped name, which is the name of no user and stayed.
+        $message->name = 'Tom &amp; Jerry';
+        $message->check();
+
+        $this->assertSame('Tom &amp; Jerry', $message->name);
+
+        $controller = (string) file_get_contents(\dirname(__DIR__, 6) . '/src/site/src/Controllers/TopicController.php');
+
+        $this->assertSame(2, substr_count($controller, "getString('authorname', \$this->me->getName('', false))"));
+        $this->assertStringNotContainsString("getString('authorname', \$this->me->getName())", $controller);
+    }
 }

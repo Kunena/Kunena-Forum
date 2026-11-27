@@ -1085,7 +1085,7 @@ class TopicController extends KunenaController
         $this->id = $this->app->getInput()->getInt('parentid', 0);
         $fields   = [
             'catid'             => $this->catid,
-            'name'              => $this->app->getInput()->getString('authorname', $this->me->getName()),
+            'name'              => $this->app->getInput()->getString('authorname', $this->me->getName('', false)),
             'email'             => $this->app->getInput()->getString('email', null),
             'subject'           => $this->postedText('subject'),
             'message'           => $this->postedText('message'),
@@ -4267,7 +4267,7 @@ class TopicController extends KunenaController
 
         $fields = [
             'catid'             => $catid,
-            'name'              => $input->getString('authorname', $this->me->getName()),
+            'name'              => $input->getString('authorname', $this->me->getName('', false)),
             'email'             => $input->getString('email', null),
             'subject'           => $this->postedText('subject'),
             'message'           => $this->postedText('message'),

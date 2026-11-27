@@ -1849,47 +1849,34 @@ class TopicController extends KunenaController
             return true;
         }
 
-        preg_match_all('/<div class=\"kunena_ebay_widget\"(.*?)>(.*?)<\/div>/s', $text, $ebay_matches);
+        // The links of the eBay and X widgets are not counted: the widgets are left out of the text. One widget skipped the whole
+        // count, so a post with a widget could have any number of links.
+        $text = preg_replace(['/<div class=\"kunena_ebay_widget\"(.*?)>(.*?)<\/div>/s', '/<div id=\"kunena_x_widget\"(.*?)>(.*?)<\/div>/s'], '', $text);
 
-        $ignore = false;
-
-        foreach ($ebay_matches as $match) {
-            if (!empty($match)) {
-                $ignore = true;
-            }
-        }
-
-        preg_match_all('/<div id=\"kunena_x_widget\"(.*?)>(.*?)<\/div>/s', $text, $x_social_matches);
-
-        foreach ($x_social_matches as $match) {
-            if (!empty($match)) {
-                $ignore = true;
-            }
-        }
-
-        if (!$ignore) {
+        // The text is the HTML of the message, or its plain text (without images) where a link is "text (url)". The links of the
+        // HTML are counted when it has some: a "(domain.tld)" in the text of a post with an image counted that one instead of
+        // all its links.
+        if (preg_match('/<a\s[^>]*href=/i', $text)) {
+            preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
+        } else {
             preg_match_all('@\(((https?://)?([-\\w]+\\.[-\\w\\.]+)+\\w(:\\d+)?(/([-\\w/_\\.]*(\\?\\S+)?)?)*)\)@', $text, $matches);
+        }
 
-            if (empty($matches[0])) {
-                preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
+        $countlink = \count($matches[0]);
+
+        // Ignore internal links
+        foreach ($matches[1] as $link) {
+            $uri  = Uri::getInstance($link);
+            $host = $uri->getHost();
+
+            // The cms will catch most of these well
+            if (empty($host) || KunenaRoute::isInternal($link)) {
+                $countlink--;
             }
+        }
 
-            $countlink = \count($matches[0]);
-
-            // Ignore internal links
-            foreach ($matches[1] as $link) {
-                $uri  = Uri::getInstance($link);
-                $host = $uri->getHost();
-
-                // The cms will catch most of these well
-                if (empty($host) || KunenaRoute::isInternal($link)) {
-                    $countlink--;
-                }
-            }
-
-            if (!$topic->isAuthorised('approve') && $countlink >= $this->config->maxLinks + 1) {
-                return false;
-            }
+        if (!$topic->isAuthorised('approve') && $countlink >= $this->config->maxLinks + 1) {
+            return false;
         }
 
         return true;

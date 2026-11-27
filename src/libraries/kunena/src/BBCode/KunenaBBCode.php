@@ -2956,15 +2956,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      */
     public function DoVideo($bbcode, $action, $name, $default, $params, $content)
     {
+        // The tag has an "allow" list: the parser checks it with that list and never calls this method to check it. The counter of the
+        // links (autoLink_disable) is not touched: lowered here, it went below 0, and every [img] after a [video] skipped the security
+        // check of the images (bbcodeImgSecure) and lost its link to the full picture. The content is verbatim: never linked.
         if ($action == BBCode::BBCODE_CHECK) {
-            $bbcode->autoLink_disable++;
-
             return true;
         }
-
-        // The links come back after the video, as after [url] and [tableau]: the counter stayed raised, and every [img] after a
-        // [video] skipped the security check of the images (bbcodeImgSecure) and lost its link to the full picture.
-        $bbcode->autoLink_disable--;
 
         if (!$content || KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Video')) {
             return '';

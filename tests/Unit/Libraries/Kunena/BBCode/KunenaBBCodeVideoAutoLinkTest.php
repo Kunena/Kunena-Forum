@@ -18,9 +18,10 @@ use Kunena\Tests\Unit\UnitTestCase;
 use Nbbc\BBCode;
 
 /**
- * [video] stops the links of the addresses inside it (autoLink_disable, raised when the tag is checked), and lowers the counter again
- * when it is written, as [url] and [tableau] do. It never lowered it: after any [video] of a message, every [img] skipped the security
- * check of the images (bbcodeImgSecure: an address which is no picture is shown as text) and lost its link to the full picture.
+ * [video] leaves the counter of the links (autoLink_disable) as it is. The tag has an "allow" list, which the parser checks itself:
+ * it never calls DoVideo() to check the tag, so the counter was never raised, and the lowering of it in the output put it below 0.
+ * After any [video] of a message every [img] skipped the security check of the images (bbcodeImgSecure: an address which is no
+ * picture is shown as text) and lost its link to the full picture.
  */
 class KunenaBBCodeVideoAutoLinkTest extends UnitTestCase
 {
@@ -46,13 +47,14 @@ class KunenaBBCodeVideoAutoLinkTest extends UnitTestCase
         }
     }
 
-    public function testTheVideoGivesTheLinksBackAfterIt(): void
+    public function testTheVideoLeavesTheCounterOfTheLinks(): void
     {
+        // The parser checks a tag with an "allow" list by that list only (Nbbc BBCode::doTag()).
+        $rules = (new \ReflectionClass(KunenaBBCodeLibrary::class))->getDefaultProperties()['default_tag_rules'] ?? null;
+        $this->assertIsArray($rules['video']['allow'] ?? null, 'the video has an allow list');
+
         $library = self::bare(KunenaBBCodeLibrary::class);
         $bbcode  = (object) ['autoLink_disable' => 0, 'parent' => (object) [], 'context' => ''];
-
-        $library->DoVideo($bbcode, BBCode::BBCODE_CHECK, 'video', null, [], '');
-        $this->assertSame(1, $bbcode->autoLink_disable, 'inside the video');
 
         $library->DoVideo($bbcode, BBCode::BBCODE_OUTPUT, 'video', null, [], '');
         $this->assertSame(0, $bbcode->autoLink_disable, 'after the video');

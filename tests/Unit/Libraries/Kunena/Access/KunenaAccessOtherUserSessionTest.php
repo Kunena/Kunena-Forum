@@ -36,6 +36,20 @@ class KunenaAccessOtherUserSessionTest extends UnitTestCase
         $this->assertStringNotContainsString('UserState(', $source, 'No list in the session.');
     }
 
+    /**
+     * A plugin of an access type gives the categories of the user among the ones which it is given: the categories which are not
+     * published, or in an unpublished section or category, are taken out before. A plugin which reads them from the database
+     * (JomSocial, Community Builder) gave back such a category, and the user read what is hidden with its section.
+     */
+    public function testThePluginsGiveOnlyCategoriesOfTheList(): void
+    {
+        $source = Files::read('src/libraries/kunena/src/Access/KunenaAccess.php');
+
+        $this->assertSame(1, preg_match('/public function getAllowedCategories\(.*?\n    \}\n/s', $source, $m));
+        $this->assertStringContainsString('$visible = $categories;', $m[0]);
+        $this->assertStringContainsString('$list += array_intersect_key($access->authoriseCategories($id, $categories), $visible);', $m[0]);
+    }
+
     public function testClearCacheEmptiesTheLists(): void
     {
         $source = Files::read('src/libraries/kunena/src/Access/KunenaAccess.php');

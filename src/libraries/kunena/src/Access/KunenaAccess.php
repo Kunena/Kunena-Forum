@@ -430,9 +430,14 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!empty($categories)) {
                 // @var KunenaAccess $access
 
+                // A plugin gives the categories of the user among the ones it is given (they may take them out of the list): a
+                // plugin which reads them from the database (JomSocial, Community Builder) gave back a category in an unpublished
+                // section or category, which is hidden with it.
+                $visible = $categories;
+
                 foreach ($this->accesstypes['all'] as $access) {
                     if (method_exists($access, 'authoriseCategories')) {
-                        $list += $access->authoriseCategories($id, $categories);
+                        $list += array_intersect_key($access->authoriseCategories($id, $categories), $visible);
                     }
                 }
             }

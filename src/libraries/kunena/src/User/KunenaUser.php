@@ -604,7 +604,7 @@ class KunenaUser
         if ($this->userid) {
             $me = KunenaUserHelper::getMyself();
 
-            if ($this->_config->showKarma && $me->userid && $me->userid != $this->userid) {
+            if ($this->_config->showKarma && !$this->_config->readOnly && $me->userid && $me->userid != $this->userid) {
                 return true;
             }
         }
@@ -1435,7 +1435,7 @@ class KunenaUser
         if ($view->config->showKarma && $this->userid) {
             $view->userkarma_title = Text::_('COM_KUNENA_KARMA') . ': ' . $this->karma;
 
-            if ($view->me->userid && $view->me->userid != $this->userid) {
+            if ($this->canSeeKarma()) {
                 $topicicontype = KunenaFactory::getTemplate()->params->get('topicicontype');
 
                 if ($topicicontype == 'svg') {

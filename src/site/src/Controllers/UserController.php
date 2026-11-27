@@ -209,6 +209,14 @@ class UserController extends KunenaController
      */
     protected function karma($karmaDelta)
     {
+        // Read only mode: karma is hidden like thank yous, but a request with a token still changed it.
+        if ($this->config->readOnly) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_WARNING_READONLY'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
         if (!Session::checkToken('get')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirectBack();

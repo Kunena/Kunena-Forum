@@ -82,10 +82,11 @@ class RanksModel extends ListModel
             $this->context .= '.' . $layout;
         }
 
-        $this->setState('filter.rankTitle', $this->getUserStateFromRequest($this->context . 'filter.rankTitle', 'filter_rankTitle', null, 'string'));
-        $this->setState('filter.rankSpecial', $this->getUserStateFromRequest($this->context . 'filter.rankSpecial', 'filter_rankSpecial', null, 'string'));
-        $this->setState('filter.rankMin', $this->getUserStateFromRequest($this->context . 'filter.rankMin', 'filter_rankMin', null, 'int'));
-        $this->setState('filter.search', $this->getUserStateFromRequest($this->context . 'filter.search', 'filter_search', null, 'string'));
+        // A dot before "filter" in the session key: without it the filters were not kept between two visits of the list.
+        $this->setState('filter.rankTitle', $this->getUserStateFromRequest($this->context . '.filter.rankTitle', 'filter_rankTitle', null, 'string'));
+        $this->setState('filter.rankSpecial', $this->getUserStateFromRequest($this->context . '.filter.rankSpecial', 'filter_rankSpecial', null, 'string'));
+        $this->setState('filter.rankMin', $this->getUserStateFromRequest($this->context . '.filter.rankMin', 'filter_rankMin', null, 'int'));
+        $this->setState('filter.search', $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', null, 'string'));
 
         parent::populateState($ordering, $direction);
     }

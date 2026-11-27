@@ -623,10 +623,10 @@ class CategoriesModel extends KunenaModel
         $allowPolls = $this->getUserStateFromRequest($this->context . '.filter.allowPolls', 'filter_allowPolls');
         $this->setState('filter.allowPolls', $allowPolls);
 
-        $anonymous = $this->getUserStateFromRequest($this->context . '.filter.anonymous', 'anonymous');
+        $anonymous = $this->getUserStateFromRequest($this->context . '.filter.anonymous', 'filter_anonymous');
         $this->setState('filter.anonymous', $anonymous);
 
-        $levels = $this->getUserStateFromRequest($this->context . '.filter.level', 'level');
+        $levels = $this->getUserStateFromRequest($this->context . '.filter.levels', 'filter_levels');
         $this->setState('filter.levels', $levels);
 
         // List state information.

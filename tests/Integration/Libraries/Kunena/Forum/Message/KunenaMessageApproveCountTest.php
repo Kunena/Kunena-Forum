@@ -30,6 +30,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
+use Kunena\Forum\Libraries\Tools\KunenaModerationQueue;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Tests\Integration\DBTestHelper;
@@ -373,6 +374,22 @@ class KunenaMessageApproveCountTest extends IntegrationTestCase implements DBTes
             'usertopic' => [['posts' => 1]],
             'user'      => [['posts' => 1]],
         ], $this->counters());
+    }
+
+    /**
+     * The tool "Moderation queue" of the backend (here: the publish needs this setup). A reply which waits for approval in a
+     * topic which went to the trash afterwards: approving it published the topic again, with that reply only, while its first
+     * post and the other replies stayed in the trash.
+     */
+    public function testTheModerationQueueLeavesTheWaitingReplyOfATrashedTopic(): void
+    {
+        $this->seed(KunenaForum::TOPIC_DELETED, 1, 3, 7, [[10, 0, KunenaForum::TOPIC_DELETED, 1000], [11, 10, KunenaForum::UNAPPROVED, 1100]]);
+
+        $this->assertSame(0, KunenaModerationQueue::unapprovedOnSite()['total']);
+        $this->assertSame(['done' => 0, 'failed' => 1], KunenaModerationQueue::apply([11], KunenaModerationQueue::APPROVE));
+
+        $this->assertEquals([['hold' => 3, 'posts' => 1]], $this->counters()['topic']);
+        $this->assertEquals([['numTopics' => 3, 'numPosts' => 7]], $this->counters()['category']);
     }
 
     /**

@@ -89,10 +89,15 @@ class KunenaModerationQueue
     public static function unapprovedOnSite(): array
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
+        // Not the messages of a topic in the trash: approving one published the topic again, with that message only (its other
+        // messages stayed in the trash).
+        $shown = $db->quoteName('tp.hold') . ' < ' . KunenaForum::DELETED;
         $query = $db->createQuery()
             ->select('COUNT(*)')
-            ->from($db->quoteName('#__kunena_messages'))
-            ->where($db->quoteName('hold') . ' = ' . KunenaForum::UNAPPROVED);
+            ->from($db->quoteName('#__kunena_messages', 'm'))
+            ->innerJoin($db->quoteName('#__kunena_topics', 'tp') . ' ON ' . $db->quoteName('tp.id') . ' = ' . $db->quoteName('m.thread'))
+            ->where($db->quoteName('m.hold') . ' = ' . KunenaForum::UNAPPROVED)
+            ->where($shown);
         $total = (int) $db->setQuery($query)->loadResult();
 
         $query = $db->createQuery()
@@ -100,8 +105,10 @@ class KunenaModerationQueue
             ->select($db->quoteName('c.name', 'category'))
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('t.mesid') . ' = ' . $db->quoteName('m.id'))
+            ->innerJoin($db->quoteName('#__kunena_topics', 'tp') . ' ON ' . $db->quoteName('tp.id') . ' = ' . $db->quoteName('m.thread'))
             ->leftJoin($db->quoteName('#__kunena_categories', 'c') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('m.catid'))
             ->where($db->quoteName('m.hold') . ' = ' . KunenaForum::UNAPPROVED)
+            ->where($shown)
             ->order($db->quoteName('m.time'));
 
         return ['total' => $total, 'items' => (array) $db->setQuery($query, 0, self::LIMIT)->loadAssocList()];
@@ -176,9 +183,11 @@ class KunenaModerationQueue
             try {
                 $message = KunenaMessageHelper::get($id);
 
-                // Approve only what waits for approval; trash what is not trashed yet.
+                // Approve only what waits for approval, in a topic which is not in the trash; trash what is not trashed yet.
                 $ok = $message->exists()
-                    && ($action === self::APPROVE ? (int) $message->hold === KunenaForum::UNAPPROVED : (int) $message->hold < KunenaForum::DELETED)
+                    && ($action === self::APPROVE
+                        ? (int) $message->hold === KunenaForum::UNAPPROVED && (int) $message->getTopic()->hold < KunenaForum::DELETED
+                        : (int) $message->hold < KunenaForum::DELETED)
                     && $message->publish($hold);
             } catch (Throwable $e) {
                 $ok = false;

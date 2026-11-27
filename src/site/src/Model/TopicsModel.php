@@ -609,8 +609,12 @@ class TopicsModel extends KunenaModel
             $latestCategory   = [$catid];
             $latestCategoryIn = true;
 
-            // Check if the category is in excluded list
-            if (\is_array($this->config->rssExcludedCategories) && $this->config->rssExcludedCategories[0] != 0) {
+            // Check if the category is in excluded list: of the feeds only. On a page (the filter of the recent topics, the link to the
+            // posts which wait for approval of a category) the category which the RSS leaves out was the list of all the others.
+            if (
+                Factory::getApplication()->getDocument()->getType() == 'feed'
+                && \is_array($this->config->rssExcludedCategories) && $this->config->rssExcludedCategories[0] != 0
+            ) {
 
                 if (\in_array($catid, $this->config->rssExcludedCategories)) {
                     $latestCategory   = $this->config->rssExcludedCategories;

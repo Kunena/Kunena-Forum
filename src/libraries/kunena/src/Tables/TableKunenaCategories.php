@@ -309,6 +309,12 @@ class TableKunenaCategories extends KunenaTable
 
         $this->name = trim((string) $this->name);
 
+        // A TINYTEXT column (255 bytes) which the form does not limit: a longer name was an error of the strict database of Joomla
+        // and the category was not saved. It is cut at a character.
+        if (\strlen($this->name) > 255) {
+            $this->name = mb_strcut($this->name, 0, 255, 'UTF-8');
+        }
+
         if (!$this->name) {
             throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));
         }

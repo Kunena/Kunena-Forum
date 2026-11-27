@@ -191,8 +191,13 @@ $type       = $this->profile->getType(0, true);
 
     <?php if ($this->profile->birthdate && $this->profile->birthdate != '1000-01-01') : ?>
         <div>
-            <dt><?php echo KunenaIcons::birthdate(); ?> <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?></dt>
-            <dd><?php echo KunenaDate::getInstance($this->profile->birthdate)->toSpan('date', 'ago', 'utc'); ?></dd>
+            <?php if ($this->profile->showsBirthdate()) : ?>
+                <dt><?php echo KunenaIcons::birthdate(); ?> <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?></dt>
+                <dd><?php echo KunenaDate::getInstance($this->profile->birthdate)->toSpan('date', 'ago', 'utc'); ?></dd>
+            <?php else : ?>
+                <dt><?php echo KunenaIcons::birthdate(); ?> <?php echo Text::_('COM_KUNENA_AGE'); ?></dt>
+                <dd><?php echo (int) $this->profile->getAge(); ?></dd>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
 

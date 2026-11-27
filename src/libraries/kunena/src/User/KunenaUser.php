@@ -1910,6 +1910,43 @@ class KunenaUser
     }
 
     /**
+     * Is the birthdate of the user shown, or his age only? His setting "Display Age Or Birthdate" (0: the age, 1: the
+     * birthdate); he sees his own birthdate. The setting was read nowhere: the whole birthdate was shown to every visitor.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public function showsBirthdate(): bool
+    {
+        return $this->displayAgeBirthdate === null || (int) $this->displayAgeBirthdate !== 0 || $this->isMyself();
+    }
+
+    /**
+     * The age of the user in years, from his birthdate (null without a birthdate).
+     *
+     * @param   integer|null  $now  The time (now when null).
+     *
+     * @return  integer|null
+     *
+     * @since   Kunena 8.0
+     */
+    public function getAge(?int $now = null): ?int
+    {
+        if (!$this->birthdate || (string) $this->birthdate === '1000-01-01') {
+            return null;
+        }
+
+        $birthdate = date_create_immutable((string) $this->birthdate, new DateTimeZone('UTC'));
+
+        if (!$birthdate) {
+            return null;
+        }
+
+        return $birthdate->diff(date_create_immutable('@' . ($now ?? time())))->y;
+    }
+
+    /**
      * Method to load a \Kunena\Forum\Libraries\User\KunenaUser object by userid.
      *
      * @param   mixed  $id  The user id of the user to load.
@@ -1976,7 +2013,10 @@ class KunenaUser
                     return false;
                 }
 
-                $title = Text::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_BIRTHDATE', KunenaDate::getInstance($this->birthdate)->toKunena('date', 'utc'));
+                // His age only, when he chose so (showsBirthdate()).
+                $title = $this->showsBirthdate()
+                    ? Text::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_BIRTHDATE', KunenaDate::getInstance($this->birthdate)->toKunena('date', 'utc'))
+                    : Text::sprintf('COM_KUNENA_MYPROFILE_AGE_AGE', (int) $this->getAge());
 
                 return '<span data-bs-toggle="tooltip" data-placement="right" title="' . $this->escape($title) . '" >' . KunenaIcons::birthdate() . '</span>';
 

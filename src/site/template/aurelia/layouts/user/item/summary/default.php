@@ -195,8 +195,13 @@ if ($this->config->showUserStats) {
             <?php if ($this->profile->birthdate && $this->profile->birthdate != '1000-01-01') :
                 ?>
                 <li class="list-group-item">
-                    <strong><?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
-                    <span><?php echo KunenaDate::getInstance($this->profile->birthdate)->toSpan('date', 'ago', 'utc'); ?></span>
+                    <?php if ($this->profile->showsBirthdate()) : ?>
+                        <strong><?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
+                        <span><?php echo KunenaDate::getInstance($this->profile->birthdate)->toSpan('date', 'ago', 'utc'); ?></span>
+                    <?php else : ?>
+                        <strong><?php echo Text::_('COM_KUNENA_AGE'); ?>:</strong>
+                        <span><?php echo (int) $this->profile->getAge(); ?></span>
+                    <?php endif; ?>
                 </li>
             <?php endif; ?>
 

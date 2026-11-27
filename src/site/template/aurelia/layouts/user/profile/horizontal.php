@@ -154,8 +154,13 @@ $personalText = $user->getPersonalText();
                 <span> <?php echo $user->getGender(); ?> </span>
             </li>
             <li>
-                <strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
-                <span> <?php echo (!empty($user->birthdate) && $user->birthdate != '1000-01-01') ? KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc') : ''; ?> </span>
+                <?php if ($user->showsBirthdate()) : ?>
+                    <strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
+                    <span> <?php echo (!empty($user->birthdate) && $user->birthdate != '1000-01-01') ? KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc') : ''; ?> </span>
+                <?php else : ?>
+                    <strong> <?php echo Text::_('COM_KUNENA_AGE'); ?>:</strong>
+                    <span> <?php echo $user->getAge() !== null ? (int) $user->getAge() : ''; ?> </span>
+                <?php endif; ?>
             </li>
             <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal'); ?>
             <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal_' . $user->userid); ?>

@@ -324,12 +324,17 @@ abstract class KunenaTopicHelper
             $query = $db->createQuery();
             $query->select($db->quoteName('m.thread') . ' AS ' . $db->quoteName('id') . ', MIN(' . $db->quoteName('m.id') . ') AS ' . $db->quoteName('lastread') . ', SUM(1) AS ' . $db->quoteName('unread'))
                 ->from($db->quoteName('#__kunena_messages', 'm'))
-                ->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('m.thread') . ' AND ' . $db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
+                ->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('m.thread') . ' AND ' . $db->quoteName('ur.user_id') . ' = ' . $db->quote($user->userid))
+                // The time the user marked the category of the topic read ("Mark Topics Read"): the messages before it were counted
+                // as new, and the link to the first unread message went to one of them.
+                ->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('m.thread'))
+                ->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON ' . $db->quoteName('uc.category_id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('uc.user_id') . ' = ' . $db->quote($user->userid))
                 ->where($db->quoteName('m.hold') . ' = 0')
                 ->andWhere($db->quoteName('m.moved') . ' = 0')
                 ->andWhere($db->quoteName('m.thread') . ' IN (' . $idstr . ')')
                 ->andWhere($db->quoteName('m.time') . ' > ' . $db->quote($session->getAllReadTime()))
                 ->andWhere('(' . $db->quoteName('ur.time') . ' IS NULL OR ' . $db->quoteName('m.time') . ' > ' . $db->quoteName('ur.time') . ')')
+                ->andWhere('(' . $db->quoteName('uc.allreadtime') . ' IS NULL OR ' . $db->quoteName('m.time') . ' > ' . $db->quoteName('uc.allreadtime') . ')')
                 ->group($db->quoteName('thread'));
             $db->setQuery($query);
 

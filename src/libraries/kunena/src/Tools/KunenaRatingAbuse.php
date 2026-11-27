@@ -178,11 +178,33 @@ class KunenaRatingAbuse
         $db      = Factory::getContainer()->get('DatabaseDriver');
         $removed = 0;
 
+        $topics  = [];
+
         foreach (array_values(array_unique(array_filter(array_map('intval', $ids)))) as $id) {
+            $query = $db->createQuery()->select('DISTINCT ' . $db->quoteName('topic_id'))->from($db->quoteName('#__kunena_rate'))
+                ->where($db->quoteName('userid') . ' = :id')
+                ->bind(':id', $id, ParameterType::INTEGER);
+            $topics = array_merge($topics, array_map('intval', (array) $db->setQuery($query)->loadColumn()));
+
             $query = $db->createQuery()->delete($db->quoteName('#__kunena_rate'))->where($db->quoteName('userid') . ' = :id')
                 ->bind(':id', $id, ParameterType::INTEGER);
             $db->setQuery($query)->execute();
             $removed += (int) $db->getAffectedRows();
+        }
+
+        // The rating of a topic is stored with the topic (the lists show it), written when a user rates: the topics of the
+        // removed ratings get the rating of the ratings which are left (as KunenaRateHelper::getSelected()), 0 without any. They
+        // kept the rating which the removed ones made.
+        foreach (array_chunk(array_values(array_unique(array_filter($topics))), 500) as $chunk) {
+            $average = $db->createQuery()
+                ->select('COALESCE(ROUND(AVG(' . $db->quoteName('r.rate') . ')), 0)')
+                ->from($db->quoteName('#__kunena_rate', 'r'))
+                ->where($db->quoteName('r.topic_id') . ' = ' . $db->quoteName('t.id'));
+            $query   = $db->createQuery()
+                ->update($db->quoteName('#__kunena_topics', 't'))
+                ->set($db->quoteName('t.rating') . ' = (' . $average . ')')
+                ->whereIn($db->quoteName('t.id'), $chunk);
+            $db->setQuery($query)->execute();
         }
 
         return $removed;

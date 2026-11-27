@@ -96,7 +96,7 @@ KunenaFactory::getTemplate()->addScriptOptions('com_kunena.usersearch_url', Kune
             <?php else :
                 $cols++;
                 ?>
-                <th scope="col" class="col-md-3">-->
+                <th scope="col" class="col-md-3">
                     <?php echo HTMLHelper::_(
                     'kunenagrid.sort',
                     'COM_KUNENA_REALNAME',
@@ -176,6 +176,7 @@ KunenaFactory::getTemplate()->addScriptOptions('com_kunena.usersearch_url', Kune
                     'kuserlist-form'
                 );
                 ?>
+            </th>
             <?php endif;
             ?>
 

@@ -1823,6 +1823,12 @@ class KunenaTopic extends KunenaDatabaseObject
                 throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_TARGET_SHADOW', $this->id, $target->id));
             }
 
+            if ((int) $target->hold >= KunenaForum::DELETED) {
+                // Nor into a topic in the trash: its messages were hidden with it, while the category counted them (and counted
+                // them again when the topic was restored).
+                throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_TARGET_DELETED', $this->id, $target->id));
+            }
+
             if ($this->poll_id && $target->poll_id) {
                 // We cannot currently have 2 polls in one topic -- fail
                 throw new Exception(Text::_('COM_KUNENA_MODERATION_CANNOT_MOVE_TOPIC_WITH_POLL_INTO_ANOTHER_WITH_POLL'));

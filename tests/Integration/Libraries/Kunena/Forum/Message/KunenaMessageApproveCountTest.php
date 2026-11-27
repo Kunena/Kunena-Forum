@@ -412,6 +412,34 @@ class KunenaMessageApproveCountTest extends IntegrationTestCase implements DBTes
     }
 
     /**
+     * A merge into a topic in the trash: the messages were hidden with it, while the category counted them (and again when the
+     * topic was restored). It is refused, and nothing changes.
+     */
+    public function testATopicIsNotMergedIntoATopicInTheTrash(): void
+    {
+        $this->seed(KunenaForum::PUBLISHED, 2, 3, 7, [[10, 0, KunenaForum::PUBLISHED, 1000], [11, 10, KunenaForum::PUBLISHED, 1100]]);
+        $this->insertRow('#__kunena_topics', [
+            'id' => 2, 'category_id' => self::CATEGORY, 'subject' => 'Trashed', 'hold' => KunenaForum::DELETED, 'posts' => 1,
+            'first_post_id' => 20, 'first_post_time' => 2000, 'first_post_userid' => self::AUTHOR,
+            'last_post_id' => 20, 'last_post_time' => 2000, 'last_post_userid' => self::AUTHOR,
+        ]);
+        $this->insertRow('#__kunena_messages', ['id' => 20, 'parent' => 0, 'thread' => 2, 'catid' => self::CATEGORY, 'userid' => self::AUTHOR, 'subject' => 'Trashed', 'time' => 2000, 'hold' => KunenaForum::DELETED]);
+        $this->insertRow('#__kunena_messages_text', ['mesid' => 20, 'message' => 'Message 20']);
+
+        $refused = false;
+
+        try {
+            KunenaTopicHelper::get(self::TOPIC)->move(KunenaTopicHelper::get(2));
+        } catch (\Exception $e) {
+            $refused = true;
+        }
+
+        $this->assertTrue($refused, 'The merge into a topic in the trash was made.');
+        $this->assertEquals([['numTopics' => 3, 'numPosts' => 7]], $this->counters()['category']);
+        $this->assertEquals([['thread' => 1], ['thread' => 1]], $this->fetchAll('SELECT thread FROM #__kunena_messages WHERE id IN (10, 11)'));
+    }
+
+    /**
      * A shown message read as a list and saved as it is (an edit) is not a new post.
      */
     public function testSavingAShownMessageReadAsAListAddsNoPost(): void

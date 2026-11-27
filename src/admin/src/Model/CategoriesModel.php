@@ -119,6 +119,8 @@ class CategoriesModel extends KunenaModel
             $config['filter_fields'] = [
                 'search',
                 'id',
+                // The id of the sort list (the column sends "id"): without it the list was sorted by its ordering, turned around.
+                'p.id',
                 'ordering',
                 'a.ordering',
                 'published',

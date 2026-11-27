@@ -89,6 +89,9 @@ abstract class KunenaCategoryHelper
 
             if (!$optimize) {
                 switch ($params['ordering']) {
+                    // The id of the list of the backend (its column and its sort list): it kept the ordering of the categories.
+                    case 'id':
+                    case 'p.id':
                     case 'catid':
                         if ($params['direction'] > 0) {
                             ksort($cats);
@@ -103,6 +106,25 @@ abstract class KunenaCategoryHelper
                         } else {
                             uksort($cats, [__CLASS__, 'compareByNameDesc']);
                         }
+                        break;
+                    case 'p.published':
+                    case 'p.access':
+                    case 'p.locked':
+                    case 'p.review':
+                    case 'p.allowPolls':
+                    case 'p.anonymous':
+                        // The other columns of the list of the backend: they only turned the ordering around. The categories with
+                        // the same value keep their ordering.
+                        $field     = $params['ordering'] === 'p.anonymous' ? 'allowAnonymous' : substr($params['ordering'], 2);
+                        $direction = $params['direction'] > 0 ? 1 : -1;
+                        $position  = array_flip(array_keys($cats));
+
+                        uksort($cats, static function ($a, $b) use ($field, $direction, $position): int {
+                            $first  = (int) (self::$_instances[$a]->$field ?? 0);
+                            $second = (int) (self::$_instances[$b]->$field ?? 0);
+
+                            return $first !== $second ? $direction * ($first <=> $second) : $position[$a] <=> $position[$b];
+                        });
                         break;
                     case 'ordering':
                     default:

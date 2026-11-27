@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 
@@ -262,6 +263,11 @@ class TrashsModel extends ListModel
         $categories = [];
 
         foreach ($topics as $topic) {
+            // Only a topic of the trash is deleted for good: the ids come from the request, and any live topic went.
+            if ((int) $topic->hold < KunenaForum::DELETED) {
+                continue;
+            }
+
             $topicIds[]                      = $topic->id;
             $categories[$topic->category_id] = $topic->category_id;
 
@@ -301,6 +307,10 @@ class TrashsModel extends ListModel
         $categories = [];
 
         foreach ($messages as $message) {
+            // Only a message of the trash is deleted for good: the ids come from the request, and any live message went.
+            if ((int) $message->hold < KunenaForum::DELETED) {
+                continue;
+            }
 
             if ($message->deleted_time < $date || $age === 0) {
                 try {

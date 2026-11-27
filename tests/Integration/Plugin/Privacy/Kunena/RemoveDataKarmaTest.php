@@ -34,8 +34,6 @@ class RemoveDataKarmaTest extends IntegrationTestCase implements DBTestInterface
 
     private ?Container $savedContainer = null;
 
-    private bool $karma = false;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -55,19 +53,10 @@ class RemoveDataKarmaTest extends IntegrationTestCase implements DBTestInterface
         $this->savedContainer = Factory::$container;
         Factory::$container   = $container;
 
-        // The table of the karma is in the tables of an installation (create_tables.utf8.sql), not in the schema which makes the
-        // tables of the tests: it is there for the test only.
-        $driver->setQuery('CREATE TABLE IF NOT EXISTS #__kunena_karma (id int(11) NOT NULL AUTO_INCREMENT, userid int(11) NOT NULL, target_userid int(11) NOT NULL, time int(11) NOT NULL DEFAULT 0, PRIMARY KEY (id))')->execute();
-        $driver->setQuery('DELETE FROM #__kunena_karma')->execute();
-        $this->karma = true;
     }
 
     protected function tearDown(): void
     {
-        if ($this->karma) {
-            $this->getDBDriver()->setQuery('DROP TABLE IF EXISTS #__kunena_karma')->execute();
-        }
-
         if ($this->savedContainer !== null) {
             Factory::$container = $this->savedContainer;
         }
@@ -79,7 +68,7 @@ class RemoveDataKarmaTest extends IntegrationTestCase implements DBTestInterface
     {
         // The user 42 gave karma to 7, got karma from 8; and 7 gave karma to 8.
         foreach ([[42, 7], [8, 42], [7, 8]] as [$from, $to]) {
-            $this->getDBDriver()->setQuery("INSERT INTO #__kunena_karma (userid, target_userid, time) VALUES ($from, $to, 1000)")->execute();
+            $this->insertRow('#__kunena_karma', ['userid' => $from, 'target_userid' => $to, 'time' => 1000]);
         }
 
         $user     = new User();
@@ -102,7 +91,7 @@ class RemoveDataKarmaTest extends IntegrationTestCase implements DBTestInterface
      */
     public function testTheExportHasTheKarmaAndTheSubscriptions(): void
     {
-        $this->getDBDriver()->setQuery('INSERT INTO #__kunena_karma (userid, target_userid, time) VALUES (42, 7, 1000)')->execute();
+        $this->insertRow('#__kunena_karma', ['userid' => 42, 'target_userid' => 7, 'time' => 1000]);
         $this->insertRow('#__kunena_user_categories', ['user_id' => 42, 'category_id' => 3, 'subscribed' => 1, 'params' => '']);
         $this->insertRow('#__kunena_user_topics', ['user_id' => 42, 'topic_id' => 9, 'category_id' => 3, 'subscribed' => 1, 'favorite' => 1]);
 

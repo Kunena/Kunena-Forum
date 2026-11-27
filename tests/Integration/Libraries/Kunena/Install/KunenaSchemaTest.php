@@ -34,10 +34,47 @@ class KunenaSchemaTest extends IntegrationTestCase implements DBTestInterface
      * Tables which the code names but neither the schema of the installer nor the install file of a plugin has (found by the first
      * run of this test). A new one fails; one which gets a table is taken out of the list.
      * - kunena_keywords: the class TableKunenaKeywords is for a table which is not made, and no code uses the class.
-     * - kunena_karma: KunenaKarma reads and writes it. A new install makes it (sql/install/mysql/create_tables.utf8.sql), but the
-     *   schema (install.xml) does not have it, so the database of these tests has no karma table either.
+     * - kunena_configuration: the table of the configuration of a forum before Kunena 7.0. The upgrade of such a forum reads it
+     *   (script.php, the step of 5.2.15) and the uninstall drops it; no installation makes it any more.
      */
-    private const KNOWN_NOT_IN_SCHEMA = ['kunena_keywords', 'kunena_karma'];
+    private const KNOWN_NOT_IN_SCHEMA = ['kunena_keywords', 'kunena_configuration'];
+
+    /**
+     * The schema has the tables and the columns of a new installation (sql/install/mysql/create_tables.utf8.sql). It was behind:
+     * no table of the karma, no deleted_time of the messages, status of the attachments, language and displayAgeBirthdate of the
+     * users, sentusers of the mail queue, and still the table of the configuration, which no installation has since Kunena 7.0.
+     * The tables of these tests are made from the schema, so the tests ran on other tables than a forum has.
+     */
+    public function testTheSchemaHasTheTablesAndColumnsOfANewInstallation(): void
+    {
+        $sql = (string) file_get_contents(\dirname(__DIR__, 5) . '/src/admin/sql/install/mysql/create_tables.utf8.sql');
+
+        $this->assertGreaterThan(30, preg_match_all('/CREATE TABLE IF NOT EXISTS `#__(\w+)`\s*\((.*?)\n\)/s', $sql, $tables, PREG_SET_ORDER));
+
+        $install = [];
+
+        foreach ($tables as [, $name, $body]) {
+            preg_match_all('/^\s*`(\w+)`\s/m', $body, $columns);
+            $install[$name] = $columns[1];
+        }
+
+        $schema = [];
+
+        foreach (SchemaGenerator::tables() as $name => $table) {
+            $schema[$name] = SchemaGenerator::columns($table);
+        }
+
+        $this->assertSame(array_keys($install), array_values(array_intersect(array_keys($install), array_keys($schema))), 'A table of the installation is not in the schema.');
+        $this->assertSame([], array_values(array_diff(array_keys($schema), array_keys($install))), 'A table of the schema is in no installation.');
+
+        foreach ($install as $name => $columns) {
+            $sorted = $schema[$name];
+            sort($columns);
+            sort($sorted);
+
+            $this->assertSame($columns, $sorted, "The columns of $name.");
+        }
+    }
 
     public static function tables(): array
     {

@@ -61,8 +61,6 @@ class PurgeTrashTest extends IntegrationTestCase implements DBTestInterface
 
     private array $userColumns = [];
 
-    private bool $deletedTime = false;
-
     public function getSchemasToLoad(): array
     {
         return ['kunena', 'joomla'];
@@ -148,9 +146,6 @@ class PurgeTrashTest extends IntegrationTestCase implements DBTestInterface
             }
         }
 
-        $driver->setQuery("ALTER TABLE #__kunena_messages ADD deleted_time int(11) NOT NULL default '0' AFTER moved")->execute();
-        $this->deletedTime = true;
-
         DBTestHelper::markDirty('#__kunena_user_topics');
 
         // A published topic with its first post, and three replies in the trash since long ago (one of them trashed later than the
@@ -189,10 +184,6 @@ class PurgeTrashTest extends IntegrationTestCase implements DBTestInterface
             $this->replace(KunenaMessageHelper::class, '_instances', []);
             $this->replace(KunenaTopicUserHelper::class, '_instances', []);
             $this->replace(KunenaTopicUserHelper::class, '_topics', []);
-        }
-
-        if ($this->deletedTime) {
-            $this->getDBDriver()->setQuery('ALTER TABLE #__kunena_messages DROP deleted_time')->execute();
         }
 
         foreach ($this->userColumns as $column) {

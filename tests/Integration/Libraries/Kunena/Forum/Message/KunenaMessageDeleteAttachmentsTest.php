@@ -67,11 +67,6 @@ class KunenaMessageDeleteAttachmentsTest extends IntegrationTestCase implements 
      */
     private array $userColumns = [];
 
-    /**
-     * The column deleted_time was added to the table of the messages for the test.
-     */
-    private bool $deletedTime = false;
-
     public function getSchemasToLoad(): array
     {
         return ['kunena', 'joomla'];
@@ -159,11 +154,6 @@ class KunenaMessageDeleteAttachmentsTest extends IntegrationTestCase implements 
             }
         }
 
-        // The message is saved with its deleted time: the column is in the tables of an installation (create_tables.utf8.sql and the
-        // upgrade), not in the schema which makes the tables of the tests. It is there for the test only.
-        $driver->setQuery("ALTER TABLE #__kunena_messages ADD deleted_time int(11) NOT NULL default '0' AFTER moved")->execute();
-        $this->deletedTime = true;
-
         $this->insertRow('#__users', ['id' => self::AUTHOR, 'name' => 'Author', 'username' => 'author', 'params' => '', 'registerDate' => '2020-01-01 00:00:00']);
 
         // The approval writes the user topics (the recount makes the missing ones): they are emptied before the next test.
@@ -188,10 +178,6 @@ class KunenaMessageDeleteAttachmentsTest extends IntegrationTestCase implements 
             $this->replace(KunenaMessageHelper::class, '_instances', []);
             $this->replace(KunenaTopicUserHelper::class, '_instances', []);
             $this->replace(KunenaTopicUserHelper::class, '_topics', []);
-        }
-
-        if ($this->deletedTime) {
-            $this->getDBDriver()->setQuery('ALTER TABLE #__kunena_messages DROP deleted_time')->execute();
         }
 
         foreach ($this->userColumns as $column) {

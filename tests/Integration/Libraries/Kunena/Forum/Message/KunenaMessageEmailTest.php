@@ -72,8 +72,6 @@ class KunenaMessageEmailTest extends IntegrationTestCase implements DBTestInterf
 
     private array $userColumns = [];
 
-    private bool $deletedTime = false;
-
     private bool $userLanguage = false;
 
     /**
@@ -233,9 +231,6 @@ class KunenaMessageEmailTest extends IntegrationTestCase implements DBTestInterf
             \define('KPATH_SITE', \dirname(__DIR__, 6) . '/src/site');
         }
 
-        $driver->setQuery("ALTER TABLE #__kunena_messages ADD deleted_time int(11) NOT NULL default '0' AFTER moved")->execute();
-        $this->deletedTime = true;
-
         $this->insertRow('#__users', ['id' => self::AUTHOR, 'name' => 'Author', 'username' => 'author', 'email' => 'author@forum.example', 'params' => '', 'registerDate' => '2020-01-01 00:00:00']);
         $this->insertRow('#__users', ['id' => self::MENTIONED, 'name' => 'Anna', 'username' => 'anna', 'email' => 'anna@forum.example', 'params' => '', 'registerDate' => '2020-01-01 00:00:00']);
 
@@ -273,10 +268,6 @@ class KunenaMessageEmailTest extends IntegrationTestCase implements DBTestInterf
 
         if ($this->userLanguage) {
             $this->getDBDriver()->setQuery('ALTER TABLE #__kunena_users DROP language')->execute();
-        }
-
-        if ($this->deletedTime) {
-            $this->getDBDriver()->setQuery('ALTER TABLE #__kunena_messages DROP deleted_time')->execute();
         }
 
         foreach ($this->userColumns as $column) {

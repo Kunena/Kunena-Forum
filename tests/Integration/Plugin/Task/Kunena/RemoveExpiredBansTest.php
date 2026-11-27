@@ -61,8 +61,6 @@ class RemoveExpiredBansTest extends IntegrationTestCase implements DBTestInterfa
 
     private array $userColumns = [];
 
-    private bool $deletedTime = false;
-
     public function getSchemasToLoad(): array
     {
         return ['kunena', 'joomla'];
@@ -148,9 +146,6 @@ class RemoveExpiredBansTest extends IntegrationTestCase implements DBTestInterfa
             }
         }
 
-        $driver->setQuery("ALTER TABLE #__kunena_messages ADD deleted_time int(11) NOT NULL default '0' AFTER moved")->execute();
-        $this->deletedTime = true;
-
         $this->insertRow('#__users', ['id' => 42, 'name' => 'Member', 'username' => 'member', 'params' => '', 'block' => 1, 'registerDate' => '2020-01-01 00:00:00']);
         $this->insertRow('#__kunena_users', ['userid' => 42, 'banned' => '2021-01-01 00:00:00']);
     }
@@ -173,10 +168,6 @@ class RemoveExpiredBansTest extends IntegrationTestCase implements DBTestInterfa
             $this->replace(KunenaMessageHelper::class, '_instances', []);
             $this->replace(KunenaTopicUserHelper::class, '_instances', []);
             $this->replace(KunenaTopicUserHelper::class, '_topics', []);
-        }
-
-        if ($this->deletedTime) {
-            $this->getDBDriver()->setQuery('ALTER TABLE #__kunena_messages DROP deleted_time')->execute();
         }
 
         foreach ($this->userColumns as $column) {

@@ -56,11 +56,6 @@ class KunenaTopicDeleteAttachmentsTest extends IntegrationTestCase implements DB
      */
     private array $saved = [];
 
-    /**
-     * The column deleted_time was added to the table of the messages for the test.
-     */
-    private bool $deletedTime = false;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -110,12 +105,6 @@ class KunenaTopicDeleteAttachmentsTest extends IntegrationTestCase implements DB
         Factory::$application = $application;
         Factory::$language    = $language;
 
-        // KunenaTopic::publish() sets the deleted time of the messages: the column is in the tables of an installation
-        // (create_tables.utf8.sql and the upgrade), not in the schema which makes the tables of the tests. It is there for the
-        // test only: the other tests compare the tables with that schema.
-        $driver->setQuery("ALTER TABLE #__kunena_messages ADD deleted_time int(11) NOT NULL default '0' AFTER moved")->execute();
-        $this->deletedTime = true;
-
         $this->insertRows('#__kunena_categories', [
             ['id' => self::CATEGORY, 'parentid' => 0, 'name' => 'Category', 'alias' => '2-category', 'published' => 1, 'numTopics' => 1, 'numPosts' => 1],
             ['id' => self::OTHER_CATEGORY, 'parentid' => 0, 'name' => 'Other', 'alias' => '3-other', 'published' => 1],
@@ -148,10 +137,6 @@ class KunenaTopicDeleteAttachmentsTest extends IntegrationTestCase implements DB
 
             // The helpers keep the topics and the categories for the request: the next test has rows of its own.
             $this->replace(KunenaTopicHelper::class, '_instances', []);
-        }
-
-        if ($this->deletedTime) {
-            $this->getDBDriver()->setQuery('ALTER TABLE #__kunena_messages DROP deleted_time')->execute();
         }
 
         // The helper of the attachments keeps them for the request: each test has rows of its own (another test used the same ids).

@@ -2314,6 +2314,9 @@ class KunenaCategory extends KunenaDatabaseObject
         $count = KunenaTopicHelper::delete($ids);
 
         KunenaUserHelper::recount();
+        // The thank yous of the messages are deleted with them: the counters of their authors (a delete of one topic counts them
+        // again too) kept them, until the recount of the tools.
+        KunenaMessageThankyouHelper::recount();
         KunenaCategoryHelper::recountBatch($this->id);
         KunenaAttachmentHelper::cleanup();
 

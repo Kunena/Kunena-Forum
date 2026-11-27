@@ -203,6 +203,29 @@ class KunenaCategoryDeleteAttachmentsTest extends IntegrationTestCase implements
     }
 
     /**
+     * The prune of a category (delete for good the topics without a post for a time) deletes the thank yous of their messages:
+     * the counter of the author kept them, until the recount of the tools.
+     */
+    public function testThePruneCountsTheThanksOfTheAuthorsAgain(): void
+    {
+        $this->topic(60, 0, 0, 1);
+        $this->insertRow('#__kunena_messages', ['id' => 61, 'parent' => 0, 'thread' => 60, 'catid' => self::CATEGORY, 'userid' => 42, 'subject' => 'Old', 'time' => 1000, 'hold' => 0]);
+        $this->insertRow('#__kunena_thankyou', ['postid' => 61, 'userid' => 43, 'targetuserid' => 42, 'time' => '2020-01-01 00:00:00']);
+        $this->insertRow('#__kunena_users', ['userid' => 42, 'thankyou' => 1]);
+
+        $this->getDBDriver()->setQuery("CREATE TABLE IF NOT EXISTS #__contentitem_tag_map (type_alias varchar(255) NOT NULL DEFAULT '', content_item_id int NOT NULL DEFAULT 0, tag_id int NOT NULL DEFAULT 0)")->execute();
+
+        try {
+            $this->assertGreaterThan(0, KunenaCategoryHelper::get(self::CATEGORY)->purge(time()));
+        } finally {
+            $this->getDBDriver()->setQuery('DROP TABLE IF EXISTS #__contentitem_tag_map')->execute();
+        }
+
+        $this->assertSame([], $this->fetchAll('SELECT postid FROM #__kunena_thankyou'));
+        $this->assertSame(0, (int) $this->fetchAll('SELECT thankyou FROM #__kunena_users WHERE userid = 42')[0]['thankyou']);
+    }
+
+    /**
      * Delete the category (with the table of the Joomla tags, which is not in the schema of the tests).
      */
     private function deleteCategory(): void

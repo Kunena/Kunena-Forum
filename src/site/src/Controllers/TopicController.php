@@ -1285,7 +1285,8 @@ class TopicController extends KunenaController
             }
         }
 
-        // Ignore identical for 5 minutes
+        // A second send of the same post by the same poster within a minute is ignored (a double click). Only the text was compared:
+        // another user who replied the same ("Thanks!") within the minute lost his reply. For a guest, also his name.
         $duplicatetimewindow = $dateNowUnix - 1 * 60;
         $lastTopic           = $topic->getCategory()->getLastTopic();
 
@@ -1293,6 +1294,8 @@ class TopicController extends KunenaController
             $lastTopic->subject == $topic->subject && $lastTopic->last_post_time >= $duplicatetimewindow
             && $lastTopic->category_id == $topic->category_id && $lastTopic->last_post_id == $topic->last_post_id
             && $lastTopic->id == $topic->id && $lastTopic->last_post_message == $message->message
+            && (int) $lastTopic->last_post_userid === (int) $this->me->userid
+            && ($this->me->userid || (string) $lastTopic->last_post_guest_name === (string) $message->name)
         ) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_DUPLICATE_IGNORED'), 'error');
 

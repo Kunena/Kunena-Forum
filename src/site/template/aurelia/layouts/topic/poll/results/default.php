@@ -25,7 +25,9 @@ $this->addScript('poll.js');
 $polllifespan = '';
 
 if ($this->show_title && $this->poll->polltimetolive != '1000-01-01 00:00:00') {
-    if ($this->intervalTimeToLive->format('%R%a') >= 1) {
+    // Running until the end has passed (the interval is inverted then). The whole days were compared: on its last day the poll
+    // was "ended" while it still took votes.
+    if (!$this->intervalTimeToLive->invert) {
         $polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_RUNS_UNTILL', $this->poll->polltimetolive) . ')</span>';
     } else {
         $polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_WAS_ENDED', $this->poll->polltimetolive) . ')</span>';

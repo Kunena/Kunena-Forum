@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site\Controller\Application\Category\Feed;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Document\FeedDocument;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\UserFactoryInterface;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -63,6 +64,10 @@ class CategoryDisplay extends KunenaControllerDisplay
         $catid = $this->input->getInt('catid', 0);
         $model = new CategoryModel();
         $this->document = $this->app->getDocument();
+
+        if (!($this->document instanceof FeedDocument)) {
+            throw new KunenaException(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
 
         if (!$this->config->enableRss) {
             throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 404);

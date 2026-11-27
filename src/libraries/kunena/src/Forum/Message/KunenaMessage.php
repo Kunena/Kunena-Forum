@@ -68,6 +68,7 @@ use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Libraries\User\KunenaUserName;
+use RuntimeException;
 use StdClass;
 use Throwable;
 use ValueError;
@@ -3186,7 +3187,17 @@ class KunenaMessage extends KunenaDatabaseObject
     {
         $attachment                     = new KunenaAttachment();
         $attachment->userid             = $this->userid;
-        $success                        = $attachment->upload($postvar, $catid);
+
+        // A file which may not be uploaded (an extension which is not allowed, no upload for this user) is a message: the post is
+        // kept. The exception went up to the task, which did not catch it, and the post was lost on an error page.
+        try {
+            $success = $attachment->upload($postvar, $catid);
+        } catch (RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'warning');
+
+            return false;
+        }
+
         $this->_attachments_add[$tmpid] = $attachment;
 
         return $success;

@@ -1264,7 +1264,15 @@ class KunenaAttachment extends KunenaDatabaseObject
         $input     = Factory::getApplication()->getInput();
         $fileInput = $input->files->get($key, null, 'raw');
 
-        $upload = KunenaUpload::getInstance(KunenaAttachmentHelper::getExtensions($catid, $this->userid));
+        // No upload is allowed to this user here (a guest with the defaults): the list of the extensions is false, which the upload
+        // did not take (a TypeError, the post was lost on an error page).
+        $extensions = KunenaAttachmentHelper::getExtensions($catid, $this->userid);
+
+        if ($extensions === false) {
+            throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 403);
+        }
+
+        $upload = KunenaUpload::getInstance($extensions);
 
         // The folder of the files of the user: named by the id of the user, a number.
         $userFolder     = 'media/kunena/attachments/' . (int) $this->userid;

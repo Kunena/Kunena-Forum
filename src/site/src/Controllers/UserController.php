@@ -469,6 +469,7 @@ class UserController extends KunenaController
                 $minimumIntegersp  = $params->get('minimum_integers');
                 $minimumSymbolsp   = $params->get('minimum_symbols');
                 $minimumUppercasep = $params->get('minimum_uppercase');
+                $minimumLowercasep = $params->get('minimum_lowercase');
                 $meterp            = $params->get('meter');
                 $thresholdp        = $params->get('threshold');
 
@@ -476,20 +477,21 @@ class UserController extends KunenaController
                 empty($minimumIntegersp) ?: $minimumIntegers   = (int) $minimumIntegersp;
                 empty($minimumSymbolsp) ?: $minimumSymbols     = (int) $minimumSymbolsp;
                 empty($minimumUppercasep) ?: $minimumUppercase = (int) $minimumUppercasep;
+                empty($minimumLowercasep) ?: $minimumLowercase = (int) $minimumLowercasep;
             }
 
             // If the field is empty and not required, the field is valid.
             $valueLength = \strlen($value);
 
-            // Load language file of com_users component
-            $this->app->getLanguage()->load('com_users');
+            // The messages are the ones of the password field of Joomla (joomla.ini): the keys of com_users which were used are
+            // not in Joomla 6, and the user read the key instead of the rule.
 
             // Set a variable to check if any errors are made in password
             $validPassword = true;
 
             // We set a maximum length to prevent abuse since it is unfiltered.
             if ($valueLength > 4096) {
-                $this->app->enqueueMessage(Text::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'error');
+                $this->app->enqueueMessage(Text::_('JFIELD_PASSWORD_TOO_LONG'), 'error');
 
                 $validPassword = false;
             }
@@ -499,7 +501,7 @@ class UserController extends KunenaController
 
             if (\strlen($valueTrim) != $valueLength) {
                 $this->app->enqueueMessage(
-                    Text::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
+                    Text::_('JFIELD_PASSWORD_SPACES_IN_PASSWORD'),
                     'error'
                 );
 
@@ -512,7 +514,7 @@ class UserController extends KunenaController
 
                 if ($nInts < $minimumIntegers) {
                     $this->app->enqueueMessage(
-                        Text::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
+                        Text::plural('JFIELD_PASSWORD_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
                         'error'
                     );
 
@@ -526,7 +528,7 @@ class UserController extends KunenaController
 
                 if ($nsymbols < $minimumSymbols) {
                     $this->app->enqueueMessage(
-                        Text::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
+                        Text::plural('JFIELD_PASSWORD_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
                         'error'
                     );
 
@@ -540,7 +542,22 @@ class UserController extends KunenaController
 
                 if ($nUppercase < $minimumUppercase) {
                     $this->app->enqueueMessage(
-                        Text::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
+                        Text::plural('JFIELD_PASSWORD_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
+                        'error'
+                    );
+
+                    $validPassword = false;
+                }
+            }
+
+            // Minimum number of lower case ASCII characters required: the option of Joomla (as its password field checks it) was
+            // left out.
+            if (!empty($minimumLowercase)) {
+                $nLowercase = preg_match_all('/[a-z]/', $value, $lmatch);
+
+                if ($nLowercase < $minimumLowercase) {
+                    $this->app->enqueueMessage(
+                        Text::plural('JFIELD_PASSWORD_NOT_ENOUGH_LOWERCASE_LETTERS_N', $minimumLowercase),
                         'error'
                     );
 
@@ -552,7 +569,7 @@ class UserController extends KunenaController
             if (!empty($minimumLength)) {
                 if (\strlen((string) $value) < $minimumLength) {
                     $this->app->enqueueMessage(
-                        Text::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
+                        Text::plural('JFIELD_PASSWORD_TOO_SHORT_N', $minimumLength),
                         'error'
                     );
 

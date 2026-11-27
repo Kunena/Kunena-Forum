@@ -1307,16 +1307,32 @@ class KunenaAttachment extends KunenaDatabaseObject
                 throw new RuntimeException("Fileinfo extension not loaded.");
             }
 
+            // A file which is refused below is taken away again. It stayed in the folder of the user: no attachment named it,
+            // and with the protection of the attachments off the web server gave it to anybody who had its address.
+            $stored = $uploadBasePath . $fileNameWithExt;
+
+            // The options "Check MIME Types" and "Legal MIME Types", as in the upload of the editor: an image whose real type is
+            // not in the list is refused (nothing read the two options).
+            if (KunenaUpload::mimeRefused($fileNameWithExt, (string) $type, (bool) $config->checkMimeTypes, (string) $config->imageMimeTypes, (string) $config->imageTypes)) {
+                @unlink($stored);
+
+                return false;
+            }
+
             if (stripos($type, 'image/') !== false) {
                 try {
-                    $imageInfo = KunenaImage::getImageFileProperties($uploadBasePath . $fileNameWithExt);
+                    $imageInfo = KunenaImage::getImageFileProperties($stored);
                 } catch (Exception $e) {
                     // $imageInfo is not set: go on and the next lines would read a property of nothing.
+                    @unlink($stored);
+
                     return false;
                 }
 
                 // A picture whose pixels do not fit in the memory of PHP is no attachment (decoded, it ended the request).
                 if (!KunenaImage::canDecode((int) $imageInfo->width, (int) $imageInfo->height)) {
+                    @unlink($stored);
+
                     return false;
                 }
 
@@ -1340,6 +1356,8 @@ class KunenaAttachment extends KunenaDatabaseObject
                         $image->toFile($uploadBasePath . $fileNameWithExt, $imageInfo->type, $options);
                         unset($image);
                     } catch (Exception $e) {
+                        @unlink($stored);
+
                         return false;
                     }
                 }
@@ -1350,8 +1368,10 @@ class KunenaAttachment extends KunenaDatabaseObject
             // A number, as the column: false was given to the query as '', and the post failed ("Incorrect integer value") whenever
             // the attachments were not protected (the default).
             $this->protected     = $protected ? 1 : 0;
-            $this->hash          = md5_file($uploadBasePath . $fileNameWithExt);
-            $this->size          = $file->size;
+            $this->hash          = md5_file($stored);
+            // The size of the file as it is stored: a picture which was made smaller kept the size of the upload.
+            clearstatcache(true, $stored);
+            $this->size          = (int) (filesize($stored) ?: $file->size);
             $this->folder        = $userFolder;
             $this->filename      = $fileInput['name'];
             $this->filename_real = $clientName !== '' ? $clientName : $fileInput['name'];

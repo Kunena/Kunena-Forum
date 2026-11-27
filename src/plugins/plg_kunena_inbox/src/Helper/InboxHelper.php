@@ -201,6 +201,12 @@ class InboxHelper
     {
         self::$unread = [];
 
+        // The read only mode of the forum ("Allow users only to read messages") is for the private messages too: a message could
+        // still be sent in it, while nobody can post.
+        if (KunenaConfig::getInstance()->readOnly) {
+            throw new RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_READONLY'));
+        }
+
         $db           = self::db();
         $conversation = 0;
         $subject      = trim(mb_substr($subject, 0, 150));

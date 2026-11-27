@@ -20,6 +20,7 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\Event\Dispatcher;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use RuntimeException;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -125,6 +126,24 @@ class InboxHelperNamesTest extends IntegrationTestCase implements DBTestInterfac
     public function testTheListOfTheBlockedUsersHasTheNamesAsText(): void
     {
         $this->assertSame([['id' => 11, 'name' => 'Tom & Jerry']], InboxHelper::getBlocked(10));
+    }
+
+    /**
+     * In the read only mode of the forum no private message is sent (nobody can post in it, but a message still went out).
+     */
+    public function testNoMessageIsSentInReadOnlyMode(): void
+    {
+        $config = KunenaConfig::getInstance();
+        (new ReflectionProperty(KunenaConfig::class, 'config'))->setValue($config, ['username' => 1, 'userCanChooseName' => 0, 'displayNameField' => 0, 'readOnly' => 1]);
+
+        try {
+            InboxHelper::send(10, 11, 'Subject', 'Text');
+            $this->fail('The message was sent.');
+        } catch (RuntimeException $e) {
+            $this->assertSame('PLG_KUNENA_INBOX_ERROR_READONLY', $e->getMessage());
+        }
+
+        $this->assertSame([], $this->fetchAll('SELECT id FROM #__kunena_inbox'));
     }
 
     /**

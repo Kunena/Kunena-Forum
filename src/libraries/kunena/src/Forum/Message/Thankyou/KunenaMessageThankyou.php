@@ -87,8 +87,7 @@ class KunenaMessageThankyou
      */
     public function delete($user): bool
     {
-        $user    = KunenaFactory::getUser($user);
-        $message = KunenaMessageHelper::get($this->id);
+        $user = KunenaFactory::getUser($user);
 
         if (!$user->exists()) {
             throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_LOGIN'));
@@ -99,6 +98,16 @@ class KunenaMessageThankyou
         }
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
+
+        // The user who got the thank you, as it was stored: the author of the message now can be another one (a post made
+        // anonymous has no author, user 0), and his counter was lowered while the one of the thanked user stayed.
+        $query = $db->createQuery()
+            ->select($db->quoteName('targetuserid'))
+            ->from($db->quoteName('#__kunena_thankyou'))
+            ->where($db->quoteName('postid') . ' = ' . (int) $this->id)
+            ->where($db->quoteName('userid') . ' = ' . (int) $user->userid);
+        $target = (int) $db->setQuery($query)->loadResult();
+
         $query = $db->createQuery();
         $query->delete($db->quoteName('#__kunena_thankyou'))
             ->where($db->quoteName('postid') . ' = ' . $db->quote($this->id))
@@ -106,10 +115,15 @@ class KunenaMessageThankyou
         $db->setQuery($query);
         $db->execute();
 
+        if (!$target || !$db->getAffectedRows()) {
+            return true;
+        }
+
         $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_users'))
             ->set($db->quoteName('thankyou') . ' = thankyou-1')
-            ->where($db->quoteName('userid') . ' = ' . $db->quote($message->userid));
+            ->where($db->quoteName('userid') . ' = ' . $target)
+            ->where($db->quoteName('thankyou') . ' > 0');
         $db->setQuery($query);
 
         try {

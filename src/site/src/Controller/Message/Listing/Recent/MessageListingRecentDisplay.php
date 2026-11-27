@@ -115,7 +115,9 @@ class MessageListingRecentDisplay extends ListDisplay
             $userid = null;
         }
 
-        $user = is_numeric($userid) ? KunenaUserHelper::get($userid) : null;
+        // The user 0 is everybody (a menu item without a user, as the feeds): it was the user of the guests, and the list had only
+        // the posts of the guests.
+        $user = is_numeric($userid) && (int) $userid > 0 ? KunenaUserHelper::get($userid) : null;
 
         // Get categories for the filter.
         $categoryIds = $this->state->get('list.categories');

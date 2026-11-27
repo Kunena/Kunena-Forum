@@ -2909,8 +2909,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $uri  = Uri::getInstance($url);
         $host = $uri->getHost();
 
-        // The cms will catch most of these well
-        if (empty($host) || KunenaRoute::isInternal($url)) {
+        // The cms will catch most of these well. A backslash is no link of the site (as in isOwnDomain()): the browsers read
+        // [url=/\evil.example] as //evil.example, another site, which has no host for the URI and got the link of the site (no
+        // rel="nofollow noopener noreferrer", no target).
+        if (!str_contains($url, '\\') && (empty($host) || KunenaRoute::isInternal($url))) {
             $internal = true;
         }
 

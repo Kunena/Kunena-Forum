@@ -253,7 +253,11 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $finder->filterByHold($hold);
         }
 
-        $start            = $mesid ? $this->topic->getPostLocation($mesid) : $start;
+        // The page of the message starts at its page: the place of the message was the start, so a page began with it (posts 13 to
+        // 22 of a page of 10), the posts before it on its page were seen nowhere, and the pagination called it another page.
+        if ($mesid) {
+            $start = $limit > 0 ? intdiv($this->topic->getPostLocation($mesid), $limit) * $limit : 0;
+        }
         $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
         $this->pagination->setUri($this->getPaginationUri());
 

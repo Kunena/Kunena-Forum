@@ -129,7 +129,9 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
 
         $this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
 
-        if (version_compare($this->minCBVersion, CBLib::version(), '<')) {
+        // An installed Community Builder older than the version which the plugin needs: the test was the other way round, so a newer
+        // CB was refused (and the plugin did nothing) and an older one was taken.
+        if (version_compare(CBLib::version(), $this->minCBVersion, '<')) {
             if ($app->isClient('administrator')) {
                 $app->enqueueMessage(Text::sprintf('PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion), 'notice');
             }

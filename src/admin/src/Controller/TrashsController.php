@@ -150,6 +150,17 @@ class TrashsController extends AdminController
             $messages = KunenaMessageHelper::getMessages($cid, 'none');
 
             foreach ($messages as $target) {
+                // A reply of a topic which is in the trash comes back with its topic: restored alone, it published the topic with
+                // this reply as its only post (the others stayed deleted in a published topic, which was then no more in the
+                // trash). The first message restores its topic (as it always did).
+                $topic = $target->getTopic();
+
+                if ((int) $topic->hold >= KunenaForum::DELETED && (int) $topic->first_post_id !== (int) $target->id) {
+                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TRASH_RESTORE_TOPIC_FIRST', (int) $target->id), 'notice');
+
+                    continue;
+                }
+
                 try {
                     $target->publish();
                 } catch (Exception $e) {

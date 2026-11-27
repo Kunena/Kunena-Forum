@@ -175,11 +175,9 @@ class UserModel extends KunenaModel
             ->where($db->quoteName('user_id') . ' = ' . (int) $user->userid);
         $db->setQuery($query);
 
+        // A user without a row selects nothing. The 0 which stood for "none" is the value of "Global moderator" (a global moderator
+        // has the row of the category 0): it was selected, and any save of the user (his signature) made him a global moderator.
         $modCatList = array_map('intval', (array) $db->loadColumn());
-
-        if (empty($modCatList)) {
-            $modCatList[] = 0;
-        }
 
         $categoryList = [];
 

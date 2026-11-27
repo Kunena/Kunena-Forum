@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
@@ -91,9 +92,17 @@ class BadgesModel extends AdminModel
             $row   = (array) $row;
             $title = trim((string) ($row['title'] ?? ''));
 
-            // A badge needs a label and a user group or a rank.
+            // A badge needs a label and a user group or a rank. A row without a label is an empty row of the form; a label without
+            // a group and a rank is refused: it was saved ("Badges saved"), and was gone when the page came back (the badges read
+            // leave such a row out).
             if ($title === '') {
                 continue;
+            }
+
+            if ((int) ($row['usergroup'] ?? 0) <= 0 && (int) ($row['rank'] ?? 0) <= 0) {
+                $this->setError(Text::sprintf('COM_KUNENA_A_BADGES_ERROR_NO_GROUP_NOR_RANK', htmlspecialchars($title, ENT_QUOTES, 'UTF-8')));
+
+                return false;
             }
 
             $rows['badges' . \count($rows)] = [

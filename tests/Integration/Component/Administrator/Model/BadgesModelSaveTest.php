@@ -17,6 +17,7 @@ use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Component\ComponentRecord;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Language;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\Registry\Registry;
@@ -110,6 +111,35 @@ class BadgesModelSaveTest extends IntegrationTestCase implements DBTestInterface
         }
 
         parent::tearDown();
+    }
+
+    /**
+     * A badge with a label but no user group and no rank is refused, and nothing is saved: it was saved ("Badges saved"), and was
+     * gone when the page came back (the badges read leave such a row out). An empty row of the form is no badge.
+     */
+    public function testABadgeWithoutGroupAndRankIsRefused(): void
+    {
+        $before = $this->fetchAll('SELECT params FROM #__extensions');
+        $model  = (new ReflectionClass(BadgesModel::class))->newInstanceWithoutConstructor();
+
+        // The texts are their keys, with the value.
+        $language = $this->createStub(Language::class);
+        $language->method('_')->willReturnCallback(static fn ($key) => $key . ' %s');
+        $savedLanguage     = Factory::$language;
+        Factory::$language = $language;
+
+        try {
+            $saved = $model->save(['badges' => [
+                ['title' => '', 'color' => '#112233', 'usergroup' => '', 'rank' => ''],
+                ['title' => 'Nobody', 'color' => '#112233', 'usergroup' => '', 'rank' => ''],
+            ]]);
+        } finally {
+            Factory::$language = $savedLanguage;
+        }
+
+        $this->assertFalse($saved);
+        $this->assertStringContainsString('Nobody', (string) $model->getError());
+        $this->assertSame($before, $this->fetchAll('SELECT params FROM #__extensions'));
     }
 
     public function testTheCacheOfTheParametersIsEmptiedAfterTheSave(): void

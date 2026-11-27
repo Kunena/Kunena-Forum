@@ -117,6 +117,29 @@ class KunenaCategoryCheckAliasTest extends IntegrationTestCase implements DBTest
     }
 
     /**
+     * The name of a view or a layout is reserved when the table of the aliases does not name it (a forum installed without the
+     * sample data, and "attachment" in any forum): a category "Attachment" took the address of every attachment.
+     */
+    public function testTheNameOfAViewOrALayoutIsReservedWithoutItsRowInTheTable(): void
+    {
+        foreach (['attachment', 'inbox', 'statistics', 'create'] as $alias) {
+            try {
+                $this->category(2, $alias)->check();
+                $this->fail("The alias $alias is taken.");
+            } catch (KunenaException) {
+                $this->addToAssertionCount(1);
+            }
+        }
+
+        // A category "Attachment" made from the name takes the next free alias.
+        $category       = $this->category(2, '');
+        $category->name = 'Attachment';
+
+        $this->assertTrue($category->check());
+        $this->assertSame('attachment-2', $category->alias);
+    }
+
+    /**
      * An empty alias is made from the name: a second category "General" was refused, it takes the next free alias instead.
      */
     public function testAnAliasMadeFromTheNameTakesTheNextFreeOne(): void

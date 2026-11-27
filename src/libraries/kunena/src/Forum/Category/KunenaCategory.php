@@ -1166,6 +1166,12 @@ class KunenaCategory extends KunenaDatabaseObject
             return false;
         }
 
+        // The names of the views and the layouts are reserved whatever the table of the aliases has: only the sample data puts
+        // them there (and not "attachment" nor "inbox"). A category "Attachment" took the address of every attachment.
+        if (isset(KunenaRoute::$views[strtolower($alias)]) || isset(KunenaRoute::$layouts[strtolower($alias)])) {
+            return false;
+        }
+
         $item = KunenaRoute::resolveAlias($alias);
 
         // Is alias free to be used?

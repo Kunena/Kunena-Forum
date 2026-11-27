@@ -1800,6 +1800,11 @@ class TopicController extends KunenaController
      */
     protected function removeLinksInMessage($text)
     {
+        // Every tag of a link, an image or an e-mail address, in any case and also without a value ([img]http://93.184.216.34/a[/img],
+        // [URL=...]): only [url=...] and [img=...] in lower case went, and the pattern below finds no address of an IP or of a
+        // domain in other letters, so those links and images were posted. Then every address with a scheme.
+        $text = preg_replace('/\[(url|img|email)\b[^\]]*\].*?\[\/\1\s*\]/isu', '', $text);
+        $text = preg_replace('#(?:https?|ftp)://\S+#iu', '', $text);
         $text = preg_replace('/\[url=(.*?)\](.*?)\[\/url\]/su', '', $text);
         $text = preg_replace('/\[img=(.*?)\](.*?)\[\/img\]/su', '', $text);
 

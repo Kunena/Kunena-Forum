@@ -660,6 +660,10 @@ class UserController extends KunenaController
             $signature = $input->$method->get('signature', '', 'raw');
 
             if (!$this->me->checkUserAllowedLinksImages() && $signature != $user->signature) {
+                // Every tag of a link, an image or an e-mail address, in any case and also without a value, then every address
+                // with a scheme (as for a post): an image of an IP address or of a domain in other letters stayed.
+                $signature = preg_replace('/\[(url|img|email)\b[^\]]*\].*?\[\/\1\s*\]/isu', '', $signature);
+                $signature = preg_replace('#(?:https?|ftp)://\S+#iu', '', $signature);
                 $signature = preg_replace('/\[url=(.*?)\](.*?)\[\/url\]/su', '', $signature);
                 $signature = preg_replace('/\[img=(.*?)\](.*?)\[\/img\]/su', '', $signature);
 

@@ -15,6 +15,7 @@ namespace Kunena\Tests\Integration\Component\Administrator\Controller;
 use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Language;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Router\Router;
 use Joomla\CMS\Session\Session;
@@ -27,8 +28,10 @@ use Joomla\Event\Dispatcher;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Administrator\Controller\ToolsController;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Tests\Integration\DBTestInterface;
 use Kunena\Tests\Integration\DBTestTrait;
 use Kunena\Tests\Integration\IntegrationTestCase;
@@ -37,7 +40,7 @@ use ReflectionProperty;
 
 /**
  * Tools > Synchronize users > "Delete lifetime ban users": the Joomla accounts of the members banned for life which are blocked are
- * deleted, with their Kunena profile. The profiles of all the members banned for life were deleted, also of those whose account
+ * deleted, with their Kunena profile (by the delete of Joomla, whose clean-up removes the profile), for who may delete accounts. The profiles of all the members banned for life were deleted, also of those whose account
  * stays (a ban of the forum does not block the account): the ban is the column "banned" of the profile, so they were unbanned.
  */
 class ToolsControllerSyncUsersTest extends IntegrationTestCase implements DBTestInterface
@@ -49,6 +52,16 @@ class ToolsControllerSyncUsersTest extends IntegrationTestCase implements DBTest
     private array $saved = [];
 
     private mixed $savedServer = null;
+
+    /**
+     * The accounts which were deleted (the delete of Joomla of each one).
+     */
+    private array $deletedIds = [];
+
+    /**
+     * Whether the administrator who runs the tool may delete the users (core.delete of com_users).
+     */
+    private bool $mayDelete = true;
 
     public function getSchemasToLoad(): array
     {
@@ -68,7 +81,31 @@ class ToolsControllerSyncUsersTest extends IntegrationTestCase implements DBTest
         $container->share('DatabaseDriver', static fn () => $driver);
         $container->share(DatabaseInterface::class, static fn () => $driver);
         $userFactory = $this->createStub(UserFactoryInterface::class);
-        $userFactory->method('loadUserById')->willReturnCallback(static fn () => new User());
+        // The accounts: their delete of Joomla is recorded (its clean-up is the work of the plugins, tested with them).
+        $userFactory->method('loadUserById')->willReturnCallback(function (int $id): User {
+            $user = new class () extends User {
+                public ?\Closure $onDelete = null;
+
+                public function authorise($action, $assetname = null)
+                {
+                    return false;
+                }
+
+                public function delete()
+                {
+                    return ($this->onDelete)((int) $this->id);
+                }
+            };
+
+            $user->id       = $id;
+            $user->onDelete = function (int $id): bool {
+                $this->deletedIds[] = $id;
+
+                return true;
+            };
+
+            return $user;
+        });
         $container->share(UserFactoryInterface::class, static fn () => $userFactory);
 
         $language = $this->createStub(Language::class);
@@ -81,7 +118,18 @@ class ToolsControllerSyncUsersTest extends IntegrationTestCase implements DBTest
         $application->setDispatcher(new Dispatcher());
         $application->setSession($session);
         $application->setContainer($container);
-        $application->loadIdentity(new User());
+        // The administrator 1, who may delete the users of Joomla (or not), and is no super user.
+        $me = new class () extends User {
+            public ?\Closure $may = null;
+
+            public function authorise($action, $assetname = null)
+            {
+                return $action === 'core.delete' && $assetname === 'com_users' && ($this->may)();
+            }
+        };
+        $me->id  = 1;
+        $me->may = fn (): bool => $this->mayDelete;
+        $application->loadIdentity($me);
         (new ReflectionProperty(AdministratorApplication::class, 'name'))->setValue($application, 'administrator');
         (new ReflectionProperty(AdministratorApplication::class, 'config'))->setValue($application, new Registry(['secret' => 'secret']));
         (new ReflectionProperty(AdministratorApplication::class, 'language'))->setValue($application, $language);
@@ -95,6 +143,9 @@ class ToolsControllerSyncUsersTest extends IntegrationTestCase implements DBTest
             'application' => Factory::$application,
             'language'    => Factory::$language,
             'config'      => $this->replace(KunenaConfig::class, 'instance', (new ReflectionClass(KunenaConfig::class))->newInstanceWithoutConstructor()),
+            // No user of the test is an administrator of the forum.
+            'access'      => $this->replace(KunenaAccess::class, 'instance', $this->createStub(KunenaAccess::class)),
+            'plugins'     => $this->replace(PluginHelper::class, 'plugins', []),
         ];
 
         Factory::$container   = $container;
@@ -102,6 +153,8 @@ class ToolsControllerSyncUsersTest extends IntegrationTestCase implements DBTest
         Factory::$language    = $language;
 
         class_exists(KunenaRoute::class);
+        // The users of the forum are loaded with the application of the test (loading the helper starts it).
+        $this->saved['users'] = $this->replace(KunenaUserHelper::class, '_instances', []);
         $this->saved['adminApp'] = $this->replace(KunenaRoute::class, 'adminApp', true);
         $this->saved['routers']  = $this->replace(Route::class, '_router', ['administrator' => $router]);
 
@@ -136,6 +189,9 @@ class ToolsControllerSyncUsersTest extends IntegrationTestCase implements DBTest
             Factory::$application = $this->saved['application'];
             Factory::$language    = $this->saved['language'];
             $this->replace(KunenaConfig::class, 'instance', $this->saved['config']);
+            $this->replace(KunenaAccess::class, 'instance', $this->saved['access']);
+            $this->replace(KunenaUserHelper::class, '_instances', $this->saved['users']);
+            $this->replace(PluginHelper::class, 'plugins', $this->saved['plugins']);
             $this->replace(KunenaRoute::class, 'adminApp', $this->saved['adminApp']);
             $this->replace(Route::class, '_router', $this->saved['routers']);
         }
@@ -143,7 +199,7 @@ class ToolsControllerSyncUsersTest extends IntegrationTestCase implements DBTest
         parent::tearDown();
     }
 
-    public function testOnlyTheBlockedAccountsOfTheLifetimeBannedAreDeletedAndTheOtherBansStay(): void
+    private function syncUsers(): void
     {
         $controller = (new ReflectionClass(ToolsController::class))->newInstanceWithoutConstructor();
         (new ReflectionProperty(ToolsController::class, 'app'))->setValue($controller, Factory::$application);
@@ -151,10 +207,29 @@ class ToolsControllerSyncUsersTest extends IntegrationTestCase implements DBTest
         (new ReflectionProperty(ToolsController::class, 'baseurl'))->setValue($controller, 'administrator/index.php?option=com_kunena&view=tools');
 
         $controller->syncUsers();
+    }
 
-        $this->assertSame([['id' => 50], ['id' => 52]], $this->fetchAll('SELECT id FROM #__users ORDER BY id'));
-        $this->assertSame([['userid' => 50, 'banned' => self::LIFETIME], ['userid' => 52, 'banned' => '1000-01-01 00:00:00']], $this->fetchAll('SELECT userid, banned FROM #__kunena_users ORDER BY userid'));
-        $this->assertSame([['user_id' => 50], ['user_id' => 52]], $this->fetchAll('SELECT user_id FROM #__user_usergroup_map ORDER BY user_id'));
+    public function testOnlyTheBlockedAccountsOfTheLifetimeBannedAreDeletedAndTheOtherBansStay(): void
+    {
+        $this->syncUsers();
+
+        $this->assertSame([51], $this->deletedIds);
+
+        // The tool deletes no row itself: the profiles and the groups are left to the delete of Joomla (the ban of 50 stays).
+        $this->assertSame([['userid' => 50, 'banned' => self::LIFETIME], ['userid' => 51, 'banned' => self::LIFETIME], ['userid' => 52, 'banned' => '1000-01-01 00:00:00']], $this->fetchAll('SELECT userid, banned FROM #__kunena_users ORDER BY userid'));
+    }
+
+    /**
+     * Who may not delete the users of Joomla deletes none with the tool: any manager of the forum deleted the accounts with SQL.
+     */
+    public function testAnAdministratorWhoMayNotDeleteTheUsersDeletesNone(): void
+    {
+        $this->mayDelete = false;
+
+        $this->syncUsers();
+
+        $this->assertSame([], $this->deletedIds);
+        $this->assertSame([['id' => 50], ['id' => 51], ['id' => 52]], $this->fetchAll('SELECT id FROM #__users ORDER BY id'));
     }
 
     /**

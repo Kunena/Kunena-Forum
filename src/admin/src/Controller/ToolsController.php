@@ -360,50 +360,20 @@ class ToolsController extends FormController
 
             $deleted = 0;
 
-            if ($lifeBanned) {
-                $idList = implode(',', $lifeBanned);
-
-                $query = $db->createQuery()
-                    ->delete($db->quoteName('#__kunena_users'))
-                    ->where($db->quoteName('userid') . ' IN (' . $idList . ')');
-                $db->setQuery($query);
-
-                try {
-                    $db->execute();
-                } catch (RuntimeException $e) {
-                    $this->app->enqueueMessage($e->getMessage(), 'error');
-
-                    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-                    return;
+            // Each account is deleted by Joomla, for who may delete it (the right to delete the users, never himself nor a super
+            // user: KunenaAccountActionPolicy), as the other deletes of accounts do. The rows were deleted with SQL by any manager
+            // of the forum, a super user too, and the clean-up of the delete (of Joomla, and of the forum: his subscriptions,
+            // roles, sessions...) never ran.
+            foreach ($lifeBanned as $id) {
+                if ($this->accountActionRefusal(KunenaAccountActionPolicy::REMOVE, $id) !== null) {
+                    continue;
                 }
 
-                // Only remove the Joomla accounts of the lifetime banned users, not every blocked account
-                $query = $db->createQuery()
-                    ->delete($db->quoteName('#__users'))
-                    ->where($db->quoteName('id') . ' IN (' . $idList . ')')
-                    ->where($db->quoteName('block') . ' = 1');
+                $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($id);
 
-                $db->setQuery($query);
-
-                try {
-                    $db->execute();
-                } catch (RuntimeException $e) {
-                    $this->app->enqueueMessage($e->getMessage(), 'error');
-
-                    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-                    return;
+                if ($user->id && $user->delete()) {
+                    $deleted++;
                 }
-
-                $deleted = $db->getAffectedRows();
-
-                // The groups of the deleted accounts (they stayed in the table of the groups of the users).
-                $db->setQuery(
-                    $db->createQuery()
-                        ->delete($db->quoteName('#__user_usergroup_map'))
-                        ->where($db->quoteName('user_id') . ' IN (' . $idList . ')')
-                )->execute();
             }
 
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $deleted), 'success');

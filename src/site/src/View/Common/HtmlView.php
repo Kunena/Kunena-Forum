@@ -335,13 +335,15 @@ class HtmlView extends KunenaView
         foreach ($users as $userid => $usertime) {
             $user = KunenaUserHelper::get($userid);
 
+            // Keyed by the name (the lists are sorted by it) and the id: two members of the same name (the forum shows the real
+            // names) were one, and the number of the members was one too low.
             // A member who does not show that he is online, or who chose the status "Invisible" (as the login widget treats them).
             if (!$user->showOnline || (int) $user->status === 3) {
                 if ($moderator) {
-                    $hiddenList[$user->getName()] = $user;
+                    $hiddenList[$user->getName() . '|' . (int) $userid] = $user;
                 }
             } else {
-                $onlineList[$user->getName()] = $user;
+                $onlineList[$user->getName() . '|' . (int) $userid] = $user;
             }
         }
 

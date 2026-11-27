@@ -37,7 +37,26 @@ class WhoIsOnlineHiddenCountTest extends UnitTestCase
             $this->assertStringContainsString("\$who = '<strong>' . \$members . ' </strong>';", $source, $file);
             $this->assertStringNotContainsString("\$who = '<strong>' . \$onlineusers['user']", $source, $file);
             // The list is made before it is counted.
-            $this->assertLessThan($count, strpos($source, $list . '[$user->getName()] = $user;'), $file);
+            $this->assertLessThan($count, strpos($source, $list . "[\$user->getName() . '|' . (int) \$userid] = \$user;"), $file);
+        }
+    }
+
+    /**
+     * Two members of the same name (the forum shows the real names) are two in the lists: the lists were keyed by the name, so
+     * they were one, and the number of the members was one too low.
+     */
+    public function testTwoMembersOfTheSameNameAreTwo(): void
+    {
+        foreach (
+            [
+                'src/site/src/Controller/Widget/Whoisonline/WidgetWhoisonlineDisplay.php',
+                'src/site/src/View/Common/HtmlView.php',
+            ] as $file
+        ) {
+            $source = Files::read($file);
+
+            $this->assertStringNotContainsString('List[$user->getName()] = $user;', $source, $file);
+            $this->assertSame(2, substr_count($source, "List[\$user->getName() . '|' . (int) \$userid] = \$user;"), $file);
         }
     }
 }

@@ -1870,6 +1870,13 @@ class UserController extends KunenaController
                     continue;
                 }
 
+                // The file of a message is removed by who may edit the message (as in the editor): the rule of the file alone (its
+                // uploader) let the author take it out of a post which he may edit no more (after the edit time, in a locked
+                // topic, in read only mode).
+                if (!$message->isAuthorised('edit')) {
+                    continue;
+                }
+
                 // The chosen file: the message deletes it and counts it off the topic on save. (The list was [0, 1], the keys
                 // of an array: the attachment 1 of the message went too.)
                 $message->removeAttachments([$attachment->id]);

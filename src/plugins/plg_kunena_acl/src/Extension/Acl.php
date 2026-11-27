@@ -51,7 +51,10 @@ class Acl extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterfa
         $app     = Factory::getApplication();
         $mapping = [];
 
-        if ($app->isClient('site') || $app->isClient('administrator')) {
+        // Also on the console and in the REST API (as the access of Joomla): the scheduled tasks check the rights of the users (the
+        // e-mails of the queue, the scheduled replies), and without the categories of the ranks nobody could read them there: the
+        // e-mails were dropped and the scheduled replies were never published.
+        if ($app->isClient('site') || $app->isClient('administrator') || $app->isClient('cli') || $app->isClient('api')) {
             $mapping['onKunenaGetAccessControl'] = 'onKunenaGetAccessControl';
         }
 

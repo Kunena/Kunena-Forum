@@ -112,7 +112,9 @@ class TopicPollDisplay extends KunenaControllerDisplay
         // Check if the poll has ended or if it still active
         if ($this->poll->polltimetolive != '1000-01-01 00:00:00') {
             $origin                   = new DateTimeImmutable('now');
-            $target                   = new DateTimeImmutable($this->poll->polltimetolive);
+            // The end is stored in UTC (as the vote reads it): read in the time zone of PHP, the poll was shown as ended (or open)
+            // hours before or after the votes were refused.
+            $target                   = new DateTimeImmutable($this->poll->polltimetolive, new DateTimeZone('UTC'));
             $this->intervalTimeToLive = $origin->diff($target);
         }
 

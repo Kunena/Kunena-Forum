@@ -1980,7 +1980,10 @@ class TopicController extends KunenaController
 
         $message = KunenaMessageHelper::get($this->id);
         $topic   = $message->getTopic();
-        $fields  = [
+
+        // The private part is read from the field of the editors (message_private, as post() reads it): it was always empty here,
+        // so an edit which kept only the private part was refused, or put the message in the trash.
+        $fields = [
             'name'              => $this->app->getInput()->getString('authorname', $message->name),
             'email'             => $this->app->getInput()->getString('email', $message->email),
             'subject'           => $this->postedText('subject'),
@@ -1992,7 +1995,7 @@ class TopicController extends KunenaController
             'poll_options'      => $this->app->getInput()->get('polloptionsID', [], 'array'),
             'poll_time_to_live' => $this->app->getInput()->getString('poll_time_to_live', 0),
             'subscribe'         => $this->app->getInput()->getInt('subscribeMe', 0),
-            'private'           => (string) $this->input->getRaw('private_message'),
+            'private'           => (string) $this->input->getRaw('message_private'),
             'params'            => '',
         ];
 

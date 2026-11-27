@@ -258,7 +258,29 @@ abstract class KunenaDiagnostics
      */
     protected static function delete_pollTopicMismatch(): string
     {
-        return "DELETE a FROM #__kunena_polls AS a INNER JOIN #__kunena_topics AS t ON t.id=a.threadid LEFT JOIN #__kunena_topics AS tt ON tt.poll_id=a.id WHERE t.poll_id!=a.id";
+        // Only a poll which no topic uses: a poll which another topic shows (an old split gave the poll to the new topic and left
+        // its topic as it was) was deleted, and that topic lost its poll (fix_pollTopicMismatch() gives it its topic).
+        return "DELETE a FROM #__kunena_polls AS a INNER JOIN #__kunena_topics AS t ON t.id=a.threadid LEFT JOIN #__kunena_topics AS tt ON tt.poll_id=a.id WHERE t.poll_id!=a.id AND tt.id IS NULL";
+    }
+
+    /**
+     * A poll which names another topic than the topic which shows it gets that topic (the same repair as fix_topicPollMismatch(),
+     * from the side of the poll). A poll which no topic shows is left to the delete.
+     *
+     * @return  QueryInterface
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function fix_pollTopicMismatch(): QueryInterface
+    {
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        return $db->createQuery()
+            ->update('#__kunena_polls AS a')
+            ->innerJoin('#__kunena_topics AS t ON t.id=a.threadid')
+            ->innerJoin('#__kunena_topics AS tt ON tt.poll_id=a.id')
+            ->set('a.threadid=tt.id')
+            ->where('t.poll_id!=a.id');
     }
 
     /**

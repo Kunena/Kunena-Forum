@@ -2952,7 +2952,7 @@ class ToolsController extends FormController
             $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_INACTIVE_N_SKIPPED', $result['skipped']), 'warning');
         }
 
-        if ($result['left'] && $action !== 'unsubscribe') {
+        if ($result['left']) {
             $this->app->enqueueMessage(Text::plural('COM_KUNENA_TOOLS_INACTIVE_N_LEFT', $result['left']), 'info');
         }
     }

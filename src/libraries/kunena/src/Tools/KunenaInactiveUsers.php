@@ -88,11 +88,17 @@ class KunenaInactiveUsers
      *
      * @since   Kunena 8.0
      */
-    public static function findOnSite(array $criteria): array
+    public static function findOnSite(array $criteria, string $action = ''): array
     {
         $db     = Factory::getContainer()->get('DatabaseDriver');
         $before = Factory::getDate('-' . $criteria['months'] . ' months')->toSql();
         $staff  = self::staff();
+
+        // Without the roles nobody is listed, so no account is touched (the staff would be among the others).
+        if ($staff === null) {
+            return ['total' => 0, 'items' => []];
+        }
+
         $query  = $db->createQuery()
             ->select($db->quoteName(['u.id', 'u.username', 'u.name', 'u.email', 'u.block', 'u.registerDate', 'u.lastvisitDate']))
             ->select('COALESCE(' . $db->quoteName('ku.posts') . ', 0) AS ' . $db->quoteName('posts'))
@@ -112,6 +118,15 @@ class KunenaInactiveUsers
 
         if ($staff) {
             $query->whereNotIn($db->quoteName('u.id'), $staff);
+        }
+
+        // An action takes the accounts which it still changes: the batch was always the first one of the list, so a run
+        // again blocked or unsubscribed the same accounts, and the ones after the first batch were never reached.
+        if ($action === 'block') {
+            $query->where($db->quoteName('u.block') . ' = 0');
+        } elseif ($action === 'unsubscribe') {
+            $query->where('(EXISTS (SELECT 1 FROM ' . $db->quoteName('#__kunena_user_categories') . ' AS uc WHERE uc.user_id = u.id AND uc.subscribed <> 0)'
+                . ' OR EXISTS (SELECT 1 FROM ' . $db->quoteName('#__kunena_user_topics') . ' AS ut WHERE ut.user_id = u.id AND ut.subscribed <> 0))');
         }
 
         $count = clone $query;
@@ -142,7 +157,7 @@ class KunenaInactiveUsers
             return $result;
         }
 
-        $found   = self::findOnSite($criteria);
+        $found   = self::findOnSite($criteria, $action);
         $factory = Factory::getContainer()->get(UserFactoryInterface::class);
         $db      = Factory::getContainer()->get('DatabaseDriver');
 
@@ -182,8 +197,8 @@ class KunenaInactiveUsers
             $result[$ok ? 'done' : 'skipped']++;
         }
 
-        // A blocked account still matches: what is left is the rest of the list, without the batch.
-        $result['left'] = max(0, $found['total'] - ($action === 'delete' ? $result['done'] : \count($found['items'])));
+        // What is left: the accounts which the action still has to change.
+        $result['left'] = max(0, $found['total'] - $result['done']);
 
         return $result;
     }
@@ -191,11 +206,11 @@ class KunenaInactiveUsers
     /**
      * The administrators and the moderators of the forum, and the Super Users.
      *
-     * @return  int[]
+     * @return  int[]|null  Null when the roles could not be read.
      *
      * @since   Kunena 8.0
      */
-    private static function staff(): array
+    private static function staff(): ?array
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $staff = [];
@@ -218,8 +233,8 @@ class KunenaInactiveUsers
                 }
             }
         } catch (Throwable $e) {
-            // Without the roles, nobody is listed: no account is touched.
-            return [0];
+            // Without the roles, nobody is listed: no account is touched. (It gave [0], which left out nobody.)
+            return null;
         }
 
         return array_map('intval', array_keys($staff));

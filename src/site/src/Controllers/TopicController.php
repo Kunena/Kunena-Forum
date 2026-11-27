@@ -967,6 +967,9 @@ class TopicController extends KunenaController
                 $uploadFile                 = $upload->getProtectedFile();
                 list($basename, $extension) = $upload->splitFilename();
                 $attachment                 = new KunenaAttachment();
+
+                // The name which the editor sent is kept as the upload without JavaScript keeps it: no folder, no control character,
+                // and within its column (a longer name was an error of a strict database).
                 $attachment->bind(
                     [
                         'mesid'         => 0,
@@ -977,7 +980,7 @@ class TopicController extends KunenaController
                         'folder'        => null,
                         'filetype'      => $response->mime,
                         'filename'      => null,
-                        'filename_real' => $response->filename,
+                        'filename_real' => KunenaAttachmentHelper::getClientFilename($response->filename),
                         'caption'       => $caption,
                         'inline'        => null,
                     ]

@@ -389,15 +389,18 @@ class SearchModel extends KunenaModel
     public function getUrlParams()
     {
         // Turn internal state into URL, but ignore default values
+        // The defaults are the ones of populateState(): a value of the form which was one of these was left out of the address,
+        // and the page of the results read the default of the state instead ("Search in subcategories" unchecked gave 1, "last
+        // year" gave the period of the settings).
         $defaults = [
             'titleonly'    => 0,
             'searchuser'   => '',
             'exactname'    => 0,
-            'childforums'  => 0,
+            'childforums'  => 1,
             'starteronly'  => 0,
             'replyless'    => 0,
             'replylimit'   => 0,
-            'searchdate'   => '365',
+            'searchdate'   => (string) $this->config->searchTime,
             'beforeafter'  => 'after',
             'sortby'       => 'lastpost',
             'order'        => 'dec',
@@ -544,7 +547,10 @@ class SearchModel extends KunenaModel
         $value = Factory::getApplication()->getInput()->getWord('order', 'dec');
         $this->setState('query.order', $value);
 
-        $value = Factory::getApplication()->getInput()->getInt('childforums', 1);
+        // A box of the form which is not checked is not sent: the form (a POST) without it means "no", an address without it the
+        // default.
+        $posted = isset($_POST['query']) || isset($_POST['searchword']);
+        $value  = Factory::getApplication()->getInput()->getInt('childforums', $posted ? 0 : 1);
         $this->setState('query.childforums', $value);
 
         $value = Factory::getApplication()->getInput()->getInt('topic_id', 0);
@@ -571,8 +577,11 @@ class SearchModel extends KunenaModel
                 $this->setState('query.ids', $value);
             }
         } else {
-            $value = Factory::getApplication()->getInput()->getString('ids', '0', 'get');
-            $value = explode(' ', (int) $value);
+            // The ids separated by spaces (the address of the results), or a list (ids[]=123, as the search box of a topic sends it).
+            // The value was made a number first: a list was 1 (the search of a topic searched the topic 1), and of "12 15" only 12
+            // was left.
+            $value = Factory::getApplication()->getInput()->get('ids', '0', 'raw');
+            $value = \is_array($value) ? $value : explode(' ', (string) $value);
             $value = ArrayHelper::toInteger($value);
 
             if ($value[0] > 0) {

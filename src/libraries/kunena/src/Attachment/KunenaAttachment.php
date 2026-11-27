@@ -802,7 +802,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      */
     public function isAudio(): bool
     {
-        return stripos($this->filetype, 'audio/') !== false;
+        return stripos((string) $this->filetype, 'audio/') !== false;
     }
 
     /**
@@ -830,7 +830,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      */
     public function isImage(): bool
     {
-        return stripos($this->filetype, 'image/') !== false;
+        return stripos((string) $this->filetype, 'image/') !== false;
     }
 
     /**
@@ -875,7 +875,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      */
     public function isPdf(): bool
     {
-        return stripos($this->filetype, 'application/pdf') !== false;
+        return stripos((string) $this->filetype, 'application/pdf') !== false;
     }
 
     /**
@@ -887,7 +887,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      */
     public function isVideo(): bool
     {
-        return stripos($this->filetype, 'video/') !== false;
+        return stripos((string) $this->filetype, 'video/') !== false;
     }
 
     /**

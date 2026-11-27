@@ -308,11 +308,13 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
         }
 
         $category = $topic->getCategory();
-        $userlist = implode(',', $userids);
+        $userlist = implode(',', array_map('intval', $userids));
 
+        // The users who are members of the group of the category: the id of the category was given back instead, so the
+        // subscribers got no notification, and the user whose id was the id of the category got them.
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
-        $query->select($db->quoteName('c.id'))
+        $query->select('DISTINCT ' . $db->quoteName('g.memberid'))
             ->from($db->quoteName('#__kunena_categories', 'c'))
             ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = ' . $db->quote('jomsocial') . ' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
             ->where($db->quoteName('c.id') . ' = ' . $db->quote((int) $category->id))

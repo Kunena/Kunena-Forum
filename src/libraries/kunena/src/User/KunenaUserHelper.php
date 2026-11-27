@@ -890,6 +890,31 @@ abstract class KunenaUserHelper
         // A user who has no topics any more (his last topic was removed for ever) is not in the count above: his posts are 0.
         self::recountPostsNull($userids);
 
+        // The users which this request has loaded get the number which is stored now. They kept the old one, and a later save
+        // of one of them wrote it back: the clean-up of a user (his posts deleted for good, then his profile emptied or a ban)
+        // left him with all the posts he no longer had.
+        $cached = array_filter(
+            $userids ? array_intersect_key(self::$_instances, array_flip($userids)) : self::$_instances,
+            static fn ($user): bool => $user instanceof KunenaUser && (int) $user->userid > 0
+        );
+
+        if ($cached) {
+            $query = $db->createQuery()
+                ->select($db->quoteName(['userid', 'posts']))
+                ->from($db->quoteName('#__kunena_users'))
+                ->whereIn($db->quoteName('userid'), array_map('intval', array_keys($cached)));
+
+            try {
+                foreach ((array) $db->setQuery($query)->loadAssocList('userid', 'posts') as $userid => $posts) {
+                    if (isset($cached[$userid])) {
+                        $cached[$userid]->posts = (int) $posts;
+                    }
+                }
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+        }
+
         return $affected;
     }
 

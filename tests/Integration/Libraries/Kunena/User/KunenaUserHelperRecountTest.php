@@ -20,6 +20,7 @@ use Joomla\Event\Dispatcher;
 use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Tests\Integration\DBTestInterface;
 use Kunena\Tests\Integration\DBTestTrait;
@@ -140,6 +141,31 @@ class KunenaUserHelperRecountTest extends IntegrationTestCase implements DBTestI
         KunenaUserHelper::recount([0, 'x']);
 
         $this->assertSame([101 => 5, 102 => 4, 103 => 0], $this->posts());
+    }
+
+    /**
+     * A user which the request has loaded gets the counted number: a later save of him (the clean-up of a user empties his
+     * profile and bans him after his posts were deleted for good) wrote the old number back.
+     */
+    public function testALoadedUserGetsTheCountedPosts(): void
+    {
+        $user         = (new ReflectionClass(KunenaUser::class))->newInstanceWithoutConstructor();
+        $user->userid = 101;
+        $user->posts  = 9;
+        $other        = (new ReflectionClass(KunenaUser::class))->newInstanceWithoutConstructor();
+        $other->userid = 102;
+        $other->posts  = 7;
+        $saved        = $this->replace(KunenaUserHelper::class, '_instances', [101 => $user, 102 => $other]);
+
+        try {
+            KunenaUserHelper::recount([101]);
+        } finally {
+            $this->replace(KunenaUserHelper::class, '_instances', $saved);
+        }
+
+        // The other user is not counted: he keeps his number.
+        $this->assertSame(5, $user->posts);
+        $this->assertSame(7, $other->posts);
     }
 
     /**

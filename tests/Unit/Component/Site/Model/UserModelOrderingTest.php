@@ -26,8 +26,12 @@ class UserModelOrderingTest extends UnitTestCase
     {
         $source = str_replace("\r\n", "\n", Files::read('src/site/src/Model/UserModel.php'));
 
+        $this->assertStringContainsString("\$fields = ['id', \$this->config->username ? 'username' : 'name'];", $source);
+
+        // The other columns only when the list shows them (as the sorts of Agora): the order by the hidden last visit gave away who
+        // came last.
         $this->assertStringContainsString(
-            "\$fields = ['id', \$this->config->username ? 'username' : 'name', 'registerDate', 'lastvisitDate', 'posts', 'karma', 'uhits'];",
+            "foreach (['registerDate' => 'userlistJoinDate', 'lastvisitDate' => 'userlistLastVisitDate', 'posts' => 'userlistPosts', 'karma' => 'userlistKarma', 'uhits' => 'userlistUserHits'] as \$field => \$option) {\n            if (\$this->config->\$option) {\n                \$fields[] = \$field;",
             $source
         );
         $this->assertStringContainsString('if ($this->config->userlistEmail && $this->me->isModerator()) {', $source);

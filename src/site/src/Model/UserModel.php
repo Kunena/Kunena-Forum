@@ -290,7 +290,14 @@ class UserModel extends KunenaModel
         // The name is the one which the forum shows (both templates have its column only): the other one (the username which is
         // used to log in, or the real name) ordered the list by a name which it hides. The e-mail addresses only for a moderator,
         // who sees all of them: the column hides the address of each member who hides it, and the order gave it away.
-        $fields = ['id', $this->config->username ? 'username' : 'name', 'registerDate', 'lastvisitDate', 'posts', 'karma', 'uhits'];
+        $fields = ['id', $this->config->username ? 'username' : 'name'];
+
+        // The other columns when the list shows them: the order by a hidden column gave it away (the last visit: who came last).
+        foreach (['registerDate' => 'userlistJoinDate', 'lastvisitDate' => 'userlistLastVisitDate', 'posts' => 'userlistPosts', 'karma' => 'userlistKarma', 'uhits' => 'userlistUserHits'] as $field => $option) {
+            if ($this->config->$option) {
+                $fields[] = $field;
+            }
+        }
 
         if ($this->config->userlistEmail && $this->me->isModerator()) {
             $fields[] = 'email';

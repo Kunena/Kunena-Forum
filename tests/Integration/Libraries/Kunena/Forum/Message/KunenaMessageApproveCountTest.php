@@ -393,6 +393,22 @@ class KunenaMessageApproveCountTest extends IntegrationTestCase implements DBTes
     }
 
     /**
+     * The moderation queue and a reply which waits for its date (scheduled, not held for review): it is for no moderator, and
+     * approving it published it at once, before the date which its author chose. One held for review stays in the queue.
+     */
+    public function testTheModerationQueueLeavesAScheduledReply(): void
+    {
+        $this->seed(KunenaForum::PUBLISHED, 1, 3, 7, [[10, 0, KunenaForum::PUBLISHED, 1000], [11, 10, KunenaForum::UNAPPROVED, 1100], [12, 10, KunenaForum::UNAPPROVED, 1200]]);
+        $later = time() + 7 * 86400;
+        $this->getDBDriver()->setQuery("UPDATE #__kunena_messages SET scheduled_time = $later, scheduled_review = 0 WHERE id = 11")->execute();
+        $this->getDBDriver()->setQuery("UPDATE #__kunena_messages SET scheduled_time = $later, scheduled_review = 1 WHERE id = 12")->execute();
+
+        $this->assertSame([12], array_map('intval', array_column(KunenaModerationQueue::unapprovedOnSite()['items'], 'id')));
+        $this->assertSame(['done' => 0, 'failed' => 1], KunenaModerationQueue::apply([11], KunenaModerationQueue::APPROVE));
+        $this->assertEquals([['hold' => 1]], $this->fetchAll('SELECT hold FROM #__kunena_messages WHERE id = 11'));
+    }
+
+    /**
      * A split (here: the test needs the setup of the messages) makes a new topic with the state of the old one: of an unapproved
      * topic, an unapproved one, which the category does not count. It counted it as a shown topic.
      */

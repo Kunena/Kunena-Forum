@@ -91,7 +91,10 @@ class KunenaModerationQueue
         $db    = Factory::getContainer()->get('DatabaseDriver');
         // Not the messages of a topic in the trash: approving one published the topic again, with that message only (its other
         // messages stayed in the trash).
-        $shown = $db->quoteName('tp.hold') . ' < ' . KunenaForum::DELETED;
+        // Nor a reply which waits for its date (scheduled, not held for review): it is for no moderator, and approving it
+        // published it at once, before the date which its author chose.
+        $shown = $db->quoteName('tp.hold') . ' < ' . KunenaForum::DELETED
+            . ' AND (' . $db->quoteName('m.scheduled_time') . ' = 0 OR ' . $db->quoteName('m.scheduled_review') . ' <> 0)';
         $query = $db->createQuery()
             ->select('COUNT(*)')
             ->from($db->quoteName('#__kunena_messages', 'm'))
@@ -187,6 +190,7 @@ class KunenaModerationQueue
                 $ok = $message->exists()
                     && ($action === self::APPROVE
                         ? (int) $message->hold === KunenaForum::UNAPPROVED && (int) $message->getTopic()->hold < KunenaForum::DELETED
+                            && (!(int) $message->scheduled_time || (int) $message->scheduled_review)
                         : (int) $message->hold < KunenaForum::DELETED)
                     && $message->publish($hold);
             } catch (Throwable $e) {

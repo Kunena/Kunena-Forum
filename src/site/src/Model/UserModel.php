@@ -287,9 +287,12 @@ class UserModel extends KunenaModel
 
         // The field of the order is one of the fields of the list: another word gave an SQL error (which stayed in the session,
         // so the list was broken until the end of it), and a word like "email" ordered the list by a column which it does not show.
-        $fields = ['id', 'username', 'name', 'registerDate', 'lastvisitDate', 'posts', 'karma', 'uhits'];
+        // The name is the one which the forum shows (both templates have its column only): the other one (the username which is
+        // used to log in, or the real name) ordered the list by a name which it hides. The e-mail addresses only for a moderator,
+        // who sees all of them: the column hides the address of each member who hides it, and the order gave it away.
+        $fields = ['id', $this->config->username ? 'username' : 'name', 'registerDate', 'lastvisitDate', 'posts', 'karma', 'uhits'];
 
-        if ($this->config->userlistEmail) {
+        if ($this->config->userlistEmail && $this->me->isModerator()) {
             $fields[] = 'email';
         }
 

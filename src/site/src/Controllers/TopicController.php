@@ -1132,6 +1132,16 @@ class TopicController extends KunenaController
 
                 return;
             }
+
+            // Not anonymous: an anonymous reply has no author, and the task which publishes the scheduled replies checks the author
+            // (banned, blocked, deleted). It found none, took the date away and left the reply waiting for good, and no moderator
+            // was told about it.
+            if ($scheduledTime > 0 && $fields['anonymous']) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SCHEDULE_ERROR_ANONYMOUS'), 'error');
+                $this->setRedirectBack();
+
+                return;
+            }
         }
 
         // Need to do to the replacement in case of VBA code is inserted without the bbcode tags [code][/code]

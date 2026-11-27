@@ -564,6 +564,12 @@ class UserController extends KunenaController
             if (!$validPassword) {
                 return false;
             }
+
+            // The password which was checked, as it was typed: getArray() above filters each value as a text (it takes the value
+            // as the name of its filter), which takes away tags and decodes entities. "Secret<b>Word42!" was stored as
+            // "SecretWord42!", and the user could not log in with the password he chose.
+            $post['password']  = $post_password;
+            $post['password2'] = $post_password2;
         }
 
         $post = array_intersect_key($post, array_flip($allow));

@@ -1039,15 +1039,7 @@ class UserController extends KunenaController
         }
 
         if (!empty($banDelPosts)) {
-            $params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
-
-            list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, $params);
-
-            $parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
-
-            list($total, $messages_recent) = KunenaMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
-
-            $messages = array_merge($messages_recent, $messages);
+            $messages = $this->messagesOf((int) $user->userid, ['recent', 'unapproved']);
 
             foreach ($messages as $mes) {
                 $mes->publish(KunenaForum::DELETED);
@@ -1057,15 +1049,9 @@ class UserController extends KunenaController
         }
 
         if (!empty($banDelPostsPerm)) {
-            $params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
-
-            list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, $params);
-
-            $parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
-
-            list($total, $messages_recent) = KunenaMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
-
-            $messages = array_merge($messages_recent, $messages);
+            // Also the posts in the trash: those which the box above has just deleted (both boxes ticked deleted nothing for good)
+            // and those of an earlier ban.
+            $messages = $this->messagesOf((int) $user->userid, ['recent', 'unapproved', 'deleted']);
 
             foreach ($messages as $mes) {
                 $mes->delete();
@@ -1078,6 +1064,31 @@ class UserController extends KunenaController
         $return = $this->app->getInput()->getString('return', '');
 
         $this->setRedirect($return !== '' && KunenaRoute::isInternal($return) ? $return : $user->getUrl(false));
+    }
+
+    /**
+     * The posts of a user in the given modes of the lists of messages (recent: published, unapproved, deleted), in the categories
+     * where the moderator may see them, for the delete of his posts with a ban. All the languages: on a multilingual site the posts
+     * in the topics of another language than the page were left.
+     *
+     * @param   int    $userid  The user.
+     * @param   array  $modes   The modes.
+     *
+     * @return  array
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    protected function messagesOf(int $userid, array $modes): array
+    {
+        $messages = [];
+
+        foreach ($modes as $mode) {
+            [, $found] = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'nolimit' => -1, 'user' => $userid, 'mode' => $mode, 'language' => 'all']);
+            $messages  = array_merge($messages, $found);
+        }
+
+        return $messages;
     }
 
     /**

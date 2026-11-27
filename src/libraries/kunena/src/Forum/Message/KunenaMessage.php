@@ -3152,13 +3152,18 @@ class KunenaMessage extends KunenaDatabaseObject
                 throw new Exception($exception->getMessage());
             }
 
+            // Only a file of this message is in the count of the topic: an upload which waited for its message (mesid 0) is not.
+            $counted = (int) $attachment->mesid === (int) $this->id && $this->id;
+
             try {
                 $attachment->delete();
             } catch (Exception $e) {
                 throw new Exception($e->getMessage());
             }
 
-            $this->getTopic()->attachments--;
+            if ($counted) {
+                $this->getTopic()->attachments--;
+            }
 
             $this->message = preg_replace('/\[attachment\=' . $attachment->id . '\].*?\[\/attachment\]/u', '', $this->message);
             // The name is text, not a pattern: a bracket in it (the upload without JavaScript keeps the name as it was) made the

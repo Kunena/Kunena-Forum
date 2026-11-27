@@ -102,7 +102,8 @@ $user   = fn (int $id) => $id > 0 ? '<a href="' . Route::_('index.php?option=com
                                     <span class="kd-form__hint"><?php echo Text::_('COM_KUNENA_TOOLS_REPORTS_GONE') ?></span>
                                 <?php endif ?>
                                 <?php if ($item['reason'] !== '' || $item['text'] !== '') : ?>
-                                    <br><span class="kd-form__hint kd-break"><?php echo $this->escape(trim($item['reason'] . ' — ' . $item['text'], ' —')) ?></span>
+                                    <?php // The parts which are there, joined (both are trimmed): trim() with " —" took away bytes of a letter at an end ("мусор"), and the escape of the broken text was empty. ?>
+                                    <br><span class="kd-form__hint kd-break"><?php echo $this->escape(implode(' — ', array_filter([$item['reason'], $item['text']], 'strlen'))) ?></span>
                                 <?php endif ?>
                             </th>
                             <td><?php echo $user($item['author']) ?></td>

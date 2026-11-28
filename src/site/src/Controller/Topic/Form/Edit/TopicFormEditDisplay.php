@@ -200,11 +200,12 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
             $this->message->edit($saved);
         }
 
+        // The private part of the message, as the save finds it (TopicController::editPrivate()): also of a message which was made
+        // anonymous (its user is 0, the private part keeps its author).
         $finder = new KunenaPrivateMessageFinder();
         $finder
             ->filterByMessage($this->message)
             ->where('parent_id', '=', 0)
-            ->where('author_id', '=', $this->message->userid)
             ->order('id')
             ->limit(1);
         $this->privateMessage       = $finder->firstOrNew();

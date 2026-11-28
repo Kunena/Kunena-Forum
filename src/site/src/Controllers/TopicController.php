@@ -2471,11 +2471,13 @@ class TopicController extends KunenaController
         $attachIds = isset($attachIds[0]) && $attachIds[0] !== '' ? explode(',', $attachIds[0]) : [];
         $attachIds = $this->ownPrivateAttachments($attachIds, $message);
 
+        // The private part of the message, whoever is its author now: it was looked up by the user of the message, which an edit
+        // that makes the message anonymous sets to 0, so a second private part was made (the first one stayed, both were shown,
+        // and every later edit made another one). A message has one private part (postPrivate() makes it when there is none).
         $finder    = new KunenaPrivateMessageFinder();
         $finder
             ->filterByMessage($message)
             ->where('parent_id', '=', 0)
-            ->where('author_id', '=', $message->userid)
             ->order('id')
             ->limit(1);
         $private = $finder->firstOrNew();

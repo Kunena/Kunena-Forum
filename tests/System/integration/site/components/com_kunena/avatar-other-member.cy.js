@@ -6,19 +6,26 @@ describe('Kunena avatars: the avatar of the profile which is edited', () => {
   const admin = { name: Cypress.expose('username'), password: Cypress.expose('password'), id: 797 };
   const user = { name: 'ci-user', password: 'ci-user-17082005-x', id: 798 };
   const folder = `${Cypress.expose('cmsPath')}/media/kunena/avatars/users`;
-  // The upload of an avatar looks at the extension of the name (the content is not looked at).
+  // The avatars which the test puts on the disk (the content of an avatar file is not looked at when it is shown).
   const content = 'not really a picture';
+  // The upload is a picture (a PNG of 1 x 1): the upload of an avatar refuses a file which is not one.
+  const png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
   const old = {};
 
   const avatarOf = (id) => cy.task('queryDB', `SELECT avatar FROM #__kunena_users WHERE userid = ${id}`).then((rows) => rows[0].avatar);
   const token = () => cy.request(`${base}&view=home`).then((page) => /name="([0-9a-f]{32})" value="1"/.exec(page.body)?.[1] ?? 'x');
-  const upload = (userid) => token().then((value) => cy.request({
-    method: 'POST',
-    url: `${base}&view=user&task=upload&format=json&${value}=1`,
-    qs: { userid, filename: 'me.png', size: content.length, mime: 'image/png', hash: 'abc', chunkStart: 0, chunkEnd: content.length },
-    headers: { 'Content-Type': 'application/octet-stream' },
-    body: content,
-    failOnStatusCode: false,
+  // The bytes of the picture go from a page of the forum, as the uploader sends them (a request of Cypress does not send the
+  // bytes of a file as they are).
+  const upload = (userid) => token().then((value) => cy.visit(`${base}&view=home`).then((win) => {
+    const bytes = win.Uint8Array.from(win.atob(png), (c) => c.charCodeAt(0));
+    const query = new win.URLSearchParams({ userid, filename: 'me.png', size: bytes.length, mime: 'image/png', hash: 'abc', chunkStart: 0, chunkEnd: bytes.length });
+    const root = win.location.pathname.split('/index.php')[0];
+
+    return cy.wrap(win.fetch(`${root}${base}&view=user&task=upload&format=json&${value}=1&${query}`, {
+      method: 'POST',
+      body: new win.Blob([bytes], { type: 'application/octet-stream' }),
+      credentials: 'same-origin',
+    }).then((response) => ({ status: response.status })));
   }));
   const remove = (userid) => token().then((value) => cy.request({
     method: 'POST',

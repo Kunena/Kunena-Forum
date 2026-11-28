@@ -47,6 +47,7 @@ use Kunena\Forum\Libraries\Forum\Message\Karma\KunenaKarmaHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
+use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Image\KunenaSvgSanitizer;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
@@ -1607,11 +1608,30 @@ class UserController extends KunenaController
 
                     File::delete($uploadFile);
                 } else {
+                    // A picture which can be shown and resized, as an attachment is checked: any content with the name of a picture
+                    // became the avatar (served as it was, and every page which showed it logged an error), and the old one was gone.
+                    $info = @getimagesize($uploadFile);
+
+                    if (!$info || stripos((string) $info['mime'], 'image/') !== 0) {
+                        File::delete($uploadFile);
+
+                        throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_NOT_IMAGE'), 400);
+                    }
+
+                    if (!KunenaImage::canDecode((int) $info[0], (int) $info[1])) {
+                        File::delete($uploadFile);
+
+                        throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_TOO_MANY_PIXELS'), 400);
+                    }
+
                     $this->deleteOldAvatars($user);
 
                     File::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
 
                     KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
+
+                    // The temporary file of the upload is not needed any more (it stayed in the folder of the uploads for good).
+                    File::delete($uploadFile);
                 }
 
                 // Save in the table \Kunena\Forum\Libraries\User\KunenaUser

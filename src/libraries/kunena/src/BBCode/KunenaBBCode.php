@@ -1900,8 +1900,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $email     = \is_string($default) ? $default : $bbcode->UnHTMLEncode($content);
         $result    = filter_var($email, FILTER_VALIDATE_EMAIL);
 
+        // Not an address: the tag stays as text with its text, as [img] and [url] do (the tag and all its text were gone, while the
+        // plain text of the excerpts kept them).
         if (!$result) {
-            return;
+            return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
         }
 
         $text      = \is_string($default) ? $bbcode->UnHTMLEncode($content) : $default;

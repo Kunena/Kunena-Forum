@@ -202,7 +202,9 @@ class CategoryManageDisplay extends KunenaControllerDisplay
         // The unpublished categories are possible parents too (a new section is not published yet). All of the tree ('none'): the list
         // of what the administrator may read left out the section of another language than the page (a multilingual site), and the
         // save took the first one of the list as the new parent.
-        $catParams = ['sections' => 1, 'catid' => 0, 'unpublished' => 1, 'action' => 'none'];
+        // Not the category itself nor its subcategories (catid: the list leaves out that branch, as the backend does): a category
+        // was offered as its own parent and as the child of its children (the save refused it).
+        $catParams = ['sections' => 1, 'catid' => (int) $category->id, 'unpublished' => 1, 'action' => 'none'];
 
         $lists                 = [];
         $lists ['accesstypes'] = KunenaAccess::getInstance()->getAccessTypesList($category);

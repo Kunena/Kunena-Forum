@@ -31,6 +31,6 @@ class CategoryManageFieldsTest extends UnitTestCase
 
         $this->assertStringContainsString("HTMLHelper::_('kunenaforum.categorylist', 'channels[]', 0, \$channelsOptions, ['catid' => \$category->id, 'action' => 'admin'],", $source);
         $this->assertStringNotContainsString("HTMLHelper::_('select.genericlist', \$channelsOptions, 'channels',", $source);
-        $this->assertStringContainsString("\$catParams = ['sections' => 1, 'catid' => 0, 'unpublished' => 1, 'action' => 'none'];", $source);
+        $this->assertStringContainsString("\$catParams = ['sections' => 1, 'catid' => (int) \$category->id, 'unpublished' => 1, 'action' => 'none'];", $source);
     }
 }

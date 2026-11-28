@@ -666,6 +666,23 @@ class KunenaCategory extends KunenaDatabaseObject
     }
 
     /**
+     * Put back the values which the translation of the page replaced (name, description, header): for a form which edits the
+     * category, which saves what it shows.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public function removeTranslation(): void
+    {
+        foreach ($this->_translated as $field => $original) {
+            $this->$field = $original;
+        }
+
+        $this->_translated = [];
+    }
+
+    /**
      * @param   KunenaUser  $user  user
      *
      * @return  KunenaExceptionAuthorise
@@ -1016,6 +1033,12 @@ class KunenaCategory extends KunenaDatabaseObject
         }
 
         $result = parent::bind($src, $fields, $include);
+
+        // A field which is given is saved as it is given, not the value which it had before the translation of the page was put on
+        // it: the name, the description and the header edited in the form of the forum of a multilingual site were not saved.
+        foreach (array_keys((array) $src) as $field) {
+            unset($this->_translated[$field]);
+        }
 
         // A category without a set of topic icons (the column is empty) uses the default set: the pages and the icons need a name.
         if (empty($this->iconset)) {

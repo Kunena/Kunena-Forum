@@ -138,6 +138,11 @@ class CategoryManageDisplay extends KunenaControllerDisplay
         } else {
             $this->category = KunenaCategoryHelper::get($catid);
             $this->category->tryAuthorise();
+
+            // The form shows the values of the category, not the translation of the page (a save without a change wrote the
+            // translation over them): a copy, the rest of the page keeps the translation.
+            $this->category = clone $this->category;
+            $this->category->removeTranslation();
         }
 
         $category = $this->category;

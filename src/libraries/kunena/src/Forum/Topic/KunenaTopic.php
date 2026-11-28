@@ -26,12 +26,14 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\ParameterType;
+use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaAfterSaveEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -52,6 +54,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Tables\TableKunenaMessages;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
@@ -1949,6 +1952,33 @@ class KunenaTopic extends KunenaDatabaseObject
             $this->_db->execute();
         } catch (RuntimeException $e) {
             throw new Exception($e->getMessage());
+        }
+
+        // The messages of a split (some of the messages, into a new or another topic) are in the search of the site with their new
+        // topic and category: the update above is SQL, and only the move of a whole topic (a change of its category) indexed its
+        // messages again, so a reply split into a closed category stayed in the results of the search of everybody.
+        if ($ids) {
+            $moved = $this->_db->createQuery()
+                ->select($this->_db->quoteName('id'))
+                ->from($this->_db->quoteName('#__kunena_messages'))
+                ->where($this->_db->quoteName('thread') . ' = ' . (int) $target->id);
+
+            if ($ids instanceof Date) {
+                $moved->where($this->_db->quoteName('time') . ' >= ' . (int) $ids->toUnix());
+            } else {
+                $moved->where($this->_db->quoteName('id') . ' IN (' . implode(',', array_map('intval', \is_array($ids) ? $ids : explode(',', (string) $ids))) . ')');
+            }
+
+            $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+
+            foreach (array_map('intval', (array) $this->_db->setQuery($moved)->loadColumn()) as $id) {
+                // The message as it is in the database now (its object of this request has the topic and category before).
+                KunenaMessageHelper::get($id, true);
+
+                $table = new TableKunenaMessages($this->_db);
+                $table->load($id);
+                $dispatcher->dispatch('onKunenaAfterSave', new KunenaAfterSaveEvent('onKunenaAfterSave', ['com_kunena.message', &$table, false]));
+            }
         }
 
         // Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)

@@ -59,6 +59,8 @@ class KunenaTopicSplitPollTest extends IntegrationTestCase implements DBTestInte
      */
     private array $saved = [];
 
+    private ?Dispatcher $dispatcher = null;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -74,6 +76,7 @@ class KunenaTopicSplitPollTest extends IntegrationTestCase implements DBTestInte
         // clears do nothing.
         $driver     = $this->getDBDriver();
         $dispatcher = new Dispatcher();
+        $this->dispatcher = $dispatcher;
         $container  = new Container();
         $container->share('DatabaseDriver', static fn () => $driver);
         $container->share(DatabaseInterface::class, static fn () => $driver);
@@ -181,5 +184,26 @@ class KunenaTopicSplitPollTest extends IntegrationTestCase implements DBTestInte
             [self::TARGET => 0, (int) $new->id => 4],
             array_map('intval', array_column($this->fetchAll('SELECT id, poll_id FROM #__kunena_topics WHERE id IN (' . self::TARGET . ', ' . (int) $new->id . ')'), 'poll_id', 'id'))
         );
+    }
+
+    /**
+     * The messages of a split are given to the search of the site again (onKunenaAfterSave, which the plugin Kunena - Finder turns
+     * into the update of the index), with their new topic and category: the split moves them with SQL, and only the move of a whole
+     * topic indexed its messages again, so a reply split into a closed category stayed in the results of the search of everybody.
+     */
+    public function testTheMessagesOfASplitAreIndexedAgainWithTheirNewCategory(): void
+    {
+        $saved = [];
+        $this->dispatcher->addListener('onKunenaAfterSave', static function ($event) use (&$saved): void {
+            [$context, $table] = [$event->getArgument(0), $event->getArgument(1)];
+
+            if ($context === 'com_kunena.message') {
+                $saved[(int) $table->id] = (int) $table->catid;
+            }
+        });
+
+        KunenaTopicHelper::get(self::TARGET)->move(KunenaCategoryHelper::get(self::OTHER_CATEGORY), [2]);
+
+        $this->assertSame([2 => self::OTHER_CATEGORY], $saved);
     }
 }

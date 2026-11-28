@@ -17,6 +17,7 @@ namespace Kunena\Forum\Administrator\Controller;
 
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
@@ -146,6 +147,11 @@ class TrashsController extends AdminController
 
         $nbItems = 0;
 
+        // The topics, the categories and the authors of what is restored: only they are counted again below.
+        $topicIds    = [];
+        $categoryIds = [];
+        $userIds     = [];
+
         if ($type == 'messages') {
             $messages = KunenaMessageHelper::getMessages($cid, 'none');
 
@@ -169,6 +175,10 @@ class TrashsController extends AdminController
                     continue;
                 }
 
+                $topicIds[(int) $target->thread]   = (int) $target->thread;
+                $categoryIds[(int) $target->catid] = (int) $target->catid;
+                $userIds[(int) $target->userid]    = (int) $target->userid;
+
                 $nbItems++;
             }
         } elseif ($type == 'topics') {
@@ -189,6 +199,9 @@ class TrashsController extends AdminController
                     continue;
                 }
 
+                $topicIds[(int) $target->id]             = (int) $target->id;
+                $categoryIds[(int) $target->category_id] = (int) $target->category_id;
+
                 $nbItems++;
             }
         } else {
@@ -202,9 +215,22 @@ class TrashsController extends AdminController
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nbItems), 'success');
         }
 
-        KunenaUserHelper::recount();
-        KunenaTopicHelper::recount();
-        KunenaCategoryHelper::recountBatch();
+        // The counts of what was restored, not of the whole forum: every restore (also of one message) counted all the users, the
+        // topics and the categories again, which takes long on a big forum.
+        if ($topicIds) {
+            // The authors of the messages of the restored topics.
+            $db      = Factory::getContainer()->get('DatabaseDriver');
+            $authors = array_map('intval', (array) $db->setQuery(
+                $db->createQuery()
+                    ->select('DISTINCT ' . $db->quoteName('userid'))
+                    ->from($db->quoteName('#__kunena_messages'))
+                    ->whereIn($db->quoteName('thread'), array_values($topicIds))
+            )->loadColumn());
+
+            KunenaUserHelper::recount(array_values(array_unique(array_merge(array_values($userIds), $authors))));
+            KunenaTopicHelper::recount(array_values($topicIds));
+            KunenaCategoryHelper::recountBatch(array_values($categoryIds));
+        }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
     }

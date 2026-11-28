@@ -241,7 +241,8 @@ class KunenaTopicMoveUnpublishedTest extends IntegrationTestCase implements DBTe
 
     /**
      * The read marks of a topic which is merged into another one go to that topic: they stayed on the shadow. A user who read both
-     * keeps the earlier of his two marks.
+     * keeps the earlier of his two marks. A user who read only the merged topic has not read the messages of the target: his mark
+     * is before its first message (1000).
      */
     public function testTheReadMarksOfAMergedTopicGoToTheTarget(): void
     {
@@ -254,7 +255,7 @@ class KunenaTopicMoveUnpublishedTest extends IntegrationTestCase implements DBTe
         KunenaTopicHelper::get(self::UNAPPROVED)->move(KunenaTopicHelper::get(self::TARGET));
 
         $this->assertSame(
-            [[42, self::TARGET, self::CATEGORY, 10, 1500], [43, self::TARGET, self::CATEGORY, 2, 1100]],
+            [[42, self::TARGET, self::CATEGORY, 10, 999], [43, self::TARGET, self::CATEGORY, 2, 1100]],
             $this->readMarks(true)
         );
     }

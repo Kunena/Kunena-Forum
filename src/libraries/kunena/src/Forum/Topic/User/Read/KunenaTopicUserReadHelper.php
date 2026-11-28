@@ -182,8 +182,15 @@ abstract class KunenaTopicUserReadHelper
     }
 
     /**
-     * @param   KunenaTopic  $old  old
-     * @param   KunenaTopic  $new  new
+     * The read marks of a topic which is merged into another one.
+     *
+     * A user who read only one of the two topics has not read the messages of the other one: his mark is put before the oldest of
+     * them (it was kept, and it made the messages of the other topic which are older than it read, so its "new" marker went).
+     *
+     * @param   KunenaTopic  $old           The topic which is merged.
+     * @param   KunenaTopic  $new           The topic which it is merged into.
+     * @param   int          $newFirstTime  The time of the first message of $new before the merge (its first post can be one of
+     *                                      $old after it); 0 when it is not known.
      *
      * @return  boolean
      *
@@ -191,11 +198,23 @@ abstract class KunenaTopicUserReadHelper
      *
      * @throws Exception
      */
-    public static function merge(KunenaTopic $old, KunenaTopic $new): bool
+    public static function merge(KunenaTopic $old, KunenaTopic $new, int $newFirstTime = 0): bool
     {
-        $db = Factory::getContainer()->get('DatabaseDriver');
+        $db       = Factory::getContainer()->get('DatabaseDriver');
+        $oldFirst = (int) $old->first_post_time;
 
-        // Move all user topics which do not exist in new topic
+        // The users who read only the topic into which the other one is merged: the messages of the other one are new to them.
+        if ($oldFirst > 0) {
+            $query0 = $db->createQuery();
+            $query0->update($db->quoteName('#__kunena_user_read', 'ur'))
+                ->leftJoin($db->quoteName('#__kunena_user_read', 'o') . ' ON ' . $db->quoteName('o.user_id') . ' = ' . $db->quoteName('ur.user_id') . ' AND ' . $db->quoteName('o.topic_id') . ' = ' . $db->quote($old->id))
+                ->set($db->quoteName('ur.time') . ' = LEAST(' . $db->quoteName('ur.time') . ', ' . ($oldFirst - 1) . ')')
+                ->where($db->quoteName('ur.topic_id') . ' = ' . $db->quote($new->id))
+                ->where($db->quoteName('o.user_id') . ' IS NULL');
+            $queries[] = $query0;
+        }
+
+        // Move all user topics which do not exist in new topic: the messages of the new topic are new to these users.
         $query1 = $db->createQuery();
         $query1->update($db->quoteName('#__kunena_user_read', 'ur'))
             ->leftJoin($db->quoteName('#__kunena_user_read', 'n') . ' ON ' . $db->quoteName('n.user_id') . ' = ' . $db->quoteName('ur.user_id') . ' AND ' . $db->quoteName('n.topic_id') . ' = ' . $db->quote($new->id))
@@ -203,6 +222,11 @@ abstract class KunenaTopicUserReadHelper
             ->set($db->quoteName('ur.category_id') . ' = ' . $db->quote($new->category_id))
             ->where($db->quoteName('ur.topic_id') . ' = ' . $db->quote($old->id))
             ->where($db->quoteName('n.user_id') . ' IS NULL');
+
+        if ($newFirstTime > 0) {
+            $query1->set($db->quoteName('ur.time') . ' = LEAST(' . $db->quoteName('ur.time') . ', ' . ($newFirstTime - 1) . ')');
+        }
+
         $queries[] = $query1;
 
         // Merge user topics information that exists in both topics

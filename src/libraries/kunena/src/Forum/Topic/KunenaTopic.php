@@ -2104,6 +2104,10 @@ class KunenaTopic extends KunenaDatabaseObject
             // Add hits into the target topic
             $target->hits += $this->hits;
 
+            // The time of the first message of the target before the merge, for the read marks (its first post can be one of this topic
+            // after it).
+            $targetFirstTime = (int) $target->first_post_time;
+
             // The messages of a topic which waits for approval or is deleted keep their state in the target topic: they are not
             // its posts and none of them is its first or last post (the last post of the topic showed a message waiting for approval).
             if ($published) {
@@ -2146,7 +2150,7 @@ class KunenaTopic extends KunenaDatabaseObject
 
             // And the read marks: they stayed on the shadow of the merged topic. A user who read both keeps the earlier of his two
             // marks, so that what he has not read is still new to him.
-            KunenaTopicUserReadHelper::merge($this, $target);
+            KunenaTopicUserReadHelper::merge($this, $target, $targetFirstTime);
 
             // Remove topic and posts from the old category
             $this->getCategory()->update($this, $published ? -1 : 0, $published ? -$this->posts : 0);

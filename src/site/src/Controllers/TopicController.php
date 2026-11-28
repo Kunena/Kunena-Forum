@@ -3943,6 +3943,7 @@ class TopicController extends KunenaController
 
         // An inbox stores the report for the moderators, and tells which of them do not want the e-mail as well.
         $moderatorIds = array_values(array_filter(array_map(static fn ($moderator) => (int) ($moderator->id ?? 0), (array) $emailToList)));
+        $noMail       = [];
 
         if ($moderatorIds) {
             $noMail = KunenaPrivate::getInstance()->notify($message, 'report', $moderatorIds, (int) $this->me->userid);
@@ -3956,7 +3957,11 @@ class TopicController extends KunenaController
         $mailWanted = !empty($this->config->reportMail);
         $canMail    = $mailWanted && $this->config->sendEmails && $this->config->email && MailHelper::isEmailAddress($this->config->email);
 
-        if (!$handled && !$canMail) {
+        // The moderators who have the report in the inbox and do not want the e-mail: it reached them. The reporter was told that it
+        // could not be sent (and it was not logged) when they did not want it, or when no e-mail could be sent.
+        $inboxed = $noMail !== [];
+
+        if (!$handled && !$canMail && !$inboxed) {
             $this->app->enqueueMessage(Text::_(!$this->config->sendEmails ? 'COM_KUNENA_EMAIL_DISABLED' : 'COM_KUNENA_EMAIL_INVALID'), 'warning');
             $this->setRedirectBack();
 
@@ -4046,7 +4051,7 @@ class TopicController extends KunenaController
             }
         }
 
-        if ($handled || $mailSent) {
+        if ($handled || $mailSent || $inboxed) {
             if ($this->config->logModeration) {
                 KunenaLog::log(
                     KunenaLog::TYPE_REPORT,
@@ -4064,7 +4069,7 @@ class TopicController extends KunenaController
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_SUCCESS'), 'success');
         } else {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_NOT_SEND'), 'success');
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_NOT_SEND'), 'error');
         }
 
         $this->setRedirect($target->getUrl($this->return, false));

@@ -3832,6 +3832,12 @@ class TopicController extends KunenaController
         $topic_emoticon = $this->app->getInput()->getInt('topic_emoticon', null);
         $keep_poll      = $this->app->getInput()->getInt('keep_poll', false);
 
+        // An icon which the forms offer, as for a post (an icon of the system, 500-505, or a number larger than the column was
+        // taken from the form of the moderation): another one keeps the icon of the topic.
+        if (!$this->isTopicIconOfForm($target instanceof KunenaTopic ? $target->getCategory() : $target, $topic_emoticon)) {
+            $topic_emoticon = null;
+        }
+
         if ($object instanceof KunenaMessage) {
             $mode = $this->app->getInput()->getWord('mode', 'selected');
 

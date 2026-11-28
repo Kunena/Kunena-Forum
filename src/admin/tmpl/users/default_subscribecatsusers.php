@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
         <p><?php echo Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_TIP'); ?></p>
         <div class="mb-3">
             <div>
-                <?php echo $this->modCatList; ?>
+                <?php echo $this->subscribeCatList; ?>
             </div>
         </div>
     </div>

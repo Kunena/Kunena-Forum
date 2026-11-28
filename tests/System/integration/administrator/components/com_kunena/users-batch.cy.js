@@ -1,14 +1,15 @@
 // The batch of the backend user list: make the chosen users moderators of the chosen categories, or global moderators
 // with category 0 (task users.batchmoderators), and subscribe them to the chosen categories (users.subscribeuserstocategories).
+// The two dialogs are in the same form: each has a list of its own, or the choice in one was sent with the other one too.
 describe('Kunena backend users: batch moderators and subscriptions', () => {
   const admin = '/administrator/index.php?option=com_kunena';
   const stamp = Date.now();
   const ids = { users: [] };
   const rows = (where) => cy.task('queryDB', `SELECT user_id, category_id FROM #__kunena_user_categories WHERE user_id IN (${ids.users.join(',')}) AND ${where} ORDER BY user_id, category_id`).then((result) => result.map((row) => `${row.user_id - ids.users[0]}:${row.category_id}`));
-  const send = (task, catids) => cy.request(`${admin}&view=users`).then((page) => {
+  const send = (task, catids, field = 'catid') => cy.request(`${admin}&view=users`).then((page) => {
     const token = /name="([0-9a-f]{32})" value="1"/.exec(page.body)[1];
 
-    return cy.request({ method: 'POST', url: `${admin}&task=users.${task}`, form: true, body: `${ids.users.map((id) => `cid[]=${id}`).join('&')}&${catids.map((id) => `catid[]=${id}`).join('&')}&${token}=1`, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, followRedirect: false });
+    return cy.request({ method: 'POST', url: `${admin}&task=users.${task}`, form: true, body: `${ids.users.map((id) => `cid[]=${id}`).join('&')}&${catids.map((id) => `${field}[]=${id}`).join('&')}&${token}=1`, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, followRedirect: false });
   });
 
   beforeEach(() => {
@@ -41,7 +42,18 @@ describe('Kunena backend users: batch moderators and subscriptions', () => {
   });
 
   it('subscribes both users to categories 3 and 4', () => {
-    cy.then(() => send('subscribeuserstocategories', [3, 4]));
+    cy.then(() => send('subscribeuserstocategories', [3, 4], 'subscribe_catid'));
     cy.then(() => rows('subscribed = 1')).should('deep.eq', ['0:3', '0:4', '1:3', '1:4']);
+  });
+
+  it('gives each dialog a list of its own', () => {
+    cy.request(`${admin}&view=users`).then((page) => {
+      expect(page.body.match(/name="catid\[\]"/g) || [], 'the list of the moderators').to.have.length(1);
+      expect(page.body.match(/name="subscribe_catid\[\]"/g) || [], 'the list of the subscriptions').to.have.length(1);
+    });
+
+    // The categories chosen for the moderators are no subscriptions.
+    cy.then(() => send('subscribeuserstocategories', [3, 4]));
+    cy.then(() => rows('subscribed = 1')).should('deep.eq', []);
   });
 });

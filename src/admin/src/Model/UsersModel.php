@@ -173,6 +173,21 @@ class UsersModel extends ListModel
     }
 
     /**
+     * The list of the categories to subscribe the users to: a field of its own. The list of the moderators is in the same form, and
+     * both were "catid[]": a choice in one dialog was sent with the other one too (the users became moderators of the categories
+     * picked for the subscriptions), and "Global moderator" was offered for a subscription.
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public function getSubscribeCatsList(): string
+    {
+        return HTMLHelper::_('kunenaforum.categorylist', 'subscribe_catid[]', 0, [], ['action' => 'admin', 'preselect' => false], 'class="form-select w-100" multiple="multiple" size="5"', 'value', 'text', [], 'catidsubscribelist');
+    }
+
+    /**
      * Method to auto-populate the model state.
      *
      * Note. Calling getState in this method will result in recursion.

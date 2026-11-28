@@ -925,7 +925,8 @@ class UsersController extends KunenaController
 
         $userids = $this->input->get('cid', [], 'array');
         $userids = ArrayHelper::toInteger($userids);
-        $catids  = $this->input->get('catid', [], 'array');
+        // The list of its dialog (catid[] is the list of the moderators, in the same form).
+        $catids  = $this->input->get('subscribe_catid', [], 'array');
         $catids  = ArrayHelper::toInteger($catids);
 
         if (empty($userids)) {

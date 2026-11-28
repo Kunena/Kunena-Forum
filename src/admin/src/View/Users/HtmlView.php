@@ -58,6 +58,9 @@ class HtmlView extends BaseHtmlView
         $this->filterForm    = $model->getFilterForm();
         $this->activeFilters = $model->getActiveFilters();
 
+        // The categories of the subscriptions: a list of its own (the moderators have the other one, in the same form).
+        $this->subscribeCatList = $model->getSubscribeCatsList();
+
         $this->addToolbar();
 
         return parent::display($tpl);

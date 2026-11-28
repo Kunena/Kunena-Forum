@@ -4427,6 +4427,23 @@ class TopicController extends KunenaController
             return;
         }
 
+        // A draft which may not be used any more (the edit time is over, the topic is locked, the category is closed): the form would
+        // refuse it after the fields were put in the session, and they came back in the next form which the user opened.
+        if ($draft->message_id) {
+            $allowed = KunenaMessageHelper::get((int) $draft->message_id)->isAuthorised('edit');
+        } elseif ($draft->parent_id) {
+            $allowed = KunenaMessageHelper::get((int) $draft->parent_id)->isAuthorised('reply');
+        } else {
+            $allowed = KunenaCategoryHelper::get((int) $draft->catid)->isAuthorised('topic.create');
+        }
+
+        if (!$allowed) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=drafts', false));
+
+            return;
+        }
+
         // The editor takes its values from the fields of the last post.
         $this->app->setUserState('com_kunena.postfields', $draft->fields);
 

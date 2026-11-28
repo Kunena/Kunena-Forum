@@ -401,10 +401,18 @@ abstract class KunenaRoute
     {
         static $cache = [];
         $catid        = (int) $uri->getVar('catid');
-        $check        = self::check($item, $uri);
 
-        if (!$check || !$catid) {
-            return $check;
+        if (!$catid) {
+            return self::check($item, $uri);
+        }
+
+        // The item covers its category and the subcategories: every variable of the item but the category must match. With the
+        // category too (check()), an item of a category was never the item of its subcategories, and their pages got the menu
+        // item of the home page.
+        foreach ($item->query as $var => $value) {
+            if ($var !== 'catid' && $value != $uri->getVar($var)) {
+                return 0;
+            }
         }
 
         if (!isset($cache[$item->id])) {
@@ -416,7 +424,12 @@ abstract class KunenaRoute
             }
         }
 
-        return \intval(isset($cache[$item->id][$catid])) * 8;
+        // The item of the category itself is the best one, the item of a parent category comes before the home page (1).
+        if (!empty($item->query['catid']) && (int) $item->query['catid'] === $catid) {
+            return 8;
+        }
+
+        return isset($cache[$item->id][$catid]) ? 4 : 0;
     }
 
     /**

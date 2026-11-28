@@ -348,6 +348,12 @@ class KunenaSession
             throw new RuntimeException($e->getMessage());
         }
 
+        // The row exists now: a second save in the same request ("Mark all forum read" in the first request of a member) inserted it
+        // again, and the duplicate key ended the request.
+        if ($result) {
+            $this->_exists = true;
+        }
+
         // Set the id for the Joomla\CMS\User\User object in case we created a new user.
         if (empty($this->userid)) {
             $this->userid = $table->userid;
@@ -359,7 +365,9 @@ class KunenaSession
         if ($userCategory->allreadtime != $this->allreadtime) {
             $userCategory->params      = '';
             $userCategory->allreadtime = $this->allreadtime;
-            $userCategory->save();
+
+            // The time of "mark all read" is kept there: a failed save of it was reported as done.
+            $result = $userCategory->save() && $result;
         }
 
         return $result;

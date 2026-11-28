@@ -1406,7 +1406,11 @@ class UserController extends KunenaController
         // Get the return url from the request and validate that it is internal.
         $return = base64_decode($input->post->get('return', '', 'BASE64'));
 
-        if (!$error && $return && KunenaRoute::isInternal($return)) {
+        // The login of Joomla gives true when the user is logged in, the one of Community Builder gives no error (null): the return
+        // address was followed only after a failed login of Joomla (false), and never after a good one.
+        $loggedIn = $error === true || $error === null;
+
+        if ($loggedIn && $return && KunenaRoute::isInternal($return)) {
             // Redirect the user.
             $this->setRedirect(Route::_($return, false));
 

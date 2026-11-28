@@ -146,7 +146,8 @@ abstract class KunenaMessageReactions
             return false;
         }
 
-        return (int) $message->hold === 0 && (int) $topic->hold === 0 && !$topic->locked;
+        // Nor in a locked category (an archive, the announcements), where the thank yous and the replies are refused.
+        return (int) $message->hold === 0 && (int) $topic->hold === 0 && !$topic->locked && !$topic->getCategory()->locked;
     }
 
     /**

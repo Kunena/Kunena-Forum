@@ -12,6 +12,8 @@
 
 namespace Kunena\Tests\Unit\Libraries\Kunena\Forum\Message;
 
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageReactions;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -28,6 +30,18 @@ use PHPUnit\Framework\Attributes\DataProvider;
 class KunenaMessageReactionsTest extends UnitTestCase
 {
     private const array LIST = ['👍', '❤️', '😂'];
+
+    /**
+     * The categories of the helper before the test.
+     */
+    private ?array $savedCategories = null;
+
+    protected function tearDown(): void
+    {
+        if ($this->savedCategories !== null) {
+            KunenaCategoryHelper::$_instances = $this->savedCategories;
+        }
+    }
 
     public function testTheDefaultOfTheSettingIsSixEmoji(): void
     {
@@ -97,13 +111,20 @@ class KunenaMessageReactionsTest extends UnitTestCase
      *
      * @return  array{0: KunenaTopic, 1: KunenaMessage, 2: KunenaUser}
      */
-    private function message(array $topic = [], array $message = [], array $user = []): array
+    private function message(array $topic = [], array $message = [], array $user = [], array $category = []): array
     {
         // The classes of the topic, the message and the user need the framework of Joomla.
         $this->requireJoomla();
 
+        // The category 3 of the topic, published and not locked (the helper keeps it as if it was loaded).
+        if ($this->savedCategories === null) {
+            $this->savedCategories = KunenaCategoryHelper::$_instances;
+        }
+
+        KunenaCategoryHelper::$_instances[3] = self::bare(KunenaCategory::class, $category + ['id' => 3, 'locked' => 0, 'published' => 1]);
+
         return [
-            self::bare(KunenaTopic::class, $topic + ['id' => 10, 'locked' => 0, 'hold' => 0]),
+            self::bare(KunenaTopic::class, $topic + ['id' => 10, 'category_id' => 3, 'locked' => 0, 'hold' => 0]),
             self::bare(KunenaMessage::class, $message + ['id' => 101, 'thread' => 10, 'userid' => 7, 'hold' => 0]),
             self::bare(KunenaUser::class, $user + ['userid' => 42, '_exists' => true, 'banned' => null, 'blocked' => 0]),
         ];
@@ -135,6 +156,16 @@ class KunenaMessageReactionsTest extends UnitTestCase
     public function testNotOn(array $topic, array $message, array $user): void
     {
         [$topic, $message, $user] = $this->message($topic, $message, $user);
+
+        $this->assertFalse(KunenaMessageReactions::mayReact($topic, $message, $user, self::LIST));
+    }
+
+    /**
+     * A locked category (an archive, the announcements) refuses the thank yous and the replies: the reactions were allowed.
+     */
+    public function testNotInALockedCategory(): void
+    {
+        [$topic, $message, $user] = $this->message([], [], [], ['locked' => 1]);
 
         $this->assertFalse(KunenaMessageReactions::mayReact($topic, $message, $user, self::LIST));
     }

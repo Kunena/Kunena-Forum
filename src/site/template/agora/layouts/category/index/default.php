@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
@@ -217,13 +218,15 @@ foreach ($this->sections as $section) :
                                     </div>
                                 <?php endif; ?>
 
-                                <?php if ($category->getmoderators() && $this->config->listCatShowModerators) : ?>
+                                <?php // Not a banned moderator, as the other lists of moderators (the index named them). ?>
+                                <?php $moderators = $this->config->listCatShowModerators ? KunenaAccess::withoutBanned($category->getModerators()) : []; ?>
+                                <?php if ($moderators) : ?>
                                     <br/>
                                     <div class="moderators">
                                         <?php
                                         // get the Moderator list for display
                                         $modslist = [];
-                                        foreach ($category->getmoderators() as $moderator) {
+                                        foreach ($moderators as $moderator) {
                                             $modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, '', null, $this->ktemplate->tooltips());
                                         }
 

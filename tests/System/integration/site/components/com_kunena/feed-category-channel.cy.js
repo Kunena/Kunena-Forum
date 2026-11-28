@@ -2,7 +2,9 @@
 // - its channel has the title and the description of the category and links to the page of the category (it had the title of the
 //   menu item, "Home", no description, and the host alone as its link: the code which sets them did not run for a feed);
 // - an item has the name of the category of its topic (the feed of a parent has the topics of its subcategories, which had the name
-//   of the parent).
+//   of the parent);
+// - the newest topics come first, whatever the order of the page of the category (with "by name", a topic posted today was not in
+//   a feed of a few items).
 describe('Kunena feeds: the feed of a category', () => {
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
@@ -64,6 +66,15 @@ describe('Kunena feeds: the feed of a category', () => {
     feed(1).then((body) => {
       expect(body, 'the category of the items').to.include('<category>General Discussion</category>');
       expect(body, 'the name of the parent for the items').to.not.include('<category>Community</category>');
+    });
+  });
+
+  it('gives the newest topics first, also when the page of the category orders them by name', () => {
+    cy.task('queryDB', "UPDATE #__kunena_categories SET topicOrdering = 'alpha' WHERE id = 3");
+    cy.then(() => addTopic(`AAA Cypress feed old ${stamp}`, 600));
+    cy.then(() => addTopic(`ZZZ Cypress feed new ${stamp}`, 1));
+    feed(3, '&limit=1').then((body) => {
+      expect(body, 'the newest topic').to.include(`ZZZ Cypress feed new ${stamp}`);
     });
   });
 });

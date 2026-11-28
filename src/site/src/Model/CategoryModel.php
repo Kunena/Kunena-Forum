@@ -304,6 +304,10 @@ class CategoryModel extends CategoriesModel
 
             if ($format == 'feed') {
                 $catid = array_keys(KunenaCategoryHelper::getChildren($catid, 100) + [$catid => 1]);
+
+                // The newest posts first (the date of the items): the order of the page of the category (sticky topics first, then
+                // by name, views, posts) gave a feed without the newest topics.
+                $params['orderby'] = 'tt.last_post_time DESC';
             }
 
             list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);

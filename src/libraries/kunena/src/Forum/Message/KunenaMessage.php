@@ -1466,8 +1466,11 @@ class KunenaMessage extends KunenaDatabaseObject
             foreach (KunenaUserFollow::getRecipients((int) $this->userid) as $follower) {
                 $followerId = (int) $follower->id;
 
+                // Nor the current user (as the subscribers, notificationExcludeList()): the moderator who approved the topic of a user
+                // whom he follows got the e-mail of the topic which he had just approved.
                 if (
                     $followerId === (int) $this->userid || \in_array($followerId, $known, true)
+                    || $followerId === (int) KunenaUserHelper::getMyself()->userid
                     || !$category->isAuthorised('read', KunenaUserHelper::get($followerId))
                 ) {
                     continue;

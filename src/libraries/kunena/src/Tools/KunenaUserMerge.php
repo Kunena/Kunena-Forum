@@ -196,6 +196,14 @@ class KunenaUserMerge
                 $db->setQuery($query)->execute();
             }
 
+            // The reactions of the user on his own messages (one of the two reacted to a post of the other): nobody reacts to his own
+            // post (KunenaMessageReactions::mayReact()), so neither the button nor the task could take them away, and they counted.
+            $db->setQuery(
+                'DELETE ' . $db->quoteName('r') . ' FROM ' . $db->quoteName('#__kunena_reactions', 'r')
+                . ' INNER JOIN ' . $db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('r.message_id')
+                . ' WHERE ' . $db->quoteName('r.user_id') . ' = ' . (int) $into . ' AND ' . $db->quoteName('m.userid') . ' = ' . (int) $into
+            )->execute();
+
             // The name of the author kept on his messages.
             $name  = (string) KunenaUserHelper::get($into)->getName('', false);
             $query = $db->createQuery()

@@ -33,7 +33,8 @@ if ($config->lightbox == 1) {
     echo $this->subLayout('Widget/Lightbox');
 
     $attributesLink = KunenaLightbox::attributes('gallery', $attachment->getUrl(false, false, false), $attachment->getFilename(false));
-    $attributesImg  = ' style="max-height:' . (int) $config->imageHeight . 'px;"';
+    // No height for "Maximum Image Height" 0, which is no limit: max-height:0px hid the picture.
+    $attributesImg  = (int) $config->imageHeight > 0 ? ' style="max-height:' . (int) $config->imageHeight . 'px;"' : '';
     ?>
     <a href="<?php echo $attachment->getUrl(); ?>"
        data-bs-toggle="tooltip" title="<?php echo $attachment->getShortName($config->attachStart, $config->attachEnd); ?>"<?php echo $attributesLink; ?>>

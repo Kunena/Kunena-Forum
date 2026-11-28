@@ -33,7 +33,8 @@ $width          = $size ? (int) $size . "px;" : 'auto ';
 // The float of [img float=...]: left or right, nothing else reaches the style.
 $float          = \in_array($this->float, ['left', 'right'], true) ? $this->float : '';
 $style          = $float ? ' float:' . $float . ';' : '';
-$attributesImg  = ' style="max-height: ' . (int) $config->imageHeight . 'px;' . ' max-width:' . $width . $style . '"';
+// No height for "Maximum Image Height" 0, which is no limit: max-height:0px hid the picture.
+$attributesImg  = ' style="' . ((int) $config->imageHeight > 0 ? 'max-height: ' . (int) $config->imageHeight . 'px;' : '') . ' max-width:' . $width . $style . '"';
 // The words of alt=... as the text of the image and its tooltip; without them the text of the image is the title of the layout.
 $altText        = $alt ? (string) $alt : (string) $title;
 ?>

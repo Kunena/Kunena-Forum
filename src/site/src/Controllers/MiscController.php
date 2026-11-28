@@ -111,7 +111,8 @@ class MiscController extends KunenaController
         // KunenaBBCodeLibrary is in the file of KunenaBBCode.
         class_exists(KunenaBBCode::class);
 
-        if (!ctype_digit($id) || \strlen($id) > 18 || !hash_equals(KunenaBBCodeLibrary::tweetKey($id), $key)) {
+        // The ids of X have 19 digits since 2022: any id which is an integer of PHP (renderTweet() takes an int).
+        if (!ctype_digit($id) || (string) (int) $id !== $id || !hash_equals(KunenaBBCodeLibrary::tweetKey($id), $key)) {
             throw new RuntimeException(Text::_('COM_KUNENA_NO_ACCESS'), 403);
         }
 

@@ -80,6 +80,9 @@ if (!empty($this->config->googleMapApiKey)) {
     $map_zoom      = isset($params['zoom']) ? (int) $params['zoom'] : 10;
     $map_control   = isset($params['control']) ? (int) $params['control'] : 0;
     $content       = json_encode(addslashes($this->content));
+    // The place for the geocoder is the text of the tag (the parser gives it encoded: "L&#039;Aquila" found no place, or another
+    // one). The info window keeps the encoded text, it is HTML.
+    $address       = json_encode(htmlspecialchars_decode((string) $this->content, ENT_QUOTES), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
     $contentString = Text::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true);
 
     $this->addScriptDeclaration(
@@ -99,7 +102,7 @@ if (!empty($this->config->googleMapApiKey)) {
 			};
 			$mapid = new google.maps.Map(document.getElementById('{$mapid}'), myOptions);
 
-			var address = {$content};
+			var address = {$address};
 			if (geocoder) {
 				geocoder.geocode( { 'address': address}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {

@@ -188,8 +188,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $options    = [];
         $options[]  = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 
-        // The forum jump: the sections and the categories which the user may read.
-        $this->catParams    = ['sections' => 1, 'catid' => 0];
+        // The forum jump: the sections and the categories which the user may read. Nothing is chosen ("Forum top" shows): the first
+        // category of the forum was chosen, so "Go" jumped there.
+        $this->catParams    = ['sections' => 1, 'catid' => 0, 'preselect' => false];
         $this->categorylist = HTMLHelper::_(
             'kunenaforum.categorylist',
             'catid',

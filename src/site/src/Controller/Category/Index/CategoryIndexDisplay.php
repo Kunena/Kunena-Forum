@@ -164,8 +164,10 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 
         $options            = [];
         $options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
-        $catParams          = ['sections' => 1, 'catid' => 0];
-        $this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', $catid, $options, $catParams, 'class="form-select inputbox fbs" size="1" aria-label="' . Text::_('COM_KUNENA_CATEGORY') . '"');
+        // The forum jump has the whole forum, with this category chosen: the category was given as the parent of the list, so the
+        // jump of a category offered that category and its subcategories only, and the first one of them was chosen.
+        $catParams          = ['sections' => 1, 'catid' => 0, 'preselect' => false];
+        $this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $catParams, 'class="form-select inputbox fbs" size="1" aria-label="' . Text::_('COM_KUNENA_CATEGORY') . '"', 'value', 'text', $catid);
 
         if ($catid) {
             $sections = KunenaCategoryHelper::getCategories($catid);

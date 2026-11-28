@@ -1383,13 +1383,16 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'content'       => BBCode::BBCODE_REQUIRED,
             'plain_content' => [],
         ],
+        // The plain text (excerpts, tooltips, the description of the page, the digest, the search index) has the name, as the page
+        // shows it: "Thanks [mention]John[/mention] for" was "Thanks  for".
         'mention' => [
-            'mode'          => BBCode::BBCODE_MODE_LIBRARY,
-            'method'        => 'DoMention',
-            'class'         => 'block',
-            'allow_in'      => ['listitem', 'block', 'columns'],
-            'content'       => BBCode::BBCODE_REQUIRED,
-            'plain_content' => [],
+            'mode'        => BBCode::BBCODE_MODE_LIBRARY,
+            'method'      => 'DoMention',
+            'class'       => 'block',
+            'allow_in'    => ['listitem', 'block', 'columns'],
+            'content'     => BBCode::BBCODE_REQUIRED,
+            'plain_start' => '@',
+            'plain_end'   => '',
         ],
     ];
 

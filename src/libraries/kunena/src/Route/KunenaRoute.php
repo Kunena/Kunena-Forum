@@ -919,8 +919,10 @@ abstract class KunenaRoute
      */
     public static function keepQuery(array $params): array
     {
+        // All the options of the search: the redirect of a search without an Itemid searched every category, period and state.
         static $names = ['limitstart', 'start', 'limit', 'mesid', 'mode', 'sel', 'search', 'userid', 'layout', 'filter_order', 'filter_order_Dir',
-            'usertype', 'query', 'topic_id', 'titleonly', 'searchuser', 'searchdate', 'order', 'sortby', 'fq', 'fauthor', 'fstatus', 'ftag', 'flang'];
+            'usertype', 'query', 'topic_id', 'titleonly', 'searchuser', 'searchdate', 'order', 'sortby', 'catids', 'childforums', 'exactname',
+            'beforeafter', 'searchatdate', 'show', 'ids', 'fq', 'fauthor', 'fstatus', 'ftag', 'flang'];
 
         // The input has the parameters of the query and those which the router read from the path (a message number, for example).
         $get = Factory::getApplication()->getInput()->getArray();

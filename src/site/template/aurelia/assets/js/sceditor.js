@@ -773,7 +773,8 @@
 				return '[mention userid=' + element.getAttribute('data-kmention-userid') + ']' + content + '[/mention]';
 			},
 			html: function (token, attrs, content) {
-				return '<span class="kmention" data-kmention-userid="' + attrs.userid + '">' + content + '</span>';
+				// The id is a number: [mention userid=1"style="...] of another post added attributes to the span.
+				return '<span class="kmention" data-kmention-userid="' + (parseInt(attrs.userid, 10) || 0) + '">' + content + '</span>';
 			}
 		});
 

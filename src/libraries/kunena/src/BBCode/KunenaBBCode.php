@@ -703,16 +703,18 @@ class KunenaBBCode extends BBCode
 
             if (!empty($path[1])) {
                 if ($path[1] == 'itm') {
-                    if (isset($path[3]) && is_numeric($path[3])) {
+                    // An item number is digits (is_numeric() took 1e400 or a number beyond an int of PHP: renderEbayLayout() threw
+                    // a TypeError and the post was an error for every reader).
+                    if (isset($path[3]) && KunenaBBCodeLibrary::isEbayItemId($path[3])) {
                         $itemid = $path[3];
-                    } elseif (isset($path[2]) && is_numeric($path[2])) {
+                    } elseif (isset($path[2]) && KunenaBBCodeLibrary::isEbayItemId($path[2])) {
                         $itemid = $path[2];
                     }
 
                     // $itemid starts as an empty string, so isset() was always true: test for an item number.
                     if ($itemid !== '') {
                         // Convert ebay item to embedded widget
-                        return KunenaBBCodeLibrary::renderEbayLayout($itemid);
+                        return KunenaBBCodeLibrary::renderEbayLayout((int) $itemid);
                     }
 
                     return;
@@ -1835,7 +1837,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // The error is the output of the tag, in the post: printed with echo it went before the page (and broke the JSON, raw and
         // feed answers which have a post).
-        if (!is_numeric($content)) {
+        $content = trim((string) $content);
+
+        // Digits only: is_numeric() took 1e400, 1.5 or a number beyond an int of PHP, and renderEbayLayout() threw a TypeError (the
+        // post was an error for every reader).
+        if (!self::isEbayItemId($content)) {
             return '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
         }
 
@@ -1848,7 +1854,21 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return '<a target="_blank" rel="noopener noreferrer" href="https://www.ebay.com/itm/' . $content . '?lang=' . $this->config->ebayLanguage . '&campid=' . $this->config->ebayAffiliateId . '">www.ebay.com/itm/' . $content . '</a>';
         }
 
-        return self::renderEbayLayout($content);
+        return self::renderEbayLayout((int) $content);
+    }
+
+    /**
+     * Whether the text is the number of an item of eBay: digits only, an int of PHP.
+     *
+     * @param   string  $id  The text.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    public static function isEbayItemId(string $id): bool
+    {
+        return preg_match('/^\d{1,15}$/D', $id) === 1;
     }
 
     /**

@@ -383,6 +383,14 @@ class KunenaMessage extends KunenaDatabaseObject
     protected ?array $_previousVersion = null;
 
     /**
+     * The author of a message which was made anonymous (makeAnonymous()), whose name the edit history loses when it is saved.
+     *
+     * @var    int
+     * @since  Kunena 8.0
+     */
+    protected int $_anonymousAuthor = 0;
+
+    /**
      * @var     array
      * @since   Kunena 6.0
      */
@@ -2289,6 +2297,9 @@ class KunenaMessage extends KunenaDatabaseObject
             $this->modified_reason = null;
         }
 
+        // The author, for the edit history (see save()).
+        $this->_anonymousAuthor = (int) $this->userid;
+
         // Remove userid, email and ip address
         $this->userid = 0;
         $this->ip     = '';
@@ -2644,6 +2655,13 @@ class KunenaMessage extends KunenaDatabaseObject
             if ((int) ($this->_config->editHistory ?? KunenaMessageHistory::MODERATORS) !== KunenaMessageHistory::OFF) {
                 KunenaMessageHistory::record($this, $previous, KunenaUserHelper::get((int) $this->modified_by));
             }
+        }
+
+        // A message which its author made anonymous: his earlier edits in its history do not name him ("Edited by" him told who wrote
+        // it, although the IP address and the e-mail were removed for that).
+        if (!$isNew && $this->_anonymousAuthor && !(int) $this->userid) {
+            KunenaMessageHistory::anonymize((int) $this->id, $this->_anonymousAuthor);
+            $this->_anonymousAuthor = 0;
         }
 
         return true;

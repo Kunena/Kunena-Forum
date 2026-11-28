@@ -168,6 +168,35 @@ abstract class KunenaMessageHistory
     }
 
     /**
+     * The versions of a message which a user made no longer name him (the message was made anonymous by its author).
+     *
+     * @param   int  $messageId  The message.
+     * @param   int  $userId     The user.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public static function anonymize(int $messageId, int $userId): void
+    {
+        if ($messageId <= 0 || $userId <= 0) {
+            return;
+        }
+
+        $db    = self::getDatabase();
+        $query = $db->createQuery()
+            ->update($db->quoteName('#__kunena_messages_history'))
+            ->set($db->quoteName('edited_by') . ' = 0')
+            ->where($db->quoteName('message_id') . ' = :id')
+            ->where($db->quoteName('edited_by') . ' = :user')
+            ->bind(':id', $messageId, ParameterType::INTEGER)
+            ->bind(':user', $userId, ParameterType::INTEGER);
+        $db->setQuery($query)->execute();
+
+        self::clearCache();
+    }
+
+    /**
      * The versions of a message, the oldest first.
      *
      * @param   int  $id  The id of the message.

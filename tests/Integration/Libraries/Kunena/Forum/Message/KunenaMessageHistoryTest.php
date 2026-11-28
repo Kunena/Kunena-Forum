@@ -112,6 +112,28 @@ class KunenaMessageHistoryTest extends IntegrationTestCase implements DBTestInte
         $this->assertSame('Typo', $versions[0]->reason);
     }
 
+    /**
+     * A message which its author makes anonymous: his earlier edits in its history do not name him any more ("Edited by" him told
+     * who wrote it, although the IP address and the e-mail were removed for that). The edits of a moderator keep their editor.
+     * (The save of a message needs a whole site: the call in it is read.)
+     */
+    public function testTheHistoryOfAMessageMadeAnonymousDoesNotNameItsAuthor(): void
+    {
+        foreach ([42, 7] as $by) {
+            [$message, $editor] = $this->edited('Subject', 'text by ' . $by);
+            $editor->userid     = $by;
+            KunenaMessageHistory::record($message, ['subject' => 'Subject', 'message' => 'before ' . $by], $editor);
+        }
+
+        KunenaMessageHistory::anonymize(5, 42);
+
+        $this->assertSame([0, 7], array_map(static fn ($version) => (int) $version->edited_by, KunenaMessageHistory::getVersions(5)));
+
+        $source = str_replace("\r\n", "\n", (string) file_get_contents(\dirname(__DIR__, 6) . '/src/libraries/kunena/src/Forum/Message/KunenaMessage.php'));
+        $this->assertStringContainsString('$this->_anonymousAuthor = (int) $this->userid;', $source);
+        $this->assertMatchesRegularExpression('/if \(!\$isNew && \$this->_anonymousAuthor && !\(int\) \$this->userid\) \{\n\s*KunenaMessageHistory::anonymize\(\(int\) \$this->id, \$this->_anonymousAuthor\);/', $source);
+    }
+
     public function testAnEditWhichChangesNothingKeepsNoVersion(): void
     {
         [$message, $editor] = $this->edited('Subject', 'same', 'Only a reason');

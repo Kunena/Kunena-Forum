@@ -223,7 +223,9 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
-        $query->select($db->quoteName('g.memberid', 'user_id'), $db->quoteName('c.id', 'category_id') . ',' . KunenaForum::ADMINISTRATOR . ' AS role')
+        // One list of columns: select() takes one argument, so the category and the role were left out, and the administrators of
+        // the groups got no rights in the categories of their groups.
+        $query->select([$db->quoteName('g.memberid', 'user_id'), $db->quoteName('c.id', 'category_id'), KunenaForum::ADMINISTRATOR . ' AS role'])
             ->from($db->quoteName('#__kunena_categories', 'c'))
             ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . '= \'jomsocial\' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
             ->where($db->quoteName('c.published') . ' = 1')

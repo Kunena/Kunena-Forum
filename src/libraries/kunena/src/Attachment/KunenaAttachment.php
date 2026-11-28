@@ -1210,6 +1210,12 @@ class KunenaAttachment extends KunenaDatabaseObject
         // Check if KunenaAttachment is private.
         if ($exception && ((int) $this->protected & self::PROTECTION_PRIVATE)) {
             $exception = $this->authorisePrivate($user, $action);
+
+            // A user of the private part who may read its message (as a file for the friends): the recipient got the file of a reply
+            // which waited for approval, was deleted, or was moved into a category which he may not read.
+            if (!$exception && $this->mesid && !$this->getMessage()->isAuthorised('read', $user)) {
+                $exception = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401);
+            }
         }
 
         // Check author access: the user who uploaded a protected file may always read it.

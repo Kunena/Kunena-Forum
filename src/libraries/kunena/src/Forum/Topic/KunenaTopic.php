@@ -104,7 +104,9 @@ class KunenaTopic extends KunenaDatabaseObject
     /**
      * The rules of each action. A vote of a poll is not through the shadow of a moved topic (NotMoved): the shadow keeps the
      * poll, and the vote was checked against the old category and the shadow, which is never locked (a poll of a topic moved
-     * to a category the user cannot read, or closed by a lock).
+     * to a category the user cannot read, or closed by a lock). Nor in a topic which waits for approval or is closed for
+     * inactivity (NotHold, NotInactive), as the form of the vote, which needs the reply: the form showed only the results there,
+     * a request was counted all the same.
      *
      * @var     array
      * @since   Kunena 6.0
@@ -130,7 +132,7 @@ class KunenaTopic extends KunenaDatabaseObject
         'poll.create'                 => ['Own'],
         'poll.edit'                   => ['Read', 'Own', 'NoVotes'],
         'poll.delete'                 => ['Read', 'Own', 'Poll'],
-        'poll.vote'                   => ['Read', 'NotMoved', 'Poll', 'Vote'],
+        'poll.vote'                   => ['Read', 'NotHold', 'NotMoved', 'NotInactive', 'Poll', 'Vote'],
         'post.read'                   => ['Read'],
         'post.thankyou'               => ['Read', 'NotMoved', 'Unlocked'],
         'post.unthankyou'             => ['Read', 'Unlocked'],

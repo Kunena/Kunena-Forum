@@ -433,46 +433,64 @@ abstract class KunenaDigest
             return false;
         }
 
-        $config = KunenaFactory::getConfig();
-        $base   = rtrim(Uri::getInstance()->toString(['scheme', 'host', 'port']), '/');
-        $escape = static fn (string $text): string => htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
-        $count  = array_sum(array_map('count', $topics));
-        $body   = '<p>' . Text::plural('COM_KUNENA_DIGEST_INTRO', $count, $escape((string) $config->boardTitle)) . '</p>';
+        // The e-mail is in the language and the time zone of the user who gets it (as the e-mails of the subscriptions), not in
+        // those of whoever runs the task (the visitor whose page ran the scheduler, an administrator, the command line).
+        $language        = Factory::getApplication()->getLanguage();
+        $currentLanguage = $language->getTag();
+        $mailLanguage    = (string) ($user->language ?? '');
+        $switch          = $mailLanguage !== '' && $mailLanguage !== $currentLanguage;
+        $timezone        = (string) KunenaUserHelper::getJoomlaParam((int) $user->userid, 'timezone', '') ?: (string) Factory::getApplication()->get('offset', 'UTC');
 
-        foreach ($topics as $list) {
-            $topic = $list[0]->getTopic();
-            $body .= '<h2 style="font-size:1.1em;margin:1.2em 0 .4em">'
-                . '<a href="' . $escape(KunenaEmail::utm($base . $list[0]->getPermaUrl(null, false))) . '">' . $escape((string) $topic->subject) . '</a></h2><ul>';
-
-            foreach ($list as $message) {
-                $body .= '<li><strong>' . $escape((string) $message->getAuthor()->getName('', false)) . '</strong> &middot; '
-                    . $escape($message->getTime()->toKunena('datetime')) . '<br>'
-                    . $escape((string) mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags(KunenaParser::stripBBCode((string) $message->message, 0, false)))), 0, 200, 'UTF-8'))
-                    . ' <a href="' . $escape(KunenaEmail::utm($base . $message->getPermaUrl(null, false))) . '">' . Text::_('COM_KUNENA_DIGEST_READ') . '</a></li>';
-            }
-
-            $body .= '</ul>';
+        if ($switch) {
+            KunenaFactory::loadLanguageMail('com_kunena', 'site', $mailLanguage);
         }
-
-        if ($more) {
-            $body .= '<p>' . Text::plural('COM_KUNENA_DIGEST_MORE', $more) . '</p>';
-        }
-
-        $body .= '<p style="font-size:.9em;color:#666">' . Text::sprintf(
-            'COM_KUNENA_DIGEST_FOOTER',
-            '<a href="' . $escape($base . KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit', false)) . '">' . Text::_('COM_KUNENA_DIGEST_SETTINGS') . '</a>'
-        ) . '</p>';
 
         try {
-            $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-            $mail->setSubject(MailHelper::cleanSubject(Text::plural('COM_KUNENA_DIGEST_SUBJECT', $count, (string) $config->boardTitle)));
-            $mail->setSender([$config->email, (string) $config->boardTitle]);
-            $mail->isHtml(true);
-            $mail->setBody($body);
+            $config = KunenaFactory::getConfig();
+            $base   = rtrim(Uri::getInstance()->toString(['scheme', 'host', 'port']), '/');
+            $escape = static fn (string $text): string => htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+            $count  = array_sum(array_map('count', $topics));
+            $body   = '<p>' . Text::plural('COM_KUNENA_DIGEST_INTRO', $count, $escape((string) $config->boardTitle)) . '</p>';
 
-            return (bool) KunenaEmail::send($mail, [$user->email]);
-        } catch (Exception $e) {
-            return false;
+            foreach ($topics as $list) {
+                $topic = $list[0]->getTopic();
+                $body .= '<h2 style="font-size:1.1em;margin:1.2em 0 .4em">'
+                    . '<a href="' . $escape(KunenaEmail::utm($base . $list[0]->getPermaUrl(null, false))) . '">' . $escape((string) $topic->subject) . '</a></h2><ul>';
+
+                foreach ($list as $message) {
+                    $body .= '<li><strong>' . $escape((string) $message->getAuthor()->getName('', false)) . '</strong> &middot; '
+                        . $escape($message->getTime()->toKunena('datetime', $timezone)) . '<br>'
+                        . $escape((string) mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags(KunenaParser::stripBBCode((string) $message->message, 0, false)))), 0, 200, 'UTF-8'))
+                        . ' <a href="' . $escape(KunenaEmail::utm($base . $message->getPermaUrl(null, false))) . '">' . Text::_('COM_KUNENA_DIGEST_READ') . '</a></li>';
+                }
+
+                $body .= '</ul>';
+            }
+
+            if ($more) {
+                $body .= '<p>' . Text::plural('COM_KUNENA_DIGEST_MORE', $more) . '</p>';
+            }
+
+            $body .= '<p style="font-size:.9em;color:#666">' . Text::sprintf(
+                'COM_KUNENA_DIGEST_FOOTER',
+                '<a href="' . $escape($base . KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit', false)) . '">' . Text::_('COM_KUNENA_DIGEST_SETTINGS') . '</a>'
+            ) . '</p>';
+
+            try {
+                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                $mail->setSubject(MailHelper::cleanSubject(Text::plural('COM_KUNENA_DIGEST_SUBJECT', $count, (string) $config->boardTitle)));
+                $mail->setSender([$config->email, (string) $config->boardTitle]);
+                $mail->isHtml(true);
+                $mail->setBody($body);
+
+                return (bool) KunenaEmail::send($mail, [$user->email]);
+            } catch (Exception $e) {
+                return false;
+            }
+        } finally {
+            if ($switch) {
+                KunenaFactory::loadLanguageMail('com_kunena', 'site', $currentLanguage);
+            }
         }
     }
 

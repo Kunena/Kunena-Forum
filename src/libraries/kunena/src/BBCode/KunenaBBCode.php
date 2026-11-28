@@ -1088,6 +1088,22 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'plain_end'     => "",
             'plain_content' => [],
         ],
+
+        // [hr] is [rule]: SCEditor writes it (its button of the horizontal line), the reports of plg_kunena_reports have it, and the
+        // help of the editor shows it. Without the rule it was shown as text.
+        'hr' => [
+            'mode'          => BBCode::BBCODE_MODE_LIBRARY,
+            'method'        => "doRule",
+            'class'         => 'block',
+            'allow_in'      => ['listitem', 'block', 'columns'],
+            'end_tag'       => BBCode::BBCODE_PROHIBIT,
+            'content'       => BBCode::BBCODE_PROHIBIT,
+            'before_tag'    => "sns",
+            'after_tag'     => "sns",
+            'plain_start'   => "\n-----\n",
+            'plain_end'     => "",
+            'plain_content' => [],
+        ],
         'br' => [
             'mode'          => BBCode::BBCODE_MODE_SIMPLE,
             'simple_start'  => "<br>\n",

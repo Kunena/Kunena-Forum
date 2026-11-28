@@ -113,6 +113,13 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             return;
         }
 
+        // The registrations of the site only: an administrator who creates a user (the backend, the web services, the command line)
+        // was checked with his own address, so an administrator on a listed address could create no user, and a user whom he chose
+        // to create was refused for his e-mail.
+        if (!$this->getApplication()->isClient('site')) {
+            return;
+        }
+
         if (!KunenaConfig::getInstance()->stopForumSpamNewUserCheck) {
             // Checking of new user is disabled
             return;

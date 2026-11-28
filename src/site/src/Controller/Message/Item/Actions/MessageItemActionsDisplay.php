@@ -502,32 +502,36 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                 );
             }
 
-            $this->messageButtons->set(
-                'delete',
-                $this->getButton(
-                    \sprintf($task, 'delete'),
+            // Only with the right to delete it, as for the other messages: its author saw a Delete which the task refused (a reply
+            // under "only without replies", a locked topic).
+            if ($this->message->isAuthorised('delete')) {
+                $this->messageButtons->set(
                     'delete',
-                    'message',
-                    'moderation',
-                    'delete',
-                    $button,
-                    KunenaIcons::delete()
-                )->set('confirm', Text::_('COM_KUNENA_MESSAGE_DELETE_CONFIRM'))
-            );
+                    $this->getButton(
+                        \sprintf($task, 'delete'),
+                        'delete',
+                        'message',
+                        'moderation',
+                        'delete',
+                        $button,
+                        KunenaIcons::delete()
+                    )->set('confirm', Text::_('COM_KUNENA_MESSAGE_DELETE_CONFIRM'))
+                );
 
-            // Dropdown Item version
-            $this->messageButtons->set(
-                'delete_dropdown',
-                $this->getButton(
-                    \sprintf($task, 'delete'),
-                    'delete',
-                    'message',
-                    'moderation',
-                    'delete',
-                    true,
-                    KunenaIcons::delete()
-                )->set('confirm', Text::_('COM_KUNENA_MESSAGE_DELETE_CONFIRM'))
-            );
+                // Dropdown Item version
+                $this->messageButtons->set(
+                    'delete_dropdown',
+                    $this->getButton(
+                        \sprintf($task, 'delete'),
+                        'delete',
+                        'message',
+                        'moderation',
+                        'delete',
+                        true,
+                        KunenaIcons::delete()
+                    )->set('confirm', Text::_('COM_KUNENA_MESSAGE_DELETE_CONFIRM'))
+                );
+            }
         } elseif ($this->message->hold == 2 || $this->message->hold == 3) {
             // Not in a topic in the trash, which is restored as a whole (the task refuses it, as for the approval above).
             if ($this->message->isAuthorised('undelete') && (int) $this->message->getTopic()->hold < 2) {

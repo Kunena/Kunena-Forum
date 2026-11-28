@@ -833,6 +833,13 @@
                 ENGINE = InnoDB
                 DEFAULT CHARSET = utf8mb4
                 DEFAULT COLLATE = utf8mb4_unicode_ci</query>
+            <!-- The language of a category and of a topic (a multilingual forum): they were in the install only, so an upgraded site
+                 had no column, its lists ended in an error on a multilingual site and the language of a topic was never saved -->
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `language` varchar(7) NOT NULL DEFAULT '*' AFTER `allowRatings`</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD `language` varchar(7) NOT NULL DEFAULT '*' AFTER `params`, ADD KEY `language` (`language`)</query>
+            <!-- A forum installed with 7.1 had no column of the age and birthdate choice (the install of 7.1 missed it, and the step
+                 of 7.1.0-BETA2 runs only for older versions): every save of a profile was an error -->
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `displayAgeBirthdate` tinyint(1) NOT NULL default '1' AFTER `showOnline`</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

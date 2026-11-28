@@ -159,3 +159,9 @@ DELETE a FROM `#__kunena_private_attachment_map` AS a LEFT JOIN `#__kunena_priva
 -- The title and the image of a rank are 255 characters, as in the schema: the install file of the first versions of 6.x made them 250.
 ALTER TABLE `#__kunena_ranks` MODIFY `rankTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '';
 ALTER TABLE `#__kunena_ranks` MODIFY `rankImage` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL;
+-- The language of a category and of a topic: in the install only, an upgraded site had no column (errors in the lists of a multilingual site, the language of a topic not saved).
+ALTER TABLE `#__kunena_categories` ADD COLUMN `language` varchar(7) NOT NULL DEFAULT '*' AFTER `allowRatings`;
+ALTER TABLE `#__kunena_topics` ADD COLUMN `language` varchar(7) NOT NULL DEFAULT '*' AFTER `params`;
+ALTER TABLE `#__kunena_topics` ADD INDEX `language` (`language`);
+-- The choice of the age and the birthdate of a profile: a forum installed with 7.1 had no column, and every save of a profile was an error.
+ALTER TABLE `#__kunena_users` ADD COLUMN `displayAgeBirthdate` tinyint(1) NOT NULL default '1' AFTER `showOnline`;

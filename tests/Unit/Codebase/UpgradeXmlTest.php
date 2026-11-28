@@ -61,6 +61,30 @@ class UpgradeXmlTest extends UnitTestCase
         $this->assertSame([], $missing);
     }
 
+    /**
+     * The columns which the install of 8.0 has and an upgraded forum lacked: the language of a category and of a topic (in the
+     * install only: on a multilingual site the lists ended in an error, and the language of a topic was never saved), and the choice
+     * of the age of a profile (the install of 7.1 missed it, and the step of 7.1.0-BETA2 runs only for older versions: every save
+     * of a profile was an error). The block of 8.0 adds them (it runs on every upgrade to 8.0), and the update file too (the page
+     * Database of Joomla and the update of a Git checkout read it).
+     */
+    public function testTheColumnsOfTheInstallWhichAnUpgradeLackedAreAdded(): void
+    {
+        $xml     = new SimpleXMLElement(Files::read(self::UPGRADE));
+        $queries = implode("\n", array_map(static fn ($query) => self::normalise((string) $query), $xml->xpath("//upgrade/version[@version='8.0.0-DEV']/query")));
+        $update  = Files::read(self::UPDATE);
+        $install = Files::read(self::INSTALL);
+
+        foreach (['kunena_categories' => 'language', 'kunena_topics' => 'language', 'kunena_users' => 'displayAgeBirthdate'] as $table => $column) {
+            $this->assertMatchesRegularExpression('/`' . $column . '`\s/', $install, "$table.$column is in the install");
+            $this->assertMatchesRegularExpression('/ALTER TABLE `#__' . $table . '` ADD `' . $column . '` /', $queries, "$table.$column in the block of 8.0");
+            $this->assertMatchesRegularExpression('/ALTER TABLE `#__' . $table . '` ADD COLUMN `' . $column . '` /', $update, "$table.$column in the update file");
+        }
+
+        $this->assertStringContainsString('ADD KEY `language` (`language`)', $queries);
+        $this->assertStringContainsString('ALTER TABLE `#__kunena_topics` ADD INDEX `language` (`language`);', $update);
+    }
+
     public function testEveryVersionBlockIsAChildOfTheUpgrade(): void
     {
         $xml = new SimpleXMLElement(Files::read(self::UPGRADE));

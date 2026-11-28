@@ -457,9 +457,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $allowed = $read[$user->userid];
 
-        // On a multilingual site the categories of another language are left out (the list above keeps them, as it is kept for
-        // all languages).
-        if (KunenaMultilanguage::isEnabled()) {
+        // On a multilingual site the categories of another language are left out for the visitor (the list above keeps them, as it
+        // is kept for all languages). Not for another user, the subscriber of an e-mail: the language is the one of the page which
+        // sends it (the scheduler runs in the request of any visitor), and the e-mails of the categories of the other languages
+        // were dropped from the queue and the digest, as sent.
+        if (KunenaMultilanguage::isEnabled() && $user->userid == KunenaUserHelper::getMyself()->userid) {
             $byLanguage = &$this->allowedCategoriesByLanguage;
 
             $key = KunenaMultilanguage::getCurrent() . '|' . $user->userid;

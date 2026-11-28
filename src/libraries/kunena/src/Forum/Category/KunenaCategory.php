@@ -916,16 +916,19 @@ class KunenaCategory extends KunenaDatabaseObject
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
         }
 
-        // On a multilingual site a category of another language is not shown.
-        if (!KunenaMultilanguage::isVisible($this->language)) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
-        }
+        // On a multilingual site a category of another language is not shown, and a category of another forum of the site neither:
+        // to the visitor, the language and the forum are those of his page. Not to another user (the subscriber of an e-mail, which
+        // the scheduler sends in the request of any visitor): the e-mails of the other languages were dropped as sent.
+        if ($user->userid == KunenaUserHelper::getMyself()->userid) {
+            if (!KunenaMultilanguage::isVisible($this->language)) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+            }
 
-        // A category of another forum of the site is not shown.
-        $scope = KunenaCategoryHelper::getForumScope();
+            $scope = KunenaCategoryHelper::getForumScope();
 
-        if ($scope !== null && !isset($scope[$this->id])) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+            if ($scope !== null && !isset($scope[$this->id])) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+            }
         }
 
         if (empty($catids[$this->id])) {

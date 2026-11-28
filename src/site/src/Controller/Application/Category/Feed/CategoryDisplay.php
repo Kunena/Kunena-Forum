@@ -117,6 +117,12 @@ class CategoryDisplay extends KunenaControllerDisplay
 
             $this->createItem($title, $url, $description, $this->category->name, $date, $userid, $username);
         }
+
+        // The title, the description, the image and the link of the feed: prepareDocument() runs for the controller of a page only,
+        // which the feed is not, so the feed had the title of the menu item ("Home"), no description and the host as its link. The
+        // feed is not rendered through a view, which would load the language file of the title.
+        KunenaFactory::loadLanguage('com_kunena.views');
+        $this->prepareDocument();
     }
 
     /**
@@ -131,13 +137,20 @@ class CategoryDisplay extends KunenaControllerDisplay
         $title = Text::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
         $this->setTitle($title);
 
-        $metaDesc = $this->document->getDescription() . '. ' . KunenaParser::parseText($this->category->name . ' - ' . $this->config->boardTitle);
-        $this->setDescription($metaDesc);
+        $metaDesc = KunenaParser::parseText($this->category->name . ' - ' . $this->config->boardTitle);
+        $current  = trim((string) $this->document->getDescription());
+        $this->setDescription($current !== '' ? $current . '. ' . $metaDesc : $metaDesc);
+
+        // The page of the category (the renderer of Joomla puts the host in front; without a link the feed had the host alone).
+        $this->document->link = $this->category->getUrl(null, false);
 
         // Create image for feed
         $image                 = new FeedImage();
         $image->title          = $this->document->getTitle();
-        $image->url            = KunenaFactory::getTemplate()->getImagePath('icons/rss.png');
+        // Addresses with the host: the renderer writes them as they are, a feed reader has no page to read a path against. The image
+        // of the feed is the one of Kunena (the image of the templates, icons/rss.png, is not there).
+        $image->url            = Uri::root() . 'media/kunena/core/images/icons/rss.png';
+        $image->link           = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->category->getUrl(null, false);
         $image->description    = $this->document->getDescription();
         $this->document->image = $image;
     }

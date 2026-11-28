@@ -26,6 +26,7 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\TopicsModel;
 
@@ -109,6 +110,10 @@ class TopicsDisplay extends KunenaControllerDisplay
         }
 
         $this->setTitle(Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT'));
+
+        // The link of the feed is the list of the forum (the renderer of Joomla puts the host in front; without a link the feed had
+        // the host alone).
+        $this->document->link = KunenaRoute::_('index.php?option=com_kunena&view=topics&mode=' . $mode, false);
 
         if ($mode == 'topics') {
             $this->topics = $this->topicsModel->getTopics();

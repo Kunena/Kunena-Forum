@@ -421,13 +421,15 @@ class KunenaTopicFinder extends KunenaFinder
                 $this->query->where($this->db->quoteName('ut.favorite') . ' != 1');
                 break;
             case 'subscribed':
-                $this->query->where($this->db->quoteName('ut.subscribed') . ' = 1');
+                // 2 is a subscription too: "first new post only" sets it when it sent the mail, until the user reads the topic (the
+                // topic left the subscriptions of the user, and the tools which end subscriptions left it).
+                $this->query->where($this->db->quoteName('ut.subscribed') . ' > 0');
                 break;
             case '!subscribed':
-                $this->query->where($this->db->quoteName('ut.subscribed') . ' != 1');
+                $this->query->where($this->db->quoteName('ut.subscribed') . ' = 0');
                 break;
             case 'involved':
-                $this->query->where('(' . $this->db->quoteName('ut.posts') . ' > 0 OR ' . $this->db->quoteName('ut.favorite') . ' = 1 OR ' . $this->db->quoteName('ut.subscribed') . ' = 1)');
+                $this->query->where('(' . $this->db->quoteName('ut.posts') . ' > 0 OR ' . $this->db->quoteName('ut.favorite') . ' = 1 OR ' . $this->db->quoteName('ut.subscribed') . ' > 0)');
                 break;
             case '!involved':
                 $this->query->where('(' . $this->db->quoteName('ut.posts') . ' < 1 OR ' . $this->db->quoteName('ut.favorite') . ' = 0 OR ' . $this->db->quoteName('ut.subscribed') . ' = 0)');

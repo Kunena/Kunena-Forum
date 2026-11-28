@@ -66,7 +66,7 @@ class KunenaSubscriptions
             $query = $db->createQuery()
                 ->select('COUNT(' . $what . ')')
                 ->from($db->quoteName($table))
-                ->where($db->quoteName('subscribed') . ' = 1');
+                ->where($db->quoteName('subscribed') . ' > 0');
 
             return (int) $db->setQuery($query)->loadResult();
         };
@@ -75,7 +75,7 @@ class KunenaSubscriptions
             ->select([$db->quoteName('c.id'), $db->quoteName('c.name'), 'COUNT(*) AS ' . $db->quoteName('total')])
             ->from($db->quoteName('#__kunena_user_categories', 's'))
             ->innerJoin($db->quoteName('#__kunena_categories', 'c') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('s.category_id'))
-            ->where($db->quoteName('s.subscribed') . ' = 1')
+            ->where($db->quoteName('s.subscribed') . ' > 0')
             ->group([$db->quoteName('c.id'), $db->quoteName('c.name')])
             ->order('COUNT(*) DESC');
         $topCategories = (array) $db->setQuery($query, 0, self::LIMIT)->loadAssocList();
@@ -84,14 +84,14 @@ class KunenaSubscriptions
             ->select([$db->quoteName('t.id'), $db->quoteName('t.subject'), $db->quoteName('t.category_id'), 'COUNT(*) AS ' . $db->quoteName('total')])
             ->from($db->quoteName('#__kunena_user_topics', 's'))
             ->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('s.topic_id'))
-            ->where($db->quoteName('s.subscribed') . ' = 1')
+            ->where($db->quoteName('s.subscribed') . ' > 0')
             ->group([$db->quoteName('t.id'), $db->quoteName('t.subject'), $db->quoteName('t.category_id')])
             ->order('COUNT(*) DESC');
         $topTopics = (array) $db->setQuery($query, 0, self::LIMIT)->loadAssocList();
 
         // The subscriptions of each user: to categories and to topics.
-        $union = '(SELECT ' . $db->quoteName('user_id') . ' FROM ' . $db->quoteName('#__kunena_user_categories') . ' WHERE ' . $db->quoteName('subscribed') . ' = 1'
-            . ' UNION ALL SELECT ' . $db->quoteName('user_id') . ' FROM ' . $db->quoteName('#__kunena_user_topics') . ' WHERE ' . $db->quoteName('subscribed') . ' = 1)';
+        $union = '(SELECT ' . $db->quoteName('user_id') . ' FROM ' . $db->quoteName('#__kunena_user_categories') . ' WHERE ' . $db->quoteName('subscribed') . ' > 0'
+            . ' UNION ALL SELECT ' . $db->quoteName('user_id') . ' FROM ' . $db->quoteName('#__kunena_user_topics') . ' WHERE ' . $db->quoteName('subscribed') . ' > 0)';
         $query = $db->createQuery()
             ->select([$db->quoteName('u.id'), $db->quoteName('u.username'), 'COUNT(*) AS ' . $db->quoteName('total')])
             ->from($union . ' AS ' . $db->quoteName('s'))
@@ -137,7 +137,7 @@ class KunenaSubscriptions
             ->from($db->quoteName('#__kunena_user_categories', 's'))
             ->innerJoin($db->quoteName('#__kunena_categories', 'c') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('s.category_id'))
             ->where($db->quoteName('s.user_id') . ' = :id')
-            ->where($db->quoteName('s.subscribed') . ' = 1')
+            ->where($db->quoteName('s.subscribed') . ' > 0')
             ->bind(':id', $userid, ParameterType::INTEGER)
             ->order($db->quoteName('c.name'));
         $result['categories'] = (array) $db->setQuery($query)->loadAssocList();
@@ -147,7 +147,7 @@ class KunenaSubscriptions
             ->from($db->quoteName('#__kunena_user_topics', 's'))
             ->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('s.topic_id'))
             ->where($db->quoteName('s.user_id') . ' = :id')
-            ->where($db->quoteName('s.subscribed') . ' = 1')
+            ->where($db->quoteName('s.subscribed') . ' > 0')
             ->bind(':id', $userid, ParameterType::INTEGER)
             ->order($db->quoteName('t.last_post_time') . ' DESC');
         $result['topics'] = (array) $db->setQuery($query, 0, self::USER_LIMIT)->loadAssocList();
@@ -186,7 +186,7 @@ class KunenaSubscriptions
                 ->update($db->quoteName($table))
                 ->set($db->quoteName('subscribed') . ' = 0')
                 ->where($db->quoteName($column) . ' = :id')
-                ->where($db->quoteName('subscribed') . ' = 1')
+                ->where($db->quoteName('subscribed') . ' > 0')
                 ->bind(':id', $id, ParameterType::INTEGER);
 
             if ($userid > 0 && $scope !== 'user') {

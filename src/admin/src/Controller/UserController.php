@@ -299,7 +299,7 @@ class UserController extends FormController
                 ->update($db->quoteName($table))
                 ->set($db->quoteName('subscribed') . ' = 0')
                 ->where($db->quoteName('user_id') . ' = ' . $uid)
-                ->where($db->quoteName('subscribed') . ' = 1')
+                ->where($db->quoteName('subscribed') . ' > 0')
                 ->whereIn($db->quoteName($column), $ids);
             $db->setQuery($query);
 

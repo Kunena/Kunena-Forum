@@ -63,7 +63,7 @@ class UserModel extends KunenaModel
         $query = $db->createQuery();
         $query->select($db->quoteName('topic_id') . ' AS thread')
             ->from($db->quoteName('#__kunena_user_topics'))
-            ->where($db->quoteName('user_id') . ' = ' . $userid . ' AND ' . $db->quoteName('subscribed') . '=1');
+            ->where($db->quoteName('user_id') . ' = ' . $userid . ' AND ' . $db->quoteName('subscribed') . ' > 0');
         $db->setQuery($query);
 
         try {

@@ -532,7 +532,8 @@ abstract class KunenaTopicHelper
         }
 
         if (!empty($params['subscribed'])) {
-            $whereuser[] = $db->quoteName('ut.subscribed') . '=1';
+            // 2 is a subscription too ("first new post only" after its mail).
+            $whereuser[] = $db->quoteName('ut.subscribed') . ' > 0';
         }
 
         // Categories where the users only see their own topics.

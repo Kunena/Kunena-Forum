@@ -39,6 +39,6 @@ class TopicFormSubscriptionDefaultTest extends UnitTestCase
         $source = Files::read('src/site/src/Controller/Topic/Form/Edit/TopicFormEditDisplay.php');
 
         $this->assertStringNotContainsString('$this->config->subscriptionsChecked', $source);
-        $this->assertStringContainsString('if ($usertopic->subscribed == 1 || $this->category->getSubscribed($this->me->userid)) {', $source);
+        $this->assertStringContainsString('if ($usertopic->subscribed > 0 || $this->category->getSubscribed($this->me->userid)) {', $source);
     }
 }

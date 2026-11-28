@@ -58,11 +58,12 @@ class KunenaCategoryTransfer
     ];
 
     /**
-     * The options of the configuration which are never exported nor imported: the keys and passwords of the services.
+     * The options of the configuration which are never exported nor imported: the keys and passwords of the services (the Cert ID of
+     * eBay is its client secret: it went into the file, and an import put the one of the other site on this one).
      *
      * @since   Kunena 8.0
      */
-    public const SECRETS = ['XConsumerKey', 'XConsumerSecret', 'blueskyappPasswordOfApp', 'ebayApiKey', 'googleMapApiKey', 'stopForumSpamKey'];
+    public const SECRETS = ['XConsumerKey', 'XConsumerSecret', 'blueskyappPasswordOfApp', 'ebayApiKey', 'ebayCertId', 'googleMapApiKey', 'stopForumSpamKey'];
 
     /**
      * The ids of a category and of all the categories below it.

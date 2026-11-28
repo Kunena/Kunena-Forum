@@ -30,11 +30,12 @@ use Throwable;
 class KunenaSettingsSnapshot
 {
     /**
-     * The settings which stay on their site: their name matches this pattern, or they are in SITE.
+     * The settings which stay on their site: their name matches this pattern, or they are in SITE. The Cert ID of eBay is its client
+     * secret (it was shown, downloaded and kept in the history in clear).
      *
      * @since   Kunena 8.0
      */
-    public const SECRET = '/key|secret|password|token/i';
+    public const SECRET = '/key|secret|password|token|certid/i';
 
     /**
      * The settings of the site itself.

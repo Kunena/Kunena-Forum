@@ -3,6 +3,110 @@
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-licensing-options
  */
 :root, :host {
+  --ck-font-size-normal: initial;
+  --ck-font-face: initial;
+  --ck-radius-unit: initial;
+  --ck-border-radius: initial;
+  --ck-spacing-unit: initial;
+  --ck-spacing-medium-small: initial;
+  --ck-spacing-small: initial;
+  --ck-spacing-standard: initial;
+  --ck-spacing-tiny: initial;
+  --ck-spacing-large: initial;
+  --ck-spacing-extra-large: initial;
+  --ck-focus-outer-shadow: initial;
+  --ck-focus-disabled-outer-shadow: initial;
+  --ck-focus-error-outer-shadow: initial;
+  --ck-ui-component-min-height: initial;
+  --ck-disabled-opacity: initial;
+  --ck-font-size-small: initial;
+  --ck-color-button-default-background: initial;
+  --_ck-button-fallback-hover-text-color: initial;
+  --ck-color-button-on-background: initial;
+  --ck-color-button-on-hover-background: initial;
+  --ck-color-button-on-active-background: initial;
+  --ck-color-button-on-disabled-background: initial;
+  --ck-color-button-on-color: initial;
+  --ck-color-button-save: initial;
+  --ck-color-button-cancel: initial;
+  --ck-color-button-action-background: initial;
+  --ck-color-button-action-hover-background: initial;
+  --ck-color-button-action-active-background: initial;
+  --ck-color-button-action-disabled-background: initial;
+  --ck-color-button-action-text: initial;
+  --ck-color-switch-button-inner-shadow: initial;
+  --ck-color-switch-button-off-background: initial;
+  --ck-color-switch-button-inner-background: initial;
+  --ck-color-switch-button-off-hover-background: initial;
+  --ck-color-switch-button-on-background: initial;
+  --ck-color-switch-button-on-hover-background: initial;
+  --ck-color-list-background: initial;
+  --ck-color-list-button-hover-background: initial;
+  --ck-color-color-grid-check-icon: initial;
+  --ck-dialog-drop-shadow: initial;
+  --ck-color-dialog-background: initial;
+  --ck-color-dialog-form-header-border: initial;
+  --ck-dropdown-max-width: initial;
+  --ck-drop-shadow: initial;
+  --ck-color-dropdown-panel-background: initial;
+  --ck-color-dropdown-panel-border: initial;
+  --ck-color-split-button-hover-background: initial;
+  --ck-toolbar-dropdown-max-width: initial;
+  --ck-dropdown-menu-menu-panel-max-width: initial;
+  --ck-rounded-corners-radius: initial;
+  --ck-inner-shadow: initial;
+  --ck-color-editable-blur-selection: initial;
+  --ck-color-panel-background: initial;
+  --ck-color-input-background: initial;
+  --ck-color-input-border: initial;
+  --ck-color-input-text: initial;
+  --ck-color-input-disabled-border: initial;
+  --ck-color-input-disabled-background: initial;
+  --ck-color-input-disabled-text: initial;
+  --ck-color-input-error-border: initial;
+  --ck-color-labeled-field-label-background: initial;
+  --ck-font-size-tiny: initial;
+  --ck-labeled-field-label-default-position-y: initial;
+  --ck-color-list-button-on-background: initial;
+  --ck-color-list-button-on-text: initial;
+  --ck-color-list-button-on-background-focus: initial;
+  --ck-balloon-border-width: initial;
+  --ck-color-panel-border: initial;
+  --ck-balloon-panel-arrow-z-index: initial;
+  --ck-balloon-arrow-drop-shadow: initial;
+  --ck-color-toolbar-background: initial;
+  --ck-balloon-fake-panel-offset-horizontal: initial;
+  --ck-balloon-fake-panel-offset-vertical: initial;
+  --ck-spacing-medium: initial;
+  --ck-color-tooltip-background: initial;
+  --ck-color-tooltip-text: initial;
+  --ck-color-toolbar-border: initial;
+  --ck-color-block-toolbar-button: initial;
+  --ck-block-toolbar-size: initial;
+  --ck-menu-bar-menu-max-width: initial;
+  --ck-menu-bar-nested-menu-horizontal-offset: initial;
+  --ck-color-widget-hover-border: initial;
+  --ck-document-outline-item-default-color: initial;
+  --ck-color-widget-blurred-border: initial;
+  --ck-content-image-caption-background-color: initial;
+  --ck-content-image-caption-text-color: initial;
+  --ck-spacing-extra-tiny: initial;
+  --ck-content-mention-background: initial;
+  --ck-content-mention-text-color: initial;
+  --ck-content-table-caption-background-color: initial;
+  --ck-content-table-caption-text-color: initial;
+  --ck-color-widget-editable-focus-background: initial;
+  --ck-color-widget-drag-handler-icon-color: initial;
+  --ck-color-resizer-tooltip-background: initial;
+  --ck-color-resizer-tooltip-text: initial;
+  --ck-color-resizer: initial;
+  --ck-color-widget-type-around-button: initial;
+  --ck-color-widget-type-around-button-icon: initial;
+  --ck-color-widget-type-around-button-hover: initial;
+  --ck-color-widget-type-around-button-active: initial;
+  --ck-color-widget-type-around-button-blurred-editable: initial;
+  --ck-color-widget-type-around-button-radar-start-alpha: initial;
+  --ck-color-widget-type-around-button-radar-end-alpha: initial;
   --ck-color-base-foreground: #f7f7f7;
   --ck-color-base-background: #fff;
   --ck-color-base-border: #c9d1dc;
@@ -122,6 +226,7 @@
   --ck-opacity-disabled: .5;
   --ck-focus-shadow-spread: 3px;
   --ck-focus-shadow-geometry: 0 0 0 var(--ck-focus-shadow-spread);
+  --ck-focus-outer-shadow-geometry: var(--ck-focus-shadow-geometry);
   --ck-focus-shadow: var(--ck-focus-outer-shadow-geometry, var(--ck-focus-shadow-geometry)) var(--ck-color-focus-outer-shadow);
   --ck-focus-shadow-disabled: var(--ck-focus-outer-shadow-geometry, var(--ck-focus-shadow-geometry)) var(--ck-color-focus-disabled-shadow);
   --ck-focus-shadow-error: var(--ck-focus-outer-shadow-geometry, var(--ck-focus-shadow-geometry)) var(--ck-color-focus-error-shadow);
@@ -1335,8 +1440,9 @@
     }
 
     & > .ck-icon {
+      --ck-collapsible-arrow-size: calc(.5 * var(--ck-icon-size));
       margin-right: var(--ck-spacing-control-icon-gap);
-      width: var(--ck-collapsible-arrow-size, calc(.5 * var(--ck-icon-size)));
+      width: var(--ck-collapsible-arrow-size);
     }
   }
 
@@ -2506,6 +2612,7 @@
 }
 
 .ck.ck-labeled-field-view {
+  --ck-labeled-field-empty-unfocused-max-width: calc(100% - var(--ck-labeled-field-label-start-gap) - var(--ck-labeled-field-label-start-gap));
   border-radius: var(--ck-rounded-corners-radius, var(--ck-radius-corners));
 
   & .ck.ck-label {
@@ -2581,7 +2688,7 @@
       transform: translate(calc(-1 * var(--ck-labeled-field-label-default-position-x, var(--ck-labeled-field-label-start-gap))), var(--ck-labeled-field-label-default-position-y, calc((var(--ck-size-control-min-height) - 1lh) / 2))) scale(1);
     }
 
-    max-width: var(--ck-labeled-field-empty-unfocused-max-width, calc(100% - 2 * var(--ck-labeled-field-label-start-gap)));
+    max-width: var(--ck-labeled-field-empty-unfocused-max-width);
     background: none;
     padding: 0;
   }
@@ -2596,7 +2703,8 @@
   }
 
   &.ck-labeled-field-view_empty:not(.ck-labeled-field-view_focused):not(.ck-labeled-field-view_placeholder) > .ck.ck-labeled-field-view__input-wrapper > .ck-dropdown + .ck-label {
-    max-width: var(--ck-labeled-field-empty-unfocused-max-width, calc(100% - 2 * var(--ck-labeled-field-label-start-gap) - var(--ck-dropdown-arrow-size) - var(--ck-spacing-control-padding-inline)));
+    --ck-labeled-field-empty-unfocused-max-width: calc(100% - var(--ck-labeled-field-label-start-gap) - var(--ck-labeled-field-label-start-gap) - var(--ck-dropdown-arrow-size) - var(--ck-spacing-control-padding-inline));
+    max-width: var(--ck-labeled-field-empty-unfocused-max-width);
   }
 
   &.ck-labeled-field-view_full-width {
@@ -3101,6 +3209,7 @@
 }
 
 .ck.ck-search {
+  --ck-search-field-view-horizontal-spacing: calc(var(--ck-icon-size) + var(--ck-spacing-medium, var(--ck-spacing-base)));
   & > .ck-labeled-field-view {
     & .ck-input {
       width: 100%;
@@ -3127,7 +3236,7 @@
     }
 
     &.ck-search__query_with-icon {
-      --ck-labeled-field-label-default-position-x: var(--ck-search-field-view-horizontal-spacing, calc(var(--ck-icon-size) + var(--ck-spacing-medium, var(--ck-spacing-base))));
+      --ck-labeled-field-label-default-position-x: var(--ck-search-field-view-horizontal-spacing);
 
       & .ck-icon {
         font-size: var(--ck-input-font-size);
@@ -3142,22 +3251,22 @@
         width: 100%;
 
         [dir="ltr"] & {
-          padding-left: var(--ck-search-field-view-horizontal-spacing, calc(var(--ck-icon-size) + var(--ck-spacing-medium, var(--ck-spacing-base))));
+          padding-left: var(--ck-search-field-view-horizontal-spacing);
         }
 
         [dir="rtl"] & {
           &:not(.ck-input-text_empty) {
-            padding-left: var(--ck-search-field-view-horizontal-spacing, calc(var(--ck-icon-size) + var(--ck-spacing-medium, var(--ck-spacing-base))));
+            padding-left: var(--ck-search-field-view-horizontal-spacing);
           }
         }
       }
     }
 
     &.ck-search__query_with-reset {
-      --ck-labeled-field-empty-unfocused-max-width: 100% - 2 * var(--ck-search-field-view-horizontal-spacing, calc(var(--ck-icon-size) + var(--ck-spacing-medium, var(--ck-spacing-base))));
+      --ck-labeled-field-empty-unfocused-max-width: calc(100% - 2 * var(--ck-search-field-view-horizontal-spacing));
 
       &.ck-labeled-field-view_empty {
-        --ck-labeled-field-empty-unfocused-max-width: 100% - var(--ck-search-field-view-horizontal-spacing, calc(var(--ck-icon-size) + var(--ck-spacing-medium, var(--ck-spacing-base)))) - var(--ck-spacing-control-icon-gap);
+        --ck-labeled-field-empty-unfocused-max-width: calc(100% - var(--ck-search-field-view-horizontal-spacing) - var(--ck-spacing-control-icon-gap));
       }
 
       & .ck-search__reset {
@@ -3185,12 +3294,12 @@
 
         [dir="ltr"] & {
           &:not(.ck-input-text_empty) {
-            padding-right: var(--ck-search-field-view-horizontal-spacing, calc(var(--ck-icon-size) + var(--ck-spacing-medium, var(--ck-spacing-base))));
+            padding-right: var(--ck-search-field-view-horizontal-spacing);
           }
         }
 
         [dir="rtl"] & {
-          padding-right: var(--ck-search-field-view-horizontal-spacing, calc(var(--ck-icon-size) + var(--ck-spacing-medium, var(--ck-spacing-base))));
+          padding-right: var(--ck-search-field-view-horizontal-spacing);
         }
       }
     }
@@ -4187,6 +4296,7 @@
     outline: var(--ck-widget-outline-thickness) solid var(--ck-clipboard-drop-target-color) !important;
   }
 
+  /*noinspection CssInvalidPseudoSelector*/
   & .ck-widget:-webkit-drag {
     zoom: .6;
     outline: none !important;
@@ -6508,6 +6618,7 @@ a.ck.ck-button.ck-link-toolbar__preview {
   pointer-events: none;
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 .ck .ck-widget.media:-webkit-drag > .ck-widget__resizer {
   display: none;
 }
@@ -6855,6 +6966,48 @@ div.ck.ck-balloon-panel.ck-mention-balloon {
 
 :root, :host {
   --ck-show-blocks-border-color: var(--ck-color-base-text-light);
+  --ck-show-blocks-label-address-ltr: none;
+  --ck-show-blocks-label-address-rtl: none;
+  --ck-show-blocks-label-aside-ltr: none;
+  --ck-show-blocks-label-aside-rtl: none;
+  --ck-show-blocks-label-blockquote-ltr: none;
+  --ck-show-blocks-label-blockquote-rtl: none;
+  --ck-show-blocks-label-details-ltr: none;
+  --ck-show-blocks-label-details-rtl: none;
+  --ck-show-blocks-label-div-ltr: none;
+  --ck-show-blocks-label-div-rtl: none;
+  --ck-show-blocks-label-footer-ltr: none;
+  --ck-show-blocks-label-footer-rtl: none;
+  --ck-show-blocks-label-h1-ltr: none;
+  --ck-show-blocks-label-h1-rtl: none;
+  --ck-show-blocks-label-h2-ltr: none;
+  --ck-show-blocks-label-h2-rtl: none;
+  --ck-show-blocks-label-h3-ltr: none;
+  --ck-show-blocks-label-h3-rtl: none;
+  --ck-show-blocks-label-h4-ltr: none;
+  --ck-show-blocks-label-h4-rtl: none;
+  --ck-show-blocks-label-h5-ltr: none;
+  --ck-show-blocks-label-h5-rtl: none;
+  --ck-show-blocks-label-h6-ltr: none;
+  --ck-show-blocks-label-h6-rtl: none;
+  --ck-show-blocks-label-header-ltr: none;
+  --ck-show-blocks-label-header-rtl: none;
+  --ck-show-blocks-label-main-ltr: none;
+  --ck-show-blocks-label-main-rtl: none;
+  --ck-show-blocks-label-nav-ltr: none;
+  --ck-show-blocks-label-nav-rtl: none;
+  --ck-show-blocks-label-pre-ltr: none;
+  --ck-show-blocks-label-pre-rtl: none;
+  --ck-show-blocks-label-ol-ltr: none;
+  --ck-show-blocks-label-ol-rtl: none;
+  --ck-show-blocks-label-ul-ltr: none;
+  --ck-show-blocks-label-ul-rtl: none;
+  --ck-show-blocks-label-p-ltr: none;
+  --ck-show-blocks-label-p-rtl: none;
+  --ck-show-blocks-label-section-ltr: none;
+  --ck-show-blocks-label-section-rtl: none;
+  --ck-show-blocks-label-figcaption-ltr: none;
+  --ck-show-blocks-label-figcaption-rtl: none;
 }
 
 .ck.ck-editor__editable.ck-editor__editable_inline.ck-show-blocks:not(.ck-widget) {

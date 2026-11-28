@@ -164,21 +164,11 @@ class UserController extends FormController
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY'), 'success');
             }
 
-            if ($type === 'save') {
-                $this->setModerate($user, $modCatids);
-            } else {
-                // Update moderator rights
-                $categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
+            // The same rights for Save and Apply: Apply had a copy of the old loop, which took the rights in the sections away (the
+            // list of the page has no sections).
+            $this->setModerate($user, $modCatids);
 
-                foreach ($categories as $category) {
-                    $category->setModerator($user, \in_array($category->id, $modCatids, true));
-                }
-
-                // Global moderator is a special case
-                if (KunenaUserHelper::getMyself()->isAdmin()) {
-                    KunenaAccess::getInstance()->setModerator(0, $user, \in_array(0, $modCatids, true));
-                }
-
+            if ($type !== 'save') {
                 $this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
             }
         }

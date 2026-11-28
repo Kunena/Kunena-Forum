@@ -35,4 +35,14 @@ class UserSaveModeratorHiddenCategoriesTest extends UnitTestCase
         $this->assertSame(1, preg_match('/protected function setModerate\(.*?\n    \}\n/s', $controller, $m));
         $this->assertMatchesRegularExpression("/if \(\\\$category->isSection\(\)\) \{\n\s*continue;\n\s*\}\n\n\s*\\\$category->setModerator\(/", $m[0]);
     }
+
+    public function testApplyKeepsThemAsSaveDoes(): void
+    {
+        // Apply (user.applychanges) had a copy of the old loop, which took the rights in the sections away; only Save was fixed.
+        $controller = str_replace("\r\n", "\n", Files::read('src/admin/src/Controller/UserController.php'));
+
+        $this->assertSame(1, preg_match('/protected function saveInternal\(.*?\n    \}\n/s', $controller, $m));
+        $this->assertStringNotContainsString('->setModerator(', $m[0]);
+        $this->assertSame(1, substr_count($m[0], '$this->setModerate($user, $modCatids);'));
+    }
 }

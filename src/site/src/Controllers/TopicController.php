@@ -3480,6 +3480,15 @@ class TopicController extends KunenaController
             return; // -- abort
         }
 
+        // Only what is deleted is restored: a message or a topic which waits for approval (an old link, a stale page) was published
+        // without the approval, its notifications and the mails of its mentions.
+        if ((int) $target->hold < KunenaForum::DELETED) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_UNDELETE_NOT_DELETED'), 'notice');
+            $this->setRedirectBack();
+
+            return;
+        }
+
         // A message of a topic in the trash (the trash puts its messages there with it): restoring it published the topic again with
         // that message only, the other messages stayed in the trash and the topic had no button to restore them any more.
         if (isset($message) && (int) $topic->hold >= KunenaForum::DELETED) {

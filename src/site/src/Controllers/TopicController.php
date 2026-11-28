@@ -1267,6 +1267,9 @@ class TopicController extends KunenaController
                         $captcha = Captcha::getInstance((string) $plugin, ['namespace' => 'kunena_captcha']);
 
                         if (!$captcha->checkAnswer($app->getInput()->post->getString('captcha', ''))) {
+                            // The captcha of Joomla (and others) says false without a message of its own: the form came back
+                            // without a word of why.
+                            $app->enqueueMessage(Text::_('COM_KUNENA_POST_ERROR_CAPTCHA'), 'error');
                             $this->setRedirectBack();
 
                             return;

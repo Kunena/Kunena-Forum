@@ -352,7 +352,9 @@ class SearchModel extends KunenaModel
     public function getSearchWords()
     {
         // Accept individual words and quoted strings
-        $splitPattern = '/[\s,]*\'([^\']+)\'[\s,]*|[\s,]*"([^"]+)"[\s,]*|[\s,]+/u';
+        // A phrase in single quotes begins and ends at the border of a word: an apostrophe in a word (l'été, don't) opened a phrase,
+        // and "don't won't" was searched as "don", "t won" and "t".
+        $splitPattern = '/[\s,]*(?<![^\s,])\'([^\']+)\'(?![^\s,])[\s,]*|[\s,]*"([^"]+)"[\s,]*|[\s,]+/u';
         $searchwords  = preg_split($splitPattern, $this->getState('searchwords'), 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 
         $result = [];

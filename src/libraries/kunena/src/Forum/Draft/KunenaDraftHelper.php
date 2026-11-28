@@ -209,6 +209,23 @@ abstract class KunenaDraftHelper
         $subject = mb_substr(trim((string) $fields['subject']), 0, 255);
         // The text has a limit (more than any message): a user has up to MAX_DRAFTS drafts and the text is kept twice.
         $fields['message'] = mb_substr((string) $fields['message'], 0, static::MAX_LENGTH);
+
+        // The other fields too (they are kept in the column of the fields): the private part as the text, the short fields as a
+        // subject, the poll with at most 100 options. Only the text had a limit, so a private part of megabytes was kept in each of
+        // the drafts of a user, and one over the size of the column ended in an error of the database shown to the user.
+        $fields['private'] = mb_substr((string) $fields['private'], 0, static::MAX_LENGTH);
+
+        foreach (['subject', 'name', 'email', 'modified_reason', 'poll_title', 'poll_time_to_live', 'params'] as $name) {
+            if (\is_scalar($fields[$name])) {
+                $fields[$name] = mb_substr((string) $fields[$name], 0, 255);
+            }
+        }
+
+        $fields['poll_options'] = array_map(
+            static fn ($option) => mb_substr(\is_scalar($option) ? (string) $option : '', 0, 255),
+            \array_slice((array) $fields['poll_options'], 0, 100, true)
+        );
+
         $message           = $fields['message'];
         $catid             = (int) $fields['catid'];
         $json              = json_encode($fields, JSON_INVALID_UTF8_SUBSTITUTE);

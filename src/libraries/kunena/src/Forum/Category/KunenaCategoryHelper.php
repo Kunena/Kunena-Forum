@@ -1346,7 +1346,13 @@ abstract class KunenaCategoryHelper
             $roots = array_filter(array_map('intval', \is_array($roots) ? $roots : explode(',', (string) $roots)));
 
             if ($roots && isset(self::getCategoriesWithChildren($roots)[$catid])) {
-                $app->redirect(KunenaRoute::_($uri . '&Itemid=' . (int) $item->id, false), 301);
+                // With the page and the options of the request (as the redirects of a missing Itemid keep them): a link to the page
+                // 2 of a topic of another forum opened its first page.
+                parse_str((string) parse_url($uri, PHP_URL_QUERY), $vars);
+                $vars           = KunenaRoute::keepQuery($vars);
+                $vars['Itemid'] = (int) $item->id;
+
+                $app->redirect(KunenaRoute::_('index.php?' . http_build_query($vars), false), 301);
             }
         }
     }

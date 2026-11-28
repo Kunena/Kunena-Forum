@@ -81,6 +81,12 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
 
         $updateInfo = null;
 
+        // A manager of the forum who may not manage the installer does not see the updates: the icon of the forum without a state
+        // of its updates (it was the red "unsupported" icon, which says that the version of Kunena is not supported).
+        if (KunenaForum::installed() && !$app->getIdentity()->authorise('core.manage', 'com_installer')) {
+            $updateInfo = (object) ['version' => 0, 'addons' => 0];
+        }
+
         if (KunenaForum::installed() && $app->getIdentity()->authorise('core.manage', 'com_installer')) {
             $updateSite = 'https://update.kunena.org/%';
             /** @var DatabaseDriver $db */

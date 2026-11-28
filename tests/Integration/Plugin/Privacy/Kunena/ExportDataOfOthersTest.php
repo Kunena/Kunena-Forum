@@ -164,4 +164,50 @@ class ExportDataOfOthersTest extends IntegrationTestCase implements DBTestInterf
         $this->assertSame('Spam', $bans[0]['reason_public']);
         $this->assertArrayNotHasKey('comments', $bans[0]);
     }
+
+    /**
+     * A post of his which 7 edited, and a post of 7 which he edited (as a moderator).
+     */
+    private function edits(): void
+    {
+        $this->insertRows('#__kunena_messages', [
+            ['id' => 1, 'parent' => 0, 'thread' => 1, 'catid' => 2, 'userid' => self::USER, 'subject' => 'His'],
+            ['id' => 2, 'parent' => 0, 'thread' => 2, 'catid' => 2, 'userid' => self::OTHER, 'subject' => 'Of 7'],
+        ]);
+        $this->insertRows('#__kunena_messages_history', [
+            ['id' => 1, 'message_id' => 1, 'edited_by' => self::OTHER, 'edited_time' => 1000, 'subject' => 'His', 'message' => 'his former text'],
+            ['id' => 2, 'message_id' => 2, 'edited_by' => self::USER, 'edited_time' => 1000, 'subject' => 'Of 7', 'message' => 'the former text of 7'],
+        ]);
+    }
+
+    /**
+     * The edit history of his own posts (also the versions which a moderator made), not the former texts of the posts of others
+     * which he edited as a moderator.
+     */
+    public function testTheEditsAreTheFormerVersionsOfHisPosts(): void
+    {
+        $this->edits();
+
+        $edits = $this->export()['items']['kunena_user_edits'] ?? [];
+
+        $this->assertSame(['his former text'], array_column($edits, 'message'));
+    }
+
+    /**
+     * The removal keeps the versions which he made of the posts of others in their history, without his id: they were deleted.
+     */
+    public function testTheRemovalKeepsHisVersionsOfThePostsOfOthers(): void
+    {
+        $this->edits();
+
+        $event = $this->createStub(RemoveDataEvent::class);
+        $event->method('getUser')->willReturn($this->user());
+
+        (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor()->onPrivacyRemoveData($event);
+
+        $this->assertEquals(
+            [['id' => 1, 'edited_by' => self::OTHER], ['id' => 2, 'edited_by' => 0]],
+            $this->fetchAll('SELECT id, edited_by FROM #__kunena_messages_history ORDER BY id')
+        );
+    }
 }

@@ -155,7 +155,7 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         $domains[] = $this->createKunenaTableDomain('follows', '#__kunena_user_follow', 'user_id', $user->id);
         $domains[] = $this->createKunenaTableDomain('ignores', '#__kunena_user_ignore', 'user_id', $user->id);
         $domains[] = $this->createKunenaTableDomain('reactions', '#__kunena_reactions', 'user_id', $user->id);
-        $domains[] = $this->createKunenaTableDomain('edits', '#__kunena_messages_history', 'edited_by', $user->id);
+        $domains[] = $this->createKunenaEditsDomain($user->id);
         $domains[] = $this->createKunenaTableDomain('digest', '#__kunena_digest', 'user_id', $user->id);
         $domains[] = $this->createKunenaTableDomain('bookmarks', '#__kunena_bookmarks', 'user_id', $user->id);
         $domains[] = $this->createKunenaTableDomain('warnings', '#__kunena_warnings', 'user_id', $user->id);
@@ -240,6 +240,18 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         // those rows stayed, with his id.
         KunenaHelper::deleteUserData('#__kunena_karma', 'target_userid', $user->id);
         KunenaHelper::deleteUserData('#__kunena_reactions', 'user_id', $user->id);
+        // The versions which he made of the posts of other users stay in their history, without his id (they were deleted: the
+        // history of those posts lost them). The versions of his own posts go with the rest of his data.
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->update($db->quoteName('#__kunena_messages_history', 'h'))
+            ->innerJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('h.message_id'))
+            ->set($db->quoteName('h.edited_by') . ' = 0')
+            ->where($db->quoteName('h.edited_by') . ' = :editor')
+            ->where($db->quoteName('m.userid') . ' <> :author')
+            ->bind(':editor', $user->id, ParameterType::INTEGER)
+            ->bind(':author', $user->id, ParameterType::INTEGER);
+        $db->setQuery($query)->execute();
         KunenaHelper::deleteUserData('#__kunena_messages_history', 'edited_by', $user->id);
         KunenaHelper::deleteUserData('#__kunena_digest', 'user_id', $user->id);
         KunenaHelper::deleteUserData('#__kunena_bookmarks', 'user_id', $user->id);
@@ -520,6 +532,38 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
 
             // The follows and the ignore list have no id of their own.
             $domain->addItem($this->createItemFromArray($data, $data['id'] ?? null));
+        }
+
+        return $domain;
+    }
+
+    /**
+     * The former versions of the messages of the user (the edit history): his texts, whoever edited them. It was taken by the
+     * editor: the export of a moderator had the former texts of the posts of other users which he edited (often what he took out of
+     * them), and the export of a user lacked the former versions of his posts which a moderator edited.
+     *
+     * @param   int  $userid  The User ID
+     *
+     * @return  Domain
+     *
+     * @since   8.0
+     */
+    private function createKunenaEditsDomain(int $userid): Domain
+    {
+        $domain = $this->createDomain('kunena_user_edits', 'kunena_user_edits_data');
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        $query  = $db->createQuery()
+            ->select('h.*')
+            ->from($db->quoteName('#__kunena_messages_history', 'h'))
+            ->innerJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('h.message_id'))
+            ->where($db->quoteName('m.userid') . ' = :userid')
+            ->bind(':userid', $userid, ParameterType::INTEGER)
+            ->order($db->quoteName('h.id'));
+
+        foreach ((array) $db->setQuery($query)->loadAssocList() as $item) {
+            $data = KunenaHelper::processUserData($item, [], []);
+
+            $domain->addItem($this->createItemFromArray($data, $data['id']));
         }
 
         return $domain;

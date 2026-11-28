@@ -160,22 +160,24 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
             'moved' => $moved,
         ];
 
+        // The id last: the topics of the same number of views or posts, of the same subject or of the same second were in an order
+        // which the database chose for each page, so a topic was shown on two pages and another one on none.
         switch ($topicOrdering) {
             case 'alpha':
-                $params['orderby'] = 'tt.ordering DESC, tt.subject ASC ';
+                $params['orderby'] = 'tt.ordering DESC, tt.subject ASC, tt.id ASC';
                 break;
             case 'creation':
-                $params['orderby'] = 'tt.ordering DESC, tt.first_post_time ' . $direction;
+                $params['orderby'] = 'tt.ordering DESC, tt.first_post_time ' . $direction . ', tt.id ' . $direction;
                 break;
             case 'views':
-                $params['orderby'] = 'tt.ordering DESC, tt.hits ' . $direction;
+                $params['orderby'] = 'tt.ordering DESC, tt.hits ' . $direction . ', tt.id ' . $direction;
                 break;
             case 'posts':
-                $params['orderby'] = 'tt.ordering DESC, tt.posts ' . $direction;
+                $params['orderby'] = 'tt.ordering DESC, tt.posts ' . $direction . ', tt.id ' . $direction;
                 break;
             case 'lastpost':
             default:
-                $params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . $direction;
+                $params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . $direction . ', tt.id ' . $direction;
         }
 
         // On a multilingual site: the topics of the language of the page, or the language chosen in the address (flang).

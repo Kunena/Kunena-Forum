@@ -15,9 +15,11 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
@@ -37,6 +39,16 @@ if ($bootstrap) {
 }
 
 $tabs = $this->getTabs();
+
+// The tab of the address is opened (#banuser from the moderation of a post), as in the other profile layouts: this layout had lost
+// it, and "New Ban" opened the profile on its first tab, the form of the ban hidden in another one.
+Factory::getApplication()->getDocument()->getWebAssetManager()->registerAndUseScript(
+    'kunena.profile.tab',
+    Uri::root() . 'media/kunena/core/js/profile-tab.js',
+    ['version' => 'auto'],
+    ['defer' => true],
+    ['bootstrap.tab']
+);
 ?>
 
 <div class="agora-profile-columns">

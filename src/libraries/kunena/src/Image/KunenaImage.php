@@ -18,7 +18,6 @@ namespace Kunena\Forum\Libraries\Image;
 use Exception;
 use Joomla\CMS\Image\Image;
 use LogicException;
-use RuntimeException;
 use stdClass;
 
 \define('MIME_GIF', 'image/gif');
@@ -85,6 +84,13 @@ class KunenaImage extends Image
             throw new LogicException('No valid image was loaded.');
         }
 
+        // Only a JPEG has the orientation of the camera, and only when PHP can read it: a PNG, a GIF or a WebP gave the warning "File
+        // not supported" (shown, it broke the answer of the upload), and without the extension exif of PHP (Joomla does not need
+        // it) every picture which the server had to resize was refused.
+        if (!\function_exists('exif_read_data') || @exif_imagetype($this->getPath()) !== IMAGETYPE_JPEG) {
+            return;
+        }
+
         $angle  = 0;
         $flip   = 0;
 
@@ -146,8 +152,6 @@ class KunenaImage extends Image
                     $this->flip(IMG_FLIP_VERTICAL, false);
                 }
             }
-        } else {
-            throw new RuntimeException('Not possible to correct image orientation becasue exif_read_data() method not available', 500);
         }
     }
 

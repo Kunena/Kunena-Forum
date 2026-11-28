@@ -191,10 +191,12 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         $params   = json_decode((string) ($user['params'] ?? ''));
         $language = \is_object($params) ? (string) ($params->language ?? '') : '';
 
-        if ($language !== '' && \intval($user['id'] ?? 0) > 0) {
+        // Also back to the default language (an empty language in the parameters): the forum kept the old one, and the mails stayed
+        // in it. Parameters without the language (a save which has none) change nothing.
+        if (\is_object($params) && property_exists($params, 'language') && \intval($user['id'] ?? 0) > 0) {
             $kuser = KunenaFactory::getUser(\intval($user['id']));
 
-            if ($kuser->exists() && $kuser->language !== $language) {
+            if ($kuser->exists() && (string) $kuser->language !== $language) {
                 $kuser->language = $language;
                 $kuser->save();
             }

@@ -27,8 +27,8 @@ use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\User\KunenaAccountActionPolicy;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -141,8 +141,9 @@ class UsersController extends KunenaController
 
         if ($cid) {
             foreach ($cid as $id) {
-                // All the messages of the user (without nolimit only one page of them was trashed).
-                list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'nolimit' => -1, 'user' => $id]);
+                // All the messages of the user, the ones which wait for approval too (only the published ones were trashed: one
+                // approval of the queue published the others of a spammer).
+                $messages = KunenaUserCleanup::messages($id, ['recent', 'unapproved']);
 
                 foreach ($messages as $mes) {
                     $mes->publish(KunenaForum::DELETED);

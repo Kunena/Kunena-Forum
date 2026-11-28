@@ -29,8 +29,8 @@ use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -347,8 +347,9 @@ class UserController extends FormController
             $target = KunenaCategoryHelper::get($catid);
 
             foreach ($uids as $id) {
-                // All the messages of the user (without nolimit only one page of them was moved).
-                list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'nolimit' => -1, 'user' => $id]);
+                // All the messages of the user, the ones which wait for approval too (they stayed in the old category, and a topic of
+                // the user was split instead of moved, because they were left in it).
+                $messages = KunenaUserCleanup::messages((int) $id, ['recent', 'unapproved']);
 
                 // The messages of the user which may be moved, grouped by topic.
                 $topics        = [];

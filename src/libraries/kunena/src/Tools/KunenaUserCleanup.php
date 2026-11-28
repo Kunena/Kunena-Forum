@@ -339,19 +339,21 @@ class KunenaUserCleanup
     }
 
     /**
-     * All the messages of the user, the unapproved and the trashed ones too.
+     * All the messages of the user, the unapproved and the trashed ones too (or the ones of the given modes).
      *
-     * @param   int  $userid  The user.
+     * @param   int       $userid  The user.
+     * @param   string[]  $modes   The modes of KunenaMessageHelper::getLatestMessages(): recent (the published ones), unapproved,
+     *                             deleted.
      *
      * @return  array
      *
      * @since   Kunena 8.0
      */
-    private static function messages(int $userid): array
+    public static function messages(int $userid, array $modes = ['recent', 'unapproved', 'deleted']): array
     {
         $messages = [];
 
-        foreach (['recent', 'unapproved', 'deleted'] as $mode) {
+        foreach ($modes as $mode) {
             $params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $userid];
 
             if ($mode !== 'recent') {

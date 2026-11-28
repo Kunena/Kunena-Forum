@@ -54,15 +54,17 @@ $tiles = [
     [
         $newToday,
         Text::_('COM_KUNENA_TEMPLATE_AGORA_TILE_NEW_TODAY'),
-        KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=default&mode=topics'),
+        // The list of the same period (sel=24): without it the list had the period of the settings, a month.
+        KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=default&mode=topics&sel=24'),
     ],
 ];
 
 if ($me->exists()) {
-    $tiles[] = [(int) $me->posts, rtrim(Text::_('COM_KUNENA_POSTS'), ': '), KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=recent&userid=' . (int) $me->userid)];
+    // The numbers of all time, so the lists of all time (sel=-1, as the tabs of the profile): they stopped at the last month.
+    $tiles[] = [(int) $me->posts, rtrim(Text::_('COM_KUNENA_POSTS'), ': '), KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=recent&sel=-1&userid=' . (int) $me->userid)];
 
     if ($config->showThankYou) {
-        $tiles[] = [(int) $me->thankyou, Text::_('COM_KUNENA_THANK_YOU_RECEIVED'), KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=thankyou&userid=' . (int) $me->userid)];
+        $tiles[] = [(int) $me->thankyou, Text::_('COM_KUNENA_THANK_YOU_RECEIVED'), KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=thankyou&sel=-1&userid=' . (int) $me->userid)];
     }
 }
 ?>

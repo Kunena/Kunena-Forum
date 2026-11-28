@@ -167,7 +167,10 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
 
         try {
             $domains[] = $this->createKunenaTableDomain('inbox_received', '#__kunena_inbox', 'user_id', $user->id);
-            $domains[] = $this->createKunenaTableDomain('inbox_sent', '#__kunena_inbox', 'sender_id', $user->id);
+            // Only the private messages which he sent. A notification (a subscription, a follow, a thank you, a report) has the
+            // user who caused it as its sender: his export had the notifications of the subscribers of his topics, of his followers
+            // and of the moderators, with their ids and when they read them.
+            $domains[] = $this->createKunenaTableDomain('inbox_sent', '#__kunena_inbox', 'sender_id', $user->id, static fn (array $item): bool => ($item['type'] ?? '') === 'message');
         } catch (Exception $e) {
             // The inbox plugin is not installed.
         }
@@ -494,20 +497,25 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
     /**
      * Create the domain of the rows of a table which belong to the user.
      *
-     * @param   string  $name    The name of the domain (kunena_user_<name>).
-     * @param   string  $table   The table.
-     * @param   string  $field   The column with the id of the user.
-     * @param   int     $userid  The User ID
+     * @param   string         $name    The name of the domain (kunena_user_<name>).
+     * @param   string         $table   The table.
+     * @param   string         $field   The column with the id of the user.
+     * @param   int            $userid  The User ID
+     * @param   callable|null  $keep    Which rows are exported (a row as an array gives true), all when null.
      *
      * @return  Domain
      *
      * @since   7.2
      */
-    private function createKunenaTableDomain(string $name, string $table, string $field, int $userid): Domain
+    private function createKunenaTableDomain(string $name, string $table, string $field, int $userid, ?callable $keep = null): Domain
     {
         $domain = $this->createDomain('kunena_user_' . $name, 'kunena_user_' . $name . '_data');
 
         foreach (KunenaHelper::getUserItems($table, $field, $userid) as $item) {
+            if ($keep && !$keep($item)) {
+                continue;
+            }
+
             $data = KunenaHelper::processUserData($item, [], []);
 
             // The follows and the ignore list have no id of their own.

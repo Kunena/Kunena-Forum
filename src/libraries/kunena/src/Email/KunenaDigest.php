@@ -31,6 +31,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 
 /**
  * The digest of the subscriptions: a user who chose a daily or a weekly digest gets no e-mail for each new reply in the topics and
@@ -416,6 +417,12 @@ abstract class KunenaDigest
             $message = $messages[$id] ?? null;
 
             if (!$message instanceof KunenaMessage || !$message->exists() || (int) $message->hold !== 0 || !$message->isAuthorised('read', $user)) {
+                continue;
+            }
+
+            // A post of a user whom he ignores now (he may have started after the post was collected): the e-mails of the
+            // subscriptions leave those out, the digest still had them.
+            if (KunenaUserIgnore::isIgnoring((int) $user->userid, (int) $message->userid)) {
                 continue;
             }
 

@@ -1025,7 +1025,12 @@ class TopicController extends KunenaController
                         throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_TOO_MANY_PIXELS'), 400);
                     }
 
-                    if ($imageInfo->width > $this->config->imageWidth || $imageInfo->height > $this->config->imageHeight) {
+                    // A limit of 0 is no limit, as for the uploader of the editor: the picture was enlarged to the other limit (0 and
+                    // 800 made a picture of 300 x 200 one of 1200 x 800), or the upload ended in a division by zero (both 0).
+                    $maxWidth  = (int) $this->config->imageWidth > 0 ? (int) $this->config->imageWidth : (int) $imageInfo->width;
+                    $maxHeight = (int) $this->config->imageHeight > 0 ? (int) $this->config->imageHeight : (int) $imageInfo->height;
+
+                    if ($imageInfo->width > $maxWidth || $imageInfo->height > $maxHeight) {
                         // Calculate quality for both JPG and PNG.
                         $quality = $this->config->imageQuality;
 
@@ -1039,7 +1044,7 @@ class TopicController extends KunenaController
 
                         $image = new KunenaImage($uploadFile);
                         $image->correctImageOrientation();
-                        $image->resize($this->config->imageWidth, $this->config->imageHeight, false);
+                        $image->resize($maxWidth, $maxHeight, false);
 
                         $options = ['quality' => $quality];
                         $image->toFile($uploadFile, $imageInfo->type, $options);

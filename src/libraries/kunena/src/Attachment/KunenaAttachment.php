@@ -1366,7 +1366,12 @@ class KunenaAttachment extends KunenaDatabaseObject
                     return false;
                 }
 
-                if ($file->size / 1024 > (float) $config->imageSize || $imageInfo->width > $config->imageWidth || $imageInfo->height > $config->imageHeight) {
+                // A limit of 0 is no limit, as for the uploader of the editor: the picture was enlarged to the other limit, or the
+                // upload ended in a division by zero (both 0).
+                $maxWidth  = (int) $config->imageWidth > 0 ? (int) $config->imageWidth : (int) $imageInfo->width;
+                $maxHeight = (int) $config->imageHeight > 0 ? (int) $config->imageHeight : (int) $imageInfo->height;
+
+                if ($file->size / 1024 > (float) $config->imageSize || $imageInfo->width > $maxWidth || $imageInfo->height > $maxHeight) {
                     // Calculate quality for both JPG and PNG.
                     $quality = $config->imageQuality;
 
@@ -1382,7 +1387,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
                     try {
                         $image = new KunenaImage($uploadBasePath . $fileNameWithExt);
-                        $image = $image->resize($config->imageWidth, $config->imageHeight, false);
+                        $image = $image->resize($maxWidth, $maxHeight, false);
                         $image->toFile($uploadBasePath . $fileNameWithExt, $imageInfo->type, $options);
                         unset($image);
                     } catch (Exception $e) {

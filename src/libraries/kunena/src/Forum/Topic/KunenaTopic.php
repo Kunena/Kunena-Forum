@@ -1917,6 +1917,12 @@ class KunenaTopic extends KunenaDatabaseObject
                 throw new Exception($e->getMessage());
             }
 
+            // A move with a shadow: the new topic is the one which the readers read, the shadow is hidden in every list. Its tags go
+            // with it (they stayed on the shadow, and the topic was in the list of none of its tags).
+            if ($newTarget && !$ids) {
+                KunenaTopicTags::moveTo((int) $this->id, (int) $target->id);
+            }
+
             // The category counts the new topic (its posts are counted by the recount of the topics): a shown one only. The new
             // topic has the state of the old one, and a split of an unapproved or trashed topic added a topic which the category
             // does not count (and counted it again when it was approved or restored).

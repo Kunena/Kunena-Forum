@@ -147,6 +147,39 @@ abstract class KunenaTopicTags
     }
 
     /**
+     * The tags of a topic go to another topic: the topic which a move with a shadow makes (the clone gets a new id, and the readers
+     * read it; the shadow is hidden in every list).
+     *
+     * @param   int  $from  The topic which had the tags.
+     * @param   int  $to    The topic which gets them.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    public static function moveTo(int $from, int $to): void
+    {
+        if ($from < 1 || $to < 1 || $from === $to) {
+            return;
+        }
+
+        try {
+            $db = Factory::getContainer()->get('DatabaseDriver');
+            $db->setQuery(
+                $db->createQuery()
+                    ->update($db->quoteName('#__contentitem_tag_map'))
+                    ->set($db->quoteName('content_item_id') . ' = ' . $to)
+                    ->where($db->quoteName('type_alias') . ' = ' . $db->quote(self::TYPE_ALIAS))
+                    ->where($db->quoteName('content_item_id') . ' = ' . $from)
+            )->execute();
+        } catch (Exception $e) {
+            // The tags are an extra: a failure must not stop the move.
+        }
+
+        unset(self::$topicTags[$from], self::$topicTags[$to]);
+    }
+
+    /**
      * The address of the list of topics which have the tag.
      *
      * @param   int  $tagId  The tag id.

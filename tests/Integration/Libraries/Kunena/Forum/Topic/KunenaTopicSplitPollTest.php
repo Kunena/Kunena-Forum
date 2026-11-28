@@ -234,4 +234,26 @@ class KunenaTopicSplitPollTest extends IntegrationTestCase implements DBTestInte
 
         $this->assertSame([self::UNAPPROVED, self::TARGET], $removed);
     }
+
+    /**
+     * A move with a shadow gives the tags of the topic to the new topic, which the readers read (the shadow is hidden in every list):
+     * the tags stayed on the shadow, and the topic was in the list of none of its tags.
+     */
+    public function testAMoveWithAShadowKeepsTheTagsOfTheTopic(): void
+    {
+        $db = $this->getDBDriver();
+        $db->setQuery("CREATE TABLE IF NOT EXISTS #__contentitem_tag_map (type_alias varchar(255) NOT NULL DEFAULT '', core_content_id int NOT NULL DEFAULT 0, content_item_id int NOT NULL DEFAULT 0, tag_id int NOT NULL DEFAULT 0, tag_date datetime NULL, type_id int NOT NULL DEFAULT 0)")->execute();
+
+        try {
+            $db->setQuery("INSERT INTO #__contentitem_tag_map (type_alias, content_item_id, tag_id) VALUES ('com_kunena.topic', " . self::TARGET . ', 7)')->execute();
+
+            $new = KunenaTopicHelper::get(self::TARGET)->move(KunenaCategoryHelper::get(self::OTHER_CATEGORY), false, true);
+            $map = $this->fetchAll("SELECT content_item_id FROM #__contentitem_tag_map WHERE type_alias = 'com_kunena.topic'");
+        } finally {
+            $db->setQuery('DROP TABLE IF EXISTS #__contentitem_tag_map')->execute();
+        }
+
+        $this->assertNotSame(self::TARGET, (int) $new->id);
+        $this->assertSame([(int) $new->id], array_map('intval', array_column($map, 'content_item_id')));
+    }
 }

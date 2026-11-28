@@ -661,7 +661,9 @@ class InboxHelper
             // The subject and the link only while the user may read the message (the topic can be deleted, moved into a
             // closed category, or the access of the user can change after the notification).
             if ($message && $message->exists() && $message->isAuthorised('read', KunenaUserHelper::get($userid))) {
-                $url  = (string) $message->getPermaUrl();
+                // The address as text (the JSON of the list; the script escapes it): as HTML it had &amp; for each &, and without
+                // the SEF addresses the link opened the wrong page.
+                $url  = (string) $message->getPermaUrl(null, false);
                 $text = Text::sprintf('PLG_KUNENA_INBOX_NOTIFY_' . strtoupper($row->type), $name, $row->subject);
             } else {
                 $row          = clone $row;

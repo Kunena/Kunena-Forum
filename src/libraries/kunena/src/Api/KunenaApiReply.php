@@ -346,7 +346,8 @@ abstract class KunenaApiReply
         $message->processNotification($url);
         $message->sendMentionNotifications('', true, $url);
 
-        if ($fields['subscribe'] && !$topic->getUserTopic($me)->subscribed) {
+        // Where the user may subscribe, as on the site: the API subscribed also with the subscriptions turned off (and sent the mails).
+        if ($fields['subscribe'] && !$topic->getUserTopic($me)->subscribed && $topic->isAuthorised('subscribe', $me)) {
             try {
                 $topic->subscribe(1, $me);
                 $activity->onAfterSubscribe($topic, 1);

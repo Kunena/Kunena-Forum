@@ -248,6 +248,12 @@ if (!$config->plainEmail) :
                                 <br/>
                                 <?php echo htmlspecialchars((string) $msg2, ENT_QUOTES, 'UTF-8'); ?>
                             <?php endif; ?>
+                            <?php // The link to unsubscribe, as the layout of Aurelia has it (the fallback layout had none, only the header). ?>
+                            <?php if (!$approved && !empty($this->unsubscribeUrl)) : ?>
+                                <br/><br/>
+                                <?php echo Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC'); ?>
+                                <a href="<?php echo htmlspecialchars($this->unsubscribeUrl, ENT_QUOTES, 'UTF-8'); ?>" style="color: #999999;"><?php echo Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE'); ?></a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 </table>
@@ -269,6 +275,15 @@ if (!$config->plainEmail) :
         $full = '';
     }
 
+    $unsubscribe = '';
+
+    if (!$approved && !empty($this->unsubscribeUrl)) {
+        $unsubscribe = "
+
+" . Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC') . "
+" . $this->unsubscribeUrl;
+    }
+
     $alt = <<<EOS
 {$msg1}
 
@@ -283,7 +298,7 @@ if (!$config->plainEmail) :
 
 {$msg2}{$more}
 
-{$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}
+{$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}{$unsubscribe}
 EOS;
     echo $alt;
 endif; ?>

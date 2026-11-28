@@ -648,6 +648,13 @@ class TopicsController extends KunenaController
                         continue;
                     }
 
+                    // Not a message of a topic in the trash: it published the topic again with that message only (as one approval).
+                    if ((int) $message->getTopic()->hold >= KunenaForum::DELETED) {
+                        $topicDeleted = true;
+
+                        continue;
+                    }
+
                     $message->publish(KunenaForum::PUBLISHED);
 
                     // The subscribers are told about a message once, as in the approval of one message: a reply which an edit sent
@@ -667,6 +674,10 @@ class TopicsController extends KunenaController
 
         if ($success) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'), 'success');
+        }
+
+        if (!empty($topicDeleted)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_TOPIC_DELETED'), 'notice');
         }
 
         $this->setRedirectBack();
@@ -742,6 +753,14 @@ class TopicsController extends KunenaController
             foreach ($messages as $message) {
                 try {
                     $message->tryAuthorise('undelete');
+
+                    // Not a message of a topic in the trash: it published the topic again with that message only (as one restore).
+                    if ((int) $message->getTopic()->hold >= KunenaForum::DELETED) {
+                        $topicDeleted = true;
+
+                        continue;
+                    }
+
                     $message->publish(KunenaForum::PUBLISHED);
 
                     $success++;
@@ -753,6 +772,10 @@ class TopicsController extends KunenaController
 
         if ($success) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_UNDELETE'), 'success');
+        }
+
+        if (!empty($topicDeleted)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_TOPIC_DELETED'), 'notice');
         }
 
         $this->setRedirectBack();

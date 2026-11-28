@@ -529,7 +529,8 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                 )->set('confirm', Text::_('COM_KUNENA_MESSAGE_DELETE_CONFIRM'))
             );
         } elseif ($this->message->hold == 2 || $this->message->hold == 3) {
-            if ($this->message->isAuthorised('undelete')) {
+            // Not in a topic in the trash, which is restored as a whole (the task refuses it, as for the approval above).
+            if ($this->message->isAuthorised('undelete') && (int) $this->message->getTopic()->hold < 2) {
                 $this->messageButtons->set(
                     'undelete',
                     $this->getButton(

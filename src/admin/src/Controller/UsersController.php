@@ -210,33 +210,35 @@ class UsersController extends KunenaController
 
         $cid = $this->input->get('cid', [], 'array');
         $cid = ArrayHelper::toInteger($cid, []);
-        $id  = array_shift($cid);
 
-        if ($id <= 0) {
+        // Every user which is checked (the button of the toolbar takes a list): only the first one was logged out, and the message
+        // said that all were.
+        $done = 0;
+
+        foreach (array_unique($cid) as $id) {
+            // The user has to be there: the logout of a number which is no user is an error of the actions log of Joomla.
+            if ($id <= 0 || !Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById((int) $id)->id) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+
+                continue;
+            }
+
+            if (!$this->accountActionAllowed(KunenaAccountActionPolicy::LOGOUT, (int) $id)) {
+                continue;
+            }
+
+            $this->app->logout((int) $id, ['clientid' => 0]);
+            $done++;
+        }
+
+        if (!$cid) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-            return;
         }
 
-        // The user has to be there: the logout of a number which is no user is an error of the actions log of Joomla.
-        if (!Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById((int) $id)->id) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-            return;
+        if ($done) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_USER_LOGOUT_DONE'), 'success');
         }
 
-        if (!$this->accountActionAllowed(KunenaAccountActionPolicy::LOGOUT, (int) $id)) {
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-            return;
-        }
-
-        $options = ['clientid' => 0];
-        $this->app->logout((int) $id, $options);
-
-        $this->app->enqueueMessage(Text::_('COM_KUNENA_A_USER_LOGOUT_DONE'), 'success');
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
     }
 

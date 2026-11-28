@@ -15,8 +15,6 @@ namespace Kunena\Forum\Site\Model;
 
 \defined('_JEXEC') or die();
 
-use DateInterval;
-use DateTime;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -292,7 +290,8 @@ class SearchModel extends KunenaModel
         $time         = 0;
         $searchatdate = $this->getState('query.searchatdate');
 
-        if (empty($searchatdate) || $searchatdate == Factory::getDate()->format('Y-m-d')) {
+        // Today is a date too (the field is empty when no date is chosen): it gave the posts of the default period, the last year.
+        if (empty($searchatdate)) {
             switch ($this->getState('query.searchdate')) {
                 case 'lastvisit':
                     $time = KunenaFactory::GetSession()->lasttime;
@@ -320,11 +319,12 @@ class SearchModel extends KunenaModel
                 }
             }
         } else {
-            $time_start_day = Factory::getDate($this->getState('query.searchatdate'))->toUnix();
-            $time_end_day   = new DateTime($this->getState('query.searchatdate'));
-            $time_end_day->add(new DateInterval("PT23H59M59S"));
+            // The day in the time zone of the user (as the dates of the posts are shown to him), the whole day: the start was midnight
+            // in UTC and the end in the time zone of PHP, and the first and the last second were left out.
+            $time_start_day = Factory::getDate($searchatdate, Factory::getApplication()->getIdentity()->getTimezone())->toUnix();
+            $time_end_day   = $time_start_day + 86400;
 
-            $querystrings[] = " m.time > " . $db->quote($time_start_day) . " AND m.time < " . $db->quote($time_end_day->getTimestamp());
+            $querystrings[] = " m.time >= " . $db->quote($time_start_day) . " AND m.time < " . $db->quote($time_end_day);
         }
 
         // Search inside one topic: the messages of a topic have its id in the thread column.

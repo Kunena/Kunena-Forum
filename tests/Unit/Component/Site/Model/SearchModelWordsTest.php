@@ -14,6 +14,7 @@ namespace Kunena\Tests\Unit\Component\Site\Model;
 
 use Joomla\CMS\MVC\Model\State;
 use Kunena\Forum\Site\Model\SearchModel;
+use Kunena\Tests\Unit\Support\Files;
 use Kunena\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionClass;
@@ -55,5 +56,20 @@ class SearchModelWordsTest extends UnitTestCase
         (new ReflectionProperty($model, '__state_set'))->setValue($model, true);
 
         $this->assertSame($words, $model->getSearchWords());
+    }
+
+    /**
+     * The date of today gave the posts of the default period (the last year), not the posts of today. (The state needs a whole
+     * site: the code is read.)
+     */
+    public function testTodayIsADayToSearch(): void
+    {
+        $source = str_replace("\r\n", "\n", Files::read('src/site/src/Model/SearchModel.php'));
+
+        $this->assertStringNotContainsString("\$searchatdate == Factory::getDate()->format('Y-m-d')", $source);
+        $this->assertStringContainsString('if (empty($searchatdate)) {', $source);
+        // The whole day, from its midnight in the time zone of the user.
+        $this->assertStringContainsString('$time_end_day   = $time_start_day + 86400;', $source);
+        $this->assertStringContainsString('Factory::getDate($searchatdate, Factory::getApplication()->getIdentity()->getTimezone())', $source);
     }
 }

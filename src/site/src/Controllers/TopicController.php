@@ -3934,6 +3934,14 @@ class TopicController extends KunenaController
             return; // -- abort
         }
 
+        // Not his own post when "User can send own report" is off (moderators may), as the button: only the button followed it.
+        if (!$this->config->userReport && (int) $message->userid === (int) $this->me->userid && !$this->me->isModerator($topic->getCategory())) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'warning');
+            $this->setRedirectBack();
+
+            return;
+        }
+
         $reason = $this->app->getInput()->getString('reason');
         $text   = $this->app->getInput()->getString('text');
 

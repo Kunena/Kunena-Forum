@@ -95,6 +95,13 @@ class TopicReportDisplay extends KunenaControllerDisplay
 
         $this->category = $this->topic->getCategory();
 
+        // Not his own post when "User can send own report" is off (moderators may), as the button of the report.
+        $reported = $this->message ?: KunenaMessageHelper::get($this->topic->first_post_id);
+
+        if (!$this->config->userReport && (int) $reported->userid === (int) $me->userid && !$me->isModerator($this->category)) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+        }
+
         $this->uri = "index.php?option=com_kunena&view=topic&layout=report&catid={$this->category->id}" .
             "&id={$this->topic->id}" . ($this->message ? "&mesid={$this->message->id}" : '');
     }

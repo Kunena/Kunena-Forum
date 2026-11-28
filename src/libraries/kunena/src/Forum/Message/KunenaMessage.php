@@ -3076,7 +3076,11 @@ class KunenaMessage extends KunenaDatabaseObject
         } elseif ($postDelta > 0) {
             $topic->markRead();
 
-            if ($this->parent == 0) {
+            // A message which comes back from the trash was posted already: the integrations gave its points, its entry of the
+            // activity stream and its notifications then, and gave them again at every restore. They are told about a restore.
+            if ((int) $this->_hold >= KunenaForum::DELETED) {
+                $activity->onAfterUndelete($this);
+            } elseif ($this->parent == 0) {
                 $activity->onAfterPost($this);
             } else {
                 $activity->onAfterReply($this);

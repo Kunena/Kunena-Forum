@@ -30,6 +30,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
+use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use Kunena\Forum\Libraries\Tools\KunenaModerationQueue;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -547,5 +548,40 @@ class KunenaMessageApproveCountTest extends IntegrationTestCase implements DBTes
 
         $this->assertSame(2, substr_count($controller, "getString('authorname', \$this->me->getName('', false))"));
         $this->assertStringNotContainsString("getString('authorname', \$this->me->getName())", $controller);
+    }
+
+    /**
+     * A reply which comes back from the trash tells the integrations (points, activity streams) about a restore: it told them about
+     * a new reply again, so its author got the points and its subscribers the notification once more at every restore.
+     */
+    public function testARestoredReplyIsNoNewReplyForTheIntegrations(): void
+    {
+        $this->seedThreeShownPosts();
+
+        $activity = new class () extends KunenaActivity {
+            public array $calls = [];
+
+            public function __construct()
+            {
+            }
+
+            public function __call(string $method, array $arguments)
+            {
+                $this->calls[] = $method;
+
+                return null;
+            }
+        };
+        $saved = $this->replace(KunenaActivity::class, 'instance', $activity);
+
+        try {
+            $this->assertTrue(KunenaMessageHelper::get(11)->publish(KunenaForum::DELETED));
+            $this->replace(KunenaMessageHelper::class, '_instances', []);
+            $this->assertTrue(KunenaMessageHelper::get(11)->publish(KunenaForum::PUBLISHED));
+        } finally {
+            $this->replace(KunenaActivity::class, 'instance', $saved);
+        }
+
+        $this->assertSame(['onAfterDelete', 'onAfterUndelete'], $activity->calls);
     }
 }

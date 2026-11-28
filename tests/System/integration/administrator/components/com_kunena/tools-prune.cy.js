@@ -1,5 +1,6 @@
 // The tool "Prune categories" of the backend (task tools.prune), moving to the trash: in the chosen category the topics without a
-// new post for more than the days are deleted (hold 2), a recent topic stays, and a sticky topic stays when "keep sticky" is on.
+// new post for more than the days are deleted as the delete of a topic does (hold 3, "deleted with the topic", since 228fc2b9e6: their
+// waiting and deleted replies keep their state), a recent topic stays, and a sticky topic stays when "keep sticky" is on.
 describe('Kunena backend tools: prune', () => {
   const admin = '/administrator/index.php?option=com_kunena';
   const stamp = Date.now();
@@ -64,7 +65,7 @@ describe('Kunena backend tools: prune', () => {
         followRedirect: false,
       });
     });
-    hold('old').should('eq', 2);
+    hold('old').should('eq', 3);
     hold('recent').should('eq', 0);
     hold('sticky').should('eq', 0);
   });

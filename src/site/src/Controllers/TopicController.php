@@ -3919,7 +3919,8 @@ class TopicController extends KunenaController
         $mailSent = false;
 
         if ($canMail && !empty($emailToList)) {
-            $mailnamesender = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle . ': ' . $this->me->getName());
+            // The name as text (a header, not HTML): getName() escapes it, so a reporter "Tom & Jerry" was "Tom &amp; Jerry".
+            $mailnamesender = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle . ': ' . $this->me->getName('', false));
             $mailsubject    = "[" . $this->config->boardTitle . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
 
             if ($reason) {

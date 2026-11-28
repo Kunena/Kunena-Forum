@@ -402,7 +402,10 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
 
             // If the batch is full, there may be more notifications left to process.
             // Exit now and let the task be resumed on the next run instead of looping forever.
-            if (\count($mailsToSend) >= $batchSize) {
+            // A batch of which no mail could be sent (addresses which the server refuses) does not end the run: the next run began
+            // with the same rows again, so the queue never went past them and the later notifications were never sent. The loop
+            // goes on with the rows after them (this run leaves out the ones which failed).
+            if (\count($mailsToSend) >= $batchSize && !empty($processedIds)) {
                 if ($processedCount > 0) {
                     $this->logTask(Text::sprintf('PLG_TASK_SENDNOTIFICATIONSKUNENA_PROCESSED', $processedCount));
                 }

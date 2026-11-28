@@ -40,10 +40,11 @@ $me     = KunenaUserHelper::getMyself();
 $author = $answer->getAuthor();
 $id     = 'kunena-topic-answer-' . (int) $this->topic->id;
 
-// A guest does not see the text of the replies when the category hides them: only the link.
+// A guest does not see the text of the replies when the category of the topic hides them: only the link. (Not the category of the
+// address, which may show the topic as a channel and not hide its replies.)
 $excerpt = '';
 
-if ($me->exists() || !$this->category->hidesRepliesForGuests()) {
+if ($me->exists() || !$this->topic->getCategory()->hidesRepliesForGuests()) {
     $excerpt = trim(preg_replace('/\s+/', ' ', (string) KunenaParser::stripBBCode((string) $answer->message, 200, false)));
 }
 ?>

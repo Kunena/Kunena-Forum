@@ -401,12 +401,16 @@ class UsersController extends KunenaController
 
         $ban = KunenaBan::getInstanceByUserid($userid, true);
 
-        if (!$ban->id) {
-            $ban->ban($userid);
-        } else {
-            $now = new Date();
-            $ban->setExpiration($now);
+        // A user who is banned already stays banned: the list gives this task to the users who are not, so it comes here again only
+        // from a page which was not reloaded or a second click, and it lifted the ban (with the message that the user was banned).
+        if ($ban->id) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_BANNED_DONE'), 'success');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
         }
+
+        $ban->ban($userid);
 
         $message = Text::_('COM_KUNENA_USER_BANNED_DONE');
 
@@ -664,8 +668,11 @@ class UsersController extends KunenaController
             // A banned user gets the block button: the ban becomes a block (lifting it here unbanned the user instead).
             $ban->blocked = 1;
         } else {
-            $now = new Date();
-            $ban->setExpiration($now);
+            // Blocked already (a page which was not reloaded, a second click): the block stays, it was lifted here.
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_BLOCKED_DONE'), 'success');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
         }
 
         $message = Text::_('COM_KUNENA_USER_BLOCKED_DONE');

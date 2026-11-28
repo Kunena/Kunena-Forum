@@ -21,6 +21,7 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUser;
 
@@ -117,6 +118,11 @@ abstract class KunenaApi
      */
     public static function category(KunenaCategory $category): object
     {
+        // The last post only when the user may read its topic, as the index shows it: in a category where the users see their own
+        // topics only, the id and the time of the last post of another user were given.
+        $last  = KunenaTopicHelper::get((int) $category->last_topic_id);
+        $shown = !$last->exists() || $last->isAuthorised('read');
+
         return (object) [
             'id'             => (int) $category->id,
             'parent_id'      => (int) $category->parentid,
@@ -125,8 +131,8 @@ abstract class KunenaApi
             'description'    => self::safeMessage((string) $category->description, false),
             'topics'         => (int) $category->numTopics,
             'posts'          => (int) $category->numPosts,
-            'last_post_id'   => (int) $category->last_post_id,
-            'last_post_time' => self::date($category->last_post_time),
+            'last_post_id'   => $shown ? (int) $category->last_post_id : 0,
+            'last_post_time' => self::date($shown ? $category->last_post_time : 0),
             'url'            => self::siteUrl('index.php?option=com_kunena&view=category&catid=' . (int) $category->id),
         ];
     }

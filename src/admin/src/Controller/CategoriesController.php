@@ -801,7 +801,9 @@ class CategoriesController extends KunenaController
             // User needs to be admin in the target category and in the current parent of every moved category
             $target = KunenaCategoryHelper::get($catParent);
 
-            if (!$this->me->isAdmin($target)) {
+            // A target which does not exist: isAdmin() of it is the check of a global administrator, and the move wrote that id as
+            // the parent (the categories were lost under no parent).
+            if (!$target->exists() || !$this->me->isAdmin($target)) {
                 $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($target->name)), 'error');
                 $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 

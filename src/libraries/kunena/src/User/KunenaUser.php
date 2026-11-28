@@ -976,11 +976,12 @@ class KunenaUser
             return false;
         }
 
+        // The username or the real name as HTML, as getName() gives it to getLink(): it went into the link as it was stored.
         if (!$name) {
             if ($optional_username == 1) {
-                $name = $this->username;
+                $name = $this->escape((string) $this->username);
             } elseif ($optional_username == 2) {
-                $name = $this->name;
+                $name = $this->escape((string) $this->name);
             }
         }
 

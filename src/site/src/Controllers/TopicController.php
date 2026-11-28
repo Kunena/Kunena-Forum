@@ -97,7 +97,11 @@ use stdClass;
  */
 class TopicController extends KunenaController
 {
-    private const int STOPFORUMSPAM_CACHE_TTL = 600;
+    /**
+     * The minutes for which an answer of StopForumSpam is kept (the cache of Joomla counts its lifetime in minutes: 600 kept it
+     * 10 hours).
+     */
+    private const int STOPFORUMSPAM_CACHE_TTL = 10;
 
     private const int STOPFORUMSPAM_TIMEOUT = 3;
 
@@ -1737,41 +1741,65 @@ class TopicController extends KunenaController
             'caching'      => true,
             'lifetime'     => self::STOPFORUMSPAM_CACHE_TTL,
         ];
-        $cache    = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
+        $cache    = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+        $cached   = $cache->get($cacheKey);
 
-        return (bool) $cache->get(
-            function () use ($payload, $url) {
-                $options = new Registry();
-                $options->set('userAgent', KunenaForum::version());
+        if ($cached === '1' || $cached === '0') {
+            return $cached === '1';
+        }
 
-                $http = (new HttpFactory())->getHttp($options);
+        // Only an answer of the service is kept: a failed lookup (a timeout, an error of the service) was kept as "not listed", and
+        // the IP, the name and the e-mail posted without a check for as long as the cache kept it.
+        $listed = $this->requestStopForumSpam($url, $payload);
 
-                try {
-                    $response = $http->post($url, $payload, [
-                        'Accept'       => 'application/json',
-                        'Content-Type' => 'application/json',
-                    ], self::STOPFORUMSPAM_TIMEOUT);
-                } catch (RuntimeException $e) {
-                    return false;
-                }
+        if ($listed === null) {
+            return false;
+        }
 
-                if ($response->getStatusCode() !== 200) {
-                    return false;
-                }
+        $cache->store($listed ? '1' : '0', $cacheKey);
 
-                $result = json_decode((string) $response->getBody(), true);
+        return $listed;
+    }
 
-                if (!\is_array($result) || empty($result['success'])) {
-                    return false;
-                }
+    /**
+     * Ask StopForumSpam whether the IP, the name or the e-mail of a post is listed.
+     *
+     * @param   string  $url      The address of the API.
+     * @param   string  $payload  The request (JSON).
+     *
+     * @return  boolean|null  Listed or not, null when the service gave no answer.
+     *
+     * @since   Kunena 8.0
+     */
+    protected function requestStopForumSpam(string $url, string $payload): ?bool
+    {
+        $options = new Registry();
+        $options->set('userAgent', KunenaForum::version());
 
-                return (isset($result['ip']['appears']) && $result['ip']['appears'])
-                    || (isset($result['username']['appears']) && $result['username']['appears'])
-                    || (isset($result['email']['appears']) && $result['email']['appears']);
-            },
-            [],
-            $cacheKey
-        );
+        $http = (new HttpFactory())->getHttp($options);
+
+        try {
+            $response = $http->post($url, $payload, [
+                'Accept'       => 'application/json',
+                'Content-Type' => 'application/json',
+            ], self::STOPFORUMSPAM_TIMEOUT);
+        } catch (RuntimeException $e) {
+            return null;
+        }
+
+        if ($response->getStatusCode() !== 200) {
+            return null;
+        }
+
+        $result = json_decode((string) $response->getBody(), true);
+
+        if (!\is_array($result) || empty($result['success'])) {
+            return null;
+        }
+
+        return (isset($result['ip']['appears']) && $result['ip']['appears'])
+            || (isset($result['username']['appears']) && $result['username']['appears'])
+            || (isset($result['email']['appears']) && $result['email']['appears']);
     }
 
     /**

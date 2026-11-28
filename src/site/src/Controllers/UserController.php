@@ -928,6 +928,9 @@ class UserController extends KunenaController
             return;
         }
 
+        // Whether the user was banned before this change (for the mail below).
+        $wasBanned = $ban->id && $ban->isEnabled();
+
         if (!$ban->id) {
             $ban->ban($user->userid, $ip, $banlevel, $expiration, $reason_private, $reason_public, $comment);
             $success = $ban->save();
@@ -995,7 +998,12 @@ class UserController extends KunenaController
 
             KunenaUserHelper::recountBanned();
 
-            if ($this->config->sendMailUserBanned) {
+            // The mail when the ban began or ended, not again at each change of an existing ban (a new end or reason sent "Your
+            // account has just been banned" again); and only when the forum sends e-mails, to an address.
+            if (
+                $this->config->sendMailUserBanned && $this->config->sendEmails
+                && $wasBanned !== $ban->isEnabled() && MailHelper::isEmailAddress((string) $user->email)
+            ) {
                 $this->sendMailWhenUserBannedAndUnbanned($user, $ban);
             }
 

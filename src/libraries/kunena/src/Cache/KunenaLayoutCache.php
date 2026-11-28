@@ -156,8 +156,21 @@ abstract class KunenaLayoutCache
         } finally {
             $part = $document->getHeadData();
             $document->resetHeadData();
-            $document->mergeHeadData($before);
+
+            // The head of the page as it was (setHeadData() keeps the attribute of each meta tag): mergeHeadData() makes every tag
+            // but http-equiv a "name" one, so the og: tags of the page (property="og:title") came out as name="og:title" when a
+            // part of the page was made for the cache, and were lost for the sites which read them.
+            $document->setHeadData($before);
+
+            $partMeta = (array) ($part['metaTags'] ?? []);
+            unset($part['metaTags']);
             $document->mergeHeadData($part);
+
+            foreach ($partMeta as $type => $tags) {
+                foreach ((array) $tags as $tagName => $content) {
+                    $document->setMetaData($tagName, $content, $type === 'http-equiv' ? true : $type);
+                }
+            }
         }
 
         if (!str_contains($output, Session::getFormToken())) {

@@ -618,6 +618,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
+     * The users of a list (by user id) who are not banned in the forum.
+     *
+     * @param   array  $list  The list, by user id.
+     *
+     * @return  array
+     *
+     * @throws  Exception
+     * @since   Kunena 8.0
+     */
+    public static function withoutBanned(array $list): array
+    {
+        if (!$list) {
+            return $list;
+        }
+
+        foreach (KunenaUserHelper::loadUsers(array_keys($list)) as $userid => $user) {
+            if ($user->isBanned()) {
+                unset($list[$userid]);
+            }
+        }
+
+        return $list;
+    }
+
+    /**
      * @param   mixed  $user  user
      *
      * @return  array
@@ -675,6 +700,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!empty($this->adminsByCatid[$catid])) {
             $adminlist += $this->adminsByCatid[$catid];
         }
+
+        // Not the moderators and administrators who are banned (they may moderate no more, isModerator() refuses them): a banned only
+        // moderator of a category got its reports and its posts to approve, and the administrators, who get them when a category has
+        // no moderator, were not told.
+        $modlist   = self::withoutBanned($modlist);
+        $adminlist = self::withoutBanned($adminlist);
 
         if ($type) {
             $subscribers = $this->loadSubscribers($topic, $type);

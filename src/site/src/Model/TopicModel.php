@@ -299,7 +299,8 @@ class TopicModel extends KunenaModel
      */
     public function getModerators()
     {
-        return $this->getCategory()->getModerators(false);
+        // Not a moderator who is banned (he may moderate no more): the page still named him under "Moderators".
+        return KunenaAccess::withoutBanned($this->getCategory()->getModerators(false));
     }
 
     /**

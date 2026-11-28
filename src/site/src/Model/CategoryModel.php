@@ -140,7 +140,8 @@ class CategoryModel extends CategoriesModel
 
             if ($this->config->listCatShowModerators) {
                 foreach ($allsubcats as $subcat) {
-                    $modUserids                   = array_keys($access->getModerators($subcat->id));
+                    // Not a moderator who is banned (he may moderate no more).
+                    $modUserids                   = array_keys(KunenaAccess::withoutBanned($access->getModerators($subcat->id)));
                     $catModeratorMap[$subcat->id] = !empty($modUserids) ? array_combine($modUserids, $modUserids) : [];
                 }
             }
@@ -470,7 +471,8 @@ class CategoryModel extends CategoriesModel
      */
     public function getModerators()
     {
-        return $this->getCategory()->getModerators(false);
+        // Not a moderator who is banned (he may moderate no more): the page still named him under "Moderators".
+        return KunenaAccess::withoutBanned($this->getCategory()->getModerators(false));
     }
 
     /**

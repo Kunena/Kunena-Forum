@@ -1,6 +1,7 @@
 // The batch of the backend category list moves the chosen categories under another one (task categories.batchcategories):
 // - with "move" chosen, and also without it (the radio "move", the only action of the batch, is not checked in the form);
-// - not under one of its own children (a loop).
+// - not under one of its own children (a loop);
+// - to a place of its own among its new siblings (it kept its old place, the same as one of them).
 describe('Kunena backend categories: batch move', () => {
   const admin = '/administrator/index.php?option=com_kunena';
   const stamp = Date.now();
@@ -38,6 +39,16 @@ describe('Kunena backend categories: batch move', () => {
   it('moves the category when "move" is not checked', () => {
     cy.then(() => send(ids.moved, ids.target));
     cy.then(() => parent('moved')).should('eq', ids.target);
+  });
+
+  it('gives the moved category a place of its own among its new siblings', () => {
+    const ordering = (name) => cy.task('queryDB', `SELECT ordering FROM #__kunena_categories WHERE id = ${ids[name]}`).then((rows) => Number(rows[0].ordering));
+
+    cy.then(() => addCategory('sibling', ids.target));
+    cy.then(() => send(ids.moved, ids.target, { move_copy: 'move' }));
+    cy.then(() => ordering('sibling')).then((sibling) => {
+      ordering('moved').should('not.eq', sibling);
+    });
   });
 
   it('does not move a category under its own child', () => {

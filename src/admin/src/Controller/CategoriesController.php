@@ -925,6 +925,10 @@ class CategoriesController extends KunenaController
                 }
             }
 
+            // The places in the new parent (as a move in the form of the category does): a moved category kept the place which it
+            // had among its old siblings, the same as one of its new siblings, and the order of the list changed with every save.
+            (new TableKunenaCategories($this->db))->reOrder('parentid=' . $this->db->quote(\intval($catParent)));
+
             $this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_MOVE_SUCCESS'), 'success');
         }
 

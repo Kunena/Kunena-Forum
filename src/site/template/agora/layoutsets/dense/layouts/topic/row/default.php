@@ -31,6 +31,9 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 $topic           = $this->topic;
 $userTopic       = $topic->getUserTopic();
 $config          = KunenaConfig::getInstance();
+// The link of the last post with its date, or its name with the date format "None" (the empty date made the link the subject of the
+// topic a second time).
+$lastPostText = $config->postDateFormat != 'none' ? $topic->getLastPostTime()->toKunena('config_postDateFormat') : Text::_('COM_KUNENA_GEN_LAST_POST');
 $topicPages      = $topic->getPagination(null, $config->messagesPerPage, 3);
 $this->ktemplate = KunenaFactory::getTemplate();
 $category        = $topic->getCategory();
@@ -124,7 +127,7 @@ if (!empty($this->spacing)) : ?>
                 <span><?php echo $topic->getFirstPostTime()->toKunena('config_postDateFormat'); ?></span>
             <?php endif; ?>
             <span class="d-md-none"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> <?php echo $this->formatLargeNumber($topic->getReplies()); ?></span>
-            <span class="d-md-none"><?php echo $this->getTopicLink($topic, 'last', $topic->getLastPostTime()->toKunena('config_postDateFormat'), null, null, $category, false, true); ?></span>
+            <span class="d-md-none"><?php echo $this->getTopicLink($topic, 'last', $lastPostText, null, null, $category, false, true); ?></span>
         </div>
         <?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
     </td>
@@ -135,7 +138,7 @@ if (!empty($this->spacing)) : ?>
     </td>
 
     <td class="d-none d-md-table-cell agora-row-last">
-        <span class="lastpostlink"><?php echo $this->getTopicLink($topic, 'last', $topic->getLastPostTime()->toKunena('config_postDateFormat'), null, $tooltips, $category, false, true); ?></span>
+        <span class="lastpostlink"><?php echo $this->getTopicLink($topic, 'last', $lastPostText, null, $tooltips, $category, false, true); ?></span>
         <span class="agora-row-by"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', $tooltips, $category->id); ?></span>
     </td>
 

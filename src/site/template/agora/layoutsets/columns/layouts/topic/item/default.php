@@ -133,7 +133,10 @@ if ($this->topic->locked) {
         <p class="agora-topic-meta">
             <span><?php echo $this->formatLargeNumber($this->topic->getReplies()) . ' ' . Text::_('COM_KUNENA_GEN_REPLIES'); ?></span>
             <span><?php echo $this->formatLargeNumber($this->topic->hits) . ' ' . Text::_('COM_KUNENA_GEN_HITS'); ?></span>
-            <span><?php echo Text::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . $this->topic->getFirstPostTime()->toKunena('config_postDateFormat'); ?></span>
+            <?php // No date with the date format "None" (the text "Topic started" stood alone). ?>
+            <?php if (KunenaConfig::getInstance()->postDateFormat != 'none') : ?>
+                <span><?php echo Text::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . $this->topic->getFirstPostTime()->toKunena('config_postDateFormat'); ?></span>
+            <?php endif; ?>
             <?php if (KunenaConfig::getInstance()->ratingEnabled) {
                 echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)
                     ->set('topic', $this->topic);
@@ -261,14 +264,21 @@ if ($this->topic->locked) {
                 <div><dt><?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></dt><dd><?php echo $this->formatLargeNumber($this->topic->hits); ?></dd></div>
             </dl>
             <p class="agora-topic-dates">
-                <?php echo Text::sprintf(
-                    'COM_KUNENA_TOPIC_STARTED_ON_DATE_BY_USER',
-                    $this->topic->getFirstPostTime()->toKunena('config_postDateFormat'),
-                    $this->topic->getFirstPostAuthor()->getLink(null, null, '', '', null, $this->category->id)
-                ); ?>
+                <?php // Without the dates with the date format "None" ("Topic started on  by X"). ?>
+                <?php if (KunenaConfig::getInstance()->postDateFormat != 'none') : ?>
+                    <?php echo Text::sprintf(
+                        'COM_KUNENA_TOPIC_STARTED_ON_DATE_BY_USER',
+                        $this->topic->getFirstPostTime()->toKunena('config_postDateFormat'),
+                        $this->topic->getFirstPostAuthor()->getLink(null, null, '', '', null, $this->category->id)
+                    ); ?>
+                <?php else : ?>
+                    <?php echo Text::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink(null, null, '', '', null, $this->category->id); ?>
+                <?php endif; ?>
                 <br>
                 <?php echo $this->getTopicLink($this->topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, null, $this->category, false, true); ?>
-                <?php echo $this->topic->getLastPostTime()->toKunena('config_postDateFormat'); ?>
+                <?php if (KunenaConfig::getInstance()->postDateFormat != 'none') : ?>
+                    <?php echo $this->topic->getLastPostTime()->toKunena('config_postDateFormat'); ?>
+                <?php endif; ?>
                 <?php echo Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, '', '', null, $this->category->id); ?>
             </p>
         </section>

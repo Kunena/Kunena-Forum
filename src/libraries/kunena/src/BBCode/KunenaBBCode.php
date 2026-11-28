@@ -890,9 +890,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'class'    => 'inline',
             'allow_in' => ['listitem', 'block', 'columns', 'inline', 'link'],
         ],
+        // A name, a hex value, or rgb()/hsl() (the colours of CKEditor are hsl(0, 75%, 60%)): the tag of such a colour was left as
+        // text. No quote and no ";" reach the style.
         'color' => [
             'mode'     => BBCode::BBCODE_MODE_ENHANCED,
-            'allow'    => ['_default' => '/^#?[a-zA-Z0-9._ -]+$/'],
+            'allow'    => ['_default' => '/^(?:#?[a-zA-Z0-9._ -]+|(?:rgb|hsl)a?\(\s*[\d.]+%?(?:\s*[,\/ ]\s*[\d.]+%?){2,3}\s*\))$/D'],
             'template' => '<span style="color: {$_default/tw};">{$_content/v}</span>',
             'class'    => 'inline',
             'allow_in' => ['listitem', 'block', 'columns', 'inline', 'link'],

@@ -389,7 +389,19 @@ abstract class KunenaParser
             $txt    = (string) preg_replace($pattern, '', $txt);
         } while ($txt !== $before);
 
-        return $txt;
+        // A block which is still open (never closed, or crossed with another block: [hide][confidential]x[/hide][/confidential]) is
+        // hidden by the parser up to the end of the text: its text went into the API, the feeds and the excerpts as it was. The text
+        // goes from its opening tag to the end (a little more than the page hides, never less). Only the blocks for some readers:
+        // a tag of the media ([attachment] alone) is no block which hides the text after it.
+        $secret = array_intersect($tags, ['confidential', 'hide', 'hidetext', 'private']);
+
+        if (!$secret) {
+            return $txt;
+        }
+
+        $secret = implode('|', array_map(static fn ($tag) => preg_quote($tag, '/'), $secret));
+
+        return (string) preg_replace('/\[(?:' . $secret . ')(?:[\s=][^\]]*)?\].*$/isu', '', $txt);
     }
 
     /**

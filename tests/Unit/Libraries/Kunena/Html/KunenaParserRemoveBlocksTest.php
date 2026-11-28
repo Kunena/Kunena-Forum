@@ -35,7 +35,11 @@ class KunenaParserRemoveBlocksTest extends UnitTestCase
             'a space in the closing tag'      => ['open [hide]secret[/hide ] end', 'open  end'],
             'another tag is kept'             => ['open [b]bold[/b] [hide]secret[/hide]', 'open [b]bold[/b] '],
             'a tag with a similar name stays' => ['open [hidden]text[/hidden]', 'open [hidden]text[/hidden]'],
-            'an unclosed tag stays as text'   => ['open [hide]text', 'open [hide]text'],
+            // A block which is still open is hidden by the parser to the end of the text: it went into the API and the feeds.
+            'an unclosed block goes to the end' => ['open [hide]secret', 'open '],
+            'an unclosed block around a block'  => ['[hide]a [hide]b[/hide] secret', ''],
+            'two blocks crossed'                => ['open [hide][confidential]secret[/hide][/confidential]', 'open '],
+            'a closing tag of another block'    => ['open [hide]a[/confidential]secret[/hide]', 'open '],
             // [hidetext] is [hide] (the button "Hide text" of SCEditor wrote it).
             '[hidetext] goes with [hide]' => ['open [hidetext]secret[/hidetext] end', 'open  end'],
             '[hidetext] in [hide]'        => ['[hide]a[hidetext]b[/hidetext]secret[/hide]open', 'open'],

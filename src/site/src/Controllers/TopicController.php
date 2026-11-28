@@ -2974,6 +2974,12 @@ class TopicController extends KunenaController
         $solved         = (int) $topic->icon_id === KunenaTopic::ICON_SOLVED;
         $topic->icon_id = $solved ? 0 : KunenaTopic::ICON_SOLVED;
 
+        // A topic marked as not solved has no accepted answer, as the removal of the answer takes the icon away
+        // (KunenaTopicAnswer::toggle()): the box "Accepted answer" stayed on a topic marked as not solved.
+        if ($solved) {
+            $topic->answer_id = 0;
+        }
+
         try {
             $topic->save();
         } catch (Exception $e) {

@@ -193,7 +193,9 @@ class SearchResults extends KunenaLayout
             $this->category     = $this->message->getCategory();
             $this->categoryLink = $categoryLinkCache[(int) $this->category->id] ?? $this->getCategoryLink($this->category);
             $ressubject         = KunenaParser::parseText($this->message->subject);
-            $resmessage         = KunenaParser::parseBBCode($this->message->message, 500);
+            // The message as the parent of the text (its author and category: [confidential], [attachment]) and 500 as its
+            // length: 500 was given as the parent, so a result had the whole text and its tags had no message.
+            $resmessage         = KunenaParser::parseBBCode($this->message->message, $this->message, 500);
 
             $userId = (int) $this->message->userid;
 

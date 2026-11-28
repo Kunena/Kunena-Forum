@@ -1659,7 +1659,9 @@ class KunenaCategory extends KunenaDatabaseObject
 
                 if (isset($ids['CHILDREN'])) {
                     // Children category channels
-                    $this->_channels['none'] += KunenaCategoryHelper::getChildren($this->id, 1, [$action => 'none']);
+                    // The children without a check ('none', as the list says): the action was given as the key of the option, so the
+                    // default (what the visitor may read) left out the children he may not read from the list of all the channels.
+                    $this->_channels['none'] += KunenaCategoryHelper::getChildren($this->id, 1, ['action' => 'none']);
                 }
             }
         }

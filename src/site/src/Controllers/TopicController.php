@@ -3724,6 +3724,15 @@ class TopicController extends KunenaController
 
         if ($targetTopic < 0) {
             $targetTopic = $this->app->getInput()->getInt('targetid', 0);
+
+            // "Enter topic ID" without an id (or not a number): the message was moved into a new topic (a split which nobody asked
+            // for), the topic into the category instead of the topic.
+            if ($targetTopic <= 0) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATION_NO_TARGET_ID'), 'notice');
+                $this->setRedirect($message->getUrl($this->return, false));
+
+                return;
+            }
         }
 
         if ($targetTopic) {

@@ -127,7 +127,12 @@
 				}
 
 				context.querySelectorAll('button.btn-danger').forEach((button) => button.remove());
-				context.append(removeButton(userId(), file.name));
+
+				// "Remove avatar" for an avatar which was saved only: the task removes the avatar of the user, whatever its name,
+				// so the button of a refused upload (a file too large) deleted his current avatar, which the list no longer showed.
+				if (result.success === true) {
+					context.append(removeButton(userId(), file.name));
+				}
 
 				if (result.success === true) {
 					enableSubmit();

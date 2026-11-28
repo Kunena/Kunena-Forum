@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Tools;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Cache\KunenaLayoutCache;
 
 /**
  * The announcements which need a look (tool "Announcements review"): published but past their end date, published but
@@ -142,6 +143,14 @@ class KunenaAnnouncementsReview
             ->where($db->quoteName('published') . ' = 1');
         $db->setQuery($query)->execute();
 
-        return (int) $db->getAffectedRows();
+        $changed = (int) $db->getAffectedRows();
+
+        // The banner of the index and the list are cached per type of user: the cache is emptied as a save of an announcement does it
+        // (KunenaDatabaseObject), else the unpublished ones stayed shown until the cache time of the forum ran out.
+        if ($changed > 0) {
+            KunenaLayoutCache::clear(true);
+        }
+
+        return $changed;
     }
 }

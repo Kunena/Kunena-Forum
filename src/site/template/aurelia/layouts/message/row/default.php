@@ -72,7 +72,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
                 echo $this->getTopicLink($topic, $this->message, null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false);
             }
 
-            echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?>
+            echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->set('reviewCount', $topic->getReviewCount())->setLayout('default'); ?>
         </div>
         <div class="float-end">
             <?php if ($userTopic->favorite) :

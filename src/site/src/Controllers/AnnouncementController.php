@@ -148,9 +148,11 @@ class AnnouncementController extends KunenaController
 
         foreach ($cid as $id) {
             $announcement = KunenaAnnouncementHelper::get($id);
-            $date_today   = Factory::getDate();
 
-            if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today) {
+            // An announcement which is unpublished already is left as it is. The test compared the end of the announcement (a string)
+            // with a date object, twice: an unpublished one with an end was skipped or saved again by chance, one without an end was
+            // saved again and reported as unpublished.
+            if ((int) $announcement->published === 0) {
                 continue;
             }
 

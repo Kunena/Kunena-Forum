@@ -148,6 +148,21 @@ class KunenaMessageFinder extends KunenaFinder
     }
 
     /**
+     * Leave out the replies which wait for their date (scheduled, not held for review): they are for no moderator yet, and an
+     * approval of one published it at once, before the date which its author chose (as KunenaModerationQueue leaves them out).
+     *
+     * @return  $this
+     *
+     * @since   Kunena 8.0
+     */
+    public function filterNotScheduled(): KunenaMessageFinder
+    {
+        $this->query->where('(' . $this->db->quoteName('a.scheduled_time') . ' = 0 OR ' . $this->db->quoteName('a.scheduled_review') . ' <> 0)');
+
+        return $this;
+    }
+
+    /**
      * Filter by hold, and find also the unapproved messages (hold 1) of one user: the author of a topic which waits for
      * approval reads his own messages in it, not the unapproved messages of the others.
      *

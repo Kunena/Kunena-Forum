@@ -133,7 +133,8 @@ class MessageListingRecentDisplay extends ListDisplay
                 $authorise = 'topic.post.approve';
                 $finder
                     ->filterByUser(null, 'author')
-                    ->filterByHold([1]);
+                    ->filterByHold([1])
+                    ->filterNotScheduled();
                 break;
             case 'deleted':
                 $authorise = 'topic.post.undelete';

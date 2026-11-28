@@ -626,7 +626,9 @@ class KunenaUser
             return true;
         }
 
-        if ($this->_config->newUsersPreventPostUrlImages && $this->posts <= $this->_config->minimalUserPostsAddUrlImage) {
+        // The minimum is the number of posts which a user needs (as for the captcha and the review of new users): with 10 a user of
+        // 10 posts was refused, and a minimum of 0 refused the users without a post.
+        if ($this->_config->newUsersPreventPostUrlImages && (int) $this->posts < (int) $this->_config->minimalUserPostsAddUrlImage) {
             return false;
         }
 

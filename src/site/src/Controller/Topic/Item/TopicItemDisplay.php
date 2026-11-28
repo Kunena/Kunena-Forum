@@ -581,9 +581,13 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $userlist       = [];
         $this->threaded = [];
         $location       = $this->pagination->limitstart;
+        // The number of a message is its place in the topic: newest first, the page counts down from the number of the messages (the
+        // newest reply was #1 on the first page, and the pinned first post was #1 too).
+        $descending     = $this->me->getMessageOrdering() != 'asc';
+        $total          = (int) $this->pagination->total;
 
         foreach ($this->messages as $message) {
-            $message->replynum = ++$location;
+            $message->replynum = $descending ? $total - $location++ : ++$location;
 
             if ($threaded) {
                 // Threaded ordering

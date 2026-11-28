@@ -45,8 +45,9 @@ class KunenaUserHelperStatusTest extends UnitTestCase
         // The helper and the user need the framework of Joomla.
         $this->requireJoomla();
 
-        // The configuration with the status of the users on, and a site application with a session lifetime of 15 minutes.
-        $config = self::bare(KunenaConfig::class, ['config' => ['userStatus' => 1]]);
+        // The configuration with the status of the users on and the list of who is online of the default settings (the sessions of
+        // the last 1800 seconds), and a site application with a session lifetime of 15 minutes.
+        $config = self::bare(KunenaConfig::class, ['config' => ['userStatus' => 1, 'showSessionType' => 2, 'showSessionStartTime' => 1800]]);
         $site   = $this->createStub(CMSApplicationInterface::class);
         $site->method('get')->willReturnArgument(1);
         $site->method('getDispatcher')->willReturn(new Dispatcher());
@@ -149,6 +150,25 @@ class KunenaUserHelperStatusTest extends UnitTestCase
         $this->forum(ages: [self::OTHER => 120]);
 
         $this->assertSame(1, KunenaUserHelper::getStatus(self::OTHER));
+    }
+
+    /**
+     * A member in the list of who is online (the sessions of the last 1800 seconds) is not "Offline" because his session is older
+     * than the lifetime of Joomla (15 minutes): the profile and the posts said "Offline" of a member whom the list named.
+     */
+    public function testAMemberInTheListOfWhoIsOnlineIsNotOffline(): void
+    {
+        $this->forum(ages: [self::OTHER => 1200]);
+
+        $this->assertSame(1, KunenaUserHelper::getStatus(self::OTHER));
+    }
+
+    public function testWithAllTheSessionsTheLifetimeOfJoomlaStays(): void
+    {
+        $this->forum(ages: [self::OTHER => 1200]);
+        (new ReflectionProperty(KunenaConfig::class, 'instance'))->setValue(null, self::bare(KunenaConfig::class, ['config' => ['userStatus' => 1, 'showSessionType' => 0]]));
+
+        $this->assertSame(-1, KunenaUserHelper::getStatus(self::OTHER));
     }
 
     public function testAnotherUserWithoutASessionIsStillOffline(): void

@@ -441,7 +441,11 @@ abstract class KunenaUserHelper
                 self::getOnlineUsers();
             }
 
-            $online = isset(self::$_online[$user->userid]) ? (self::$_online[$user->userid]->time > time() - Factory::getApplication()->get('lifetime', 15) * 60) : false;
+            // Online as in the list of who is online, which has the limit of the settings ("Show the sessions" of the last N
+            // seconds, or of the session lifetime of Joomla): with its own limit (the lifetime of Joomla) a member of the list was
+            // "Offline" on his profile and his posts. Only "all the sessions" (no limit in the list) keeps the lifetime here.
+            $online = isset(self::$_online[$user->userid])
+                && ($config->showSessionType > 0 || self::$_online[$user->userid]->time > time() - Factory::getApplication()->get('lifetime', 15) * 60);
         }
 
         if (!$online || ($user->status == 3 && !$user->isMyself() && !self::getMyself()->isModerator())) {

@@ -1454,6 +1454,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return true;
         }
 
+        // Nothing in the e-mails nor in the activity streams, as the other tags of restricted content: the access to the article was
+        // checked for who renders the post (the moderator who approves it, the queue of the mails), so an article of a restricted
+        // level went into the mail of every subscriber.
+        if (!empty($bbcode->context) || !empty($bbcode->parent->forceSecure)) {
+            return '';
+        }
+
         $lang = Factory::getApplication()->getLanguage();
         $lang->load('com_content');
 

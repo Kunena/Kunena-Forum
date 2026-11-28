@@ -116,7 +116,8 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                     <?php echo $this->captchaDisplay; ?>
                 </div>
             <?php endif; ?>
-            <?php if ($topic->isAuthorised('subscribe')) :
+            <?php // Not for a member who follows the topic already (as the form of a reply): an empty box did not end his subscription. ?>
+            <?php if ($topic->isAuthorised('subscribe') && !$topic->getUserTopic()->subscribed) :
             ?>
                 <div class="mb-2">
                     <div class="form-check">

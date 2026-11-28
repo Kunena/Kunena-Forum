@@ -122,7 +122,8 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         <?php echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>'; ?>
                     </div>
 
-                    <?php if ($topic->isAuthorised('subscribe')) :
+                    <?php // Not for a member who follows the topic already (as the form of a reply): an empty box did not end his subscription. ?>
+                    <?php if ($topic->isAuthorised('subscribe') && !$topic->getUserTopic()->subscribed) :
                     ?>
                         <div class="clearfix"></div>
                         <div class="control-group">
@@ -236,7 +237,8 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             <?php echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor' . (int) $message->id . '" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>'; ?>
                         </div>
 
-                        <?php if ($topic->isAuthorised('subscribe')) :
+                        <?php // Not for a member who follows the topic already (as the form of a reply): an empty box did not end his subscription. ?>
+                        <?php if ($topic->isAuthorised('subscribe') && !$topic->getUserTopic()->subscribed) :
                         ?>
                             <div class="clearfix"></div>
                             <div class="control-group">

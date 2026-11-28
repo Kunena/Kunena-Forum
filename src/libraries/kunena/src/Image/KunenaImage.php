@@ -218,7 +218,8 @@ class KunenaImage extends Image
                 imagefill($handle, 0, 0, $trnprt_indx);
                 imagecolortransparent($handle, $trnprt_indx);
             }
-        } elseif ($imgProperties->mime == MIME_PNG) {
+        } elseif (\in_array($imgProperties->mime, [MIME_PNG, 'image/webp', 'image/avif'], true)) {
+            // The pictures with an alpha channel keep it (a WebP or an AVIF too: their transparent parts became black).
             imagealphablending($handle, false);
             imagesavealpha($handle, true);
 

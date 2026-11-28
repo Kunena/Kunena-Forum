@@ -246,6 +246,9 @@ class KunenaMessageFinder extends KunenaFinder
                 // thank yous which the user received counted a message that often, and its pages were short or empty.
                 $this->query->where('EXISTS (SELECT 1 FROM ' . $this->db->quoteName('#__kunena_thankyou', 'th') . ' WHERE ' . $this->db->quoteName('th.postid') . ' = '
                     . $this->db->quoteName('a.id') . ' AND ' . $this->db->quoteName('th.targetuserid') . ' = ' . (int) $user->userid . ')');
+                // Only the messages of which he is still the author: a thank you keeps the author whom it was given to, and a message
+                // which he made anonymous afterwards was in the list of his profile, which told every member who wrote it.
+                $this->query->where($this->db->quoteName('a.userid') . ' = ' . (int) $user->userid);
                 break;
             case '!thankee':
                 $this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $this->db->quoteName('th.postid') . ' = a.id AND ' . $this->db->quoteName('th.targetuserid') . ' != ' . (int) $user->userid);

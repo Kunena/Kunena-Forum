@@ -102,4 +102,18 @@ class KunenaMessageFinderThankeeTest extends IntegrationTestCase implements DBTe
 
         $this->assertSame(2, (new KunenaMessageFinder())->filterByUser($user, 'thankee')->count());
     }
+
+    /**
+     * A message which he made anonymous after the thank yous (its author is 0, the thank yous keep him as their target) is not in his
+     * list: the list of his profile told every member who wrote the anonymous message.
+     */
+    public function testAMessageMadeAnonymousIsNotInTheList(): void
+    {
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_messages SET userid = 0, name = ' . $this->getDBDriver()->quote('Anonymous') . ' WHERE id = 2')->execute();
+
+        $user = (new ReflectionClass(KunenaUser::class))->newInstanceWithoutConstructor();
+        (new ReflectionProperty(KunenaUser::class, 'userid'))->setValue($user, 42);
+
+        $this->assertSame(1, (new KunenaMessageFinder())->filterByUser($user, 'thankee')->count());
+    }
 }

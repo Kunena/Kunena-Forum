@@ -221,10 +221,6 @@ class KunenaTopicMoveUnpublishedTest extends IntegrationTestCase implements DBTe
     }
 
     /**
-     * The read marks of the users follow a topic which moves to another category: they kept the old category, so the topic was not
-     * in the unread topics of the new category (Diagnostics listed them as "user read in the wrong category").
-     */
-    /**
      * A topic moved into a category of one language takes that language (as a new topic of it does): it kept its own, and the
      * lists of the category, which show the topics of the language of the page, left it out on every page.
      */
@@ -238,6 +234,30 @@ class KunenaTopicMoveUnpublishedTest extends IntegrationTestCase implements DBTe
         $this->assertSame('fr-FR', $this->fetchAll('SELECT language FROM #__kunena_topics WHERE id = ' . self::TARGET)[0]['language']);
     }
 
+    /**
+     * A published topic is not merged into a topic which waits for approval: its messages were hidden with that topic, while the
+     * category counted them (and counted them again when the topic was approved).
+     */
+    public function testAPublishedTopicIsNotMergedIntoATopicWhichWaitsForApproval(): void
+    {
+        try {
+            KunenaTopicHelper::get(self::TARGET)->move(KunenaTopicHelper::get(self::UNAPPROVED));
+            $refused = false;
+        } catch (\Exception $e) {
+            $refused = true;
+        }
+
+        $this->assertSame(
+            ['refused' => true, 'threads' => [self::TARGET, self::TARGET]],
+            ['refused' => $refused, 'threads' => array_map('intval', array_column($this->fetchAll('SELECT thread FROM #__kunena_messages WHERE id IN (1, 2) ORDER BY id'), 'thread'))]
+        );
+        $this->assertSame([[1, 2], [0, 0]], $this->counts());
+    }
+
+    /**
+     * The read marks of the users follow a topic which moves to another category: they kept the old category, so the topic was not
+     * in the unread topics of the new category (Diagnostics listed them as "user read in the wrong category").
+     */
     public function testTheReadMarksOfAMovedTopicGetItsNewCategory(): void
     {
         $this->insertRows('#__kunena_user_read', [

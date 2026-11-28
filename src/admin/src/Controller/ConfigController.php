@@ -22,6 +22,7 @@ use Joomla\CMS\Router\Route;
 use Kunena\Forum\Administrator\Helper\ConfigHelper;
 use Kunena\Forum\Administrator\Model\ConfigModel;
 use Kunena\Forum\Libraries\Cache\KunenaLayoutCache;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Tools\KunenaSettingsHistory;
 use RuntimeException;
 use Throwable;
@@ -115,6 +116,16 @@ class ConfigController extends BaseController
             return;
         }
 
+        // The badges, the social websites and the groups of the ranks have their own views: the form does not have them, and the
+        // save replaces all the parameters. Only the plugin "System - Kunena" kept them, so without it a save deleted them.
+        $current = ComponentHelper::getParams('com_kunena');
+
+        foreach (['badges', 'socials', 'rankgroups'] as $own) {
+            if (!\array_key_exists($own, $valid) && $current->exists($own)) {
+                $valid[$own] = $current->get($own);
+            }
+        }
+
         // The settings before the save, for the history of the settings.
         $before = KunenaSettingsHistory::paramsOnSite();
 
@@ -128,6 +139,10 @@ class ConfigController extends BaseController
         }
 
         KunenaSettingsHistory::recordOnSite($before);
+
+        // The settings of the forum are read from their cache: it was emptied by the plugin "System - Kunena" only, so without it the
+        // forum kept the old settings (and a later save of the settings wrote them back).
+        KunenaConfig::getInstance()->reset();
 
         // The parts of the pages in the cache were made with the settings before (KunenaLayoutCache).
         KunenaLayoutCache::clear(true);

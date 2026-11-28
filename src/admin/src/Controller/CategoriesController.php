@@ -421,6 +421,10 @@ class CategoriesController extends KunenaController
         foreach ($categories as $category) {
             if (!$category->isAuthorised('admin')) {
                 $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'error');
+            } elseif ($category->isSection() && $this->hasChildren((int) $category->id)) {
+                // The categories of a deleted section go to its parent, the root: they became sections, which have no topics, and
+                // their topics could not be reached any more. They are moved or deleted first.
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SECTION_NOT_EMPTY', $this->escape($category->name)), 'error');
             } elseif (!$category->isCheckedOut($this->me->userid)) {
                 try {
                     $category->delete();
@@ -447,6 +451,25 @@ class CategoriesController extends KunenaController
         }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
+
+    /**
+     * Whether a category has subcategories, published or not.
+     *
+     * @param   int  $id  The category.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 8.0
+     */
+    protected function hasChildren(int $id): bool
+    {
+        $query = $this->db->createQuery()
+            ->select('COUNT(*)')
+            ->from($this->db->quoteName('#__kunena_categories'))
+            ->where($this->db->quoteName('parentid') . ' = ' . $id);
+
+        return (int) $this->db->setQuery($query)->loadResult() > 0;
     }
 
     /**

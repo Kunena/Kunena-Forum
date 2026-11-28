@@ -18,11 +18,9 @@ namespace Kunena\Forum\Site;
 if ($this->message->id == $this->selected) {
     $link = $this->message->displayField('subject');
 } else {
-    $link = $this->getTopicLink(
-        $this->message->getTopic(),
-        $this->message,
-        $this->message->displayField('subject')
-    );
+    // The permalink of the message, which says which message is shown: the link of the topic had only #id, so the threaded page
+    // showed the first message of its page, not the one which was clicked.
+    $link = '<a href="' . $this->message->getPermaUrl() . '">' . $this->message->displayField('subject') . '</a>';
 }
 ?>
 <?php if ($this->message->id == $this->selected) : ?>

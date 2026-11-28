@@ -210,4 +210,14 @@ class ExportDataOfOthersTest extends IntegrationTestCase implements DBTestInterf
             $this->fetchAll('SELECT id, edited_by FROM #__kunena_messages_history ORDER BY id')
         );
     }
+
+    /**
+     * Every domain once: the topics which he started and the rows of his topics (subscriptions, favourites) had the same name.
+     */
+    public function testEveryDomainHasANameOfItsOwn(): void
+    {
+        $names = $this->export()['names'];
+
+        $this->assertSame(array_unique($names), $names);
+    }
 }

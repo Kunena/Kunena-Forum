@@ -200,6 +200,6 @@ class RemoveDataKarmaTest extends IntegrationTestCase implements DBTestInterface
 
         $this->assertSame(1, $items['kunena_user_karma'] ?? null);
         $this->assertSame(1, $items['kunena_user_categories'] ?? null);
-        $this->assertSame(1, $items['kunena_user_topics'] ?? null);
+        $this->assertSame(1, $items['kunena_user_topic_subscriptions'] ?? null);
     }
 }

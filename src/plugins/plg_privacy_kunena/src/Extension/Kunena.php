@@ -163,7 +163,8 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         // categories and the topics). They were left out of the export.
         $domains[] = $this->createKunenaTableDomain('karma', '#__kunena_karma', 'userid', $user->id);
         $domains[] = $this->createKunenaTableDomain('categories', '#__kunena_user_categories', 'user_id', $user->id);
-        $domains[] = $this->createKunenaTableDomain('topics', '#__kunena_user_topics', 'user_id', $user->id);
+        // A name of its own: "kunena_user_topics" is the domain of the topics he started, an export had it twice.
+        $domains[] = $this->createKunenaTableDomain('topic_subscriptions', '#__kunena_user_topics', 'user_id', $user->id);
 
         try {
             $domains[] = $this->createKunenaTableDomain('inbox_received', '#__kunena_inbox', 'user_id', $user->id);

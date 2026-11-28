@@ -819,6 +819,12 @@ abstract class KunenaCategoryHelper
             $query->where($db->quoteName('t.first_post_userid') . ' NOT IN (' . implode(',', $ignored) . ')');
         }
 
+        // On a multilingual site, the topics of the language of the page and of all languages, which the lists of topics show: a
+        // topic of another language was new in the index, and no list of the page gave it.
+        if (KunenaMultilanguage::isEnabled()) {
+            $query->where($db->quoteName('t.language') . ' IN (' . $db->quote('*') . ', ' . $db->quote(KunenaMultilanguage::getCurrent()) . ')');
+        }
+
         $db->setQuery($query);
 
         try {

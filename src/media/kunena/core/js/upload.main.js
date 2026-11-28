@@ -12,6 +12,14 @@
 
 	// The files of the message: how many there are, and how many of the files of the edited message are in the text.
 	let fileCount = 0;
+	// The uploads which are still running: the form is sent only when none is (the first finished one of several enabled the
+	// button, and the files still on their way were not in the post).
+	let pending = 0;
+	const finished = () => {
+		pending = Math.max(0, pending - 1);
+
+		return pending === 0;
+	};
 	let fileeditinline = 0;
 
 	// The data of each button of a file (the answer of the upload, or the file of the edited message).
@@ -696,6 +704,7 @@
 				}
 
 				fileCount = fileCountTotal;
+				pending += files.length;
 			},
 			add: (file) => {
 				const bar = byId('progress-bar');
@@ -726,8 +735,10 @@
 			done: (result, item) => {
 				const span = item.querySelector('span');
 
+				const last = finished();
+
 				if (result.success === true) {
-					setSubmit(true);
+					setSubmit(last);
 
 					// The name links to the file which was sent (an answer without its address: no link to "null").
 					if (span && result.location) {
@@ -758,9 +769,10 @@
 					// limit of one file, the file after a refused one was "too many").
 					fileCount = Math.max(0, fileCount - 1);
 
-					if (result.message) {
-						setSubmit(true);
+					// A refusal without a message enables the form too (it stayed disabled for good).
+					setSubmit(last);
 
+					if (result.message) {
 						const error = document.createElement('div');
 
 						error.className = 'alert alert-danger';
@@ -775,7 +787,7 @@
 
 				// No answer: the file is not on the server, so it is no file of the message either.
 				fileCount = Math.max(0, fileCount - 1);
-				setSubmit(true);
+				setSubmit(finished());
 				error.className = 'text-danger';
 				error.textContent = message || 'Upload failed';
 				item.firstElementChild.append(document.createElement('br'), error);

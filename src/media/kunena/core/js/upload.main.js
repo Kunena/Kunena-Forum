@@ -671,7 +671,9 @@
 		KunenaUploader.attach(input, {
 			url: () => byId('kunena_upload_files_url')?.value,
 			params: (file) => ({
-				catid: byId('kunena_upload')?.value ?? '',
+				// The category chosen in the form (a new topic), else the one of the message: the rights of the upload were those of
+				// the category in which the form opened, and a file was refused in a category which allows it.
+				catid: byId('postcatid')?.value || byId('kunena_upload')?.value || '',
 				filename: file.name,
 				size: file.size,
 				mime: file.type

@@ -48,17 +48,21 @@ class Kunenaforum
      */
     public static function categorylist($name, $parent, $options = [], $params = [], $attribs = null, $key = 'value', $text = 'text', $selected = [], $idtag = false, $translate = false)
     {
+        // A field of a form gives its attributes as XML (an object): (bool) of the attribute sections="0" was true, so the list of the
+        // menu item "New topic" offered the sections. The flags are read as their text.
+        $flag = static fn (string $name): bool => isset($params[$name]) && filter_var((string) $params[$name], FILTER_VALIDATE_BOOLEAN);
+
         $preselect     = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
-        $unpublished   = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
-        $sections      = isset($params['sections']) ? (bool) $params['sections'] : 0;
+        $unpublished   = $flag('unpublished');
+        $sections      = $flag('sections');
         $ordering      = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
         $direction     = isset($params['direction']) && $params['direction'] == 'desc' ? -1 : 1;
         $action        = isset($params['action']) ? (string) $params['action'] : 'read';
         $levels        = isset($params['levels']) ? (int) $params['levels'] : 10;
-        $topleveltxt   = isset($params['toplevel']) ? $params['toplevel'] : false;
+        $topleveltxt   = isset($params['toplevel']) && (string) $params['toplevel'] !== '' ? (string) $params['toplevel'] : false;
         $catid         = isset($params['catid']) ? (int) $params['catid'] : 0;
-        $hide_lonely   = isset($params['hide_lonely']) ? (bool) $params['hide_lonely'] : 0;
-        $returnOptions = isset($params['return_options']) ? (bool) $params['return_options'] : 0;
+        $hide_lonely   = $flag('hide_lonely');
+        $returnOptions = $flag('return_options');
 
         $params                = [];
         $params['ordering']    = $ordering;

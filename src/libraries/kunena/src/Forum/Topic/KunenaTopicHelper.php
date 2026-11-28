@@ -19,8 +19,10 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaBeforeDeleteEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
@@ -30,6 +32,7 @@ use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Tables\TableKunenaTopics;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -113,6 +116,8 @@ abstract class KunenaTopicHelper
         } else {
             $idlist = (int) $ids;
         }
+
+        self::unindexTopics((string) $idlist);
 
         $queries = [];
 
@@ -990,6 +995,32 @@ abstract class KunenaTopicHelper
     }
 
     /**
+     * The messages of the topics leave the search of the site, as before the delete of one topic (onKunenaBeforeDelete, which the
+     * plugin Kunena - Finder turns into the removal of its messages from the index). The prune deletes and trashes topics with SQL:
+     * their posts stayed in the results of the search (deleted ones as published, and leading to a page which is gone). A trashed
+     * topic which is restored is indexed again by its save.
+     *
+     * @param   string  $idlist  The ids of the topics, separated by commas.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    protected static function unindexTopics(string $idlist): void
+    {
+        $db         = Factory::getContainer()->get('DatabaseDriver');
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+
+        foreach (array_filter(array_map('intval', explode(',', $idlist))) as $id) {
+            $table = new TableKunenaTopics($db);
+
+            if ($table->load($id)) {
+                $dispatcher->dispatch('onKunenaBeforeDelete', new KunenaBeforeDeleteEvent('onKunenaBeforeDelete', ['com_kunena.topic', $table]));
+            }
+        }
+    }
+
+    /**
      * Method to trash topics. They will be marked as deleted, but still exist in database.
      *
      * @param   array|int  $ids  ids
@@ -1013,6 +1044,8 @@ abstract class KunenaTopicHelper
         }
 
         $db        = Factory::getContainer()->get('DatabaseDriver');
+
+        self::unindexTopics((string) $idlist);
 
         // As the delete of a topic (KunenaTopic::publish(TOPIC_DELETED)): the messages in the state of their topic become "deleted
         // with the topic", the others keep theirs. Every message was set to deleted, so a restore of the topic (which brings back the

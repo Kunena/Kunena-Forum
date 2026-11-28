@@ -206,4 +206,32 @@ class KunenaTopicSplitPollTest extends IntegrationTestCase implements DBTestInte
 
         $this->assertSame([2 => self::OTHER_CATEGORY], $saved);
     }
+
+    /**
+     * The prune deletes and trashes topics with SQL (KunenaTopicHelper::delete() and trash()): their messages leave the search of the
+     * site as before the delete of one topic (onKunenaBeforeDelete of the topic, which the plugin Kunena - Finder turns into the
+     * removal of its messages). Their posts stayed in the results: deleted ones as published, and leading to a page which is gone.
+     * (Next to the split: both move or remove messages with SQL.)
+     */
+    public function testThePrunedTopicsLeaveTheSearch(): void
+    {
+        $removed = [];
+        $this->dispatcher->addListener('onKunenaBeforeDelete', static function ($event) use (&$removed): void {
+            if ($event->getArgument(0) === 'com_kunena.topic') {
+                $removed[] = (int) $event->getArgument(1)->id;
+            }
+        });
+
+        // The delete removes the Joomla tags of the topics: the table is in an installation of Joomla, not in the schema of the tests.
+        $this->getDBDriver()->setQuery("CREATE TABLE IF NOT EXISTS #__contentitem_tag_map (type_alias varchar(255) NOT NULL DEFAULT '', content_item_id int NOT NULL DEFAULT 0, tag_id int NOT NULL DEFAULT 0)")->execute();
+
+        try {
+            KunenaTopicHelper::trash([self::UNAPPROVED]);
+            KunenaTopicHelper::delete([self::TARGET]);
+        } finally {
+            $this->getDBDriver()->setQuery('DROP TABLE IF EXISTS #__contentitem_tag_map')->execute();
+        }
+
+        $this->assertSame([self::UNAPPROVED, self::TARGET], $removed);
+    }
 }

@@ -165,10 +165,18 @@ abstract class KunenaTopicTags
 
         try {
             $db = Factory::getContainer()->get('DatabaseDriver');
+
+            // A tag which both topics have stays once (the map has a unique key on the type, the item and the tag: the update of all
+            // the rows failed, and no tag moved). The rows which could not move are the doubles: they go.
+            $db->setQuery(
+                'UPDATE IGNORE ' . $db->quoteName('#__contentitem_tag_map')
+                . ' SET ' . $db->quoteName('content_item_id') . ' = ' . $to
+                . ' WHERE ' . $db->quoteName('type_alias') . ' = ' . $db->quote(self::TYPE_ALIAS)
+                . ' AND ' . $db->quoteName('content_item_id') . ' = ' . $from
+            )->execute();
             $db->setQuery(
                 $db->createQuery()
-                    ->update($db->quoteName('#__contentitem_tag_map'))
-                    ->set($db->quoteName('content_item_id') . ' = ' . $to)
+                    ->delete($db->quoteName('#__contentitem_tag_map'))
                     ->where($db->quoteName('type_alias') . ' = ' . $db->quote(self::TYPE_ALIAS))
                     ->where($db->quoteName('content_item_id') . ' = ' . $from)
             )->execute();

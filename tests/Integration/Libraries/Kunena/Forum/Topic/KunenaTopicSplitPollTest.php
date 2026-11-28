@@ -258,6 +258,33 @@ class KunenaTopicSplitPollTest extends IntegrationTestCase implements DBTestInte
     }
 
     /**
+     * A merged topic gives its tags to the topic it is merged into, which has its messages now (a tag which both have stays once):
+     * the tags stayed on the merged topic, a shadow or deleted after the merge, and the discussion was in the list of none of them.
+     */
+    public function testAMergedTopicGivesItsTagsToTheTarget(): void
+    {
+        $db = $this->getDBDriver();
+        $db->setQuery("CREATE TABLE IF NOT EXISTS #__contentitem_tag_map (type_alias varchar(255) NOT NULL DEFAULT '', core_content_id int NOT NULL DEFAULT 0, content_item_id int NOT NULL DEFAULT 0, tag_id int NOT NULL DEFAULT 0, tag_date datetime NULL, type_id int NOT NULL DEFAULT 0, UNIQUE KEY uk (type_id, content_item_id, tag_id))")->execute();
+        $this->insertRow('#__kunena_topics', [
+            'id' => 9, 'category_id' => self::CATEGORY, 'subject' => 'Into', 'hold' => 0, 'posts' => 1,
+            'first_post_id' => 20, 'first_post_time' => 500, 'last_post_id' => 20, 'last_post_time' => 500,
+        ]);
+        $this->insertRow('#__kunena_messages', ['id' => 20, 'parent' => 0, 'thread' => 9, 'catid' => self::CATEGORY, 'subject' => 'Into', 'time' => 500, 'hold' => 0]);
+
+        try {
+            // The merged topic has the tags 7 and 8, the target the tag 8.
+            $db->setQuery("INSERT INTO #__contentitem_tag_map (type_alias, content_item_id, tag_id) VALUES ('com_kunena.topic', " . self::TARGET . ", 7), ('com_kunena.topic', " . self::TARGET . ", 8), ('com_kunena.topic', 9, 8)")->execute();
+
+            KunenaTopicHelper::get(self::TARGET)->move(KunenaTopicHelper::get(9));
+            $map = $this->fetchAll("SELECT content_item_id, tag_id FROM #__contentitem_tag_map WHERE type_alias = 'com_kunena.topic' ORDER BY content_item_id, tag_id");
+        } finally {
+            $db->setQuery('DROP TABLE IF EXISTS #__contentitem_tag_map')->execute();
+        }
+
+        $this->assertSame([[9, 7], [9, 8]], array_map(static fn ($row) => array_map('intval', array_values($row)), $map));
+    }
+
+    /**
      * A merged topic gives its accepted answer to the topic it is merged into, when that one has none: all its messages are there now.
      * The answer stayed on the shadow, and the answer box was gone.
      */

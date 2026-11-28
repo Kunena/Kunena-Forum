@@ -2114,6 +2114,10 @@ class KunenaTopic extends KunenaDatabaseObject
         } elseif (!$ids) {
             // Moving topic into another topic
 
+            // Its tags go to the target, which has its messages now: they stayed on the topic which is a shadow (or deleted) after the
+            // merge, so the merged discussion was in the list of none of its tags.
+            KunenaTopicTags::moveTo((int) $this->id, (int) $target->id);
+
             // Add hits into the target topic
             $target->hits += $this->hits;
 

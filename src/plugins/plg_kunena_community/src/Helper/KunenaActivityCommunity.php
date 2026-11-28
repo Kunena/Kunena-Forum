@@ -61,9 +61,11 @@ class KunenaActivityCommunity extends KunenaActivity
      */
     public function onAfterPost($message): void
     {
-        if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+        // The points go to the author of the post (as the points of a thank you go to its target): without a user, JomSocial gave
+        // them to the current user, the moderator who approved or restored the post, or the visitor who published a scheduled one.
+        if ((int) $message->userid > 0 && StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
             CFactory::load('libraries', 'userpoints');
-            CUserPoints::assignPoint('com_kunena.thread.new');
+            CUserPoints::assignPoint('com_kunena.thread.new', (int) $message->userid);
         }
 
         $act          = new stdClass();
@@ -221,9 +223,11 @@ class KunenaActivityCommunity extends KunenaActivity
      */
     public function onAfterReply($message): void
     {
-        if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+        // The points go to the author of the post (as the points of a thank you go to its target): without a user, JomSocial gave
+        // them to the current user, the moderator who approved or restored the post, or the visitor who published a scheduled one.
+        if ((int) $message->userid > 0 && StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
             CFactory::load('libraries', 'userpoints');
-            CUserPoints::assignPoint('com_kunena.thread.reply');
+            CUserPoints::assignPoint('com_kunena.thread.reply', (int) $message->userid);
         }
 
         // Get users who have subscribed to the topic, excluding current user.

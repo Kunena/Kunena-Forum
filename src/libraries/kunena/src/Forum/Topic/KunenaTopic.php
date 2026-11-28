@@ -52,6 +52,7 @@ use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tables\TableKunenaMessages;
@@ -1894,6 +1895,12 @@ class KunenaTopic extends KunenaDatabaseObject
 
             // Did user want to change category?
             $target->category_id = $categoryTarget->id;
+
+            // A category of one language has topics of that language (as a new topic takes it): a topic moved into it kept its own,
+            // and the lists of the category, which show the topics of the language of the page, left it out on every page.
+            if ($categoryTarget->language && $categoryTarget->language !== KunenaMultilanguage::ALL) {
+                $target->language = $categoryTarget->language;
+            }
         } else {
             throw new Exception(Text::_('COM_KUNENA_MODERATION_ERROR_WRONG_TARGET'));
         }

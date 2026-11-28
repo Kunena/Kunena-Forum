@@ -224,6 +224,20 @@ class KunenaTopicMoveUnpublishedTest extends IntegrationTestCase implements DBTe
      * The read marks of the users follow a topic which moves to another category: they kept the old category, so the topic was not
      * in the unread topics of the new category (Diagnostics listed them as "user read in the wrong category").
      */
+    /**
+     * A topic moved into a category of one language takes that language (as a new topic of it does): it kept its own, and the
+     * lists of the category, which show the topics of the language of the page, left it out on every page.
+     */
+    public function testATopicMovedIntoACategoryOfOneLanguageTakesIt(): void
+    {
+        $category           = KunenaCategoryHelper::get(self::OTHER_CATEGORY);
+        $category->language = 'fr-FR';
+
+        KunenaTopicHelper::get(self::TARGET)->move($category);
+
+        $this->assertSame('fr-FR', $this->fetchAll('SELECT language FROM #__kunena_topics WHERE id = ' . self::TARGET)[0]['language']);
+    }
+
     public function testTheReadMarksOfAMovedTopicGetItsNewCategory(): void
     {
         $this->insertRows('#__kunena_user_read', [

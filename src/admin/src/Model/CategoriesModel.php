@@ -460,7 +460,9 @@ class CategoriesModel extends KunenaModel
      */
     public function getBatchCategories(): string
     {
-        $categories         = $this->getAdminCategories();
+        // All the categories which the user may administer: the categories of the list were taken, with its filters and its page,
+        // so the batch could move only to a category of the page which was shown (20 of them by default).
+        $categories         = KunenaCategoryHelper::getIndentation(KunenaCategoryHelper::getChildren(0, 100, ['action' => 'admin', 'unpublished' => 1]));
         $batch_categories   = [];
         $batch_categories[] = HTMLHelper::_('select.option', 'select', Text::_('JSELECT'));
 

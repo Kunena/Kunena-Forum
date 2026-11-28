@@ -2160,7 +2160,8 @@ class TopicController extends KunenaController
         // keeps the subject the topic had when it was written, and the fix of a typo in an old reply renamed the topic back.
         $subjectChanged = trim((string) $message->subject) !== trim($oldSubject);
 
-        if ($topic->first_post_id == $message->id || $subjectChanged && ($this->config->allowChangeSubject && $topic->first_post_userid == $message->userid || $this->me->isModerator())) {
+        // A moderator of the category too (as the post of a reply takes it): only the global moderators were.
+        if ($topic->first_post_id == $message->id || $subjectChanged && ($this->config->allowChangeSubject && $topic->first_post_userid == $message->userid || $this->me->isModerator($topic->getCategory()))) {
             $topic->subject = $fields['subject'];
         }
 

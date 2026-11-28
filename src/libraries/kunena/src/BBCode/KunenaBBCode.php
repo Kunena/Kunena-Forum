@@ -203,8 +203,10 @@ class KunenaBBCode extends BBCode
      */
     protected function autoDetectURLs($string): array
     {
-        // The text of [url]address[/url] is the address as written: one address chunk, encoded, without links or smileys.
-        if ($this->urlWithoutDefinition > 0) {
+        // The text of [url]address[/url] is the address as written: one address chunk, encoded, without links or smileys. So is the
+        // text of every other link ([url=...] counts in autoLink_disable): an address in it was made a link inside the link
+        // ([url=https://a.example]https://a.example[/url] gave <a><a>...</a></a>, or a frame of an embed in a link).
+        if ($this->urlWithoutDefinition > 0 || $this->autoLink_disable > 0) {
             return ['', htmlspecialchars((string) $string, ENT_QUOTES, 'UTF-8')];
         }
 

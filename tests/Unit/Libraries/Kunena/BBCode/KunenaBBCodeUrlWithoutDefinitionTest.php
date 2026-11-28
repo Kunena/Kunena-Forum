@@ -265,4 +265,18 @@ class KunenaBBCodeUrlWithoutDefinitionTest extends UnitTestCase
         // Auto-linked as before: without the scheme, and shortened.
         $this->assertSame('www.kunena.../docs', trim($links->item(1)->textContent), $html);
     }
+
+    /**
+     * The text of a link with its address ([url=...]) is not auto-linked either: an address in it was made a link inside the link
+     * (<a><a>...</a></a>, or the frame of an embed inside a link).
+     */
+    public function testTheTextOfALinkWithItsAddressIsNoSecondLink(): void
+    {
+        $html  = $this->parse('[url=https://other.example/page]https://other.example/page[/url]');
+        $links = $this->links($html);
+
+        $this->assertSame(1, $links->length, $html);
+        $this->assertSame('https://other.example/page', $links->item(0)->getAttribute('href'), $html);
+        $this->assertStringNotContainsString('<a', $links->item(0)->ownerDocument->saveHTML($links->item(0)->firstChild), $html);
+    }
 }

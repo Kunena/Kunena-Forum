@@ -469,6 +469,16 @@ class KunenaAttachment extends KunenaDatabaseObject
             if (!$this->isImage() && !$config->showFileForGuest) {
                 return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'), 401);
             }
+
+            // The files of a reply in a category which hides the replies from the guests (they log in to read them): the text of the
+            // reply was hidden, its files were shown under it and given.
+            if ($this->mesid) {
+                $message = $this->getMessage();
+
+                if ($message->exists() && (int) $message->id !== (int) $message->getTopic()->first_post_id && $message->getCategory()->hidesRepliesForGuests()) {
+                    return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 401);
+                }
+            }
         }
 
         // A file without protection ("Protect Attachments" off, the default) is for who may read its message, and a file which

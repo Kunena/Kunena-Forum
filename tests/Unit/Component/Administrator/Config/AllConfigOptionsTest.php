@@ -372,10 +372,10 @@ class AllConfigOptionsTest extends UnitTestCase
     }
 
     /**
-     * Options which the form has and no code reads yet (the ids of three menu items, kept for the menu of the forum).
+     * Options which the form has and no code reads yet (the ids of two menu items, kept for the menu of the forum).
      * A new option which nothing reads fails the test below; an option which gets its code is taken out of this list.
      */
-    private const NOT_READ_YET = ['homeId', 'mainMenuId', 'miscId'];
+    private const NOT_READ_YET = ['homeId', 'mainMenuId'];
 
     /** @var string|null */
     private static ?string $code = null;

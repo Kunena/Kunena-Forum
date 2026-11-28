@@ -119,13 +119,11 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
             try {
-                if ($this->config->searchId) {
-                    $itemid = $this->config->searchId;
-                } else {
-                    $menu      = $this->app->getMenu();
-                    $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
-                    $itemid    = $getid->id;
-                }
+                // The menu item of the form of a new topic: the option "SEARCH ID" was taken first, so the form of a new topic was sent
+                // to the menu item of the search.
+                $menu      = $this->app->getMenu();
+                $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
+                $itemid    = $getid->id;
 
                 if (!$itemid) {
                     $itemid = KunenaRoute::fixMissingItemID();

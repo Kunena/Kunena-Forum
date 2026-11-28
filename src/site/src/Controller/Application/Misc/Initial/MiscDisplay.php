@@ -185,8 +185,9 @@ class MiscDisplay extends Display
 
         if (!$Itemid) {
             try {
-                if (isset($this->config->customId) && $this->config->customId) {
-                    $itemid = $this->config->customId;
+                // The option "MISC ID" (miscId): another name was read, which no option has, so the option did nothing.
+                if ($this->config->miscId) {
+                    $itemid = $this->config->miscId;
                 } else {
                     $menu      = $this->app->getMenu();
                     $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));

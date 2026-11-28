@@ -15,7 +15,6 @@ namespace Kunena\Forum\Api\Controller;
 
 \defined('_JEXEC') or die();
 
-use Joomla\CMS\Access\Exception\NotAllowed;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
@@ -84,7 +83,7 @@ class PostsController extends ApiController
      *
      * @return  void
      *
-     * @throws  NotAllowed|ResourceNotFound|Save  The status of the error: 403, 404, or 400, 409 and 429.
+     * @throws  ResourceNotFound|Save  The status of the error: 404, or 400, 403 (with its reason), 409 and 429.
      * @since   Kunena 8.0
      */
     public function add()
@@ -98,8 +97,10 @@ class PostsController extends ApiController
                 KunenaApiReply::fields(json_decode((string) $this->input->json->getRaw(), true))
             );
         } catch (RuntimeException $e) {
+            // A refusal keeps its reason (captcha, read only, banned, locked, links): the handler of NotAllowed of Joomla answers
+            // "Access Denied" whatever the message, so a client could not tell them apart. The one of Save keeps it, with the status.
             throw match ($e->getCode()) {
-                403      => new NotAllowed($e->getMessage(), 403),
+                403      => new Save($e->getMessage(), 403),
                 404      => new ResourceNotFound($e->getMessage(), 404),
                 409, 429 => new Save($e->getMessage(), $e->getCode()),
                 default  => new Save($e->getMessage(), 400),

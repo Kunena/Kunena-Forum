@@ -64,21 +64,28 @@ abstract class KunenaPopupNotification
      * @param   integer            $after   The last message the browser has seen.
      * @param   integer            $cursor  The last message now.
      * @param   integer|null       $now     The time now (seconds), for the tests.
+     * @param   boolean            $topics  The subscriptions of the topics count (the settings of the forum turn them on).
+     * @param   boolean            $cats    The subscriptions of the categories count.
      *
      * @return  object[]  id, parent, mentioned, own and topicsub of each message, the oldest first.
      *
      * @since   Kunena 8.0
      */
-    public static function candidates(DatabaseInterface $db, int $userid, int $after, int $cursor, ?int $now = null): array
+    public static function candidates(DatabaseInterface $db, int $userid, int $after, int $cursor, ?int $now = null, bool $topics = true, bool $cats = true): array
     {
         $mention = '%[mention userid=' . $userid . ']%';
+
+        // The subscriptions count only as the settings of the forum let them ($topics, $cats; see get()).
+        $follow = ($topics ? ' OR ' . $db->quoteName('ut.subscribed') . ' > 0' : '')
+            . ($cats ? ' OR (' . $db->quoteName('m.parent') . ' = 0 AND ' . $db->quoteName('uc.subscribed') . ' = 1)' : '');
         $query   = $db->createQuery()
             ->select([
                 $db->quoteName('m.id'),
                 $db->quoteName('m.parent'),
                 'CASE WHEN ' . $db->quoteName('mt.message') . ' LIKE ' . $db->quote($mention) . ' THEN 1 ELSE 0 END AS ' . $db->quoteName('mentioned'),
                 'CASE WHEN ' . $db->quoteName('t.first_post_userid') . ' = ' . $userid . ' THEN 1 ELSE 0 END AS ' . $db->quoteName('own'),
-                'COALESCE(' . $db->quoteName('ut.subscribed') . ', 0) AS ' . $db->quoteName('topicsub'),
+                ($topics ? 'COALESCE(' . $db->quoteName('ut.subscribed') . ', 0)' : '0') . ' AS ' . $db->quoteName('topicsub'),
+                ($cats ? 'COALESCE(' . $db->quoteName('uc.subscribed') . ', 0)' : '0') . ' AS ' . $db->quoteName('catsub'),
             ])
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->join('INNER', $db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('m.thread'))
@@ -100,8 +107,7 @@ abstract class KunenaPopupNotification
             ->where($db->quoteName('m.time') . ' > ' . (($now ?? time()) - self::MAX_AGE))
             ->where(
                 '(' . $db->quoteName('t.first_post_userid') . ' = ' . $userid
-                . ' OR ' . $db->quoteName('ut.subscribed') . ' > 0'
-                . ' OR (' . $db->quoteName('m.parent') . ' = 0 AND ' . $db->quoteName('uc.subscribed') . ' = 1)'
+                . $follow
                 . ' OR ' . $db->quoteName('mt.message') . ' LIKE ' . $db->quote($mention) . ')'
             )
             // The newest ones, given the oldest first: with the oldest 100 the popups showed the newest of those, and the messages
@@ -154,8 +160,14 @@ abstract class KunenaPopupNotification
             return $result;
         }
 
+        // The subscriptions count as the settings of the forum let them (as for the e-mails): with the subscriptions of the topics or
+        // of the categories turned off, their old rows still gave "replied in a topic you follow" and "new topic in a category".
+        $config = KunenaConfig::getInstance();
+        $topics = !empty($config->allowSubscriptions) && $config->topicSubscriptions !== 'disabled';
+        $cats   = !empty($config->allowSubscriptions) && $config->categorySubscriptions !== 'disabled';
+
         try {
-            $rows = self::candidates($db, $userid, $after, $cursor);
+            $rows = self::candidates($db, $userid, $after, $cursor, null, $topics, $cats);
         } catch (Exception $e) {
             return $result;
         }

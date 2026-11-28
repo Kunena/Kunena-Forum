@@ -101,6 +101,23 @@ class PopupCandidatesTest extends IntegrationTestCase implements DBTestInterface
         $this->assertSame([1 => 'topic'], $this->found());
     }
 
+    /**
+     * With the subscriptions turned off in the settings, the old subscriptions give no popup (as no e-mail): they still gave
+     * "replied in a topic you follow" and "new topic in a category you follow".
+     */
+    public function testSubscriptionsTurnedOffGiveNoPopup(): void
+    {
+        $this->topic(1, 9);
+        $this->message(1, 1, 0, 9);
+        $this->message(2, 1, 1, 7);
+        $this->insertRow('#__kunena_user_topics', ['user_id' => self::USER, 'topic_id' => 1, 'subscribed' => 1]);
+        $this->insertRow('#__kunena_user_categories', ['user_id' => self::USER, 'category_id' => 2, 'subscribed' => 1]);
+
+        $rows = KunenaPopupNotification::candidates($this->getDBDriver(), self::USER, 0, 100, self::NOW, false, false);
+
+        $this->assertSame([], $rows);
+    }
+
     public function testOwnHeldAndOldMessagesAreSkippedAndTheCursorLimitsTheRange(): void
     {
         $this->topic(1, self::USER);

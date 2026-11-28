@@ -2893,9 +2893,12 @@ class KunenaMessage extends KunenaDatabaseObject
             } catch (Exception $e) {
                 throw new Exception($e->getMessage());
             } finally {
-                // Restore original language regardless of success or failure.
+                // Restore original language regardless of success or failure: from the folders which the switch loaded (the files
+                // of Kunena are not in the language folder of the site, so the load found nothing, the strings stayed in the
+                // language of the last recipient, and a mention mail sent after them or the next page was in it), both files.
                 if ($languageChanged) {
-                    $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
+                    KunenaFactory::loadLanguageMail('com_kunena', 'site', $currentLanguage);
+                    KunenaFactory::loadLanguageMail('com_kunena.libraries', 'admin', $currentLanguage);
                 }
             }
         }

@@ -115,7 +115,8 @@ class CategoryDisplay extends KunenaControllerDisplay
             $category = $topic->getCategory();
             $url      = $topic->getUrl($category, true, 'last');
 
-            $this->createItem($title, $url, $description, $this->category->name, $date, $userid, $username);
+            // The category of the topic: the feed of a parent has the topics of its subcategories, which had the name of the parent.
+            $this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
         }
 
         // The title, the description, the image and the link of the feed: prepareDocument() runs for the controller of a page only,

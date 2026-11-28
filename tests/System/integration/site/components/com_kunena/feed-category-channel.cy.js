@@ -1,6 +1,8 @@
 // The feed of a category:
 // - its channel has the title and the description of the category and links to the page of the category (it had the title of the
-//   menu item, "Home", no description, and the host alone as its link: the code which sets them did not run for a feed).
+//   menu item, "Home", no description, and the host alone as its link: the code which sets them did not run for a feed);
+// - an item has the name of the category of its topic (the feed of a parent has the topics of its subcategories, which had the name
+//   of the parent).
 describe('Kunena feeds: the feed of a category', () => {
   const base = '/index.php?option=com_kunena';
   const stamp = Date.now();
@@ -54,6 +56,14 @@ describe('Kunena feeds: the feed of a category', () => {
       const channel = body.slice(0, body.indexOf('<item>'));
 
       expect(channel, 'the link of the list').to.match(/<link>https?:\/\/[^<\/]+\/[^<]+<\/link>/);
+    });
+  });
+
+  it('gives each topic the name of its own category', () => {
+    // The topics of the test site are in the subcategory General Discussion of Community.
+    feed(1).then((body) => {
+      expect(body, 'the category of the items').to.include('<category>General Discussion</category>');
+      expect(body, 'the name of the parent for the items').to.not.include('<category>Community</category>');
     });
   });
 });

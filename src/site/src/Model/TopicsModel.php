@@ -777,9 +777,9 @@ class TopicsModel extends KunenaModel
         $value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_ordering", 'filter_order', 'id', 'cmd');
         $this->setState('list.ordering', $value);
 
-        $value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_start", 'limitstart', 0, 'int');
-
-        // $value = $this->getInt ( 'limitstart', 0 );
+        // The page of the address, the first one without a start: the page which the user opened last (kept in the session) came
+        // back when he opened the list again (from the menu, the tabs of the forum, a filter of the list, which leaves out the start).
+        $value = max(0, $this->getInt('limitstart', 0));
         $this->setState('list.start', $value);
 
         $value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_direction", 'filter_order_Dir', 'desc', 'word');

@@ -25,6 +25,7 @@ use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaSearchUserFilter;
@@ -251,6 +252,22 @@ class SearchModel extends KunenaModel
                 $querystrings[] = "({$text} {$not} LIKE '%{$escapedSearchword}%' {$operator} m.subject {$not} LIKE '%{$escapedSearchword}%')";
             } else {
                 $querystrings[] = "(m.subject {$not} LIKE '%{$escapedSearchword}%')";
+            }
+        }
+
+        // A guest gets no reply of a category which hides the replies from guests (the topic, the feeds and the quotes hide them): its
+        // text was searched and the reply counted, with the teaser in place of its text, so a guest learnt which words were in it.
+        if (!$this->me->exists()) {
+            $teasers = [];
+
+            foreach (KunenaCategoryHelper::getCategories() as $category) {
+                if ($category->hidesRepliesForGuests()) {
+                    $teasers[] = (int) $category->id;
+                }
+            }
+
+            if ($teasers) {
+                $querystrings[] = '(m.parent = 0 OR m.catid NOT IN (' . implode(',', $teasers) . '))';
             }
         }
 

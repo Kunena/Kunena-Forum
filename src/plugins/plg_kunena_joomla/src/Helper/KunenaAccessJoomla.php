@@ -176,7 +176,9 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
                 $html['joomla-level']['post']  = [
                     'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
                     'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
-                    'input' => HTMLHelper::_(
+                    // An empty value first: a list without a choice is not sent, and the defaults (Registered, Manager, Super
+                    // Users) came back, so nobody could be refused.
+                    'input' => '<input type="hidden" name="params-joomla-level[access_post][]" value="">' . HTMLHelper::_(
                         'access.usergroup',
                         'params-joomla-level[access_post][]',
                         $category->params->get('access_post', [2, 6, 8]),
@@ -187,7 +189,9 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
                 $html['joomla-level']['reply'] = [
                     'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
                     'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
-                    'input' => HTMLHelper::_(
+                    // An empty value first: a list without a choice is not sent, and the defaults (Registered, Manager, Super
+                    // Users) came back, so nobody could be refused.
+                    'input' => '<input type="hidden" name="params-joomla-level[access_reply][]" value="">' . HTMLHelper::_(
                         'access.usergroup',
                         'params-joomla-level[access_reply][]',
                         $category->params->get('access_reply', [2, 6, 8]),
@@ -234,7 +238,9 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
                 $html['joomla-group']['post']  = [
                     'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
                     'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
-                    'input' => HTMLHelper::_(
+                    // An empty value first: a list without a choice is not sent, and the defaults (Registered, Manager, Super
+                    // Users) came back, so nobody could be refused.
+                    'input' => '<input type="hidden" name="params-joomla-group[access_post][]" value="">' . HTMLHelper::_(
                         'access.usergroup',
                         'params-joomla-group[access_post][]',
                         $category->params->get('access_post', [2, 6, 8]),
@@ -245,7 +251,9 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
                 $html['joomla-group']['reply'] = [
                     'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
                     'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
-                    'input' => HTMLHelper::_(
+                    // An empty value first: a list without a choice is not sent, and the defaults (Registered, Manager, Super
+                    // Users) came back, so nobody could be refused.
+                    'input' => '<input type="hidden" name="params-joomla-group[access_reply][]" value="">' . HTMLHelper::_(
                         'access.usergroup',
                         'params-joomla-group[access_reply][]',
                         $category->params->get('access_reply', [2, 6, 8]),

@@ -141,6 +141,14 @@ final class Kunena extends Adapter implements SubscriberInterface
     protected array $oldCategories = [];
 
     /**
+     * The ids of the messages which the last batch read (getItems()), also those which gave no item.
+     *
+     * @var    int[]
+     * @since  Kunena 8.0
+     */
+    protected array $batchIds = [];
+
+    /**
      * The table name.
      *
      * @var string
@@ -447,10 +455,16 @@ final class Kunena extends Adapter implements SubscriberInterface
             $iState->totalItems--;
         }
 
-        // If the query returned fewer items than requested, all messages are indexed.
+        // The cursor goes past every id which the batch read, also of a message which gave no item (no row of its text): such a
+        // message was read again by every batch, and a batch with one item less than its limit ended the index too early.
+        if ($this->batchIds) {
+            $lastId = max($lastId, max($this->batchIds));
+        }
+
+        // If the query returned fewer messages than requested, all messages are indexed.
         // Settle any difference between the counted total and the items actually
         // delivered (e.g. messages deleted while indexing was running).
-        if (\count($items) < $limit) {
+        if (\count($this->batchIds) < $limit) {
             $iState->totalItems -= max(0, (int) $aState['total'] - $offset);
             $offset             = (int) $aState['total'];
         }
@@ -620,6 +634,9 @@ final class Kunena extends Adapter implements SubscriberInterface
         } catch (Exception $e) {
             KunenaError::displayDatabaseError($e);
         }
+
+        // The ids which the batch read (onBuildIndex() moves its cursor past them and knows the last batch by their number).
+        $this->batchIds = array_map('intval', (array) $ids);
 
         // Convert the items to result objects.
         $messages = KunenaMessageHelper::getMessages($ids, 'none');

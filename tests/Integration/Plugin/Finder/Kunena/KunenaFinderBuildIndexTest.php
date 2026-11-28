@@ -206,6 +206,44 @@ class KunenaFinderBuildIndexTest extends IntegrationTestCase implements DBTestIn
     }
 
     /**
+     * A message without a row of its text (Diagnostics knows them) gives no item: its batch had one item less than its limit, which
+     * ended the index, and the messages after that batch were never indexed. The batch counts the messages it read.
+     */
+    public function testAMessageWithoutTextDoesNotEndTheIndex(): void
+    {
+        $this->insertRow('#__kunena_messages', ['id' => 2, 'parent' => 0, 'thread' => 1, 'catid' => 2, 'name' => 'U',
+            'userid' => 0, 'email' => '', 'subject' => 'Message 2', 'time' => 2, 'ip' => '', 'hold' => 0]);
+
+        $plugin = (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor();
+        $plugin->setDatabase($this->getDBDriver());
+        (new ReflectionProperty(Kunena::class, 'db'))->setValue($plugin, $this->getDBDriver());
+        (new ReflectionProperty(Kunena::class, 'viewLevels'))->setValue($plugin, []);
+
+        $indexer = $this->createStub(Indexer::class);
+        $indexer->method('index')->willReturnCallback(function ($item) {
+            $this->indexed[] = (int) $item->id;
+
+            return 1;
+        });
+        (new ReflectionProperty(Kunena::class, 'indexer'))->setValue($plugin, $indexer);
+
+        // Batches of 2 messages, 4 messages to index (the message 2 has no text).
+        $state               = new \stdClass();
+        $state->batchSize    = 2;
+        $state->batchOffset  = 0;
+        $state->totalItems   = 4;
+        $state->pluginState  = ['Kunena' => ['offset' => 0, 'total' => 4]];
+        $this->replace(Indexer::class, 'state', $state);
+
+        for ($batch = 0; $batch < 5 && Indexer::getState()->pluginState['Kunena']['offset'] < 4; $batch++) {
+            Indexer::getState()->batchOffset = 0;
+            $plugin->onBuildIndex();
+        }
+
+        $this->assertSame([1, 4, 9], $this->indexed);
+    }
+
+    /**
      * A topic is moved into another category, or deleted: KunenaTopic::move() and publish() change the category and the state of
      * its messages in the database and save the topic. The messages are indexed again with their new access level and state; they
      * were not, and the posts of a topic moved into a closed category or deleted stayed in the results of the search of the site.

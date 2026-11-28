@@ -70,7 +70,8 @@ $topics   = $topicIds ? KunenaTopicHelper::getTopics(array_values(array_unique($
                         <span class="badge bg-secondary"><?php echo Text::_('COM_KUNENA_DRAFT_REPLY'); ?></span>
                     <?php endif; ?>
                 </td>
-                <td><?php echo $category->exists() ? $category->displayField('name') : ''; ?></td>
+                <?php // The name of a category which the user may still read (as the link of the topic): the name of a hidden one was shown. ?>
+                <td><?php echo $category->exists() && $category->isAuthorised('read') ? $category->displayField('name') : ''; ?></td>
                 <td><?php echo HTMLHelper::_('date', $draft->modified_time, 'DATE_FORMAT_LC5'); ?></td>
                 <td class="text-end">
                     <a class="btn btn-outline-primary btn-sm"

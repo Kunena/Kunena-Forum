@@ -187,8 +187,11 @@ $this->addStyleSheet('rating.css');
                         </tr>
                     <?php endif; ?>
                 </tfoot>
-            <?php endif; ?>
             </table>
+        <?php else : ?>
+            <?php // A category without a topic says so (the page had its buttons only, and the end of a table which nothing opened). ?>
+            <div class="alert alert-info"><?php echo Text::_('COM_KUNENA_VIEW_CATEGORY_NO_TOPICS'); ?></div>
+        <?php endif; ?>
     </form>
 
     <?php if ($this->topics) : ?>

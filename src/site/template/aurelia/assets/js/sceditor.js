@@ -504,10 +504,13 @@
 				if (url) {
 					return params['html']
 						.replace('{url}', sceditor.escapeEntities(url, true))
-						.replace('{src}', sceditor.escapeEntities(content, true))
+						// The content is escaped by the parser already (its text): escaped again, an & of the address was saved as
+						// &amp; at every edit of the message.
+						.replace('{src}', content)
 						.replace('{type}', sceditor.escapeEntities(attrs.defaultattr, true));
 				}
-				return sceditor.escapeEntities(token.val + content + (token.closing ? token.closing.val : ''));
+				// The tags are text, the content is escaped already (an & was &amp; at every edit).
+				return sceditor.escapeEntities(token.val, true) + content + sceditor.escapeEntities(token.closing ? token.closing.val : '', true);
 			}
 		});
 	

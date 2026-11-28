@@ -231,8 +231,12 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
         $this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
 
-        if ($this->me->canSubscribe == -1) {
-            $this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
+        // The box as the member left it in a reply which failed (as the form of a new topic does): it took his setting again, so a
+        // member who ticked it found it empty (or the other way round) after a refused captcha.
+        if ($saved) {
+            $this->subscriptionsChecked = $saved['subscribe'];
+        } elseif ($this->me->canSubscribe == -1) {
+            $this->subscriptionsChecked = $this->config->subscriptionsChecked == 1;
         } else {
             $this->subscriptionsChecked = $this->me->canSubscribe;
         }

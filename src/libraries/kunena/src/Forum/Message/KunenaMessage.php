@@ -119,7 +119,7 @@ class KunenaMessage extends KunenaDatabaseObject
         'approve'                => ['Read'],
         'delete'                 => ['Read', 'Own', 'Delete'],
         'thankyou'               => ['Read', 'NotHold', 'Thankyou'],
-        'unthankyou'             => ['Read'],
+        'unthankyou'             => ['Read', 'ThankyouEnabled'],
         'undelete'               => ['Read'],
         'permdelete'             => ['Read', 'Permdelete'],
         'attachment.read'        => ['Read'],
@@ -995,6 +995,24 @@ class KunenaMessage extends KunenaDatabaseObject
      * @return  KunenaExceptionAuthorise|void
      *
      * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function authoriseThankyouEnabled(KunenaUser $user)
+    {
+        // The removal of a thank you too, when the thank yous are off: only the button followed the option, a request removed the
+        // thank yous (of anybody, for a moderator) all the same.
+        if (!$this->_config->showThankYou) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
+        }
+
+        return;
+    }
+
+    /**
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|void
+     *
      * @since   Kunena 6.0
      */
     protected function authoriseThankyou(KunenaUser $user)

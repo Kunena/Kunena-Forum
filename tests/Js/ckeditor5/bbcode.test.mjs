@@ -115,6 +115,16 @@ test('the formatting of the editor becomes BBCode', () => {
 	assert.equal(htmlToBbcode('<p>one<br>two</p><p>&nbsp;</p><p>four</p>'), 'one\ntwo\n\nfour');
 });
 
+test('the text before the first item of a list is kept (before the list)', () => {
+	// Only the items were written: the text was lost at the first save of the message.
+	assert.equal(roundTrip('[list]Intro[*]a[*]b[/list]'), 'Intro\n[list]\n[*]a\n[*]b\n[/list]');
+});
+
+test('an e-mail address with a % which is no escape is kept as it is written', () => {
+	// decodeURIComponent() threw: the editor stopped converting, and the edits of the message were lost on submit.
+	assert.equal(roundTrip('[email]a%b@example.org[/email]'), '[email]a%b@example.org[/email]');
+});
+
 test('Windows line endings are read as line breaks', () => {
 	assert.equal(roundTrip('one\r\ntwo'), 'one\ntwo');
 });

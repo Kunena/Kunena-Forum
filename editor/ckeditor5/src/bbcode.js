@@ -332,8 +332,13 @@ function blockHtml(node, options, align) {
 		const styles = { 1: 'decimal', a: 'lower-alpha', A: 'upper-alpha', i: 'lower-roman', I: 'upper-roman' };
 		const style = type && styles[type] ? ` style="list-style-type:${styles[type]}"` : '';
 		const items = node.children.filter((child) => child.tag === '*');
+		// The text before the first [*] ([list]Intro[*]a[/list]) is kept, as a paragraph before the list: only the items were
+		// written, and the text was lost at the first save of the message.
+		const first = node.children.findIndex((child) => child.tag === '*');
+		const intro = first < 0 ? node.children : node.children.slice(0, first);
+		const introHtml = intro.some((child) => child.text === undefined || child.text.trim() !== '') ? blocksHtml(trimBreaks(intro), options) : '';
 
-		return `<${tag}${style}>${items.map((item) => `<li>${blocksHtml(trimBreaks(item.children), options) || '<p>&nbsp;</p>'}</li>`).join('')}</${tag}>`;
+		return `${introHtml}<${tag}${style}>${items.map((item) => `<li>${blocksHtml(trimBreaks(item.children), options) || '<p>&nbsp;</p>'}</li>`).join('')}</${tag}>`;
 	}
 
 	// left, center, right, justify: the paragraphs inside are aligned.
@@ -534,7 +539,15 @@ function linkBbcode(node) {
 	const text = inlineBbcode(node.children);
 
 	if (/^mailto:/i.test(href)) {
-		const address = decodeURIComponent(href.slice(7));
+		// An address with a % which is no escape (a%b@example.org) is kept as it is written: decodeURIComponent() threw, the editor
+		// stopped converting, and the edits of the message were lost on submit.
+		let address;
+
+		try {
+			address = decodeURIComponent(href.slice(7));
+		} catch {
+			address = href.slice(7);
+		}
 
 		// A link made without a text has its address as the text (CKEditor writes the href, mailto: included).
 		return text === address || text === href || text === '' ? `[email]${address}[/email]` : `[email=${address}]${text}[/email]`;

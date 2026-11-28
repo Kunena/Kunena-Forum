@@ -207,17 +207,29 @@ class TopicListingUserDisplay extends ListDisplay
                 ];
 
                 if ($view == 'user' && $layout == 'default') {
-                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
+                    // Without a menu item of the forum which the visitor may see (their access, their language) there is no Itemid: no
+                    // redirect, it went to the same address again, until the browser gave up.
+                    if (!empty($params['Itemid'])) {
+                        return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
+                    }
                 } elseif ($view == 'topics' && $layout == 'user') {
                     $params['view']   = 'topics';
                     $params['layout'] = 'user';
                     $params['mode']   = $this->state->get('list.mode');
 
-                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
+                    // Without a menu item of the forum which the visitor may see (their access, their language) there is no Itemid: no
+                    // redirect, it went to the same address again, until the browser gave up.
+                    if (!empty($params['Itemid'])) {
+                        return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
+                    }
                 }
                 $params['mode'] = $this->state->get('list.mode');
 
-                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
+                // Without a menu item of the forum which the visitor may see (their access, their language) there is no Itemid: no
+                // redirect, it went to the same address again, until the browser gave up.
+                if (!empty($params['Itemid'])) {
+                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false), 301);
+                }
 
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());

@@ -39,7 +39,7 @@ class KunenaFinderCategoryStateTest extends UnitTestCase
     {
         $table = (new ReflectionClass(TableKunenaCategories::class))->newInstanceWithoutConstructor();
 
-        foreach ($values + ['accesstype' => 'joomla.group', 'access' => 1, 'pubAccess' => 2, 'pubRecurse' => 1, 'adminAccess' => 0, 'adminRecurse' => 1, 'published' => 1, 'parentid' => 1, 'params' => '{}'] as $name => $value) {
+        foreach ($values + ['accesstype' => 'joomla.group', 'access' => 1, 'pubAccess' => 2, 'pubRecurse' => 1, 'adminAccess' => 0, 'adminRecurse' => 1, 'published' => 1, 'parentid' => 1, 'language' => '*', 'params' => '{}'] as $name => $value) {
             $table->$name = $value;
         }
 
@@ -53,6 +53,7 @@ class KunenaFinderCategoryStateTest extends UnitTestCase
             'the second group'                  => [['adminAccess' => 6]],
             'the child groups of the second one' => [['adminRecurse' => 0]],
             'the parent'                        => [['parentid' => 5]],
+            'the language'                      => [['language' => 'fr-FR']],
         ];
     }
 

@@ -206,6 +206,40 @@ class KunenaFinderBuildIndexTest extends IntegrationTestCase implements DBTestIn
     }
 
     /**
+     * The language of an item is the one of its category (else of its topic): every post was "all languages", so the posts of a
+     * French category were in the results of the English pages, with the menu item of the language of the indexer (a 404 there).
+     */
+    public function testTheItemsHaveTheLanguageOfTheirCategory(): void
+    {
+        $this->getDBDriver()->setQuery("UPDATE #__kunena_categories SET language = 'fr-FR' WHERE id = 2")->execute();
+
+        $plugin = (new ReflectionClass(Kunena::class))->newInstanceWithoutConstructor();
+        $plugin->setDatabase($this->getDBDriver());
+        (new ReflectionProperty(Kunena::class, 'db'))->setValue($plugin, $this->getDBDriver());
+        (new ReflectionProperty(Kunena::class, 'viewLevels'))->setValue($plugin, []);
+
+        $items   = [];
+        $indexer = $this->createStub(Indexer::class);
+        $indexer->method('index')->willReturnCallback(static function ($item) use (&$items) {
+            $items[] = [(int) $item->id, $item->language, str_contains((string) $item->route, 'Itemid')];
+
+            return 1;
+        });
+        (new ReflectionProperty(Kunena::class, 'indexer'))->setValue($plugin, $indexer);
+
+        $state              = new \stdClass();
+        $state->batchSize   = 10;
+        $state->batchOffset = 0;
+        $state->totalItems  = 3;
+        $state->pluginState = ['Kunena' => ['offset' => 0, 'total' => 3]];
+        $this->replace(Indexer::class, 'state', $state);
+
+        $plugin->onBuildIndex();
+
+        $this->assertSame([[1, 'fr-FR', false], [4, 'fr-FR', false], [9, 'fr-FR', false]], $items);
+    }
+
+    /**
      * A message without a row of its text (Diagnostics knows them) gives no item: its batch had one item less than its limit, which
      * ended the index, and the messages after that batch were never indexed. The batch counts the messages it read.
      */

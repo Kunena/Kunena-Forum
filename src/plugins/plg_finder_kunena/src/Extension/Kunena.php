@@ -686,7 +686,13 @@ final class Kunena extends Adapter implements SubscriberInterface
         // The url is the key of the item in the index: the one of the adapter, which remove() looks for when a message is deleted.
         // The route opens the message; it is not routed here: made from the console (the indexer of the scheduler) a routed
         // address carries the placeholder of the console for the root of the site.
-        $itemid      = KunenaRoute::fixMissingItemID();
+        // The language of the item: the one of its category, else the one of its topic. Every post was "all languages", so a post
+        // of a French category was in the results of the English pages. An item of one language gets no menu item of the language
+        // of the indexer (the router takes the one of the page): the link of the menu item of another language was a 404.
+        $category = $message->getCategory();
+        $language = $category->language && $category->language !== '*' ? (string) $category->language : (string) ($message->getTopic()->language ?: '*');
+        $itemid   = $language === '*' ? KunenaRoute::fixMissingItemID() : 0;
+
         $item->url   = $this->getUrl($message->id, $this->extension, $this->layout);
         $item->route = 'index.php?option=com_kunena&view=topic&catid=' . (int) $message->catid . '&id=' . (int) $message->thread
             . '&mesid=' . (int) $message->id . ($itemid ? '&Itemid=' . (int) $itemid : '');
@@ -702,7 +708,6 @@ final class Kunena extends Adapter implements SubscriberInterface
         // The indexer of Joomla stores only the state (not the published value of the result) and the search shows the items of
         // state 1: a message which waits for approval or is deleted is not in the results, nor are the messages of a category
         // where the users see only their own topics (a helpdesk: the access level of the category would show them to every user).
-        $category        = $message->getCategory();
         $visible         = $message->hold == 0 && $category->published == 1 && !$category->params->get('ownTopicsOnly');
 
         // A category in an unpublished section or category is hidden with it.
@@ -712,7 +717,7 @@ final class Kunena extends Adapter implements SubscriberInterface
 
         $item->published = \intval($message->hold == 0);
         $item->state     = \intval($visible);
-        $item->language  = '*';
+        $item->language  = $language;
 
         // The view level which only the users who may read the category have (getAccessLevel()).
         $item->access = $this->getAccessLevel($item->catid);
@@ -877,6 +882,7 @@ final class Kunena extends Adapter implements SubscriberInterface
             'adminRecurse'  => (int) $table->adminRecurse,
             'published'     => (int) $table->published,
             'parentid'      => (int) $table->parentid,
+            'language'      => (string) $table->language,
             'ownTopicsOnly' => (int) $params->get('ownTopicsOnly', 0),
         ];
     }

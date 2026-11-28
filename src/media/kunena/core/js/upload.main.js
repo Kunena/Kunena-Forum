@@ -695,8 +695,10 @@
 				show(byId('kattach_form'));
 
 				const fileCountTotal = files.length + fileCount;
+				// "Limit Attachments" 0 is no limit, as on the server: every file was "too many".
+				const maxFiles = Number(Joomla.getOptions('com_kunena.kunena_upload_files_maxfiles')) || 0;
 
-				if (fileCountTotal > Joomla.getOptions('com_kunena.kunena_upload_files_maxfiles')) {
+				if (maxFiles > 0 && fileCountTotal > maxFiles) {
 					tooManyFiles();
 					setSubmit(true);
 

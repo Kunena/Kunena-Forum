@@ -151,6 +151,23 @@ abstract class KunenaMessageSchedule
      */
     protected static function publishOne(KunenaMessage $message): bool
     {
+        // The reply is taken for this run, at once and in the database: only while it still waits (held, with a schedule). The list
+        // of the run was read before: a reply which its author deleted in the meantime was published again, one which a moderator
+        // approved (or another run published, the tool of the backend runs beside the task) sent its e-mails a second time, and two
+        // runs at once both counted the post.
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->update($db->quoteName('#__kunena_messages'))
+            ->set($db->quoteName('scheduled_time') . ' = 0')
+            ->where($db->quoteName('id') . ' = ' . (int) $message->id)
+            ->where($db->quoteName('hold') . ' = 1')
+            ->where($db->quoteName('scheduled_time') . ' > 0');
+        $db->setQuery($query)->execute();
+
+        if ($db->getAffectedRows() < 1) {
+            return false;
+        }
+
         $topic  = $message->getTopic();
         $author = KunenaUserHelper::get((int) $message->userid);
 

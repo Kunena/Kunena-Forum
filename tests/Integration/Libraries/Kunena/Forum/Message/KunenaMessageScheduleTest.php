@@ -331,6 +331,25 @@ class KunenaMessageScheduleTest extends IntegrationTestCase implements DBTestInt
         $this->assertSame($me, KunenaUserHelper::getMyself());
     }
 
+    /**
+     * The reply is taken in the database for the run, only while it still waits: the run reads its list first, and a reply which
+     * its author deleted in the meantime was published again (one which a moderator approved, or another run published, sent its
+     * e-mails a second time).
+     */
+    public function testAReplyDeletedAfterTheListOfTheRunIsNotPublished(): void
+    {
+        $this->seed(self::NOW - 60);
+
+        // The run has the reply (as publishDue() loads it); then its author deletes it.
+        $message = KunenaMessageHelper::get(self::REPLY, true);
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_messages SET hold = 2, scheduled_time = 0 WHERE id = ' . self::REPLY)->execute();
+
+        $publishOne = new \ReflectionMethod(KunenaMessageSchedule::class, 'publishOne');
+
+        $this->assertFalse($publishOne->invoke(null, $message));
+        $this->assertSame(2, (int) $this->fetchAll('SELECT hold FROM #__kunena_messages WHERE id = ' . self::REPLY)[0]['hold']);
+    }
+
     public function testAReplyWhichIsNotDueIsLeftAlone(): void
     {
         $this->seed(self::NOW + 3600);

@@ -93,7 +93,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                     <label class="form-label" for="email">
                         <?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
                     </label>
-                    <input type="text" id="email" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox form-control" maxlength="35" value="" required />
+                    <input type="text" id="email" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox form-control" maxlength="254" value="" required />
                 </div>
             <?php endif; ?>
 

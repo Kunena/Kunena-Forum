@@ -101,7 +101,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                     ?>
                         <div class="form-group">
                             <?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-                            <label for="email<?php echo (int) $message->id; ?>"></label><input type="text" id="email<?php echo (int) $message->id; ?>" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
+                            <label for="email<?php echo (int) $message->id; ?>"></label><input type="text" id="email<?php echo (int) $message->id; ?>" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="254" value="" required />
                         </div>
                     <?php endif; ?>
 
@@ -216,7 +216,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         ?>
                             <div class="form-group">
                                 <?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-                                <label for="email<?php echo (int) $message->id; ?>"></label><input type="text" id="email<?php echo (int) $message->id; ?>" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
+                                <label for="email<?php echo (int) $message->id; ?>"></label><input type="text" id="email<?php echo (int) $message->id; ?>" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="254" value="" required />
                             </div>
                         <?php endif; ?>
 

@@ -1968,11 +1968,13 @@ class UserController extends KunenaController
                 continue;
             }
 
+            // The name as text: the scripts of the editors put it in as text, so an escaped name was shown and posted as
+            // "Tom &amp; Jerry" (the JSON encodes it).
             $obj           = new stdClass();
             $obj->id       = $found->userid;
             $obj->userid   = $found->userid;
             $obj->avatar   = $found->getAvatarURL();
-            $obj->username = $this->escape($found->getName('', false));
+            $obj->username = $found->getName('', false);
             $list[]        = $obj;
         }
 
@@ -2020,12 +2022,13 @@ class UserController extends KunenaController
                     continue;
                 }
 
+                // The name as text (the editors put it in as text: an escaped name was posted as "Tom &amp; Jerry").
                 $obj         = new stdClass();
                 $obj->id     = $key;
                 $obj->userid = $user->userid;
                 $obj->avatar = $user->getAvatarURL();
                 // The name which is shown of the user (username, real name or display name).
-                $obj->username = $this->escape($user->getName('', false));
+                $obj->username = $user->getName('', false);
 
                 $userListMentions[] = $obj;
             }

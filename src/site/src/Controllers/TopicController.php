@@ -81,6 +81,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use RuntimeException;
 use stdClass;
 
@@ -2592,8 +2593,12 @@ class TopicController extends KunenaController
 
             $activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
 
-            // The author finds the thanks in his inbox (when an inbox is installed).
-            if ($message->userid && $message->userid != $this->me->userid) {
+            // The author finds the thanks in his inbox (when an inbox is installed): not from a user whom he ignores (as the mentions,
+            // the private messages and the popups leave them out), whose thanks still came to his inbox.
+            if (
+                $message->userid && $message->userid != $this->me->userid
+                && !KunenaUserIgnore::isIgnoring((int) $message->userid, (int) $this->me->userid)
+            ) {
                 KunenaPrivate::getInstance()->notify($message, 'thanks', [(int) $message->userid], (int) $this->me->userid);
             }
         } else {

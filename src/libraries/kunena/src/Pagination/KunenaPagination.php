@@ -169,6 +169,12 @@ class KunenaPagination
             $this->limitstart = 0;
         }
 
+        // The start of a page: a start which is not one (an old link after a change of the number of items of a page, start=25 with
+        // 20 a page) showed a page which overlapped the next one, and the number of the current page was not the one of its link.
+        if ($this->limit > 0) {
+            $this->limitstart -= $this->limitstart % $this->limit;
+        }
+
         /*
          * If limitstart is greater than total (i.e. we are asked to display records that don't exist)
          * then set limitstart to display the last natural page of results

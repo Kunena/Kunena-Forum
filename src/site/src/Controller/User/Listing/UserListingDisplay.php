@@ -126,7 +126,9 @@ class UserListingDisplay extends KunenaControllerDisplay
         $finder = new KunenaUserFinder();
         $finder
             ->filterByConfiguration($filter)
-            ->filterByName((string) $this->state->get('list.search'))
+            // "Search from the beginning of the name" of the settings: it was read by the model, which the list does not use for its
+            // query, so the list found the names which have the text anywhere.
+            ->filterByName((string) $this->state->get('list.search'), (bool) $this->config->userlistSearchFromStart)
             ->filterByUserType((string) $this->state->get('userlist.usertype'));
 
         $this->total      = $finder->count();

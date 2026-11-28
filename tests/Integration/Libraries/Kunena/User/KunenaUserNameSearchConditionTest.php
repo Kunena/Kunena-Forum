@@ -16,10 +16,13 @@ use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
+use Kunena\Forum\Libraries\User\KunenaUserFinder;
 use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Tests\Integration\DBTestInterface;
 use Kunena\Tests\Integration\DBTestTrait;
 use Kunena\Tests\Integration\IntegrationTestCase;
+use Kunena\Tests\Unit\Support\Files;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -141,6 +144,28 @@ class KunenaUserNameSearchConditionTest extends IntegrationTestCase implements D
     }
 
     /**
+     * The user list itself searches from the start when the option is set: the option was read by the model of the users, which the
+     * list does not use for its query (it uses KunenaUserFinder), so it had no effect on the list.
+     */
+    public function testTheUserListSearchesFromTheStartWithTheOption(): void
+    {
+        $this->configure(KunenaUserName::REALNAME, false);
+
+        $finder = new KunenaUserFinder();
+        $finder->filterByName('Real', true);
+        $query = (new ReflectionProperty(KunenaFinder::class, 'query'))->getValue($finder);
+        $query->clear('select')->select($this->getDBDriver()->quoteName('a.id'));
+
+        $this->assertSame([], array_map('intval', $this->getDBDriver()->setQuery($query)->loadColumn()), 'no name starts with Real');
+
+        // The list gives the option to the finder.
+        $this->assertStringContainsString(
+            "->filterByName((string) \$this->state->get('list.search'), (bool) \$this->config->userlistSearchFromStart)",
+            Files::read('src/site/src/Controller/User/Listing/UserListingDisplay.php')
+        );
+    }
+
+    /**
      * The ids of the users which the condition finds, in order.
      */
     private function find(string $search, bool $fromStart = false): array
@@ -165,6 +190,7 @@ class KunenaUserNameSearchConditionTest extends IntegrationTestCase implements D
             'username'         => $type,
             'nameUserChoice'   => (int) $choice,
             'displayNameField' => self::FIELD,
+            'userlistRows'     => 30,
         ]);
 
         $this->replace(KunenaConfig::class, 'instance', $config);

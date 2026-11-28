@@ -83,18 +83,19 @@ class KunenaUserFinder extends KunenaFinder
     }
 
     /**
-     * @param   string  $search  search
+     * @param   string  $search     search
+     * @param   bool    $fromStart  Only the names which begin with the text (the setting of the user list).
      *
      * @return  $this
      *
      * @since   Kunena 6.0
      */
-    public function filterByName(string $search): KunenaFinder
+    public function filterByName(string $search, bool $fromStart = false): KunenaFinder
     {
         // No search, no condition (the search of the names reads the users whose names match: an empty text matches them all).
         if (trim($search) !== '') {
             // The user is found by the name which the forum shows of him, not by the names which it keeps for itself.
-            $this->query->where(KunenaUserName::getSearchCondition($search));
+            $this->query->where(KunenaUserName::getSearchCondition($search, 'a', false, $fromStart));
         }
 
         return $this;

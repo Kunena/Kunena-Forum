@@ -1730,21 +1730,27 @@ class KunenaUser
      */
     public function GetUserGroup(int $userid): string
     {
-        $groups = Access::getGroupsByUser($userid, false);
+        $groups = array_values(array_filter(array_map('intval', Access::getGroupsByUser($userid, false))));
 
-        $groupid_list = implode(',', $groups);
+        if (!$groups) {
+            return '<br/>';
+        }
 
+        // Every group of the user, in the order of the tree: the ids were joined ("2,8") and made a number (2), so a member of
+        // Registered and of Super Users (or of a group of the site, VIP) was shown as Registered only.
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery()
             ->select($db->quoteName('title'))
             ->from($db->quoteName('#__usergroups'))
-            ->where($db->quoteName('id') . ' = ' . $db->quote((int) $groupid_list));
+            ->whereIn($db->quoteName('id'), $groups)
+            ->order($db->quoteName('lft'));
 
-        $db->setQuery($query);
-        $groupNames = $db->loadResult();
-        $groupNames .= '<br/>';
+        $titles = array_map(
+            static fn ($title): string => htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8'),
+            (array) $db->setQuery($query)->loadColumn()
+        );
 
-        return $groupNames;
+        return implode('<br/>', $titles) . '<br/>';
     }
 
     /**

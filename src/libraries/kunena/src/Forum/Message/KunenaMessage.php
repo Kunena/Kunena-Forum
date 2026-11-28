@@ -3146,11 +3146,18 @@ class KunenaMessage extends KunenaDatabaseObject
             // counted again on every edit.
             $new               = (int) $attachment->mesid !== (int) $this->id;
             $attachment->mesid = $this->id;
+            $saved             = false;
 
             try {
-                $attachment->save();
+                $saved = (bool) $attachment->save();
             } catch (Exception $e) {
                 $app->enqueueMessage($e->getMessage(), 'error');
+            }
+
+            // A file which was not saved is not in the message: it was counted in the topic, and its tag became an empty one (the
+            // tags of the uploads which are left go below).
+            if (!$saved) {
+                continue;
             }
 
             // Update attachments count and fix attachment name inside message
@@ -3227,9 +3234,17 @@ class KunenaMessage extends KunenaDatabaseObject
             return false;
         }
 
+        // A file which the upload refused (its type, its pixels, an image which could not be read or resized) is not added: the
+        // message tried to save an attachment without a file, counted it in the topic and wrote an empty tag in the text.
+        if (!$success) {
+            Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 'warning');
+
+            return false;
+        }
+
         $this->_attachments_add[$tmpid] = $attachment;
 
-        return $success;
+        return true;
     }
 
     /**

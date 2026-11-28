@@ -645,10 +645,12 @@ abstract class KunenaMessageHelper
         $idlist = implode(',', $ids);
         $db     = Factory::getContainer()->get('DatabaseDriver');
         $query  = $db->createQuery();
+        // The messages of the same second are in the order of their ids, as on the page of the topic: they counted as neither before
+        // nor after each other, so they had the same place, and the link of one of them opened the page of the other.
         $query->select(
             'm.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
-				SUM(mm.time<m.time) AS before_count,
-				SUM(mm.time>m.time) AS after_count'
+				SUM(mm.time<m.time OR (mm.time=m.time AND mm.id<m.id)) AS before_count,
+				SUM(mm.time>m.time OR (mm.time=m.time AND mm.id>m.id)) AS after_count'
         )
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin($db->quoteName('#__kunena_messages', 'mm') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('mm.thread'))

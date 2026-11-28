@@ -266,8 +266,12 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
         $this->pagination->setUri($this->getPaginationUri());
 
+        // The messages of the same second in the order of their ids: without it the database chose their order for each page, and
+        // at the end of a page one of them was shown twice and the other on no page.
+        $direction      = $this->me->getMessageOrdering() == 'asc' ? 1 : -1;
         $this->messages = $finder
-            ->order('time', $this->me->getMessageOrdering() == 'asc' ? 1 : -1)
+            ->order('time', $direction)
+            ->order('id', $direction)
             ->start($this->pagination->limitstart)
             ->limit($this->pagination->limit)
             ->find();

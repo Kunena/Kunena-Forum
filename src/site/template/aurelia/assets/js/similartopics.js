@@ -57,6 +57,8 @@
 			if (text.length < 4 || text === last) {
 				if (text.length < 4) {
 					show([]);
+					// The list is empty now: the same subject typed again is asked again (it showed nothing).
+					last = '';
 				}
 
 				return;
@@ -73,6 +75,11 @@
 				});
 
 				if (!response.ok || number !== asked) {
+					// A failed request does not block this subject for good.
+					if (!response.ok) {
+						last = '';
+					}
+
 					return;
 				}
 
@@ -82,7 +89,8 @@
 					show(Array.isArray(json.data) ? json.data : []);
 				}
 			} catch (e) {
-				// The suggestions are a help: nothing to tell the visitor when they fail.
+				// The suggestions are a help: nothing to tell the visitor when they fail. The subject may be asked again.
+				last = '';
 			}
 		};
 

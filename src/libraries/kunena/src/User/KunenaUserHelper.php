@@ -277,8 +277,25 @@ abstract class KunenaUserHelper
      */
     public static function getLastId(): int
     {
+        // The newest member whom the forum shows: not a blocked account (a spammer whom the administrator blocked, an account which
+        // was never activated) and not a super user whom the user list hides, as the lists of the top posters. It was the last id of
+        // the users which the setting of the count takes, blocked accounts included.
         if (self::$_lastid === null) {
-            self::getTotalCount();
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery()
+                ->select('MAX(' . $db->quoteName('id') . ')')
+                ->from($db->quoteName('#__users'))
+                ->where($db->quoteName('block') . ' = 0');
+
+            if (KunenaFactory::getConfig()->superAdminUserlist && ($filter = Access::getUsersByGroup(8))) {
+                $query->where($db->quoteName('id') . ' NOT IN (' . implode(',', array_map('intval', $filter)) . ')');
+            }
+
+            try {
+                self::$_lastid = (int) $db->setQuery($query)->loadResult();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
         }
 
         return (int) self::$_lastid;
@@ -504,13 +521,13 @@ abstract class KunenaUserHelper
             }
 
             $query = $db->createQuery();
-            $query->select('COUNT(*), MAX(id)')
+            $query->select('COUNT(*)')
                 ->from($db->quoteName('#__users'))
                 ->where($where);
             $db->setQuery($query);
 
             try {
-                list(self::$_total, self::$_lastid) = $db->loadRow();
+                self::$_total = (int) $db->loadResult();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
             }

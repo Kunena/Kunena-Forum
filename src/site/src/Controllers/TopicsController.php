@@ -70,6 +70,9 @@ class TopicsController extends KunenaController
         $ids     = ArrayHelper::toInteger($ids);
 
         $topics = KunenaTopicHelper::getTopics($ids);
+        // The topics on which the action was done, for the moderation log: it had an entry for every topic of the request once one of
+        // them was done (also the refused ones and, for the approval, the ones which did not wait for it), as move() had.
+        $done = [];
 
         if (!$topics) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
@@ -85,6 +88,7 @@ class TopicsController extends KunenaController
                 try {
                     $topic->tryAuthorise('permdelete');
                     $topic->delete();
+                    $done[] = $topic;
 
                     // Activity integration
                     $activity = KunenaFactory::getActivityIntegration();
@@ -143,11 +147,11 @@ class TopicsController extends KunenaController
 
         if ($message) {
             if ($this->config->logModeration) {
-                foreach ($topics as $topic) {
+                foreach ($done as $topic) {
                     KunenaLog::log(
                         KunenaLog::TYPE_MODERATION,
                         KunenaLog::LOG_TOPIC_DESTROY,
-                        ['topic_ids' => $ids],
+                        ['topic_ids' => array_map(static fn ($topic) => (int) $topic->id, $done)],
                         $topic->getCategory(),
                         $topic,
                         null
@@ -181,6 +185,9 @@ class TopicsController extends KunenaController
 
         $message = '';
         $topics  = KunenaTopicHelper::getTopics($ids);
+        // The topics on which the action was done, for the moderation log: it had an entry for every topic of the request once one of
+        // them was done (also the refused ones and, for the approval, the ones which did not wait for it), as move() had.
+        $done = [];
 
         if (!$topics) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
@@ -190,6 +197,7 @@ class TopicsController extends KunenaController
                 try {
                     $topic->tryAuthorise('delete');
                     $topic->publish(KunenaForum::TOPIC_DELETED);
+                    $done[] = $topic;
 
                     $message = Text::_('COM_KUNENA_BULKMSG_DELETED');
                 } catch (Exception $e) {
@@ -200,11 +208,11 @@ class TopicsController extends KunenaController
 
         if ($message) {
             if ($this->config->logModeration) {
-                foreach ($topics as $topic) {
+                foreach ($done as $topic) {
                     KunenaLog::log(
                         KunenaLog::TYPE_MODERATION,
                         KunenaLog::LOG_TOPIC_DELETE,
-                        ['topic_ids' => $ids],
+                        ['topic_ids' => array_map(static fn ($topic) => (int) $topic->id, $done)],
                         $topic->getCategory(),
                         $topic,
                         null
@@ -238,6 +246,9 @@ class TopicsController extends KunenaController
 
         $message = '';
         $topics  = KunenaTopicHelper::getTopics($ids);
+        // The topics on which the action was done, for the moderation log: it had an entry for every topic of the request once one of
+        // them was done (also the refused ones and, for the approval, the ones which did not wait for it), as move() had.
+        $done = [];
 
         if (!$topics) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
@@ -247,6 +258,7 @@ class TopicsController extends KunenaController
                 try {
                     $topic->tryAuthorise('undelete');
                     $topic->publish(KunenaForum::PUBLISHED);
+                    $done[] = $topic;
 
                     $message = Text::_('COM_KUNENA_POST_SUCCESS_UNDELETE');
                 } catch (Exception $e) {
@@ -257,11 +269,11 @@ class TopicsController extends KunenaController
 
         if ($message) {
             if ($this->config->logModeration) {
-                foreach ($topics as $topic) {
+                foreach ($done as $topic) {
                     KunenaLog::log(
                         KunenaLog::TYPE_MODERATION,
                         KunenaLog::LOG_TOPIC_UNDELETE,
-                        ['topic_ids' => $ids],
+                        ['topic_ids' => array_map(static fn ($topic) => (int) $topic->id, $done)],
                         $topic->getCategory(),
                         $topic,
                         null
@@ -295,6 +307,9 @@ class TopicsController extends KunenaController
 
         $message = '';
         $topics  = KunenaTopicHelper::getTopics($ids);
+        // The topics on which the action was done, for the moderation log: it had an entry for every topic of the request once one of
+        // them was done (also the refused ones and, for the approval, the ones which did not wait for it), as move() had.
+        $done = [];
 
         if (!$topics) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'error');
@@ -311,6 +326,7 @@ class TopicsController extends KunenaController
                     }
 
                     $topic->publish(KunenaForum::PUBLISHED);
+                    $done[] = $topic;
 
                     $message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
 
@@ -330,11 +346,11 @@ class TopicsController extends KunenaController
 
         if ($message) {
             if ($this->config->logModeration) {
-                foreach ($topics as $topic) {
+                foreach ($done as $topic) {
                     KunenaLog::log(
                         KunenaLog::TYPE_MODERATION,
                         KunenaLog::LOG_TOPIC_APPROVE,
-                        ['topic_ids' => $ids],
+                        ['topic_ids' => array_map(static fn ($topic) => (int) $topic->id, $done)],
                         $topic->getCategory(),
                         $topic,
                         null

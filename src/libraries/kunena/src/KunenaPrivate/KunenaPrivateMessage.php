@@ -216,7 +216,24 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
         // The finder keeps the messages which it found on this page: a deleted one is found no more.
         KunenaPrivateMessageFinder::forget();
 
-        return parent::delete();
+        $id = (int) $this->id;
+
+        if (!parent::delete()) {
+            return false;
+        }
+
+        // Its maps go with it (as deleteOfMessagesQuery() deletes them): an edit which emptied the private part left its users, its
+        // message and its files mapped to a private part which was gone.
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        foreach (['#__kunena_private_user_map', '#__kunena_private_post_map', '#__kunena_private_attachment_map'] as $table) {
+            $query = $db->createQuery()
+                ->delete($db->quoteName($table))
+                ->where($db->quoteName('private_id') . ' = ' . $id);
+            $db->setQuery($query)->execute();
+        }
+
+        return true;
     }
 
     /**

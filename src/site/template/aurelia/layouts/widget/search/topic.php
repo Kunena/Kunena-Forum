@@ -27,6 +27,8 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
         <?php if (isset($this->catid)) :
             ?>
             <input type="hidden" name="catids[]" value="<?php echo $this->catid; ?>" />
+            <?php // With its subcategories (the search of a form without the box takes none, so they were left out). ?>
+            <input type="hidden" name="childforums" value="<?php echo $childforums; ?>" />
         <?php endif; ?>
 
         <?php if (isset($this->id)) :

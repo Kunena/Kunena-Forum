@@ -144,4 +144,24 @@ class ExportDataOfOthersTest extends IntegrationTestCase implements DBTestInterf
 
         $this->assertSame(['message'], array_column($sent, 'type'));
     }
+
+    /**
+     * His bans without the comments of the moderators (their ids and notes, which the site shows to the moderators only).
+     */
+    public function testHisBanHasNoCommentsOfTheModerators(): void
+    {
+        $this->insertRow('#__kunena_users_banned', [
+            'userid'        => self::USER,
+            'created_by'    => 1,
+            'created_time'  => '2026-01-01 00:00:00',
+            'reason_public' => 'Spam',
+            'comments'      => '[{"userid":1,"time":1,"comment":"a note of the moderators"}]',
+        ]);
+
+        $bans = $this->export()['items']['kunena_user_banned'] ?? [];
+
+        $this->assertCount(1, $bans);
+        $this->assertSame('Spam', $bans[0]['reason_public']);
+        $this->assertArrayNotHasKey('comments', $bans[0]);
+    }
 }

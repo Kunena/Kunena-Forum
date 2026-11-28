@@ -613,7 +613,8 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
     {
         $domain   = $this->createDomain('kunena_user_banned', 'kunena_user_banned_data');
         $redacted = [];
-        $excluded = ['created_by', 'reason_private', 'modified_by', 'modified_time', 'params'];
+        // The comments are the notes of the moderators (their ids and texts), which the site shows to the moderators only.
+        $excluded = ['created_by', 'reason_private', 'modified_by', 'modified_time', 'params', 'comments'];
         $items    = KunenaHelper::getUserItems('#__kunena_users_banned', 'userid', $userid);
 
         foreach ($items as $item) {

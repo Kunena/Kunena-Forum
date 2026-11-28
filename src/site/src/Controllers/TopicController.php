@@ -364,6 +364,14 @@ class TopicController extends KunenaController
         if (!$attachment->isAuthorised('delete')) {
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
+
+        // And only while its message may be edited (as removeattachments()): the uploader changed how the files of a post are shown
+        // after the edit time, in a locked topic, in read only mode. An upload which waits for its message has none.
+        $message = (int) $attachment->mesid ? $attachment->getMessage() : null;
+
+        if ($message && $message->exists() && !$message->isAuthorised('edit')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
     }
 
     /**

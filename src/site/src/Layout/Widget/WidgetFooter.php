@@ -67,7 +67,8 @@ class WidgetFooter extends KunenaLayout
             $itemid = KunenaRoute::fixMissingItemID();
 
             if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix')) {
-                $url = KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}") . '?format=feed&type=' . KunenaFeedLink::type();
+                // The layout of the feed (only it has the controller of the feed): with layout=default the link was a 404.
+                $url = KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=feed&{$rssType}") . '?format=feed&type=' . KunenaFeedLink::type();
             } else {
                 $url = KunenaRoute::_('index.php?option=com_kunena&view=topics&format=feed&type=' . KunenaFeedLink::type() . "&layout=feed&{$rssType}&Itemid={$itemid}", true);
             }

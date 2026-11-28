@@ -168,7 +168,7 @@ $type       = $this->profile->getType(0, true);
 
     <div>
         <dt><?php echo KunenaIcons::clock(); ?> <?php echo Text::_('COM_KUNENA_MYPROFILE_LOCAL_TIME'); ?></dt>
-        <dd><?php echo $this->profile->getTime()->toKunena('time'); ?></dd>
+        <dd><?php // The time in the time zone of the member, not of the visitor (toKunena() takes the zone of the visitor without one). ?><?php echo $this->profile->getTime()->toKunena('time', $this->profile->getTime()->getTimezone()->getName()); ?></dd>
     </div>
 
     <?php if (!empty($this->profile->location)) : ?>

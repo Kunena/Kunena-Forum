@@ -249,8 +249,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $finder        = new KunenaMessageFinder();
         $finder->where('thread', '=', $this->topic->id);
 
-        // The author of a topic which waits for approval sees his own unapproved messages in it.
-        if ($this->topic->isUnapprovedOf($this->me) && !$this->me->isModerator($topicCategory)) {
+        // A user sees his own messages which wait for approval, as the rights of a message allow (a reply held for review, a scheduled
+        // reply with its notice): only the author of a topic which waits for approval saw them, the author of a reply in a published
+        // topic was sent to the topic and did not find his reply, nor its button to edit it.
+        if ($this->me->exists() && (int) $this->me->userid > 0 && !$this->me->isModerator($topicCategory)) {
             $finder->filterByHoldOrOwnUnapproved($hold, $this->me);
         } else {
             $finder->filterByHold($hold);

@@ -245,40 +245,39 @@ class UserItemDisplay extends KunenaControllerDisplay
 
         $this->setMetaData('robots', 'index, follow');
 
-        if ($menu_item) {
-            $params             = $menu_item->getParams();
-            $params_title       = $params->get('page_title');
-            $params_description = $params->get('menu-meta_description');
+        // The title, the description and the tags of Open Graph also without an active menu item (a link without an Itemid): the page
+        // had none of them then. The settings of the menu item replace the defaults when there is one.
+        $params             = $menu_item ? $menu_item->getParams() : null;
+        $params_title       = $params ? $params->get('page_title') : '';
+        $params_description = $params ? $params->get('menu-meta_description') : '';
 
-            if (!empty($params_title)) {
-                $title = $params->get('page_title');
-                $this->setTitle($title);
-            } else {
-                $title = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $name);
-                $this->setTitle($title);
-            }
+        if (!empty($params_title)) {
+            $title = $params_title;
+        } else {
+            $title = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $name);
+        }
 
-            $this->setMetaData('og:description', $title, 'property');
-            $this->setMetaData('og:title', $name, 'property');
+        $this->setTitle($title);
+        $this->setMetaData('og:description', $title, 'property');
+        $this->setMetaData('og:title', $name, 'property');
 
-            if (!empty($params_description)) {
-                $description = $params->get('menu-meta_description');
-                $this->setDescription($description);
-            } else {
-                $description = Text::sprintf(
-                    'COM_KUNENA_META_PROFILE',
-                    $name,
-                    $this->config->boardTitle,
-                    $name,
-                    $this->config->boardTitle
-                );
-                $this->setDescription($description);
-            }
+        if (!empty($params_description)) {
+            $this->setDescription($params_description);
+        } else {
+            $description = Text::sprintf(
+                'COM_KUNENA_META_PROFILE',
+                $name,
+                $this->config->boardTitle,
+                $name,
+                $this->config->boardTitle
+            );
+            $this->setDescription($description);
+        }
 
-            $params_robots = $params->get('robots');
-            if (!empty($params_robots)) {
-                $this->setMetaData('robots', $params_robots);
-            }
+        $params_robots = $params ? $params->get('robots') : '';
+
+        if (!empty($params_robots)) {
+            $this->setMetaData('robots', $params_robots);
         }
 
         // A profile without a post is a thin page (a name and a date), one for each user who registered.

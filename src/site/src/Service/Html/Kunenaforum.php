@@ -141,7 +141,9 @@ class Kunenaforum
 
             $toplevel = 1;
         } else {
-            $toplevel = -KunenaCategoryHelper::get($parent)->level;
+            // The level of the parent of the list (it is a list of parents by now: the empty category of an array had the level 0,
+            // so the categories under a parent kept the dashes of their whole depth).
+            $toplevel = -KunenaCategoryHelper::get(\is_array($parent) ? (int) reset($parent) : (int) $parent)->level;
         }
 
         foreach ($categories as $category) {

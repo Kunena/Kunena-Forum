@@ -340,20 +340,17 @@ class UsersController extends KunenaController
                 continue;
             }
 
-            $result = $user->delete();
-
-            if (!$result) {
-                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_USER_DELETE_KUNENA_USER_TABLE_FAILED', $user->userid), 'error');
-                continue;
-            }
-
-            // Delete the user too from Joomla!
+            // The account of Joomla is deleted, and with it the data of the forum (the system plugin, on onUserAfterDelete). The
+            // profile of the forum was deleted first: when the delete of the account failed, the account stayed without it, and
+            // the ban (a column of the profile) was lifted.
             $jresult = $instance->delete();
 
             if (!$jresult) {
                 $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_USER_DELETE_JOOMLA_USER_TABLE_FAILED', $user->userid), 'error');
                 continue;
             }
+
+            KunenaAccess::getInstance()->clearCache();
 
             $usernames[] = $user->username;
         }

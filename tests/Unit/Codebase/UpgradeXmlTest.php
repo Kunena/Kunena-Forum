@@ -85,6 +85,22 @@ class UpgradeXmlTest extends UnitTestCase
         $this->assertStringContainsString('ALTER TABLE `#__kunena_topics` ADD INDEX `language` (`language`);', $update);
     }
 
+    /**
+     * A new forum has the mail templates of the forum too, as the upgrade adds them: they were only in the update file and the block
+     * of 8.0, so a new forum had none (Users > Mail Templates), and the option to use the mail templates did nothing.
+     */
+    public function testTheInstallHasTheMailTemplatesOfTheUpdate(): void
+    {
+        $rows = static function (string $file): array {
+            preg_match_all('/INSERT IGNORE INTO `#__mail_templates`[^;]*;/s', Files::read($file), $matches);
+
+            return array_map([self::class, 'normalise'], $matches[0]);
+        };
+
+        $this->assertCount(4, $rows(self::UPDATE));
+        $this->assertSame($rows(self::UPDATE), $rows(self::INSTALL));
+    }
+
     public function testEveryVersionBlockIsAChildOfTheUpgrade(): void
     {
         $xml = new SimpleXMLElement(Files::read(self::UPGRADE));

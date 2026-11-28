@@ -682,3 +682,14 @@ CREATE TABLE IF NOT EXISTS `#__kunena_notifications_mailsqueue`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
+
+-- The mail templates of the forum (Users > Mail Templates): an upgrade added them, a new forum had none, so the option to use
+-- the mail templates did nothing there.
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.subscription', 'com_kunena', '', 'COM_KUNENA_MAILTPL_NOTIFICATION_SUBJECT', 'COM_KUNENA_MAILTPL_NOTIFICATION_BODY', 'COM_KUNENA_MAILTPL_NOTIFICATION_HTMLBODY', '', '{"tags":["sitename","boardtitle","heading","subject","topic","category","author","url","message","more","footer","unsubscribe"]}');
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.moderator', 'com_kunena', '', 'COM_KUNENA_MAILTPL_NOTIFICATION_SUBJECT', 'COM_KUNENA_MAILTPL_NOTIFICATION_BODY', 'COM_KUNENA_MAILTPL_NOTIFICATION_HTMLBODY', '', '{"tags":["sitename","boardtitle","heading","subject","topic","category","author","url","message","more","footer","unsubscribe"]}');
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.mention', 'com_kunena', '', 'COM_KUNENA_MAILTPL_MENTION_SUBJECT', 'COM_KUNENA_MAILTPL_MENTION_BODY', 'COM_KUNENA_MAILTPL_MENTION_HTMLBODY', '', '{"tags":["sitename","author","topic","url"]}');
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.reportmessage', 'com_kunena', '', 'COM_KUNENA_MAILTPL_REPORT_SUBJECT', 'COM_KUNENA_MAILTPL_REPORT_BODY', 'COM_KUNENA_MAILTPL_REPORT_HTMLBODY', '', '{"tags":["sitename","boardtitle","title","sender","reason","report","poster","subject","message","url"]}');

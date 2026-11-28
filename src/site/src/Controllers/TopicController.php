@@ -1546,7 +1546,8 @@ class TopicController extends KunenaController
 
         // Create Poll
         $poll_title   = $fields['poll_title'];
-        $poll_options = $fields['poll_options'];
+        // Without the options whose text is empty: a poll of empty options was made without an option.
+        $poll_options = array_filter((array) $fields['poll_options'], static fn ($option) => trim((string) $option) !== '');
 
         // A poll is created, never changed here: the poll of the topic is edited with the first post (poll.edit). A reply which sent
         // the fields of a poll wrote them over the poll of the topic and its votes, with the right to create a poll only.
@@ -2305,8 +2306,9 @@ class TopicController extends KunenaController
         $poll_title = $fields['poll_title'];
 
         if ($poll_title !== null) {
-            // Save changes into poll
-            $poll_options = $fields['poll_options'];
+            // Save changes into poll. Without the options whose text is empty: a poll whose options were all emptied was kept with
+            // none (all its options and votes deleted); it is removed now, as a poll without options is.
+            $poll_options = array_filter((array) $fields['poll_options'], static fn ($option) => trim((string) $option) !== '');
             $poll         = $topic->getPoll();
 
             if (!empty($poll_options) && !empty($poll_title)) {

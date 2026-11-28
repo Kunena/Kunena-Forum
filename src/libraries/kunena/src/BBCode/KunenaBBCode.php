@@ -2602,9 +2602,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
             $url_parsed = parse_url($url);
 
-            if (\is_array($url_parsed) && ($url_parsed['host'] ?? '') == 'soundcloud.com') {
+            if (\is_array($url_parsed) && \in_array(strtolower($url_parsed['host'] ?? ''), ['soundcloud.com', 'www.soundcloud.com'], true)) {
                 return '<iframe allowtransparency="true" width="100%" height="350" style="border: 0" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
             }
+
+            // Another address (a short link, another host): as a link. The post lost it.
+            return self::minimalLink($content);
         }
 
         return false;
@@ -3118,7 +3121,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if (isset($vid_providers[$vid["type"]])) {
             list($vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2) = (isset($vid_providers[$vid["type"]])) ? $vid_providers[$vid["type"]] : $vid_providers["_default"];
         } else {
-            return;
+            // A provider which is not embedded (DivX, QuickTime... which the dialog of the editor still offers, a file .avi or .mov):
+            // the address as a link, or the text. The post lost it.
+            return self::minimalLink($content);
         }
 
         unset($vid_providers);

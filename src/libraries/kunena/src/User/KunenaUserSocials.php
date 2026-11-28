@@ -494,7 +494,7 @@ class KunenaUserSocials
     },
     "bluesky_app": {
         "value": "",
-        "url": "https://bsky.app/##VALUE##",
+        "url": "https://bsky.app/profile/##VALUE##",
         "title": "COM_KUNENA_MYPROFILE_BLUESKY_APP",
         "nourl": 0,
         "fa": "fa-brands fa-bluesky"
@@ -599,6 +599,57 @@ JSON;
     public function getPlugin(string $name): Registry
     {
         return isset($this->plugins[$name]) ? $this->plugins[$name] : new Registry();
+    }
+
+    /**
+     * The address of the value of a user on a website: the value in the place of ##VALUE##. A value can be the address which the user
+     * copied from the website: what follows the part of the address of the website before ##VALUE## is the value
+     * (https://www.linkedin.com/in/joe is joe). Only the path of the address was taken, which doubled the part of the address in it
+     * (https://www.linkedin.com/in/in/joe) or lost the name in the host (https://.blogspot.com/).
+     *
+     * @param   string  $template  The address of the website, with ##VALUE##.
+     * @param   string  $value     The value of the user.
+     *
+     * @return  string
+     *
+     * @since   Kunena 8.0
+     */
+    public static function href(string $template, string $value): string
+    {
+        $value = trim($value);
+        $at    = strpos($template, '##VALUE##');
+
+        if ($value === '' || $at === false) {
+            return $template;
+        }
+
+        $host   = static fn (string $address): string => (string) preg_replace('#^(?:https?:)?//(?:www\.)?#i', '', $address);
+        $before = $host(substr($template, 0, $at));
+        $after  = rtrim(substr($template, $at + 9), '/');
+
+        if (preg_match('#^https?://#i', $value)) {
+            $address = rtrim($host($value), '/');
+
+            if ($before !== '' && stripos($address, $before) === 0) {
+                // https://www.linkedin.com/in/joe for https://www.linkedin.com/in/##VALUE##.
+                $value = substr($address, \strlen($before));
+            } elseif ($before === '' && $after !== '' && str_ends_with(strtolower($address), strtolower($after))) {
+                // https://joe.blogspot.com/ for https://##VALUE##.blogspot.com/.
+                $value = substr($address, 0, -\strlen($after));
+            } else {
+                // Another address of the website (x.com for twitter.com): its path.
+                $value = (string) parse_url($value, PHP_URL_PATH);
+            }
+        }
+
+        $value = trim($value, '/');
+
+        // An address with the @ before the value (Threads): the @ of the value is not doubled.
+        if (str_ends_with(substr($template, 0, $at), '@')) {
+            $value = ltrim($value, '@');
+        }
+
+        return str_replace('##VALUE##', $value, $template);
     }
 
     /**

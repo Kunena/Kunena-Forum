@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\User\KunenaUserSocials;
 
 $showAll = isset($this->showAll) ? $this->showAll : false;
 ?>
@@ -34,11 +35,8 @@ $showAll = isset($this->showAll) ? $this->showAll : false;
             echo '<i class="' . htmlspecialchars($social->fa, ENT_QUOTES, 'UTF-8') . '"></i>';
             echo '</span> ';
         } elseif (isset($social->fa) && !empty($social->value)) {
-            // Parse the URL and extract the path
-            $parsedUrl = parse_url($social->value);
-            $path = ltrim($parsedUrl['path'] ?? $social->value, '/');
-
-            $href = str_replace('##VALUE##', $path, $social->url);
+            // The value of the user, or the address which he copied from the website (KunenaUserSocials::href()).
+            $href = KunenaUserSocials::href((string) $social->url, (string) $social->value);
 
             echo '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" ';
             echo 'target="_blank" rel="nofollow noopener noreferrer" title="' . Text::_($social->title) . '">';

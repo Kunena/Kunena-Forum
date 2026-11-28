@@ -323,6 +323,8 @@ class ToolsModel extends AdminModel
      */
     public function getSystemReportAnonymous(): string
     {
+        // Without what names the site, as the address of the mails is left out: the address of the site, the user and the host of
+        // the mail server (an e-mail address, often) were in the report which is made to be posted in public.
         $this->app = Factory::getApplication();
         $kunenaDB  = $this->getDatabase();
 
@@ -330,10 +332,10 @@ class ToolsModel extends AdminModel
         $this->getReportData();
 
         return '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . '[b]PHP version:[/b] ' . phpversion() . ' | ' . $this->mbstring
-            . ' | ' . $this->gdSupport . ' | ' . $this->openssl . ' | ' . $this->json . ' | ' . $this->fileinfo . ' | [b]MySQL version:[/b] ' . $kunenaDB->getVersion() . ' (Server type: ' . $kunenaDB->getServerType() . ') | [b]Base URL:[/b]' . Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
+            . ' | ' . $this->gdSupport . ' | ' . $this->openssl . ' | ' . $this->json . ' | ' . $this->fileinfo . ' | [b]MySQL version:[/b] ' . $kunenaDB->getVersion() . ' (Server type: ' . $kunenaDB->getServerType() . ')[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfigSef . ' | [b]Joomla! SEF rewrite:[/b] '
             . $this->jconfigSefRewrite . ' | [b]FTP layer:[/b] ' . $this->jconfigFtp . ' |
-	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfigSmtpUser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess
+	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess
             . ' | [b]PHP environment:[/b] [u]Max execution time:[/u] ' . $this->maxExecTime . ' seconds | [u]Max execution memory:[/u] '
             . $this->maxExecMem . ' | [u]Max file upload:[/u] ' . $this->fileUploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $this->joomlaMenuDetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $this->jtemplateDetails->name . ' | [u]author:[/u] ' . $this->jtemplateDetails->author . ' | [u]version:[/u] ' . $this->jtemplateDetails->version . ' | [u]creationdate:[/u] ' . $this->jtemplateDetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $this->ktemplateDetails->name . ' | [u]author:[/u] ' . $this->ktemplateDetails->author . ' | [u]version:[/u] ' . $this->ktemplateDetails->version . ' | [u]creationdate:[/u] ' . $this->ktemplateDetails->creationDate . ' [/quote][quote][b]Kunena template params[/b]:[spoiler] ' . $this->ktemplateParams . '[/spoiler][/quote][quote] [b]Kunena version detailed:[/b] ' . $this->kunenaVersionInfo . '
 	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigSettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integrationSettings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlaLanguages . '[/spoiler][/quote]' . $this->thirdPartyText . ' ' . $this->sefText . ' ' . $this->plgText . ' ' . $this->modText;

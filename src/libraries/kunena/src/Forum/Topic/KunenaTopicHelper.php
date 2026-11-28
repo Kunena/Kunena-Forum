@@ -327,7 +327,12 @@ abstract class KunenaTopicHelper
 
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery();
-            $query->select($db->quoteName('m.thread') . ' AS ' . $db->quoteName('id') . ', MIN(' . $db->quoteName('m.id') . ') AS ' . $db->quoteName('lastread') . ', SUM(1) AS ' . $db->quoteName('unread'))
+            // The first unread message is the earliest in time (by id when two have the same time): a scheduled reply keeps the
+            // id it got when it was written and is published later, so the lowest id sent the link past the earlier unread replies.
+            // (The first id of the list: a cut of the list by group_concat_max_len only shortens its end.)
+            $query->select($db->quoteName('m.thread') . ' AS ' . $db->quoteName('id')
+                . ', CAST(SUBSTRING_INDEX(GROUP_CONCAT(' . $db->quoteName('m.id') . ' ORDER BY ' . $db->quoteName('m.time') . ', ' . $db->quoteName('m.id') . "), ',', 1) AS UNSIGNED) AS " . $db->quoteName('lastread')
+                . ', SUM(1) AS ' . $db->quoteName('unread'))
                 ->from($db->quoteName('#__kunena_messages', 'm'))
                 ->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('m.thread') . ' AND ' . $db->quoteName('ur.user_id') . ' = ' . $db->quote($user->userid))
                 // The time the user marked the category of the topic read ("Mark Topics Read"): the messages before it were counted

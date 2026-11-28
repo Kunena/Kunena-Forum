@@ -828,7 +828,20 @@ class TopicsController extends KunenaController
             foreach ($messages as $message) {
                 try {
                     $message->tryAuthorise('permdelete');
+
+                    // The files of the message go with it: the topic counts them no more, as in the delete for good of one message
+                    // (the paperclip of the lists stayed, with the old number).
+                    $files = \count($message->getAttachments(false, 'none'));
+
                     $message->delete();
+
+                    $topic = $message->getTopic();
+
+                    if ($files && $topic->exists()) {
+                        $topic->attachments = max(0, (int) $topic->attachments - $files);
+                        $topic->save(false);
+                    }
+
                     $this->logPost(KunenaLog::LOG_POST_DESTROY, $message);
 
                     $success++;

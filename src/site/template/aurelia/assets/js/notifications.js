@@ -155,9 +155,10 @@
 			busy = true;
 
 			try {
+				// A poll in the background is no visit of the member (X-Kunena-Background): it kept his visit open for ever.
 				const response = await fetch(options.url + '&after=' + getCursor(), {
 					credentials: 'same-origin',
-					headers: {Accept: 'application/json'}
+					headers: {Accept: 'application/json', 'X-Kunena-Background': '1'}
 				});
 
 				if (!response.ok) {

@@ -51,9 +51,10 @@
 			busy = true;
 
 			try {
+				// A refresh in the background is no visit of the member (X-Kunena-Background): it kept his visit open for ever.
 				const response = await fetch(window.location.href, {
 					credentials: 'same-origin',
-					headers: {'X-Requested-With': 'XMLHttpRequest'},
+					headers: {'X-Requested-With': 'XMLHttpRequest', 'X-Kunena-Background': '1'},
 				});
 
 				if (!response.ok) {

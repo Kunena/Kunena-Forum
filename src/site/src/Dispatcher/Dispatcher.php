@@ -85,8 +85,11 @@ class Dispatcher extends ComponentDispatcher
         // Initialize custom error handlers.
         KunenaError::initialize();
 
-        // Initialize session.
-        $ksession = KunenaFactory::getSession(true);
+        // Initialize session. A request which a page of the forum makes in the background (the refresh of the lists, the poll of
+        // the notifications: X-Kunena-Background) is no visit: every 30 seconds it moved the time of the visit, so a member who left
+        // a page open never had a new visit, and "since your last visit" stayed at the visit of days before.
+        $background = Factory::getApplication()->getInput()->server->getString('HTTP_X_KUNENA_BACKGROUND', '') === '1';
+        $ksession   = KunenaFactory::getSession(!$background);
 
         if ($ksession->userid > 0) {
             // Create user if it does not exist
@@ -97,7 +100,7 @@ class Dispatcher extends ComponentDispatcher
             }
 
             // Save session
-            if (!$ksession->save()) {
+            if (!$background && !$ksession->save()) {
                 Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
             }
         }

@@ -194,8 +194,10 @@ class CategoryManageDisplay extends KunenaControllerDisplay
         $yesno [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
         $yesno [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
-        // The unpublished categories are possible parents too (a new section is not published yet).
-        $catParams = ['sections' => 1, 'catid' => 0, 'unpublished' => 1];
+        // The unpublished categories are possible parents too (a new section is not published yet). All of the tree ('none'): the list
+        // of what the administrator may read left out the section of another language than the page (a multilingual site), and the
+        // save took the first one of the list as the new parent.
+        $catParams = ['sections' => 1, 'catid' => 0, 'unpublished' => 1, 'action' => 'none'];
 
         $lists                 = [];
         $lists ['accesstypes'] = KunenaAccess::getInstance()->getAccessTypesList($category);
@@ -209,7 +211,10 @@ class CategoryManageDisplay extends KunenaControllerDisplay
             $lists['categories'] = HTMLHelper::_('kunenaforum.categorylist', 'parentid', 0, null, $catParams, 'class="inputbox form-select"', 'value', 'text', $category->parentid);
         }
 
-        $lists ['channels']       = HTMLHelper::_('select.genericlist', $channelsOptions, 'channels', 'class="inputbox form-select" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
+        // The channels as the backend has them: a list (channels[]) of "this", "children" and the categories. The field was one value
+        // (channels) with the first two only: a save of the category lost its channels of other categories, and with both chosen
+        // only the last was kept.
+        $lists ['channels']       = HTMLHelper::_('kunenaforum.categorylist', 'channels[]', 0, $channelsOptions, ['catid' => $category->id, 'action' => 'admin'], 'class="inputbox form-select" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
         $lists ['aliases']        = $aliases ? HTMLHelper::_('select.genericlist', $aliases, 'aliases', 'class="inputbox form-select"', 'value', 'text', $category->alias) : null;
         $lists ['published']      = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-select"', 'value', 'text', $category->published);
         $lists ['forumLocked']    = HTMLHelper::_('select.genericlist', $yesno, 'locked', 'class="inputbox form-select" size="1"', 'value', 'text', $category->locked);

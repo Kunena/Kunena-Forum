@@ -33,6 +33,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use RuntimeException;
 
 /**
@@ -808,6 +809,14 @@ abstract class KunenaCategoryHelper
 
         if ($own) {
             $query->where($own);
+        }
+
+        // Nor the topics of the users whom he ignores, which the lists of topics leave out: the count showed them as new, and only
+        // "mark all read" made it go.
+        $ignored = array_filter(array_map('intval', KunenaUserIgnore::getIgnored((int) $user->userid)));
+
+        if ($ignored) {
+            $query->where($db->quoteName('t.first_post_userid') . ' NOT IN (' . implode(',', $ignored) . ')');
         }
 
         $db->setQuery($query);

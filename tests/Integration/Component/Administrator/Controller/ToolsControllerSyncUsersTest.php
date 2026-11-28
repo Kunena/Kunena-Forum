@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Tests\Integration\DBTestInterface;
 use Kunena\Tests\Integration\DBTestTrait;
 use Kunena\Tests\Integration\IntegrationTestCase;
@@ -230,6 +231,51 @@ class ToolsControllerSyncUsersTest extends IntegrationTestCase implements DBTest
 
         $this->assertSame([], $this->deletedIds);
         $this->assertSame([['id' => 50], ['id' => 51], ['id' => 52]], $this->fetchAll('SELECT id FROM #__users ORDER BY id'));
+    }
+
+    /**
+     * "Rename" with the names which the forum shows ("Show the name": 0 real name, 1 username, 2 nickname), as a new post stores
+     * them: the tool wrote the username of every author for "nickname" (the logins which the site hides), and the real name, also an
+     * empty one, for "real name".
+     */
+    private function rename(int $shown): array
+    {
+        $config = (new ReflectionClass(KunenaConfig::class))->newInstanceWithoutConstructor();
+        (new ReflectionProperty(KunenaConfig::class, 'config'))->setValue($config, ['username' => $shown]);
+        $this->replace(KunenaConfig::class, 'instance', $config);
+        $field = $this->replace(KunenaUserName::class, 'displayNameField', null);
+
+        // 50 has a real name, 52 has none; each wrote a message and its topic.
+        $this->getDBDriver()->setQuery("UPDATE #__users SET name = '' WHERE id = 52")->execute();
+
+        foreach ([50 => 1, 52 => 2] as $userid => $id) {
+            $this->insertRow('#__kunena_messages', ['id' => $id, 'thread' => $id, 'catid' => 2, 'userid' => $userid, 'name' => 'old']);
+            $this->insertRow('#__kunena_topics', ['id' => $id, 'category_id' => 2, 'first_post_userid' => $userid, 'first_post_guest_name' => 'old', 'last_post_userid' => $userid, 'last_post_guest_name' => 'old']);
+        }
+
+        (new ReflectionProperty(AdministratorApplication::class, 'input'))->setValue(Factory::$application, new Input(['userRename' => 1]));
+
+        try {
+            $this->syncUsers();
+        } finally {
+            $this->replace(KunenaUserName::class, 'displayNameField', $field);
+        }
+
+        return [
+            'messages' => array_column($this->fetchAll('SELECT name FROM #__kunena_messages ORDER BY id'), 'name'),
+            'topics'   => array_map(static fn ($row) => $row['first_post_guest_name'] . '/' . $row['last_post_guest_name'], $this->fetchAll('SELECT first_post_guest_name, last_post_guest_name FROM #__kunena_topics ORDER BY id')),
+        ];
+    }
+
+    public function testTheNicknameSettingDoesNotShowTheUsernames(): void
+    {
+        // No nickname field: the real name, then the username, as the forum shows them.
+        $this->assertSame(['messages' => ['User 50', 'user52'], 'topics' => ['User 50/User 50', 'user52/user52']], $this->rename(2));
+    }
+
+    public function testAnEmptyRealNameGivesTheUsername(): void
+    {
+        $this->assertSame(['messages' => ['User 50', 'user52'], 'topics' => ['User 50/User 50', 'user52/user52']], $this->rename(0));
     }
 
     /**

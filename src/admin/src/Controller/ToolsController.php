@@ -24,6 +24,7 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\UserFactoryInterface;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -85,6 +86,7 @@ use Kunena\Forum\Libraries\Tools\KunenaUserCleanup;
 use Kunena\Forum\Libraries\Tools\KunenaUserMerge;
 use Kunena\Forum\Libraries\User\KunenaAccountActionPolicy;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
 use RuntimeException;
 use StdClass;
@@ -380,18 +382,8 @@ class ToolsController extends FormController
         }
 
         if ($userRename) {
-            $queryName = KunenaConfig::getInstance()->username ? "username" : "name";
-
-            $query = $db->createQuery()
-                ->update($db->quoteName('#__kunena_messages', 'm'))
-                ->innerJoin($db->quoteName('#__users', 'u'))
-                ->set($db->quoteName('m.name') . ' = ' . $db->quoteName('u.' . $queryName))
-                ->where($db->quoteName('m.userid') . ' = ' . $db->quoteName('u.id'));
-
-            $db->setQuery($query);
-
             try {
-                $db->execute();
+                $affectedRows = $this->renameAuthors($db);
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
@@ -399,53 +391,70 @@ class ToolsController extends FormController
 
                 return;
             }
-
-            $affectedRows = $db->getAffectedRows();
-
-            $query = $db->createQuery()
-                ->update($db->quoteName('#__kunena_topics', 't'))
-                ->innerJoin($db->quoteName('#__users', 'u'))
-                ->set($db->quoteName('t.first_post_guest_name') . ' = ' . $db->quoteName('u.' . $queryName))
-                ->where($db->quoteName('t.first_post_userid') . ' = ' . $db->quoteName('u.id'));
-
-            $db->setQuery($query);
-
-            try {
-                $db->execute();
-            } catch (RuntimeException $e) {
-                $this->app->enqueueMessage($e->getMessage(), 'error');
-
-                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-                return;
-            }
-
-            $affectedRows += $db->getAffectedRows();
-
-            $query = $db->createQuery()
-                ->update($db->quoteName('#__kunena_topics', 't'))
-                ->innerJoin($db->quoteName('#__users', 'u'))
-                ->set($db->quoteName('t.last_post_guest_name') . ' = ' . $db->quoteName('u.' . $queryName))
-                ->where($db->quoteName('t.last_post_userid') . ' = ' . $db->quoteName('u.id'));
-
-            $db->setQuery($query);
-
-            try {
-                $db->execute();
-            } catch (RuntimeException $e) {
-                $this->app->enqueueMessage($e->getMessage(), 'error');
-
-                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-                return;
-            }
-
-            $affectedRows += $db->getAffectedRows();
 
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $affectedRows), 'success');
         }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
+
+    /**
+     * The names of the authors in their messages and topics: the name which a new post stores (the name which the forum shows, by
+     * the configuration and the choice of the user, the nickname, and their fallbacks). The tool took the username for "nickname"
+     * (the logins of all the authors were shown in their posts) and the real name, also an empty one, for the other choices.
+     *
+     * @param   DatabaseInterface  $db  The database.
+     *
+     * @return  integer  The rows which were changed.
+     *
+     * @throws  RuntimeException
+     * @since   Kunena 8.0
+     */
+    protected function renameAuthors(DatabaseInterface $db): int
+    {
+        $query = $db->createQuery()
+            ->select('DISTINCT ' . $db->quoteName('userid'))
+            ->from($db->quoteName('#__kunena_messages'))
+            ->where($db->quoteName('userid') . ' > 0');
+        $ids   = array_map('intval', (array) $db->setQuery($query)->loadColumn());
+        $rows  = 0;
+
+        foreach (array_chunk($ids, 500) as $chunk) {
+            KunenaUserHelper::loadUsers($chunk);
+            KunenaUserName::preload($chunk);
+
+            $names = [];
+
+            foreach ($chunk as $id) {
+                $user = KunenaUserHelper::get($id);
+
+                // An account which is gone keeps the name of its posts.
+                if ((string) $user->username !== '') {
+                    $names[$id] = KunenaUserName::get($user);
+                }
+            }
+
+            if (!$names) {
+                continue;
+            }
+
+            foreach ([['#__kunena_messages', 'name', 'userid'], ['#__kunena_topics', 'first_post_guest_name', 'first_post_userid'], ['#__kunena_topics', 'last_post_guest_name', 'last_post_userid']] as [$table, $column, $key]) {
+                $case = 'CASE ' . $db->quoteName($key);
+
+                foreach ($names as $id => $name) {
+                    $case .= ' WHEN ' . (int) $id . ' THEN ' . $db->quote($name);
+                }
+
+                $query = $db->createQuery()
+                    ->update($db->quoteName($table))
+                    ->set($db->quoteName($column) . ' = ' . $case . ' END')
+                    ->where($db->quoteName($key) . ' IN (' . implode(',', array_keys($names)) . ')');
+                $db->setQuery($query)->execute();
+                $rows += $db->getAffectedRows();
+            }
+        }
+
+        return $rows;
     }
 
     /**

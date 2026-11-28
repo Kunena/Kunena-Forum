@@ -157,7 +157,9 @@ abstract class KunenaTopicTags
      */
     public static function getUrl(int $tagId): string
     {
-        return KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=default&ftag=' . $tagId, false);
+        // All the topics of the tag (sel=-1): without a time the list took the default time of the lists (30 days), and the older
+        // topics of the tag were not in it.
+        return KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=default&ftag=' . $tagId . '&sel=-1', false);
     }
 
     /**

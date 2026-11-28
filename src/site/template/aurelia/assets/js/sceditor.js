@@ -794,6 +794,15 @@
 			};
 		};
 
+		// The players of the videos which the editor shows (an iframe): SCEditor keeps only the iframes of the addresses which it
+		// allows, the player of the forum was not one of them, so a [video] was removed from the message at its next save.
+		// A new list for each editor: SCEditor adds its own address to the list which it is given.
+		var videoIframeUrls = function () {
+			return Object.keys(kunenaCmd.video).map(function (key) {
+				return kunenaCmd.video[key].url;
+			});
+		};
+
 		// The text which "Go to editor" of the quick reply copied: into the textarea, which SCEditor reads when it is made. A value
 		// set into the editor just after it is made was lost: its frame loads afterwards, with an empty document.
 		var kunenaCopy = localStorage.getItem('copyKunenaeditor');
@@ -805,6 +814,7 @@
 
 		sceditor.create(textarea, {
 			plugins: 'undo,autoyoutube,kunenapaste',
+			allowedIframeUrls: videoIframeUrls(),
 			format: 'bbcode',
 			toolbar: toolbar_buttons,
 			locale: userlang,
@@ -847,6 +857,7 @@
 
 		sceditor.create(textarea_private, {
 			plugins: 'undo,autoyoutube,kunenapaste',
+			allowedIframeUrls: videoIframeUrls(),
 			format: 'bbcode',
 			toolbar: toolbar_buttons_private,
 			locale: userlang,

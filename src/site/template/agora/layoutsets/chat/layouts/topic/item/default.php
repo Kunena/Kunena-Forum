@@ -28,6 +28,8 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicNewReplies;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 
 Text::script('COM_KUNENA_RATE_LOGIN');
 Text::script('COM_KUNENA_RATE_NOT_YOURSELF');
@@ -83,7 +85,9 @@ if ($this->ktemplate->params->get('ajaxTopicList', 1)) {
 $txt             = '';
 
 // The left pane: the latest topics of the category which the user may read (KunenaTopicHelper checks it).
-[, $paneTopics] = KunenaTopicHelper::getLatestTopics([(int) $this->category->id], 0, 8);
+// Not the topics of the users whom the visitor ignores, which the list of the category leaves out.
+$paneIgnored    = array_filter(array_map('intval', KunenaUserIgnore::getIgnored((int) KunenaUserHelper::getMyself()->userid)));
+[, $paneTopics] = KunenaTopicHelper::getLatestTopics([(int) $this->category->id], 0, 8, ['where' => $paneIgnored ? ' AND tt.first_post_userid NOT IN (' . implode(',', $paneIgnored) . ')' : '']);
 
 // Their unread messages, which the pane shows (the query of the list does not know them: the number was never shown).
 KunenaTopicHelper::fetchNewStatus($paneTopics);

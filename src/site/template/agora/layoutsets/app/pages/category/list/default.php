@@ -20,6 +20,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 
 /*
  * The layout App: the index of the forum starts like the home of an app. A greeting, tiles with the numbers of the visitor (new
@@ -40,8 +41,11 @@ $config   = KunenaFactory::getConfig();
 
 // The topics which the visitor may read (KunenaTopicHelper checks it): the number of the last day, the five latest ones.
 // The time of the first post: with the default order the time is the one of the last post, and an old topic with a new reply counted.
-[$newToday] = KunenaTopicHelper::getLatestTopics(false, 0, 1, ['starttime' => time() - 86400, 'orderby' => 'tt.first_post_time DESC']);
-[, $latest] = KunenaTopicHelper::getLatestTopics(false, 0, 5);
+// Not the topics of the users whom the visitor ignores, which the lists leave out (the tile counted them, the activity showed them).
+$ignored    = array_filter(array_map('intval', KunenaUserIgnore::getIgnored((int) $me->userid)));
+$ignoredOut = $ignored ? ' AND tt.first_post_userid NOT IN (' . implode(',', $ignored) . ')' : '';
+[$newToday] = KunenaTopicHelper::getLatestTopics(false, 0, 1, ['starttime' => time() - 86400, 'orderby' => 'tt.first_post_time DESC', 'where' => $ignoredOut]);
+[, $latest] = KunenaTopicHelper::getLatestTopics(false, 0, 5, ['where' => $ignoredOut]);
 
 // Which of them the member has not read: the list marks them (the query of the list does not know it, it was never marked).
 KunenaTopicHelper::fetchNewStatus($latest);

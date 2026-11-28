@@ -1619,7 +1619,9 @@ class TopicController extends KunenaController
         // Now try adding any new subscriptions if asked for by the poster
         $usertopic = $topic->getUserTopic();
 
-        if ($fields['subscribe'] && !$usertopic->subscribed) {
+        // Where the user may subscribe (as the box of the form is shown): a request subscribed with the subscriptions turned off, and a
+        // guest got the error of the table.
+        if ($fields['subscribe'] && !$usertopic->subscribed && $topic->isAuthorised('subscribe')) {
             try {
                 $topic->subscribe(1);
 

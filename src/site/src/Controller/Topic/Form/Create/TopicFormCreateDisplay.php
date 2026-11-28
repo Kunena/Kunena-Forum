@@ -247,7 +247,15 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
         $this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
         $this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
-        $this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
+        // The choice of the member ("Select subscription as default" of his settings), as the reply takes it; the default of the forum
+        // when he has none. Only the default of the forum was taken: a member who chose No was subscribed to each topic he started.
+        if ($saved) {
+            $this->subscriptionsChecked = $saved['subscribe'];
+        } elseif ((int) ($this->me->canSubscribe ?? -1) === -1) {
+            $this->subscriptionsChecked = $this->config->subscriptionsChecked == 1;
+        } else {
+            $this->subscriptionsChecked = (bool) $this->me->canSubscribe;
+        }
 
         // Fields restored after a failed post exist only in this form; a draft keeps its own copy.
         $this->unsentFields = !empty($saved) && $this->input->getInt('draftid', 0) === 0;

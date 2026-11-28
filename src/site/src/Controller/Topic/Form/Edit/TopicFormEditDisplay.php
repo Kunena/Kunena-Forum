@@ -221,7 +221,9 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
         }
 
         if ($this->topic->isAuthorised('subscribe') && $this->topic->exists()) {
-            if ($usertopic->subscribed == 1 || $this->config->subscriptionsChecked == 1 || $this->category->getSubscribed($this->me->userid)) {
+            // Checked when the user follows the topic now (or its category): the default of the forum checked it always, and the
+            // save of a small correction subscribed again a user who had left the topic.
+            if ($usertopic->subscribed == 1 || $this->category->getSubscribed($this->me->userid)) {
                 $this->subscriptionsChecked = true;
             }
         } else {

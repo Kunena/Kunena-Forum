@@ -2564,7 +2564,9 @@ class TopicController extends KunenaController
             return; // -- abort
         }
 
-        $category            = KunenaCategoryHelper::get($this->catid);
+        // The category of the message (as react() takes it), not the one of the request: a request with another catid wrote the log
+        // of the thank you into that category (the moderators of it saw it, with the subject of a topic which they may not read).
+        $category            = $message->getCategory();
         $thankyou            = KunenaMessageThankyouHelper::get($this->mesid);
         $activityIntegration = KunenaFactory::getActivityIntegration();
 
@@ -2633,7 +2635,8 @@ class TopicController extends KunenaController
                 KunenaLog::log(
                     KunenaLog::TYPE_MODERATION,
                     KunenaLog::LOG_POST_UNTHANKYOU,
-                    ['mesid' => $message->id, 'userid' => $message->userid],
+                    // The user whose thank you was removed (a moderator removes the one of another user), not the author of the post.
+                    ['mesid' => $message->id, 'userid' => (int) $whose->userid],
                     $category,
                     $message->getTopic(),
                     $message->getAuthor()

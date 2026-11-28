@@ -1810,10 +1810,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         $config = KunenaFactory::getConfig();
 
+        // The error is the output of the tag, in the post: printed with echo it went before the page (and broke the JSON, raw and
+        // feed answers which have a post).
         if (!is_numeric($content)) {
-            echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
-
-            return false;
+            return '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
         }
 
         // Display tag in activity streams etc..
@@ -2246,10 +2246,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         $content = trim($content);
 
+        // The error is the output of the tag, in the post (printed with echo it went before the page).
         if (empty($content)) {
-            echo '<div class="alert alert-error">' . Text::_('COM_KUNENA_LIB_BBCODE_MAP_ERROR_CITY_MISSING') . '</div>';
-
-            return false;
+            return '<div class="alert alert-error">' . Text::_('COM_KUNENA_LIB_BBCODE_MAP_ERROR_CITY_MISSING') . '</div>';
         }
 
         $document = Factory::getApplication()->getDocument();

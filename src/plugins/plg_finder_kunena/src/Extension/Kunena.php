@@ -278,7 +278,9 @@ final class Kunena extends Adapter implements SubscriberInterface
             unset($this->oldCategories[(int) $row->id]);
 
             if ($old !== $new) {
-                $catids = $old['published'] !== $new['published'] ? $this->getCategoryTree((int) $row->id) : [(int) $row->id];
+                // The state and the parent of a category give the state of its subcategories too.
+                $tree   = $old['published'] !== $new['published'] || $old['parentid'] !== $new['parentid'];
+                $catids = $tree ? $this->getCategoryTree((int) $row->id) : [(int) $row->id];
 
                 foreach ($this->getMessageIdsByCategories($catids) as $id) {
                     $this->reindex($id);
@@ -864,11 +866,17 @@ final class Kunena extends Adapter implements SubscriberInterface
     {
         $params = new Registry($table->params);
 
+        // Also what getAccessLevel() takes of a category of groups (the child groups, the second group), and the parent (createIndexerResult()
+        // hides the messages of a category under an unpublished parent): a change of them left the old access or state in the index.
         return [
             'accesstype'    => (string) $table->accesstype,
             'access'        => (int) $table->access,
             'pubAccess'     => (int) $table->pubAccess,
+            'pubRecurse'    => (int) $table->pubRecurse,
+            'adminAccess'   => (int) $table->adminAccess,
+            'adminRecurse'  => (int) $table->adminRecurse,
             'published'     => (int) $table->published,
+            'parentid'      => (int) $table->parentid,
             'ownTopicsOnly' => (int) $params->get('ownTopicsOnly', 0),
         ];
     }

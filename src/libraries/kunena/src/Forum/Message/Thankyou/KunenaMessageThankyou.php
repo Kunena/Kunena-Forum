@@ -115,7 +115,13 @@ class KunenaMessageThankyou
         $db->setQuery($query);
         $db->execute();
 
-        if (!$target || !$db->getAffectedRows()) {
+        // Removed by another request in the meantime (a double click): not removed a second time, the caller logged it and took the
+        // points of the activity integrations off again.
+        if (!$db->getAffectedRows()) {
+            throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
+        }
+
+        if (!$target) {
             return true;
         }
 

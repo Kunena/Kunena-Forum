@@ -2580,7 +2580,13 @@ class TopicController extends KunenaController
 
         if ($type == 'thankyou') {
             try {
-                $thankyou->save($this->me);
+                // Not saved (the thank you of another request of the user was stored in the meantime, a double click): the
+                // success, the log, the points of the activity integrations and the inbox are not given a second time.
+                if (!$thankyou->save($this->me)) {
+                    $this->setRedirectBack();
+
+                    return;
+                }
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
                 $this->setRedirectBack();

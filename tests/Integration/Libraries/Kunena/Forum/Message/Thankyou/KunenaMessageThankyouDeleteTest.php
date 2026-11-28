@@ -14,11 +14,13 @@ namespace Kunena\Tests\Integration\Libraries\Kunena\Forum\Message\Thankyou;
 
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Language;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\Event\Dispatcher;
 use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyou;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
@@ -123,6 +125,39 @@ class KunenaMessageThankyouDeleteTest extends IntegrationTestCase implements DBT
             ['0' => 0, '42' => 0],
             array_map('intval', array_column($this->fetchAll('SELECT userid, thankyou FROM #__kunena_users ORDER BY userid'), 'thankyou', 'userid'))
         );
+    }
+
+    /**
+     * A thank you which another request took back in the meantime (a double click: both requests loaded it before either removed
+     * it): the second one is refused, so the caller does not log the removal again and take the points of the activity integrations
+     * off a second time.
+     */
+    public function testAThankYouTakenBackByAnotherRequestIsRefused(): void
+    {
+        $thanker = self::bareUser(43);
+        $this->replace(KunenaUserHelper::class, '_instances', [43 => $thanker]);
+
+        $thankyou = (new ReflectionClass(KunenaMessageThankyou::class))->newInstanceWithoutConstructor();
+        (new ReflectionProperty(KunenaMessageThankyou::class, 'id'))->setValue($thankyou, 61);
+        (new ReflectionProperty(KunenaMessageThankyou::class, 'users'))->setValue($thankyou, [43 => '2026-01-01 00:00:00']);
+
+        // The other request.
+        $this->getDBDriver()->setQuery('DELETE FROM #__kunena_thankyou WHERE postid = 61 AND userid = 43')->execute();
+
+        // The message of the refusal: the key of the text.
+        $language = $this->createStub(Language::class);
+        $language->method('_')->willReturnArgument(0);
+        $saved             = Factory::$language;
+        Factory::$language = $language;
+
+        try {
+            $thankyou->delete($thanker);
+            $this->fail('The thank you was taken back a second time.');
+        } catch (KunenaException $e) {
+            $this->assertSame('COM_KUNENA_THANKYOU_NOT_PRESENT', $e->getMessage());
+        } finally {
+            Factory::$language = $saved;
+        }
     }
 
     private static function bareUser(int $id): KunenaUser

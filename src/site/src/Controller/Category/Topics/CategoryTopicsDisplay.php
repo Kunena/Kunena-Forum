@@ -84,6 +84,14 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
     public mixed $actionMove = null;
 
     /**
+     * The moderators of the category, which the page names (the layout had them never: nothing gave them to it).
+     *
+     * @var    array
+     * @since  Kunena 8.0
+     */
+    public mixed $moderators = null;
+
+    /**
      * @var     string
      * @since   Kunena 6.0
      */
@@ -236,6 +244,11 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         }
 
         $this->actionMove = $model->getActionMove();
+
+        // The moderators of the category, not a banned one, when the settings name them ("Show moderators").
+        if ($this->config->listCatShowModerators) {
+            $this->moderators = KunenaAccess::withoutBanned($this->category->getModerators(false));
+        }
 
         $this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
         $this->pagination->setDisplayedPages(5);

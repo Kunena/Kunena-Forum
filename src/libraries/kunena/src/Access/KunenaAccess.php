@@ -124,7 +124,11 @@ class KunenaAccess
     public function __construct()
     {
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-        PluginHelper::importPlugin('kunena', 'joomla');
+        // Every plugin of Kunena which gives an access type (the ranks of plg_kunena_acl, a community), not only the one of Joomla: the
+        // site imports the group only on its pages, so on the console (the scheduled tasks), in the API, in the backend and before the
+        // import of a page the categories of the ranks had no access, and nobody but the moderators could read them (the e-mails
+        // of the queue were dropped, the scheduled replies never published). Each plugin decides itself in which applications it runs.
+        PluginHelper::importPlugin('kunena');
 
         $accessControlEvent = new KunenaGetAccessControlEvent('onKunenaGetAccessControl');
         Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetAccessControl', $accessControlEvent);

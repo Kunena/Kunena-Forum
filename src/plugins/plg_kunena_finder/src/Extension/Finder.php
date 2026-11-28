@@ -5,7 +5,7 @@
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Kunena\Forum\Plugin\Kunena\Finder;
+namespace Kunena\Forum\Plugin\Kunena\Finder\Extension;
 
 \defined('_JEXEC') or die;
 
@@ -77,7 +77,7 @@ final class Finder extends CMSPlugin implements SubscriberInterface, DispatcherA
         $table_content = ob_get_contents();
         ob_end_clean();
         Log::add('onKunenaAfterSave table: ' . $table_content, Log::INFO);
-        Log::add('onKunenaAfterSave isNew: ' . ($isNew) ? 'Yes' : 'No', Log::INFO);
+        Log::add('onKunenaAfterSave isNew: ' . ($isNew ? 'Yes' : 'No'), Log::INFO);
 
         PluginHelper::importPlugin('finder');
 
@@ -112,7 +112,7 @@ final class Finder extends CMSPlugin implements SubscriberInterface, DispatcherA
         $table_content = ob_get_contents();
         ob_end_clean();
         Log::add('onKunenaBeforeSave table: ' . $table_content, Log::INFO);
-        Log::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', Log::INFO);
+        Log::add('onKunenaBeforeSave isNew: ' . ($isNew ? 'Yes' : 'No'), Log::INFO);
 
         PluginHelper::importPlugin('finder');
 

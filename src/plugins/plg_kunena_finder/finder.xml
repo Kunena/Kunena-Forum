@@ -20,6 +20,7 @@
     <files>
         <folder plugin="finder">src</folder>
         <folder>language</folder>
+        <folder>services</folder>
     </files>
     <config>
         <fields name="params">

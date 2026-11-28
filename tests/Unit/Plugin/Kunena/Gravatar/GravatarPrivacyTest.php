@@ -43,8 +43,8 @@ class GravatarPrivacyTest extends UnitTestCase
         return [
             'show (0)'                           => [0, true],
             'show as a string from the database' => ['0', true],
-            'never set (null)'                   => [null, true],
-            'never set (empty string)'           => ['', true],
+            'never set (null)'                   => [null, false],
+            'never set (empty string)'           => ['', false],
             'hide (1)'                           => [1, false],
             'hide as a string'                   => ['1', false],
             'registered users only (2)'          => [2, false],

@@ -29,7 +29,7 @@ abstract class GravatarPrivacy
      * is shown, without anything of the address in it.
      *
      * The setting "hide email" of the member is 0 (show), 1 (hide) or 2 (only for registered users). An avatar is shown to
-     * everybody, guests included, and the page can be cached for others, so only 0 (or never set) gives the address.
+     * everybody, guests included, and the page can be cached for others, so only 0 gives the address.
      *
      * @param   mixed  $email      The email address of the member.
      * @param   mixed  $hideEmail  The setting of the member.
@@ -46,8 +46,9 @@ abstract class GravatarPrivacy
             return '';
         }
 
-        // Never set (null or ''), or explicitly "show".
-        if ($hideEmail === null || $hideEmail === '' || (is_numeric($hideEmail) && (int) $hideEmail === 0)) {
+        // Only an explicit "show". Never set (null or '': a user without a profile of the forum) is hidden, as KunenaUser and the
+        // default of the column have it: the hash of his address was in the page.
+        if (is_numeric($hideEmail) && (int) $hideEmail === 0) {
             return $email;
         }
 

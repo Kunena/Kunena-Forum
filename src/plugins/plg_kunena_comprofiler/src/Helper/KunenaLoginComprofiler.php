@@ -22,6 +22,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use RuntimeException;
 
 /**
  * Class KunenaLoginComprofiler
@@ -86,17 +87,26 @@ class KunenaLoginComprofiler extends KunenaLoginAbstract
      */
     public function getRememberMe(): bool
     {
+        // The option of the login module of Community Builder, in its module. The query was never given to the database (the last
+        // query of the request was run again and its first column read), and it read the table of the extensions with a join to an
+        // unknown alias: the option was never what the module says.
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select('params')
-            ->from($db->quoteName('#__extensions'))
-            ->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.userid')
-            ->where('element = \'mod_cblogin\'')
-            ->andWhere('type = \'module\'');
-        $raw_params = $db->loadResult();
-        $params     = new CBRegistry($raw_params);
+        $query = $db->createQuery()
+            ->select($db->quoteName('params'))
+            ->from($db->quoteName('#__modules'))
+            ->where($db->quoteName('module') . ' = ' . $db->quote('mod_cblogin'))
+            ->where($db->quoteName('published') . ' = 1');
+        $db->setQuery($query, 0, 1);
 
-        return $params->get('remember_enabled', 1);
+        try {
+            $raw_params = (string) $db->loadResult();
+        } catch (RuntimeException $e) {
+            $raw_params = '';
+        }
+
+        $params = new CBRegistry($raw_params);
+
+        return (bool) $params->get('remember_enabled', 1);
     }
 
     /**

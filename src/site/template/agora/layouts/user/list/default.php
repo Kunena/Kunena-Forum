@@ -43,7 +43,8 @@ foreach (
         'userlistUserHits'      => ['COM_KUNENA_USRL_HITS', 'uhits'],
     ] as $option => $sort
 ) {
-    if ($config->$option) {
+    // The order by the e-mail addresses is for the moderators (UserModel): for the others the chip ordered the list by the id.
+    if ($config->$option && ($sort[1] !== 'email' || $this->me->isModerator())) {
         $sorts[] = $sort;
     }
 }

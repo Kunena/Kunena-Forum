@@ -165,16 +165,23 @@ KunenaFactory::getTemplate()->addScriptOptions('com_kunena.usersearch_url', Kune
                 $cols++;
                 ?>
             <th scope="col" class="col-md-1 d-none d-md-table-cell">
-                <?php echo HTMLHelper::_(
-                    'kunenagrid.sort',
-                    'COM_KUNENA_USRL_EMAIL',
-                    'email',
-                    $this->state->get('list.direction'),
-                    $this->state->get('list.ordering'),
-                    '',
-                    '',
-                    'kuserlist-form'
-                );
+                <?php
+                // The order by the e-mail addresses is for the moderators (UserModel): for the others the head is no sort link,
+                // which ordered the list by the id.
+                if ($this->me->isModerator()) :
+                    echo HTMLHelper::_(
+                        'kunenagrid.sort',
+                        'COM_KUNENA_USRL_EMAIL',
+                        'email',
+                        $this->state->get('list.direction'),
+                        $this->state->get('list.ordering'),
+                        '',
+                        '',
+                        'kuserlist-form'
+                    );
+                else :
+                    echo Text::_('COM_KUNENA_USRL_EMAIL');
+                endif;
                 ?>
             </th>
             <?php endif;

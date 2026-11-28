@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
@@ -672,6 +673,7 @@ class TopicsController extends KunenaController
                     }
 
                     $message->publish(KunenaForum::PUBLISHED);
+                    $this->logPost(KunenaLog::LOG_POST_APPROVE, $message);
 
                     // The subscribers are told about a message once, as in the approval of one message: a reply which an edit sent
                     // back to review was mailed to all of them again (and its author got the mail of the approval again).
@@ -727,6 +729,7 @@ class TopicsController extends KunenaController
                 try {
                     $message->tryAuthorise('delete');
                     $message->publish(KunenaForum::DELETED);
+                    $this->logPost(KunenaLog::LOG_POST_DELETE, $message);
 
                     $success++;
                 } catch (Exception $e) {
@@ -778,6 +781,7 @@ class TopicsController extends KunenaController
                     }
 
                     $message->publish(KunenaForum::PUBLISHED);
+                    $this->logPost(KunenaLog::LOG_POST_UNDELETE, $message);
 
                     $success++;
                 } catch (Exception $e) {
@@ -825,6 +829,7 @@ class TopicsController extends KunenaController
                 try {
                     $message->tryAuthorise('permdelete');
                     $message->delete();
+                    $this->logPost(KunenaLog::LOG_POST_DESTROY, $message);
 
                     $success++;
                 } catch (Exception $e) {
@@ -838,5 +843,33 @@ class TopicsController extends KunenaController
         }
 
         $this->setRedirectBack();
+    }
+
+    /**
+     * The moderation log of an action on one of the selected messages of a list, as the action on one message writes it
+     * (TopicController): the actions on the selected messages were not logged, a delete for good neither.
+     *
+     * @param   string         $log      The action (KunenaLog::LOG_POST_*).
+     * @param   KunenaMessage  $message  The message.
+     *
+     * @return  void
+     *
+     * @since   Kunena 8.0
+     */
+    private function logPost(string $log, KunenaMessage $message): void
+    {
+        if (!$this->config->logModeration) {
+            return;
+        }
+
+        $category = $message->getCategory();
+
+        KunenaLog::log(
+            $this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+            $log,
+            ['mesid' => $message->id],
+            $category,
+            $message->getTopic()
+        );
     }
 }

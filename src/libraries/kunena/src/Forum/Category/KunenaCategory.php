@@ -1270,6 +1270,17 @@ class KunenaCategory extends KunenaDatabaseObject
 
         $db     = Factory::getContainer()->get('DatabaseDriver');
         $catid  = $db->quote($this->id);
+
+        // The moderators of the category, whose flag of moderator is worked out again after their rows are deleted below: it stayed
+        // set for a user who moderated only this category (and the user page of the backend then offered him the global right).
+        $moderators = array_map('intval', (array) $db->setQuery(
+            $db->createQuery()
+                ->select($db->quoteName('user_id'))
+                ->from($db->quoteName('#__kunena_user_categories'))
+                ->where($db->quoteName('category_id') . ' = ' . $catid)
+                ->where($db->quoteName('role') . ' = 1')
+        )->loadColumn());
+
         $simple = [
             // Aliases, user topics, user categories, user read
             ['#__kunena_aliases', 'item', $db->quoteName('type') . ' = ' . $db->quote('catid')],
@@ -1413,6 +1424,18 @@ class KunenaCategory extends KunenaDatabaseObject
 
         KunenaUserHelper::recount();
         KunenaMessageThankyouHelper::recount();
+
+        $access->clearCache();
+
+        foreach ($moderators as $userid) {
+            // Read again: a user loaded before in the request has the flag of then.
+            $user = KunenaUserHelper::get($userid, true);
+
+            if ($user->exists() && (int) $user->moderator !== (int) !empty($access->getModeratorStatus($user))) {
+                $user->moderator = (int) !empty($access->getModeratorStatus($user));
+                $user->save();
+            }
+        }
 
         // The own icon image of the category (7.2).
         KunenaCategoryIcon::delete((int) $this->id);

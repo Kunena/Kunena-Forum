@@ -17,6 +17,8 @@ use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Language;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\Event\Dispatcher;
@@ -81,6 +83,15 @@ class KunenaCategoryDeleteAttachmentsTest extends IntegrationTestCase implements
         $container->share(DatabaseInterface::class, static fn () => $driver);
         $container->share(DispatcherInterface::class, static fn () => $dispatcher);
         $container->share(CacheControllerFactoryInterface::class, fn () => $this->createStub(CacheControllerFactoryInterface::class));
+        // The Joomla user of a saved Kunena user (the flag of a moderator is saved after the delete): a user with its id.
+        $userFactory = $this->createStub(UserFactoryInterface::class);
+        $userFactory->method('loadUserById')->willReturnCallback(static function (int $id): User {
+            $user     = new User();
+            $user->id = $id;
+
+            return $user;
+        });
+        $container->share(UserFactoryInterface::class, static fn () => $userFactory);
         $application = $this->createStub(CMSApplicationInterface::class);
         $application->method('getDispatcher')->willReturn($dispatcher);
         $application->method('isClient')->willReturnCallback(static fn ($client) => $client === 'cli');
@@ -280,5 +291,20 @@ class KunenaCategoryDeleteAttachmentsTest extends IntegrationTestCase implements
             [self::OTHER_CATEGORY => 0, 8 => self::OTHER_CATEGORY, 9 => 8],
             array_column($this->fetchAll('SELECT id, parentid FROM #__kunena_categories ORDER BY id'), 'parentid', 'id')
         );
+    }
+
+    /**
+     * A user who moderated only the deleted category is no moderator any more: the flag of his profile stayed set (the user page of
+     * the backend then offered him the right of a global moderator). (The access is a stub here: it has no moderator left.)
+     */
+    public function testTheModeratorOfTheDeletedCategoryIsNoModeratorAnyMore(): void
+    {
+        $this->insertRow('#__users', ['id' => 42, 'name' => 'Moderator', 'username' => 'moderator', 'email' => 'm@example.invalid', 'params' => '']);
+        $this->insertRow('#__kunena_users', ['userid' => 42, 'moderator' => 1]);
+        $this->insertRow('#__kunena_user_categories', ['user_id' => 42, 'category_id' => self::CATEGORY, 'role' => 1]);
+
+        $this->deleteCategory();
+
+        $this->assertSame(0, (int) $this->fetchAll('SELECT moderator FROM #__kunena_users WHERE userid = 42')[0]['moderator']);
     }
 }

@@ -20,6 +20,8 @@ use Kunena\Tests\Unit\UnitTestCase;
  * - "Allowed to post a new topic" and "Allowed to reply" without a choice: a list without a choice is not sent, the setting was
  *   left out of the parameters, and the defaults (Registered, Manager, Super Users) came back: nobody could be refused. An empty
  *   value is sent before each list.
+ * - The primary and the secondary group are one group (the columns are one number): the lists allowed a choice of several, of
+ *   which only the last one was kept.
  * (The fields need a whole site: the code is read.)
  */
 class KunenaAccessJoomlaFormTest extends UnitTestCase
@@ -43,6 +45,16 @@ class KunenaAccessJoomlaFormTest extends UnitTestCase
                     $name
                 );
             }
+        }
+    }
+
+    public function testThePrimaryAndTheSecondaryGroupAreOneGroup(): void
+    {
+        $source = $this->source();
+
+        foreach (['pubAccess', 'adminAccess'] as $field) {
+            $this->assertSame(1, preg_match("/HTMLHelper::_\('access\.usergroup', '{$field}', [^\n]*\)/", $source, $m), $field);
+            $this->assertStringNotContainsString('multiple', $m[0], $field);
         }
     }
 }

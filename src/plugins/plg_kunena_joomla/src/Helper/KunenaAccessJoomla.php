@@ -212,7 +212,8 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
                 'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC') . '<br /><br />' .
                     Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC2') . '<br /><br />' .
                     Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_HINT_DESC'),
-                'input' => HTMLHelper::_('access.usergroup', 'pubAccess', $category->pubAccess, 'class="form-select" multiple size="10"', false),
+                // One group (the column is one number): with "multiple" a choice of several kept only the last one.
+                'input' => HTMLHelper::_('access.usergroup', 'pubAccess', $category->pubAccess, 'class="form-select" size="10"', false),
             ];
 
             $html['joomla-group']['pubRecurse']  = [
@@ -225,7 +226,8 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
                 'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC') . '<br /><br />' .
                     Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC2') . '<br /><br />' .
                     Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_HINT_DESC'),
-                'input' => HTMLHelper::_('access.usergroup', 'adminAccess', $category->adminAccess, 'class="form-select" multiple size="10"', false),
+                // One group (the column is one number): with "multiple" a choice of several kept only the last one.
+                'input' => HTMLHelper::_('access.usergroup', 'adminAccess', $category->adminAccess, 'class="form-select" size="10"', false),
             ];
 
             $html['joomla-group']['adminRecurse'] = [

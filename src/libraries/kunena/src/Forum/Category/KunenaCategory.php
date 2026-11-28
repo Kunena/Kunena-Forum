@@ -43,6 +43,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
@@ -2527,6 +2528,9 @@ class KunenaCategory extends KunenaDatabaseObject
 
         $count = KunenaTopicHelper::trash($ids);
 
+        // The posts of the users in these topics (the count of a user is the sum of them): the trash changes the messages in the
+        // database only, so every author kept the posts of his trashed topics (and his rank) until a recount of the tools.
+        KunenaTopicUserHelper::recount($ids);
         KunenaUserHelper::recount();
         KunenaCategoryHelper::recountBatch($this->id);
 

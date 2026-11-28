@@ -2022,6 +2022,7 @@ class TopicController extends KunenaController
             'subscribe'         => $this->app->getInput()->getInt('subscribeMe', 0),
             'private'           => (string) $this->input->getRaw('message_private'),
             'params'            => '',
+            'mesid'             => $this->id,
         ];
 
         // A request without a valid token may come from another site: nothing of it is kept for the edit form, so a
@@ -2033,10 +2034,14 @@ class TopicController extends KunenaController
             return;
         }
 
+        // Kept for the form, as in post(): an edit refused by a rule of the text (a link in the subject, too many links) went back
+        // to the form with the saved text, and what the user typed was lost. The fields name their message (mesid): the form of
+        // the edit of another message does not take them.
+        $this->app->setUserState('com_kunena.postfields', $fields);
+
         try {
             $message->tryAuthorise('edit');
         } catch (Exception $e) {
-            $this->app->setUserState('com_kunena.postfields', $fields);
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
 
@@ -2163,6 +2168,7 @@ class TopicController extends KunenaController
 
                 if ($deleted) {
                     $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'), 'success');
+                    $this->app->setUserState('com_kunena.postfields', null);
                 }
 
                 $this->setRedirect($message->getUrl($this->return, false));
@@ -2188,12 +2194,14 @@ class TopicController extends KunenaController
         try {
             $message->save();
         } catch (Exception $e) {
-            $this->app->setUserState('com_kunena.postfields', $fields);
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
 
             return;
         }
+
+        // Saved: the fields are not for a form any more.
+        $this->app->setUserState('com_kunena.postfields', null);
 
         // The uploads which the saved message took are active now. They were marked before the checks of the post: a refused post
         // left them active without a message, and the scheduled task, which removes the pending uploads (status 0), never did.
@@ -4459,8 +4467,8 @@ class TopicController extends KunenaController
             return;
         }
 
-        // The editor takes its values from the fields of the last post.
-        $this->app->setUserState('com_kunena.postfields', $draft->fields);
+        // The editor takes its values from the fields of the last post (those of an edit name their message, see edit()).
+        $this->app->setUserState('com_kunena.postfields', $draft->message_id ? ['mesid' => (int) $draft->message_id] + (array) $draft->fields : $draft->fields);
 
         if ($draft->message_id) {
             $url = "index.php?option=com_kunena&view=topic&layout=edit&catid={$draft->catid}&id={$draft->topic_id}&mesid={$draft->message_id}&draftid={$draft->id}";

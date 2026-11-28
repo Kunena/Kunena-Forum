@@ -133,6 +133,11 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
         $saved = $this->app->getUserState('com_kunena.postfields');
 
+        // Not the fields of an edit (they name their message): the text of a refused edit came into a new post.
+        if (!empty($saved['mesid'])) {
+            $saved = null;
+        }
+
         $this->me        = KunenaUserHelper::getMyself();
         $this->ktemplate = KunenaFactory::getTemplate();
 

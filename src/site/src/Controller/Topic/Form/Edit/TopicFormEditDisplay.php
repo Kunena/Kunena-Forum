@@ -103,6 +103,14 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
         $mesid       = $this->input->getInt('mesid');
         $saved       = $this->app->getUserState('com_kunena.postfields');
 
+        // Only the fields of an edit of this message: the session has the fields of the last form which was refused, a reply (a
+        // quick reply refused by the flood protection) or the edit of another message, which took the place of the text of this one,
+        // and a save wrote them over it.
+        if ($saved && (int) ($saved['mesid'] ?? 0) !== $mesid) {
+            $saved = null;
+            $this->app->setUserState('com_kunena.postfields', null);
+        }
+
         $this->me        = KunenaUserHelper::getMyself();
         $this->ktemplate = KunenaFactory::getTemplate();
         $this->message   = KunenaMessageHelper::get($mesid);

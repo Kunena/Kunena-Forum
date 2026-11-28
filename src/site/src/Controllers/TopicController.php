@@ -2007,13 +2007,15 @@ class TopicController extends KunenaController
         $topic   = $message->getTopic();
 
         // The private part is read from the field of the editors (message_private, as post() reads it): it was always empty here,
-        // so an edit which kept only the private part was refused, or put the message in the trash.
+        // so an edit which kept only the private part was refused, or put the message in the trash. The reason is empty when the form
+        // has no field of it (editMarkup off): the reason of the last edit (of a moderator) was saved again with the next edit of the
+        // author, also in its history.
         $fields = [
             'name'              => $this->app->getInput()->getString('authorname', $message->name),
             'email'             => $this->app->getInput()->getString('email', $message->email),
             'subject'           => $this->postedText('subject'),
             'message'           => $this->postedText('message'),
-            'modified_reason'   => $this->app->getInput()->getString('modified_reason', $message->modified_reason),
+            'modified_reason'   => $this->app->getInput()->getString('modified_reason', ''),
             'icon_id'           => $this->app->getInput()->getInt('topic_emoticon', $topic->icon_id),
             'anonymous'         => $this->app->getInput()->getInt('anonymous', 0),
             'poll_title'        => $this->app->getInput()->getString('poll_title', null),

@@ -20,6 +20,7 @@ use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Event\Dispatcher;
 use Joomla\Registry\Registry;
@@ -192,6 +193,12 @@ abstract class KunenaParser
         $bbcode->SetPlainMode(false);
         $txt = $bbcode->Parse($txt);
         $txt = self::prepareContent($txt, $target);
+
+        // A message in an e-mail: an address of the site without its host (an emoticon, the profile of a mention, a link of the
+        // router) points nowhere in a mail program, the emoticons were broken images and the mentions dead links.
+        if ($context === 'subscription') {
+            $txt = self::absoluteUrls((string) $txt, Uri::getInstance()->toString(['scheme', 'host', 'port']));
+        }
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 

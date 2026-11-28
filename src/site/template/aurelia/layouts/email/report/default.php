@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 
 $config            = KunenaConfig::getInstance();
 $user              = $this->message->getAuthor();
@@ -175,7 +176,7 @@ if (!$config->plainEmail) :
                             <br/>
                             <div><?php echo Text::_('COM_KUNENA_REPORT_POST_MESSAGE'); ?></div>
                             <hr/>
-                            <div><?php echo $this->message->displayField('message'); ?></div>
+                            <div><?php echo KunenaParser::absoluteUrls((string) $this->message->displayField('message'), Uri::getInstance()->toString(['scheme', 'host', 'port'])); ?></div>
                         </td>
                     </tr>
 

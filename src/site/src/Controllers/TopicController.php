@@ -3959,7 +3959,8 @@ class TopicController extends KunenaController
                     'subject'    => $topic->subject,
                     'url'        => $msglink,
                 ];
-                $html   = $common + ['message' => '<div style="border-left:3px solid #dddddd;padding:4px 14px;margin:14px 0">' . $message->displayField('message') . '</div>'];
+                // The addresses of the site with their host (emoticons, mentions): root-relative, they were broken in a mail program.
+                $html   = $common + ['message' => '<div style="border-left:3px solid #dddddd;padding:4px 14px;margin:14px 0">' . KunenaParser::absoluteUrls((string) $message->displayField('message'), Uri::getInstance()->toString(['scheme', 'host', 'port'])) . '</div>'];
                 $plain  = $common + ['message' => $message->displayField('message', false)];
 
                 foreach ($emailToList as $emailTo) {

@@ -197,7 +197,8 @@ class UserItemDisplay extends KunenaControllerDisplay
             }
         }
 
-        $this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+        // The name as text: the breadcrumb escapes it ("Tom & Jerry" was "Tom &amp; Jerry").
+        $this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName('', false));
     }
 
     /**

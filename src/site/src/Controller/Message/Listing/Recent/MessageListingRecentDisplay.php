@@ -357,7 +357,8 @@ class MessageListingRecentDisplay extends ListDisplay
         $total = $this->pagination->pagesTotal;
         $user  = KunenaUserHelper::get($this->state->get('user'));
 
-        $headerText      = $this->headerText . ' ' . Text::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+        // The name as text: the title and the description of the page are escaped by Joomla (it had &amp; for a &).
+        $headerText      = $this->headerText . ' ' . Text::_('COM_KUNENA_FROM') . ' ' . $user->getName('', false) . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
         $menu_item       = $this->app->getMenu()->getActive();
         $componentParams = ComponentHelper::getParams('com_config');
         $robots          = $componentParams->get('robots');

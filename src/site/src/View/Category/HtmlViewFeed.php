@@ -74,7 +74,8 @@ class KunenaViewCategory extends KunenaView
 
         foreach ($this->topics as $topic) {
             if ($this->config->rssType == 'topic') {
-                $description = Text::sprintf('COM_KUNENA_RSS_TOPICS_CONTAINS_MESSAGES', $topic->posts) . ' - ' . Text::sprintf('COM_KUNENA_RSS_LAST_AUTHOR', KunenaFactory::getUser($topic->last_post_userid)->getName($topic->last_post_guest_name));
+                // The name as text: the description is escaped below (parseText(), parseBBCode()), the feed had &amp; for a &.
+                $description = Text::sprintf('COM_KUNENA_RSS_TOPICS_CONTAINS_MESSAGES', $topic->posts) . ' - ' . Text::sprintf('COM_KUNENA_RSS_LAST_AUTHOR', KunenaFactory::getUser($topic->last_post_userid)->getName($topic->last_post_guest_name, false));
             } elseif (!KunenaUserHelper::getMyself()->userid && $topic->getCategory()->hidesRepliesForGuests() && $topic->last_post_id != $topic->first_post_id) {
                 // The replies are hidden from the guests (like the feed of the topics).
                 $description = Text::_('COM_KUNENA_TEASER_TEXT');

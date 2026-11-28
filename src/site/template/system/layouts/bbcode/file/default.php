@@ -33,7 +33,8 @@ $size     = $this->size;
     ?>
 
         <?php echo Text::_('COM_KUNENA_FILENAME'); ?>
-        <a href="<?php echo $url; ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape($filename); ?>">
+        <?php // The address has the name of the file of the member: escaped as the title is. ?>
+        <a href="<?php echo $this->escape($url); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape($filename); ?>">
             <?php echo $this->escape(KunenaAttachmentHelper::shortenFilename($filename)); ?>
         </a>
 

@@ -22,7 +22,6 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial\Helper;
 
 use Exception;
 use FD;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -58,12 +57,14 @@ class KunenaActivityEasySocial extends KunenaActivity
      */
     public function onAfterPost(KunenaMessage $message)
     {
-        if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
-            $this->assignPoints('thread.new');
+        // The points and the badge go to the author of the post: the user of the request (the moderator who approved or restored
+        // the post) got them. A guest gets none.
+        if ($message->userid && StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+            $this->assignPoints('thread.new', (int) $message->userid);
         }
 
-        if (StringHelper::strlen($message->message) > $this->params->get('activity_badge_limit', 0)) {
-            $this->assignBadge('thread.new', Text::_('PLG_KUNENA_EASYSOCIAL_BADGE_NEW_TITLE'));
+        if ($message->userid && StringHelper::strlen($message->message) > $this->params->get('activity_badge_limit', 0)) {
+            $this->assignBadge('thread.new', Text::_('PLG_KUNENA_EASYSOCIAL_BADGE_NEW_TITLE'), (int) $message->userid);
         }
 
         $stream = FD::stream();
@@ -131,14 +132,14 @@ class KunenaActivityEasySocial extends KunenaActivity
     {
         $length = StringHelper::strlen($message->message);
 
-        // Assign points for replying a thread
-        if ($length > $this->params->get('activity_points_limit', 0)) {
-            $this->assignPoints('thread.reply');
+        // Assign points for replying a thread, to its author (not to the moderator who approved or restored it). A guest gets none.
+        if ($message->userid && $length > $this->params->get('activity_points_limit', 0)) {
+            $this->assignPoints('thread.reply', (int) $message->userid);
         }
 
         // Assign badge for replying to a thread
-        if ($length > $this->params->get('activity_badge_limit', 0)) {
-            $this->assignBadge('thread.reply', Text::_('PLG_KUNENA_EASYSOCIAL_BADGE_REPLY_TITLE'));
+        if ($message->userid && $length > $this->params->get('activity_badge_limit', 0)) {
+            $this->assignBadge('thread.reply', Text::_('PLG_KUNENA_EASYSOCIAL_BADGE_REPLY_TITLE'), (int) $message->userid);
         }
 
         $stream = FD::stream();
@@ -219,10 +220,10 @@ class KunenaActivityEasySocial extends KunenaActivity
             }
         }
 
-        // Get all subscribers, moderators and admins who will get the email
-        $me          = Factory::getApplication()->getIdentity();
+        // Get all subscribers, moderators and admins who will get the email, but the author of the post: the user of the request
+        // was left out (the moderator who approved a reply), and the author was told about his own reply.
         $acl         = KunenaAccess::getInstance();
-        $subscribers = $acl->getSubscribers($message->catid, $message->thread, $mailsubs, $mailmods, $mailadmins, $me->id);
+        $subscribers = $acl->getSubscribers($message->catid, $message->thread, $mailsubs, $mailmods, $mailadmins, (int) $message->userid);
 
         if (!$subscribers) {
             return false;

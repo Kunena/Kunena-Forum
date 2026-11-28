@@ -104,6 +104,15 @@ class KunenaMessageFinderThankeeTest extends IntegrationTestCase implements DBTe
     }
 
     /**
+     * The messages of the users whom the visitor ignores are left out (the list of the recent posts), the others stay.
+     */
+    public function testTheMessagesOfIgnoredUsersAreLeftOut(): void
+    {
+        $this->assertSame(3, (new KunenaMessageFinder())->filterOutAuthors([])->count());
+        $this->assertSame(1, (new KunenaMessageFinder())->filterOutAuthors([42])->count());
+    }
+
+    /**
      * A message which he made anonymous after the thank yous (its author is 0, the thank yous keep him as their target) is not in his
      * list: the list of his profile told every member who wrote the anonymous message.
      */

@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Layout\Widget\WidgetModule;
 use Kunena\Forum\Site\Model\TopicsModel;
@@ -168,6 +169,12 @@ class MessageListingRecentDisplay extends ListDisplay
                 $finder
                     ->filterByUser($user, 'author')
                     ->filterByHold([0]);
+
+                // The recent posts of all the users: not those of the users whom the visitor ignores ("the messages and the topics of
+                // this user are hidden for you", as the topic lists leave them out). The posts of one user stay when he is chosen.
+                if (!$user) {
+                    $finder->filterOutAuthors(KunenaUserIgnore::getIgnored((int) KunenaUserHelper::getMyself()->userid));
+                }
                 break;
         }
 

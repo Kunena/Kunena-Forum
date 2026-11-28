@@ -263,6 +263,26 @@ class KunenaMessageFinder extends KunenaFinder
     }
 
     /**
+     * Leave out the messages of the users (the ignore list of a user), as KunenaTopicFinder::filterOutAuthors() does for the topics.
+     *
+     * @param   int[]  $userids  Ids of the users.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 8.0
+     */
+    public function filterOutAuthors(array $userids): KunenaMessageFinder
+    {
+        $userids = array_filter(ArrayHelper::toInteger($userids));
+
+        if ($userids) {
+            $this->query->where($this->db->quoteName('a.userid') . ' NOT IN (' . implode(',', $userids) . ')');
+        }
+
+        return $this;
+    }
+
+    /**
      * Filter by user access to the categories.
      *
      * It is very important to use this or category filter. Otherwise messages from unauthorized categories will be

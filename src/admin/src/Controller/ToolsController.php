@@ -1008,10 +1008,14 @@ class ToolsController extends FormController
             $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' ADD `language` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`';
             $db->setQuery($query);
 
+            // A failure is told, and not "created": the error was printed into the redirect, where nobody saw it.
             try {
                 $db->execute();
             } catch (Exception $e) {
-                echo htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+                return;
             }
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_COLUMN_LANGUAGE_HAS_BEEN_CREATED'), 'message');

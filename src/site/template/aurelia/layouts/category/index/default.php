@@ -97,7 +97,7 @@ foreach ($this->sections as $section) :
                     <a class="btn btn-outline-primary btn-sm <?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $section->name)); ?>" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_CATEGORY_EDIT_NAMED', $section->name)); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
                 <?php endif; ?>
 
-                <button class="btn btn-outline-primary btn-sm" type="button" title="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', $section->name)); ?>" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', $section->name)); ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>" data-bs-toggle="collapse" data-bs-target="#section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
+                <button class="btn btn-outline-primary btn-sm" type="button" title="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', $section->name)); ?>" aria-label="<?php echo $this->escape(Text::sprintf('COM_KUNENA_TOGGLE_NAMED', $section->name)); ?>" aria-expanded="true" aria-controls="section<?php echo $section->id; ?>" data-bs-toggle="collapse" data-bs-target="#section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
             <?php endif; ?>
         </h2>
 

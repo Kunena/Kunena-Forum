@@ -102,7 +102,11 @@ if ($this->topic->locked) {
     <?php
     // The head of the topic as in the mockup: the marks and the tags as chips, the title, one line with the numbers.
     $topicTagsHtml = KunenaTopicTags::render((int) $this->topic->id, 'agora-topic-tags');
-    $solved        = KunenaTopicAnswer::getAnswer($this->topic) !== null;
+    // The chip of the accepted answer as the box of the answer shows it: when the forum has accepted answers, for an answer the
+    // user may read. It was shown with the setting off (an answer accepted before, the box and the actions hidden).
+    $config        = KunenaConfig::getInstance();
+    $answer        = (!isset($config->acceptedAnswers) || $config->acceptedAnswers) ? KunenaTopicAnswer::getAnswer($this->topic) : null;
+    $solved        = $answer !== null && $answer->isAuthorised('read');
     ?>
     <header class="agora-topic-head">
         <?php if ($solved || $this->topic->locked || $topicTagsHtml !== '') : ?>

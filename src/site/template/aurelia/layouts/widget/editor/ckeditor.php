@@ -92,6 +92,10 @@ foreach ([
 
 HTMLHelper::_('bootstrap.tab');
 
+// The dialogs of the editor (map, link, poll, video...) are modals of Bootstrap (dialogs.js: window.bootstrap.Modal). Each script of
+// Bootstrap adds only its own part: without this one a dialog was an error of the editor on a page which loads no other modal.
+HTMLHelper::_('bootstrap.modal');
+
 // $this->getAllowedtoUseLinksImages();
 
 // $this->addScript('edit.js');

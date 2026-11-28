@@ -335,6 +335,27 @@ class KunenaUserMerge
             $db->setQuery($query)->execute();
         }
 
+        // The row of the second user keeps what the first one had in it: the subscription, the favorite and the role of the
+        // moderator. The row of the first user was dropped, so a subscription of a topic in which the second user had posted (or of a
+        // category which he had marked read) was lost.
+        $keep = ['#__kunena_user_topics' => ['subscribed', 'favorite'], '#__kunena_user_categories' => ['subscribed', 'role']][$table] ?? [];
+
+        if ($keep && $taken) {
+            $query = $db->createQuery()
+                ->update($db->quoteName($table, 'i'))
+                ->innerJoin($db->quoteName($table, 'f') . ' ON ' . $db->quoteName('f.' . $other) . ' = ' . $db->quoteName('i.' . $other))
+                ->where($db->quoteName('f.' . $column) . ' = :from')
+                ->where($db->quoteName('i.' . $column) . ' = :into')
+                ->bind(':from', $from, ParameterType::INTEGER)
+                ->bind(':into', $into, ParameterType::INTEGER);
+
+            foreach ($keep as $value) {
+                $query->set($db->quoteName('i.' . $value) . ' = GREATEST(' . $db->quoteName('i.' . $value) . ', ' . $db->quoteName('f.' . $value) . ')');
+            }
+
+            $db->setQuery($query)->execute();
+        }
+
         foreach (array_chunk($taken, 500) as $chunk) {
             $query = $db->createQuery()
                 ->delete($db->quoteName($table))

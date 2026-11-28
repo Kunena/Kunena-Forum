@@ -1797,7 +1797,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @since   Kunena 8.0
      */
-    protected static function withoutQuotes(string $text): string
+    public static function withoutQuotes(string $text): string
     {
         // The innermost block first, until none is left.
         do {

@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -186,6 +187,16 @@ abstract class KunenaPopupNotification
             // No popup for a message of a user whom the user ignores (he gets no e-mail about it either).
             if (!$message || KunenaUserIgnore::isIgnoring($userid, (int) $message->userid)) {
                 continue;
+            }
+
+            // A mention in a quote is the mention of the quoted post, as for the e-mails of the mentions: every reply which quoted a
+            // post with the user's name gave "X mentioned you". Such a message is shown for another reason only, or not at all.
+            if ($row->mentioned && !\in_array($userid, KunenaMessage::getMentionedUserIds(KunenaMessage::withoutQuotes((string) $message->message)), true)) {
+                $row->mentioned = 0;
+
+                if (!$row->own && !($row->topicsub > 0) && !(!$row->parent && (int) ($row->catsub ?? 0) === 1)) {
+                    continue;
+                }
             }
 
             $name = $message->getAuthor()->getName('', false);

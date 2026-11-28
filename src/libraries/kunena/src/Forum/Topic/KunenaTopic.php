@@ -2128,6 +2128,12 @@ class KunenaTopic extends KunenaDatabaseObject
                 );
             }
 
+            // The accepted answer of the merged topic is in the target now (all its messages are): the target takes it when it has
+            // none. It stayed on the shadow, and the answer box was gone.
+            if (!(int) $target->answer_id && (int) $this->answer_id) {
+                $target->answer_id = (int) $this->answer_id;
+            }
+
             // Save target topic
             try {
                 $target->save(false);

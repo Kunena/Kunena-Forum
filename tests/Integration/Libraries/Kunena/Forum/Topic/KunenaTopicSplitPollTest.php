@@ -256,4 +256,22 @@ class KunenaTopicSplitPollTest extends IntegrationTestCase implements DBTestInte
         $this->assertNotSame(self::TARGET, (int) $new->id);
         $this->assertSame([(int) $new->id], array_map('intval', array_column($map, 'content_item_id')));
     }
+
+    /**
+     * A merged topic gives its accepted answer to the topic it is merged into, when that one has none: all its messages are there now.
+     * The answer stayed on the shadow, and the answer box was gone.
+     */
+    public function testAMergedTopicGivesItsAnswerToTheTarget(): void
+    {
+        $this->getDBDriver()->setQuery('UPDATE #__kunena_topics SET answer_id = 2 WHERE id = ' . self::TARGET)->execute();
+        $this->insertRow('#__kunena_topics', [
+            'id' => 9, 'category_id' => self::CATEGORY, 'subject' => 'Into', 'hold' => 0, 'posts' => 1,
+            'first_post_id' => 20, 'first_post_time' => 500, 'last_post_id' => 20, 'last_post_time' => 500,
+        ]);
+        $this->insertRow('#__kunena_messages', ['id' => 20, 'parent' => 0, 'thread' => 9, 'catid' => self::CATEGORY, 'subject' => 'Into', 'time' => 500, 'hold' => 0]);
+
+        KunenaTopicHelper::get(self::TARGET)->move(KunenaTopicHelper::get(9));
+
+        $this->assertSame(2, (int) $this->fetchAll('SELECT answer_id FROM #__kunena_topics WHERE id = 9')[0]['answer_id']);
+    }
 }
